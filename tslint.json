@@ -1,0 +1,24 @@
+{
+	"defaultSeverity": "warn",
+	"extends": [
+		"tslint:recommended"
+	],
+	"jsRules": {},
+	"rules": {
+		"indent": {
+			"options": [
+				"tabs"
+			]
+		},
+		"max-line-length": [
+			true,
+			{
+				"limit": 120,
+				"ignore-pattern": "^\\s+//|http"
+			}
+		],
+		"object-literal-shorthand": false,
+		"object-literal-sort-keys": false,
+		"trailing-comma": false
+	}
+}

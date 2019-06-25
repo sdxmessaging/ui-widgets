@@ -1,3 +1,12 @@
+# TypeScript --incremental
+*.tsbuildinfo
+
+# MacOS
+.DS_Store
+
+# Compiled output
+lib
+
 # Logs
 logs
 *.log

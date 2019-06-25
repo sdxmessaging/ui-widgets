@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "es6",
+		"declaration": true,
+		"rootDir": "./src",
+		"outDir": "./lib",
+		"incremental": true,
+		"composite": true,
+		"moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"types": [
+			"lodash",
+			"mithril",
+			"signature_pad"
+		],
+		"lib": [
+			"dom",
+			"es5",
+			"scripthost",
+			"es2015.iterable",
+			"es2015.promise"
+		],
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+	}
+}

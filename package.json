@@ -1,0 +1,19 @@
+{
+  "name": "ui-widgets",
+  "version": "1.0.0",
+  "description": "ui-widgets",
+  "scripts": {
+    "build": "tsc -b",
+    "watch": "tsc -w"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/lodash": "^4.14.134",
+    "@types/mithril": "^1.1.16",
+    "@types/signature_pad": "^2.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
+  }
+}
