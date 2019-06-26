@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
 import stream, { Stream } from "mithril/stream";
 
-import { IDataFile, IFileWidget, IMithrilEvent, IModelField } from "../interface/widget";
+import { IFile, IFileWidget, IMithrilEvent, IModelField } from "../interface/widget";
 
 import { guid, removeByProperty } from "../utils";
 
@@ -13,7 +13,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 
 	protected dragging: boolean = false;
 
-	protected fileList: Stream<IDataFile[]> = stream<IDataFile[]>([]);
+	protected fileList: Stream<IFile[]> = stream<IFile[]>([]);
 
 	public oninit({ attrs: { value } }: CVnode<IFileWidget>) {
 		// Provide member function access to value attribute
@@ -21,10 +21,10 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	}
 
 	public view({ attrs: { field } }: CVnode<IFileWidget>): Children {
-		const { prop, label, containerClass, required, disabled } = field;
+		const { id, label, containerClass, required, disabled } = field;
 		return m("div", [
 			m("label.flex.flex-column", lodash.extend({
-				for: prop,
+				for: id,
 				title: label,
 				class: `${disabled ? "o-60" : "pointer"} ${containerClass}`
 			}, disabled ? {} : {
@@ -33,20 +33,20 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				ondrop: (evt: DragEvent) => {
 					this.dragStop(evt);
 					if (evt.dataTransfer) {
-						this.addFiles(evt.dataTransfer.files, prop);
+						this.addFiles(evt.dataTransfer.files);
 					}
 				}
 			}), [
 					m("input.clip", {
-						id: prop,
-						name: prop,
+						id,
+						name: id,
 						type: "file",
 						multiple: this.multiple,
 						accept: this.acceptTypes,
 						required,
 						disabled,
 						onchange: ({ target: { files } }: { target: HTMLFormElement }) => {
-							this.addFiles(files, prop);
+							this.addFiles(files);
 						}
 					}),
 					m("span.mb1.silver", label),
@@ -79,17 +79,14 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 		);
 	}
 
-	protected addFiles(fileList: ArrayLike<File>, fileKey: string) {
+	protected addFiles(fileList: ArrayLike<File>) {
 		const newFileList = this.fileList();
 		lodash.each(fileList, (file: File) => {
 			newFileList.push({
-				file: file,
 				_id: guid(),
-				prop: fileKey,
 				name: file.name,
-				size: file.size,
-				type: file.type,
-				lastModified: file.lastModified
+				path: "not_set",
+				file: file
 			});
 		});
 		this.fileList(newFileList);

@@ -53,7 +53,7 @@ export class SignBuilder extends FileSelect {
 							])
 					)
 					: m(this.state === SignState.Draw ? SignDraw : SignType, {
-						onSet: (dataUrl: string) => this.setDataUrl(dataUrl, field.prop),
+						onSet: (dataUrl: string) => this.setDataUrl(dataUrl, field.id),
 						onCancel: () => this.state = SignState.Select
 					})
 			]);
@@ -65,14 +65,11 @@ export class SignBuilder extends FileSelect {
 				type: "image/png"
 			});
 			this.setFile({
-				file: newFile,
-				dataUrl: scaledDataUrl,
 				_id: this.getFileId(),
-				prop: fileKey,
 				name: newFile.name,
-				size: newFile.size,
-				type: newFile.type,
-				lastModified: newFile.lastModified
+				path: "not_set",
+				file: newFile,
+				dataUrl: scaledDataUrl
 			});
 			this.state = SignState.Select;
 			m.redraw();

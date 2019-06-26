@@ -9,14 +9,14 @@ import { getLabel, inputBorder, inputText } from "../utils";
 export class BaseInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
-		const { prop, type, placeholder, containerClass, classes = "", required, disabled } = field;
+		const { id, type, placeholder, containerClass, classes = "", required, disabled } = field;
 		return [
 			getLabel(field),
 			m(".w-100", {
 				class: containerClass
 			}, m("input.input-reset.w-100.pa2" + b.inputHeight, {
-				id: prop,
-				name: prop,
+				id,
+				name: id,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
 				type,

@@ -26,7 +26,7 @@ export class ImageSelect extends FileSelect {
 		);
 	}
 
-	protected addFiles(fileList: ArrayLike<File>, fileKey: string) {
+	protected addFiles(fileList: ArrayLike<File>) {
 		const file = lodash.head(fileList);
 		if (!file) {
 			return;
@@ -40,14 +40,11 @@ export class ImageSelect extends FileSelect {
 				type: fileType
 			});
 			this.setFile({
-				file: newFile,
-				dataUrl: dataURL,
 				_id: this.getFileId(),
-				prop: fileKey,
 				name: newFile.name,
-				size: newFile.size,
-				type: newFile.type,
-				lastModified: newFile.lastModified
+				path: "not_set",
+				file: newFile,
+				dataUrl: dataURL
 			});
 			m.redraw();
 		});

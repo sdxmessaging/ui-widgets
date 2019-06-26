@@ -1,20 +1,15 @@
 import { Stream } from "mithril/stream";
 
-export type TPropVal = string | number | boolean;
+export type TProp = string | number | boolean;
 
-export interface IDataFile {
-	// For persisting, to be sent with item data
+export interface IFile {
 	readonly _id: string;
-	readonly prop: string;
-	// Link for files outside of local vault
-	readonly remoteUrl?: string;
-	// Standard file metadata
 	readonly name: string;
-	readonly size: number;
-	readonly type: string;
-	readonly lastModified: number;
-	// To be uploaded separate from item data
+	// Display
+	readonly path: string;
+	// Input
 	readonly file?: Blob;
+	// Image input preview
 	readonly dataUrl?: string;
 }
 
@@ -38,7 +33,7 @@ export const enum FieldType {
 }
 
 export interface IModelField {
-	readonly prop: string;
+	readonly id: string;
 	readonly label: string;
 	readonly type: FieldType | string;
 	readonly default?: string;
@@ -53,7 +48,7 @@ export interface IModelField {
 // Select/Radio widgets
 export interface IOption {
 	readonly label: string;
-	readonly value: TPropVal;
+	readonly value: TProp;
 }
 
 export interface IOptionField extends IModelField {
@@ -73,10 +68,10 @@ interface IBaseWidget {
 	readonly field: TField;
 }
 export interface IFileWidget extends IBaseWidget {
-	readonly value: Stream<IDataFile[]>;
+	readonly value: Stream<IFile[]>;
 }
 export interface IPropWidget extends IBaseWidget {
-	readonly value: Stream<TPropVal>;
+	readonly value: Stream<TProp>;
 }
 
 // Editor signature inner widgets

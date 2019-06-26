@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import m, { Children } from "mithril";
 
-import { IDataFile, IModelField } from "./interface/widget";
+import { IModelField } from "./interface/widget";
 
 export const inputBorder: string = "border-box bn";
 export const inputText: string = "fw2 dark-gray";
@@ -17,13 +17,14 @@ export function getDisplayLabel({ label }: IModelField, className?: string) {
 	}, label);
 }
 
-export function getLabel(field: IModelField): Children {
+export function getLabel({ id, label, required }: IModelField): Children {
 	return m("label.mb1.silver", {
-		for: field.prop
-	}, getLabelText(field));
+		title: label,
+		for: id
+	}, getLabelText(label, required));
 }
 
-export function getLabelText({ required, label }: IModelField): string {
+export function getLabelText(label: string, required?: boolean): string {
 	return required ? `${label}*` : label;
 }
 
@@ -33,11 +34,6 @@ export function guid(): string {
 		const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});
-}
-
-// TODO Move to ui-builder
-export function getFileUrl({ _id, remoteUrl }: IDataFile): string {
-	return remoteUrl ? remoteUrl : `./wallet-files/${_id}`;
 }
 
 export function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined {

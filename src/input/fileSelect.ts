@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import m from "mithril";
 
-import { IDataFile, IModelField } from "../interface/widget";
+import { IFile, IModelField } from "../interface/widget";
 
 import { guid } from "../utils";
 import { FileMulti } from "./fileMulti";
@@ -25,19 +25,16 @@ export class FileSelect extends FileMulti {
 		return null;
 	}
 
-	protected addFiles(fileList: ArrayLike<File>, fileKey: string) {
+	protected addFiles(fileList: ArrayLike<File>) {
 		const file = lodash.head(fileList);
 		if (!file) {
 			return;
 		}
 		this.setFile({
-			file: file,
 			_id: this.getFileId(),
-			prop: fileKey,
 			name: file.name,
-			size: file.size,
-			type: file.type,
-			lastModified: file.lastModified
+			path: "not_set",
+			file: file
 		});
 	}
 
@@ -48,7 +45,7 @@ export class FileSelect extends FileMulti {
 	}
 
 	// Replace any instance file(s) with a single IDataFile
-	protected setFile(fileObj: IDataFile) {
+	protected setFile(fileObj: IFile) {
 		this.fileList([fileObj]);
 	}
 

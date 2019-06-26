@@ -5,7 +5,7 @@ import { TBss } from "./interface/style";
 
 interface IButton {
 	readonly label: string;
-	readonly type?: string;
+	readonly type?: "submit" | "reset" | "button";
 	readonly icon?: string;
 	readonly classes?: string;
 	readonly disabled?: boolean;
@@ -20,10 +20,7 @@ export class Button implements ClassComponent<IButton> {
 	} }: CVnode<IButton>) {
 		return m("button.button-reset.pa2.bn.br2" + b.bgBranding.brandingAlt, {
 			type,
-			class: [
-				classes,
-				disabled ? "o-60" : "dim pointer"
-			].join(" "),
+			class: `${disabled ? "o-60 " : ""}${classes}`,
 			disabled,
 			style,
 			onclick,

@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel, getFileUrl } from "../utils";
+import { getDisplayLabel } from "../utils";
 
 export class FileDownload implements ClassComponent<IFileWidget> {
 
@@ -15,12 +15,12 @@ export class FileDownload implements ClassComponent<IFileWidget> {
 		}, [
 				getDisplayLabel(field, "mb1"),
 				m(".flex.flex-column.mt1.nb1",
-					lodash.map(value(), (file) => {
+					lodash.map(value(), ({ name, path }) => {
 						return m("a.pa2.mv1.link.ba.b--black-20.dark-gray.dim.pointer[target=_blank]", {
-							href: getFileUrl(file)
+							href: path
 						}, [
 								m("i.fal.fa-file-download.mr2"),
-								file.name,
+								name,
 							]);
 					})
 				)

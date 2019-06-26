@@ -9,7 +9,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const radioField = field as IOptionField;
-		const { prop, options, classes, containerClass, disabled } = radioField;
+		const { id, options, classes, containerClass, disabled } = radioField;
 		return [
 			getLabel(radioField),
 			m("div", {
@@ -22,7 +22,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 					class: disabled ? "o-60" : "pointer"
 				},
 					m("input.mr1[type=radio]", {
-						name: prop,
+						name: id,
 						value: value,
 						checked: val() === value,
 						class: classes,

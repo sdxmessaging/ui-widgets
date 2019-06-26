@@ -1,10 +1,10 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IPropWidget, TPropVal } from "../interface/widget";
+import { IPropWidget, TProp } from "../interface/widget";
 
 import { getDisplayLabel } from "../utils";
 
-export function linkAttrs(fieldType: string, value: TPropVal) {
+export function linkAttrs(fieldType: string, value: TProp) {
 	if (fieldType === "email") {
 		return {
 			href: `mailto:${value}`

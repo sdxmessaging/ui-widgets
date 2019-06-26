@@ -39,7 +39,7 @@ export class ImageMulti extends FileMulti {
 		);
 	}
 
-	protected addFiles(fileList: ArrayLike<File>, fileKey: string) {
+	protected addFiles(fileList: ArrayLike<File>) {
 		const fileType = "image/jpeg";
 		const newFileList = this.fileList();
 		Promise.all(lodash.map(fileList, (file) => {
@@ -51,14 +51,11 @@ export class ImageMulti extends FileMulti {
 					type: fileType
 				});
 				newFileList.push({
-					file: newFile,
-					dataUrl: dataURL,
 					_id: guid(),
-					prop: fileKey,
 					name: newFile.name,
-					size: newFile.size,
-					type: newFile.type,
-					lastModified: newFile.lastModified
+					path: "not_set",
+					file: newFile,
+					dataUrl: dataURL
 				});
 			});
 		})).then(() => {
