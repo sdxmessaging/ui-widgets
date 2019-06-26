@@ -5,7 +5,7 @@ import { IFileWidget } from "../interface/widget";
 
 import { getDisplayLabel } from "../utils";
 
-export class FileDownload implements ClassComponent<IFileWidget> {
+export class FileList implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const { classes, style } = field;

@@ -73,7 +73,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				file.name,
 				m("i.fal.fa-file-minus.child.fr", {
 					title: `Remove ${file.name}`,
-					onclick: () => this.removeFile(file._id)
+					onclick: () => this.removeFile(file.guid)
 				})
 			]))
 		);
@@ -83,7 +83,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 		const newFileList = this.fileList();
 		lodash.each(fileList, (file: File) => {
 			newFileList.push({
-				_id: guid(),
+				guid: guid(),
 				name: file.name,
 				path: "not_set",
 				file: file
@@ -94,7 +94,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 
 	protected removeFile(fileId: string) {
 		const newFileList = this.fileList();
-		removeByProperty(newFileList, { _id: fileId });
+		removeByProperty(newFileList, { guid: fileId });
 		this.fileList(newFileList);
 	}
 

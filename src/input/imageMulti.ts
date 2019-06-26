@@ -31,7 +31,7 @@ export class ImageMulti extends FileMulti {
 			},
 				m(".pa2.bg-white.ba.b--light-silver.br2.absolute.top-0.right-0.child.pointer", {
 					title: `Remove ${file.name}`,
-					onclick: () => this.removeFile(file._id)
+					onclick: () => this.removeFile(file.guid)
 				},
 					m("i.fal.fa-file-minus.fa-lg")
 				)
@@ -51,7 +51,7 @@ export class ImageMulti extends FileMulti {
 					type: fileType
 				});
 				newFileList.push({
-					_id: guid(),
+					guid: guid(),
 					name: newFile.name,
 					path: "not_set",
 					file: newFile,

@@ -3,12 +3,12 @@ import { Stream } from "mithril/stream";
 export type TProp = string | number | boolean;
 
 export interface IFile {
-	readonly _id: string;
+	readonly guid: string;
 	readonly name: string;
 	// Display
 	readonly path: string;
 	// Input
-	readonly file?: Blob;
+	readonly file?: File;
 	// Image input preview
 	readonly dataUrl?: string;
 }

@@ -31,7 +31,7 @@ export class FileSelect extends FileMulti {
 			return;
 		}
 		this.setFile({
-			_id: this.getFileId(),
+			guid: this.getFileId(),
 			name: file.name,
 			path: "not_set",
 			file: file
@@ -41,7 +41,7 @@ export class FileSelect extends FileMulti {
 	// Generate or re-use the set file _id
 	protected getFileId(): string {
 		const fileObj = lodash.head(this.fileList());
-		return fileObj ? fileObj._id : guid();
+		return fileObj ? fileObj.guid : guid();
 	}
 
 	// Replace any instance file(s) with a single IDataFile

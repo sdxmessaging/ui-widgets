@@ -65,7 +65,7 @@ export class SignBuilder extends FileSelect {
 				type: "image/png"
 			});
 			this.setFile({
-				_id: this.getFileId(),
+				guid: this.getFileId(),
 				name: newFile.name,
 				path: "not_set",
 				file: newFile,

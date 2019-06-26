@@ -40,7 +40,7 @@ export class ImageSelect extends FileSelect {
 				type: fileType
 			});
 			this.setFile({
-				_id: this.getFileId(),
+				guid: this.getFileId(),
 				name: newFile.name,
 				path: "not_set",
 				file: newFile,
