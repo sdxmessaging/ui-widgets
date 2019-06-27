@@ -20,7 +20,7 @@ export class FileList implements ClassComponent<IFileWidget> {
 							href: path
 						}, [
 								m("i.fal.fa-file-download.mr2"),
-								name,
+								name
 							]);
 					})
 				)

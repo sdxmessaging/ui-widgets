@@ -6,7 +6,7 @@ import { IModelField } from "../interface/widget";
 import { Thumbnail } from "../display/thumbnail";
 import { FileMulti } from "./fileMulti";
 
-import { dataURItoBlob, fileNameExtSplit, guid, resizeImage } from "../utils";
+import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
 export class ImageMulti extends FileMulti {
 
@@ -25,7 +25,7 @@ export class ImageMulti extends FileMulti {
 	protected viewFileList() {
 		return m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
 			lodash.map(this.fileList(), (file) => m(Thumbnail, {
-				src: file.dataUrl,
+				src: imgSrc(file.path, file.dataUrl),
 				class: "dim",
 				style: { "max-height": "6rem" }
 			},

@@ -9,7 +9,7 @@ import { FileSelect } from "./fileSelect";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-import { dataURItoBlob, getLabel, scaleRect } from "../utils";
+import { dataURItoBlob, getLabel, imgSrc, scaleRect } from "../utils";
 
 const enum SignState {
 	Select,
@@ -45,7 +45,7 @@ export class SignBuilder extends FileSelect {
 						onclick: () => this.state = SignState.Draw
 					}, fileObj
 							? m("img.aspect-ratio--object", {
-								src: fileObj.dataUrl,
+								src: imgSrc(fileObj.path, fileObj.dataUrl)
 							})
 							: m(".aspect-ratio--object.flex.items-center.justify-center", [
 								m("i.fal.fa-pen-nib.fa-2x"),

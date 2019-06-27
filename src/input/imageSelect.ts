@@ -5,7 +5,7 @@ import m from "mithril";
 import { TBss } from "../interface/style";
 import { IModelField } from "../interface/widget";
 
-import { dataURItoBlob, fileNameExtSplit, resizeImage } from "../utils";
+import { dataURItoBlob, fileNameExtSplit, imgSrc, resizeImage } from "../utils";
 import { FileSelect } from "./fileSelect";
 
 export class ImageSelect extends FileSelect {
@@ -16,12 +16,12 @@ export class ImageSelect extends FileSelect {
 	protected acceptTypes: string = "image/*";
 
 	protected viewUploadWidget({ classes = "h5" }: IModelField) {
-		const fileObj = lodash.head(this.fileList());
+		const file = lodash.head(this.fileList());
 		return m(".w-100.pa1.contain.ba.bw1.b--dashed.br3.dt.tc", {
 			class: `${classes} ${this.dragging ? "b--blue blue" : "b--light-silver dark-gray"}`
 		},
-			fileObj ? m("img.img" + b.imgHeight, {
-				src: fileObj.dataUrl
+			file ? m("img.img" + b.imgHeight, {
+				src: imgSrc(file.path, file.dataUrl)
 			}) : m("i.fal.fa-camera.fa-2x.dtc.v-mid")
 		);
 	}

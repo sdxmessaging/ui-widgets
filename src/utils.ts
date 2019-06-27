@@ -28,6 +28,10 @@ export function getLabelText(label: string, required?: boolean): string {
 	return required ? `${label}*` : label;
 }
 
+export function imgSrc(path: string, dataUrl?: string): string {
+	return dataUrl ? dataUrl : path;
+}
+
 export function guid(): string {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
 		// tslint:disable-next-line

@@ -18,6 +18,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 		}, [
 				getDisplayLabel(field, "mb1"),
 				file ? m("img.img.contain.self-center" + b.imgHeight, {
+					title: file.name,
 					src: file.path
 				}) : m("i.fal.fa-image")
 			]
