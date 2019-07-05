@@ -23,7 +23,7 @@ export default {
 	input: "lib/index.js",
 	external,
 	output: {
-		name: "ui-widgets",
+		name: "uiWidgets",
 		dir: "dist",
 		format: "umd",
 		globals
