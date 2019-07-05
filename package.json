@@ -2,17 +2,23 @@
   "name": "ui-widgets",
   "version": "1.0.0",
   "description": "ui-widgets",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc -b",
-    "watch": "tsc -w"
+    "postbuild": "rollup -c",
+    "watch": "tsc -w",
+    "bundle-watch": "rollup -c -w"
   },
   "author": "",
   "license": "UNLICENSED",
+  "types": "./lib/index.d.ts",
   "dependencies": {},
   "devDependencies": {
     "@types/lodash": "^4.14.134",
     "@types/mithril": "^1.1.16",
     "@types/signature_pad": "^2.3.0",
+    "rollup": "^1.16.4",
+    "rollup-plugin-uglify": "^6.0.2",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   }
