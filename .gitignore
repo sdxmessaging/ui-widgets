@@ -4,8 +4,8 @@
 # MacOS
 .DS_Store
 
-# Compiled output
-lib
+# Intermediate compiled output
+lib/**/*.js
 
 # Logs
 logs

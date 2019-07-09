@@ -1,5 +1,3 @@
-import uglify from "rollup-plugin-uglify";
-
 export const globals = {
 	"lodash": "_",
 	"mithril": "m",
@@ -12,20 +10,13 @@ export const external = Object.keys(globals);
 // Fix warning from TypeScript derived es5 classes
 export const context = "this";
 
-const plugins = [
-	uglify.uglify({
-		// Disable compression (enabled: 2% smaller, 3-4 times slower)
-		compress: false
-	})
-];
-
 export default {
 	input: "lib/index.js",
 	external,
 	output: {
 		name: "uiWidgets",
 		dir: "dist",
-		format: "umd",
+		format: "esm",
 		globals
 	},
 	context,
