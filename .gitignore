@@ -4,6 +4,9 @@
 # MacOS
 .DS_Store
 
+# Example script
+dist/example.js
+
 # Intermediate compiled output
 lib/**/*.js
 

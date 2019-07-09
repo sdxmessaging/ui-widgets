@@ -1,19 +1,24 @@
 // Not part of dist bundle
 
-// Globals
-declare const m: any;
-// import * as widgets from "./index";
-const widgets = (window as any).uiWidgets;
+import m from "mithril";
+import stream from "mithril/stream";
+import { BaseText, Checkbox } from "./index";
+import { BaseInput, CheckboxInput, RadioInput, SelectInput } from "./index";
+import { FileList, ImageMulti } from "./index";
+
+import { IFile, TProp } from "./interface/widget";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-	const textVal = m.stream("Change Me");
-	const dateVal = m.stream();
-	const colVal = m.stream();
-	const checkVal = m.stream();
-	const optVal = m.stream();
+	// Simple props
+	const textVal = stream<TProp>("Change Me");
+	const dateVal = stream<TProp>();
+	const colVal = stream<TProp>();
+	const checkVal = stream<TProp>();
+	const optVal = stream<TProp>();
 
-	const imgList = m.stream([]);
+	// Files
+	const imgList = stream<IFile[]>([]);
 
 	m.mount(document.getElementById("page") as HTMLElement, {
 		view: () => m(".pa3", [
@@ -22,10 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			m("p", "These example input/display pairs manipulate a common stream"),
 
 			m("h3", "Basic Inputs"),
+			m("p", "Display components reflect changes to input components"),
 
 			// Text
 			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(widgets.BaseInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(BaseInput, {
 					field: {
 						id: "text-in",
 						label: "Text Input",
@@ -33,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					},
 					value: textVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(widgets.BaseText, {
+				m(".w-50.pa2.ba.b--silver", m(BaseText, {
 					field: {
 						id: "text-out",
 						label: "Text Output",
@@ -45,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			// Date
 			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(widgets.BaseInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(BaseInput, {
 					field: {
 						id: "date-in",
 						label: "Date Input",
@@ -53,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					},
 					value: dateVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(widgets.BaseText, {
+				m(".w-50.pa2.ba.b--silver", m(BaseText, {
 					field: {
 						id: "date-out",
 						label: "Date Output",
@@ -65,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			// Colour
 			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(widgets.BaseInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(BaseInput, {
 					field: {
 						id: "color-in",
 						label: "Colour Input",
@@ -73,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					},
 					value: colVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(widgets.BaseText, {
+				m(".w-50.pa2.ba.b--silver", m(BaseText, {
 					field: {
 						id: "color-out",
 						label: "Colour Output",
@@ -85,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			// Checkbox
 			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(widgets.CheckboxInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(CheckboxInput, {
 					field: {
 						id: "check-in",
 						label: "Checkbox Input",
@@ -93,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					},
 					value: checkVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(widgets.Checkbox, {
+				m(".w-50.pa2.ba.b--silver", m(Checkbox, {
 					field: {
 						id: "check-out",
 						label: "Checkbox Output",
@@ -103,12 +109,15 @@ document.addEventListener("DOMContentLoaded", () => {
 				}))
 			]),
 
+			m("h3", "Multiple Inputs"),
+			m("p", "Multiple inputs can share the same value"),
+
 			// Select/Radio
 			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(widgets.SelectInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(SelectInput, {
 					field: {
 						id: "select-in",
-						label: "Colour Input",
+						label: "Select Input",
 						type: "select",
 						options: [{
 							label: "Opt 1",
@@ -120,10 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
 					},
 					value: optVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(widgets.RadioInput, {
+				m(".w-50.pa2.ba.b--silver", m(RadioInput, {
 					field: {
 						id: "radio-in",
-						label: "Colour Output",
+						label: "Radio Input",
 						type: "radio",
 						options: [{
 							label: "Opt 1",
@@ -142,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			// Image/FileList
 			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(widgets.ImageMulti, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(ImageMulti, {
 					field: {
 						id: "image-in",
 						label: "Image Input",
@@ -150,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					},
 					value: imgList
 				})),
-				m(".w-50.pa2.ba.b--silver", m(widgets.FileDownload, {
+				m(".w-50.pa2.ba.b--silver", m(FileList, {
 					field: {
 						id: "image-out",
 						label: "File List Output",
