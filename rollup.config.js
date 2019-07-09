@@ -14,11 +14,9 @@ export default {
 	input: "lib/index.js",
 	external,
 	output: {
-		name: "uiWidgets",
 		dir: "dist",
 		format: "esm",
 		globals
 	},
-	context,
-	plugins
+	context
 };
