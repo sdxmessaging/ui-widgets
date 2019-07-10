@@ -1,3 +1,5 @@
+import { terser } from "rollup-plugin-terser";
+
 export const globals = {
 	"lodash": "_",
 	"mithril": "m",
@@ -10,6 +12,12 @@ export const external = Object.keys(globals);
 // Fix warning from TypeScript derived es5 classes
 export const context = "this";
 
+const plugins = [
+	terser({
+		compress: false
+	})
+];
+
 export default {
 	input: "lib/index.js",
 	external,
@@ -18,5 +26,6 @@ export default {
 		format: "esm",
 		globals
 	},
-	context
+	context,
+	plugins
 };

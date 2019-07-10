@@ -8,9 +8,9 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { id, label, classes, containerClass, required, disabled } = field;
-		return m("div", {
+		return m("div.pa2", {
 			class: containerClass
-		}, m(".flex.flex-wrap.pa2", {
+		}, m(".flex.flex-wrap", {
 			class: inputText,
 		},
 			m("label.flex.items-center.dark-gray", {
