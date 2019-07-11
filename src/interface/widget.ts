@@ -32,17 +32,50 @@ export const enum FieldType {
 	sign = "sign"
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+// Fields can include helpers "section-", "shipping", "bulling"
+// Contact fields can also be combined with "home", "work", "mobile", "fax", "pager"
+type TAutocomplete = "off" | "on" |
+	// Name
+	"name" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" |
+	// Authentication
+	"username" | "new-password" | "current-password" | "one-time-code" |
+	// Organisation
+	"organization-title" | "organization" |
+	// Address
+	"street-address" | "address-line1" | "address-line2" | "address-line3" |
+	"address-level4" | "address-level3" | "address-level2" | "address-level1" |
+	"country" | "country-name" | "postal-code" |
+	// Payment
+	"cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" |
+	"cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" |
+	"transaction-currency" | "transaction-amount" |
+	// Person
+	"language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "url" | "photo" |
+	// Contact
+	"tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
+
 export interface IModelField {
-	readonly id: string;
 	readonly label: string;
+	// Standard HTML attributes
+	readonly id: string;
 	readonly type: FieldType | string;
-	readonly default?: string;
+	readonly name?: string;
 	readonly placeholder?: string;
+	readonly required?: boolean;
+	readonly readonly?: boolean;
+	readonly disabled?: boolean;
+	readonly autofocus?: boolean;
+	readonly autocomplete?: TAutocomplete;
+	// Widget attributes
+	readonly instant?: boolean;
 	readonly classes?: string;
 	readonly containerClass?: string;
-	readonly required?: boolean;
-	readonly disabled?: boolean;
 	readonly style?: Record<string, string>;
+	// No support
+	readonly default?: string;
+	// BaseInput value transform function
+	xform?(value: TProp): TProp;
 }
 
 // Select/Radio widgets

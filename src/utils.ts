@@ -18,7 +18,7 @@ export function getDisplayLabel({ label }: IModelField, className?: string) {
 }
 
 export function getLabel({ id, label, required }: IModelField): Children {
-	return m("label.mb1.silver", {
+	return m("label.mb1.f6.silver", {
 		title: label,
 		for: id
 	}, getLabelText(label, required));

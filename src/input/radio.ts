@@ -8,10 +8,14 @@ import { getLabel, inputText } from "../utils";
 export class RadioInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
-		const radioField = field as IOptionField;
-		const { id, options, classes, containerClass, disabled } = radioField;
+		const {
+			id, name = id,
+			required, readonly, disabled, autocomplete,
+			containerClass, classes = "",
+			options
+		} = field as IOptionField;
 		return [
-			getLabel(radioField),
+			getLabel(field),
 			m("div", {
 				class: containerClass
 			}, m(".flex.flex-wrap", {
@@ -22,11 +26,11 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 					class: disabled ? "o-60" : "pointer"
 				},
 					m("input.mr1[type=radio]", {
-						name: id,
+						name,
 						value: value,
 						checked: val() === value,
 						class: classes,
-						disabled
+						required, readonly, disabled, autocomplete
 					}),
 					label
 				))

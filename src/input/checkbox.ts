@@ -7,7 +7,12 @@ import { getLabelText, inputText } from "../utils";
 export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { id, label, classes, containerClass, required, disabled } = field;
+		const {
+			label,
+			id, name = id,
+			required, readonly, disabled, autocomplete,
+			containerClass, classes = ""
+		} = field;
 		return m("div.pa2", {
 			class: containerClass
 		}, m(".flex.flex-wrap", {
@@ -17,11 +22,9 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				class: `${disabled ? "o-60 " : ""}${classes}`
 			},
 				m("input.mr1[type=checkbox]", {
-					id,
-					name: id,
+					id, name,
 					checked: value(),
-					required,
-					disabled,
+					required, readonly, disabled, autocomplete,
 					// Update value on check
 					onchange: ({ target: { checked } }: { target: HTMLInputElement }) => value(checked),
 				}),

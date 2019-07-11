@@ -20,7 +20,7 @@ export class Button implements ClassComponent<IButton> {
 	} }: CVnode<IButton>) {
 		return m("button.button-reset.pa2.bn.br2" + b.bgBranding.brandingAlt, {
 			type,
-			class: `${disabled ? "o-60 " : ""}${classes}`,
+			class: `${disabled ? "o-60 " : "dim pointer "}${classes}`,
 			disabled,
 			style,
 			onclick,

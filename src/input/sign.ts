@@ -24,7 +24,11 @@ export class SignBuilder extends FileSelect {
 	private state: SignState = SignState.Select;
 
 	public view({ attrs: { field } }: CVnode<IFileWidget>): Children {
-		const { containerClass } = field;
+		const {
+			id,
+			// required, readonly, disabled, autofocus,
+			containerClass
+		} = field;
 		const fileObj = lodash.head(this.fileList());
 		return m(".flex.flex-column", {
 			class: containerClass
@@ -53,7 +57,7 @@ export class SignBuilder extends FileSelect {
 							])
 					)
 					: m(this.state === SignState.Draw ? SignDraw : SignType, {
-						onSet: (dataUrl: string) => this.setDataUrl(dataUrl, field.id),
+						onSet: (dataUrl: string) => this.setDataUrl(dataUrl, id),
 						onCancel: () => this.state = SignState.Select
 					})
 			]);

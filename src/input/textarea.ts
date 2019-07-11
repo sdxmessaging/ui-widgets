@@ -7,20 +7,21 @@ import { getLabel, inputBorder, inputText } from "../utils";
 export class TextareaInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
-		const { id, placeholder, classes, containerClass, required, disabled } = field;
+		const {
+			id, name = id, placeholder,
+			required, readonly, disabled, autofocus, autocomplete,
+			containerClass, classes = ""
+		} = field;
 		return [
 			getLabel(field),
 			m("div", {
 				class: containerClass
 			}, m("textarea.w-100.pa2[rows=3]", {
-				id,
-				name: id,
+				id, name,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
-				placeholder,
+				placeholder, required, readonly, disabled, autofocus, autocomplete,
 				style: { resize: "vertical" },
-				required,
-				disabled,
 				// Update value on type
 				onchange: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
 			}))

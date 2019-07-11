@@ -21,7 +21,12 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	}
 
 	public view({ attrs: { field } }: CVnode<IFileWidget>): Children {
-		const { id, label, containerClass, required, disabled } = field;
+		const {
+			label,
+			id, name = id,
+			required, readonly, disabled, autofocus,
+			containerClass
+		} = field;
 		return m("div", [
 			m("label.flex.flex-column", lodash.extend({
 				for: id,
@@ -37,19 +42,16 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					}
 				}
 			}), [
-					m("input.clip", {
-						id,
-						name: id,
-						type: "file",
+					m("input.clip[type=file]", {
+						id, name,
 						multiple: this.multiple,
 						accept: this.acceptTypes,
-						required,
-						disabled,
+						required, readonly, disabled, autofocus,
 						onchange: ({ target: { files } }: { target: HTMLFormElement }) => {
 							this.addFiles(files);
 						}
 					}),
-					m("span.mb1.silver", label),
+					m("span.mb1.f6.silver", label),
 					this.viewUploadWidget(field)
 				]),
 			this.viewFileList()
