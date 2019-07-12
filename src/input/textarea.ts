@@ -9,8 +9,8 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
 			id, name = id, placeholder,
-			required, readonly, disabled, autofocus, autocomplete,
-			containerClass, classes = ""
+			required, readonly, disabled, autofocus, autocomplete, spellcheck,
+			instant, containerClass, classes = ""
 		} = field;
 		return [
 			getLabel(field),
@@ -20,10 +20,10 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 				id, name,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
-				placeholder, required, readonly, disabled, autofocus, autocomplete,
+				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 				style: { resize: "vertical" },
-				// Update value on type
-				onchange: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
+				// Update value on change or input ("instant" option)
+				[instant ? "oninput" : "onchange"]: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
 			}))
 		];
 	}

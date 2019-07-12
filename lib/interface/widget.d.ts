@@ -37,12 +37,12 @@ export interface IModelField {
     readonly disabled?: boolean;
     readonly autofocus?: boolean;
     readonly autocomplete?: TAutocomplete;
+    readonly spellcheck?: boolean;
     readonly instant?: boolean;
     readonly classes?: string;
     readonly containerClass?: string;
     readonly style?: Record<string, string>;
     readonly default?: string;
-    xform?(value: TProp): TProp;
 }
 export interface IOption {
     readonly label: string;

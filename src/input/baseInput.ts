@@ -2,7 +2,7 @@ declare const b: TBss;
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { TBss } from "../interface/style";
-import { IPropWidget, TProp } from "../interface/widget";
+import { IPropWidget } from "../interface/widget";
 
 import { getLabel, inputBorder, inputText } from "../utils";
 
@@ -11,9 +11,8 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
 			id, type, name = id, placeholder,
-			required, readonly, disabled, autofocus, autocomplete,
-			instant, containerClass, classes = "",
-			xform = relayProp
+			required, readonly, disabled, autofocus, autocomplete, spellcheck,
+			instant, containerClass, classes = ""
 		} = field;
 		return [
 			getLabel(field),
@@ -23,15 +22,11 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 				id, name, type,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
-				placeholder, required, readonly, disabled, autofocus, autocomplete,
-				// Update value on change or input (controlled by instant flag
-				[instant ? "oninput" : "onchange"]: ({ target: { value } }: { target: HTMLInputElement }) => val(xform(value)),
+				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
+				// Update value on change or input ("instant" option)
+				[instant ? "oninput" : "onchange"]: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
 			}))
 		];
 	}
 
-}
-
-function relayProp(value: TProp): TProp {
-	return value;
 }

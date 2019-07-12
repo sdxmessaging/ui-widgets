@@ -67,6 +67,7 @@ export interface IModelField {
 	readonly disabled?: boolean;
 	readonly autofocus?: boolean;
 	readonly autocomplete?: TAutocomplete;
+	readonly spellcheck?: boolean;
 	// Widget attributes
 	readonly instant?: boolean;
 	readonly classes?: string;
@@ -74,8 +75,6 @@ export interface IModelField {
 	readonly style?: Record<string, string>;
 	// No support
 	readonly default?: string;
-	// BaseInput value transform function
-	xform?(value: TProp): TProp;
 }
 
 // Select/Radio widgets

@@ -13,12 +13,12 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autocomplete,
 			containerClass, classes = ""
 		} = field;
-		return m("div.pa2", {
+		return m("div", {
 			class: containerClass
 		}, m(".flex.flex-wrap", {
 			class: inputText,
 		},
-			m("label.flex.items-center.dark-gray", {
+			m("label.flex.items-center.dark-gray.pa2", {
 				class: `${disabled ? "o-60 " : "pointer "}${classes}`
 			},
 				m("input.mr1[type=checkbox]", {
