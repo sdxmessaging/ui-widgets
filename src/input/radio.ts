@@ -23,7 +23,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				onchange: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
 			},
 				// No requirement for label "for" attribute
-				lodash.map(options, ({ label, value }) => m("label.flex.items-center.pa2", {
+				lodash.map(options, ({ label, value }) => m("label.flex.items-center", {
 					class: `${disabled ? "o-60 " : "pointer "}${classes}`
 				},
 					m("input.mr1[type=radio]", {

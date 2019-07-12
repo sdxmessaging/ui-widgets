@@ -5,6 +5,7 @@ import { IModelField } from "./interface/widget";
 
 export const inputBorder: string = "border-box bn";
 export const inputText: string = "fw2 dark-gray";
+export const labelCls: string = "mb1 f6 silver";
 
 export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
 
@@ -18,9 +19,10 @@ export function getDisplayLabel({ label }: IModelField, className?: string) {
 }
 
 export function getLabel({ id, label, required }: IModelField): Children {
-	return m("label.mb1.f6.silver", {
+	return m("label", {
 		title: label,
-		for: id
+		for: id,
+		class: labelCls
 	}, getLabelText(label, required));
 }
 

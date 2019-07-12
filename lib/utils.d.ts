@@ -2,6 +2,7 @@ import m, { Children } from "mithril";
 import { IModelField } from "./interface/widget";
 export declare const inputBorder: string;
 export declare const inputText: string;
+export declare const labelCls: string;
 export declare const pxRatio: number;
 export declare function getDisplayLabel({ label }: IModelField, className?: string): m.Vnode<any, any>;
 export declare function getLabel({ id, label, required }: IModelField): Children;

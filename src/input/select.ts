@@ -20,7 +20,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			getLabel(field),
 			m("div", {
 				class: containerClass
-			}, m("select.input-reset.w-100.pa2" + b.inputHeight, {
+			}, m("select.input-reset.w-100" + b.inputHeight, {
 				id, name,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,

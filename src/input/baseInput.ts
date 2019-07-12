@@ -18,7 +18,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			getLabel(field),
 			m(".w-100", {
 				class: containerClass
-			}, m("input.input-reset.w-100.pa2" + b.inputHeight, {
+			}, m("input.input-reset.w-100" + b.inputHeight, {
 				id, name, type,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,

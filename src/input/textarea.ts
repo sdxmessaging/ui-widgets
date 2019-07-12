@@ -16,7 +16,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			getLabel(field),
 			m("div", {
 				class: containerClass
-			}, m("textarea.w-100.pa2[rows=3]", {
+			}, m("textarea.w-100[rows=3]", {
 				id, name,
 				value: val(),
 				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,

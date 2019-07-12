@@ -21,6 +21,7 @@ export { ImagePreview } from "./display/imagePreview";
 export { Label } from "./input/label";
 // Prop
 export { BaseInput } from "./input/baseInput";
+export { PasswordInput } from "./input/password";
 export { TextareaInput } from "./input/textarea";
 export { CheckboxInput } from "./input/checkbox";
 // Prop (options)

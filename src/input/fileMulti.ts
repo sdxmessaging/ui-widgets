@@ -4,7 +4,7 @@ import stream, { Stream } from "mithril/stream";
 
 import { IFile, IFileWidget, IMithrilEvent, IModelField } from "../interface/widget";
 
-import { guid, removeByProperty } from "../utils";
+import { guid, labelCls, removeByProperty } from "../utils";
 
 export class FileMulti implements ClassComponent<IFileWidget> {
 
@@ -51,7 +51,9 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 							this.addFiles(files);
 						}
 					}),
-					m("span.mb1.f6.silver", label),
+					m("span", {
+						class: labelCls
+					}, label),
 					this.viewUploadWidget(field)
 				]),
 			this.viewFileList()
