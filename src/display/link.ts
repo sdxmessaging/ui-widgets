@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getDisplayLabel } from "../utils";
+import { getDisplayLabel, styleIcon } from "../utils";
 
 export function linkAttrs(fieldType: string, value: TProp) {
 	if (fieldType === "email") {
@@ -38,8 +38,8 @@ export class Link implements ClassComponent<IPropWidget> {
 			getDisplayLabel(field),
 				value ?
 					m("a.link.dark-gray.dim.pointer.ws-normal", linkAttrs(field.type, value()),
-						m("i.fal.mr2", {
-							class: iconMap[field.type]
+						m("i.mr2", {
+							class: styleIcon(iconMap[field.type] || "fa-link")
 						}),
 						value())
 					: null

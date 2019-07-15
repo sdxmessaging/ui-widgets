@@ -1,3 +1,5 @@
+// Font Awesome icon style
+export type TIconStyle = "fas" | "far" | "fal" | "fab";
 
 // BSS TypeScript basic support
 interface IBss {

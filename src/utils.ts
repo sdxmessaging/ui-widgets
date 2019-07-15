@@ -1,7 +1,18 @@
 import lodash from "lodash";
 import m, { Children } from "mithril";
 
+import { TIconStyle } from "./interface/style";
 import { IModelField } from "./interface/widget";
+
+// Icon global style helper
+let iconStyle: TIconStyle = "fas";
+export function setIconStyle(style: TIconStyle) {
+	iconStyle = style;
+}
+
+export function styleIcon(iconClass: string): string {
+	return `${iconStyle} ${iconClass}`;
+}
 
 export const inputBorder: string = "border-box bn";
 export const inputText: string = "fw2 dark-gray";

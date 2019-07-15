@@ -5,7 +5,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { TBss } from "../interface/style";
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel } from "../utils";
+import { getDisplayLabel, styleIcon } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
 
@@ -17,10 +17,14 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 			style
 		}, [
 				getDisplayLabel(field, "mb1"),
-				file ? m("img.img.contain.self-center" + b.imgHeight, {
-					title: file.name,
-					src: file.path
-				}) : m("i.fal.fa-image")
+				file
+					? m("img.img.contain.self-center" + b.imgHeight, {
+						title: file.name,
+						src: file.path
+					})
+					: m("i", {
+						class: styleIcon("fa-image")
+					})
 			]
 		);
 	}

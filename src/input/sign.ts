@@ -9,7 +9,7 @@ import { FileSelect } from "./fileSelect";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-import { dataURItoBlob, getLabel, imgSrc, scaleRect } from "../utils";
+import { dataURItoBlob, getLabel, imgSrc, scaleRect, styleIcon } from "../utils";
 
 const enum SignState {
 	Select,
@@ -38,11 +38,15 @@ export class SignBuilder extends FileSelect {
 					m("span.ph2.mh2.ml-auto.dark-gray", {
 						class: this.state === SignState.Draw ? b.brandingAlt.class : "dim pointer",
 						onclick: () => this.state = SignState.Draw
-					}, m("i.fal.fa-fw.fa-pen")),
+					}, m("i.fa-fw", {
+						class: styleIcon("fa-pen")
+					})),
 					m("span.ph2.mh2.dark-gray", {
 						class: this.state === SignState.Type ? b.brandingAlt.class : "dim pointer",
 						onclick: () => this.state = SignState.Type
-					}, m("i.fal.fa-fw.fa-keyboard"))
+					}, m("i.fa-fw", {
+						class: styleIcon("fa-keyboard")
+					}))
 				]),
 				this.state === SignState.Select
 					? m(".aspect-ratio.dark-gray.ba.bw1.br3.b--dashed.b--black-30.pointer" + b.aspectRatio4x1, {
@@ -52,7 +56,9 @@ export class SignBuilder extends FileSelect {
 								src: imgSrc(fileObj.path, fileObj.dataUrl)
 							})
 							: m(".aspect-ratio--object.flex.items-center.justify-center", [
-								m("i.fal.fa-pen-nib.fa-2x"),
+								m("i.fa-2x", {
+									class: styleIcon("fa-pen-nib")
+								}),
 								m("span.ml2", "Sign")
 							])
 					)

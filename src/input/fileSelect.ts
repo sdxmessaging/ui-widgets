@@ -3,7 +3,7 @@ import m from "mithril";
 
 import { IFile, IModelField } from "../interface/widget";
 
-import { guid } from "../utils";
+import { guid, styleIcon } from "../utils";
 import { FileMulti } from "./fileMulti";
 
 export class FileSelect extends FileMulti {
@@ -15,7 +15,9 @@ export class FileSelect extends FileMulti {
 		return m(".pa2.ba.b--dashed.br2", {
 			class: this.dragging ? "b--blue blue" : "b--light-silver dark-gray"
 		}, [
-				m("i.fal.fa-file-upload.mr2"),
+				m("i.mr2", {
+					class: styleIcon("fa-file-upload")
+				}),
 				m("span", fileObj ? fileObj.name : "Upload...")
 			]
 		);

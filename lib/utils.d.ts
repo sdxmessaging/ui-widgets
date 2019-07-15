@@ -1,5 +1,8 @@
 import m, { Children } from "mithril";
+import { TIconStyle } from "./interface/style";
 import { IModelField } from "./interface/widget";
+export declare function setIconStyle(style: TIconStyle): void;
+export declare function styleIcon(iconClass: string): string;
 export declare const inputBorder: string;
 export declare const inputText: string;
 export declare const labelCls: string;

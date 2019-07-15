@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel } from "../utils";
+import { getDisplayLabel, styleIcon } from "../utils";
 
 export class FileList implements ClassComponent<IFileWidget> {
 
@@ -19,7 +19,9 @@ export class FileList implements ClassComponent<IFileWidget> {
 						return m("a.pa2.mv1.link.ba.b--black-20.dark-gray.dim.pointer[target=_blank]", {
 							href: path
 						}, [
-								m("i.fal.fa-file-download.mr2"),
+								m("i.mr2", {
+									class: styleIcon("fa-file-download")
+								}),
 								name
 							]);
 					})

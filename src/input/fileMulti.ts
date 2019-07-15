@@ -4,7 +4,7 @@ import stream, { Stream } from "mithril/stream";
 
 import { IFile, IFileWidget, IMithrilEvent, IModelField } from "../interface/widget";
 
-import { guid, labelCls, removeByProperty } from "../utils";
+import { guid, labelCls, removeByProperty, styleIcon } from "../utils";
 
 export class FileMulti implements ClassComponent<IFileWidget> {
 
@@ -64,7 +64,9 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 		return m(".pa2.ba.b--dashed.br2", {
 			class: this.dragging ? "b--blue blue" : "b--light-silver dark-gray"
 		}, [
-				m("i.fal.fa-file-upload.mr2"),
+				m("i.mr2", {
+					class: styleIcon("fa-file-upload")
+				}),
 				m("span", "Add file(s)...")
 			]
 		);
@@ -73,10 +75,13 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected viewFileList(): Children {
 		return m(".flex.flex-column.mt1.nb1",
 			lodash.map(this.fileList(), (file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
-				m("i.fal.fa-file-download.mr2"),
+				m("i.mr2", {
+					class: styleIcon("fa-file-download")
+				}),
 				file.name,
-				m("i.fal.fa-file-minus.child.fr", {
+				m("i.child.fr", {
 					title: `Remove ${file.name}`,
+					class: styleIcon("fa-trash-alt"),
 					onclick: () => this.removeFile(file.guid)
 				})
 			]))

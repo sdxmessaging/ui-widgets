@@ -3,6 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { TBss } from "./interface/style";
 
+import { styleIcon } from "./utils";
+
 interface IButton {
 	readonly label: string;
 	readonly type?: "submit" | "reset" | "button";
@@ -25,8 +27,8 @@ export class Button implements ClassComponent<IButton> {
 			style,
 			onclick,
 		},
-			icon ? m("i.fal.fa-fw.mr2", {
-				class: icon
+			icon ? m("i.fa-fw.mr2", {
+				class: styleIcon(icon)
 			}) : null,
 			label
 		);
