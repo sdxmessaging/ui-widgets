@@ -13,14 +13,16 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 
 	private signaturePad: SignaturePad | null = null;
 
+	private resizeHandler?: (() => void) & lodash.Cancelable;
+
 	public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
 		const canvas = dom.children[0] as HTMLCanvasElement;
 		this.signaturePad = new SignaturePad(canvas, {
 			minWidth: 0.5 * pxRatio,
 			maxWidth: 1.5 * pxRatio
 		});
-		// Create resize handler with access to member variables
-		this.resizeCanvas = lodash.debounce(() => {
+		// Create resize handler
+		const resizeCanvas = () => {
 			canvas.width = canvas.offsetWidth * pxRatio;
 			canvas.height = canvas.offsetHeight * pxRatio;
 			const ctx = canvas.getContext("2d");
@@ -28,15 +30,19 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 				ctx.scale(pxRatio, pxRatio);
 				this.signaturePad.clear();
 			}
-		}, 250);
-		window.addEventListener("resize", this.resizeCanvas);
-		window.addEventListener("orientationchange", this.resizeCanvas);
-		this.resizeCanvas();
+		};
+		this.resizeHandler = lodash.debounce(resizeCanvas, 250);
+		window.addEventListener("resize", this.resizeHandler);
+		window.addEventListener("orientationchange", this.resizeHandler);
+		resizeCanvas();
 	}
 
 	public onremove() {
-		window.removeEventListener("resize", this.resizeCanvas);
-		window.removeEventListener("orientationchange", this.resizeCanvas);
+		if (this.resizeHandler) {
+			this.resizeHandler.cancel();
+			window.removeEventListener("resize", this.resizeHandler);
+			window.removeEventListener("orientationchange", this.resizeHandler);
+		}
 	}
 
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
@@ -75,10 +81,6 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 		if (this.signaturePad) {
 			this.signaturePad.clear();
 		}
-	}
-
-	private resizeCanvas() {
-		lodash.noop();
 	}
 
 }

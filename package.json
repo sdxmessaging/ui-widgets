@@ -15,7 +15,7 @@
     "bundle-watch": "rollup -c -w",
     "preexample": "tsc -b",
     "example": "rollup -c rollup.config.example.js",
-    "postexample": "open example.html"
+    "open": "open example.html"
   },
   "author": "",
   "license": "UNLICENSED",

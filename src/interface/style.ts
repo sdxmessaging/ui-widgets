@@ -1,5 +1,5 @@
-// Font Awesome icon style
-export type TIconStyle = "fas" | "far" | "fal" | "fab";
+// Font Awesome icon style (excluding "fab" branding icons)
+export type TIconStyle = "fas" | "far" | "fal";
 
 // BSS TypeScript basic support
 interface IBss {

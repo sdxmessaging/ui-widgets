@@ -1,4 +1,4 @@
-export declare type TIconStyle = "fas" | "far" | "fal" | "fab";
+export declare type TIconStyle = "fas" | "far" | "fal";
 interface IBss {
     readonly class: string;
     readonly imgHeight: any;
