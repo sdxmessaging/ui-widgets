@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	} as TBss);
 
 	// Simple props
-	const textVal = stream<TProp>("Change Me");
+	const textVal = stream<TProp>("Text");
 	const dateVal = stream<TProp>();
-	const colVal = stream<TProp>();
+	const colVal = stream<TProp>("#cc0011");
 	const checkVal = stream<TProp>();
 	const optVal = stream<TProp>();
 
@@ -41,15 +41,36 @@ document.addEventListener("DOMContentLoaded", () => {
 			m("p", "Display components reflect changes to input components"),
 
 			// Text
-			m(".mw8.flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(BaseInput, {
-					field: {
-						id: "text-in",
-						label: "Text Input",
-						type: "text"
-					},
-					value: textVal
-				})),
+			m(".mw8.flex.mb2.items-center", [
+				m(".flex.flex-column.w-50.mr2", [
+					m(".pa2.mb2.ba.b--silver", m(BaseInput, {
+						field: {
+							id: "text-in-input",
+							label: "Text Input (updates on input)",
+							type: "text",
+							instant: true
+						},
+						value: textVal
+					})),
+					m(".pa2.ba.b--silver", m(BaseInput, {
+						field: {
+							id: "text-in-change",
+							label: "Text Input (updates on change)",
+							type: "text"
+						},
+						value: textVal
+					}))
+				]),
+
+				// m(".w-50.pa2.mr2.ba.b--silver", m(BaseInput, {
+				// 	field: {
+				// 		id: "text-in-input",
+				// 		label: "Text Input (updates on input)",
+				// 		type: "text",
+				// 		instant: true
+				// 	},
+				// 	value: textVal
+				// })),
 				m(".w-50.pa2.ba.b--silver", m(BaseText, {
 					field: {
 						id: "text-out",
