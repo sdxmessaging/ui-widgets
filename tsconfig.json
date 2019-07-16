@@ -1,17 +1,17 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "es6",
+		"module": "es2015",
 		"declaration": true,
 		"rootDir": "./src",
 		"outDir": "./lib",
 		"incremental": true,
-		"composite": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"types": [
 			"lodash",
 			"mithril",
+			"node",
 			"signature_pad"
 		],
 		"lib": [
@@ -27,5 +27,11 @@
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-	}
+	},
+	"include": [
+		"src/**/*"
+	],
+	"exclude": [
+		"src/**/*.spec.ts"
+	]
 }
