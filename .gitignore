@@ -9,6 +9,7 @@ dist/example.js
 
 # Intermediate compiled output
 lib/**/*.js
+lib/**/*.map
 
 # Logs
 logs

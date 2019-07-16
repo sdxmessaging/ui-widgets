@@ -16,7 +16,7 @@ const o = require("ospec");
 import {
 	fileNameExtSplit,
 	setIconStyle, styleIcon
-} from "./utils";
+} from "./index";
 
 o.spec("Utility functions", () => {
 
