@@ -13,8 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Default styling
 	b.helper({
-		imgHeight: b.maxHeight("20rem"),
-		aspectRatio4x1: b.paddingBottom("25%"),
 		inputHeight: b.height("1.9em"),
 		bgBranding: b.backgroundColor("aliceblue"),
 		brandingAlt: b.color("black")

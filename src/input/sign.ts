@@ -9,7 +9,7 @@ import { FileSelect } from "./fileSelect";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-import { dataURItoBlob, getLabel, imgSrc, scaleRect, styleIcon } from "../utils";
+import { dataURItoBlob, getLabel, imgSrc, scaleRect, signAspectRatio, styleIcon } from "../utils";
 
 const enum SignState {
 	Select,
@@ -49,7 +49,8 @@ export class SignBuilder extends FileSelect {
 					}))
 				]),
 				this.state === SignState.Select
-					? m(".aspect-ratio.dark-gray.ba.bw1.br3.b--dashed.b--black-30.pointer" + b.aspectRatio4x1, {
+					? m(".aspect-ratio.dark-gray.ba.bw1.br3.b--dashed.b--black-30.pointer", {
+						style: signAspectRatio,
 						onclick: () => this.state = SignState.Draw
 					}, fileObj
 							? m("img.aspect-ratio--object", {

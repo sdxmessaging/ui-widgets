@@ -4,21 +4,25 @@ import m, { Children } from "mithril";
 import { TIconStyle } from "./interface/style";
 import { IModelField } from "./interface/widget";
 
-// Icon global style helper
-let iconStyle: TIconStyle = "fas";
-export function setIconStyle(style: TIconStyle) {
-	iconStyle = style;
-}
+export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
 
+// Icon global style helper
+// TODO Convert these functions into a theme "setter", with an interface for theme classes
+let iconStyle: TIconStyle = "fas";
 export function styleIcon(iconClass: string): string {
 	return `${iconStyle} ${iconClass}`;
+}
+export function setIconStyle(style: TIconStyle) {
+	iconStyle = style;
 }
 
 export const inputBorder: string = "border-box bn";
 export const inputText: string = "fw2 dark-gray";
 export const labelCls: string = "mb1 f6 silver";
 
-export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
+export const signAspectRatio: Record<"padding-bottom", string> = {
+	"padding-bottom": "25%"
+};
 
 // Used by display widgets
 // TODO Consolidate with getLabel

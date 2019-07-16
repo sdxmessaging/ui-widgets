@@ -1,13 +1,11 @@
 import lodash from "lodash";
-declare const b: TBss;
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import SignaturePad from "signature_pad";
 
-import { TBss } from "../interface/style";
 import { ISignWidget } from "../interface/widget";
 
 import { Button } from "../button";
-import { pxRatio } from "../utils";
+import { pxRatio, signAspectRatio } from "../utils";
 
 export class SignDraw implements ClassComponent<ISignWidget> {
 
@@ -47,7 +45,9 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
-			m(".aspect-ratio.ba.bw1.br3.b--dashed.b--black-30" + b.aspectRatio4x1,
+			m(".aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
+				style: signAspectRatio
+			},
 				m("canvas.aspect-ratio--object")
 			),
 			m(".flex.flex-row.nl1.nr1.mb1", [

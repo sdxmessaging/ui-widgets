@@ -1,8 +1,6 @@
 import lodash from "lodash";
-declare const b: TBss;
 import m from "mithril";
 
-import { TBss } from "../interface/style";
 import { IModelField } from "../interface/widget";
 
 import { dataURItoBlob, fileNameExtSplit, imgSrc, resizeImage, styleIcon } from "../utils";
@@ -21,7 +19,7 @@ export class ImageSelect extends FileSelect {
 			class: `${classes} ${this.dragging ? "b--blue blue" : "b--light-silver dark-gray"}`
 		},
 			file
-			? m("img.img" + b.imgHeight, {
+			? m("img.img.h5", {
 				src: imgSrc(file.path, file.dataUrl)
 			})
 			: m("i.fa-2x.dtc.v-mid", {

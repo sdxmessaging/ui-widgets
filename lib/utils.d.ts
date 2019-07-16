@@ -1,12 +1,13 @@
 import m, { Children } from "mithril";
 import { TIconStyle } from "./interface/style";
 import { IModelField } from "./interface/widget";
-export declare function setIconStyle(style: TIconStyle): void;
+export declare const pxRatio: number;
 export declare function styleIcon(iconClass: string): string;
+export declare function setIconStyle(style: TIconStyle): void;
 export declare const inputBorder: string;
 export declare const inputText: string;
 export declare const labelCls: string;
-export declare const pxRatio: number;
+export declare const signAspectRatio: Record<"padding-bottom", string>;
 export declare function getDisplayLabel({ label }: IModelField, className?: string): m.Vnode<any, any>;
 export declare function getLabel({ id, label, required }: IModelField): Children;
 export declare function getLabelText(label: string, required?: boolean): string;

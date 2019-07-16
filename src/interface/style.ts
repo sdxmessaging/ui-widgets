@@ -4,12 +4,11 @@ export type TIconStyle = "fas" | "far" | "fal";
 // BSS TypeScript basic support
 interface IBss {
 	readonly class: string;
-	// Expected classes
-	readonly imgHeight: any;
-	readonly aspectRatio4x1: any;
+	// BaseInpyt, PasswordInput, SelectInput height
 	readonly inputHeight: any;
+	// Button background
 	readonly bgBranding: any;
-	// readonly branding: any;
+	// Button text
 	readonly brandingAlt: any;
 }
 

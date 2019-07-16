@@ -1,8 +1,6 @@
 import lodash from "lodash";
-declare const b: TBss;
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { TBss } from "../interface/style";
 import { IFileWidget } from "../interface/widget";
 
 import { getDisplayLabel, styleIcon } from "../utils";
@@ -18,7 +16,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 		}, [
 				getDisplayLabel(field, "mb1"),
 				file
-					? m("img.img.contain.self-center" + b.imgHeight, {
+					? m("img.img.h5.contain.self-center", {
 						title: file.name,
 						src: file.path
 					})

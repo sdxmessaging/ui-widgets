@@ -1,13 +1,11 @@
 import lodash from "lodash";
-declare const b: TBss;
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream, { Stream } from "mithril/stream";
 
-import { TBss } from "../interface/style";
 import { ISignWidget } from "../interface/widget";
 
 import { Button } from "../button";
-import { pxRatio } from "../utils";
+import { pxRatio, signAspectRatio } from "../utils";
 
 export class SignType implements ClassComponent<ISignWidget> {
 
@@ -41,7 +39,9 @@ export class SignType implements ClassComponent<ISignWidget> {
 
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
-			m(".aspect-ratio.ba.bw1.br3.b--dashed.b--black-30" + b.aspectRatio4x1,
+			m(".aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
+				style: signAspectRatio
+			},
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
 					// Prevent enter key from bubbling
 					onkeypress: ({ keyCode }: { keyCode: number }) => {
