@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import m, { Children } from "mithril";
+import m from "mithril";
 
 import { TIconStyle } from "./interface/style";
 import { IModelField } from "./interface/widget";
@@ -33,7 +33,7 @@ export function getDisplayLabel({ label }: IModelField, className?: string) {
 	}, label);
 }
 
-export function getLabel({ id, label, required }: IModelField): Children {
+export function getLabel({ id, label, required }: IModelField) {
 	return m("label", {
 		title: label,
 		for: id,
@@ -92,6 +92,7 @@ export function dataURItoBlob(dataURI: string): Blob {
 
 /**
  * Scale given width and height values if either exceed the giving limit
+ * Returns integer values, rounding errors can significantly distort small rectangles
  */
 export function scaleRect(width: number, height: number, limit: number): [number, number] {
 	if (width > height) {

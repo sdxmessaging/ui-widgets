@@ -3,7 +3,6 @@
 		"target": "es5",
 		"module": "es2015",
 		"declaration": true,
-		"sourceMap": true,
 		"rootDir": "./src",
 		"outDir": "./lib",
 		"incremental": true,

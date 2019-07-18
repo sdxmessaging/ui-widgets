@@ -16,8 +16,8 @@
     "preexample": "tsc -b",
     "example": "rollup -c rollup.config.example.js",
     "open": "open example.html",
-    "test": "ospec src/**/*.spec.ts --require ts-node/register",
-    "coverage": "nyc ospec src/**/*.spec.ts --require ts-node/register --require source-map-support/register"
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ospec src/**/*.spec.ts --require ts-node/register",
+    "coverage": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' nyc ospec src/**/*.spec.ts --require ts-node/register"
   },
   "author": "",
   "license": "UNLICENSED",
@@ -37,20 +37,8 @@
     "rollup": "^1.17.0",
     "rollup-plugin-terser": "^5.1.1",
     "signature_pad": "^3.0.0-beta.3",
-    "source-map-support": "^0.5.12",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
-  },
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "all": true,
-    "include": [
-      "src/**/*.ts"
-    ],
-    "reporter": [
-      "text",
-      "html"
-    ]
   }
 }

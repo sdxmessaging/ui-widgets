@@ -1,21 +1,12 @@
-// TODO Compile ui-widgets with "module": "commonjs" before running test
-// tslint:disable no-var-requires
-
-// Browser mock
-const window = require("mithril/test-utils/browserMock")();
-interface ITestGlobal {
-	window: Partial<Window>;
-	document: Partial<Document>;
-}
-declare const global: ITestGlobal;
-global.window = window;
-global.document = window.document;
-
-// Test suite
+import "./mockBrowser";
+// tslint:disable-next-line no-var-requires
 const o = require("ospec");
+
 import {
 	fileNameExtSplit,
-	setIconStyle, styleIcon
+	guid,
+	scaleRect,
+	setIconStyle, styleIcon,
 } from "./index";
 
 o.spec("Utility functions", () => {
@@ -29,8 +20,22 @@ o.spec("Utility functions", () => {
 		o(styleIcon("fa-test")).equals("fal fa-test");
 	});
 
+	o("Create unique ID", () => {
+		o(guid().length).equals(36);
+	});
+
 	o("File name handling", () => {
 		o(fileNameExtSplit("test.complex.extension")).deepEquals(["test.complex", ".extension"]);
+	});
+
+});
+
+o.spec("Image scaling/rotation", () => {
+
+	o("Scale rectangle", () => {
+		const [scaleWidth, scaleHeight] = scaleRect(12, 6, 8);
+		o(scaleWidth).equals(8);
+		o(scaleHeight).equals(4);
 	});
 
 });
