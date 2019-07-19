@@ -1,11 +1,7 @@
 export declare type TIconStyle = "fas" | "far" | "fal";
-interface IBss {
-    readonly class: string;
-    readonly inputHeight: any;
-    readonly bgBranding: any;
-    readonly brandingAlt: any;
+export interface ITheme {
+    readonly icon: TIconStyle;
+    readonly inpHgt: string;
+    readonly btnBg: string;
+    readonly btnTxt: string;
 }
-export declare type TBss = {
-    [key in keyof IBss]: TBss | any;
-};
-export {};

@@ -1,22 +1,12 @@
-// Not part of dist bundle
-declare const b: any;
 import m from "mithril";
 import stream from "mithril/stream";
 import { BaseText, Checkbox } from "./index";
 import { BaseInput, CheckboxInput, RadioInput, SelectInput, SignBuilder } from "./index";
 import { FileList, ImageMulti } from "./index";
 
-import { TBss } from "./interface/style";
 import { IFile, TProp } from "./interface/widget";
 
 document.addEventListener("DOMContentLoaded", () => {
-
-	// Default styling
-	b.helper({
-		inputHeight: b.height("1.9em"),
-		bgBranding: b.backgroundColor("aliceblue"),
-		brandingAlt: b.color("black")
-	} as TBss);
 
 	// Simple props
 	const textVal = stream<TProp>("Text");

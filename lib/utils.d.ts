@@ -1,13 +1,16 @@
 import m from "mithril";
-import { TIconStyle } from "./interface/style";
+import { ITheme } from "./interface/style";
 import { IModelField } from "./interface/widget";
 export declare const pxRatio: number;
-export declare function styleIcon(iconClass: string): string;
-export declare function setIconStyle(style: TIconStyle): void;
 export declare const inputBorder: string;
 export declare const inputText: string;
 export declare const labelCls: string;
-export declare const signAspectRatio: Record<"padding-bottom", string>;
+export declare const signAspectRatio: {
+    "padding-bottom": string;
+};
+export declare function applyTheme(newTheme: Partial<ITheme>): void;
+export declare function getTheme(keys: Array<keyof ITheme>): string;
+export declare function getIcon(iconClass: string): string;
 export declare function getDisplayLabel({ label }: IModelField, className?: string): m.Vnode<any, any>;
 export declare function getLabel({ id, label, required }: IModelField): m.Vnode<any, any>;
 export declare function getLabelText(label: string, required?: boolean): string;
