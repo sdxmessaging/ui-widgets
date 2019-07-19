@@ -3,7 +3,7 @@ import m from "mithril";
 
 import { IModelField } from "../interface/widget";
 
-import { dataURItoBlob, fileNameExtSplit, imgSrc, resizeImage, styleIcon } from "../utils";
+import { dataURItoBlob, fileNameExtSplit, getIcon, imgSrc, resizeImage } from "../utils";
 import { FileSelect } from "./fileSelect";
 
 export class ImageSelect extends FileSelect {
@@ -23,7 +23,7 @@ export class ImageSelect extends FileSelect {
 				src: imgSrc(file.path, file.dataUrl)
 			})
 			: m("i.fa-2x.dtc.v-mid", {
-				class: styleIcon("fa-camera")
+				class: getIcon("fa-camera")
 			})
 		);
 	}

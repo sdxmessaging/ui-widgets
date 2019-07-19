@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel, styleIcon } from "../utils";
+import { getDisplayLabel, getIcon } from "../utils";
 
 export class FileList implements ClassComponent<IFileWidget> {
 
@@ -20,7 +20,7 @@ export class FileList implements ClassComponent<IFileWidget> {
 							href: path
 						}, [
 								m("i.mr2", {
-									class: styleIcon("fa-file-download")
+									class: getIcon("fa-file-download")
 								}),
 								name
 							]);

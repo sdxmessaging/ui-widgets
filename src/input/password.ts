@@ -1,11 +1,9 @@
-declare const b: TBss;
 import m, { ClassComponent, CVnode } from "mithril";
 import stream, { Stream } from "mithril/stream";
 
-import { TBss } from "../interface/style";
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getLabel, inputBorder, inputText, labelCls } from "../utils";
+import { getLabel, getTheme, inputBorder, inputText, labelCls } from "../utils";
 import { CheckboxInput } from "./checkbox";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
@@ -33,11 +31,11 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			]),
 			m(".w-100", {
 				class: containerClass
-			}, m("input.input-reset.w-100" + b.inputHeight, {
+			}, m("input.input-reset.w-100", {
 				id, name,
 				type: this.showPassword() ? "text" : "password",
 				value: val(),
-				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
+				class: `${disabled ? "o-60 " : ""}${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
 				placeholder, required, readonly, disabled, autofocus, autocomplete,
 				// Safari quirk
 				autocorrect: "off",

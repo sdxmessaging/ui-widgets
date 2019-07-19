@@ -20,8 +20,8 @@ ui-widgets has several lightweight dependencies for building and styling widgets
 * [Lodash](https://lodash.com/)
 * [Tachyons](https://tachyons.io/)
 * [Font Awesome](https://fontawesome.com/)
-* [BSS](https://github.com/porsager/bss)
-* Signature widgets require [Signature Pad](https://github.com/szimek/signature_pad)
+* Signature drawing input requires [Signature Pad](https://github.com/szimek/signature_pad)
+* Signature text input requires font [Caveat](https://fonts.googleapis.com/css?family=Caveat)
 
 ### Install with NPM
 

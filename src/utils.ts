@@ -1,28 +1,37 @@
 import lodash from "lodash";
 import m from "mithril";
 
-import { TIconStyle } from "./interface/style";
+import { ITheme } from "./interface/style";
 import { IModelField } from "./interface/widget";
 
 export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
 
-// Icon global style helper
-// TODO Convert these functions into a theme "setter", with an interface for theme classes
-let iconStyle: TIconStyle = "fas";
-export function styleIcon(iconClass: string): string {
-	return `${iconStyle} ${iconClass}`;
-}
-export function setIconStyle(style: TIconStyle) {
-	iconStyle = style;
-}
-
+// Class/Theme helpers
 export const inputBorder: string = "border-box bn";
 export const inputText: string = "fw2 dark-gray";
 export const labelCls: string = "mb1 f6 silver";
-
-export const signAspectRatio: Record<"padding-bottom", string> = {
+export const signAspectRatio = {
 	"padding-bottom": "25%"
 };
+
+const classMap: ITheme = {
+	icon: "fas",
+	inpHgt: "h2",
+	btnBg: "bg-light-blue",
+	btnTxt: "dark-gray"
+};
+export function applyTheme(newTheme: Partial<ITheme>) {
+	lodash.merge(classMap, newTheme);
+}
+export function getTheme(keys: Array<keyof ITheme>): string {
+	return lodash(keys)
+		.map((key) => classMap[key])
+		.value()
+		.join(" ");
+}
+export function getIcon(iconClass: string): string {
+	return `${getTheme(["icon"])} ${iconClass}`;
+}
 
 // Used by display widgets
 // TODO Consolidate with getLabel

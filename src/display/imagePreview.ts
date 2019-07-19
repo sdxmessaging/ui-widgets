@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel, styleIcon } from "../utils";
+import { getDisplayLabel, getIcon } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
 
@@ -21,7 +21,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 						src: file.path
 					})
 					: m("i", {
-						class: styleIcon("fa-image")
+						class: getIcon("fa-image")
 					})
 			]
 		);

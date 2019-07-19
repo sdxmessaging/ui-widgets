@@ -6,7 +6,7 @@ import { IModelField } from "../interface/widget";
 import { Thumbnail } from "../display/thumbnail";
 import { FileMulti } from "./fileMulti";
 
-import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage, styleIcon } from "../utils";
+import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgSrc, resizeImage } from "../utils";
 
 export class ImageMulti extends FileMulti {
 
@@ -19,7 +19,7 @@ export class ImageMulti extends FileMulti {
 			class: `${classes} ${this.dragging ? "b--blue blue" : "b--light-silver dark-gray"}`
 		},
 			m("i.fa-2x.dtc.v-mid", {
-				class: styleIcon("fa-camera")
+				class: getIcon("fa-camera")
 			})
 		);
 	}
@@ -36,7 +36,7 @@ export class ImageMulti extends FileMulti {
 					onclick: () => this.removeFile(file.guid)
 				},
 					m("i.fa-lg", {
-						class: styleIcon("fa-trash-alt")
+						class: getIcon("fa-trash-alt")
 					})
 				)
 			))

@@ -1,11 +1,9 @@
 import lodash from "lodash";
-declare const b: TBss;
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { TBss } from "../interface/style";
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { getLabel, inputBorder, inputText } from "../utils";
+import { getLabel, getTheme, inputBorder, inputText } from "../utils";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
@@ -20,10 +18,10 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			getLabel(field),
 			m("div", {
 				class: containerClass
-			}, m("select.input-reset.w-100" + b.inputHeight, {
+			}, m("select.input-reset.w-100", {
 				id, name,
 				value: val(),
-				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
+				class: `${disabled ? "o-60 " : ""}${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
 				required, readonly, disabled, autofocus, autocomplete,
 				// Update value on selection
 				onchange: ({ target: { value } }: { target: HTMLInputElement }) => val(value)

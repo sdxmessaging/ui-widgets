@@ -1,15 +1,13 @@
 import lodash from "lodash";
-declare const b: TBss;
 import m, { Children, CVnode } from "mithril";
 
-import { TBss } from "../interface/style";
 import { IFileWidget } from "../interface/widget";
 
 import { FileSelect } from "./fileSelect";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-import { dataURItoBlob, getLabel, imgSrc, scaleRect, signAspectRatio, styleIcon } from "../utils";
+import { dataURItoBlob, getIcon, getLabel, getTheme, imgSrc, scaleRect, signAspectRatio } from "../utils";
 
 const enum SignState {
 	Select,
@@ -36,16 +34,16 @@ export class SignBuilder extends FileSelect {
 				m(".mb1.flex.flex-row", [
 					getLabel(field),
 					m("span.ph2.mh2.ml-auto.dark-gray", {
-						class: this.state === SignState.Draw ? b.brandingAlt.class : "dim pointer",
+						class: `${this.state === SignState.Draw ? "" : "dim pointer "}${getTheme(["btnTxt"])}`,
 						onclick: () => this.state = SignState.Draw
 					}, m("i.fa-fw", {
-						class: styleIcon("fa-pen")
+						class: getIcon("fa-pen")
 					})),
 					m("span.ph2.mh2.dark-gray", {
-						class: this.state === SignState.Type ? b.brandingAlt.class : "dim pointer",
+						class: `${this.state === SignState.Type ? "" : "dim pointer "}${getTheme(["btnTxt"])}`,
 						onclick: () => this.state = SignState.Type
 					}, m("i.fa-fw", {
-						class: styleIcon("fa-keyboard")
+						class: getIcon("fa-keyboard")
 					}))
 				]),
 				this.state === SignState.Select
@@ -58,7 +56,7 @@ export class SignBuilder extends FileSelect {
 							})
 							: m(".aspect-ratio--object.flex.items-center.justify-center", [
 								m("i.fa-2x", {
-									class: styleIcon("fa-pen-nib")
+									class: getIcon("fa-pen-nib")
 								}),
 								m("span.ml2", "Sign")
 							])

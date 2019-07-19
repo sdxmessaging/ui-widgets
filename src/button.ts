@@ -1,9 +1,6 @@
-declare const b: TBss;
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { TBss } from "./interface/style";
-
-import { styleIcon } from "./utils";
+import { getIcon, getTheme } from "./utils";
 
 interface IButton {
 	readonly label: string;
@@ -20,15 +17,15 @@ export class Button implements ClassComponent<IButton> {
 	public view({ attrs: {
 		label, type = "button", icon, classes, disabled, style, onclick
 	} }: CVnode<IButton>) {
-		return m("button.button-reset.pa2.bn.br2" + b.bgBranding.brandingAlt, {
+		return m("button.button-reset.pa2.bn.br2", {
 			type,
-			class: `${disabled ? "o-60 " : "dim pointer "}${classes}`,
+			class: `${disabled ? "o-60 " : "dim pointer "}${getTheme(["btnBg", "btnTxt"])} ${classes}`,
 			disabled,
 			style,
 			onclick,
 		},
 			icon ? m("i.fa-fw.mr2", {
-				class: styleIcon(icon)
+				class: getIcon(icon)
 			}) : null,
 			label
 		);
