@@ -35,14 +35,12 @@ export class Link implements ClassComponent<IPropWidget> {
 			class: classes,
 			style
 		}, [
-			getDisplayLabel(field),
-				value ?
-					m("a.link.dark-gray.dim.pointer.ws-normal", linkAttrs(field.type, value()),
-						m("i.mr2", {
-							class: getIcon(iconMap[field.type] || "fa-link")
-						}),
-						value())
-					: null
+				getDisplayLabel(field),
+				m("a.link.dark-gray.dim.pointer.ws-normal", linkAttrs(field.type, value()),
+					m("i.mr2", {
+						class: getIcon(iconMap[field.type] || "fa-link")
+					}),
+					value())
 			]);
 	}
 

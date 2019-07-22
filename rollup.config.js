@@ -18,7 +18,7 @@ const plugins = [
 	})
 ];
 
-export default {
+export default [{
 	input: "lib/index.js",
 	external,
 	output: {
@@ -28,4 +28,15 @@ export default {
 	},
 	context,
 	plugins
-};
+}, {
+	input: "lib/index.js",
+	external,
+	output: {
+		name: "uiWidgets",
+		dir: "umd",
+		format: "umd",
+		globals
+	},
+	context,
+	plugins
+}];

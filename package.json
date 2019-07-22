@@ -7,24 +7,23 @@
     "type": "git",
     "url": "https://github.com/sdxmessaging/ui-widgets.git"
   },
-  "main": "./dist/index.js",
+  "main": "./umd/index.js",
+  "module": "./dist/index.js",
   "scripts": {
     "build": "tsc -b",
     "postbuild": "rollup -c",
     "watch": "tsc -w",
     "bundle-watch": "rollup -c -w",
-    "preexample": "tsc -b",
-    "example": "rollup -c rollup.config.example.js",
-    "open": "open example.html",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ospec src/**/*.spec.ts --require ts-node/register",
-    "coverage": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' nyc ospec src/**/*.spec.ts --require ts-node/register"
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ospec 'src/{**/*,*}.spec.ts' --require ts-node/register",
+    "coverage": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' nyc ospec 'src/{**/*,*}.spec.ts' --require ts-node/register",
+    "example": "open example.html"
   },
   "author": "",
   "license": "UNLICENSED",
   "types": "./lib/index.d.ts",
   "dependencies": {
     "@types/lodash": "^4.14.136",
-    "@types/mithril": "^1.1.16",
+    "@types/mithril": "^1.1.17",
     "@types/signature_pad": "^2.3.0"
   },
   "devDependencies": {
