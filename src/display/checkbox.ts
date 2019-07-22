@@ -12,11 +12,11 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 			class: classes,
 			style
 		}, [
-			getDisplayLabel(field),
-			m("i.self-end", {
-				class: getIcon(value() ? "fa-check" : "fa-times")
-			})
-		]);
+				getDisplayLabel(field),
+				m("i.self-end", {
+					class: getIcon(value() ? "fa-check" : "fa-times")
+				})
+			]);
 	}
 
 }

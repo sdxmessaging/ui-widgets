@@ -12,11 +12,11 @@ export class BaseText implements ClassComponent<IPropWidget> {
 			class: classes,
 			style
 		}, [
-			getDisplayLabel(field),
-			m("span.ws-normal", {
-				title: value()
-			}, value())
-		]);
+				getDisplayLabel(field),
+				m("span.ws-normal", {
+					title: value()
+				}, value())
+			]);
 	}
 
 }

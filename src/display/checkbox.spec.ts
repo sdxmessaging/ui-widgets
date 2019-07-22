@@ -5,43 +5,41 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { BaseInput } from "../index";
+import { Checkbox } from "../index";
 import { FieldType, TProp } from "../interface/widget";
 
-o.spec("BaseInput", () => {
+o.spec("Checkbox", () => {
 
-	o("text", () => {
+	o("checked", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<TProp>(true);
 		m.mount(root, {
-			view: () => m(BaseInput, {
+			view: () => m(Checkbox, {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.text
+					type: FieldType.checkbox
 				},
 				value
 			})
 		});
-		// Label + Input
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
-	o("required", () => {
+	o("unchecked", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<TProp>(false);
 		m.mount(root, {
-			view: () => m(BaseInput, {
+			view: () => m(Checkbox, {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.text,
-					required: true
+					type: FieldType.checkbox
 				},
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
 });
