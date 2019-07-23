@@ -2,12 +2,17 @@ import "./mockBrowser";
 // tslint:disable-next-line no-var-requires
 const o = require("ospec");
 
+import stream, { Stream } from "mithril/stream";
+import { TProp } from "./interface/widget";
+
 import {
 	applyTheme,
 	fileNameExtSplit,
 	getIcon,
 	guid,
-	scaleRect
+	scaleRect,
+	setCheck,
+	setValue
 } from "./index";
 
 o.spec("Utility functions", () => {
@@ -29,6 +34,28 @@ o.spec("Utility functions", () => {
 
 	o("File name handling", () => {
 		o(fileNameExtSplit("test.complex.extension")).deepEquals(["test.complex", ".extension"]);
+	});
+
+});
+
+o.spec("Input TProp update", () => {
+
+	o("Update value", () => {
+		const value: Stream<TProp> = stream<TProp>("Initial");
+		const mod = setValue(value);
+		const input = window.document.createElement("input");
+		input.value = "Update";
+		mod({ target: input });
+		o(value()).equals(input.value);
+	});
+
+	o("Update check", () => {
+		const check: Stream<TProp> = stream<TProp>(true);
+		const mod = setCheck(check);
+		const input = window.document.createElement("input");
+		input.checked = false;
+		mod({ target: input });
+		o(check()).equals(input.checked);
 	});
 
 });
