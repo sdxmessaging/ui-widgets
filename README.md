@@ -45,11 +45,10 @@ Add ui-widgets as node module dependency:
 
 ### Quick-start with example page
 
-A simple demonstration page is available from ui-widgets, build and open the example page:
+A simple demonstration page is available from ui-widgets, open the example.html file:
 
 ```bash
 npm run example
-npm run open
 ```
 
 The example page shows how input widgets write to a given stream, which is read by a display widget. The examples also cover multiple inputs manipulating a stream, and the file streams.
