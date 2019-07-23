@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { getLabel, inputText } from "../utils";
+import { getLabel, inputText, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
@@ -20,7 +20,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				class: containerClass
 			}, m(".flex.flex-wrap", {
 				class: inputText,
-				onchange: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
+				onchange: setValue(val)
 			},
 				// No requirement for label "for" attribute
 				lodash.map(options, ({ label, value }) => m("label.flex.items-center", {

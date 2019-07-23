@@ -3,14 +3,14 @@ import stream, { Stream } from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getLabel, getTheme, inputBorder, inputText, labelCls } from "../utils";
+import { getLabel, getTheme, inputBorder, inputText, labelCls, setValue } from "../utils";
 import { CheckboxInput } from "./checkbox";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
 	private showPassword: Stream<TProp> = stream<TProp>(false);
 
-	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
+	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
 			id, name = id, placeholder,
 			required, readonly, disabled, autofocus, autocomplete,
@@ -34,13 +34,13 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			}, m("input.input-reset.w-100", {
 				id, name,
 				type: this.showPassword() ? "text" : "password",
-				value: val(),
+				value: value(),
 				class: `${disabled ? "o-60 " : ""}${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
 				placeholder, required, readonly, disabled, autofocus, autocomplete,
 				// Safari quirk
 				autocorrect: "off",
 				// Update value on change or input ("instant" option)
-				[instant ? "oninput" : "onchange"]: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
+				[instant ? "oninput" : "onchange"]: setValue(value)
 			}))
 		];
 	}

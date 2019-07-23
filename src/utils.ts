@@ -1,8 +1,9 @@
 import lodash from "lodash";
 import m from "mithril";
+import { Stream } from "mithril/stream";
 
 import { ITheme } from "./interface/style";
-import { IModelField } from "./interface/widget";
+import { IModelField, TProp } from "./interface/widget";
 
 export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
 
@@ -64,6 +65,15 @@ export function guid(): string {
 		const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});
+}
+
+// Input widget TProp update helpers
+export function setValue(val: Stream<TProp>) {
+	return ({ target: { value } }: { target: HTMLInputElement }) => val(value);
+}
+
+export function setCheck(chk: Stream<TProp>) {
+	return ({ target: { checked } }: { target: HTMLInputElement }) => chk(checked);
 }
 
 export function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined {

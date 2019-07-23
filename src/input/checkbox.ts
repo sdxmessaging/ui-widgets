@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { getLabelText, inputText } from "../utils";
+import { getLabelText, inputText, setCheck } from "../utils";
 
 export class CheckboxInput implements ClassComponent<IPropWidget> {
 
@@ -26,7 +26,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					checked: value(),
 					required, readonly, disabled, autocomplete,
 					// Update value on check
-					onchange: ({ target: { checked } }: { target: HTMLInputElement }) => value(checked),
+					onchange: setCheck(value),
 				}),
 				getLabelText(label, required)
 			)

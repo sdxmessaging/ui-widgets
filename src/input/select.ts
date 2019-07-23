@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { getLabel, getTheme, inputBorder, inputText } from "../utils";
+import { getLabel, getTheme, inputBorder, inputText, setValue } from "../utils";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
@@ -24,7 +24,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 				class: `${disabled ? "o-60 " : ""}${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
 				required, readonly, disabled, autofocus, autocomplete,
 				// Update value on selection
-				onchange: ({ target: { value } }: { target: HTMLInputElement }) => val(value)
+				onchange: setValue(val)
 			},
 				lodash.map(options, ({ label, value }) => m("option", {
 					value
