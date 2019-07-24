@@ -9,9 +9,6 @@ export const globals = {
 
 export const external = Object.keys(globals);
 
-// Fix warning from TypeScript derived es5 classes
-export const context = "this";
-
 const plugins = [
 	terser({
 		compress: false
@@ -26,7 +23,6 @@ export default [{
 		format: "esm",
 		globals
 	},
-	context,
 	plugins
 }, {
 	input: "lib/index.js",
@@ -37,6 +33,5 @@ export default [{
 		format: "umd",
 		globals
 	},
-	context,
 	plugins
 }];

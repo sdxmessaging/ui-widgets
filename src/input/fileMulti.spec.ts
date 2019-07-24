@@ -5,12 +5,11 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FileMulti } from "../index";
 import { FieldType, IFile } from "../interface/widget";
 
-o.spec("FileMulti", () => {
+import { FileMulti } from "./fileMulti";
 
-	// TODO Simulate drag/drop file, file input change, and file list remove btn click
+o.spec("FileMulti", () => {
 
 	o("empty", () => {
 		const root = window.document.createElement("div");

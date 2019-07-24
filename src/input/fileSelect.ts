@@ -1,54 +1,49 @@
 import lodash from "lodash";
-import m from "mithril";
+import m, { ClassComponent, CVnode } from "mithril";
+import stream, { Stream } from "mithril/stream";
 
-import { IFile, IModelField } from "../interface/widget";
+import { IFileWidget } from "../interface/widget";
+
+import { FileInput } from "./fileInput";
 
 import { getIcon, guid } from "../utils";
-import { FileMulti } from "./fileMulti";
 
-export class FileSelect extends FileMulti {
+export class FileSelect implements ClassComponent<IFileWidget> {
 
-	protected multiple: boolean = false;
+	protected dragging: Stream<boolean> = stream<boolean>(false);
 
-	protected viewUploadWidget(_: IModelField) {
-		const fileObj = lodash.head(this.fileList());
-		return m(".pa2.ba.b--dashed.br2", {
-			class: this.dragging ? "b--blue blue" : "b--light-silver dark-gray"
-		}, [
-				m("i.mr2", {
-					class: getIcon("fa-file-upload")
-				}),
-				m("span", fileObj ? fileObj.name : "Upload...")
-			]
-		);
-	}
-
-	protected viewFileList() {
-		return null;
-	}
-
-	protected addFiles(fileList: ArrayLike<File>) {
-		const file = lodash.head(fileList);
-		if (!file) {
-			return;
-		}
-		this.setFile({
-			guid: this.getFileId(),
-			name: file.name,
-			path: "not_set",
-			file: file
-		});
-	}
-
-	// Generate or re-use the set file _id
-	protected getFileId(): string {
-		const fileObj = lodash.head(this.fileList());
-		return fileObj ? fileObj.guid : guid();
-	}
-
-	// Replace any instance file(s) with a single IDataFile
-	protected setFile(fileObj: IFile) {
-		this.fileList([fileObj]);
+	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
+		const fileObj = lodash.head(value());
+		const fileId = fileObj ? fileObj.guid : guid();
+		return m("div", [
+			m(FileInput, {
+				field,
+				multiple: false,
+				dragging: this.dragging,
+				onSet: (setList: FileList | null) => {
+					const file = lodash.head(setList);
+					if (!file) {
+						return;
+					}
+					value([{
+						guid: fileId,
+						name: file.name,
+						path: "not_set",
+						file: file
+					}]);
+				}
+			},
+				m(".pa2.ba.b--dashed.br2", {
+					class: this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"
+				}, [
+						m("i.mr2", {
+							class: getIcon("fa-file-upload")
+						}),
+						m("span", fileObj ? fileObj.name : "Upload...")
+					]
+				)
+			)
+		]);
 	}
 
 }

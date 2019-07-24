@@ -1,13 +1,12 @@
 import lodash from "lodash";
-import m, { Children, CVnode } from "mithril";
+import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { FileSelect } from "./fileSelect";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-import { dataURItoBlob, getIcon, getLabel, getTheme, imgSrc, scaleRect, signAspectRatio } from "../utils";
+import { dataURItoBlob, getIcon, getLabel, getTheme, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
 
 const enum SignState {
 	Select,
@@ -15,19 +14,20 @@ const enum SignState {
 	Type
 }
 
-export class SignBuilder extends FileSelect {
+export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	protected static maxImageSize: number = 640;
 
 	private state: SignState = SignState.Select;
 
-	public view({ attrs: { field } }: CVnode<IFileWidget>): Children {
+	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
 			id,
 			// required, readonly, disabled, autofocus,
 			containerClass
 		} = field;
-		const fileObj = lodash.head(this.fileList());
+		const fileObj = lodash.head(value());
+		const fileId = fileObj ? fileObj.guid : guid();
 		return m(".flex.flex-column", {
 			class: containerClass
 		}, [
@@ -62,27 +62,25 @@ export class SignBuilder extends FileSelect {
 							])
 					)
 					: m(this.state === SignState.Draw ? SignDraw : SignType, {
-						onSet: (dataUrl: string) => this.setDataUrl(dataUrl, id),
+						onSet: (dataUrl: string) => {
+							scaleDataUrl(dataUrl, SignBuilder.maxImageSize).then((scaledDataUrl) => {
+								const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
+									type: "image/png"
+								});
+								value([{
+									guid: fileId,
+									name: newFile.name,
+									path: "not_set",
+									file: newFile,
+									dataUrl: scaledDataUrl
+								}]);
+								this.state = SignState.Select;
+								m.redraw();
+							});
+						},
 						onCancel: () => this.state = SignState.Select
 					})
 			]);
-	}
-
-	private setDataUrl(dataUrl: string, fileKey: string) {
-		scaleDataUrl(dataUrl, SignBuilder.maxImageSize).then((scaledDataUrl) => {
-			const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${fileKey}.png`, {
-				type: "image/png"
-			});
-			this.setFile({
-				guid: this.getFileId(),
-				name: newFile.name,
-				path: "not_set",
-				file: newFile,
-				dataUrl: scaledDataUrl
-			});
-			this.state = SignState.Select;
-			m.redraw();
-		});
 	}
 
 }

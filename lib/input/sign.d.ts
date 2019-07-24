@@ -1,9 +1,7 @@
-import { Children, CVnode } from "mithril";
+import m, { ClassComponent, CVnode } from "mithril";
 import { IFileWidget } from "../interface/widget";
-import { FileSelect } from "./fileSelect";
-export declare class SignBuilder extends FileSelect {
+export declare class SignBuilder implements ClassComponent<IFileWidget> {
     protected static maxImageSize: number;
     private state;
-    view({ attrs: { field } }: CVnode<IFileWidget>): Children;
-    private setDataUrl;
+    view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }

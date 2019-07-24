@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FileSelect } from "../index";
 import { FieldType, IFile } from "../interface/widget";
+
+import { FileSelect } from "../index";
 
 o.spec("FileSelect", () => {
 

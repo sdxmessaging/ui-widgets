@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { ImageMulti } from "../index";
 import { FieldType, IFile } from "../interface/widget";
+
+import { ImageMulti } from "../index";
 
 o.spec("ImageMulti", () => {
 

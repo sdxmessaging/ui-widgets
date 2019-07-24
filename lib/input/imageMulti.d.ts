@@ -1,10 +1,9 @@
-import m from "mithril";
-import { IModelField } from "../interface/widget";
-import { FileMulti } from "./fileMulti";
-export declare class ImageMulti extends FileMulti {
+import m, { ClassComponent, CVnode } from "mithril";
+import { Stream } from "mithril/stream";
+import { IFile, IFileWidget } from "../interface/widget";
+export declare class ImageMulti implements ClassComponent<IFileWidget> {
     protected static maxImageSize: number;
-    protected acceptTypes: string;
-    protected viewUploadWidget({ classes }: IModelField): m.Vnode<any, any>;
-    protected viewFileList(): m.Vnode<any, any>;
-    protected addFiles(fileList: ArrayLike<File>): void;
+    protected dragging: Stream<boolean>;
+    view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }
+export declare function addFiles(fileList: Stream<IFile[]>, addList: FileList | null, maxSize: number): void;
