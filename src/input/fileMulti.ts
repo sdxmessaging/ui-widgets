@@ -13,12 +13,11 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected dragging: Stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-
 		return m("div", [
 			m(FileInput, {
 				field,
 				dragging: this.dragging,
-				onSet: (setList: FileList | null) => addFiles(value, setList)
+				onSet: addFiles(value)
 			},
 				m(".pa2.ba.b--dashed.br2", {
 					class: this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"
@@ -48,24 +47,25 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 
 }
 
+export function addFiles(fileList: Stream<IFile[]>) {
+	return (addList: FileList | null) => {
+		const newFileList = fileList();
+		lodash.each(addList, (file: File) => {
+			newFileList.push({
+				guid: guid(),
+				name: file.name,
+				path: "not_set",
+				file: file
+			});
+		});
+		fileList(newFileList);
+	};
+}
+
 export function removeFile(fileList: Stream<IFile[]>, removeGuid: string) {
 	return () => {
 		const newFileList = fileList();
 		removeByProperty(newFileList, { guid: removeGuid });
 		fileList(newFileList);
 	};
-}
-
-// Stream helpers
-export function addFiles(fileList: Stream<IFile[]>, addList: FileList | null) {
-	const newFileList = fileList();
-	lodash.each(addList, (file: File) => {
-		newFileList.push({
-			guid: guid(),
-			name: file.name,
-			path: "not_set",
-			file: file
-		});
-	});
-	fileList(newFileList);
 }

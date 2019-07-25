@@ -32,20 +32,30 @@ o.spec("FileInput", () => {
 		stop(dummyEvt);
 		o(dragState()).equals(false);
 		// Drop file
-		const set = drop(dragState, fileList);
+		const set = drop(dragState, (setList) => {
+			// No files on event dataTransfer
+			o(setList).equals(undefined);
+		});
 		set(dummyEvt);
 		o(dragState()).equals(false);
-		o(fileList.length).equals(0);
+		o(fileList().length).equals(0);
 	});
 
 	o("change", () => {
 		const fileList = stream<IFile[]>([]);
-		const set = change(fileList);
-		// TODO Simulate adding a file object
-		// create array of "file-like" case to FileList
+		// Mock callback
+		const spy = o.spy((_: FileList) => null);
+		const set = change(spy);
+		// Mock input with FileList
+		const file = { name: "Test" };
+		const addList = [file];
 		const input = window.document.createElement("input");
+		input.files = (addList as unknown) as FileList;
 		set({ target: input });
-		o(fileList.length).equals(0);
+		// Validate callback
+		o(spy.callCount).equals(1);
+		o(spy.args[0]).deepEquals(addList);
+		o(fileList().length).equals(0);
 	});
 
 });

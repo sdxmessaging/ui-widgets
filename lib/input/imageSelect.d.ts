@@ -1,8 +1,9 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import { Stream } from "mithril/stream";
-import { IFileWidget } from "../interface/widget";
+import { IFile, IFileWidget } from "../interface/widget";
 export declare class ImageSelect implements ClassComponent<IFileWidget> {
     protected static maxImageSize: number;
     protected dragging: Stream<boolean>;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }
+export declare function setFile(fileList: Stream<IFile[]>, maxSize: number): (setList: FileList | null) => void;

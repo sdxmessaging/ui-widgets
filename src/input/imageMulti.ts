@@ -17,15 +17,13 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 	protected dragging: Stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-
 		const { classes } = field;
-
 		return m("div", [
 			m(FileInput, {
 				field,
 				accept: "image/*",
 				dragging: this.dragging,
-				onSet: (setList: FileList | null) => addFiles(value, setList, ImageMulti.maxImageSize)
+				onSet: addFiles(value, ImageMulti.maxImageSize)
 			},
 				m(".w-100.pa1.ba.bw1.b--dashed.br3.dt.tc", {
 					class: `${classes} ${this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"}`
@@ -56,28 +54,29 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 
 }
 
-// Stream helpers
-export function addFiles(fileList: Stream<IFile[]>, addList: FileList | null, maxSize: number) {
-	const fileType = "image/jpeg";
-	const newFileList = fileList();
-	Promise.all(lodash.map(addList, (file) => {
-		// Limit file dimensions
-		return resizeImage(file, maxSize, fileType).then((dataURL) => {
-			// Split original file name from extension
-			const [fName] = fileNameExtSplit(file.name);
-			const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
-				type: fileType
+export function addFiles(fileList: Stream<IFile[]>, maxSize: number) {
+	return (addList: FileList | null) => {
+		const fileType = "image/jpeg";
+		const newFileList = fileList();
+		Promise.all(lodash.map(addList, (file) => {
+			// Limit file dimensions
+			return resizeImage(file, maxSize, fileType).then((dataURL) => {
+				// Split original file name from extension
+				const [fName] = fileNameExtSplit(file.name);
+				const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
+					type: fileType
+				});
+				newFileList.push({
+					guid: guid(),
+					name: newFile.name,
+					path: "not_set",
+					file: newFile,
+					dataUrl: dataURL
+				});
 			});
-			newFileList.push({
-				guid: guid(),
-				name: newFile.name,
-				path: "not_set",
-				file: newFile,
-				dataUrl: dataURL
-			});
+		})).then(() => {
+			fileList(newFileList);
+			m.redraw();
 		});
-	})).then(() => {
-		fileList(newFileList);
-		m.redraw();
-	});
+	};
 }

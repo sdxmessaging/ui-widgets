@@ -5,5 +5,5 @@ export declare class FileMulti implements ClassComponent<IFileWidget> {
     protected dragging: Stream<boolean>;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }
+export declare function addFiles(fileList: Stream<IFile[]>): (addList: FileList | null) => void;
 export declare function removeFile(fileList: Stream<IFile[]>, removeGuid: string): () => void;
-export declare function addFiles(fileList: Stream<IFile[]>, addList: FileList | null): void;

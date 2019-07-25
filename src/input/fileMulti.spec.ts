@@ -8,6 +8,7 @@ import stream from "mithril/stream";
 import { FieldType, IFile } from "../interface/widget";
 
 import { FileMulti } from "./fileMulti";
+import { addFiles, removeFile } from "./fileMulti";
 
 o.spec("FileMulti", () => {
 
@@ -45,6 +46,37 @@ o.spec("FileMulti", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+	});
+
+	o("add", () => {
+		const fileList = stream<IFile[]>([]);
+		const add = addFiles(fileList);
+		// Mock File and FileList
+		const file = { name: "Test" };
+		const addList = [file, file];
+		add((addList as unknown) as FileList);
+		o(fileList().length).equals(2);
+	});
+
+	o("remove", () => {
+		const fileList = stream<IFile[]>([{
+			guid: "1",
+			name: "Test 1",
+			path: "not_set"
+		}, {
+			guid: "2",
+			name: "Test 2",
+			path: "not_set"
+		}]);
+		// Attempt to remove file not present
+		const removeNone = removeFile(fileList, "n/a");
+		removeNone();
+		o(fileList().length).equals(2);
+		// Remove first file
+		const remove1 = removeFile(fileList, "1");
+		remove1();
+		o(fileList().length).equals(1);
+		o(fileList()[0].guid).equals("2");
 	});
 
 });

@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 import stream, { Stream } from "mithril/stream";
 
-import { IFileWidget } from "../interface/widget";
+import { IFile, IFileWidget } from "../interface/widget";
 
 import { FileInput } from "./fileInput";
 
@@ -14,24 +14,12 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const fileObj = lodash.head(value());
-		const fileId = fileObj ? fileObj.guid : guid();
 		return m("div", [
 			m(FileInput, {
 				field,
 				multiple: false,
 				dragging: this.dragging,
-				onSet: (setList: FileList | null) => {
-					const file = lodash.head(setList);
-					if (!file) {
-						return;
-					}
-					value([{
-						guid: fileId,
-						name: file.name,
-						path: "not_set",
-						file: file
-					}]);
-				}
+				onSet: setFile(value)
 			},
 				m(".pa2.ba.b--dashed.br2", {
 					class: this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"
@@ -46,4 +34,21 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 		]);
 	}
 
+}
+
+export function setFile(fileList: Stream<IFile[]>) {
+	return (setList: FileList | null) => {
+		const file = lodash.head(setList);
+		if (!file) {
+			return;
+		}
+		const fileObj = lodash.head(fileList());
+		fileList([{
+			// Re-use file identifier
+			guid: fileObj ? fileObj.guid : guid(),
+			name: file.name,
+			path: "not_set",
+			file: file
+		}]);
+	};
 }

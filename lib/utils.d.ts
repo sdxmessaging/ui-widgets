@@ -19,10 +19,10 @@ export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function guid(): string;
 export declare function setValue(val: Stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => Stream<TProp>;
+}) => Stream<string | number | boolean>;
 export declare function setCheck(chk: Stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => Stream<TProp>;
+}) => Stream<string | number | boolean>;
 export declare function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined;
 /**
  * Mutates input list, returns array of removed items

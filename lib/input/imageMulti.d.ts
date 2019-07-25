@@ -6,4 +6,4 @@ export declare class ImageMulti implements ClassComponent<IFileWidget> {
     protected dragging: Stream<boolean>;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }
-export declare function addFiles(fileList: Stream<IFile[]>, addList: FileList | null, maxSize: number): void;
+export declare function addFiles(fileList: Stream<IFile[]>, maxSize: number): (addList: FileList | null) => void;
