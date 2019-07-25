@@ -1,6 +1,6 @@
 export * from "./interface/widget";
 
-export * from "./utils";
+export { applyTheme, getTheme, getIcon } from "./utils";
 
 export * from "./button";
 

@@ -1,5 +1,5 @@
 export * from "./interface/widget";
-export * from "./utils";
+export { applyTheme, getTheme, getIcon } from "./utils";
 export * from "./button";
 export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";
