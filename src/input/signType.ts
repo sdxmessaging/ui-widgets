@@ -2,10 +2,10 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream, { Stream } from "mithril/stream";
 
-import { ISignWidget } from "../interface/widget";
+import { ISignWidget, TProp } from "../interface/widget";
 
 import { Button } from "../button";
-import { pxRatio, signAspectRatio } from "../utils";
+import { pxRatio, setValue, signAspectRatio } from "../utils";
 
 export class SignType implements ClassComponent<ISignWidget> {
 
@@ -43,15 +43,15 @@ export class SignType implements ClassComponent<ISignWidget> {
 				style: signAspectRatio
 			},
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
-					// Prevent enter key from bubbling
 					onkeypress: ({ keyCode }: { keyCode: number }) => {
+						// Prevent enter key from bubbling
 						if (keyCode === 13 && this.text()) {
 							onSet(renderText(this.text()));
 							return false;
 						}
 						return true;
 					},
-					oninput: ({ target: { value } }: { target: HTMLInputElement }) => this.text(value),
+					oninput: setValue(this.text as Stream<TProp>),
 					value: this.text(),
 					style: {
 						"font-size": this.fontSize(),
@@ -88,7 +88,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 
 }
 
-function renderText(text: string) {
+export function renderText(text: string) {
 	const canvas = document.createElement("canvas");
 	const fontSize = 90 * pxRatio;
 	canvas.width = 600 * pxRatio;
