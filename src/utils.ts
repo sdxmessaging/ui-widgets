@@ -164,7 +164,7 @@ export function resizeImage(file: File, maxSize: number, type: string): Promise<
 	});
 }
 
-function getOrientation(buffer: ArrayBuffer) {
+export function getOrientation(buffer: ArrayBuffer) {
 	// Image exif data in first 64k of file
 	const viewLen = Math.min(buffer.byteLength, 64 * 1024);
 	const view = new DataView(buffer, 0, viewLen);
@@ -201,7 +201,7 @@ function getOrientation(buffer: ArrayBuffer) {
 	return -1;
 }
 
-function rotateContext(ctx: CanvasRenderingContext2D, width: number, height: number, orientation?: number) {
+export function rotateContext(ctx: CanvasRenderingContext2D, width: number, height: number, orientation?: number) {
 	if (!orientation || orientation > 8) {
 		return;
 	}

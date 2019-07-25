@@ -19,10 +19,10 @@ export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function guid(): string;
 export declare function setValue(val: Stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => Stream<string | number | boolean>;
+}) => Stream<TProp>;
 export declare function setCheck(chk: Stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => Stream<string | number | boolean>;
+}) => Stream<TProp>;
 export declare function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined;
 /**
  * Mutates input list, returns array of removed items
@@ -39,3 +39,5 @@ export declare function dataURItoBlob(dataURI: string): Blob;
  */
 export declare function scaleRect(width: number, height: number, limit: number): [number, number];
 export declare function resizeImage(file: File, maxSize: number, type: string): Promise<string>;
+export declare function getOrientation(buffer: ArrayBuffer): number;
+export declare function rotateContext(ctx: CanvasRenderingContext2D, width: number, height: number, orientation?: number): void;
