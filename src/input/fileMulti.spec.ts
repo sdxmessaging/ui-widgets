@@ -51,10 +51,9 @@ o.spec("FileMulti", () => {
 	o("add", () => {
 		const fileList = stream<IFile[]>([]);
 		const add = addFiles(fileList);
-		// Mock File and FileList
 		const file = { name: "Test" };
-		const addList = [file, file];
-		add((addList as unknown) as FileList);
+		const addList = ([file, file] as unknown) as FileList;
+		add(addList);
 		o(fileList().length).equals(2);
 	});
 

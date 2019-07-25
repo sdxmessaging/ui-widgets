@@ -2,13 +2,39 @@ import "../mockBrowser";
 // tslint:disable no-var-requires
 const o = require("ospec");
 
+import m from "mithril";
 import stream from "mithril/stream";
 
-import { IFile } from "../interface/widget";
+import { FieldType, IFile } from "../interface/widget";
 
+import { FileInput } from "./fileInput";
 import { change, dragStart, dragStop, drop } from "./fileInput";
 
 o.spec("FileInput", () => {
+
+	o("disabled", () => {
+		const root = window.document.createElement("div");
+		const dragging = stream<boolean>(false);
+		m.mount(root, {
+			view: () => m(FileInput, {
+				field: {
+					id: "test",
+					label: "test",
+					name: "Test",
+					disabled: true,
+					type: FieldType.file
+				},
+				dragging,
+				onSet: (_) => null
+			})
+		});
+		o(root.childNodes.length).equals(1);
+		const label = root.childNodes[0] as HTMLLabelElement;
+		// Label has input, text nodes only
+		o(label.childNodes.length).equals(2);
+		o((label.childNodes[0] as HTMLInputElement).hasAttribute("disabled")).equals(true);
+
+	});
 
 	o("drag/drop", () => {
 		const dragState = stream<boolean>(false);

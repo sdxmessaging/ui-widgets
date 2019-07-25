@@ -8,6 +8,7 @@ import stream from "mithril/stream";
 import { FieldType, IFile } from "../interface/widget";
 
 import { FileSelect } from "./fileSelect";
+import { setFile } from "./fileSelect";
 
 o.spec("FileSelect", () => {
 
@@ -45,6 +46,20 @@ o.spec("FileSelect", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+	});
+
+	o("set", () => {
+		const fileList = stream<IFile[]>([]);
+		const add = setFile(fileList);
+		const file = { name: "Test" };
+		// Set empty file list
+		const emptyList = ([] as unknown) as FileList;
+		add(emptyList);
+		o(fileList().length).equals(0);
+		// Set 1 file
+		const addList = ([file, file] as unknown) as FileList;
+		add(addList);
+		o(fileList().length).equals(1);
 	});
 
 });

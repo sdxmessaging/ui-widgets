@@ -8,6 +8,7 @@ import stream from "mithril/stream";
 import { FieldType, IFile } from "../interface/widget";
 
 import { ImageMulti } from "./imageMulti";
+// import { addFiles } from "./imageMulti";
 
 o.spec("ImageMulti", () => {
 
@@ -46,5 +47,14 @@ o.spec("ImageMulti", () => {
 		});
 		o(root.childNodes.length).equals(1);
 	});
+
+	// o("add", () => {
+	// 	const fileList = stream<IFile[]>([]);
+	// 	const add = addFiles(fileList, 1024);
+	// 	const file = { name: "Test", type: "image/jpeg" };
+	// 	const addList = ([file, file] as unknown) as FileList;
+	// 	add(addList);
+	// 	o(fileList().length).equals(2);
+	// });
 
 });
