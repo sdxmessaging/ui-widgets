@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { Trusted } from "../index";
 import { FieldType, TProp } from "../interface/widget";
+
+import { Trusted } from "./trusted";
 
 o.spec("Trusted", () => {
 

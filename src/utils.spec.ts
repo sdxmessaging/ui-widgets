@@ -13,7 +13,7 @@ import {
 	scaleRect,
 	setCheck,
 	setValue
-} from "./index";
+} from "./utils";
 
 o.spec("Utility functions", () => {
 

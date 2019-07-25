@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { ImagePreview } from "../index";
 import { FieldType, IFile } from "../interface/widget";
+
+import { ImagePreview } from "./imagePreview";
 
 o.spec("ImagePreview", () => {
 

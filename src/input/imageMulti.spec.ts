@@ -7,7 +7,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IFile } from "../interface/widget";
 
-import { ImageMulti } from "../index";
+import { ImageMulti } from "./imageMulti";
 
 o.spec("ImageMulti", () => {
 

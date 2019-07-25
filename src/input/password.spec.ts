@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { PasswordInput } from "../index";
 import { FieldType, TProp } from "../interface/widget";
+
+import { PasswordInput } from "./password";
 
 o.spec("PasswordInput", () => {
 

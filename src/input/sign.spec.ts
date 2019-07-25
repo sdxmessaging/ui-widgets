@@ -7,7 +7,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IFile } from "../interface/widget";
 
-import { SignBuilder } from "../index";
+import { SignBuilder } from "./sign";
 
 o.spec("SignBuilder", () => {
 

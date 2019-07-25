@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TextareaInput } from "../index";
 import { FieldType, TProp } from "../interface/widget";
+
+import { TextareaInput } from "./textarea";
 
 o.spec("TextareaInput", () => {
 

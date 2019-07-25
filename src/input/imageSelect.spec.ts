@@ -7,7 +7,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IFile } from "../interface/widget";
 
-import { ImageSelect } from "../index";
+import { ImageSelect } from "./imageSelect";
 
 o.spec("ImageSelect", () => {
 

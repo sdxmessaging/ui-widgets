@@ -5,8 +5,9 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { SelectText } from "../index";
 import { FieldType, TProp } from "../interface/widget";
+
+import { SelectText } from "./select";
 
 o.spec("SelectText", () => {
 

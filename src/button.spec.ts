@@ -4,7 +4,7 @@ const o = require("ospec");
 
 import m from "mithril";
 
-import { Button } from "./index";
+import { Button } from "./button";
 
 o.spec("Button", () => {
 
