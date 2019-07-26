@@ -174,9 +174,12 @@ document.addEventListener("DOMContentLoaded", function () {
 						value: imgList
 					}))
 				]),
-
-				// Pretty-print
-				m(".mw8.h5.mb2.bg-dark-blue.f5.moon-gray.pre", m("p.pa2.code", JSON.stringify(imgList(), null, 2))),
+				m(uiWidgets.Button, {
+					label: "Log Image List to Console",
+					icon: "fa-print",
+					classes: "mb2",
+					onclick: () => console.log(imgList())
+				}),
 
 				// Sign/FileList
 				m(".mw8.flex.mb2", [
@@ -196,7 +199,13 @@ document.addEventListener("DOMContentLoaded", function () {
 						},
 						value: signList
 					}))
-				])
+				]),
+				m(uiWidgets.Button, {
+					label: "Log Signature to Console",
+					icon: "fa-print",
+					classes: "mb2",
+					onclick: () => console.log(signList())
+				}),
 
 			]);
 		}

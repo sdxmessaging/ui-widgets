@@ -28,7 +28,26 @@ o.spec("BaseInput", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	o("required", () => {
+	o("name + disabled + classes", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("test");
+		m.mount(root, {
+			view: () => m(BaseInput, {
+				field: {
+					id: "test",
+					name: "custom",
+					label: "test",
+					type: FieldType.text,
+					disabled: true,
+					classes: "ma2"
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(2);
+	});
+
+	o("required + instant", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -37,7 +56,8 @@ o.spec("BaseInput", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.text,
-					required: true
+					required: true,
+					instant: true
 				},
 				value
 			})
