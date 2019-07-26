@@ -8,3 +8,4 @@ export declare class SignType implements ClassComponent<ISignWidget> {
     onremove(): void;
     view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>): m.Vnode<any, any>[];
 }
+export declare function renderText(text: string): string;

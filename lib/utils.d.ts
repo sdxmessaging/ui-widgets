@@ -1,7 +1,7 @@
 import m from "mithril";
 import { Stream } from "mithril/stream";
 import { ITheme } from "./interface/style";
-import { IModelField, TProp } from "./interface/widget";
+import { TField, TProp } from "./interface/widget";
 export declare const pxRatio: number;
 export declare const inputBorder: string;
 export declare const inputText: string;
@@ -12,8 +12,8 @@ export declare const signAspectRatio: {
 export declare function applyTheme(newTheme: Partial<ITheme>): void;
 export declare function getTheme(keys: Array<keyof ITheme>): string;
 export declare function getIcon(iconClass: string): string;
-export declare function getDisplayLabel({ label }: IModelField, className?: string): m.Vnode<any, any>;
-export declare function getLabel({ id, label, required }: IModelField): m.Vnode<any, any>;
+export declare function getDisplayLabel({ label }: TField, className?: string): m.Vnode<any, any>;
+export declare function getLabel({ id, label, required }: TField): m.Vnode<any, any>;
 export declare function getLabelText(label: string, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function guid(): string;

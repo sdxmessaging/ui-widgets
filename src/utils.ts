@@ -3,7 +3,7 @@ import m from "mithril";
 import { Stream } from "mithril/stream";
 
 import { ITheme } from "./interface/style";
-import { IModelField, TProp } from "./interface/widget";
+import { TField, TProp } from "./interface/widget";
 
 export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
 
@@ -36,14 +36,14 @@ export function getIcon(iconClass: string): string {
 
 // Used by display widgets
 // TODO Consolidate with getLabel
-export function getDisplayLabel({ label }: IModelField, className?: string) {
+export function getDisplayLabel({ label }: TField, className?: string) {
 	return m("span.mr2.silver.truncate", {
 		title: label,
 		class: className
 	}, label);
 }
 
-export function getLabel({ id, label, required }: IModelField) {
+export function getLabel({ id, label, required }: TField) {
 	return m("label", {
 		title: label,
 		for: id,

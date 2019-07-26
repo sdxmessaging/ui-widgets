@@ -26,7 +26,7 @@ export declare const enum FieldType {
     sign = "sign"
 }
 declare type TAutocomplete = "off" | "on" | "name" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "url" | "photo" | "tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
-export interface IModelField {
+export interface IField {
     readonly label: string;
     readonly id: string;
     readonly type: FieldType | string;
@@ -48,11 +48,11 @@ export interface IOption {
     readonly label: string;
     readonly value: TProp;
 }
-export interface IOptionField extends IModelField {
+export interface IOptionField extends IField {
     readonly type: FieldType.select | FieldType.radio;
     readonly options: IOption[];
 }
-export declare type TField = IModelField | IOptionField;
+export declare type TField = IField | IOptionField;
 export interface IMithrilEvent extends Event {
     redraw: boolean;
 }

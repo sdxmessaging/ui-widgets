@@ -55,7 +55,7 @@ type TAutocomplete = "off" | "on" |
 	// Contact
 	"tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
 
-export interface IModelField {
+export interface IField {
 	readonly label: string;
 	// Standard HTML attributes
 	readonly id: string;
@@ -83,12 +83,12 @@ export interface IOption {
 	readonly value: TProp;
 }
 
-export interface IOptionField extends IModelField {
+export interface IOptionField extends IField {
 	readonly type: FieldType.select | FieldType.radio;
 	readonly options: IOption[];
 }
 
-export type TField = IModelField | IOptionField;
+export type TField = IField | IOptionField;
 
 // Mithril event handler helper
 export interface IMithrilEvent extends Event {
