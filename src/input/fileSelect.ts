@@ -42,10 +42,8 @@ export function setFile(fileList: Stream<IFile[]>) {
 		if (!file) {
 			return;
 		}
-		const fileObj = lodash.head(fileList());
 		fileList([{
-			// Re-use file identifier
-			guid: fileObj ? fileObj.guid : guid(),
+			guid: guid(),
 			name: file.name,
 			path: "not_set",
 			file: file

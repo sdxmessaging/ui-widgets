@@ -48,7 +48,6 @@ export function setFile(fileList: Stream<IFile[]>, maxSize: number) {
 		if (!file) {
 			return;
 		}
-		const fileObj = lodash.head(fileList());
 		// Limit file dimensions
 		const fileType = "image/jpeg";
 		resizeImage(file, maxSize, fileType).then((dataURL) => {
@@ -58,8 +57,7 @@ export function setFile(fileList: Stream<IFile[]>, maxSize: number) {
 				type: fileType
 			});
 			fileList([{
-				// Re-use file identifier
-				guid: fileObj ? fileObj.guid : guid(),
+				guid: guid(),
 				name: newFile.name,
 				path: "not_set",
 				file: newFile,
