@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import { Stream } from "mithril/stream";
 import { TField } from "../interface/widget";
-interface IFileInput {
+export interface IFileInput {
     readonly field: TField;
     readonly accept?: string;
     readonly multiple?: boolean;
@@ -17,4 +17,3 @@ export declare function drop(state: Stream<boolean>, setFiles: (setList: FileLis
 export declare function change(setFiles: (setList: FileList | null) => void): ({ target: { files } }: {
     target: HTMLInputElement;
 }) => void;
-export {};

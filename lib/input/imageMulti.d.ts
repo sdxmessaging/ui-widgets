@@ -4,6 +4,6 @@ import { IFile, IFileWidget } from "../interface/widget";
 export declare class ImageMulti implements ClassComponent<IFileWidget> {
     protected static maxImageSize: number;
     protected dragging: Stream<boolean>;
-    view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
+    view({ attrs: { field, value } }: CVnode<IFileWidget>): (m.Vnode<any, any> | m.Vnode<import("./fileInput").IFileInput, unknown>)[];
 }
 export declare function addFiles(fileList: Stream<IFile[]>, maxSize: number): (addList: FileList | null) => void;

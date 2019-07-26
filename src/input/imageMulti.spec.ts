@@ -25,7 +25,7 @@ o.spec("ImageMulti", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		o(root.childNodes.length).equals(2);
 	});
 
 	o("single", () => {
@@ -45,7 +45,7 @@ o.spec("ImageMulti", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		o(root.childNodes.length).equals(2);
 	});
 
 	// o("add", () => {

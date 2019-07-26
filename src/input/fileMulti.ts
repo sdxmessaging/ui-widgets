@@ -13,7 +13,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected dragging: Stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		return m("div", [
+		return [
 			m(FileInput, {
 				field,
 				dragging: this.dragging,
@@ -42,7 +42,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					})
 				]))
 			)
-		]);
+		];
 	}
 
 }

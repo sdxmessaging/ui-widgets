@@ -14,24 +14,22 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const fileObj = lodash.head(value());
-		return m("div", [
-			m(FileInput, {
-				field,
-				multiple: false,
-				dragging: this.dragging,
-				onSet: setFile(value)
-			},
-				m(".pa2.ba.b--dashed.br2", {
-					class: this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"
-				}, [
-						m("i.mr2", {
-							class: getIcon("fa-file-upload")
-						}),
-						m("span", fileObj ? fileObj.name : "Upload...")
-					]
-				)
+		return m(FileInput, {
+			field,
+			multiple: false,
+			dragging: this.dragging,
+			onSet: setFile(value)
+		},
+			m(".pa2.ba.b--dashed.br2", {
+				class: this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"
+			}, [
+					m("i.mr2", {
+						class: getIcon("fa-file-upload")
+					}),
+					m("span", fileObj ? fileObj.name : "Upload...")
+				]
 			)
-		]);
+		);
 	}
 
 }

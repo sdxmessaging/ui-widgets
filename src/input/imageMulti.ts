@@ -17,8 +17,8 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 	protected dragging: Stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { classes } = field;
-		return m("div", [
+		const { classes = "" } = field;
+		return [
 			m(FileInput, {
 				field,
 				accept: "image/*",
@@ -36,7 +36,6 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
 				lodash.map(value(), (file) => m(Thumbnail, {
 					src: imgSrc(file.path, file.dataUrl),
-					class: "dim",
 					style: { "max-height": "6rem" }
 				},
 					m(".pa2.bg-white.ba.b--light-silver.br2.absolute.top-0.right-0.child.pointer", {
@@ -49,7 +48,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					)
 				))
 			)
-		]);
+		];
 	}
 
 }

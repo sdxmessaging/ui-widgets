@@ -16,28 +16,26 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const fileObj = lodash.head(value());
-		const { classes } = field;
-		return m("div", [
-			m(FileInput, {
-				field,
-				accept: "image/*",
-				multiple: false,
-				dragging: this.dragging,
-				onSet: setFile(value, ImageSelect.maxImageSize)
+		const { classes = "" } = field;
+		return m(FileInput, {
+			field,
+			accept: "image/*",
+			multiple: false,
+			dragging: this.dragging,
+			onSet: setFile(value, ImageSelect.maxImageSize)
+		},
+			m(".w-100.pa1.contain.ba.bw1.b--dashed.br3.dt.tc", {
+				class: `${classes} ${this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"}`
 			},
-				m(".w-100.pa1.contain.ba.bw1.b--dashed.br3.dt.tc", {
-					class: `${classes} ${this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"}`
-				},
-					fileObj
-						? m("img.img.h5", {
-							src: imgSrc(fileObj.path, fileObj.dataUrl)
-						})
-						: m("i.fa-2x.dtc.v-mid", {
-							class: getIcon("fa-camera")
-						})
-				)
+				fileObj
+					? m("img.img.h5", {
+						src: imgSrc(fileObj.path, fileObj.dataUrl)
+					})
+					: m("i.fa-2x.dtc.v-mid", {
+						class: getIcon("fa-camera")
+					})
 			)
-		]);
+		);
 	}
 
 }

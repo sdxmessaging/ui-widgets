@@ -5,7 +5,7 @@ import { Stream } from "mithril/stream";
 import { IMithrilEvent, TField } from "../interface/widget";
 import { labelCls } from "../utils";
 
-interface IFileInput {
+export interface IFileInput {
 	readonly field: TField;
 	readonly accept?: string;
 	readonly multiple?: boolean;
@@ -15,15 +15,17 @@ interface IFileInput {
 
 export class FileInput implements ClassComponent<IFileInput> {
 	public view({ attrs: {
-		field, accept = "*", multiple = true, dragging, onSet
-	}, children }: CVnode<IFileInput>) {
-		const {
+		field: {
 			label,
 			id, name = id,
 			required, readonly, disabled, autofocus,
-			containerClass
-		} = field;
-		return m("label.flex.flex-column", lodash.extend({
+			containerClass = ""
+		},
+		accept = "*", multiple = true,
+		dragging,
+		onSet
+	}, children }: CVnode<IFileInput>) {
+		return m("label", lodash.extend({
 			for: id,
 			title: label,
 			class: `${disabled ? "o-60" : "pointer"} ${containerClass}`
@@ -37,7 +39,8 @@ export class FileInput implements ClassComponent<IFileInput> {
 					required, readonly, disabled, autofocus,
 					onchange: change(onSet)
 				}),
-				m("span", {
+				m("span.db", {
+					title: label,
 					class: labelCls
 				}, label),
 				children
