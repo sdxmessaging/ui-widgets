@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	var checkVal = stream();
 	var optVal = stream();
 	// Files
+	var fileList = stream([]);
 	var imgList = stream([]);
 	var signList = stream([]);
 
@@ -153,9 +154,35 @@ document.addEventListener("DOMContentLoaded", function () {
 				]),
 
 				m("h3", "Files"),
-				m("p", "These file widgets operate on a single file array stream, printed in the box below"),
+				m("p", "These file widgets operate on a single file array stream"),
 
-				// Image/FileList
+				// FileSelect/FileList
+				m(".mw8.flex.mb2", [
+					m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.FileSelect, {
+						field: {
+							id: "file-in",
+							label: "File Input",
+							type: "file"
+						},
+						value: fileList
+					})),
+					m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+						field: {
+							id: "image-out",
+							label: "File Output",
+							type: "file"
+						},
+						value: fileList
+					}))
+				]),
+				m(uiWidgets.Button, {
+					label: "Log File to Console",
+					icon: "fa-print",
+					classes: "mb2",
+					onclick: () => console.log(fileList())
+				}),
+
+				// ImageMulti/FileList
 				m(".mw8.flex.mb2", [
 					m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageMulti, {
 						field: {
@@ -181,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					onclick: () => console.log(imgList())
 				}),
 
-				// Sign/FileList
+				// SignBuilder/ImagePreview
 				m(".mw8.flex.mb2", [
 					m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.SignBuilder, {
 						field: {
@@ -191,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						},
 						value: signList
 					})),
-					m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+					m(".w-50.pa2.ba.b--silver", m(uiWidgets.ImagePreview, {
 						field: {
 							id: "sign-out",
 							label: "Signature File Output",
@@ -205,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					icon: "fa-print",
 					classes: "mb2",
 					onclick: () => console.log(signList())
-				}),
+				})
 
 			]);
 		}

@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel } from "../utils";
+import { getDisplayLabel, imgSrc } from "../utils";
 import { Thumbnail } from "./thumbnail";
 
 export class ImageList implements ClassComponent<IFileWidget> {
@@ -16,9 +16,9 @@ export class ImageList implements ClassComponent<IFileWidget> {
 		}, [
 				getDisplayLabel(field, "mb2"),
 				m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
-					lodash.map(value(), ({ name, path }) => m(Thumbnail, {
+					lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
 						title: name,
-						src: path,
+						src: imgSrc(path, dataUrl),
 						style: { "max-height": "6rem" }
 					}))
 				)

@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel, getIcon } from "../utils";
+import { getDisplayLabel, getIcon, imgSrc } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
 
@@ -16,9 +16,10 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 		}, [
 				getDisplayLabel(field, "mb1"),
 				file
-					? m("img.img.h5.contain.self-center", {
+					? m("img.img.contain.self-center", {
 						title: file.name,
-						src: file.path
+						src: imgSrc(file.path, file.dataUrl),
+						style: { "max-height": "16rem" }
 					})
 					: m("i", {
 						class: getIcon("fa-image")
