@@ -1,5 +1,5 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import stream, { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
@@ -8,7 +8,7 @@ import { CheckboxInput } from "./checkbox";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
-	private showPassword: Stream<TProp> = stream<TProp>(false);
+	private showPassword: stream<TProp> = stream<TProp>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {

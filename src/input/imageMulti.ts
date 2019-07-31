@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
-import stream, { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
@@ -14,7 +14,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 
 	protected static maxImageSize: number = 1280;
 
-	protected dragging: Stream<boolean> = stream<boolean>(false);
+	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { classes = "" } = field;
@@ -53,7 +53,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 
 }
 
-export function addFiles(fileList: Stream<IFile[]>, maxSize: number) {
+export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
 	return (addList: FileList | null) => {
 		const fileType = "image/jpeg";
 		const newFileList = fileList();

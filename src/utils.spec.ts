@@ -2,7 +2,7 @@ import "./mockBrowser";
 // tslint:disable-next-line no-var-requires
 const o = require("ospec");
 
-import stream, { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 import { TProp } from "./interface/widget";
 
 import {
@@ -44,7 +44,7 @@ o.spec("Utility functions", () => {
 o.spec("Input TProp update", () => {
 
 	o("Update value", () => {
-		const value: Stream<TProp> = stream<TProp>("Initial");
+		const value: stream<TProp> = stream<TProp>("Initial");
 		const mod = setValue(value);
 		const input = window.document.createElement("input");
 		input.value = "Update";
@@ -53,7 +53,7 @@ o.spec("Input TProp update", () => {
 	});
 
 	o("Update check", () => {
-		const check: Stream<TProp> = stream<TProp>(true);
+		const check: stream<TProp> = stream<TProp>(true);
 		const mod = setCheck(check);
 		const input = window.document.createElement("input");
 		input.checked = false;
@@ -66,27 +66,19 @@ o.spec("Input TProp update", () => {
 o.spec("Scale rectangle", () => {
 
 	o("width exceed", () => {
-		const [scaleWidth, scaleHeight] = scaleRect(12, 6, 8);
-		o(scaleWidth).equals(8);
-		o(scaleHeight).equals(4);
+		o(scaleRect(12, 6, 8)).deepEquals([8, 4]);
 	});
 
 	o("width within", () => {
-		const [scaleWidth, scaleHeight] = scaleRect(12, 6, 12);
-		o(scaleWidth).equals(12);
-		o(scaleHeight).equals(6);
+		o(scaleRect(12, 6, 12)).deepEquals([12, 6]);
 	});
 
 	o("height exceed", () => {
-		const [scaleWidth, scaleHeight] = scaleRect(6, 12, 8);
-		o(scaleWidth).equals(4);
-		o(scaleHeight).equals(8);
+		o(scaleRect(6, 12, 8)).deepEquals([4, 8]);
 	});
 
 	o("height within", () => {
-		const [scaleWidth, scaleHeight] = scaleRect(6, 12, 12);
-		o(scaleWidth).equals(6);
-		o(scaleHeight).equals(12);
+		o(scaleRect(6, 12, 12)).deepEquals([6, 12]);
 	});
 
 });

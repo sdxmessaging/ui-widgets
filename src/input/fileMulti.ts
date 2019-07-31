@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
-import stream, { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
@@ -10,7 +10,7 @@ import { getIcon, guid, removeByProperty } from "../utils";
 
 export class FileMulti implements ClassComponent<IFileWidget> {
 
-	protected dragging: Stream<boolean> = stream<boolean>(false);
+	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		return [
@@ -47,7 +47,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 
 }
 
-export function addFiles(fileList: Stream<IFile[]>) {
+export function addFiles(fileList: stream<IFile[]>) {
 	return (addList: FileList | null) => {
 		const newFileList = fileList();
 		lodash.each(addList, (file: File) => {
@@ -62,7 +62,7 @@ export function addFiles(fileList: Stream<IFile[]>) {
 	};
 }
 
-export function removeFile(fileList: Stream<IFile[]>, removeGuid: string) {
+export function removeFile(fileList: stream<IFile[]>, removeGuid: string) {
 	return () => {
 		const newFileList = fileList();
 		removeByProperty(newFileList, { guid: removeGuid });

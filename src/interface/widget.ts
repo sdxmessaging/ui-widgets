@@ -1,4 +1,4 @@
-import { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 export type TProp = string | number | boolean;
 
@@ -100,10 +100,10 @@ interface IBaseWidget {
 	readonly field: TField;
 }
 export interface IFileWidget extends IBaseWidget {
-	readonly value: Stream<IFile[]>;
+	readonly value: stream<IFile[]>;
 }
 export interface IPropWidget extends IBaseWidget {
-	readonly value: Stream<TProp>;
+	readonly value: stream<TProp>;
 }
 
 // Editor signature inner widgets

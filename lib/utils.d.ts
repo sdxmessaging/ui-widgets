@@ -1,5 +1,5 @@
 import m from "mithril";
-import { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 import { ITheme } from "./interface/style";
 import { TField, TProp } from "./interface/widget";
 export declare const pxRatio: number;
@@ -17,12 +17,12 @@ export declare function getLabel({ id, label, required }: TField): m.Vnode<any, 
 export declare function getLabelText(label: string, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function guid(): string;
-export declare function setValue(val: Stream<TProp>): ({ target: { value } }: {
+export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => Stream<TProp>;
-export declare function setCheck(chk: Stream<TProp>): ({ target: { checked } }: {
+}) => stream<string | number | boolean>;
+export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => Stream<TProp>;
+}) => stream<string | number | boolean>;
 export declare function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined;
 /**
  * Mutates input list, returns array of removed items

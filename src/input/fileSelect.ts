@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
-import stream, { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
@@ -10,7 +10,7 @@ import { getIcon, guid } from "../utils";
 
 export class FileSelect implements ClassComponent<IFileWidget> {
 
-	protected dragging: Stream<boolean> = stream<boolean>(false);
+	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const fileObj = lodash.head(value());
@@ -34,7 +34,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 }
 
-export function setFile(fileList: Stream<IFile[]>) {
+export function setFile(fileList: stream<IFile[]>) {
 	return (setList: FileList | null) => {
 		const file = lodash.head(setList);
 		if (!file) {

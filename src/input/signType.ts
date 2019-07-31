@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
-import stream, { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { ISignWidget, TProp } from "../interface/widget";
 
@@ -9,8 +9,8 @@ import { pxRatio, setValue, signAspectRatio } from "../utils";
 
 export class SignType implements ClassComponent<ISignWidget> {
 
-	private text: Stream<string> = stream("");
-	private fontSize: Stream<string> = stream("12px");
+	private text: stream<string> = stream("");
+	private fontSize: stream<string> = stream("12px");
 
 	private resizeHandler?: (() => void) & lodash.Cancelable;
 
@@ -51,7 +51,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 						}
 						return true;
 					},
-					oninput: setValue(this.text as Stream<TProp>),
+					oninput: setValue(this.text as stream<TProp>),
 					value: this.text(),
 					style: {
 						"font-size": this.fontSize(),

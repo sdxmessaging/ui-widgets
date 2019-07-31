@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
-import { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
 import { labelCls } from "../utils";
@@ -9,7 +9,7 @@ export interface IFileInput {
 	readonly field: TField;
 	readonly accept?: string;
 	readonly multiple?: boolean;
-	readonly dragging: Stream<boolean>;
+	readonly dragging: stream<boolean>;
 	onSet(setList: FileList | null): void;
 }
 
@@ -48,7 +48,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 	}
 }
 
-export function dragStart(state: Stream<boolean>) {
+export function dragStart(state: stream<boolean>) {
 	return (evt: DragEvent & IMithrilEvent) => {
 		evt.preventDefault();
 		if (evt.dataTransfer) {
@@ -62,14 +62,14 @@ export function dragStart(state: Stream<boolean>) {
 	};
 }
 
-export function dragStop(state: Stream<boolean>) {
+export function dragStop(state: stream<boolean>) {
 	return (evt: DragEvent) => {
 		evt.preventDefault();
 		state(false);
 	};
 }
 
-export function drop(state: Stream<boolean>, setFiles: (setList: FileList | null) => void) {
+export function drop(state: stream<boolean>, setFiles: (setList: FileList | null) => void) {
 	return (evt: DragEvent) => {
 		evt.preventDefault();
 		state(false);

@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import m from "mithril";
-import { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 
 import { ITheme } from "./interface/style";
 import { TField, TProp } from "./interface/widget";
@@ -68,11 +68,11 @@ export function guid(): string {
 }
 
 // Input widget TProp update helpers
-export function setValue(val: Stream<TProp>) {
+export function setValue(val: stream<TProp>) {
 	return ({ target: { value } }: { target: HTMLInputElement }) => val(value);
 }
 
-export function setCheck(chk: Stream<TProp>) {
+export function setCheck(chk: stream<TProp>) {
 	return ({ target: { checked } }: { target: HTMLInputElement }) => chk(checked);
 }
 

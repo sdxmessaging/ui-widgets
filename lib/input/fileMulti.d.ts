@@ -1,9 +1,9 @@
 import { Children, ClassComponent, CVnode } from "mithril";
-import { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 export declare class FileMulti implements ClassComponent<IFileWidget> {
-    protected dragging: Stream<boolean>;
+    protected dragging: stream<boolean>;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): Children;
 }
-export declare function addFiles(fileList: Stream<IFile[]>): (addList: FileList | null) => void;
-export declare function removeFile(fileList: Stream<IFile[]>, removeGuid: string): () => void;
+export declare function addFiles(fileList: stream<IFile[]>): (addList: FileList | null) => void;
+export declare function removeFile(fileList: stream<IFile[]>, removeGuid: string): () => void;

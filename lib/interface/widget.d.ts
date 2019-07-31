@@ -1,4 +1,4 @@
-import { Stream } from "mithril/stream";
+import stream from "mithril/stream";
 export declare type TProp = string | number | boolean;
 export interface IFile {
     readonly guid: string;
@@ -60,10 +60,10 @@ interface IBaseWidget {
     readonly field: TField;
 }
 export interface IFileWidget extends IBaseWidget {
-    readonly value: Stream<IFile[]>;
+    readonly value: stream<IFile[]>;
 }
 export interface IPropWidget extends IBaseWidget {
-    readonly value: Stream<TProp>;
+    readonly value: stream<TProp>;
 }
 export interface ISignWidget {
     onSet(dataUrl: string): void;
