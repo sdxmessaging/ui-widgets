@@ -4,7 +4,6 @@
 		"src/**/*.ts"
 	],
 	"reporter": [
-		"text",
-		"html"
+		"lcov"
 	]
 }

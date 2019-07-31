@@ -1,3 +1,6 @@
+# SonarCloud
+.scannerwork
+
 # TypeScript --incremental
 *.tsbuildinfo
 
