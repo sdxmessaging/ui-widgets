@@ -6,7 +6,8 @@ import { IFileWidget } from "../interface/widget";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-import { dataURItoBlob, getIcon, getLabel, getTheme, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
+// import { dataURItoBlob, getIcon, getLabel, getTheme, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
+import { dataURItoBlob, getIcon, getLabel, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
 
 const enum SignState {
 	Select,
@@ -28,37 +29,46 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		} = field;
 		const fileObj = lodash.head(value());
 		const fileId = fileObj ? fileObj.guid : guid();
-		return m(".flex.flex-column", {
+		return m(".relative", {
 			class: containerClass
 		}, [
-				m(".mb1.flex.flex-row", [
-					getLabel(field),
-					m("span.ph2.mh2.ml-auto.dark-gray", {
-						class: `${this.state === SignState.Draw ? "" : "dim pointer "}${getTheme(["btnTxt"])}`,
-						onclick: () => this.state = SignState.Draw
-					}, m("i.fa-fw", {
-						class: getIcon("fa-pen")
-					})),
-					m("span.ph2.mh2.dark-gray", {
-						class: `${this.state === SignState.Type ? "" : "dim pointer "}${getTheme(["btnTxt"])}`,
-						onclick: () => this.state = SignState.Type
-					}, m("i.fa-fw", {
-						class: getIcon("fa-keyboard")
-					}))
-				]),
+				getLabel(field),
 				this.state === SignState.Select
 					? m(".aspect-ratio.dark-gray.ba.bw1.br3.b--dashed.b--black-30.pointer", {
-						style: signAspectRatio,
-						onclick: () => this.state = SignState.Draw
+						style: signAspectRatio
 					}, fileObj
-							? m("img.aspect-ratio--object", {
-								src: imgSrc(fileObj.path, fileObj.dataUrl)
-							})
-							: m(".aspect-ratio--object.flex.items-center.justify-center", [
-								m("i.fa-2x", {
-									class: getIcon("fa-pen-nib")
-								}),
-								m("span.ml2", "Sign")
+							// Current signature
+							? m(".aspect-ratio--object.hide-child.dim", {
+								onclick: () => value([])
+							}, [
+									m("img.img", {
+										src: imgSrc(fileObj.path, fileObj.dataUrl)
+									}),
+									// Remove signature button
+									m(".pa3.absolute.top-0.right-0.child",
+										m("i.fa-2x", {
+											class: getIcon("fa-eraser")
+										})
+									)
+								])
+							// Draw/Type buttons
+							: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
+								m(".flex-auto.flex.items-center.justify-center.tc.dim", {
+									onclick: () => this.state = SignState.Draw
+								},
+									m("i.fa-2x", {
+										class: getIcon("fa-pen-nib")
+									}),
+									m("span.ml2", "Sign")
+								),
+								m(".flex-auto.flex.items-center.justify-center.tc.dim", {
+									onclick: () => this.state = SignState.Type
+								},
+									m("i.fa-2x", {
+										class: getIcon("fa-keyboard")
+									}),
+									m("span.ml2", "Type")
+								)
 							])
 					)
 					: m(this.state === SignState.Draw ? SignDraw : SignType, {

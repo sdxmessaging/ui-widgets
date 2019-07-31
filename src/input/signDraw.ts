@@ -50,7 +50,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 			},
 				m("canvas.aspect-ratio--object")
 			),
-			m(".flex.flex-row.nl1.nr1.mb1", [
+			m(".pa2.bg-white.br2.absolute.right-0", [
 				m(Button, {
 					label: "Apply",
 					icon: "fa-check",

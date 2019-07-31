@@ -49,14 +49,14 @@ export class FileInput implements ClassComponent<IFileInput> {
 }
 
 export function dragStart(state: Stream<boolean>) {
-	return (evt: DragEvent) => {
+	return (evt: DragEvent & IMithrilEvent) => {
 		evt.preventDefault();
 		if (evt.dataTransfer) {
 			evt.dataTransfer.dropEffect = "copy";
 		}
 		// Prevent excessive redraws if dragging state is already set
 		if (state()) {
-			((evt as Event) as IMithrilEvent).redraw = false;
+			evt.redraw = false;
 		}
 		state(true);
 	};

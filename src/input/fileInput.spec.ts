@@ -5,7 +5,7 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IFile } from "../interface/widget";
+import { FieldType, IFile, IMithrilEvent } from "../interface/widget";
 
 import { FileInput } from "./fileInput";
 import { change, dragStart, dragStop, drop } from "./fileInput";
@@ -45,7 +45,7 @@ o.spec("FileInput", () => {
 			dataTransfer: {
 				dropEffect: ""
 			}
-		} as unknown) as DragEvent;
+		} as unknown) as DragEvent & IMithrilEvent;
 		// Start drag
 		const start = dragStart(dragState);
 		start(dummyEvt);
