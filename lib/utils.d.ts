@@ -9,6 +9,9 @@ export declare const labelCls: string;
 export declare const signAspectRatio: {
     "padding-bottom": string;
 };
+export declare const imgMaxSize: {
+    "max-height": string;
+};
 export declare function applyTheme(newTheme: Partial<ITheme>): void;
 export declare function getTheme(keys: Array<keyof ITheme>): string;
 export declare function getIcon(iconClass: string): string;
@@ -19,10 +22,10 @@ export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function guid(): string;
 export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;
 export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;
 export declare function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined;
 /**
  * Mutates input list, returns array of removed items

@@ -6,7 +6,7 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { FileInput } from "./fileInput";
 
-import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgSrc, resizeImage } from "../utils";
+import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgMaxSize, imgSrc, resizeImage } from "../utils";
 
 export class ImageSelect implements ClassComponent<IFileWidget> {
 
@@ -28,8 +28,10 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				class: `${classes} ${this.dragging() ? "b--blue blue" : "b--light-silver dark-gray"}`
 			},
 				fileObj
-					? m("img.img.h5", {
-						src: imgSrc(fileObj.path, fileObj.dataUrl)
+					? m("img.img.contain", {
+						title: fileObj.name,
+						src: imgSrc(fileObj.path, fileObj.dataUrl),
+						style: imgMaxSize
 					})
 					: m("i.fa-2x.dtc.v-mid", {
 						class: getIcon("fa-camera")

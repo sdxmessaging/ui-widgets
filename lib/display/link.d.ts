@@ -4,7 +4,7 @@ export declare function linkAttrs(fieldType: string, value: TProp): {
     href: string;
     target?: undefined;
 } | {
-    href: string | number | boolean;
+    href: TProp;
     target: string;
 };
 export declare const iconMap: Record<string, string>;

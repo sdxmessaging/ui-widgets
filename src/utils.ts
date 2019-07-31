@@ -14,6 +14,9 @@ export const labelCls: string = "mb1 f6 silver";
 export const signAspectRatio = {
 	"padding-bottom": "25%"
 };
+export const imgMaxSize = {
+	"max-height": "16rem"
+}
 
 const classMap: ITheme = {
 	icon: "fas",
