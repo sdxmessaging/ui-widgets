@@ -24,10 +24,10 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 			canvas.width = canvas.offsetWidth * pxRatio;
 			canvas.height = canvas.offsetHeight * pxRatio;
 			const ctx = canvas.getContext("2d");
-			if (ctx && this.signaturePad) {
+			if (ctx) {
 				ctx.scale(pxRatio, pxRatio);
-				this.signaturePad.clear();
 			}
+			this.resetCanvas();
 		};
 		this.resizeHandler = lodash.debounce(resizeCanvas, 250);
 		window.addEventListener("resize", this.resizeHandler);

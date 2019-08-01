@@ -16,7 +16,7 @@ export const signAspectRatio = {
 };
 export const imgMaxSize = {
 	"max-height": "16rem"
-}
+};
 
 const classMap: ITheme = {
 	icon: "fas",
