@@ -1,17 +1,18 @@
-import "./mockBrowser";
-// tslint:disable-next-line no-var-requires
+// tslint:disable no-var-requires
 const o = require("ospec");
+// const { File: fileConstructor } = require("file-api");
 
 import stream from "mithril/stream";
 import { TProp } from "./interface/widget";
 
 import {
 	applyTheme,
-	// dataURItoBlob,
+	dataURItoBlob,
 	fileNameExtSplit,
 	getIcon,
 	getOrientation,
 	guid,
+	// resizeImage,
 	rotateContext,
 	scaleRect,
 	setCheck,
@@ -83,19 +84,27 @@ o.spec("Scale rectangle", () => {
 
 });
 
-o.spec("Blob", () => {
-
-	// TODO Mock atob and Blob
+o.spec("File", () => {
 
 	o("create", () => {
 		// tslint:disable-next-line:max-line-length
-		// const blob: Blob = dataURItoBlob("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAABAAEDAREAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6AP/9k=");
-		// o(blob.type).equals("image/jpeg");
+		const blob: Blob = dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
+		o(blob.type).equals("image/gif");
 	});
 
-});
+	// o("resize", (done: () => void) => {
+	// 	const file = new fileConstructor({
+	// 		name: "test.gif",
+	// 		buffer: Buffer.from("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", "base64")
+	// 	});
+	// 	return resizeImage(file, 100, "image/png")
+	// 		.then((dataUrl) => {
+	// 			o(dataUrl.length > 0).equals(true);
+	// 			done();
+	// 		});
+	// });
 
-// resizeImage
+});
 
 o.spec("Image orientation", () => {
 

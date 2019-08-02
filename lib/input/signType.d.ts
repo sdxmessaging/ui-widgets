@@ -9,4 +9,3 @@ export declare class SignType implements ClassComponent<ISignWidget> {
     private scaleText;
 }
 export declare function applyText(text: stream<string>, callback: ISignWidget["onSet"]): () => boolean;
-export declare function renderText(text: string): string;

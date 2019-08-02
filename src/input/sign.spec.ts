@@ -1,4 +1,3 @@
-import "../mockBrowser";
 // tslint:disable no-var-requires
 const o = require("ospec");
 
@@ -8,6 +7,9 @@ import stream from "mithril/stream";
 import { FieldType, IFile } from "../interface/widget";
 
 import { SignBuilder } from "./sign";
+// import { SignState } from "./sign";
+// import { setFile } from "./sign";
+import { scaleDataUrl } from "./sign";
 
 o.spec("SignBuilder", () => {
 
@@ -45,6 +47,27 @@ o.spec("SignBuilder", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+	});
+
+	// o("set", (done: () => void) => {
+	// 	o.timeout(1000);
+	// 	const fileList = stream<IFile[]>([]);
+	// 	const state: stream<SignState> = stream<SignState>(SignState.Draw);
+	// 	const set = setFile(fileList, state, "test", 100);
+	// 	set("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
+	// 		.then(() => {
+	// 			o(state()).equals(SignState.Select);
+	// 			o(fileList().length).equals(1);
+	// 			done();
+	// 		});
+	// });
+
+	o("scale", (done: () => void) => {
+		scaleDataUrl("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", 10)
+			.then((dataUrl) => {
+				o(dataUrl.length > 0).equals(true);
+				done();
+			});
 	});
 
 });

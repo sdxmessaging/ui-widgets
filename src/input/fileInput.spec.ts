@@ -1,4 +1,3 @@
-import "../mockBrowser";
 // tslint:disable no-var-requires
 const o = require("ospec");
 
@@ -75,9 +74,11 @@ o.spec("FileInput", () => {
 		// Mock input with FileList
 		const file = { name: "Test" };
 		const addList = [file];
-		const input = window.document.createElement("input");
-		input.files = (addList as unknown) as FileList;
-		set({ target: input });
+		set({
+			target: {
+				files: (addList as unknown) as FileList
+			} as HTMLInputElement
+		});
 		// Validate callback
 		o(spy.callCount).equals(1);
 		o(spy.args[0]).deepEquals(addList);

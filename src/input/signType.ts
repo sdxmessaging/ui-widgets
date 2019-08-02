@@ -68,22 +68,18 @@ export class SignType implements ClassComponent<ISignWidget> {
 export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
-			callback(renderText(text()));
+			const canvas = document.createElement("canvas");
+			canvas.width = 600;
+			canvas.height = 150;
+			const fontSize = 0.56 * canvas.height;
+			const context = canvas.getContext("2d");
+			if (context) {
+				context.textBaseline = "middle";
+				context.font = `${fontSize}px Caveat`;
+				context.fillText(text(), 8, canvas.height * 0.52);
+			}
+			callback(canvas.toDataURL());
 		}
 		return false;
 	};
-}
-
-export function renderText(text: string) {
-	const canvas = document.createElement("canvas");
-	canvas.width = 600;
-	canvas.height = 150;
-	const fontSize = 0.56 * canvas.height;
-	const context = canvas.getContext("2d");
-	if (context) {
-		context.textBaseline = "middle";
-		context.font = `${fontSize}px Caveat`;
-		context.fillText(text, 8, canvas.height * 0.52);
-	}
-	return canvas.toDataURL();
 }

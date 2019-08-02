@@ -1,4 +1,3 @@
-import "./mockBrowser";
 // tslint:disable no-var-requires
 const o = require("ospec");
 

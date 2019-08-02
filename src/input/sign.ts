@@ -1,15 +1,15 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
+import stream from "mithril/stream";
 
-import { IFileWidget } from "../interface/widget";
+import { IFile, IFileWidget } from "../interface/widget";
 
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 
-// import { dataURItoBlob, getIcon, getLabel, getTheme, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
 import { dataURItoBlob, getIcon, getLabel, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
 
-const enum SignState {
+export const enum SignState {
 	Select,
 	Draw,
 	Type
@@ -19,7 +19,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	protected static maxImageSize: number = 640;
 
-	private state: SignState = SignState.Select;
+	private state: stream<SignState> = stream<SignState>(SignState.Select);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
@@ -28,12 +28,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			containerClass
 		} = field;
 		const fileObj = lodash.head(value());
-		const fileId = fileObj ? fileObj.guid : guid();
 		return m(".relative", {
 			class: containerClass
 		}, [
 				getLabel(field),
-				this.state === SignState.Select
+				this.state() === SignState.Select
 					? m(".aspect-ratio.dark-gray.ba.bw1.br3.b--dashed.b--black-30.pointer", {
 						style: signAspectRatio
 					}, fileObj
@@ -54,7 +53,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							// Draw/Type buttons
 							: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
 								m(".flex-auto.flex.items-center.justify-center.tc.dim", {
-									onclick: () => this.state = SignState.Draw
+									onclick: () => this.state(SignState.Draw)
 								},
 									m("i.fa-2x", {
 										class: getIcon("fa-pen-nib")
@@ -62,7 +61,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									m("span.ml2", "Sign")
 								),
 								m(".flex-auto.flex.items-center.justify-center.tc.dim", {
-									onclick: () => this.state = SignState.Type
+									onclick: () => this.state(SignState.Type)
 								},
 									m("i.fa-2x", {
 										class: getIcon("fa-keyboard")
@@ -71,31 +70,35 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 								)
 							])
 					)
-					: m(this.state === SignState.Draw ? SignDraw : SignType, {
-						onSet: (dataUrl: string) => {
-							scaleDataUrl(dataUrl, SignBuilder.maxImageSize).then((scaledDataUrl) => {
-								const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
-									type: "image/png"
-								});
-								value([{
-									guid: fileId,
-									name: newFile.name,
-									path: "not_set",
-									file: newFile,
-									dataUrl: scaledDataUrl
-								}]);
-								this.state = SignState.Select;
-								m.redraw();
-							});
-						},
-						onCancel: () => this.state = SignState.Select
+					: m(this.state() === SignState.Draw ? SignDraw : SignType, {
+						onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
+						onCancel: () => this.state(SignState.Select)
 					})
 			]);
 	}
 
 }
 
-function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
+export function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id: string, maxSize: number) {
+	return (setDataUrl: string) => {
+		return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
+			const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
+				type: "image/png"
+			});
+			fileList([{
+				guid: guid(),
+				name: newFile.name,
+				path: "not_set",
+				file: newFile,
+				dataUrl: scaledDataUrl
+			}]);
+			state(SignState.Select);
+			m.redraw();
+		});
+	};
+}
+
+export function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 	return new Promise((resolve) => {
 		const image = new Image();
 		image.onload = () => {

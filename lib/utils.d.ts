@@ -42,5 +42,6 @@ export declare function dataURItoBlob(dataURI: string): Blob;
  */
 export declare function scaleRect(width: number, height: number, limit: number): [number, number];
 export declare function resizeImage(file: File, maxSize: number, type: string): Promise<string>;
+export declare function readOrientation(file: File): Promise<number>;
 export declare function getOrientation(buffer: ArrayBuffer): number;
 export declare function rotateContext(ctx: CanvasRenderingContext2D, width: number, height: number, orientation?: number): void;

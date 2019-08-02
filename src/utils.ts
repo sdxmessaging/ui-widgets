@@ -128,23 +128,16 @@ export function scaleRect(width: number, height: number, limit: number): [number
 }
 
 export function resizeImage(file: File, maxSize: number, type: string): Promise<string> {
-	return new Promise((resolve, reject) => {
-		if (!file.type.match(/image.*/)) {
-			reject(new Error("File most be an image"));
-			return;
-		}
-		const reader = new FileReader();
-		reader.onload = (evt: ProgressEvent) => {
-			if (!(evt && evt.target)) {
-				return;
-			}
-			const { result } = evt.target as FileReader;
-
+	if (!file.type.match(/image.*/)) {
+		return Promise.reject(new Error("File most be an image"));
+	}
+	return readOrientation(file)
+		.then((orientation) => new Promise((resolve) => {
+			const reader = new FileReader();
 			const image = new Image();
 			image.onload = () => {
 				const canvas = document.createElement("canvas");
 				const [width, height] = scaleRect(image.width, image.height, maxSize);
-				const orientation = getOrientation(result as ArrayBuffer);
 				// Orientations after 4 are rotated 90 degrees
 				if (orientation > 4) {
 					canvas.width = height;
@@ -160,8 +153,18 @@ export function resizeImage(file: File, maxSize: number, type: string): Promise<
 				}
 				resolve(canvas.toDataURL(type));
 			};
-			const imageBlob = new Blob([result as ArrayBuffer]);
-			image.src = window.URL.createObjectURL(imageBlob);
+			reader.onload = () => {
+				image.src = reader.result as string;
+			};
+			reader.readAsDataURL(file);
+		}));
+}
+
+export function readOrientation(file: File): Promise<number> {
+	return new Promise((resolve) => {
+		const reader = new FileReader();
+		reader.onload = () => {
+			resolve(getOrientation(reader.result as ArrayBuffer));
 		};
 		reader.readAsArrayBuffer(file);
 	});
