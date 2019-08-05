@@ -33,7 +33,6 @@
 		"src/**/*"
 	],
 	"exclude": [
-		"src/mockBrowser.ts",
 		"src/**/*.spec.ts"
 	]
 }
