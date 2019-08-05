@@ -1,7 +1,6 @@
 // tslint:disable no-var-requires
 const o = require("ospec");
 const canvas = require("canvas");
-const fileApi = require("file-api");
 const jsdom = require("jsdom");
 
 const dom = new jsdom.JSDOM("", {
@@ -9,25 +8,15 @@ const dom = new jsdom.JSDOM("", {
 	pretendToBeVisual: true,
 });
 
-// Add globals for Mithril and ui-widgets
-Object.assign(global, {
-	window: dom.window,
-	document: dom.window.document,
-	requestAnimationFrame: dom.window.requestAnimationFrame,
-	Image: canvas.Image,
-	// Browser file helpers
-	atob: (data: string) => Buffer.from(data, "base64").toString(),
-	Blob: require("node-blob"),
-	// file-api module does not have modern File constructor
-	File: fileApi.File,
-	FileList: fileApi.FileList,
-	FileReader: fileApi.FileReader
+// Copy props from window onto global (Blob, File, atob etc)
+Object.defineProperties(global, {
+	...Object.getOwnPropertyDescriptors(dom.window),
+	...Object.getOwnPropertyDescriptors(canvas),
+	...Object.getOwnPropertyDescriptors(global)
 });
 
 // Initial Mithril load
 require("mithril");
 
 // Cleanup
-o.after(() => {
-	dom.window.close();
-});
+o.after(() => dom.window.close());
