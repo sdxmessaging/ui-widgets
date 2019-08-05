@@ -98,7 +98,7 @@ export function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id:
 	};
 }
 
-export function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
+function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 	return new Promise((resolve) => {
 		const image = new Image();
 		image.onload = () => {

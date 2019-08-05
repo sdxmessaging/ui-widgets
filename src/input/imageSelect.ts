@@ -46,11 +46,11 @@ export function setFile(fileList: stream<IFile[]>, maxSize: number) {
 	return (setList: FileList | null) => {
 		const file = lodash.head(setList);
 		if (!file) {
-			return;
+			throw new Error("No file set");
 		}
 		// Limit file dimensions
 		const fileType = "image/jpeg";
-		resizeImage(file, maxSize, fileType).then((dataURL) => {
+		return resizeImage(file, maxSize, fileType).then((dataURL) => {
 			// Split original file name from extension
 			const [fName] = fileNameExtSplit(file.name);
 			const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {

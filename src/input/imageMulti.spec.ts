@@ -5,9 +5,10 @@ import m from "mithril";
 import stream from "mithril/stream";
 
 import { FieldType, IFile } from "../interface/widget";
+import { dataURItoBlob } from "../utils";
 
 import { ImageMulti } from "./imageMulti";
-// import { addFiles } from "./imageMulti";
+import { addFiles } from "./imageMulti";
 
 o.spec("ImageMulti", () => {
 
@@ -47,13 +48,18 @@ o.spec("ImageMulti", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	// o("add", () => {
-	// 	const fileList = stream<IFile[]>([]);
-	// 	const add = addFiles(fileList, 1024);
-	// 	const file = { name: "Test", type: "image/jpeg" };
-	// 	const addList = ([file, file] as unknown) as FileList;
-	// 	add(addList);
-	// 	o(fileList().length).equals(2);
-	// });
+	o("add", (done: () => void) => {
+		const fileList = stream<IFile[]>([]);
+		const add = addFiles(fileList, 1024);
+		// Add 2 basic files
+		const file = new File([
+			dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
+		], "test.gif", { type: "image/gif" });
+		add(([file, file] as unknown) as FileList)
+			.then(() => {
+				o(fileList().length).equals(2);
+				done();
+			});
+	});
 
 });

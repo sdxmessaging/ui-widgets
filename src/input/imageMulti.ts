@@ -57,7 +57,7 @@ export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
 	return (addList: FileList | null) => {
 		const fileType = "image/jpeg";
 		const newFileList = fileList();
-		Promise.all(lodash.map(addList, (file) => {
+		return Promise.all(lodash.map(addList, (file) => {
 			// Limit file dimensions
 			return resizeImage(file, maxSize, fileType).then((dataURL) => {
 				// Split original file name from extension

@@ -6,4 +6,4 @@ export declare class ImageSelect implements ClassComponent<IFileWidget> {
     protected dragging: stream<boolean>;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): Children;
 }
-export declare function setFile(fileList: stream<IFile[]>, maxSize: number): (setList: FileList | null) => void;
+export declare function setFile(fileList: stream<IFile[]>, maxSize: number): (setList: FileList | null) => Promise<void>;

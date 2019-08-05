@@ -1,6 +1,5 @@
 // tslint:disable no-var-requires
 const o = require("ospec");
-// const { File: fileConstructor } = require("file-api");
 
 import stream from "mithril/stream";
 import { TProp } from "./interface/widget";
@@ -12,7 +11,7 @@ import {
 	getIcon,
 	getOrientation,
 	guid,
-	// resizeImage,
+	resizeImage,
 	rotateContext,
 	scaleRect,
 	setCheck,
@@ -87,22 +86,20 @@ o.spec("Scale rectangle", () => {
 o.spec("File", () => {
 
 	o("create", () => {
-		// tslint:disable-next-line:max-line-length
-		const blob: Blob = dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
+		const blob = dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
 		o(blob.type).equals("image/gif");
 	});
 
-	// o("resize", (done: () => void) => {
-	// 	const file = new fileConstructor({
-	// 		name: "test.gif",
-	// 		buffer: Buffer.from("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", "base64")
-	// 	});
-	// 	return resizeImage(file, 100, "image/png")
-	// 		.then((dataUrl) => {
-	// 			o(dataUrl.length > 0).equals(true);
-	// 			done();
-	// 		});
-	// });
+	o("resize", (done: () => void) => {
+		const file = new File([
+			dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
+		], "test.gif", { type: "image/gif" });
+		resizeImage(file, 100, "image/png")
+			.then((dataUrl) => {
+				o(dataUrl.length > 0).equals(true);
+				done();
+			});
+	});
 
 });
 
