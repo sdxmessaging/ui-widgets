@@ -46,7 +46,7 @@ export function setFile(fileList: stream<IFile[]>, maxSize: number) {
 	return (setList: FileList | null) => {
 		const file = lodash.head(setList);
 		if (!file) {
-			throw new Error("No file set");
+			return Promise.resolve();
 		}
 		// Limit file dimensions
 		const fileType = "image/jpeg";

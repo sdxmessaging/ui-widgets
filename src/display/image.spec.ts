@@ -26,12 +26,17 @@ o.spec("ImageList", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("single", () => {
+	o("multiple", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
 			name: "Test",
 			path: "/test/path"
+		}, {
+			guid: "data",
+			name: "Data",
+			path: "/",
+			dataUrl: "data:image/gif;base64,==="
 		}]);
 		m.mount(root, {
 			view: () => m(ImageList, {

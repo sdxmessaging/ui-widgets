@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { ITheme } from "./interface/style";
 import { TField, TProp } from "./interface/widget";
 
-export const pxRatio: number = Math.max(window.devicePixelRatio || 1, 1);
+export const pxRatio: number = Math.max(window.devicePixelRatio, 1);
 
 // Class/Theme helpers
 export const inputBorder: string = "border-box bn";
@@ -127,7 +127,13 @@ export function scaleRect(width: number, height: number, limit: number): [number
 	return [width, height];
 }
 
-export function resizeImage(file: File, maxSize: number, type: string): Promise<string> {
+/**
+ * Shrink an image if width/height exceeds a given maximum
+ * @param file Image file to resize
+ * @param maxSize Maximum dimension size in pixels
+ * @param type Image MIME type to return
+ */
+export function resizeImage(file: File, maxSize: number, type?: string): Promise<string> {
 	if (!file.type.match(/image.*/)) {
 		return Promise.reject(new Error("File most be an image"));
 	}

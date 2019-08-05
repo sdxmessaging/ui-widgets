@@ -48,15 +48,19 @@ o.spec("ImageSelect", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("throw", () => {
+	o("set 0", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = setFile(fileList, 1024);
 		// Set empty file list
 		const emptyList = ([] as unknown) as FileList;
-		o(() => add(emptyList)).throws("No file set");
+		add(emptyList)
+			.then(() => {
+				o(fileList().length).equals(0);
+				done();
+			});
 	});
 
-	o("set", (done: () => void) => {
+	o("set 1", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = setFile(fileList, 1024);
 		const file = new File([

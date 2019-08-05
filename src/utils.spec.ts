@@ -86,8 +86,8 @@ o.spec("Scale rectangle", () => {
 o.spec("File", () => {
 
 	o("create", () => {
-		const blob = dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
-		o(blob.type).equals("image/gif");
+		const blob = dataURItoBlob("data:text/plain;charset=UTF-8;page=21,hello%20world");
+		o(blob.type).equals("text/plain");
 	});
 
 	o("resize", (done: () => void) => {
@@ -97,6 +97,15 @@ o.spec("File", () => {
 		resizeImage(file, 100, "image/png")
 			.then((dataUrl) => {
 				o(dataUrl.length > 0).equals(true);
+				done();
+			});
+	});
+
+	o("resize error", (done: () => void) => {
+		const file = new File(["test"], "test.txt");
+		resizeImage(file, 100)
+			.catch((err: Error) => {
+				o(err.message).equals("File most be an image");
 				done();
 			});
 	});
@@ -121,6 +130,38 @@ o.spec("Image orientation", () => {
 	});
 
 	// TODO Work out what the other bytes mean
+	o("no orientation", () => {
+
+		const buffer = new ArrayBuffer(128);
+		const view = new DataView(buffer);
+		// Mark first byte
+		view.setUint16(0, 0xFFD8, false);
+		view.setUint16(2, 0xFFE1, false);
+		view.setUint32(6, 0x00000000, false);
+		const orientation = getOrientation(buffer);
+		o(orientation).equals(-1);
+	});
+
+	o("orientation", () => {
+		const buffer = new ArrayBuffer(128);
+		const view = new DataView(buffer);
+		// Mark first bytes
+		view.setUint16(0, 0xFFD8, false);
+		view.setUint16(2, 0xFFE1, false);
+		// "Magic" number
+		view.setUint32(6, 0x45786966, false);
+		// Big endian
+		view.setUint16(12, 0x0000, false);
+		// Offset
+		view.setUint32(16, 0x00000014);
+		// Tags
+		view.setUint16(32, 0x0001);
+		// Orientation key/value
+		view.setUint16(34, 0x0112, false);
+		view.setUint16(42, 0x0004, false);
+		const orientation = getOrientation(buffer);
+		o(orientation).equals(4);
+	});
 
 });
 
