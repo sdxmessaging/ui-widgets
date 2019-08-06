@@ -40,7 +40,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							? m(".aspect-ratio--object.hide-child.dim", {
 								onclick: () => value([])
 							}, [
-									m("img.img", {
+									m("img.img.w-100", {
 										src: imgSrc(fileObj.path, fileObj.dataUrl)
 									}),
 									// Remove signature button

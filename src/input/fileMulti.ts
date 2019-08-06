@@ -6,7 +6,7 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { FileInput } from "./fileInput";
 
-import { getIcon, guid, removeByProperty } from "../utils";
+import { getIcon, guid } from "../utils";
 
 export class FileMulti implements ClassComponent<IFileWidget> {
 
@@ -65,7 +65,7 @@ export function addFiles(fileList: stream<IFile[]>) {
 export function removeFile(fileList: stream<IFile[]>, removeGuid: string) {
 	return () => {
 		const newFileList = fileList();
-		removeByProperty(newFileList, { guid: removeGuid });
+		lodash.remove(newFileList, { guid: removeGuid });
 		fileList(newFileList);
 	};
 }

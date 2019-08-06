@@ -26,11 +26,6 @@ export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
 export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
 }) => stream<TProp>;
-export declare function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined;
-/**
- * Mutates input list, returns array of removed items
- */
-export declare function removeByProperty<T>(list: T[], prop: Partial<T>): T[];
 /**
  * Split given file name from extension
  */

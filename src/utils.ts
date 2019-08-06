@@ -79,17 +79,6 @@ export function setCheck(chk: stream<TProp>) {
 	return ({ target: { checked } }: { target: HTMLInputElement }) => chk(checked);
 }
 
-export function pickByProperty<T>(list: ReadonlyArray<T>, prop: Partial<T>): T | undefined {
-	return lodash.find(list, lodash.matches(prop));
-}
-
-/**
- * Mutates input list, returns array of removed items
- */
-export function removeByProperty<T>(list: T[], prop: Partial<T>): T[] {
-	return lodash.remove(list, lodash.matches(prop));
-}
-
 /**
  * Split given file name from extension
  */
