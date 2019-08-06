@@ -5,7 +5,7 @@ import SignaturePad from "signature_pad";
 import { ISignWidget } from "../interface/widget";
 
 import { Button } from "../button";
-import { pxRatio, signAspectRatio } from "../utils";
+import { signAspectRatio } from "../utils";
 
 export class SignDraw implements ClassComponent<ISignWidget> {
 
@@ -15,17 +15,19 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 
 	public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
 		const canvas = dom.children[0] as HTMLCanvasElement;
+		const initialRatio = pxRatio();
 		this.signaturePad = new SignaturePad(canvas, {
-			minWidth: 0.5 * pxRatio,
-			maxWidth: 1.5 * pxRatio
+			minWidth: 0.5 * initialRatio,
+			maxWidth: 1.5 * initialRatio
 		});
 		// Create resize handler
 		const resizeCanvas = () => {
-			canvas.width = canvas.offsetWidth * pxRatio;
-			canvas.height = canvas.offsetHeight * pxRatio;
+			const resizeRatio = pxRatio();
+			canvas.width = canvas.offsetWidth * resizeRatio;
+			canvas.height = canvas.offsetHeight * resizeRatio;
 			const ctx = canvas.getContext("2d");
 			if (ctx) {
-				ctx.scale(pxRatio, pxRatio);
+				ctx.scale(resizeRatio, resizeRatio);
 			}
 			this.resetCanvas();
 		};
@@ -83,4 +85,8 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 		}
 	}
 
+}
+
+function pxRatio() {
+	return Math.max(window.devicePixelRatio, 1);
 }

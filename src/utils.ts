@@ -5,8 +5,6 @@ import stream from "mithril/stream";
 import { ITheme } from "./interface/style";
 import { TField, TProp } from "./interface/widget";
 
-export const pxRatio: number = Math.max(window.devicePixelRatio, 1);
-
 // Class/Theme helpers
 export const inputBorder: string = "border-box bn";
 export const inputText: string = "fw2 dark-gray";
