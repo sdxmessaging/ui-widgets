@@ -37,6 +37,7 @@ o.spec("Utility functions", () => {
 
 	o("File name handling", () => {
 		o(fileNameExtSplit("test.complex.extension")).deepEquals(["test.complex", ".extension"]);
+		o(fileNameExtSplit("test no ext")).deepEquals(["test no ext", ""]);
 	});
 
 });

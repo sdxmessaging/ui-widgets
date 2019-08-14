@@ -2,7 +2,6 @@ import m from "mithril";
 import stream from "mithril/stream";
 import { ITheme } from "./interface/style";
 import { TField, TProp } from "./interface/widget";
-export declare const pxRatio: number;
 export declare const inputBorder: string;
 export declare const inputText: string;
 export declare const labelCls: string;

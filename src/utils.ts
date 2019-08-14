@@ -82,7 +82,11 @@ export function setCheck(chk: stream<TProp>) {
  */
 export function fileNameExtSplit(fileName: string): [string, string] {
 	const extIdx = fileName.lastIndexOf(".");
-	return [fileName.substr(0, extIdx), fileName.substr(extIdx)];
+	if (extIdx === -1) {
+		return [fileName, ""];
+	} else {
+		return [fileName.substr(0, extIdx), fileName.substr(extIdx)];
+	}
 }
 
 export function dataURItoBlob(dataURI: string): Blob {
