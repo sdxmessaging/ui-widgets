@@ -8,6 +8,21 @@ import { FileInput } from "./fileInput";
 
 import { getIcon, guid } from "../utils";
 
+export function setFile(fileList: stream<IFile[]>) {
+	return (setList: FileList | null) => {
+		const file = lodash.head(setList);
+		if (!file) {
+			return;
+		}
+		fileList([{
+			guid: guid(),
+			name: file.name,
+			path: "not_set",
+			file: file
+		}]);
+	};
+}
+
 export class FileSelect implements ClassComponent<IFileWidget> {
 
 	protected dragging: stream<boolean> = stream<boolean>(false);
@@ -32,19 +47,4 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 		);
 	}
 
-}
-
-export function setFile(fileList: stream<IFile[]>) {
-	return (setList: FileList | null) => {
-		const file = lodash.head(setList);
-		if (!file) {
-			return;
-		}
-		fileList([{
-			guid: guid(),
-			name: file.name,
-			path: "not_set",
-			file: file
-		}]);
-	};
 }

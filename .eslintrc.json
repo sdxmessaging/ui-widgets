@@ -1,0 +1,29 @@
+{
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"env": {
+		"node": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"project": "./tsconfig.test.json"
+	},
+	"rules": {
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/interface-name-prefix": [
+			"error",
+			{
+				"prefixWithI": "always"
+			}
+		],
+		"@typescript-eslint/no-var-requires": "off"
+	}
+}

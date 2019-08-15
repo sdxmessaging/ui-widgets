@@ -62,7 +62,7 @@ export function imgSrc(path: string, dataUrl?: string): string {
 
 export function guid(): string {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-		// tslint:disable-next-line
+		// eslint:disable-next-line
 		const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 		return v.toString(16);
 	});
@@ -194,7 +194,7 @@ export function getOrientation(buffer: ArrayBuffer) {
 					return view.getUint16(offset + (i * 12) + 8, little);
 				}
 			}
-			// tslint:disable-next-line:no-bitwise
+			// eslint:disable-next-line:no-bitwise
 		} else if ((marker & 0xFF00) !== 0xFF00) {
 			break;
 		} else {

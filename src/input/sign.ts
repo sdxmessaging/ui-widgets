@@ -15,9 +15,46 @@ export const enum SignState {
 	Type
 }
 
+function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
+	return new Promise((resolve) => {
+		const image = new Image();
+		image.onload = () => {
+			const canvas = document.createElement("canvas");
+			const [width, height] = scaleRect(image.width, image.height, maxSize);
+			canvas.width = width;
+			canvas.height = height;
+			const context = canvas.getContext("2d");
+			if (context) {
+				context.drawImage(image, 0, 0, width, height);
+			}
+			resolve(canvas.toDataURL());
+		};
+		image.src = dataUrl;
+	});
+}
+
+export function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id: string, maxSize: number) {
+	return (setDataUrl: string) => {
+		return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
+			const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
+				type: "image/png"
+			});
+			fileList([{
+				guid: guid(),
+				name: newFile.name,
+				path: "not_set",
+				file: newFile,
+				dataUrl: scaledDataUrl
+			}]);
+			state(SignState.Select);
+			m.redraw();
+		});
+	};
+}
+
 export class SignBuilder implements ClassComponent<IFileWidget> {
 
-	protected static maxImageSize: number = 640;
+	protected static maxImageSize = 640;
 
 	private state: stream<SignState> = stream<SignState>(SignState.Select);
 
@@ -77,41 +114,4 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			]);
 	}
 
-}
-
-export function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id: string, maxSize: number) {
-	return (setDataUrl: string) => {
-		return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
-			const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
-				type: "image/png"
-			});
-			fileList([{
-				guid: guid(),
-				name: newFile.name,
-				path: "not_set",
-				file: newFile,
-				dataUrl: scaledDataUrl
-			}]);
-			state(SignState.Select);
-			m.redraw();
-		});
-	};
-}
-
-function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
-	return new Promise((resolve) => {
-		const image = new Image();
-		image.onload = () => {
-			const canvas = document.createElement("canvas");
-			const [width, height] = scaleRect(image.width, image.height, maxSize);
-			canvas.width = width;
-			canvas.height = height;
-			const context = canvas.getContext("2d");
-			if (context) {
-				context.drawImage(image, 0, 0, width, height);
-			}
-			resolve(canvas.toDataURL());
-		};
-		image.src = dataUrl;
-	});
 }

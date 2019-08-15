@@ -13,41 +13,6 @@ export interface IFileInput {
 	onSet(setList: FileList | null): void;
 }
 
-export class FileInput implements ClassComponent<IFileInput> {
-	public view({ attrs: {
-		field: {
-			label,
-			id, name = id,
-			required, readonly, disabled, autofocus,
-			containerClass = ""
-		},
-		accept = "*", multiple = true,
-		dragging,
-		onSet
-	}, children }: CVnode<IFileInput>) {
-		return m("label", lodash.extend({
-			for: id,
-			title: label,
-			class: `${disabled ? "o-60" : "pointer"} ${containerClass}`
-		}, disabled ? {} : {
-			ondragover: dragStart(dragging),
-			ondragleave: dragStop(dragging),
-			ondrop: drop(dragging, onSet)
-		}), [
-				m("input.clip[type=file]", {
-					id, name, multiple, accept,
-					required, readonly, disabled, autofocus,
-					onchange: change(onSet)
-				}),
-				m("span.db", {
-					title: label,
-					class: labelCls
-				}, label),
-				children
-			]);
-	}
-}
-
 export function dragStart(state: stream<boolean>) {
 	return (evt: DragEvent & IMithrilEvent) => {
 		evt.preventDefault();
@@ -81,4 +46,39 @@ export function drop(state: stream<boolean>, setFiles: (setList: FileList | null
 
 export function change(setFiles: (setList: FileList | null) => void) {
 	return ({ target: { files } }: { target: HTMLInputElement }) => setFiles(files);
+}
+
+export class FileInput implements ClassComponent<IFileInput> {
+	public view({ attrs: {
+		field: {
+			label,
+			id, name = id,
+			required, readonly, disabled, autofocus,
+			containerClass = ""
+		},
+		accept = "*", multiple = true,
+		dragging,
+		onSet
+	}, children }: CVnode<IFileInput>) {
+		return m("label", lodash.extend({
+			for: id,
+			title: label,
+			class: `${disabled ? "o-60" : "pointer"} ${containerClass}`
+		}, disabled ? {} : {
+			ondragover: dragStart(dragging),
+			ondragleave: dragStop(dragging),
+			ondrop: drop(dragging, onSet)
+		}), [
+				m("input.clip[type=file]", {
+					id, name, multiple, accept,
+					required, readonly, disabled, autofocus,
+					onchange: change(onSet)
+				}),
+				m("span.db", {
+					title: label,
+					class: labelCls
+				}, label),
+				children
+			]);
+	}
 }

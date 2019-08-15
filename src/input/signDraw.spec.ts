@@ -1,4 +1,3 @@
-// tslint:disable no-var-requires
 const o = require("ospec");
 
 import m from "mithril";
@@ -11,7 +10,7 @@ o.spec("SignDraw", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignDraw, {
-				onSet: (_) => null,
+				onSet: () => null,
 				onCancel: () => null
 			})
 		});

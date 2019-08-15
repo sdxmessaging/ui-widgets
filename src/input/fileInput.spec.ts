@@ -1,4 +1,4 @@
-// tslint:disable no-var-requires
+
 const o = require("ospec");
 
 import m from "mithril";
@@ -24,7 +24,7 @@ o.spec("FileInput", () => {
 					type: FieldType.file
 				},
 				dragging,
-				onSet: (_) => null
+				onSet: () => null
 			})
 		});
 		o(root.childNodes.length).equals(1);
@@ -69,7 +69,7 @@ o.spec("FileInput", () => {
 	o("change", () => {
 		const fileList = stream<IFile[]>([]);
 		// Mock callback
-		const spy = o.spy((_: FileList) => null);
+		const spy = o.spy(() => null);
 		const set = change(spy);
 		// Mock input with FileList
 		const file = { name: "Test" };

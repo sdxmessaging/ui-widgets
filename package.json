@@ -21,7 +21,10 @@
     "@types/mithril": "^2.0.0",
     "@types/node": "^12.6.8",
     "@types/signature_pad": "^2.3.0",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
     "canvas": "^2.5.0",
+    "eslint": "^6.1.0",
     "jsdom": "^15.1.1",
     "lodash": "^4.17.15",
     "mithril": "^2.0.3",
@@ -31,7 +34,6 @@
     "rollup-plugin-terser": "^5.1.1",
     "signature_pad": "^3.0.0-beta.3",
     "ts-node": "^8.3.0",
-    "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
   "scripts": {
@@ -41,6 +43,7 @@
     "bundle-watch": "rollup -c -w",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ospec 'src/{**/*,*}.spec.ts' --require ts-node/register ../../../test-setup.ts",
     "coverage": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' nyc ospec 'src/{**/*,*}.spec.ts' --require ts-node/register ../../../test-setup.ts",
-    "example": "open example.html"
+    "example": "open example.html",
+    "lint": "eslint src/**/*.ts"
   }
 }

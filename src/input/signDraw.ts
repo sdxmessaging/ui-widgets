@@ -7,6 +7,10 @@ import { ISignWidget } from "../interface/widget";
 import { Button } from "../button";
 import { signAspectRatio } from "../utils";
 
+function pxRatio() {
+	return Math.max(window.devicePixelRatio, 1);
+}
+
 export class SignDraw implements ClassComponent<ISignWidget> {
 
 	private signaturePad: SignaturePad | null = null;
@@ -85,8 +89,4 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 		}
 	}
 
-}
-
-function pxRatio() {
-	return Math.max(window.devicePixelRatio, 1);
 }

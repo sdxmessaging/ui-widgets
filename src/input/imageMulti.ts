@@ -10,9 +10,36 @@ import { removeFile } from "./fileMulti";
 
 import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgSrc, resizeImage } from "../utils";
 
+export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
+	return (addList: FileList | null) => {
+		const fileType = "image/jpeg";
+		const newFileList = fileList();
+		return Promise.all(lodash.map(addList, (file) => {
+			// Limit file dimensions
+			return resizeImage(file, maxSize, fileType).then((dataURL) => {
+				// Split original file name from extension
+				const [fName] = fileNameExtSplit(file.name);
+				const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
+					type: fileType
+				});
+				newFileList.push({
+					guid: guid(),
+					name: newFile.name,
+					path: "not_set",
+					file: newFile,
+					dataUrl: dataURL
+				});
+			});
+		})).then(() => {
+			fileList(newFileList);
+			m.redraw();
+		});
+	};
+}
+
 export class ImageMulti implements ClassComponent<IFileWidget> {
 
-	protected static maxImageSize: number = 1280;
+	protected static maxImageSize = 1280;
 
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
@@ -51,31 +78,4 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 		];
 	}
 
-}
-
-export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
-	return (addList: FileList | null) => {
-		const fileType = "image/jpeg";
-		const newFileList = fileList();
-		return Promise.all(lodash.map(addList, (file) => {
-			// Limit file dimensions
-			return resizeImage(file, maxSize, fileType).then((dataURL) => {
-				// Split original file name from extension
-				const [fName] = fileNameExtSplit(file.name);
-				const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
-					type: fileType
-				});
-				newFileList.push({
-					guid: guid(),
-					name: newFile.name,
-					path: "not_set",
-					file: newFile,
-					dataUrl: dataURL
-				});
-			});
-		})).then(() => {
-			fileList(newFileList);
-			m.redraw();
-		});
-	};
 }

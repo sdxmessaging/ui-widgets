@@ -6,9 +6,9 @@ export declare const enum SignState {
     Draw = 1,
     Type = 2
 }
+export declare function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id: string, maxSize: number): (setDataUrl: string) => Promise<void>;
 export declare class SignBuilder implements ClassComponent<IFileWidget> {
     protected static maxImageSize: number;
     private state;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }
-export declare function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id: string, maxSize: number): (setDataUrl: string) => Promise<void>;

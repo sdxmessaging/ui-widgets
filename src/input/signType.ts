@@ -6,6 +6,25 @@ import { ISignWidget, TProp } from "../interface/widget";
 import { Button } from "../button";
 import { setValue, signAspectRatio } from "../utils";
 
+export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
+	return () => {
+		if (text()) {
+			const canvas = document.createElement("canvas");
+			canvas.width = 600;
+			canvas.height = 150;
+			const fontSize = 0.56 * canvas.height;
+			const context = canvas.getContext("2d");
+			if (context) {
+				context.textBaseline = "middle";
+				context.font = `${fontSize}px Caveat`;
+				context.fillText(text(), 8, canvas.height * 0.52);
+			}
+			callback(canvas.toDataURL());
+		}
+		return false;
+	};
+}
+
 export class SignType implements ClassComponent<ISignWidget> {
 
 	private text: stream<string> = stream("");
@@ -63,23 +82,4 @@ export class SignType implements ClassComponent<ISignWidget> {
 		input.style.fontSize = `${0.56 * height}px`;
 	}
 
-}
-
-export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
-	return () => {
-		if (text()) {
-			const canvas = document.createElement("canvas");
-			canvas.width = 600;
-			canvas.height = 150;
-			const fontSize = 0.56 * canvas.height;
-			const context = canvas.getContext("2d");
-			if (context) {
-				context.textBaseline = "middle";
-				context.font = `${fontSize}px Caveat`;
-				context.fillText(text(), 8, canvas.height * 0.52);
-			}
-			callback(canvas.toDataURL());
-		}
-		return false;
-	};
 }

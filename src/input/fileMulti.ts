@@ -8,6 +8,29 @@ import { FileInput } from "./fileInput";
 
 import { getIcon, guid } from "../utils";
 
+export function addFiles(fileList: stream<IFile[]>) {
+	return (addList: FileList | null) => {
+		const newFileList = fileList();
+		lodash.each(addList, (file: File) => {
+			newFileList.push({
+				guid: guid(),
+				name: file.name,
+				path: "not_set",
+				file: file
+			});
+		});
+		fileList(newFileList);
+	};
+}
+
+export function removeFile(fileList: stream<IFile[]>, removeGuid: string) {
+	return () => {
+		const newFileList = fileList();
+		lodash.remove(newFileList, { guid: removeGuid });
+		fileList(newFileList);
+	};
+}
+
 export class FileMulti implements ClassComponent<IFileWidget> {
 
 	protected dragging: stream<boolean> = stream<boolean>(false);
@@ -45,27 +68,4 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 		];
 	}
 
-}
-
-export function addFiles(fileList: stream<IFile[]>) {
-	return (addList: FileList | null) => {
-		const newFileList = fileList();
-		lodash.each(addList, (file: File) => {
-			newFileList.push({
-				guid: guid(),
-				name: file.name,
-				path: "not_set",
-				file: file
-			});
-		});
-		fileList(newFileList);
-	};
-}
-
-export function removeFile(fileList: stream<IFile[]>, removeGuid: string) {
-	return () => {
-		const newFileList = fileList();
-		lodash.remove(newFileList, { guid: removeGuid });
-		fileList(newFileList);
-	};
 }

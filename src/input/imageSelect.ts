@@ -8,9 +8,35 @@ import { FileInput } from "./fileInput";
 
 import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgMaxSize, imgSrc, resizeImage } from "../utils";
 
+export function setFile(fileList: stream<IFile[]>, maxSize: number) {
+	return (setList: FileList | null) => {
+		const file = lodash.head(setList);
+		if (!file) {
+			return Promise.resolve();
+		}
+		// Limit file dimensions
+		const fileType = "image/jpeg";
+		return resizeImage(file, maxSize, fileType).then((dataURL) => {
+			// Split original file name from extension
+			const [fName] = fileNameExtSplit(file.name);
+			const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
+				type: fileType
+			});
+			fileList([{
+				guid: guid(),
+				name: newFile.name,
+				path: "not_set",
+				file: newFile,
+				dataUrl: dataURL
+			}]);
+			m.redraw();
+		});
+	};
+}
+
 export class ImageSelect implements ClassComponent<IFileWidget> {
 
-	protected static maxImageSize: number = 1280;
+	protected static maxImageSize = 1280;
 
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
@@ -40,30 +66,4 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 		);
 	}
 
-}
-
-export function setFile(fileList: stream<IFile[]>, maxSize: number) {
-	return (setList: FileList | null) => {
-		const file = lodash.head(setList);
-		if (!file) {
-			return Promise.resolve();
-		}
-		// Limit file dimensions
-		const fileType = "image/jpeg";
-		return resizeImage(file, maxSize, fileType).then((dataURL) => {
-			// Split original file name from extension
-			const [fName] = fileNameExtSplit(file.name);
-			const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
-				type: fileType
-			});
-			fileList([{
-				guid: guid(),
-				name: newFile.name,
-				path: "not_set",
-				file: newFile,
-				dataUrl: dataURL
-			}]);
-			m.redraw();
-		});
-	};
 }

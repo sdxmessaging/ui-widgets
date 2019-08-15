@@ -1,4 +1,3 @@
-// tslint:disable no-var-requires
 const o = require("ospec");
 
 import m from "mithril";

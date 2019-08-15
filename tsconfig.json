@@ -7,7 +7,6 @@
 		"outDir": "./lib",
 		"incremental": true,
 		"moduleResolution": "node",
-		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"types": [
 			"lodash",

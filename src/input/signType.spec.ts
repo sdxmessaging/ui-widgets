@@ -1,4 +1,3 @@
-// tslint:disable no-var-requires
 const o = require("ospec");
 
 import m from "mithril";
@@ -13,7 +12,7 @@ o.spec("SignType", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignType, {
-				onSet: (_) => null,
+				onSet: () => null,
 				onCancel: () => null
 			})
 		});
@@ -24,7 +23,7 @@ o.spec("SignType", () => {
 
 	o("apply", () => {
 		const text: stream<string> = stream<string>("");
-		const spy = o.spy((_: string) => null);
+		const spy = o.spy(() => null);
 		const apply = applyText(text, spy);
 		// Spy should not be called with empty text
 		apply();
