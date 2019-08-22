@@ -70,7 +70,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		}, [
 				getLabel(field),
 				this.state() === SignState.Select
-					? m(".aspect-ratio.dark-gray.ba.bw1.br3.b--dashed.b--black-30.pointer", {
+					? m(".aspect-ratio.dark-gray.bg-white.ba.bw1.br3.b--dashed.b--black-30.pointer", {
+						id,
 						style: signAspectRatio
 					}, fileObj
 							// Current signature
