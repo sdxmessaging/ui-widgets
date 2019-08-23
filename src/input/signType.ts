@@ -53,7 +53,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 					}
 				})
 			),
-			m(".pa2.bg-white.br2.absolute.right-0", [
+			m(".pa2.bg-white.br2.absolute.right-0.z-999", [
 				m(Button, {
 					label: "Apply",
 					icon: "fa-check",

@@ -10,6 +10,7 @@ import { SignType } from "./signType";
 import { dataURItoBlob, getIcon, getLabel, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
 
 export const enum SignState {
+	Readonly,
 	Select,
 	Draw,
 	Type
@@ -58,6 +59,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	private state: stream<SignState> = stream<SignState>(SignState.Select);
 
+	// TODO Support updates to component setting/reverting "readonly mode"
+	public oninit({ attrs: { field: { readonly } } }: CVnode<IFileWidget>) {
+		if (readonly) {
+			this.state(SignState.Readonly);
+		}
+	}
+
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
 			id,
@@ -73,7 +81,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					? m(".aspect-ratio.dark-gray.bg-white.ba.bw1.br3.b--dashed.b--black-30.pointer", {
 						id,
 						style: signAspectRatio
-					}, fileObj
+					},
+						fileObj
 							// Current signature
 							? m(".aspect-ratio--object.hide-child.dim", {
 								onclick: () => value([])
@@ -108,10 +117,24 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 								)
 							])
 					)
-					: m(this.state() === SignState.Draw ? SignDraw : SignType, {
-						onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
-						onCancel: () => this.state(SignState.Select)
-					})
+					: this.state() === SignState.Readonly
+						? m(".aspect-ratio.dark-gray.bg-white.br3", {
+							id,
+							style: signAspectRatio
+						},
+							fileObj
+								// Current signature
+								? m(".aspect-ratio--object.hide-child",
+									m("img.img.w-100", {
+										src: imgSrc(fileObj.path, fileObj.dataUrl)
+									}),
+								)
+								: null
+						)
+						: m(this.state() === SignState.Draw ? SignDraw : SignType, {
+							onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
+							onCancel: () => this.state(SignState.Select)
+						})
 			]);
 	}
 
