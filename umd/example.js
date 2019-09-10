@@ -14,9 +14,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	var imgList = stream([]);
 	var signList = stream([]);
 
+	// Custom
+	var value = stream("");
+	var label = stream("Custom Input");
+	var type = stream("text");
+	var placeholder = stream("Placeholder");
+	var readonly = stream(false);
+	var disabled = stream(false);
+
 	m.mount(document.getElementById("page"), {
 		view: function () {
 			return m(".pa3.mb5", [
+
 				m("h3", "Example"),
 				m("p", "These example input/display widgets manipulate a common stream"),
 
@@ -150,6 +159,87 @@ document.addEventListener("DOMContentLoaded", function () {
 							classes: "pa2"
 						},
 						value: optVal
+					}))
+				]),
+
+				m("h3", "Create Your Own"),
+				m("p", "Widget options are simple to update"),
+
+				// Custom BaseInput
+				m(".mw8.flex.mb2", [
+					m(".flex.flex-column.w-50.mr2", [
+						m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
+							field: {
+								id: "custom-label",
+								label: "Label",
+								type: "text",
+								instant: true
+							},
+							value: label
+						})),
+						m(".pa2.mb2.ba.b--silver", m(uiWidgets.SelectInput, {
+							field: {
+								id: "custom-type",
+								label: "Type",
+								type: "select",
+								options: [{
+									label: "Text",
+									value: "text"
+								}, {
+									label: "Date",
+									value: "date"
+								}, {
+									label: "Number",
+									value: "number"
+								}, {
+									label: "Email",
+									value: "email"
+								}, {
+									label: "Telephone",
+									value: "tel"
+								}, {
+									label: "Color",
+									value: "color"
+								}]
+							},
+							value: type
+						})),
+						m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
+							field: {
+								id: "custom-placeholder",
+								label: "Placeholder",
+								type: "text",
+								instant: true
+							},
+							value: placeholder
+						})),
+						m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
+							field: {
+								id: "custom-readonly",
+								label: "Readonly",
+								type: "checkbox"
+							},
+							value: readonly
+						})),
+						m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
+							field: {
+								id: "custom-disabled",
+								label: "Disabled",
+								type: "checkbox"
+							},
+							value: disabled
+						})),
+					]),
+					m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+						field: {
+							id: "custom-out",
+							label: label(),
+							type: type(),
+							placeholder: placeholder(),
+							readonly: readonly(),
+							disabled: disabled()
+						},
+						value: value
 					}))
 				]),
 
