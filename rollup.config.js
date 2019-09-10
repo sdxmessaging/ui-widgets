@@ -9,11 +9,12 @@ export const globals = {
 
 export const external = Object.keys(globals);
 
-const plugins = [
-	terser({
+const plugins = [];
+if (process.env.MINIFY) {
+	plugins.push(terser({
 		compress: false
-	})
-];
+	}));
+}
 
 export default [{
 	input: "lib/index.js",
