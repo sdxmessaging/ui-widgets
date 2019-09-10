@@ -60,8 +60,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 	private state: stream<SignState> = stream<SignState>(SignState.Select);
 
 	// TODO Support updates to component setting/reverting "readonly mode"
-	public oninit({ attrs: { field: { readonly } } }: CVnode<IFileWidget>) {
-		if (readonly) {
+	public oninit({ attrs: { field: { readonly, disabled } } }: CVnode<IFileWidget>) {
+		if (readonly || disabled) {
 			this.state(SignState.Readonly);
 		}
 	}
@@ -69,7 +69,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
 			id,
-			// required, readonly, disabled, autofocus,
+			// required, disabled, autofocus,
 			containerClass
 		} = field;
 		const fileObj = lodash.head(value());
