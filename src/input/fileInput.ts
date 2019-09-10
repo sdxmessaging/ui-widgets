@@ -63,22 +63,23 @@ export class FileInput implements ClassComponent<IFileInput> {
 		return m("label", lodash.extend({
 			for: id,
 			title: label,
-			class: `${disabled ? "o-60" : "pointer"} ${containerClass}`
-		}, disabled ? {} : {
+			class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${containerClass}`
+		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),
 			ondrop: drop(dragging, onSet)
 		}), [
-				m("input.clip[type=file]", {
-					id, name, multiple, accept,
-					required, readonly, disabled, autofocus,
-					onchange: change(onSet)
-				}),
-				m("span.db", {
-					title: label,
-					class: labelCls
-				}, label),
-				children
-			]);
+			m("input.clip[type=file]", {
+				id, name, multiple, accept,
+				required, autofocus,
+				disabled: disabled || readonly,
+				onchange: change(onSet)
+			}),
+			m("span.db", {
+				title: label,
+				class: labelCls
+			}, label),
+			children
+		]);
 	}
 }

@@ -21,10 +21,10 @@ export declare function getDisplayLabel({ label }: TField, className?: string): 
 export declare function getLabel({ id, label, required }: TField): m.Vnode<any, any>;
 export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<TProp>;
+}) => stream<string | number | boolean>;
 export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => stream<TProp>;
+}) => stream<string | number | boolean>;
 /**
  * Split given file name from extension
  */

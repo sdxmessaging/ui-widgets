@@ -19,12 +19,13 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			class: inputText,
 		},
 			m("label.flex.items-center.dark-gray", {
-				class: `${disabled ? "o-60 " : "pointer "}${classes}`
+				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 			},
 				m("input.mr1[type=checkbox]", {
 					id, name,
 					checked: value(),
-					required, readonly, disabled, autocomplete,
+					required, autocomplete,
+					disabled: disabled || readonly,
 					// Update value on check
 					onchange: setCheck(value),
 				}),

@@ -21,13 +21,14 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			}, m("select.input-reset.w-100", {
 				id, name,
 				value: val(),
-				class: `${disabled ? "o-60 " : ""}${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
+				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
 				required, readonly, disabled, autofocus, autocomplete,
 				// Update value on selection
 				onchange: setValue(val)
 			},
 				lodash.map(options, ({ label, value }) => m("option", {
-					value
+					value,
+					disabled: disabled || readonly
 				}, label))
 			))
 		];

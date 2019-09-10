@@ -24,13 +24,13 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			},
 				// No requirement for label "for" attribute
 				lodash.map(options, ({ label, value }) => m("label.flex.items-center", {
-					class: `${disabled ? "o-60 " : "pointer "}${classes}`
+					class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 				},
 					m("input.mr1[type=radio]", {
-						name,
-						value,
+						name, value,
 						checked: val() === value,
-						required, readonly, disabled, autocomplete
+						required, autocomplete,
+						disabled: disabled || readonly
 					}),
 					label
 				))

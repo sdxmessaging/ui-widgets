@@ -11,6 +11,6 @@ export declare function setFile(fileList: stream<IFile[]>, state: stream<SignSta
 export declare class SignBuilder implements ClassComponent<IFileWidget> {
     protected static maxImageSize: number;
     private state;
-    oninit({ attrs: { field: { readonly } } }: CVnode<IFileWidget>): void;
+    oninit({ attrs: { field: { readonly, disabled } } }: CVnode<IFileWidget>): void;
     view({ attrs: { field, value } }: CVnode<IFileWidget>): m.Vnode<any, any>;
 }
