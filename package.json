@@ -1,11 +1,13 @@
 {
-  "name": "ui-widgets",
-  "private": true,
+  "name": "@sdxmessaging/ui-widgets",
   "version": "1.0.0",
   "description": "Build form inputs and display values with mithril components and streams",
   "repository": {
     "type": "git",
     "url": "https://github.com/sdxmessaging/ui-widgets.git"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
   },
   "author": "Michael Pastuch",
   "homepage": "https://github.com/sdxmessaging/ui-widgets",
