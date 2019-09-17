@@ -3,7 +3,9 @@ import stream from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getLabel, getTheme, inputBorder, inputText, labelCls, setValue } from "../utils";
+import { getTheme, inputBorder, inputText, labelCls } from "../theme";
+import { getLabel, setValue } from "../utils";
+
 import { CheckboxInput } from "./checkbox";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {

@@ -2,7 +2,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { getDisplayLabel, getIcon } from "../utils";
+import { getIcon } from "../theme";
+import { getDisplayLabel } from "../utils";
 
 export class Checkbox implements ClassComponent<IPropWidget> {
 

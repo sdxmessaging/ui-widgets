@@ -3,7 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel, getIcon } from "../utils";
+import { getIcon } from "../theme";
+import { getDisplayLabel } from "../utils";
 
 export class FileList implements ClassComponent<IFileWidget> {
 

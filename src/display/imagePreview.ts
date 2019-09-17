@@ -3,7 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getDisplayLabel, getIcon, imgMaxSize, imgSrc } from "../utils";
+import { getIcon, imgMaxSize } from "../theme";
+import { getDisplayLabel, imgSrc } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
 

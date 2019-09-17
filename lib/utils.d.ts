@@ -1,19 +1,6 @@
 import m from "mithril";
 import stream from "mithril/stream";
-import { ITheme } from "./interface/style";
 import { TField, TProp } from "./interface/widget";
-export declare const inputBorder = "border-box bn";
-export declare const inputText = "fw2 dark-gray";
-export declare const labelCls = "mb1 f6 silver";
-export declare const signAspectRatio: {
-    "padding-bottom": string;
-};
-export declare const imgMaxSize: {
-    "max-height": string;
-};
-export declare function applyTheme(newTheme: Partial<ITheme>): void;
-export declare function getTheme(keys: Array<keyof ITheme>): string;
-export declare function getIcon(iconClass: string): string;
 export declare function guid(): string;
 export declare function getLabelText(label: string, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
@@ -21,10 +8,10 @@ export declare function getDisplayLabel({ label }: TField, className?: string): 
 export declare function getLabel({ id, label, required }: TField): m.Vnode<any, any>;
 export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;
 export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;
 /**
  * Split given file name from extension
  */

@@ -4,10 +4,11 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
+import { getIcon, signAspectRatio } from "../theme";
+import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
+
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
-
-import { dataURItoBlob, getIcon, getLabel, guid, imgSrc, scaleRect, signAspectRatio } from "../utils";
 
 export const enum SignState {
 	Readonly,

@@ -3,7 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { getLabel, getTheme, inputBorder, inputText, setValue } from "../utils";
+import { getTheme, inputBorder, inputText } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 

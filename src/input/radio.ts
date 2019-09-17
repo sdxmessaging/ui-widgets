@@ -3,7 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { getLabel, inputText, setValue } from "../utils";
+import { inputText } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 

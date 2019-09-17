@@ -2,7 +2,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getDisplayLabel, getIcon } from "../utils";
+import { getIcon } from "../theme";
+import { getDisplayLabel } from "../utils";
 
 export function linkAttrs(fieldType: string, value: TProp) {
 	if (fieldType === "email") {

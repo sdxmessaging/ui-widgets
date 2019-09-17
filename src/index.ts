@@ -1,6 +1,7 @@
 export * from "./interface/widget";
 
-export { applyTheme, fileNameExtSplit, getTheme, getIcon } from "./utils";
+export { applyTheme, getTheme, getIcon } from "./theme";
+export { fileNameExtSplit } from "./utils";
 
 export * from "./button";
 

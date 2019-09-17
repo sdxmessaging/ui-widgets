@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
-import { labelCls } from "../utils";
+import { labelCls } from "../theme";
 
 export interface IFileInput {
 	readonly field: TField;

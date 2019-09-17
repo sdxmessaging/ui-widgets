@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { getIcon, getTheme } from "./utils";
+import { getIcon, getTheme } from "./theme";
 
 interface IButton {
 	readonly label: string;

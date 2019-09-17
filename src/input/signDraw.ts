@@ -4,8 +4,9 @@ import SignaturePad from "signature_pad";
 
 import { ISignWidget } from "../interface/widget";
 
+import { signAspectRatio } from "../theme";
+
 import { Button } from "../button";
-import { signAspectRatio } from "../utils";
 
 function pxRatio() {
 	return Math.max(window.devicePixelRatio, 1);

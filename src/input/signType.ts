@@ -3,8 +3,10 @@ import stream from "mithril/stream";
 
 import { ISignWidget, TProp } from "../interface/widget";
 
+import { signAspectRatio } from "../theme";
+import { setValue } from "../utils";
+
 import { Button } from "../button";
-import { setValue, signAspectRatio } from "../utils";
 
 export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
 	return () => {

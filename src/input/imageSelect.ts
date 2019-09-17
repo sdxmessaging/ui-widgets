@@ -4,9 +4,10 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { FileInput } from "./fileInput";
+import { getIcon, imgMaxSize } from "../theme";
+import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
-import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgMaxSize, imgSrc, resizeImage } from "../utils";
+import { FileInput } from "./fileInput";
 
 export function setFile(fileList: stream<IFile[]>, maxSize: number) {
 	return (setList: FileList | null) => {

@@ -2,7 +2,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { getLabel, inputBorder, inputText, setValue } from "../utils";
+import { inputBorder, inputText } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
 

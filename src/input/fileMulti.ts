@@ -4,9 +4,10 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { FileInput } from "./fileInput";
+import { getIcon } from "../theme";
+import { guid } from "../utils";
 
-import { getIcon, guid } from "../utils";
+import { FileInput } from "./fileInput";
 
 export function addFiles(fileList: stream<IFile[]>) {
 	return (addList: FileList | null) => {

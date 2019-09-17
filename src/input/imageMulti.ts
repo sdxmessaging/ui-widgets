@@ -4,11 +4,12 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
+import { getIcon } from "../theme";
+import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
+
 import { Thumbnail } from "../display/thumbnail";
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
-
-import { dataURItoBlob, fileNameExtSplit, getIcon, guid, imgSrc, resizeImage } from "../utils";
 
 export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
 	return (addList: FileList | null) => {
