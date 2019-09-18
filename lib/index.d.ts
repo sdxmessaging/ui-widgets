@@ -1,5 +1,5 @@
 export * from "./interface/widget";
-export { applyTheme, getTheme, getIcon } from "./theme";
+export { updateTheme, getTheme, getIcon } from "./theme";
 export { fileNameExtSplit } from "./utils";
 export * from "./button";
 export { Trusted } from "./display/trusted";

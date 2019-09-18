@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { inputText } from "../theme";
+import { txtCls } from "../theme";
 import { getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
@@ -20,7 +20,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			m("div", {
 				class: containerClass
 			}, m(".flex.flex-wrap", {
-				class: inputText,
+				class: txtCls(),
 				onchange: setValue(val)
 			},
 				// No requirement for label "for" attribute

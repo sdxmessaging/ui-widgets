@@ -4,10 +4,8 @@ import stream from "mithril/stream";
 import { TProp } from "./interface/widget";
 
 import {
-	applyTheme,
 	dataURItoBlob,
 	fileNameExtSplit,
-	getIcon,
 	getOrientation,
 	guid,
 	resizeImage,
@@ -17,18 +15,7 @@ import {
 	setValue
 } from "./utils";
 
-o.spec("Utility functions", () => {
-
-	o("Default icon style", () => {
-		o(getIcon("fa-test")).equals("fas fa-test");
-	});
-
-	o("Change icon style", () => {
-		applyTheme({
-			icon: "fal"
-		});
-		o(getIcon("fa-test")).equals("fal fa-test");
-	});
+o.spec("Utils", () => {
 
 	o("Create unique ID", () => {
 		o(guid().length).equals(36);

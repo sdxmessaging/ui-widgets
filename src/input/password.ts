@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getTheme, inputBorder, inputText, labelCls } from "../theme";
+import { inpCls, lblCls } from "../theme";
 import { getLabel, setValue } from "../utils";
 
 import { CheckboxInput } from "./checkbox";
@@ -26,18 +26,18 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 						id: "showpass",
 						label: "Show Password",
 						type: "checkbox",
-						containerClass: labelCls
+						containerClass: `mb1 ${lblCls()}`
 					},
 					value: this.showPassword
 				})
 			]),
 			m(".w-100", {
 				class: containerClass
-			}, m("input.input-reset.w-100", {
+			}, m("input.input-reset.border-box.w-100", {
 				id, name,
 				type: this.showPassword() ? "text" : "password",
 				value: value(),
-				class: `${disabled ? "o-60 " : ""}${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
+				class: `${disabled ? "o-60" : ""} ${inpCls()} ${classes}`,
 				placeholder, required, readonly, disabled, autofocus, autocomplete,
 				// Safari quirk
 				autocorrect: "off",

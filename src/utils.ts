@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { TField, TProp } from "./interface/widget";
 
-import { labelCls } from "./theme";
+import { lblCls } from "./theme";
 
 export function guid(): string {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -30,10 +30,10 @@ export function getDisplayLabel({ label }: TField, className?: string) {
 }
 
 export function getLabel({ id, label, required }: TField) {
-	return m("label", {
+	return m("label.mb1", {
 		title: label,
 		for: id,
-		class: labelCls
+		class: lblCls()
 	}, getLabelText(label, required));
 }
 

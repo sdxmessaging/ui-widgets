@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
-import { labelCls } from "../theme";
+import { lblCls } from "../theme";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -75,9 +75,9 @@ export class FileInput implements ClassComponent<IFileInput> {
 				disabled: disabled || readonly,
 				onchange: change(onSet)
 			}),
-			m("span.db", {
+			m("span.db.mb1", {
 				title: label,
-				class: labelCls
+				class: lblCls()
 			}, label),
 			children
 		]);

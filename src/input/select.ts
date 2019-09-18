@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { getTheme, inputBorder, inputText } from "../theme";
+import { inpCls } from "../theme";
 import { getLabel, setValue } from "../utils";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
@@ -19,10 +19,10 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			getLabel(field),
 			m("div", {
 				class: containerClass
-			}, m("select.input-reset.w-100", {
+			}, m("select.input-reset.border-box.w-100", {
 				id, name,
 				value: val(),
-				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${getTheme(["inpHgt"])} ${classes} ${inputBorder} ${inputText}`,
+				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${inpCls()} ${classes}`,
 				required, readonly, disabled, autofocus, autocomplete,
 				// Update value on selection
 				onchange: setValue(val)

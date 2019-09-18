@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { getIcon, getTheme } from "./theme";
+import { getIcon, btnClass } from "./theme";
 
 interface IButton {
 	readonly label: string;
@@ -17,9 +17,9 @@ export class Button implements ClassComponent<IButton> {
 	public view({ attrs: {
 		label, type = "button", icon, classes, disabled, style, onclick
 	} }: CVnode<IButton>) {
-		return m("button.button-reset.pa2.bn.br2", {
+		return m("button.button-reset.pa2", {
 			type,
-			class: `${disabled ? "o-60 " : "dim pointer "}${getTheme(["btnBg", "btnTxt"])} ${classes}`,
+			class: `${disabled ? "o-60" : "dim pointer"} ${btnClass()} ${classes}`,
 			disabled,
 			style,
 			onclick,

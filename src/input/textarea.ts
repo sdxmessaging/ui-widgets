@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { inputBorder, inputText } from "../theme";
+import { areaCls } from "../theme";
 import { getLabel, setValue } from "../utils";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
@@ -17,10 +17,10 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			getLabel(field),
 			m("div", {
 				class: containerClass
-			}, m("textarea.w-100[rows=3]", {
+			}, m("textarea.border-box.w-100[rows=3]", {
 				id, name,
 				value: value(),
-				class: `${disabled ? "o-60 " : ""}${classes} ${inputBorder} ${inputText}`,
+				class: `${disabled ? "o-60" : ""} ${areaCls()} ${classes}`,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 				style: { resize: "vertical" },
 				// Update value on change or input ("instant" option)
