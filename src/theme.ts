@@ -11,11 +11,13 @@ export const imgMaxSize = {
 	"max-height": "16rem"
 };
 
-const classMap: ITheme = {
+export const classMap: ITheme = {
 	icon: stream("fas"),
 	// Label
 	lblCol: stream("silver"),
 	lblFnt: stream("f6"),
+	// Display
+	dspFnt: stream("truncate"),
 	// Input
 	inpHgt: stream("h2"),
 	inpCol: stream("dark-gray"),
@@ -29,31 +31,25 @@ const classMap: ITheme = {
 };
 
 // Merge theme entries into widget class helpers
+function joinCls(classes: string[]) {
+	return classes.join(" ");
+}
+function compositeClass(keys: ReadonlyArray<TThemeKey>): stream<string> {
+	return stream.merge(lodash.map(keys, (key) => classMap[key])).map(joinCls);
+}
 
 // Input labels
-export const lblCls = stream
-	.merge([classMap.lblCol, classMap.lblFnt])
-	.map((classes) => classes.join(" "));
-
+export const lblCls = compositeClass(["lblCol", "lblFnt"]);
+// Display labels
+export const dspLblCls = compositeClass(["lblCol", "dspFnt"]);
 // Non-text input font
-export const txtCls = stream
-	.merge([classMap.inpCol, classMap.inpFnt])
-	.map((classes) => classes.join(" "));
-
+export const txtCls = compositeClass(["inpCol", "inpFnt"]);
 // Textarea font
-export const areaCls = stream
-	.merge([classMap.inpBrd, txtCls])
-	.map((classes) => classes.join(" "));
-
+export const areaCls = stream.merge([classMap.inpBrd, txtCls]).map(joinCls);
 // Typical input
-export const inpCls = stream
-	.merge([classMap.inpHgt, areaCls])
-	.map((classes) => classes.join(" "));
-
+export const inpCls = stream.merge([classMap.inpHgt, areaCls]).map(joinCls);
 // Global button
-export const btnClass = stream
-	.merge([classMap.btnBg, classMap.btnCol, classMap.btnFnt, classMap.btnBrd])
-	.map((classes) => classes.join(" "));
+export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnBrd"])
 
 export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 	lodash.forEach(newTheme, (value, key) => {
@@ -61,14 +57,6 @@ export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 			classMap[key as TThemeKey](value || "");
 		}
 	});
-}
-
-// Deprecated
-export function getTheme(keys: ReadonlyArray<TThemeKey>): string {
-	return lodash(keys)
-		.map((key) => classMap[key]())
-		.value()
-		.join(" ");
 }
 
 export function getIcon(iconClass: string): string {

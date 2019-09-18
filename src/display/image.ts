@@ -14,7 +14,7 @@ export class ImageList implements ClassComponent<IFileWidget> {
 			class: classes,
 			style
 		}, [
-				getDisplayLabel(field, "mb2"),
+				getDisplayLabel(field),
 				m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
 					lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
 						title: name,

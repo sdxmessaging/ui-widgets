@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { TField, TProp } from "./interface/widget";
 
-import { lblCls } from "./theme";
+import { dspLblCls, lblCls } from "./theme";
 
 export function guid(): string {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -22,15 +22,15 @@ export function imgSrc(path: string, dataUrl?: string): string {
 
 // Used by display widgets
 // TODO Consolidate with getLabel
-export function getDisplayLabel({ label }: TField, className?: string) {
+export function getDisplayLabel({ label }: TField) {
 	return m("span.mr2.silver.truncate", {
 		title: label,
-		class: className
+		class: dspLblCls()
 	}, label);
 }
 
 export function getLabel({ id, label, required }: TField) {
-	return m("label.mb1", {
+	return m("label.mb1.db", {
 		title: label,
 		for: id,
 		class: lblCls()

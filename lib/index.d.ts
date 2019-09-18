@@ -1,7 +1,7 @@
 export * from "./interface/widget";
-export { updateTheme, getTheme, getIcon } from "./theme";
+export { updateTheme, getIcon } from "./theme";
 export { fileNameExtSplit } from "./utils";
-export * from "./button";
+export { Button } from "./button";
 export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";
 export { iconMap, linkAttrs, Link } from "./display/link";

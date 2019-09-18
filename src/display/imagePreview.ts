@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getIcon, imgMaxSize } from "../theme";
+import { getIcon, imgMaxSize, classMap } from "../theme";
 import { getDisplayLabel, imgSrc } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
@@ -15,15 +15,15 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 			class: classes,
 			style
 		}, [
-				getDisplayLabel(field, "mb1"),
+				getDisplayLabel(field),
 				file
-					? m("img.img.contain.self-center", {
+					? m("img.img.mt2.contain.self-center", {
 						title: file.name,
 						src: imgSrc(file.path, file.dataUrl),
 						style: imgMaxSize
 					})
-					: m("i", {
-						class: getIcon("fa-image")
+					: m("i.mt2", {
+						class: `${classMap.inpCol()} ${getIcon("fa-image")}`
 					})
 			]
 		);

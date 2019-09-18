@@ -3,6 +3,7 @@ export interface ITheme {
     readonly icon: stream<string>;
     readonly lblCol: stream<string>;
     readonly lblFnt: stream<string>;
+    readonly dspFnt: stream<string>;
     readonly inpHgt: stream<string>;
     readonly inpCol: stream<string>;
     readonly inpFnt: stream<string>;

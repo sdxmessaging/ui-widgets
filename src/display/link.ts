@@ -2,23 +2,26 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getIcon } from "../theme";
+import { getIcon, txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export function linkAttrs(fieldType: string, value: TProp) {
 	if (fieldType === "email") {
 		return {
-			href: `mailto:${value}`
+			href: `mailto:${value}`,
+			class: txtCls()
 		};
 	} else if (fieldType === "tel") {
 		return {
-			href: `tel:${value}`
+			href: `tel:${value}`,
+			class: txtCls()
 		};
 	} else {
 		// Assume standard urls
 		return {
 			href: value,
-			target: "_blank"
+			target: "_blank",
+			class: txtCls()
 		};
 	}
 }
@@ -37,7 +40,7 @@ export class Link implements ClassComponent<IPropWidget> {
 			style
 		}, [
 				getDisplayLabel(field),
-				m("a.link.dark-gray.dim.pointer.ws-normal", linkAttrs(field.type, value()),
+				m("a.link.dim.pointer.ws-normal", linkAttrs(field.type, value()),
 					m("i.mr2", {
 						class: getIcon(iconMap[field.type] || "fa-link")
 					}),

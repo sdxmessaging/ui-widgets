@@ -19,7 +19,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		}, m(".flex.flex-wrap", {
 			class: txtCls(),
 		},
-			m("label.flex.items-center.dark-gray", {
+			m("label.flex.items-center", {
 				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 			},
 				m("input.mr1[type=checkbox]", {

@@ -40,7 +40,7 @@ btnBrd.map((newCls) => uiWidgets.updateTheme({ btnBrd: newCls }));
 
 m.mount(document.getElementById("page"), {
 	view: function () {
-		return m(".pa3.mb5", [
+		return m(".mw8.pa3.center", [
 
 			m("h3", "Example"),
 			m("p", "These example input/display widgets manipulate a common stream"),
@@ -49,7 +49,7 @@ m.mount(document.getElementById("page"), {
 			m("p", "Display components reflect changes to input components"),
 
 			// Text
-			m(".mw8.flex.mb2.items-center", [
+			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
 					m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
 						field: {
@@ -80,7 +80,7 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Date
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "date-in",
@@ -100,7 +100,7 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Colour
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "color-in",
@@ -120,7 +120,7 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Checkbox
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CheckboxInput, {
 					field: {
 						id: "check-in",
@@ -144,7 +144,7 @@ m.mount(document.getElementById("page"), {
 			m("p", "Multiple inputs can share the same value"),
 
 			// Select/Radio
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.SelectInput, {
 					field: {
 						id: "select-in",
@@ -182,7 +182,7 @@ m.mount(document.getElementById("page"), {
 			m("p", "Widget options are simple to update"),
 
 			// Custom BaseInput
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
 					m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
 						field: {
@@ -263,7 +263,7 @@ m.mount(document.getElementById("page"), {
 			m("p", "These file widgets operate on a single file array stream"),
 
 			// FileSelect/FileList
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.FileSelect, {
 					field: {
 						id: "file-in",
@@ -289,7 +289,7 @@ m.mount(document.getElementById("page"), {
 			}),
 
 			// ImageMulti/FileList
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageMulti, {
 					field: {
 						id: "image-in",
@@ -315,7 +315,7 @@ m.mount(document.getElementById("page"), {
 			}),
 
 			// SignBuilder/ImagePreview
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.SignBuilder, {
 					field: {
 						id: "sign-in",
@@ -341,11 +341,11 @@ m.mount(document.getElementById("page"), {
 			}),
 
 			m("h3", "Theme"),
-			m("p", "Update theme classes on the fly, and use your favourite css"),
-			m("p", "Try changing classes available from tachyons css"),
+			m("p", "Update theme classes on the fly and use your existing css"),
+			m("p", "Try other available classes in tachyons css"),
 
 			// Labels
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "label-col",
@@ -365,7 +365,7 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Inputs
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "label-col",
@@ -385,7 +385,7 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Buttons
-			m(".mw8.flex.mb2", [
+			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "button-bg",

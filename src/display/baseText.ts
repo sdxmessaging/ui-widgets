@@ -2,6 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
+import { txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export class BaseText implements ClassComponent<IPropWidget> {
@@ -12,11 +13,12 @@ export class BaseText implements ClassComponent<IPropWidget> {
 			class: classes,
 			style
 		}, [
-				getDisplayLabel(field),
-				m("span.ws-normal", {
-					title: value()
-				}, value())
-			]);
+			getDisplayLabel(field),
+			m("span.ws-normal", {
+				title: value(),
+				class: txtCls()
+			}, value())
+		]);
 	}
 
 }

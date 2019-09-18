@@ -3,6 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
+import { txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export class SelectText implements ClassComponent<IPropWidget> {
@@ -18,7 +19,8 @@ export class SelectText implements ClassComponent<IPropWidget> {
 		}, [
 				getDisplayLabel(field),
 				m("span.ws-normal", {
-					title: label
+					title: label,
+					class: txtCls()
 				}, label)
 			]);
 	}

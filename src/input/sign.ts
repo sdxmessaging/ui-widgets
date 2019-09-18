@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { getIcon, signAspectRatio } from "../theme";
+import { getIcon, signAspectRatio, txtCls } from "../theme";
 import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
@@ -77,66 +77,68 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		return m(".relative", {
 			class: containerClass
 		}, [
-				getLabel(field),
-				this.state() === SignState.Select
-					? m(".aspect-ratio.dark-gray.bg-white.ba.bw1.br3.b--dashed.b--black-30.pointer", {
+			getLabel(field),
+			this.state() === SignState.Select
+				? m(".aspect-ratio.dark-gray.bg-white.ba.bw1.br3.b--dashed.b--black-30.pointer", {
+					id,
+					style: signAspectRatio
+				},
+					fileObj
+						// Current signature
+						? m(".aspect-ratio--object.hide-child.dim", {
+							onclick: () => value([])
+						}, [
+							m("img.img.w-100", {
+								src: imgSrc(fileObj.path, fileObj.dataUrl)
+							}),
+							// Remove signature button
+							m(".pa3.absolute.top-0.right-0.child",
+								m("i.fa-2x", {
+									class: getIcon("fa-eraser")
+								})
+							)
+						])
+						// Draw/Type buttons
+						: m(".aspect-ratio--object.flex.items-stretch.justify-center", {
+							class: txtCls()
+						}, [
+							m(".flex-auto.flex.items-center.justify-center.tc.dim", {
+								onclick: () => this.state(SignState.Draw)
+							},
+								m("i.fa-2x", {
+									class: getIcon("fa-pen-nib")
+								}),
+								m("span.ml2", "Sign")
+							),
+							m(".flex-auto.flex.items-center.justify-center.tc.dim", {
+								onclick: () => this.state(SignState.Type)
+							},
+								m("i.fa-2x", {
+									class: getIcon("fa-keyboard")
+								}),
+								m("span.ml2", "Type")
+							)
+						])
+				)
+				: this.state() === SignState.Readonly
+					? m(".aspect-ratio.dark-gray.bg-white.br3", {
 						id,
 						style: signAspectRatio
 					},
 						fileObj
 							// Current signature
-							? m(".aspect-ratio--object.hide-child.dim", {
-								onclick: () => value([])
-							}, [
-									m("img.img.w-100", {
-										src: imgSrc(fileObj.path, fileObj.dataUrl)
-									}),
-									// Remove signature button
-									m(".pa3.absolute.top-0.right-0.child",
-										m("i.fa-2x", {
-											class: getIcon("fa-eraser")
-										})
-									)
-								])
-							// Draw/Type buttons
-							: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
-								m(".flex-auto.flex.items-center.justify-center.tc.dim", {
-									onclick: () => this.state(SignState.Draw)
-								},
-									m("i.fa-2x", {
-										class: getIcon("fa-pen-nib")
-									}),
-									m("span.ml2", "Sign")
-								),
-								m(".flex-auto.flex.items-center.justify-center.tc.dim", {
-									onclick: () => this.state(SignState.Type)
-								},
-									m("i.fa-2x", {
-										class: getIcon("fa-keyboard")
-									}),
-									m("span.ml2", "Type")
-								)
-							])
+							? m(".aspect-ratio--object.hide-child",
+								m("img.img.w-100", {
+									src: imgSrc(fileObj.path, fileObj.dataUrl)
+								}),
+							)
+							: null
 					)
-					: this.state() === SignState.Readonly
-						? m(".aspect-ratio.dark-gray.bg-white.br3", {
-							id,
-							style: signAspectRatio
-						},
-							fileObj
-								// Current signature
-								? m(".aspect-ratio--object.hide-child",
-									m("img.img.w-100", {
-										src: imgSrc(fileObj.path, fileObj.dataUrl)
-									}),
-								)
-								: null
-						)
-						: m(this.state() === SignState.Draw ? SignDraw : SignType, {
-							onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
-							onCancel: () => this.state(SignState.Select)
-						})
-			]);
+					: m(this.state() === SignState.Draw ? SignDraw : SignType, {
+						onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
+						onCancel: () => this.state(SignState.Select)
+					})
+		]);
 	}
 
 }
