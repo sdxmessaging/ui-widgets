@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { getIcon, txtCls } from "../theme";
+import { drgCls, filCls, getIcon } from "../theme";
 import { guid } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -36,8 +36,8 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 			dragging: this.dragging,
 			onSet: setFile(value)
 		},
-			m(".pa2.ba.b--dashed.br2", {
-				class: this.dragging() ? "b--blue blue" : `b--light-silver ${txtCls()}`
+			m(".pa2", {
+				class: this.dragging() ? drgCls() : filCls()
 			}, [
 					m("i.mr2", {
 						class: getIcon("fa-file-upload")

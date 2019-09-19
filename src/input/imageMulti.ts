@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { getIcon, txtCls } from "../theme";
+import { drgCls, filCls, getIcon } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
 import { Thumbnail } from "../display/thumbnail";
@@ -53,8 +53,8 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addFiles(value, ImageMulti.maxImageSize)
 			},
-				m(".w-100.pa1.ba.bw1.b--dashed.br3.dt.tc", {
-					class: `${classes} ${this.dragging() ? "b--blue blue" : `b--light-silver ${txtCls()}`}`
+				m(".w-100.pa1.dt.tc", {
+					class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
 				},
 					m("i.fa-2x.dtc.v-mid", {
 						class: getIcon("fa-camera")

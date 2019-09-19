@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { getIcon, imgMaxSize, txtCls } from "../theme";
+import { drgCls, filCls, getIcon, imgMaxSize } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -51,8 +51,8 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			dragging: this.dragging,
 			onSet: setFile(value, ImageSelect.maxImageSize)
 		},
-			m(".w-100.pa1.contain.ba.bw1.b--dashed.br3.dt.tc", {
-				class: `${classes} ${this.dragging() ? "b--blue blue" : `b--light-silver ${txtCls()}`}`
+			m(".w-100.pa1.contain.dt.tc", {
+				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
 			},
 				fileObj
 					? m("img.img.contain", {

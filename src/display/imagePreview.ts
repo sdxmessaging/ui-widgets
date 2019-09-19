@@ -3,16 +3,16 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getIcon, imgMaxSize, classMap } from "../theme";
+import { classMap, getIcon, imgMaxSize } from "../theme";
 import { getDisplayLabel, imgSrc } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { classes, style } = field;
+		const { classes = "", style } = field;
 		const file = lodash.head(value());
-		return m(".pa2.flex.flex-column.bb.b--black-20", {
-			class: classes,
+		return m(".pa2.flex.flex-column", {
+			class: `${classMap.dspBrd()} ${classes}`,
 			style
 		}, [
 				getDisplayLabel(field),

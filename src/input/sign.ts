@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { getIcon, signAspectRatio, txtCls } from "../theme";
+import { filCls, getIcon, signAspectRatio } from "../theme";
 import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
@@ -70,8 +70,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
 			id,
-			// required, disabled, autofocus,
-			containerClass
+			// required
+			classes = "", containerClass
 		} = field;
 		const fileObj = lodash.head(value());
 		return m(".relative", {
@@ -79,8 +79,9 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		}, [
 			getLabel(field),
 			this.state() === SignState.Select
-				? m(".aspect-ratio.dark-gray.bg-white.ba.bw1.br3.b--dashed.b--black-30.pointer", {
+				? m(".aspect-ratio.pointer", {
 					id,
+					class: `${filCls()} ${classes}`,
 					style: signAspectRatio
 				},
 					fileObj
@@ -99,9 +100,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							)
 						])
 						// Draw/Type buttons
-						: m(".aspect-ratio--object.flex.items-stretch.justify-center", {
-							class: txtCls()
-						}, [
+						: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
 							m(".flex-auto.flex.items-center.justify-center.tc.dim", {
 								onclick: () => this.state(SignState.Draw)
 							},
@@ -121,7 +120,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						])
 				)
 				: this.state() === SignState.Readonly
-					? m(".aspect-ratio.dark-gray.bg-white.br3", {
+					? m(".aspect-ratio.br3", {
 						id,
 						style: signAspectRatio
 					},

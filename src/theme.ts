@@ -18,11 +18,17 @@ export const classMap: ITheme = {
 	lblFnt: stream("f6"),
 	// Display
 	dspFnt: stream("truncate"),
+	dspBrd: stream("bb b--black-20"), //
 	// Input
 	inpHgt: stream("h2"),
 	inpCol: stream("dark-gray"),
 	inpFnt: stream("fw2"),
 	inpBrd: stream("bn"),
+	// File/Hover
+	filBrd: stream("ba bw1 br3 b--dashed"),
+	filBrdCol: stream("b--black-30"),
+	drgCol: stream("b--blue"),
+	drgBrdCol: stream("blue"),
 	// Button
 	btnBg: stream("bg-light-blue"),
 	btnCol: stream("dark-gray"),
@@ -34,27 +40,33 @@ export const classMap: ITheme = {
 function joinCls(classes: string[]) {
 	return classes.join(" ");
 }
-function compositeClass(keys: ReadonlyArray<TThemeKey>): stream<string> {
-	return stream.merge(lodash.map(keys, (key) => classMap[key])).map(joinCls);
+function compositeClass(keys: ReadonlyArray<TThemeKey>, streams: ReadonlyArray<stream<string>> = []): stream<string> {
+	return stream
+		.merge(lodash.concat(lodash.map(keys, (key) => classMap[key]), streams))
+		.map(joinCls);
 }
 
-// Input labels
-export const lblCls = compositeClass(["lblCol", "lblFnt"]);
 // Display labels
 export const dspLblCls = compositeClass(["lblCol", "dspFnt"]);
+// Input labels
+export const lblCls = compositeClass(["lblCol", "lblFnt"]);
 // Non-text input font
 export const txtCls = compositeClass(["inpCol", "inpFnt"]);
 // Textarea font
-export const areaCls = stream.merge([classMap.inpBrd, txtCls]).map(joinCls);
+export const areaCls = compositeClass(["inpBrd"], [txtCls]);
 // Typical input
-export const inpCls = stream.merge([classMap.inpHgt, areaCls]).map(joinCls);
+export const inpCls = compositeClass(["inpHgt"], [areaCls]);
+// File border
+export const filCls = compositeClass(["filBrd", "filBrdCol"], [txtCls]);
+// File dragover border
+export const drgCls = compositeClass(["inpFnt", "filBrd", "drgCol", "drgBrdCol"]);
 // Global button
 export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnBrd"])
 
 export function updateTheme(newTheme: Partial<TThemeUpdate>) {
-	lodash.forEach(newTheme, (value, key) => {
+	lodash.forEach(newTheme, (value = "", key) => {
 		if (key in classMap) {
-			classMap[key as TThemeKey](value || "");
+			classMap[key as TThemeKey](value);
 		}
 	});
 }

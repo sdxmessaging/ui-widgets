@@ -24,7 +24,6 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 				value: val(),
 				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${inpCls()} ${classes}`,
 				required, readonly, disabled, autofocus, autocomplete,
-				// Update value on selection
 				onchange: setValue(val)
 			},
 				lodash.map(options, ({ label, value }) => m("option", {

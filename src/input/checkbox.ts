@@ -27,7 +27,6 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					checked: value(),
 					required, autocomplete,
 					disabled: disabled || readonly,
-					// Update value on check
 					onchange: setCheck(value),
 				}),
 				getLabelText(label, required)

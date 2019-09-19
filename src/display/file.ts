@@ -3,15 +3,15 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getIcon, txtCls } from "../theme";
+import { classMap, getIcon, txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export class FileList implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { classes, style } = field;
-		return m(".pa2.flex.flex-column.bb.b--black-20", {
-			class: classes,
+		const { classes = "", style } = field;
+		return m(".pa2.flex.flex-column", {
+			class: `${classMap.dspBrd()} ${classes}`,
 			style
 		}, [
 				getDisplayLabel(field),
