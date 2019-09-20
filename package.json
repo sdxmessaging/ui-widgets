@@ -12,7 +12,7 @@
   "author": "Michael Pastuch",
   "homepage": "https://github.com/sdxmessaging/ui-widgets",
   "bugs": "https://github.com/sdxmessaging/ui-widgets/issues",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "./umd/index.js",
   "module": "./dist/index.js",
   "types": "./lib/index.d.ts",

@@ -18,7 +18,7 @@ export const classMap: ITheme = {
 	lblFnt: stream("f6"),
 	// Display
 	dspFnt: stream("truncate"),
-	dspBrd: stream("bb b--black-20"), //
+	dspBrd: stream("bb b--black-20"),
 	// Input
 	inpHgt: stream("h2"),
 	inpCol: stream("dark-gray"),
