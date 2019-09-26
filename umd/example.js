@@ -349,7 +349,7 @@ m.mount(document.getElementById("page"), {
 		m(".flex.mb2", [
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
-					id: "label-col",
+					id: "theme-label-col",
 					label: "Label Colour",
 					type: "text"
 				},
@@ -357,7 +357,7 @@ m.mount(document.getElementById("page"), {
 			})),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
-					id: "button-bg",
+					id: "theme-label-fnt",
 					label: "Label Font",
 					type: "text"
 				},
@@ -369,7 +369,7 @@ m.mount(document.getElementById("page"), {
 		m(".flex.mb2", [
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
-					id: "label-col",
+					id: "theme-input-col",
 					label: "Input Colour",
 					type: "text"
 				},
@@ -377,7 +377,7 @@ m.mount(document.getElementById("page"), {
 			})),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
-					id: "button-bg",
+					id: "theme-input-brd",
 					label: "Input Border",
 					type: "text"
 				},
@@ -389,7 +389,7 @@ m.mount(document.getElementById("page"), {
 		m(".flex.mb2", [
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
-					id: "button-bg",
+					id: "theme-button-bg",
 					label: "Button Background Colour",
 					type: "text"
 				},
@@ -397,7 +397,7 @@ m.mount(document.getElementById("page"), {
 			})),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
-					id: "button-brd",
+					id: "theme-button-brd",
 					label: "Button Border",
 					type: "text"
 				},

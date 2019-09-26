@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
 import { lblCls } from "../theme";
+import { getLabelText } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -75,10 +76,10 @@ export class FileInput implements ClassComponent<IFileInput> {
 				disabled: disabled || readonly,
 				onchange: change(onSet)
 			}),
-			m("span.db.mb1", {
+			label ? m("span.db.mb1", {
 				title: label,
 				class: lblCls()
-			}, label),
+			}, getLabelText(label, required)) : null,
 			children
 		]);
 	}

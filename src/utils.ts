@@ -23,18 +23,18 @@ export function imgSrc(path: string, dataUrl?: string): string {
 // Used by display widgets
 // TODO Consolidate with getLabel
 export function getDisplayLabel({ label }: TField) {
-	return m("span.mr2.silver.truncate", {
+	return label ? m("span.mr2.silver.truncate", {
 		title: label,
 		class: dspLblCls()
-	}, label);
+	}, label) : null;
 }
 
 export function getLabel({ id, label, required }: TField) {
-	return m("label.mb1.db", {
+	return label ? m("label.mb1.db", {
 		title: label,
 		for: id,
 		class: lblCls()
-	}, getLabelText(label, required));
+	}, getLabelText(label, required)) : null;
 }
 
 // Input widget TProp update helpers
