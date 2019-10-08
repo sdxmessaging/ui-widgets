@@ -57,9 +57,10 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 			},
 				m("canvas.aspect-ratio--object")
 			),
-			m(".pa2.bg-white.br2.absolute.right-0.z-999", [
+			m(".absolute.top-0.right-0.z-999", {
+				style: { transform: "translateY(-100%)" }
+			}, [
 				m(Button, {
-					label: "Apply",
 					icon: "fa-check",
 					classes: "ma1",
 					onclick: () => {
@@ -69,18 +70,16 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 					}
 				}),
 				m(Button, {
-					label: "Reset",
 					icon: "fa-eraser",
 					classes: "ma1",
 					onclick: () => this.resetCanvas()
 				}),
 				m(Button, {
-					label: "Cancel",
 					icon: "fa-times",
 					classes: "ma1",
 					onclick: onCancel
 				})
-			])
+			]),
 		];
 	}
 

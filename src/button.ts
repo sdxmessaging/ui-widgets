@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { getIcon, btnClass } from "./theme";
 
 interface IButton {
-	readonly label: string;
+	readonly label?: string;
 	readonly type?: "submit" | "reset" | "button";
 	readonly icon?: string;
 	readonly classes?: string;
@@ -24,8 +24,8 @@ export class Button implements ClassComponent<IButton> {
 			style,
 			onclick,
 		},
-			icon ? m("i.fa-fw.mr2", {
-				class: getIcon(icon)
+			icon ? m("i.fa-fw", {
+				class: `${label ? "mr2" : ""} ${getIcon(icon)}`
 			}) : null,
 			label
 		);

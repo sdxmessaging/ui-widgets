@@ -55,21 +55,20 @@ export class SignType implements ClassComponent<ISignWidget> {
 					}
 				})
 			),
-			m(".pa2.bg-white.br2.absolute.right-0.z-999", [
+			m(".absolute.top-0.right-0.z-999", {
+				style: { transform: "translateY(-100%)" }
+			}, [
 				m(Button, {
-					label: "Apply",
 					icon: "fa-check",
 					classes: "ma1",
 					onclick: applyText(this.text, onSet)
 				}),
 				m(Button, {
-					label: "Reset",
 					icon: "fa-eraser",
 					classes: "ma1",
 					onclick: () => this.text("")
 				}),
 				m(Button, {
-					label: "Cancel",
 					icon: "fa-times",
 					classes: "ma1",
 					onclick: onCancel

@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 interface IButton {
-    readonly label: string;
+    readonly label?: string;
     readonly type?: "submit" | "reset" | "button";
     readonly icon?: string;
     readonly classes?: string;
