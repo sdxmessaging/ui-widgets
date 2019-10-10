@@ -23,7 +23,7 @@ export function imgSrc(path: string, dataUrl?: string): string {
 // Used by display widgets
 // TODO Consolidate with getLabel
 export function getDisplayLabel({ label }: TField) {
-	return label ? m("span.mr2.silver.truncate", {
+	return label ? m("span.mr2.truncate", {
 		title: label,
 		class: dspLblCls()
 	}, label) : null;

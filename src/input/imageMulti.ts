@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { drgCls, filCls, getIcon } from "../theme";
+import { btnClass, drgCls, filCls, getIcon } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
 import { Thumbnail } from "../display/thumbnail";
@@ -66,8 +66,9 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					src: imgSrc(file.path, file.dataUrl),
 					style: { "max-height": "6rem" }
 				},
-					m(".pa2.bg-white.ba.b--light-silver.br2.absolute.top-0.right-0.child.pointer", {
+					m(".pa2.absolute.top-0.right-0.child.pointer", {
 						title: `Remove ${file.name}`,
+						class: btnClass(),
 						onclick: removeFile(value, file.guid)
 					},
 						m("i.fa-lg", {
