@@ -89,7 +89,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						? m(".aspect-ratio--object.hide-child.dim", {
 							onclick: () => value([])
 						}, [
-							m("img.img.w-100", {
+							m("img.img.w-100.absolute", {
 								src: imgSrc(fileObj.path, fileObj.dataUrl)
 							}),
 							// Remove signature button
@@ -122,13 +122,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				: this.state() === SignState.Readonly
 					? m(".aspect-ratio", {
 						id,
-						class: `${filCls()} ${classes}`,
+						class: classes,
 						style: signAspectRatio
 					},
 						fileObj
 							// Current signature
-							? m(".aspect-ratio--object.hide-child",
-								m("img.img.w-100", {
+							? m(".aspect-ratio--object",
+								m("img.img.w-100.absolute", {
 									src: imgSrc(fileObj.path, fileObj.dataUrl)
 								}),
 							)
