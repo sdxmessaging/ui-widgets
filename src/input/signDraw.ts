@@ -61,6 +61,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 				style: { transform: "translateY(-100%)" }
 			}, [
 				m(Button, {
+					title: "Apply",
 					icon: "fa-check",
 					classes: "ma1",
 					onclick: () => {
@@ -70,11 +71,13 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 					}
 				}),
 				m(Button, {
+					title: "Reset",
 					icon: "fa-eraser",
 					classes: "ma1",
 					onclick: () => this.resetCanvas()
 				}),
 				m(Button, {
+					title: "Cancel",
 					icon: "fa-times",
 					classes: "ma1",
 					onclick: onCancel

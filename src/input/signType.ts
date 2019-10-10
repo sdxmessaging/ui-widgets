@@ -59,16 +59,19 @@ export class SignType implements ClassComponent<ISignWidget> {
 				style: { transform: "translateY(-100%)" }
 			}, [
 				m(Button, {
+					title: "Apply",
 					icon: "fa-check",
 					classes: "ma1",
 					onclick: applyText(this.text, onSet)
 				}),
 				m(Button, {
+					title: "Reset",
 					icon: "fa-eraser",
 					classes: "ma1",
 					onclick: () => this.text("")
 				}),
 				m(Button, {
+					title: "Cancel",
 					icon: "fa-times",
 					classes: "ma1",
 					onclick: onCancel

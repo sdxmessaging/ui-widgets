@@ -120,8 +120,9 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						])
 				)
 				: this.state() === SignState.Readonly
-					? m(".aspect-ratio.br3", {
+					? m(".aspect-ratio", {
 						id,
+						class: `${filCls()} ${classes}`,
 						style: signAspectRatio
 					},
 						fileObj
