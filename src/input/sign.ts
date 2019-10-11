@@ -11,12 +11,6 @@ import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 import { SignStamp } from "./signStamp";
 
-export const enum SignState {
-	Select,
-	Draw,
-	Type
-}
-
 function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 	return new Promise((resolve) => {
 		const image = new Image();
@@ -25,17 +19,15 @@ function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 			const [width, height] = scaleRect(image.width, image.height, maxSize);
 			canvas.width = width;
 			canvas.height = height;
-			const context = canvas.getContext("2d");
-			if (context) {
-				context.drawImage(image, 0, 0, width, height);
-			}
+			const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+			context.drawImage(image, 0, 0, width, height);
 			resolve(canvas.toDataURL());
 		};
 		image.src = dataUrl;
 	});
 }
 
-export function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id: string, maxSize: number) {
+export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) {
 	return (setDataUrl: string) => {
 		return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
 			const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
@@ -48,7 +40,6 @@ export function setFile(fileList: stream<IFile[]>, state: stream<SignState>, id:
 				file: newFile,
 				dataUrl: scaledDataUrl
 			}]);
-			state(SignState.Select);
 			m.redraw();
 		});
 	};
@@ -58,17 +49,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	protected static maxImageSize = 640;
 
-	private state: stream<SignState> = stream<SignState>(SignState.Select);
-
 	private component?: ComponentTypes<ISignWidget>;
 
-	// TODO Support updates to component setting/reverting "readonly mode"
-	public oninit() {
-		this.state.map((state) => {
-			if (state === SignState.Select) {
-				this.component = undefined;
-			}
-		})
+	public oninit({ attrs: { value } }: CVnode<IFileWidget>) {
+		// Reset component on file change
+		value.map(() => this.component = undefined);
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
@@ -85,8 +70,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			// Use signature creation component (if set)
 			this.component
 				? m(this.component, {
-					onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
-					onCancel: () => this.state(SignState.Select)
+					onSet: setFile(value, id, SignBuilder.maxImageSize),
+					onCancel: () => this.component = undefined
 				})
 				: readonly || disabled
 					// Display component in "readonly" mode
@@ -129,10 +114,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
 								// TODO Provide means to enable/disable each option
 								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-									onclick: () => {
-										this.state(SignState.Draw);
-										this.component = SignDraw;
-									}
+									onclick: () => this.component = SignDraw
 								},
 									m("i.fa-2x", {
 										class: getIcon("fa-pen-nib")
@@ -140,10 +122,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									m("span.mt2", "Sign")
 								),
 								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-									onclick: () => {
-										this.state(SignState.Type);
-										this.component = SignType;
-									}
+									onclick: () => this.component = SignType
 								},
 									m("i.fa-2x", {
 										class: getIcon("fa-keyboard")
@@ -151,10 +130,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									m("span.mt2", "Type")
 								),
 								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-									onclick: () => {
-										this.state(SignState.Type);
-										this.component = SignStamp;
-									}
+									onclick: () => this.component = SignStamp
 								},
 									m("i.fa-2x", {
 										class: getIcon("fa-stamp")

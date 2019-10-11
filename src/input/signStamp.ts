@@ -13,12 +13,10 @@ export function applyText(callback: ISignWidget["onSet"]) {
 		canvas.width = 600;
 		canvas.height = 150;
 		const fontSize = 0.56 * canvas.height;
-		const context = canvas.getContext("2d");
-		if (context) {
-			context.textBaseline = "middle";
-			context.font = `200 ${fontSize}px sans-serif`;
-			context.fillText("Accepted", 8, canvas.height * 0.52);
-		}
+		const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+		context.textBaseline = "middle";
+		context.font = `200 ${fontSize}px sans-serif`;
+		context.fillText("Accepted", 8, canvas.height * 0.52);
 		callback(canvas.toDataURL());
 	};
 }
@@ -41,7 +39,7 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 				style: signAspectRatio,
 				onsubmit: applyText(onSet)
 			},
-				m(".flex.items-center.aspect-ratio--object.pa2", {
+				m(".flex.items-center.aspect-ratio--object.pa2.pointer", {
 					onclick: () => this.checked(!this.checked())
 				}, [
 					m("i.mr2", {

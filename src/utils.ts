@@ -202,11 +202,9 @@ export function resizeImage(file: File, maxSize: number, type?: string): Promise
 					canvas.width = width;
 					canvas.height = height;
 				}
-				const context = canvas.getContext("2d");
-				if (context) {
-					rotateContext(context, width, height, orientation);
-					context.drawImage(image, 0, 0, width, height);
-				}
+				const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+				rotateContext(context, width, height, orientation);
+				context.drawImage(image, 0, 0, width, height);
 				resolve(canvas.toDataURL(type));
 			};
 			reader.onload = () => {

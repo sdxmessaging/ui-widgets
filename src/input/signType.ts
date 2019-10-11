@@ -15,12 +15,10 @@ export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) 
 			canvas.width = 600;
 			canvas.height = 150;
 			const fontSize = 0.56 * canvas.height;
-			const context = canvas.getContext("2d");
-			if (context) {
-				context.textBaseline = "middle";
-				context.font = `${fontSize}px Caveat`;
-				context.fillText(text(), 8, canvas.height * 0.52);
-			}
+			const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+			context.textBaseline = "middle";
+			context.font = `${fontSize}px Caveat`;
+			context.fillText(text(), 8, canvas.height * 0.52);
 			callback(canvas.toDataURL());
 		}
 		return false;
