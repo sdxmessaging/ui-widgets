@@ -7,7 +7,7 @@ import { getIcon, signAspectRatio } from "../theme";
 
 import { Button } from "../button";
 
-export function applyText(callback: ISignWidget["onSet"]) {
+export function applyStamp(callback: ISignWidget["onSet"]) {
 	return () => {
 		const canvas = document.createElement("canvas");
 		canvas.width = 600;
@@ -37,7 +37,7 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 		return [
 			m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
 				style: signAspectRatio,
-				onsubmit: applyText(onSet)
+				onsubmit: applyStamp(onSet)
 			},
 				m(".flex.items-center.aspect-ratio--object.pa2.pointer", {
 					onclick: () => this.checked(!this.checked())
@@ -56,7 +56,7 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 					icon: "fa-check",
 					classes: "ma1",
 					disabled: !this.checked(),
-					onclick: applyText(onSet)
+					onclick: applyStamp(onSet)
 				}),
 				// m(Button, {
 				// 	title: "Reset",

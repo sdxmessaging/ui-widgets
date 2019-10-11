@@ -32,11 +32,11 @@ export class SignType implements ClassComponent<ISignWidget> {
 	public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
 		const input = dom.children[0] as HTMLInputElement;
 		input.focus({ preventScroll: false });
-		this.scaleText(input, dom as HTMLElement);
+		this.scaleText(dom as HTMLElement);
 	}
 
 	public onupdate({ dom }: CVnodeDOM<ISignWidget>) {
-		this.scaleText(dom.children[0] as HTMLInputElement, dom as HTMLElement);
+		this.scaleText(dom as HTMLElement);
 	}
 
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
@@ -79,9 +79,9 @@ export class SignType implements ClassComponent<ISignWidget> {
 	}
 
 	// Post render update text input font based on container size
-	private scaleText(input: HTMLInputElement, container: HTMLElement) {
+	private scaleText(container: HTMLElement) {
 		const height = container.offsetHeight;
-		input.style.fontSize = `${0.56 * height}px`;
+		container.style.fontSize = `${0.56 * height}px`;
 	}
 
 }
