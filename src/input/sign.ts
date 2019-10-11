@@ -1,17 +1,17 @@
 import lodash from "lodash";
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { ClassComponent, ComponentTypes, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, IFileWidget } from "../interface/widget";
+import { IFile, IFileWidget, ISignWidget } from "../interface/widget";
 
 import { filCls, getIcon, signAspectRatio } from "../theme";
 import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
+import { SignStamp } from "./signStamp";
 
 export const enum SignState {
-	Readonly,
 	Select,
 	Draw,
 	Type
@@ -60,17 +60,21 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	private state: stream<SignState> = stream<SignState>(SignState.Select);
 
+	private component?: ComponentTypes<ISignWidget>;
+
 	// TODO Support updates to component setting/reverting "readonly mode"
-	public oninit({ attrs: { field: { readonly, disabled } } }: CVnode<IFileWidget>) {
-		if (readonly || disabled) {
-			this.state(SignState.Readonly);
-		}
+	public oninit() {
+		this.state.map((state) => {
+			if (state === SignState.Select) {
+				this.component = undefined;
+			}
+		})
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
 			id,
-			// required
+			readonly, disabled,
 			classes = "", containerClass
 		} = field;
 		const fileObj = lodash.head(value());
@@ -78,48 +82,14 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			class: containerClass
 		}, [
 			getLabel(field),
-			this.state() === SignState.Select
-				? m(".aspect-ratio.pointer", {
-					id,
-					class: `${filCls()} ${classes}`,
-					style: signAspectRatio
-				},
-					fileObj
-						// Current signature
-						? m(".aspect-ratio--object.hide-child.dim", {
-							onclick: () => value([])
-						}, [
-							m("img.img.w-100.absolute", {
-								src: imgSrc(fileObj.path, fileObj.dataUrl)
-							}),
-							// Remove signature button
-							m(".pa3.absolute.top-0.right-0.child",
-								m("i.fa-2x", {
-									class: getIcon("fa-eraser")
-								})
-							)
-						])
-						// Draw/Type buttons
-						: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
-							m(".flex-auto.flex.items-center.justify-center.tc.dim", {
-								onclick: () => this.state(SignState.Draw)
-							},
-								m("i.fa-2x", {
-									class: getIcon("fa-pen-nib")
-								}),
-								m("span.ml2", "Sign")
-							),
-							m(".flex-auto.flex.items-center.justify-center.tc.dim", {
-								onclick: () => this.state(SignState.Type)
-							},
-								m("i.fa-2x", {
-									class: getIcon("fa-keyboard")
-								}),
-								m("span.ml2", "Type")
-							)
-						])
-				)
-				: this.state() === SignState.Readonly
+			// Use signature creation component (if set)
+			this.component
+				? m(this.component, {
+					onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
+					onCancel: () => this.state(SignState.Select)
+				})
+				: readonly || disabled
+					// Display component in "readonly" mode
 					? m(".aspect-ratio", {
 						id,
 						class: classes,
@@ -134,10 +104,65 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							)
 							: null
 					)
-					: m(this.state() === SignState.Draw ? SignDraw : SignType, {
-						onSet: setFile(value, this.state, id, SignBuilder.maxImageSize),
-						onCancel: () => this.state(SignState.Select)
-					})
+					// Display signature picker
+					: m(".aspect-ratio.pointer", {
+						id,
+						class: `${filCls()} ${classes}`,
+						style: signAspectRatio
+					},
+						fileObj
+							// Current signature
+							? m(".aspect-ratio--object.hide-child.dim", {
+								onclick: () => value([])
+							}, [
+								m("img.img.w-100.absolute", {
+									src: imgSrc(fileObj.path, fileObj.dataUrl)
+								}),
+								// Remove signature button
+								m(".pa3.absolute.top-0.right-0.child",
+									m("i.fa-2x", {
+										class: getIcon("fa-eraser")
+									})
+								)
+							])
+							// Signature creation options
+							: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
+								// TODO Provide means to enable/disable each option
+								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+									onclick: () => {
+										this.state(SignState.Draw);
+										this.component = SignDraw;
+									}
+								},
+									m("i.fa-2x", {
+										class: getIcon("fa-pen-nib")
+									}),
+									m("span.mt2", "Sign")
+								),
+								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+									onclick: () => {
+										this.state(SignState.Type);
+										this.component = SignType;
+									}
+								},
+									m("i.fa-2x", {
+										class: getIcon("fa-keyboard")
+									}),
+									m("span.mt2", "Type")
+								),
+								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+									onclick: () => {
+										this.state(SignState.Type);
+										this.component = SignStamp;
+									}
+								},
+									m("i.fa-2x", {
+										class: getIcon("fa-stamp")
+									}),
+									m("span.mt2", "Agree")
+								)
+							])
+					)
 		]);
 	}
 
