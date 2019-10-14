@@ -21,12 +21,16 @@ o.spec("SignStamp", () => {
 	});
 
 	o("apply", () => {
-		const spy = o.spy(() => null);
-		const apply = applyStamp(spy);
-		// Spy should not be called with empty text
-		apply();
-		o(spy.callCount).equals(1);
-		// spy.args[0] will be a base64 encoded png of text on a canvas
+		const canvas = document.createElement("canvas");
+		// Hardcode canvas size for test
+		Object.defineProperties(canvas, {
+			clientWidth: { get: () => 40 },
+			clientHeight: { get: () => 10 }
+		});
+		applyStamp(canvas, false);
+		const stampedUrl = canvas.toDataURL();
+		applyStamp(canvas, true);
+		o(stampedUrl === canvas.toDataURL()).equals(false);
 	});
 
 });

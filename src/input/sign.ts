@@ -119,7 +119,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									m("i.fa-2x", {
 										class: getIcon("fa-pen-nib")
 									}),
-									m("span.mt2", "Sign")
+									m("span.mt2", "Draw")
 								),
 								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
 									onclick: () => this.component = SignType
@@ -135,7 +135,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									m("i.fa-2x", {
 										class: getIcon("fa-stamp")
 									}),
-									m("span.mt2", "Agree")
+									m("span.mt2", "Accept")
 								)
 							])
 					)

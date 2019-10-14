@@ -5,6 +5,10 @@ import { TField, TProp } from "./interface/widget";
 
 import { dspLblCls, lblCls } from "./theme";
 
+export function pxRatio() {
+	return Math.max(window.devicePixelRatio, 1);
+}
+
 export function guid(): string {
 	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
 		const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -189,7 +193,6 @@ export function resizeImage(file: File, maxSize: number, type?: string): Promise
 	}
 	return readOrientation(file)
 		.then((orientation) => new Promise((resolve) => {
-			const reader = new FileReader();
 			const image = new Image();
 			image.onload = () => {
 				const canvas = document.createElement("canvas");
@@ -207,9 +210,8 @@ export function resizeImage(file: File, maxSize: number, type?: string): Promise
 				context.drawImage(image, 0, 0, width, height);
 				resolve(canvas.toDataURL(type));
 			};
-			reader.onload = () => {
-				image.src = reader.result as string;
-			};
+			const reader = new FileReader();
+			reader.onload = () => image.src = reader.result as string;
 			reader.readAsDataURL(file);
 		}));
 }

@@ -5,12 +5,9 @@ import SignaturePad from "signature_pad";
 import { ISignWidget } from "../interface/widget";
 
 import { signAspectRatio } from "../theme";
+import { pxRatio } from "../utils";
 
 import { Button } from "../button";
-
-function pxRatio() {
-	return Math.max(window.devicePixelRatio, 1);
-}
 
 export class SignDraw implements ClassComponent<ISignWidget> {
 

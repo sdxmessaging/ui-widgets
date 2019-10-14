@@ -3,50 +3,52 @@ import stream from "mithril/stream";
 
 import { ISignWidget } from "../interface/widget";
 
-import { getIcon, signAspectRatio } from "../theme";
+import { classMap, signAspectRatio } from "../theme";
+import { pxRatio } from "../utils";
 
 import { Button } from "../button";
 
-export function applyStamp(callback: ISignWidget["onSet"]) {
-	return () => {
-		const canvas = document.createElement("canvas");
-		canvas.width = 600;
-		canvas.height = 150;
-		const fontSize = 0.56 * canvas.height;
-		const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-		context.textBaseline = "middle";
-		context.font = `200 ${fontSize}px sans-serif`;
-		context.fillText("Accepted", 8, canvas.height * 0.52);
-		callback(canvas.toDataURL());
-	};
+export function applyStamp(canvas: HTMLCanvasElement, checked: boolean) {
+	const styles = window.getComputedStyle(canvas);
+	const ratio = pxRatio();
+	canvas.width = canvas.clientWidth * ratio;
+	canvas.height = canvas.clientHeight * ratio;
+	const fontSize = 0.56 * canvas.height;
+	const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.textBaseline = "middle";
+	context.font = `${styles["fontWeight"]} ${fontSize}px ${styles["fontFamily"]}`;
+	// checked ? fa-check-square : fa-square
+	context.fillText(checked ? "\uf14a" : "\uf0c8", canvas.height * 0.25, canvas.height * 0.52);
+	context.font = `200 ${fontSize}px sans-serif`;
+	context.fillText(checked ? "Accepted" : "Accept", canvas.height, fontSize);
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {
 
 	private checked: stream<boolean> = stream<boolean>(false);
+	private canvas?: HTMLCanvasElement;
 
 	public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
-		this.scaleText(dom as HTMLElement);
+		this.canvas = dom.children[0] as HTMLCanvasElement;
+		applyStamp(this.canvas, this.checked());
 	}
 
-	public onupdate({ dom }: CVnodeDOM<ISignWidget>) {
-		this.scaleText(dom as HTMLElement);
+	public onupdate() {
+		if (this.canvas) {
+			applyStamp(this.canvas, this.checked());
+		}
 	}
 
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
-			m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
-				style: signAspectRatio,
-				onsubmit: applyStamp(onSet)
+			m(".aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
+				style: signAspectRatio
 			},
-				m(".flex.items-center.aspect-ratio--object.pa2.pointer", {
+				m("canvas.aspect-ratio--object.pointer", {
+					class: classMap.icon(),
 					onclick: () => this.checked(!this.checked())
-				}, [
-					m("i.mr2", {
-						class: getIcon(this.checked() ? "fa-fw fa-check" : "fa-fw fa-times")
-					}),
-					m("span", "I Accept")
-				])
+				})
 			),
 			m(".absolute.top-0.right-0.z-999", {
 				style: { transform: "translateY(-100%)" }
@@ -56,7 +58,11 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 					icon: "fa-check",
 					classes: "ma1",
 					disabled: !this.checked(),
-					onclick: applyStamp(onSet)
+					onclick: () => {
+						if (this.canvas) {
+							onSet(this.canvas.toDataURL())
+						}
+					}
 				}),
 				// m(Button, {
 				// 	title: "Reset",
@@ -72,12 +78,6 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 				})
 			])
 		];
-	}
-
-	// Post render update text input font based on container size
-	private scaleText(container: HTMLElement) {
-		const height = container.offsetHeight;
-		container.style.fontSize = `${0.56 * height}px`;
 	}
 
 }

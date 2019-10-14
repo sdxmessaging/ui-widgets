@@ -8,6 +8,7 @@ import { setValue } from "../utils";
 
 import { Button } from "../button";
 
+// TODO Pass in container element to size canvas
 export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
@@ -18,7 +19,7 @@ export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) 
 			const context = canvas.getContext("2d") as CanvasRenderingContext2D;
 			context.textBaseline = "middle";
 			context.font = `${fontSize}px Caveat`;
-			context.fillText(text(), 8, canvas.height * 0.52);
+			context.fillText(text(), canvas.height * 0.05, fontSize);
 			callback(canvas.toDataURL());
 		}
 		return false;
@@ -80,7 +81,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 
 	// Post render update text input font based on container size
 	private scaleText(container: HTMLElement) {
-		const height = container.offsetHeight;
+		const height = container.clientHeight;
 		container.style.fontSize = `${0.56 * height}px`;
 	}
 

@@ -17,9 +17,9 @@
   "module": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "dependencies": {
-    "signature_pad": "^3.0.0-beta.3",
     "lodash": "^4.17.15",
-    "mithril": "^2.0.4"
+    "mithril": "^2.0.4",
+    "signature_pad": "^3.0.0-beta.3"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
