@@ -45,7 +45,7 @@ npm i @sdxmessaging/ui-widgets
 A umd version of the library is available via jsDelivr:
 
 ```html
-<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/gh/sdxmessaging/ui-widgets@1.2.2/umd/index.js"></script>
+<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/gh/sdxmessaging/ui-widgets/umd/index.js"></script>
 ```
 
 ### Quick-start with example page
