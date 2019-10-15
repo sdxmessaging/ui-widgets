@@ -1,7 +1,7 @@
 export * from "./interface/widget";
 
 export { updateTheme, getIcon } from "./theme";
-export { fileNameExtSplit } from "./utils";
+export { fileNameExtSplit, guid } from "./utils";
 
 export { Button } from "./button";
 

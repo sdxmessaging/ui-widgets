@@ -1,8 +1,13 @@
 import m from "mithril";
 import stream from "mithril/stream";
 import { TField, TProp } from "./interface/widget";
-export declare function pxRatio(): number;
+declare global {
+    interface Window {
+        msCrypto: Crypto;
+    }
+}
 export declare function guid(): string;
+export declare function pxRatio(): number;
 export declare function getLabelText(label: string, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function getDisplayLabel({ label }: TField): m.Vnode<any, any> | null;

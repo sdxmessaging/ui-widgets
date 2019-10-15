@@ -5,15 +5,34 @@ import { TField, TProp } from "./interface/widget";
 
 import { dspLblCls, lblCls } from "./theme";
 
-export function pxRatio() {
-	return Math.max(window.devicePixelRatio, 1);
+declare global {
+	// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+	interface Window { msCrypto: Crypto }
 }
 
+// Create "v4-like" (no fixed version id) uuid (based on node-uuid)
+function toHex(inp: number): string {
+	// Add to 0x100 to pad small numbers with leading 0
+	return (inp + 0x100).toString(16).substr(1);
+}
 export function guid(): string {
-	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-		const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-		return v.toString(16);
-	});
+	const bytes = new Uint8Array(16);
+	const crypto = window.crypto || window.msCrypto;
+	crypto.getRandomValues(bytes);
+	return ([
+		toHex(bytes[0]), toHex(bytes[1]),
+		toHex(bytes[2]), toHex(bytes[3]), "-",
+		toHex(bytes[4]), toHex(bytes[5]), "-",
+		toHex(bytes[6]), toHex(bytes[7]), "-",
+		toHex(bytes[8]), toHex(bytes[9]), "-",
+		toHex(bytes[10]), toHex(bytes[11]),
+		toHex(bytes[12]), toHex(bytes[13]),
+		toHex(bytes[14]), toHex(bytes[15])
+	]).join("");
+}
+
+export function pxRatio() {
+	return Math.max(window.devicePixelRatio, 1);
 }
 
 export function getLabelText(label: string, required?: boolean): string {
