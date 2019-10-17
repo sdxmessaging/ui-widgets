@@ -3,6 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { classMap, getIcon, imgMaxSize } from "../theme";
 import { getDisplayLabel, imgSrc } from "../utils";
 
@@ -23,7 +24,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 						style: imgMaxSize
 					})
 					: m("i.mt2", {
-						class: `${classMap.inpCol()} ${getIcon("fa-image")}`
+						class: `${classMap.inpCol()} ${getIcon(config.imageIcn)}`
 					})
 			]
 		);

@@ -3,6 +3,7 @@ import stream from "mithril/stream";
 
 import { ISignWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { classMap, signAspectRatio } from "../theme";
 import { pxRatio } from "../utils";
 
@@ -54,8 +55,8 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 				style: { transform: "translateY(-100%)" }
 			}, [
 				m(Button, {
-					title: "Apply",
-					icon: "fa-check",
+					title: config.applyTtl,
+					icon: config.applyIcn,
 					classes: "ma1",
 					disabled: !this.checked(),
 					onclick: () => {
@@ -65,14 +66,14 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 					}
 				}),
 				// m(Button, {
-				// 	title: "Reset",
-				// 	icon: "fa-eraser",
+				// 	title: title: config.resetTtl,
+				// 	icon: config.resetIcn,
 				// 	classes: "ma1",
 				// 	onclick: () => this.checked(false)
 				// }),
 				m(Button, {
-					title: "Cancel",
-					icon: "fa-times",
+					title: config.cancelTtl,
+					icon: config.cancelIcn,
 					classes: "ma1",
 					onclick: onCancel
 				})

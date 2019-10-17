@@ -4,6 +4,7 @@ import SignaturePad from "signature_pad";
 
 import { ISignWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { signAspectRatio } from "../theme";
 import { pxRatio } from "../utils";
 
@@ -56,8 +57,8 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 				style: { transform: "translateY(-100%)" }
 			}, [
 				m(Button, {
-					title: "Apply",
-					icon: "fa-check",
+					title: config.applyTtl,
+					icon: config.applyIcn,
 					classes: "ma1",
 					onclick: () => {
 						if (this.signaturePad && !this.signaturePad.isEmpty()) {
@@ -66,14 +67,14 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 					}
 				}),
 				m(Button, {
-					title: "Reset",
-					icon: "fa-eraser",
+					title: config.resetTtl,
+					icon: config.resetIcn,
 					classes: "ma1",
 					onclick: () => this.resetCanvas()
 				}),
 				m(Button, {
-					title: "Cancel",
-					icon: "fa-times",
+					title: config.cancelTtl,
+					icon: config.cancelIcn,
 					classes: "ma1",
 					onclick: onCancel
 				})

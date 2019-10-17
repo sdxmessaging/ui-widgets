@@ -3,6 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { classMap, getIcon, txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
@@ -22,7 +23,7 @@ export class FileList implements ClassComponent<IFileWidget> {
 							class: txtCls()
 						}, [
 								m("i.mr2", {
-									class: getIcon("fa-file-download")
+									class: getIcon(config.downloadIcn)
 								}),
 								name
 							]);

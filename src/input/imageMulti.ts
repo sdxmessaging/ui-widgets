@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { btnClass, drgCls, filCls, getIcon } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
@@ -57,7 +58,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
 				},
 					m("i.fa-2x.dtc.v-mid", {
-						class: getIcon("fa-camera")
+						class: getIcon(config.cameraIcn)
 					})
 				)
 			),
@@ -72,7 +73,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 						onclick: removeFile(value, file.guid)
 					},
 						m("i.fa-lg", {
-							class: getIcon("fa-trash-alt")
+							class: getIcon(config.deleteIcn)
 						})
 					)
 				))

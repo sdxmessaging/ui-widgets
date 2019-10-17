@@ -3,6 +3,7 @@ import stream from "mithril/stream";
 
 import { ISignWidget, TProp } from "../interface/widget";
 
+import { config } from "../config";
 import { signAspectRatio } from "../theme";
 import { setValue } from "../utils";
 
@@ -58,20 +59,20 @@ export class SignType implements ClassComponent<ISignWidget> {
 				style: { transform: "translateY(-100%)" }
 			}, [
 				m(Button, {
-					title: "Apply",
-					icon: "fa-check",
+					title: config.applyTtl,
+					icon: config.applyIcn,
 					classes: "ma1",
 					onclick: applyText(this.text, onSet)
 				}),
 				m(Button, {
-					title: "Reset",
-					icon: "fa-eraser",
+					title: config.resetTtl,
+					icon: config.resetIcn,
 					classes: "ma1",
 					onclick: () => this.text("")
 				}),
 				m(Button, {
-					title: "Cancel",
-					icon: "fa-times",
+					title: config.cancelTtl,
+					icon: config.cancelIcn,
 					classes: "ma1",
 					onclick: onCancel
 				})

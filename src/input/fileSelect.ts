@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { drgCls, filCls, getIcon } from "../theme";
 import { guid } from "../utils";
 
@@ -40,9 +41,9 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				class: this.dragging() ? drgCls() : filCls()
 			}, [
 					m("i.mr2", {
-						class: getIcon("fa-file-upload")
+						class: getIcon(config.uploadIcn)
 					}),
-					m("span", fileObj ? fileObj.name : "Upload...")
+					m("span", fileObj ? fileObj.name : config.addFileTxt)
 				]
 			)
 		);

@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { drgCls, filCls, getIcon, imgMaxSize } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
@@ -61,7 +62,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 						style: imgMaxSize
 					})
 					: m("i.fa-2x.dtc.v-mid", {
-						class: getIcon("fa-camera")
+						class: getIcon(config.cameraIcn)
 					})
 			)
 		);

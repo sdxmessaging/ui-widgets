@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { drgCls, filCls, getIcon } from "../theme";
 import { guid } from "../utils";
 
@@ -47,21 +48,21 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					class: this.dragging() ? drgCls() : filCls()
 				}, [
 					m("i.mr2", {
-						class: getIcon("fa-file-upload")
+						class: getIcon(config.uploadIcn)
 					}),
-					m("span", "Add file(s)...")
+					m("span", config.addFilesTxt)
 				]
 				)
 			),
 			m(".flex.flex-column.mt1.nb1",
 				lodash.map(value(), (file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
 					m("i.mr2", {
-						class: getIcon("fa-file-download")
+						class: getIcon(config.downloadIcn)
 					}),
 					file.name,
 					m("i.child.fr", {
-						title: `Remove ${file.name}`,
-						class: getIcon("fa-trash-alt"),
+						title: `${config.remFileTtl} ${file.name}`,
+						class: getIcon(config.deleteIcn),
 						onclick: removeFile(value, file.guid)
 					})
 				]))

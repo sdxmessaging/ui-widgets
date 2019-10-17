@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 import { IPropWidget, TProp } from "../interface/widget";
 
 import { inpCls, lblCls } from "../theme";
+import { config } from "../config";
 import { getLabel, setValue } from "../utils";
 
 import { CheckboxInput } from "./checkbox";
@@ -24,7 +25,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				m(CheckboxInput, {
 					field: {
 						id: "showpass",
-						label: "Show Password",
+						label: config.showPassTxt,
 						type: "checkbox",
 						containerClass: `mb1 ${lblCls()}`
 					},

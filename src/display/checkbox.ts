@@ -2,6 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { classMap, getIcon } from "../theme";
 import { getDisplayLabel } from "../utils";
 
@@ -15,7 +16,7 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 		}, [
 				getDisplayLabel(field),
 				m("i.self-end", {
-					class: `${classMap.inpCol()} ${getIcon(value() ? "fa-check" : "fa-times")}`
+					class: `${classMap.inpCol()} ${getIcon(value() ? config.checkIcn : config.uncheckIcn)}`
 				})
 			]);
 	}

@@ -4,6 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget, ISignWidget } from "../interface/widget";
 
+import { config } from "../config";
 import { filCls, getIcon, signAspectRatio } from "../theme";
 import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
@@ -106,7 +107,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 								// Remove signature button
 								m(".pa3.absolute.top-0.right-0.child",
 									m("i.fa-2x", {
-										class: getIcon("fa-eraser")
+										class: getIcon(config.resetIcn)
 									})
 								)
 							])
@@ -117,25 +118,25 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									onclick: () => this.component = SignDraw
 								},
 									m("i.fa-2x", {
-										class: getIcon("fa-pen-nib")
+										class: getIcon(config.drawIcn)
 									}),
-									m("span.mt2", "Draw")
+									m("span.mt2", config.signDrawTxt)
 								),
 								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
 									onclick: () => this.component = SignType
 								},
 									m("i.fa-2x", {
-										class: getIcon("fa-keyboard")
+										class: getIcon(config.typeIcn)
 									}),
-									m("span.mt2", "Type")
+									m("span.mt2", config.signTypeTxt)
 								),
 								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
 									onclick: () => this.component = SignStamp
 								},
 									m("i.fa-2x", {
-										class: getIcon("fa-stamp")
+										class: getIcon(config.stampIcn)
 									}),
-									m("span.mt2", "Accept")
+									m("span.mt2", config.signStampTxt)
 								)
 							])
 					)

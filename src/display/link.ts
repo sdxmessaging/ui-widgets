@@ -2,6 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
+import { config } from "../config";
 import { classMap, getIcon, txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
@@ -27,22 +28,22 @@ export function linkAttrs(fieldType: string, value: TProp) {
 }
 
 export const iconMap: Record<string, string> = {
-	email: "fa-envelope",
-	tel: "fa-phone"
+	email: config.emailIcn,
+	tel: config.telIcn
 };
 
 export class Link implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { classes = "", style } = field;
+		const { type, classes = "", style } = field;
 		return m(".pa2.flex.flex-wrap", {
 			class: `${classMap.dspBrd()} ${classes}`,
 			style
 		}, [
 				getDisplayLabel(field),
-				m("a.link.dim.pointer.ws-normal", linkAttrs(field.type, value()),
+				m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()),
 					m("i.mr2", {
-						class: getIcon(iconMap[field.type] || "fa-link")
+						class: getIcon(iconMap[type] || config.linkIcn)
 					}),
 					value())
 			]);
