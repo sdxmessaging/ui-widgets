@@ -319,7 +319,12 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "sign-in",
 					label: "Signature Input",
-					type: "sign"
+					type: "sign",
+					// options: [{
+					// 	label: "", value: "stamp"
+					// }, {
+					// 	label: "", value: "type"
+					// }]
 				},
 				value: signList
 			})),

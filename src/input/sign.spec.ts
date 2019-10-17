@@ -26,6 +26,28 @@ o.spec("SignBuilder", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
+	o("options", () => {
+		const root = window.document.createElement("div");
+		const value = stream<IFile[]>([]);
+		m.mount(root, {
+			view: () => m(SignBuilder, {
+				field: {
+					id: "test",
+					label: "test",
+					type: FieldType.sign,
+					classes: "custom",
+					options: [{
+						label: "", value: "Draw"
+					}, {
+						label: "", value: "unknown"
+					}]
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+	});
+
 	o("single", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
@@ -39,6 +61,44 @@ o.spec("SignBuilder", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.sign
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+	});
+
+	o("disabled", () => {
+		const root = window.document.createElement("div");
+		const value = stream<IFile[]>([]);
+		m.mount(root, {
+			view: () => m(SignBuilder, {
+				field: {
+					id: "test",
+					label: "test",
+					type: FieldType.sign,
+					disabled: true
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+	});
+
+	o("readonly", () => {
+		const root = window.document.createElement("div");
+		const value = stream<IFile[]>([{
+			guid: "test",
+			name: "Test",
+			path: "/test/path"
+		}]);
+		m.mount(root, {
+			view: () => m(SignBuilder, {
+				field: {
+					id: "test",
+					label: "test",
+					type: FieldType.sign,
+					readonly: true
 				},
 				value
 			})

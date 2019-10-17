@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, ComponentTypes, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, IFileWidget, ISignWidget } from "../interface/widget";
+import { IFile, IFileWidget, IOptionField, ISignWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { filCls, getIcon, signAspectRatio } from "../theme";
@@ -11,6 +11,12 @@ import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 import { SignStamp } from "./signStamp";
+
+const enum SignTypes {
+	Draw = "draw",
+	Type = "type",
+	Stamp = "stamp"
+}
 
 function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 	return new Promise((resolve) => {
@@ -61,8 +67,15 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		const {
 			id,
 			readonly, disabled,
-			classes = "", containerClass
-		} = field;
+			classes = "", containerClass,
+			options = [{
+				label: "", value: SignTypes.Draw
+			}, {
+				label: "", value: SignTypes.Type
+			}, {
+				label: "", value: SignTypes.Stamp
+			}]
+		} = field as IOptionField;
 		const fileObj = lodash.head(value());
 		return m(".relative", {
 			class: containerClass
@@ -90,7 +103,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							)
 							: null
 					)
-					// Display signature picker
+					// Display signature preview/creator
 					: m(".aspect-ratio.pointer", {
 						id,
 						class: `${filCls()} ${classes}`,
@@ -112,33 +125,42 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 								)
 							])
 							// Signature creation options
-							: m(".aspect-ratio--object.flex.items-stretch.justify-center", [
-								// TODO Provide means to enable/disable each option
-								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-									onclick: () => this.component = SignDraw
-								},
-									m("i.fa-2x", {
-										class: getIcon(config.drawIcn)
-									}),
-									m("span.mt2", config.signDrawTxt)
-								),
-								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-									onclick: () => this.component = SignType
-								},
-									m("i.fa-2x", {
-										class: getIcon(config.typeIcn)
-									}),
-									m("span.mt2", config.signTypeTxt)
-								),
-								m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-									onclick: () => this.component = SignStamp
-								},
-									m("i.fa-2x", {
-										class: getIcon(config.stampIcn)
-									}),
-									m("span.mt2", config.signStampTxt)
-								)
-							])
+							: m(".aspect-ratio--object.flex.items-stretch.justify-center",
+								lodash.map(options, ({ value }) => {
+									// TODO Consider making a map of component, icon, text objects?
+									if (value === SignTypes.Draw) {
+										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+											onclick: () => this.component = SignDraw
+										},
+											m("i.fa-2x", {
+												class: getIcon(config.drawIcn)
+											}),
+											m("span.mt2", config.signDrawTxt)
+										)
+									}
+									if (value === SignTypes.Type) {
+										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+											onclick: () => this.component = SignType
+										},
+											m("i.fa-2x", {
+												class: getIcon(config.typeIcn)
+											}),
+											m("span.mt2", config.signTypeTxt)
+										);
+									}
+									if (value === SignTypes.Stamp) {
+										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+											onclick: () => this.component = SignStamp
+										},
+											m("i.fa-2x", {
+												class: getIcon(config.stampIcn)
+											}),
+											m("span.mt2", config.signStampTxt)
+										);
+									}
+									return null;
+								})
+							)
 					)
 		]);
 	}
