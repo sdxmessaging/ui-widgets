@@ -3,20 +3,16 @@ import lodash from "lodash";
 import { IConfig, TConfig } from "./interface/config";
 
 export const confMap: IConfig = {
-	// File inputs
 	addFileTxt: "Upload...",
 	addFilesTxt: "Add file(s)...",
 	remFileTtl: "Remove",
-	// Password input
 	showPassTxt: "Show Password",
-	// Signature
 	signDrawTxt: "Draw",
 	signTypeTxt: "Type",
 	signStampTxt: "Accept",
 	applyTtl: "Apply",
 	resetTtl: "Reset",
 	cancelTtl: "Cancel",
-	// Icons
 	drawIcn: "fa-pen-nib",
 	typeIcn: "fa-keyboard",
 	stampIcn: "fa-stamp",

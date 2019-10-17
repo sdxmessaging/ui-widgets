@@ -1,5 +1,6 @@
 export * from "./interface/widget";
 
+export { updateConfig } from "./config";
 export { updateTheme, getIcon } from "./theme";
 export { fileNameExtSplit, guid } from "./utils";
 
