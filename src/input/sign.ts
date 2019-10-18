@@ -126,9 +126,9 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							])
 							// Signature creation options
 							: m(".aspect-ratio--object.flex.items-stretch.justify-center",
-								lodash.map(options, ({ value }) => {
+								lodash.map(options, ({ value: type }) => {
 									// TODO Consider making a map of component, icon, text objects?
-									if (value === SignTypes.Draw) {
+									if (type === SignTypes.Draw) {
 										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
 											onclick: () => this.component = SignDraw
 										},
@@ -138,7 +138,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 											m("span.mt2", config.signDrawTxt)
 										)
 									}
-									if (value === SignTypes.Type) {
+									if (type === SignTypes.Type) {
 										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
 											onclick: () => this.component = SignType
 										},
@@ -148,7 +148,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 											m("span.mt2", config.signTypeTxt)
 										);
 									}
-									if (value === SignTypes.Stamp) {
+									if (type === SignTypes.Stamp) {
 										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
 											onclick: () => this.component = SignStamp
 										},
