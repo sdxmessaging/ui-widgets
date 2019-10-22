@@ -1,5 +1,7 @@
+import { IOption } from "./widget";
 
 export interface IConfig {
+	imageMaxSize: number;
 	/** Single file input label */
 	addFileTxt: string;
 	/** Multiple file input label */
@@ -8,6 +10,10 @@ export interface IConfig {
 	remFileTtl: string;
 	/** Password display toggle label */
 	showPassTxt: string;
+	/** Default options for signature creator */
+	signOpts: IOption[];
+	/** Maximum size for signature image in px */
+	signMaxSize: number;
 	/** Signature "Draw" button caption */
 	signDrawTxt: string;
 	/** Signature "Type" button caption */

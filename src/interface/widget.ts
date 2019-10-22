@@ -32,6 +32,12 @@ export const enum FieldType {
 	sign = "sign"
 }
 
+export const enum SignTypes {
+	Draw = "draw",
+	Type = "type",
+	Stamp = "stamp"
+}
+
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
 // Fields can include helpers "section-", "shipping", "bulling"
 // Contact fields can also be combined with "home", "work", "mobile", "fax", "pager"

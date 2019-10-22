@@ -1,3 +1,4 @@
+export { IConfig } from "./interface/config";
 export * from "./interface/widget";
 
 export { updateConfig } from "./config";

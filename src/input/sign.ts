@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, ComponentTypes, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, IFileWidget, IOptionField, ISignWidget } from "../interface/widget";
+import { IFile, IFileWidget, IOptionField, ISignWidget, SignTypes } from "../interface/widget";
 
 import { config } from "../config";
 import { filCls, getIcon, signAspectRatio } from "../theme";
@@ -11,12 +11,6 @@ import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 import { SignStamp } from "./signStamp";
-
-const enum SignTypes {
-	Draw = "draw",
-	Type = "type",
-	Stamp = "stamp"
-}
 
 function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 	return new Promise((resolve) => {
@@ -54,8 +48,6 @@ export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) 
 
 export class SignBuilder implements ClassComponent<IFileWidget> {
 
-	protected static maxImageSize = 640;
-
 	private component?: ComponentTypes<ISignWidget>;
 
 	public oninit({ attrs: { value } }: CVnode<IFileWidget>) {
@@ -68,13 +60,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			id,
 			readonly, disabled,
 			classes = "", containerClass,
-			options = [{
-				label: "", value: SignTypes.Draw
-			}, {
-				label: "", value: SignTypes.Type
-			}, {
-				label: "", value: SignTypes.Stamp
-			}]
+			options = config.signOpts
 		} = field as IOptionField;
 		const fileObj = lodash.head(value());
 		return m(".relative", {
@@ -84,7 +70,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			// Use signature creation component (if set)
 			this.component
 				? m(this.component, {
-					onSet: setFile(value, id, SignBuilder.maxImageSize),
+					onSet: setFile(value, id, config.signMaxSize),
 					onCancel: () => this.component = undefined
 				})
 				: readonly || disabled

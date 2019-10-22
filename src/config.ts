@@ -1,12 +1,22 @@
 import lodash from "lodash";
 
 import { IConfig, TConfig } from "./interface/config";
+import { SignTypes } from "./interface/widget";
 
 export const confMap: IConfig = {
+	imageMaxSize: 1280,
 	addFileTxt: "Upload...",
 	addFilesTxt: "Add file(s)...",
 	remFileTtl: "Remove",
 	showPassTxt: "Show Password",
+	signOpts: [{
+		label: "", value: SignTypes.Draw
+	}, {
+		label: "", value: SignTypes.Type
+	}, {
+		label: "", value: SignTypes.Stamp
+	}],
+	signMaxSize: 640,
 	signDrawTxt: "Draw",
 	signTypeTxt: "Type",
 	signStampTxt: "Accept",

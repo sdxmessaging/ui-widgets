@@ -41,8 +41,6 @@ export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
 
 export class ImageMulti implements ClassComponent<IFileWidget> {
 
-	protected static maxImageSize = 1280;
-
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
@@ -52,7 +50,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				field,
 				accept: "image/*",
 				dragging: this.dragging,
-				onSet: addFiles(value, ImageMulti.maxImageSize)
+				onSet: addFiles(value, config.imageMaxSize)
 			},
 				m(".w-100.pa1.dt.tc", {
 					class: `${this.dragging() ? drgCls() : filCls()} ${classes}`

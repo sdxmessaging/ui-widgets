@@ -38,8 +38,6 @@ export function setFile(fileList: stream<IFile[]>, maxSize: number) {
 
 export class ImageSelect implements ClassComponent<IFileWidget> {
 
-	protected static maxImageSize = 1280;
-
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
@@ -50,7 +48,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			accept: "image/*",
 			multiple: false,
 			dragging: this.dragging,
-			onSet: setFile(value, ImageSelect.maxImageSize)
+			onSet: setFile(value, config.imageMaxSize)
 		},
 			m(".w-100.pa1.contain.dt.tc", {
 				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
