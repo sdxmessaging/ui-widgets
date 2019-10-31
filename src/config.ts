@@ -1,6 +1,6 @@
 import lodash from "lodash";
 
-import { IConfig, TConfig } from "./interface/config";
+import { IConfig } from "./interface/config";
 import { SignTypes } from "./interface/widget";
 
 export const confMap: IConfig = {
@@ -41,7 +41,7 @@ export const confMap: IConfig = {
 	linkIcn: "fa-link"
 };
 
-export const config: TConfig = confMap;
+export const config: Readonly<IConfig> = confMap;
 
 export function updateConfig(newConfig: Partial<IConfig>) {
 	lodash.assign(confMap, newConfig);

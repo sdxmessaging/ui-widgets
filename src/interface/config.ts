@@ -46,5 +46,3 @@ export interface IConfig {
 	telIcn: string;
 	linkIcn: string;
 }
-
-export type TConfig = Readonly<IConfig>;

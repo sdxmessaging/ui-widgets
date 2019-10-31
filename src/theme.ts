@@ -64,8 +64,8 @@ export const drgCls = compositeClass(["inpFnt", "filBrd", "drgCol", "drgBrdCol"]
 export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnBrd"])
 
 export function updateTheme(newTheme: Partial<TThemeUpdate>) {
-	lodash.forEach(newTheme, (value = "", key) => {
-		if (key in classMap) {
+	lodash.forEach(newTheme, (value, key) => {
+		if (value && key in classMap) {
 			classMap[key as TThemeKey](value);
 		}
 	});

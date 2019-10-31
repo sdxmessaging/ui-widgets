@@ -45,4 +45,3 @@ export interface IConfig {
     telIcn: string;
     linkIcn: string;
 }
-export declare type TConfig = Readonly<IConfig>;
