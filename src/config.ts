@@ -20,6 +20,8 @@ export const confMap: IConfig = {
 	signDrawTxt: "Draw",
 	signTypeTxt: "Type",
 	signStampTxt: "Accept",
+	stampTxt: "Accept",
+	stampSetTxt: "Accepted",
 	applyTtl: "Apply",
 	resetTtl: "Reset",
 	cancelTtl: "Cancel",

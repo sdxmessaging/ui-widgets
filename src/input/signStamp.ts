@@ -7,8 +7,6 @@ import { config } from "../config";
 import { classMap, signAspectRatio } from "../theme";
 import { pxRatio } from "../utils";
 
-import { Button } from "../button";
-
 export function applyStamp(canvas: HTMLCanvasElement, checked: boolean) {
 	const styles = window.getComputedStyle(canvas);
 	const ratio = pxRatio();
@@ -22,7 +20,7 @@ export function applyStamp(canvas: HTMLCanvasElement, checked: boolean) {
 	// checked ? fa-check-square : fa-square
 	context.fillText(checked ? "\uf14a" : "\uf0c8", canvas.height * 0.25, canvas.height * 0.52);
 	context.font = `200 ${fontSize}px sans-serif`;
-	context.fillText(checked ? "Accepted" : "Accept", canvas.height, fontSize);
+	context.fillText(checked ? config.stampSetTxt : config.stampTxt, canvas.height, fontSize);
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {
@@ -35,13 +33,16 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 		applyStamp(this.canvas, this.checked());
 	}
 
-	public onupdate() {
+	public onupdate({ attrs: { onSet } }: CVnode<ISignWidget>) {
 		if (this.canvas) {
 			applyStamp(this.canvas, this.checked());
+			if (this.checked()) {
+				onSet(this.canvas.toDataURL());
+			}
 		}
 	}
 
-	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
+	public view() {
 		return [
 			m(".aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
 				style: signAspectRatio
@@ -50,34 +51,7 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 					class: classMap.icon(),
 					onclick: () => this.checked(!this.checked())
 				})
-			),
-			m(".absolute.top-0.right-0.z-999", {
-				style: { transform: "translateY(-100%)" }
-			}, [
-				m(Button, {
-					title: config.applyTtl,
-					icon: config.applyIcn,
-					classes: "ma1",
-					disabled: !this.checked(),
-					onclick: () => {
-						if (this.canvas) {
-							onSet(this.canvas.toDataURL())
-						}
-					}
-				}),
-				// m(Button, {
-				// 	title: title: config.resetTtl,
-				// 	icon: config.resetIcn,
-				// 	classes: "ma1",
-				// 	onclick: () => this.checked(false)
-				// }),
-				m(Button, {
-					title: config.cancelTtl,
-					icon: config.cancelIcn,
-					classes: "ma1",
-					onclick: onCancel
-				})
-			])
+			)
 		];
 	}
 

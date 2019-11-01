@@ -19,6 +19,10 @@ export interface IConfig {
     signTypeTxt: string;
     /** Signature "Stamp" button caption */
     signStampTxt: string;
+    /** Signature "Stamp" unchecked label */
+    stampTxt: string;
+    /** Signature "Stamp" checked label */
+    stampSetTxt: string;
     /** Signature "Apply" button tooltip */
     applyTtl: string;
     /** Signature "Reset" button tooltip */

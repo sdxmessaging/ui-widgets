@@ -63,6 +63,34 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			options = config.signOpts
 		} = field as IOptionField;
 		const fileObj = lodash.head(value());
+		// Convert options into widget descriptions
+		const opts = lodash(options).map(({ value: type }) => {
+			if (type === SignTypes.Draw) {
+				return {
+					component: SignDraw,
+					icon: getIcon(config.drawIcn),
+					label: config.signDrawTxt
+				};
+			} else if (type === SignTypes.Type) {
+				return {
+					component: SignType,
+					icon: getIcon(config.typeIcn),
+					label: config.signTypeTxt
+				};
+			} else if (type === SignTypes.Stamp) {
+				return {
+					component: SignStamp,
+					icon: getIcon(config.stampIcn),
+					label: config.signStampTxt
+				};
+			}
+			return null;
+		}).compact().value();
+		// Auto-select widget if there is only one option and no file
+		if (opts.length === 1 && !fileObj) {
+			const opt = opts[0];
+			this.component = opt.component;
+		}
 		return m(".relative", {
 			class: containerClass
 		}, [
@@ -112,40 +140,49 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							])
 							// Signature creation options
 							: m(".aspect-ratio--object.flex.items-stretch.justify-center",
-								lodash.map(options, ({ value: type }) => {
-									// TODO Consider making a map of component, icon, text objects?
-									if (type === SignTypes.Draw) {
-										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-											onclick: () => this.component = SignDraw
-										},
-											m("i.fa-2x", {
-												class: getIcon(config.drawIcn)
-											}),
-											m("span.mt2", config.signDrawTxt)
-										)
-									}
-									if (type === SignTypes.Type) {
-										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-											onclick: () => this.component = SignType
-										},
-											m("i.fa-2x", {
-												class: getIcon(config.typeIcn)
-											}),
-											m("span.mt2", config.signTypeTxt)
-										);
-									}
-									if (type === SignTypes.Stamp) {
-										return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-											onclick: () => this.component = SignStamp
-										},
-											m("i.fa-2x", {
-												class: getIcon(config.stampIcn)
-											}),
-											m("span.mt2", config.signStampTxt)
-										);
-									}
-									return null;
-								})
+								lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+									onclick: () => this.component = component
+								},
+									m("i.fa-2x", {
+										class: icon
+									}),
+									m("span.mt2", label)
+								))
+
+								// lodash.map(options, ({ value: type }) => {
+								// 	// TODO Consider making a map of component, icon, text objects?
+								// 	if (type === SignTypes.Draw) {
+								// 		return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+								// 			onclick: () => this.component = SignDraw
+								// 		},
+								// 			m("i.fa-2x", {
+								// 				class: getIcon(config.drawIcn)
+								// 			}),
+								// 			m("span.mt2", config.signDrawTxt)
+								// 		)
+								// 	}
+								// 	if (type === SignTypes.Type) {
+								// 		return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+								// 			onclick: () => this.component = SignType
+								// 		},
+								// 			m("i.fa-2x", {
+								// 				class: getIcon(config.typeIcn)
+								// 			}),
+								// 			m("span.mt2", config.signTypeTxt)
+								// 		);
+								// 	}
+								// 	if (type === SignTypes.Stamp) {
+								// 		return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+								// 			onclick: () => this.component = SignStamp
+								// 		},
+								// 			m("i.fa-2x", {
+								// 				class: getIcon(config.stampIcn)
+								// 			}),
+								// 			m("span.mt2", config.signStampTxt)
+								// 		);
+								// 	}
+								// 	return null;
+								// })
 							)
 					)
 		]);

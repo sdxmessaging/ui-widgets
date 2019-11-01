@@ -5,6 +5,6 @@ export declare class SignStamp implements ClassComponent<ISignWidget> {
     private checked;
     private canvas?;
     oncreate({ dom }: CVnodeDOM<ISignWidget>): void;
-    onupdate(): void;
-    view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>): m.Vnode<any, any>[];
+    onupdate({ attrs: { onSet } }: CVnode<ISignWidget>): void;
+    view(): m.Vnode<any, any>[];
 }
