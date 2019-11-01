@@ -15,7 +15,7 @@ o.spec("SignStamp", () => {
 				onCancel: () => null
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 		m.mount(root, null);
 		o(root.childNodes.length).equals(0);
 	});
