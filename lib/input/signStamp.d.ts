@@ -1,10 +1,10 @@
-import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
+import { ClassComponent, CVnode, CVnodeDOM, Children } from "mithril";
 import { ISignWidget } from "../interface/widget";
 export declare function applyStamp(canvas: HTMLCanvasElement, checked: boolean): void;
 export declare class SignStamp implements ClassComponent<ISignWidget> {
     private applied;
-    private canvas?;
     oncreate({ dom }: CVnodeDOM<ISignWidget>): void;
-    onupdate({ attrs: { onSet } }: CVnode<ISignWidget>): void;
-    view(): m.Vnode<any, any>[];
+    onupdate({ dom }: CVnodeDOM<ISignWidget>): void;
+    view({ attrs: { onSet } }: CVnode<ISignWidget>): Children;
+    private scaleText;
 }
