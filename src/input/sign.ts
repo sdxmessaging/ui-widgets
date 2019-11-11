@@ -88,35 +88,32 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		}).compact().value();
 		// Auto-select widget if there is only one option and no file
 		if (opts.length === 1 && !fileObj) {
-			const opt = opts[0];
-			this.component = opt.component;
+			this.component = opts[0].component;
 		}
 		return m(".relative", {
 			class: containerClass
 		}, [
 			getLabel(field),
-			// Use signature creation component (if set)
-			this.component
-				? m(this.component, {
-					onSet: setFile(value, id, config.signMaxSize),
-					onCancel: () => this.component = undefined
-				})
-				: readonly || disabled
-					// Display component in "readonly" mode
-					? m(".aspect-ratio", {
-						id,
-						class: classes,
-						style: signAspectRatio
-					},
-						fileObj
-							// Current signature
-							? m(".aspect-ratio--object",
-								m("img.img.w-100.absolute", {
-									src: imgSrc(fileObj.path, fileObj.dataUrl)
-								}),
-							)
-							: null
-					)
+			readonly || disabled
+				// Display component in "readonly" mode
+				? m(".aspect-ratio", {
+					id,
+					class: classes,
+					style: signAspectRatio
+				},
+					// Current signature
+					fileObj ? m(".aspect-ratio--object",
+						m("img.img.w-100.absolute", {
+							src: imgSrc(fileObj.path, fileObj.dataUrl)
+						}),
+					) : null
+				)
+				// Use signature creation component (if set)
+				: this.component
+					? m(this.component, {
+						onSet: setFile(value, id, config.signMaxSize),
+						onCancel: () => this.component = undefined
+					})
 					// Display signature preview/creator
 					: m(".aspect-ratio.pointer", {
 						id,
@@ -148,41 +145,6 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 									}),
 									m("span.mt2", label)
 								))
-
-								// lodash.map(options, ({ value: type }) => {
-								// 	// TODO Consider making a map of component, icon, text objects?
-								// 	if (type === SignTypes.Draw) {
-								// 		return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-								// 			onclick: () => this.component = SignDraw
-								// 		},
-								// 			m("i.fa-2x", {
-								// 				class: getIcon(config.drawIcn)
-								// 			}),
-								// 			m("span.mt2", config.signDrawTxt)
-								// 		)
-								// 	}
-								// 	if (type === SignTypes.Type) {
-								// 		return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-								// 			onclick: () => this.component = SignType
-								// 		},
-								// 			m("i.fa-2x", {
-								// 				class: getIcon(config.typeIcn)
-								// 			}),
-								// 			m("span.mt2", config.signTypeTxt)
-								// 		);
-								// 	}
-								// 	if (type === SignTypes.Stamp) {
-								// 		return m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
-								// 			onclick: () => this.component = SignStamp
-								// 		},
-								// 			m("i.fa-2x", {
-								// 				class: getIcon(config.stampIcn)
-								// 			}),
-								// 			m("span.mt2", config.signStampTxt)
-								// 		);
-								// 	}
-								// 	return null;
-								// })
 							)
 					)
 		]);

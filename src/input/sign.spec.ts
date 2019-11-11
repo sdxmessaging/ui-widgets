@@ -3,7 +3,7 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IFile } from "../interface/widget";
+import { FieldType, IFile, SignTypes } from "../interface/widget";
 
 import { SignBuilder } from "./sign";
 import { setFile } from "./sign";
@@ -37,7 +37,7 @@ o.spec("SignBuilder", () => {
 					type: FieldType.sign,
 					classes: "custom",
 					options: [{
-						label: "", value: "Draw"
+						label: "", value: SignTypes.Draw
 					}, {
 						label: "", value: "unknown"
 					}]
@@ -48,7 +48,7 @@ o.spec("SignBuilder", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("single", () => {
+	o("default", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
