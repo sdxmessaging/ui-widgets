@@ -1,5 +1,5 @@
 import m, { ClassComponent, CVnode, CVnodeDOM, Children } from "mithril";
-import stream from "mithril/stream";
+// import stream from "mithril/stream";
 
 import { ISignWidget } from "../interface/widget";
 
@@ -9,7 +9,7 @@ import { signAspectRatio } from "../theme";
 
 import { Button } from "../button";
 
-export function applyStamp(canvas: HTMLCanvasElement, checked: boolean) {
+export function applyStamp(canvas: HTMLCanvasElement) {
 	// const ratio = pxRatio();
 	// canvas.width = canvas.clientWidth * ratio;
 	// canvas.height = canvas.clientHeight * ratio;
@@ -18,12 +18,12 @@ export function applyStamp(canvas: HTMLCanvasElement, checked: boolean) {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.textBaseline = "middle";
 	context.font = `${fontSize}px Caveat`;
-	context.fillText(checked ? config.stampSetTxt : config.stampTxt, canvas.height * 0.05, fontSize);
+	context.fillText(config.stampSetTxt, canvas.height * 0.05, fontSize);
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {
 
-	private applied: stream<boolean> = stream<boolean>(false);
+	// private applied: stream<boolean> = stream<boolean>(false);
 	// private canvas?: HTMLCanvasElement;
 
 	// public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
@@ -52,14 +52,13 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 		return m(".aspect-ratio", {
 			style: signAspectRatio,
 		}, m(Button, {
-			label: config.stampSetTxt,
+			label: config.stampTxt,
 			classes: "aspect-ratio--object",
 			onclick: () => {
 				const canvas = window.document.createElement("canvas");
 				canvas.width = 640;
 				canvas.height = 160;
-				applyStamp(canvas, this.applied());
-				console.debug(canvas.toDataURL());
+				applyStamp(canvas);
 				onSet(canvas.toDataURL());
 			}
 		}));
