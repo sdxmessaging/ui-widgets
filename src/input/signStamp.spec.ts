@@ -21,16 +21,10 @@ o.spec("SignStamp", () => {
 	});
 
 	o("apply", () => {
-		const canvas = document.createElement("canvas");
-		// Hardcode canvas size for test
-		Object.defineProperties(canvas, {
-			clientWidth: { get: () => 40 },
-			clientHeight: { get: () => 10 }
-		});
-		applyStamp(canvas, false);
-		const stampedUrl = canvas.toDataURL();
-		applyStamp(canvas, true);
-		o(stampedUrl === canvas.toDataURL()).equals(false);
+		const spy = o.spy(() => null);
+		const apply = applyStamp(spy);
+		apply();
+		o(spy.callCount).equals(1);
 	});
 
 });

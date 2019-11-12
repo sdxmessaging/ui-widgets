@@ -38,3 +38,4 @@ export declare function rotateContext(ctx: CanvasRenderingContext2D, width: numb
  * @param type Image MIME type to return
  */
 export declare function resizeImage(file: File, maxSize: number, type?: string): Promise<string>;
+export declare function textToImage(text: string, width: number, height: number, font?: string): string;

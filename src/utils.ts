@@ -234,3 +234,16 @@ export function resizeImage(file: File, maxSize: number, type?: string): Promise
 			reader.readAsDataURL(file);
 		}));
 }
+
+// Create dataURL image from given text
+export function textToImage(text: string, width: number, height: number, font = "sans-serif"): string {
+	const canvas = document.createElement("canvas");
+	canvas.width = width;
+	canvas.height = height;
+	const fontSize = 0.56 * canvas.height;
+	const context = canvas.getContext("2d") as CanvasRenderingContext2D;
+	context.textBaseline = "middle";
+	context.font = `${fontSize}px ${font}`;
+	context.fillText(text, canvas.height * 0.05, fontSize);
+	return canvas.toDataURL();
+}

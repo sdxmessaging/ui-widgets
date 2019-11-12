@@ -5,23 +5,16 @@ import { ISignWidget, TProp } from "../interface/widget";
 
 import { config } from "../config";
 import { signAspectRatio } from "../theme";
-import { setValue } from "../utils";
+import { setValue, textToImage } from "../utils";
 
 import { Button } from "../button";
 
-// TODO Pass in container element to size canvas
 export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
-			const canvas = document.createElement("canvas");
-			canvas.width = 600;
-			canvas.height = 150;
-			const fontSize = 0.56 * canvas.height;
-			const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-			context.textBaseline = "middle";
-			context.font = `${fontSize}px Caveat`;
-			context.fillText(text(), canvas.height * 0.05, fontSize);
-			callback(canvas.toDataURL());
+			const width = config.signMaxSize;
+			const height = 0.25 * width;
+			callback(textToImage(text(), width, height, "Caveat"));
 		}
 		return false;
 	};
