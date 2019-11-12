@@ -17,6 +17,7 @@ export const confMap: IConfig = {
 		label: "", value: SignTypes.Stamp
 	}],
 	signMaxSize: 640,
+	signFont: "sans-serif",
 	signDrawTxt: "Draw",
 	signTypeTxt: "Type",
 	signStampTxt: "Accept",

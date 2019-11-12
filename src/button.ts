@@ -22,7 +22,7 @@ export class Button implements ClassComponent<IButton> {
 			type,
 			title,
 			disabled,
-			class: `${disabled ? "o-60" : "dim pointer"} ${btnClass()} ${classes}`,
+			class: `${disabled ? "o-60" : "pointer"} ${btnClass()} ${classes}`,
 			style,
 			onclick,
 		},

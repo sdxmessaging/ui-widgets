@@ -12,7 +12,7 @@ export function applyStamp(callback: ISignWidget["onSet"]) {
 	return () => {
 		const width = config.signMaxSize;
 		const height = 0.25 * width;
-		callback(textToImage(config.stampSetTxt, width, height, "Caveat"));
+		callback(textToImage(config.stampSetTxt, width, height, config.signFont));
 	};
 }
 
@@ -29,11 +29,11 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 	public view({ attrs: { onSet } }: CVnode<ISignWidget>) {
 		return m(".aspect-ratio", {
 			style: signAspectRatio,
-		}, m(Button, {
+		}, m(".aspect-ratio--object", m(Button, {
 			label: config.stampTxt,
-			classes: "aspect-ratio--object",
+			classes: "relative w-100 h-100",
 			onclick: applyStamp(onSet)
-		}));
+		})));
 	}
 
 	// Post render update text input font based on container size

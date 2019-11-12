@@ -236,7 +236,7 @@ export function resizeImage(file: File, maxSize: number, type?: string): Promise
 }
 
 // Create dataURL image from given text
-export function textToImage(text: string, width: number, height: number, font = "sans-serif"): string {
+export function textToImage(text: string, width: number, height: number, font: string): string {
 	const canvas = document.createElement("canvas");
 	canvas.width = width;
 	canvas.height = height;

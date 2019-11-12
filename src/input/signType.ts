@@ -14,7 +14,7 @@ export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) 
 		if (text()) {
 			const width = config.signMaxSize;
 			const height = 0.25 * width;
-			callback(textToImage(text(), width, height, "Caveat"));
+			callback(textToImage(text(), width, height, config.signFont));
 		}
 		return false;
 	};
@@ -44,7 +44,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 					oninput: setValue(this.text as stream<TProp>),
 					value: this.text(),
 					style: {
-						"font-family": "Caveat"
+						"font-family": config.signFont
 					}
 				})
 			),

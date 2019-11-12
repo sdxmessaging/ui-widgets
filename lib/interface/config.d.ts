@@ -13,6 +13,8 @@ export interface IConfig {
     signOpts: IOption[];
     /** Maximum size for signature image in px */
     signMaxSize: number;
+    /** Signature type/stamp font */
+    signFont: string;
     /** Signature "Draw" button caption */
     signDrawTxt: string;
     /** Signature "Type" button caption */
