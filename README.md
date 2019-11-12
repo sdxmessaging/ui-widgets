@@ -23,7 +23,7 @@ ui-widgets has several lightweight dependencies for building and styling widgets
 * [Tachyons](https://tachyons.io/)
 * We suggest using [Font Awesome](https://fontawesome.com/) for icons
 * Signature drawing input requires [Signature Pad](https://github.com/szimek/signature_pad)
-* Signature text input requires font [Caveat](https://fonts.googleapis.com/css?family=Caveat)
+* Signature text/stamp input benefits from a custom font, we suggest [Caveat](https://fonts.googleapis.com/css?family=Caveat)
 * IE 11 requires a polyfill to support Promises used by our file inputs, we recommend [Promise Polyfill](https://github.com/taylorhakes/promise-polyfill)
 
 ### Install with NPM

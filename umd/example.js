@@ -2,6 +2,10 @@
 
 var stream = m.stream;
 
+uiWidgets.updateConfig({
+	signFont: "Caveat"
+});
+
 // Simple props
 var textVal = stream("Text");
 var dateVal = stream();
