@@ -42,6 +42,8 @@ export interface IField {
     readonly disabled?: boolean;
     readonly autofocus?: boolean;
     readonly autocomplete?: TAutocomplete;
+    readonly pattern?: string;
+    readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
     readonly spellcheck?: boolean;
     readonly instant?: boolean;
     readonly classes?: string;

@@ -10,7 +10,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
 			id, type, name = id, placeholder,
-			required, readonly, disabled, autofocus, autocomplete, spellcheck,
+			required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck,
 			instant, containerClass, classes = ""
 		} = field;
 		return [
@@ -21,7 +21,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 				id, name, type,
 				value: value(),
 				class: `${disabled ? "o-60" : ""} ${inpCls()} ${classes}`,
-				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
+				placeholder, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck,
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}))
