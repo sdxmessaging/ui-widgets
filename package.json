@@ -1,6 +1,6 @@
 {
   "name": "@sdxmessaging/ui-widgets",
-  "version": "1.2.18",
+  "version": "1.2.19",
   "description": "Build form inputs and display values with mithril components and streams",
   "repository": {
     "type": "git",
@@ -23,20 +23,20 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
-    "@types/lodash": "^4.14.146",
+    "@types/lodash": "^4.14.149",
     "@types/mithril": "^2.0.2",
-    "@types/node": "^12.12.7",
+    "@types/node": "^12.12.11",
     "@types/signature_pad": "^2.3.0",
-    "@typescript-eslint/eslint-plugin": "^2.6.1",
-    "@typescript-eslint/parser": "^2.6.1",
+    "@typescript-eslint/eslint-plugin": "^2.8.0",
+    "@typescript-eslint/parser": "^2.8.0",
     "canvas": "^2.6.0",
     "eslint": "^6.6.0",
     "jsdom": "^15.2.1",
     "nyc": "^14.1.1",
     "ospec": "^4.0.1",
-    "rollup": "^1.26.5",
+    "rollup": "^1.27.4",
     "rollup-plugin-terser": "^5.1.2",
-    "ts-node": "^8.5.0",
+    "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
   },
   "scripts": {
