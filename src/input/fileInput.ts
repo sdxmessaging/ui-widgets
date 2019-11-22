@@ -52,8 +52,7 @@ export function change(setFiles: (setList: FileList | null) => void) {
 export class FileInput implements ClassComponent<IFileInput> {
 	public view({ attrs: {
 		field: {
-			label,
-			id, name = id,
+			label, id, name = id, title = label,
 			required, readonly, disabled, autofocus,
 			containerClass = ""
 		},
@@ -77,7 +76,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 				onchange: change(onSet)
 			}),
 			label ? m("span.db.mb1", {
-				title: label,
+				title,
 				class: lblCls()
 			}, getLabelText(label, required)) : null,
 			children

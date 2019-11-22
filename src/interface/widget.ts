@@ -14,14 +14,20 @@ export interface IFile {
 }
 
 export const enum FieldType {
-	text = "text",
 	label = "label",
+	trusted = "trusted",
+	// BaseInput
+	text = "text",
+	search = "search",
 	date = "date",
 	number = "number",
+	range = "range",
 	email = "email",
+	url = "url",
 	tel = "tel",
+	color = "color",
+	// Custom
 	textarea = "textarea",
-	trusted = "trusted",
 	checkbox = "checkbox",
 	select = "select",
 	radio = "radio",
@@ -67,12 +73,18 @@ export interface IField {
 	readonly id: string;
 	readonly type: FieldType | string;
 	readonly name?: string;
+	readonly title?: string;
 	readonly placeholder?: string;
 	readonly required?: boolean;
 	readonly readonly?: boolean;
 	readonly disabled?: boolean;
 	readonly autofocus?: boolean;
 	readonly autocomplete?: TAutocomplete;
+	readonly max?: number | string;
+	readonly maxlength?: number;
+	readonly min?: number | string;
+	readonly minlength?: number;
+	readonly step?: number | string;
 	readonly pattern?: string;
 	readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
 	readonly spellcheck?: boolean;

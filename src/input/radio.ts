@@ -25,6 +25,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			},
 				// No requirement for label "for" attribute
 				lodash.map(options, ({ label, value }) => m("label.flex.items-center", {
+					title: label,
 					class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 				},
 					m("input.mr1[type=radio]", {

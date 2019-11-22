@@ -9,8 +9,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
-			label,
-			id, name = id,
+			label, id, name = id, title = label,
 			required, readonly, disabled, autocomplete,
 			containerClass, classes = ""
 		} = field;
@@ -20,6 +19,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			class: txtCls(),
 		},
 			m("label.flex.items-center", {
+				title,
 				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 			},
 				m("input.mr1[type=checkbox]", {

@@ -10,7 +10,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
-			id, name = id,
+			label, id, name = id, title = label,
 			required, readonly, disabled, autofocus, autocomplete,
 			containerClass, classes = "",
 			options
@@ -20,10 +20,10 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			m("div", {
 				class: containerClass
 			}, m("select.input-reset.border-box.w-100", {
-				id, name,
+				id, name, title,
+				required, readonly, disabled, autofocus, autocomplete,
 				value: val(),
 				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${inpCls()} ${classes}`,
-				required, readonly, disabled, autofocus, autocomplete,
 				onchange: setValue(val)
 			},
 				lodash.map(options, ({ label, value }) => m("option", {

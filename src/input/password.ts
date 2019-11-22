@@ -15,8 +15,9 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
-			id, name = id, placeholder,
-			required, readonly, disabled, autofocus, autocomplete,
+			label, id, name = id, title = label, placeholder,
+			maxlength, minlength, required,
+			readonly, disabled, autofocus, autocomplete,
 			instant, containerClass, classes = ""
 		} = field;
 		return [
@@ -35,11 +36,12 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			m(".w-100", {
 				class: containerClass
 			}, m("input.input-reset.border-box.w-100", {
-				id, name,
+				id, name, title, placeholder,
 				type: this.showPassword() ? "text" : "password",
+				maxlength, minlength, required,
+				readonly, disabled, autofocus, autocomplete,
 				value: value(),
 				class: `${disabled ? "o-60" : ""} ${inpCls()} ${classes}`,
-				placeholder, required, readonly, disabled, autofocus, autocomplete,
 				// Safari quirk
 				autocorrect: "off",
 				// Update value on change or input ("instant" option)

@@ -9,8 +9,10 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
-			id, type, name = id, placeholder,
-			required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck,
+			label, id, type, name = id, title = label, placeholder,
+			max, maxlength, min, minlength, step, required,
+			readonly, disabled, autofocus, autocomplete,
+			pattern, inputmode, spellcheck,
 			instant, containerClass, classes = ""
 		} = field;
 		return [
@@ -18,10 +20,12 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			m(".w-100", {
 				class: containerClass
 			}, m("input.input-reset.border-box.w-100", {
-				id, name, type,
+				id, type, name, title, placeholder,
+				max, maxlength, min, minlength, step, required,
+				readonly, disabled, autofocus, autocomplete,
+				pattern, inputmode, spellcheck,
 				value: value(),
 				class: `${disabled ? "o-60" : ""} ${inpCls()} ${classes}`,
-				placeholder, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck,
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}))

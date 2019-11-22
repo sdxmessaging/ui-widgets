@@ -6,7 +6,9 @@ import { getLabelText } from "../utils";
 
 export class Label implements ClassComponent<IPropWidget> {
 
-	public view({ attrs: { field: { label, required } } }: CVnode<IPropWidget>) {
-		return m("label.mb2", getLabelText(label, required));
+	public view({ attrs: { field: {
+		label, title = label, required
+	} } }: CVnode<IPropWidget>) {
+		return m("label.mb2", { title }, getLabelText(label, required));
 	}
 }
