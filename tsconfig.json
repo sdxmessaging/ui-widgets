@@ -8,12 +8,6 @@
 		"incremental": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
-		"types": [
-			"lodash",
-			"mithril",
-			"node",
-			"signature_pad"
-		],
 		"lib": [
 			"dom",
 			"es5",

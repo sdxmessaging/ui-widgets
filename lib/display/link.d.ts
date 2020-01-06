@@ -5,7 +5,7 @@ export declare function linkAttrs(fieldType: string, value: TProp): {
     class: string;
     target?: undefined;
 } | {
-    href: TProp;
+    href: string | number | boolean;
     target: string;
     class: string;
 };
