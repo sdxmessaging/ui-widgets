@@ -2,6 +2,7 @@ export * from "./interface/widget";
 export { updateConfig } from "./config";
 export { updateTheme, getIcon } from "./theme";
 export { fileNameExtSplit, guid } from "./utils";
+export { Badge } from "./badge";
 export { Button } from "./button";
 export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";

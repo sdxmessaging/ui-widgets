@@ -310,12 +310,15 @@ m.mount(document.getElementById("page"), {
 				value: imgList
 			}))
 		]),
-		m(uiWidgets.Button, {
-			label: "Log Image List to Console",
-			icon: "fa-print",
-			classes: "mb2",
-			onclick: () => console.log(imgList())
-		}),
+
+		m(uiWidgets.Badge, { label: imgList().length },
+			m(uiWidgets.Button, {
+				label: "Log Image List to Console",
+				icon: "fa-print",
+				classes: "mb2",
+				onclick: () => console.log(imgList())
+			})
+		),
 
 		// SignBuilder/ImagePreview
 		m(".flex.mb2", [

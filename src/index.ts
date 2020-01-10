@@ -4,6 +4,7 @@ export { updateConfig } from "./config";
 export { updateTheme, getIcon } from "./theme";
 export { fileNameExtSplit, guid } from "./utils";
 
+export { Badge } from "./badge";
 export { Button } from "./button";
 
 // Display widgets
