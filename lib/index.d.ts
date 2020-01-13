@@ -4,6 +4,7 @@ export { updateTheme, getIcon } from "./theme";
 export { fileNameExtSplit, guid } from "./utils";
 export { Badge } from "./badge";
 export { Button } from "./button";
+export { NavButton } from "./navButton";
 export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";
 export { iconMap, linkAttrs, Link } from "./display/link";

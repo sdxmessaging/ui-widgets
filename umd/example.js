@@ -45,9 +45,32 @@ btnBrd.map((newCls) => uiWidgets.updateTheme({ btnBrd: newCls }));
 m.mount(document.getElementById("page"), {
 	view: () => m(".mw8.pa3.center", [
 
+		m(".flex.flex-column.flex-row-l.fixed.top-0.right-0.bg-near-white", [
+			m(uiWidgets.NavButton, {
+				label: "Basic Usage",
+				icon: "fa-home",
+				onclick: () => window.location.hash = "basic"
+			}),
+			m(uiWidgets.NavButton, {
+				label: "Customise",
+				icon: "fa-edit",
+				onclick: () => window.location.hash = "custom"
+			}),
+			m(uiWidgets.NavButton, {
+				label: "File Support",
+				icon: "fa-file-alt",
+				onclick: () => window.location.hash = "files"
+			}),
+			m(uiWidgets.NavButton, {
+				label: "Theme Support",
+				icon: "fa-pencil-ruler",
+				onclick: () => window.location.hash = "theme"
+			})
+		]),
+
 		m("h2", "ui-widgets"),
 
-		m("h3", "Basic Inputs"),
+		m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),
 		m("p", "Display components reflect changes made to the stream by input components. A stream can be used by multiple input components."),
 
 		// Text
@@ -179,7 +202,7 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
-		m("h3", "Easy to Customise"),
+		m("h3", m("a#custom.link[href=#custom]", "Customise")),
 		m("p", "Widget options are simple to update"),
 
 		// Custom BaseInput
@@ -260,7 +283,7 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
-		m("h3", "Files"),
+		m("h3", m("a#files.link[href=#files]", "File Support")),
 		m("p", "These file widgets operate on a single file array stream"),
 
 		// FileSelect/FileList
@@ -351,7 +374,7 @@ m.mount(document.getElementById("page"), {
 			onclick: () => console.log(signList())
 		}),
 
-		m("h3", "Theme"),
+		m("h3", m("a#theme.link[href=#theme]", "Theme Support")),
 		m("p", "Update theme classes on the fly and use your existing css"),
 		m("p", "Try other available classes from ",
 			m("a[href=https://tachyons.io/][target=_blank]", "Tachyons css")

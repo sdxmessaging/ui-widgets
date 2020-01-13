@@ -6,6 +6,7 @@ export { fileNameExtSplit, guid } from "./utils";
 
 export { Badge } from "./badge";
 export { Button } from "./button";
+export { NavButton } from "./navButton";
 
 // Display widgets
 // Prop

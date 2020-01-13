@@ -1,11 +1,10 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { IMithrilEvent } from "./interface/widget";
-import { getIcon, btnClass } from "./theme";
+import { getIcon } from "./theme";
 
-interface IButton {
+interface INavButton {
 	readonly label?: string;
-	readonly type?: "submit" | "reset" | "button";
 	readonly title?: string;
 	readonly icon?: string;
 	readonly classes?: string;
@@ -14,16 +13,15 @@ interface IButton {
 	onclick?(evt: IMithrilEvent): void;
 }
 
-export class Button implements ClassComponent<IButton> {
+export class NavButton implements ClassComponent<INavButton> {
 
 	public view({ attrs: {
-		label, type = "button", title = label, icon, classes, disabled, style, onclick
-	} }: CVnode<IButton>) {
-		return m("button.button-reset.pa2", {
-			type,
+		label, title = label, icon, classes, disabled, style, onclick
+	} }: CVnode<INavButton>) {
+		return m(".mh2.pa2.truncate", {
 			title,
 			disabled,
-			class: `${disabled ? "o-60" : "pointer"} ${btnClass()} ${classes}`,
+			class: `${disabled ? "o-60" : "pointer"} ${classes}`,
 			style,
 			onclick,
 		},
