@@ -16,6 +16,8 @@ o.spec("SignStamp", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+		// Force onupdate
+		m.redraw.sync();
 		m.mount(root, null);
 		o(root.childNodes.length).equals(0);
 	});

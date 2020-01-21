@@ -5,16 +5,16 @@ import { ISignWidget, TProp } from "../interface/widget";
 
 import { config } from "../config";
 import { signAspectRatio } from "../theme";
-import { setValue, textToImage } from "../utils";
+import { setValue } from "../utils";
 
 import { Button } from "../button";
+
+import { createStamp } from "./signStamp";
 
 export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
-			const width = config.signMaxSize;
-			const height = 0.25 * width;
-			callback(textToImage(text(), width, height, config.signFont));
+			callback(createStamp(text()));
 		}
 		return false;
 	};
@@ -37,7 +37,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
 			m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
-				style: signAspectRatio,
+				style: signAspectRatio(),
 				onsubmit: applyText(this.text, onSet)
 			},
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {

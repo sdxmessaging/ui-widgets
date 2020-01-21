@@ -21,7 +21,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 					? m("img.img.mt2.contain.self-center", {
 						title: file.name,
 						src: imgSrc(file.path, file.dataUrl),
-						style: imgMaxSize
+						style: imgMaxSize()
 					})
 					: m("i.mt2", {
 						class: `${classMap.inpCol()} ${getIcon(config.imageIcn)}`

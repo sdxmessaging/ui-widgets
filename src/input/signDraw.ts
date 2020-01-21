@@ -49,7 +49,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
 			m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", {
-				style: signAspectRatio
+				style: signAspectRatio()
 			},
 				m("canvas.aspect-ratio--object")
 			),

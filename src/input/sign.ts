@@ -99,7 +99,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				? m(".aspect-ratio", {
 					id,
 					class: classes,
-					style: signAspectRatio
+					style: signAspectRatio()
 				},
 					// Current signature
 					fileObj ? m(".aspect-ratio--object",
@@ -118,7 +118,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					: m(".aspect-ratio.pointer", {
 						id,
 						class: `${filCls()} ${classes}`,
-						style: signAspectRatio
+						style: signAspectRatio()
 					},
 						fileObj
 							// Current signature

@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { classMap } from "../theme";
+import { classMap, thumbMaxSize } from "../theme";
 import { getDisplayLabel, imgSrc } from "../utils";
 import { Thumbnail } from "./thumbnail";
 
@@ -20,7 +20,7 @@ export class ImageList implements ClassComponent<IFileWidget> {
 					lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
 						title: name,
 						src: imgSrc(path, dataUrl),
-						style: { "max-height": "6rem" }
+						style: thumbMaxSize()
 					}))
 				)
 			]

@@ -5,6 +5,8 @@ import { SignTypes } from "./interface/widget";
 
 export const confMap: IConfig = {
 	imageMaxSize: 1280,
+	imageDispHeight: "16rem",
+	thumbDispHeight: "6rem",
 	addFileTxt: "Upload...",
 	addFilesTxt: "Add file(s)...",
 	remFileTtl: "Remove",
@@ -17,6 +19,7 @@ export const confMap: IConfig = {
 		label: "", value: SignTypes.Stamp
 	}],
 	signMaxSize: 640,
+	signHeightPct: 25,
 	signFont: "sans-serif",
 	signDrawTxt: "Draw",
 	signTypeTxt: "Type",

@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { btnClass, drgCls, filCls, getIcon } from "../theme";
+import { btnClass, drgCls, filCls, getIcon, thumbMaxSize } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
 import { Thumbnail } from "../display/thumbnail";
@@ -63,7 +63,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
 				lodash.map(value(), (file) => m(Thumbnail, {
 					src: imgSrc(file.path, file.dataUrl),
-					style: { "max-height": "6rem" }
+					style: thumbMaxSize()
 				},
 					m(".pa2.absolute.top-0.right-0.child.pointer", {
 						title: `Remove ${file.name}`,

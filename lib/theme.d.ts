@@ -1,9 +1,12 @@
 import stream from "mithril/stream";
 import { ITheme, TThemeUpdate } from "./interface/theme";
-export declare const signAspectRatio: {
+export declare function signAspectRatio(): {
     "padding-bottom": string;
 };
-export declare const imgMaxSize: {
+export declare function imgMaxSize(): {
+    "max-height": string;
+};
+export declare function thumbMaxSize(): {
     "max-height": string;
 };
 export declare const classMap: ITheme;

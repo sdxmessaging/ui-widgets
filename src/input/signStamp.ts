@@ -8,12 +8,14 @@ import { textToImage } from "../utils";
 
 import { Button } from "../button";
 
+export function createStamp(sign: string): string {
+	const width = config.signMaxSize;
+	const height = 0.01 * config.signHeightPct * width;
+	return textToImage(sign, width, height, config.signFont);
+}
+
 export function applyStamp(callback: ISignWidget["onSet"]) {
-	return () => {
-		const width = config.signMaxSize;
-		const height = 0.25 * width;
-		callback(textToImage(config.stampSetTxt, width, height, config.signFont));
-	};
+	return () => callback(createStamp(config.stampSetTxt));
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {
@@ -28,7 +30,7 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 
 	public view({ attrs: { onSet } }: CVnode<ISignWidget>) {
 		return m(".aspect-ratio", {
-			style: signAspectRatio,
+			style: signAspectRatio(),
 		}, m(".aspect-ratio--object", m(Button, {
 			label: config.stampTxt,
 			classes: "relative w-100 h-100",

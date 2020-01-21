@@ -2,14 +2,18 @@ import stream from "mithril/stream";
 import lodash from "lodash";
 
 import { ITheme, TThemeKey, TThemeUpdate } from "./interface/theme";
+import { config } from "./config";
 
 // Class/Theme helpers
-export const signAspectRatio = {
-	"padding-bottom": "25%"
-};
-export const imgMaxSize = {
-	"max-height": "16rem"
-};
+export function signAspectRatio() {
+	return { "padding-bottom": `${config.signHeightPct}%` };
+}
+export function imgMaxSize() {
+	return { "max-height": config.imageDispHeight };
+}
+export function thumbMaxSize() {
+	return { "max-height": config.thumbDispHeight };
+}
 
 export const classMap: ITheme = {
 	icon: stream("fas"),

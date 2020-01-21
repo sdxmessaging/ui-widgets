@@ -57,7 +57,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 					? m("img.img.contain", {
 						title: fileObj.name,
 						src: imgSrc(fileObj.path, fileObj.dataUrl),
-						style: imgMaxSize
+						style: imgMaxSize()
 					})
 					: m("i.fa-2x.dtc.v-mid", {
 						class: getIcon(config.cameraIcn)

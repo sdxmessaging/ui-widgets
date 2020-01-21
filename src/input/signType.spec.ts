@@ -17,6 +17,8 @@ o.spec("SignType", () => {
 			})
 		});
 		o(root.childNodes.length).equals(2);
+		// Force onupdate
+		m.redraw.sync();
 		m.mount(root, null);
 		o(root.childNodes.length).equals(0);
 	});

@@ -1,6 +1,11 @@
 import { IOption } from "./widget";
 export interface IConfig {
+    /** Maximum size for upload image in px */
     imageMaxSize: number;
+    /** Display height of pending images as CSS size */
+    imageDispHeight: string;
+    /** Display height of thumbnail images as CSS size */
+    thumbDispHeight: string;
     /** Single file input label */
     addFileTxt: string;
     /** Multiple file input label */
@@ -13,6 +18,8 @@ export interface IConfig {
     signOpts: IOption[];
     /** Maximum size for signature image in px */
     signMaxSize: number;
+    /** Height of signature widget as percentage of width */
+    signHeightPct: number;
     /** Signature type/stamp font */
     signFont: string;
     /** Signature "Draw" button caption */
