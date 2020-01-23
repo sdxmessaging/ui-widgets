@@ -12,6 +12,7 @@ var dateVal = stream();
 var colVal = stream("#cc0011");
 var checkVal = stream();
 var optVal = stream();
+var faceVal = stream();
 
 // Custom
 var value = stream("");
@@ -43,7 +44,7 @@ var btnBrd = stream("bn br2");
 btnBrd.map((newCls) => uiWidgets.updateTheme({ btnBrd: newCls }));
 
 m.mount(document.getElementById("page"), {
-	view: () => m(".mw8.pa3.center", [
+	view: () => m(".mw8.pa3.mb5.center", [
 
 		m(".flex.flex-column.flex-row-l.fixed.top-0.right-0.bg-near-white", [
 			m(uiWidgets.NavButton, {
@@ -189,14 +190,14 @@ m.mount(document.getElementById("page"), {
 					id: "radio-in",
 					label: "Radio Input",
 					type: "radio",
+					classes: "pa2",
 					options: [{
-						label: "Opt 1",
-						value: "1"
+						value: "1",
+						label: "Opt 1"
 					}, {
-						label: "Opt 2",
-						value: "2"
+						value: "2",
+						label: "Opt 2"
 					}],
-					classes: "pa2"
 				},
 				value: optVal
 			}))
@@ -349,12 +350,7 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "sign-in",
 					label: "Signature Input",
-					type: "sign",
-					// options: [{
-					// 	label: "", value: "stamp"
-					// }, {
-					// 	label: "", value: "type"
-					// }]
+					type: "sign"
 				},
 				value: signList
 			})),
@@ -438,7 +434,52 @@ m.mount(document.getElementById("page"), {
 				},
 				value: btnBrd
 			}))
-		])
+		]),
+
+		m("h3", m("a#closing.link[href=#closing]", "Thanks")),
+		m("p", "We hope you like these widgets"),
+
+		// Feedback
+		m(uiWidgets.RadioInput, {
+			field: {
+				id: "feedback-in",
+				label: "We value your feedback",
+				type: "radio",
+				containerClass: "justify-between bg-near-white br-pill",
+				classes: "flex-auto justify-center pa2 bg-animate br-pill",
+				// classes: "pa2",
+				options: [{
+					value: "1",
+					label: "Very unsatisfied",
+					icon: "fa-angry fa-2x"
+				}, {
+					value: "2",
+					label: "Unsatisfied",
+					icon: "fa-frown fa-2x"
+				}, {
+					value: "3",
+					label: "Neutral",
+					icon: "fa-meh fa-2x"
+				}, {
+					value: "4",
+					label: "Satisfied",
+					icon: "fa-smile fa-2x"
+				}, {
+					value: "5",
+					label: "Very satisfied",
+					icon: "fa-grin-beam fa-2x"
+				}],
+			},
+			value: faceVal
+		}),
+
+		faceVal() ? m("p", Number.parseInt(faceVal()) < 4
+			? [
+				"Missing features? Room for improvement? Be sure to ",
+				m("a.link[href=https://github.com/sdxmessaging/ui-widgets/issues][target=_blank]", "log an issue.")
+			]
+			: "We'll keep up the good work!"
+		) : null
 
 	])
 

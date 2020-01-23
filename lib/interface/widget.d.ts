@@ -62,8 +62,9 @@ export interface IField {
     readonly default?: string;
 }
 export interface IOption {
-    readonly label: string;
     readonly value: TProp;
+    readonly label: string;
+    readonly icon?: string;
 }
 export interface IOptionField extends IField {
     readonly type: FieldType.select | FieldType.radio;

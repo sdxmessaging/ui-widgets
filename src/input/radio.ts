@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { classMap, txtCls, actCls } from "../theme";
+import { actCls, classMap, getIcon, txtCls } from "../theme";
 import { getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
@@ -20,7 +20,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			m(".flex", {
 				class: `${txtCls()} ${containerClass}`,
 				onchange: setValue(val)
-			}, lodash.map(options, ({ label, value }) => {
+			}, lodash.map(options, ({ value, label, icon }) => {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
 				return m("label.flex.items-center", {
@@ -32,7 +32,10 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 						required, autocomplete,
 						disabled: disabled || readonly,
 					}),
-					label
+					icon ? m("i.fa-fw", {
+						title: label,
+						class: getIcon(icon)
+					}) : label
 				);
 			}))
 		];

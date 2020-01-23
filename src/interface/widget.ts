@@ -99,8 +99,9 @@ export interface IField {
 
 // Select/Radio widgets
 export interface IOption {
-	readonly label: string;
 	readonly value: TProp;
+	readonly label: string;
+	readonly icon?: string;
 }
 
 export interface IOptionField extends IField {
