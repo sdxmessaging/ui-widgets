@@ -9,6 +9,8 @@ export interface ITheme {
     readonly inpCol: stream<string>;
     readonly inpFnt: stream<string>;
     readonly inpBrd: stream<string>;
+    readonly actCol: stream<string>;
+    readonly actBg: stream<string>;
     readonly filBrd: stream<string>;
     readonly filBrdCol: stream<string>;
     readonly drgCol: stream<string>;

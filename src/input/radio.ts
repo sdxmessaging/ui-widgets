@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { txtCls } from "../theme";
+import { classMap, txtCls, actCls } from "../theme";
 import { getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
@@ -12,31 +12,29 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled, autocomplete,
-			containerClass, classes = "",
+			containerClass = "flex-wrap", classes = "",
 			options
 		} = field as IOptionField;
 		return [
 			getLabel(field),
-			m("div", {
-				class: containerClass
-			}, m(".flex.flex-wrap", {
-				class: txtCls(),
+			m(".flex", {
+				class: `${txtCls()} ${containerClass}`,
 				onchange: setValue(val)
-			},
+			}, lodash.map(options, ({ label, value }) => {
+				const checked = val() === value;
 				// No requirement for label "for" attribute
-				lodash.map(options, ({ label, value }) => m("label.flex.items-center", {
+				return m("label.flex.items-center", {
 					title: label,
-					class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
+					class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${checked ? actCls() : "dim pointer"} ${classMap.btnBrd()} ${classes}`
 				},
-					m("input.mr1[type=radio]", {
-						name, value,
-						checked: val() === value,
+					m("input.clip[type=radio]", {
+						name, value, checked,
 						required, autocomplete,
-						disabled: disabled || readonly
+						disabled: disabled || readonly,
 					}),
 					label
-				))
-			))
+				);
+			}))
 		];
 	}
 

@@ -15,6 +15,9 @@ export interface ITheme {
 	readonly inpCol: stream<string>;
 	readonly inpFnt: stream<string>;
 	readonly inpBrd: stream<string>;
+	// Active (radio/checkbox)
+	readonly actCol: stream<string>;
+	readonly actBg: stream<string>;
 	// File input
 	readonly filBrd: stream<string>;
 	readonly filBrdCol: stream<string>;

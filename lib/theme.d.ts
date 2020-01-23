@@ -15,6 +15,7 @@ export declare const lblCls: stream<string>;
 export declare const txtCls: stream<string>;
 export declare const areaCls: stream<string>;
 export declare const inpCls: stream<string>;
+export declare const actCls: stream<string>;
 export declare const filCls: stream<string>;
 export declare const drgCls: stream<string>;
 export declare const btnClass: stream<string>;

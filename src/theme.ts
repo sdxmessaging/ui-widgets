@@ -28,11 +28,14 @@ export const classMap: ITheme = {
 	inpCol: stream("dark-gray"),
 	inpFnt: stream("fw2"),
 	inpBrd: stream("bn"),
+	// Active (radio/check)
+	actCol: stream("dark-gray"),
+	actBg: stream("bg-light-blue"),
 	// File/Hover
 	filBrd: stream("ba bw1 br3 b--dashed"),
 	filBrdCol: stream("b--black-30"),
-	drgCol: stream("b--blue"),
-	drgBrdCol: stream("blue"),
+	drgCol: stream("blue"),
+	drgBrdCol: stream("b--blue"),
 	// Button
 	btnBg: stream("bg-light-blue"),
 	btnCol: stream("dark-gray"),
@@ -60,12 +63,14 @@ export const txtCls = compositeClass(["inpCol", "inpFnt"]);
 export const areaCls = compositeClass(["inpBrd"], [txtCls]);
 // Typical input
 export const inpCls = compositeClass(["inpHgt"], [areaCls]);
+// Active radio
+export const actCls = compositeClass(["actCol", "actBg"]);
 // File border
 export const filCls = compositeClass(["filBrd", "filBrdCol"], [txtCls]);
 // File dragover border
 export const drgCls = compositeClass(["inpFnt", "filBrd", "drgCol", "drgBrdCol"]);
 // Global button
-export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnBrd"])
+export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnBrd"]);
 
 export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 	lodash.forEach(newTheme, (value, key) => {
