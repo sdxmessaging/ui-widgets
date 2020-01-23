@@ -4,7 +4,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { inpCls } from "../theme";
-import { getLabel, setValue } from "../utils";
+import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
@@ -23,7 +23,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 				id, name, title,
 				required, readonly, disabled, autofocus, autocomplete,
 				value: val(),
-				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${inpCls()} ${classes}`,
+				class: `${getEnabledClass(disabled, readonly)} ${inpCls()} ${classes}`,
 				onchange: setValue(val)
 			},
 				lodash.map(options, ({ label, value }) => m("option", {

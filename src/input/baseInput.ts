@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IPropWidget } from "../interface/widget";
 
 import { inpCls } from "../theme";
-import { getLabel, setValue } from "../utils";
+import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
@@ -25,7 +25,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
 				value: value(),
-				class: `${disabled ? "o-60" : ""} ${inpCls()} ${classes}`,
+				class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}))

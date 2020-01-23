@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
 import { lblCls } from "../theme";
-import { getLabelText } from "../utils";
+import { getEnabledClass, getLabelText } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -63,7 +63,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 		return m("label", lodash.extend({
 			for: id,
 			title: label,
-			class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${containerClass}`
+			class: `${getEnabledClass(disabled, readonly)} ${containerClass}`
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),

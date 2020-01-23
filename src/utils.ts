@@ -60,6 +60,11 @@ export function getLabel({ id, label, required }: TField) {
 	}, getLabelText(label, required)) : null;
 }
 
+// Common to interactive widgets
+export function getEnabledClass(disabled?: boolean, readonly?: boolean) {
+	return disabled ? "o-60" : readonly ? "" : "pointer";
+}
+
 // Input widget TProp update helpers
 export function setValue(val: stream<TProp>) {
 	return ({ target: { value } }: { target: HTMLInputElement }) => val(value);

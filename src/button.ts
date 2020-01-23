@@ -2,6 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IMithrilEvent } from "./interface/widget";
 import { getIcon, btnClass } from "./theme";
+import { getEnabledClass } from "./utils";
 
 interface IButton {
 	readonly label?: string;
@@ -23,7 +24,7 @@ export class Button implements ClassComponent<IButton> {
 			type,
 			title,
 			disabled,
-			class: `${disabled ? "o-60" : "pointer"} ${btnClass()} ${classes}`,
+			class: `${getEnabledClass(disabled)} ${btnClass()} ${classes}`,
 			style,
 			onclick,
 		},

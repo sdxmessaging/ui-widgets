@@ -5,7 +5,7 @@ import { IPropWidget, TProp } from "../interface/widget";
 
 import { inpCls, lblCls } from "../theme";
 import { config } from "../config";
-import { getLabel, setValue } from "../utils";
+import { getEnabledClass, getLabel, setValue } from "../utils";
 
 import { CheckboxInput } from "./checkbox";
 
@@ -28,6 +28,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 						id: "showpass",
 						label: config.showPassTxt,
 						type: "checkbox",
+						readonly, disabled,
 						containerClass: `mb1 ${lblCls()}`
 					},
 					value: this.showPassword
@@ -41,7 +42,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				maxlength, minlength, required,
 				readonly, disabled, autofocus, autocomplete,
 				value: value(),
-				class: `${disabled ? "o-60" : ""} ${inpCls()} ${classes}`,
+				class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
 				// Safari quirk
 				autocorrect: "off",
 				// Update value on change or input ("instant" option)

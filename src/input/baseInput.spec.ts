@@ -45,14 +45,14 @@ o.spec("BaseInput", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	o("required + instant", () => {
+	o("required + instant + no label", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(BaseInput, {
 				field: {
 					id: "test",
-					label: "test",
+					label: "",
 					type: FieldType.text,
 					required: true,
 					instant: true
@@ -60,7 +60,7 @@ o.spec("BaseInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
 });

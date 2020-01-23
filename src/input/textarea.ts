@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IPropWidget } from "../interface/widget";
 
 import { areaCls } from "../theme";
-import { getLabel, setValue } from "../utils";
+import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
 
@@ -21,7 +21,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 				id, name, title,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 				value: value(),
-				class: `${disabled ? "o-60" : ""} ${areaCls()} ${classes}`,
+				class: `${getEnabledClass(disabled, true)} ${areaCls()} ${classes}`,
 				style: { resize: "vertical" },
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)

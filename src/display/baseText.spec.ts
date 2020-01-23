@@ -26,4 +26,20 @@ o.spec("BaseText", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
+	o("no label", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("test");
+		m.mount(root, {
+			view: () => m(BaseText, {
+				field: {
+					id: "test",
+					label: "",
+					type: FieldType.text
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+	});
+
 });

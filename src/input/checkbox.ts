@@ -4,7 +4,7 @@ import { IPropWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { getIcon, txtCls } from "../theme";
-import { getLabelText, setCheck } from "../utils";
+import { getEnabledClass, getLabelText, setCheck } from "../utils";
 
 export class CheckboxInput implements ClassComponent<IPropWidget> {
 
@@ -19,7 +19,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		},
 			m("label.flex.items-center", {
 				title,
-				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
+				class: `${getEnabledClass(disabled, readonly)} ${classes}`
 			},
 				m("input.clip[type=checkbox]", {
 					id, name,

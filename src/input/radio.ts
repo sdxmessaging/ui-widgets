@@ -4,7 +4,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { actCls, classMap, getIcon, txtCls } from "../theme";
-import { getLabel, setValue } from "../utils";
+import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
@@ -25,7 +25,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				// No requirement for label "for" attribute
 				return m("label.flex.items-center", {
 					title: label,
-					class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${checked ? actCls() : "dim pointer"} ${classMap.btnBrd()} ${classes}`
+					class: `${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()} ${classes}`
 				},
 					m("input.clip[type=radio]", {
 						name, value, checked,
@@ -33,7 +33,6 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 						disabled: disabled || readonly,
 					}),
 					icon ? m("i.fa-fw", {
-						title: label,
 						class: getIcon(icon)
 					}) : label
 				);

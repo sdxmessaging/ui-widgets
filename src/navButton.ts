@@ -2,6 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IMithrilEvent } from "./interface/widget";
 import { getIcon } from "./theme";
+import { getEnabledClass } from "./utils";
 
 interface INavButton {
 	readonly label?: string;
@@ -21,7 +22,7 @@ export class NavButton implements ClassComponent<INavButton> {
 		return m(".mh2.pa2.truncate", {
 			title,
 			disabled,
-			class: `${disabled ? "o-60" : "pointer"} ${classes}`,
+			class: `${getEnabledClass(disabled)} ${classes}`,
 			style,
 			onclick,
 		},
