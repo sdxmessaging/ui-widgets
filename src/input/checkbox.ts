@@ -17,7 +17,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		return m(".w-100", {
 			class: `${txtCls()} ${containerClass}`,
 		},
-			m("label.flex", {
+			m("label.flex.items-center", {
 				title,
 				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 			},
@@ -29,7 +29,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					onchange: setCheck(value),
 				}),
 				getLabelText(label, required),
-				m("i.self-end.ml2", {
+				m("i.ml2", {
 					class: getIcon(value() ? config.checkIcn : config.uncheckIcn)
 				})
 			)

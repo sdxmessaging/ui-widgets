@@ -10,12 +10,12 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { classes = "", style } = field;
-		return m(".pa2.flex.flex-wrap", {
+		return m(".pa2.flex.items-center", {
 			class: `${classMap.dspBrd()} ${classes}`,
 			style
 		}, [
 				getDisplayLabel(field),
-				m("i.self-end", {
+				m("i", {
 					class: `${classMap.inpCol()} ${getIcon(value() ? config.checkIcn : config.uncheckIcn)}`
 				})
 			]);
