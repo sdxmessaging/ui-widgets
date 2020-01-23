@@ -17,7 +17,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 		} = field as IOptionField;
 		return [
 			getLabel(field),
-			m("div", {
+			m(".w-100", {
 				class: containerClass
 			}, m("select.input-reset.border-box.w-100", {
 				id, name, title,
