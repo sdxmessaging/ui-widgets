@@ -2,7 +2,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { txtCls } from "../theme";
+import { config } from "../config";
+import { getIcon, txtCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
 export class CheckboxInput implements ClassComponent<IPropWidget> {
@@ -11,27 +12,28 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled, autocomplete,
-			containerClass, classes = ""
+			containerClass = "", classes = ""
 		} = field;
-		return m("div", {
-			class: containerClass
-		}, m(".flex.flex-wrap", {
-			class: txtCls(),
+		return m(".w-100", {
+			class: `${txtCls()} ${containerClass}`,
 		},
-			m("label.flex.items-center", {
+			m("label.flex", {
 				title,
 				class: `${disabled ? "o-60" : readonly ? "" : "pointer"} ${classes}`
 			},
-				m("input.mr1[type=checkbox]", {
+				m("input.clip[type=checkbox]", {
 					id, name,
 					checked: value(),
 					required, autocomplete,
 					disabled: disabled || readonly,
 					onchange: setCheck(value),
 				}),
-				getLabelText(label, required)
+				getLabelText(label, required),
+				m("i.self-end.ml2", {
+					class: getIcon(value() ? config.checkIcn : config.uncheckIcn)
+				})
 			)
-		));
+		);
 	}
 
 }
