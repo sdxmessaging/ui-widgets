@@ -9,7 +9,7 @@ import { BaseText } from "./baseText";
 
 o.spec("BaseText", () => {
 
-	o("text", () => {
+	o("basic", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -26,7 +26,7 @@ o.spec("BaseText", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("no label", () => {
+	o("no label + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -34,7 +34,8 @@ o.spec("BaseText", () => {
 				field: {
 					id: "test",
 					label: "",
-					type: FieldType.text
+					type: FieldType.text,
+					classes: "test"
 				},
 				value
 			})

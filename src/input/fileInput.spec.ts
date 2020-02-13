@@ -11,7 +11,25 @@ import { change, dragStart, dragStop, drop } from "./fileInput";
 
 o.spec("FileInput", () => {
 
-	o("disabled", () => {
+	o("basic + no label + title", () => {
+		const root = window.document.createElement("div");
+		const dragging = stream<boolean>(false);
+		m.mount(root, {
+			view: () => m(FileInput, {
+				field: {
+					id: "test",
+					label: "",
+					type: FieldType.file,
+					title: "test title"
+				},
+				dragging,
+				onSet: () => null
+			})
+		});
+		o(root.childNodes.length).equals(1);
+	});
+
+	o("disabled + name + container", () => {
 		const root = window.document.createElement("div");
 		const dragging = stream<boolean>(false);
 		m.mount(root, {
@@ -21,7 +39,8 @@ o.spec("FileInput", () => {
 					label: "test",
 					name: "Test",
 					disabled: true,
-					type: FieldType.file
+					type: FieldType.file,
+					containerClass: "test"
 				},
 				dragging,
 				onSet: () => null
@@ -32,7 +51,6 @@ o.spec("FileInput", () => {
 		// Label has input, text nodes only
 		o(label.childNodes.length).equals(2);
 		o((label.childNodes[0] as HTMLInputElement).hasAttribute("disabled")).equals(true);
-
 	});
 
 	o("drag/drop", () => {

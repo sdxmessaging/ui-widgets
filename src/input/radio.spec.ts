@@ -9,7 +9,7 @@ import { RadioInput } from "./radio";
 
 o.spec("RadioInput", () => {
 
-	o("text", () => {
+	o("basic", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("val");
 		m.mount(root, {
@@ -18,6 +18,33 @@ o.spec("RadioInput", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.radio,
+					options: [{
+						label: "Test Value",
+						value: "val"
+					}, {
+						label: "Test Value 2",
+						value: "val2",
+						icon: "test",
+					}]
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(2);
+	});
+
+	o("name + container + classes", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("val");
+		m.mount(root, {
+			view: () => m(RadioInput, {
+				field: {
+					id: "test",
+					label: "test",
+					name: "test name",
+					type: FieldType.radio,
+					classes: "test",
+					containerClass: "test",
 					options: [{
 						label: "Test Value",
 						value: "val"

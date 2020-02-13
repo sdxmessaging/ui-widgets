@@ -9,7 +9,7 @@ import { Link } from "./link";
 
 o.spec("Link", () => {
 
-	o("url", () => {
+	o("url + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("www.example.com");
 		m.mount(root, {
@@ -17,7 +17,8 @@ o.spec("Link", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.text
+					type: FieldType.text,
+					classes: "test"
 				},
 				value
 			})

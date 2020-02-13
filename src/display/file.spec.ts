@@ -26,7 +26,7 @@ o.spec("FileList", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("single", () => {
+	o("single + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -38,7 +38,8 @@ o.spec("FileList", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.file
+					type: FieldType.file,
+					classes: "test"
 				},
 				value
 			})

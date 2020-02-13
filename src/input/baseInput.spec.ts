@@ -9,7 +9,7 @@ import { BaseInput } from "./baseInput";
 
 o.spec("BaseInput", () => {
 
-	o("text", () => {
+	o("basic + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -17,7 +17,8 @@ o.spec("BaseInput", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.text
+					type: FieldType.text,
+					classes: "test"
 				},
 				value
 			})
@@ -36,8 +37,7 @@ o.spec("BaseInput", () => {
 					name: "custom",
 					label: "test",
 					type: FieldType.text,
-					disabled: true,
-					classes: "ma2"
+					disabled: true
 				},
 				value
 			})
@@ -45,7 +45,7 @@ o.spec("BaseInput", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	o("required + instant + no label", () => {
+	o("required + instant + no label + title", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -53,6 +53,7 @@ o.spec("BaseInput", () => {
 				field: {
 					id: "test",
 					label: "",
+					title: "test",
 					type: FieldType.text,
 					required: true,
 					instant: true

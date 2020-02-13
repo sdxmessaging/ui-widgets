@@ -25,7 +25,7 @@ o.spec("Checkbox", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("unchecked", () => {
+	o("unchecked + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>(false);
 		m.mount(root, {
@@ -33,7 +33,8 @@ o.spec("Checkbox", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.checkbox
+					type: FieldType.checkbox,
+					classes: "test"
 				},
 				value
 			})

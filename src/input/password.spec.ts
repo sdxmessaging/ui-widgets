@@ -9,7 +9,7 @@ import { PasswordInput } from "./password";
 
 o.spec("PasswordInput", () => {
 
-	o("text", () => {
+	o("basic + instant", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -17,6 +17,26 @@ o.spec("PasswordInput", () => {
 				field: {
 					id: "test",
 					label: "test",
+					type: FieldType.text,
+					instant: true
+				},
+				value
+			})
+		});
+		// Label + Input
+		o(root.childNodes.length).equals(2);
+	});
+
+	o("name + no label + title", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("test");
+		m.mount(root, {
+			view: () => m(PasswordInput, {
+				field: {
+					id: "test",
+					label: "",
+					name: "test",
+					title: "test title",
 					type: FieldType.text
 				},
 				value
@@ -26,7 +46,7 @@ o.spec("PasswordInput", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	o("required", () => {
+	o("required + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -35,6 +55,7 @@ o.spec("PasswordInput", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.text,
+					classes: "test",
 					required: true
 				},
 				value

@@ -9,7 +9,7 @@ import { SelectText } from "./select";
 
 o.spec("SelectText", () => {
 
-	o("text", () => {
+	o("basic + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("val");
 		m.mount(root, {
@@ -18,6 +18,7 @@ o.spec("SelectText", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.select,
+					classes: "test",
 					options: [{
 						label: "Test Value",
 						value: "val"

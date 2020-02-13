@@ -9,7 +9,7 @@ import { TextareaInput } from "./textarea";
 
 o.spec("TextareaInput", () => {
 
-	o("text", () => {
+	o("basic + name + instant + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
@@ -17,7 +17,10 @@ o.spec("TextareaInput", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.text
+					name: "test name",
+					type: FieldType.text,
+					classes: "test",
+					instant: true
 				},
 				value
 			})
@@ -26,21 +29,22 @@ o.spec("TextareaInput", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	o("required", () => {
+	o("required + no label + title", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(TextareaInput, {
 				field: {
 					id: "test",
-					label: "test",
+					label: "",
+					title: "test",
 					type: FieldType.text,
 					required: true
 				},
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
 });

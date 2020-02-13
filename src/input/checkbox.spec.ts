@@ -9,7 +9,7 @@ import { CheckboxInput } from "./checkbox";
 
 o.spec("CheckboxInput", () => {
 
-	o("value", () => {
+	o("basic + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>(true);
 		m.mount(root, {
@@ -17,7 +17,8 @@ o.spec("CheckboxInput", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.checkbox
+					type: FieldType.checkbox,
+					classes: "test"
 				},
 				value
 			})
@@ -25,7 +26,7 @@ o.spec("CheckboxInput", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("disabled", () => {
+	o("disabled + name + title", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>(true);
 		m.mount(root, {
@@ -33,6 +34,8 @@ o.spec("CheckboxInput", () => {
 				field: {
 					id: "test",
 					label: "test",
+					name: "test name",
+					title: "test title",
 					type: FieldType.checkbox,
 					disabled: true
 				},

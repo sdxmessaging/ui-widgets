@@ -25,7 +25,7 @@ o.spec("ImagePreview", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("single", () => {
+	o("single + classes", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -37,7 +37,8 @@ o.spec("ImagePreview", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.image
+					type: FieldType.image,
+					classes: "test"
 				},
 				value
 			})

@@ -9,7 +9,7 @@ import { SelectInput } from "./select";
 
 o.spec("SelectInput", () => {
 
-	o("text", () => {
+	o("basic", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("val");
 		m.mount(root, {
@@ -18,6 +18,29 @@ o.spec("SelectInput", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.radio,
+					options: [{
+						label: "Test Value",
+						value: "val"
+					}]
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(2);
+	});
+
+	o("name + classes", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("val");
+		m.mount(root, {
+			view: () => m(SelectInput, {
+				field: {
+					id: "test",
+					label: "test",
+					name: "test name",
+					title: "test title",
+					type: FieldType.radio,
+					classes: "test",
 					options: [{
 						label: "Test Value",
 						value: "val"

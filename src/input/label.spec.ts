@@ -25,4 +25,22 @@ o.spec("Label", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
+	o("value + title + required", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>(true);
+		m.mount(root, {
+			view: () => m(Label, {
+				field: {
+					id: "test",
+					label: "test",
+					type: FieldType.label,
+					title: "test title",
+					required: true
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+	});
+
 });

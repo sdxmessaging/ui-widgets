@@ -44,8 +44,8 @@
     "postbuild": "rollup -c --environment MINIFY",
     "watch": "tsc -w",
     "bundle-watch": "rollup -c -w --environment MINIFY",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json ospec 'src/{**/*,*}.spec.ts' --require ts-node/register test-setup.ts",
-    "coverage": "TS_NODE_PROJECT=tsconfig.test.json nyc ospec 'src/{**/*,*}.spec.ts' --require ts-node/register test-setup.ts",
+    "test": "TS_NODE_PROJECT=tsconfig.test.json ospec 'src/{**/*,*}.spec.ts' --require ts-node/register ./test-setup.ts",
+    "coverage": "TS_NODE_PROJECT=tsconfig.test.json nyc ospec 'src/{**/*,*}.spec.ts' --require ts-node/register ./test-setup.ts",
     "example": "open example.html",
     "lint": "eslint --ext .ts src/"
   }
