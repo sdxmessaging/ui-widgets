@@ -20,7 +20,7 @@ export class Button implements ClassComponent<IButton> {
 	public view({ attrs: {
 		label, type = "button", title = label, icon, classes, disabled, style, onclick
 	} }: CVnode<IButton>) {
-		return m("button.button-reset.pa2", {
+		return m("button.button-reset", {
 			type,
 			title,
 			disabled,

@@ -40,6 +40,7 @@ export const classMap: ITheme = {
 	btnBg: stream("bg-light-blue"),
 	btnCol: stream("dark-gray"),
 	btnFnt: stream(""),
+	btnPad: stream("pa2"),
 	btnBrd: stream("bn br2")
 };
 
@@ -70,7 +71,7 @@ export const filCls = compositeClass(["filBrd", "filBrdCol"], [txtCls]);
 // File dragover border
 export const drgCls = compositeClass(["inpFnt", "filBrd", "drgCol", "drgBrdCol"]);
 // Global button
-export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnBrd"]);
+export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnPad", "btnBrd"]);
 
 export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 	lodash.forEach(newTheme, (value, key) => {

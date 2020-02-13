@@ -27,6 +27,7 @@ export interface ITheme {
 	readonly btnBg: stream<string>;
 	readonly btnCol: stream<string>;
 	readonly btnFnt: stream<string>;
+	readonly btnPad: stream<string>;
 	readonly btnBrd: stream<string>;
 }
 
