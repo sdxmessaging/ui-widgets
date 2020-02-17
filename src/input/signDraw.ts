@@ -5,7 +5,6 @@ import SignaturePad from "signature_pad";
 import { ISignWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { signAspectRatio } from "../theme";
 import { pxRatio } from "../utils";
 
 import { Button } from "../button";
@@ -46,11 +45,9 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 		}
 	}
 
-	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
+	public view({ attrs: { style, onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
-			m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", {
-				style: signAspectRatio()
-			},
+			m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style },
 				m("canvas.aspect-ratio--object")
 			),
 			m(".absolute.top-0.right-0.z-999", {

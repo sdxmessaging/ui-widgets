@@ -1,8 +1,5 @@
 import stream from "mithril/stream";
 import { ITheme, TThemeUpdate } from "./interface/theme";
-export declare function signAspectRatio(): {
-    "padding-bottom": string;
-};
 export declare function imgMaxSize(): {
     "max-height": string;
 };

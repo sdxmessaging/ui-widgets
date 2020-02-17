@@ -70,7 +70,12 @@ export interface IOptionField extends IField {
     readonly type: FieldType.select | FieldType.radio;
     readonly options: IOption[];
 }
-export declare type TField = IField | IOptionField;
+export interface ISignField extends IField {
+    readonly type: FieldType.sign;
+    readonly options?: IOption[];
+    readonly heightPct?: number;
+}
+export declare type TField = IField | IOptionField | ISignField;
 export interface IMithrilEvent extends Event {
     redraw: boolean;
 }
@@ -84,6 +89,8 @@ export interface IPropWidget extends IBaseWidget {
     readonly value: stream<TProp>;
 }
 export interface ISignWidget {
+    readonly heightPct: number;
+    readonly style: Record<string, string>;
     onSet(dataUrl: string): void;
     onCancel(): void;
 }

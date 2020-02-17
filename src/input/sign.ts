@@ -2,10 +2,10 @@ import lodash from "lodash";
 import m, { ClassComponent, ComponentTypes, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, IFileWidget, IOptionField, ISignWidget, SignTypes } from "../interface/widget";
+import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../interface/widget";
 
 import { config } from "../config";
-import { filCls, getIcon, signAspectRatio } from "../theme";
+import { filCls, getIcon } from "../theme";
 import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
@@ -60,8 +60,12 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			id,
 			readonly, disabled,
 			classes = "", containerClass,
-			options = config.signOpts
-		} = field as IOptionField;
+			options = config.signOpts,
+			heightPct = config.signHeightPct
+		} = field as ISignField;
+		const style = {
+			"padding-bottom": `${heightPct}%`
+		};
 		const fileObj = lodash.head(value());
 		// Convert options into widget descriptions
 		const opts = lodash(options).map(({ value: type }) => {
@@ -99,7 +103,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				? m(".aspect-ratio", {
 					id,
 					class: classes,
-					style: signAspectRatio()
+					style
 				},
 					// Current signature
 					fileObj ? m(".aspect-ratio--object",
@@ -111,6 +115,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				// Use signature creation component (if set)
 				: this.component
 					? m(this.component, {
+						heightPct,
+						style,
 						onSet: setFile(value, id, config.signMaxSize),
 						onCancel: () => this.component = undefined
 					})
@@ -118,7 +124,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					: m(".aspect-ratio.pointer", {
 						id,
 						class: `${filCls()} ${classes}`,
-						style: signAspectRatio()
+						style
 					},
 						fileObj
 							// Current signature

@@ -109,7 +109,13 @@ export interface IOptionField extends IField {
 	readonly options: IOption[];
 }
 
-export type TField = IField | IOptionField;
+export interface ISignField extends IField {
+	readonly type: FieldType.sign;
+	readonly options?: IOption[];
+	readonly heightPct?: number;
+}
+
+export type TField = IField | IOptionField | ISignField;
 
 // Mithril event handler helper
 export interface IMithrilEvent extends Event {
@@ -129,6 +135,8 @@ export interface IPropWidget extends IBaseWidget {
 
 // Editor signature inner widgets
 export interface ISignWidget {
+	readonly heightPct: number;
+	readonly style: Record<string, string>;
 	onSet(dataUrl: string): void;
 	onCancel(): void;
 }

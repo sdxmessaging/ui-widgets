@@ -26,7 +26,7 @@ o.spec("SignBuilder", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("options", () => {
+	o("options + heightPct", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -40,7 +40,8 @@ o.spec("SignBuilder", () => {
 						label: "", value: SignTypes.Draw
 					}, {
 						label: "", value: "unknown"
-					}]
+					}],
+					heightPct: 50
 				},
 				value
 			})

@@ -10,6 +10,8 @@ o.spec("SignDraw", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignDraw, {
+				heightPct: 25,
+				style: {},
 				onSet: () => null,
 				onCancel: () => null
 			})

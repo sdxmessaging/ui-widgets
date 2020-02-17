@@ -11,6 +11,8 @@ o.spec("SignStamp", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignStamp, {
+				heightPct: 25,
+				style: {},
 				onSet: () => null,
 				onCancel: () => null
 			})
@@ -24,7 +26,7 @@ o.spec("SignStamp", () => {
 
 	o("apply", () => {
 		const spy = o.spy(() => null);
-		const apply = applyStamp(spy);
+		const apply = applyStamp(25, spy);
 		apply();
 		o(spy.callCount).equals(1);
 	});

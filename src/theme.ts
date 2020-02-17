@@ -5,9 +5,6 @@ import { ITheme, TThemeKey, TThemeUpdate } from "./interface/theme";
 import { config } from "./config";
 
 // Class/Theme helpers
-export function signAspectRatio() {
-	return { "padding-bottom": `${config.signHeightPct}%` };
-}
 export function imgMaxSize() {
 	return { "max-height": config.imageDispHeight };
 }

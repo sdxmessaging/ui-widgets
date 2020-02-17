@@ -12,6 +12,8 @@ o.spec("SignType", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignType, {
+				heightPct: 25,
+				style: {},
 				onSet: () => null,
 				onCancel: () => null
 			})
@@ -26,7 +28,7 @@ o.spec("SignType", () => {
 	o("apply", () => {
 		const text: stream<string> = stream<string>("");
 		const spy = o.spy(() => null);
-		const apply = applyText(text, spy);
+		const apply = applyText(text, 25, spy);
 		// Spy should not be called with empty text
 		apply();
 		o(spy.callCount).equals(0);

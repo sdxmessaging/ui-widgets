@@ -4,17 +4,16 @@ import stream from "mithril/stream";
 import { ISignWidget, TProp } from "../interface/widget";
 
 import { config } from "../config";
-import { signAspectRatio } from "../theme";
 import { setValue } from "../utils";
 
 import { Button } from "../button";
 
 import { createStamp } from "./signStamp";
 
-export function applyText(text: stream<string>, callback: ISignWidget["onSet"]) {
+export function applyText(text: stream<string>, heightPct: number, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
-			callback(createStamp(text()));
+			callback(createStamp(text(), heightPct));
 		}
 		return false;
 	};
@@ -34,11 +33,11 @@ export class SignType implements ClassComponent<ISignWidget> {
 		this.scaleText(dom as HTMLElement);
 	}
 
-	public view({ attrs: { onSet, onCancel } }: CVnode<ISignWidget>) {
+	public view({ attrs: { heightPct, style, onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
 			m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
-				style: signAspectRatio(),
-				onsubmit: applyText(this.text, onSet)
+				style,
+				onsubmit: applyText(this.text, heightPct, onSet)
 			},
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
 					oninput: setValue(this.text as stream<TProp>),
@@ -55,7 +54,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 					title: config.applyTtl,
 					icon: config.applyIcn,
 					classes: "ma1",
-					onclick: applyText(this.text, onSet)
+					onclick: applyText(this.text, heightPct, onSet)
 				}),
 				m(Button, {
 					title: config.resetTtl,
