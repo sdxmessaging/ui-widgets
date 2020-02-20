@@ -143,13 +143,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							])
 							// Signature creation options
 							: m(".aspect-ratio--object.flex.items-stretch.justify-center",
-								lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.justify-center.tc.dim", {
+								lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.flex-wrap.justify-center.tc.dim", {
 									onclick: () => this.component = component
 								},
-									m("i.fa-2x", {
+									m("i.fa-2x.ma1", {
 										class: icon
 									}),
-									m("span.mt2", label)
+									m("span.ma1", label)
 								))
 							)
 					)
