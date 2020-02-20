@@ -351,7 +351,7 @@ m.mount(document.getElementById("page"), {
 					id: "sign-in",
 					label: "Signature Input",
 					type: "sign",
-					heightPct: 12.5
+					heightPct: 20
 				},
 				value: signList
 			})),
