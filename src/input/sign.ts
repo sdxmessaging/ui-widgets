@@ -125,33 +125,32 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						id,
 						class: `${filCls()} ${classes}`,
 						style
-					},
-						fileObj
-							// Current signature
-							? m(".aspect-ratio--object.hide-child.dim", {
-								onclick: () => value([])
-							}, [
-								m("img.img.w-100.absolute", {
-									src: imgSrc(fileObj.path, fileObj.dataUrl)
-								}),
-								// Remove signature button
-								m(".pa3.absolute.top-0.right-0.child",
-									m("i.fa-2x", {
-										class: getIcon(config.resetIcn)
-									})
-								)
-							])
-							// Signature creation options
-							: m(".aspect-ratio--object.flex.items-stretch.justify-center",
-								lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.flex-wrap.justify-center.tc.dim", {
-									onclick: () => this.component = component
-								},
-									m("i.fa-2x.ma1", {
-										class: icon
-									}),
-									m("span.ma1", label)
-								))
+					}, fileObj
+						// Current signature
+						? m(".aspect-ratio--object.hide-child.dim", {
+							onclick: () => value([])
+						}, [
+							m("img.img.w-100.absolute", {
+								src: imgSrc(fileObj.path, fileObj.dataUrl)
+							}),
+							// Remove signature button
+							m(".pa3.absolute.top-0.right-0.child",
+								m("i.fa-2x", {
+									class: getIcon(config.resetIcn)
+								})
 							)
+						])
+						// Signature creation options
+						: m(".aspect-ratio--object.flex.items-stretch.justify-center",
+							lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.flex-wrap.justify-center.tc.dim", {
+								onclick: () => this.component = component
+							},
+								m("i.fa-2x.ma1", {
+									class: icon
+								}),
+								m("span.ma1", label)
+							))
+						)
 					)
 		]);
 	}
