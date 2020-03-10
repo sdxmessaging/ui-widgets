@@ -1,11 +1,11 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget, TProp } from "../interface/widget";
-export declare function linkAttrs(fieldType: string, value: TProp): {
+import { FieldType, IPropWidget, TProp } from "../interface/widget";
+export declare function linkAttrs(fieldType: FieldType | string, value: TProp): {
     href: string;
     class: string;
     target?: undefined;
 } | {
-    href: string | number | boolean;
+    href: TProp;
     target: string;
     class: string;
 };

@@ -81,7 +81,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "text-in-input",
 						label: "Text Input (updates on input)",
-						type: "text",
 						instant: true
 					},
 					value: textVal
@@ -89,8 +88,7 @@ m.mount(document.getElementById("page"), {
 				m(".pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "text-in-change",
-						label: "Text Input (updates on change)",
-						type: "text"
+						label: "Text Input (updates on change)"
 					},
 					value: textVal
 				}))
@@ -98,8 +96,7 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 				field: {
 					id: "text-out",
-					label: "Text Output",
-					type: "text"
+					label: "Text Output"
 				},
 				value: textVal
 			}))
@@ -118,8 +115,7 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 				field: {
 					id: "date-out",
-					label: "Date Output",
-					type: "text"
+					label: "Date Output"
 				},
 				value: dateVal
 			}))
@@ -138,8 +134,7 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 				field: {
 					id: "color-out",
-					label: "Colour Output",
-					type: "text"
+					label: "Colour Output"
 				},
 				value: colVal
 			}))
@@ -151,7 +146,6 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "check-in",
 					label: "Checkbox Input",
-					type: "checkbox",
 					classes: "pa2"
 				},
 				value: checkVal
@@ -159,8 +153,7 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.Checkbox, {
 				field: {
 					id: "check-out",
-					label: "Checkbox Output",
-					type: "text"
+					label: "Checkbox Output"
 				},
 				value: checkVal
 			}))
@@ -213,7 +206,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "custom-label",
 						label: "Label",
-						type: "text",
 						instant: true
 					},
 					value: label
@@ -230,6 +222,9 @@ m.mount(document.getElementById("page"), {
 							label: "Date",
 							value: "date"
 						}, {
+							label: "Date Time",
+							value: "datetime-local"
+						}, {
 							label: "Number",
 							value: "number"
 						}, {
@@ -241,6 +236,9 @@ m.mount(document.getElementById("page"), {
 						}, {
 							label: "Color",
 							value: "color"
+						}, {
+							label: "Range",
+							value: "range"
 						}]
 					},
 					value: type
@@ -249,7 +247,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "custom-placeholder",
 						label: "Placeholder",
-						type: "text",
 						instant: true
 					},
 					value: placeholder
@@ -382,16 +379,14 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
 					id: "theme-label-col",
-					label: "Label Colour",
-					type: "text"
+					label: "Label Colour"
 				},
 				value: lblCol
 			})),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
 					id: "theme-label-fnt",
-					label: "Label Font",
-					type: "text"
+					label: "Label Font"
 				},
 				value: lblFnt
 			}))
@@ -402,16 +397,14 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
 					id: "theme-input-col",
-					label: "Input Colour",
-					type: "text"
+					label: "Input Colour"
 				},
 				value: inpCol
 			})),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
 					id: "theme-input-brd",
-					label: "Input Border",
-					type: "text"
+					label: "Input Border"
 				},
 				value: inpBrd
 			}))
@@ -422,16 +415,14 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
 					id: "theme-button-bg",
-					label: "Button Background Colour",
-					type: "text"
+					label: "Button Background Colour"
 				},
 				value: btnBg
 			})),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 				field: {
 					id: "theme-button-brd",
-					label: "Button Border",
-					type: "text"
+					label: "Button Border"
 				},
 				value: btnBrd
 			}))

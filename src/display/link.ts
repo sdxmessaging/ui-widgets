@@ -1,12 +1,12 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { config } from "../config";
 import { classMap, getIcon, txtCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
-export function linkAttrs(fieldType: string, value: TProp) {
+export function linkAttrs(fieldType: FieldType | string, value: TProp) {
 	if (fieldType === "email") {
 		return {
 			href: `mailto:${value}`,
@@ -35,18 +35,18 @@ export const iconMap: Record<string, string> = {
 export class Link implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { type, classes = "", style } = field;
+		const { type = FieldType.url, classes = "", style } = field;
 		return m(".pa2.flex.flex-wrap", {
 			class: `${classMap.dspBrd()} ${classes}`,
 			style
 		}, [
-				getDisplayLabel(field),
-				m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()),
-					m("i.mr2", {
-						class: getIcon(iconMap[type] || config.linkIcn)
-					}),
-					value())
-			]);
+			getDisplayLabel(field),
+			m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()),
+				m("i.mr2", {
+					class: getIcon(iconMap[type] || config.linkIcn)
+				}),
+				value())
+		]);
 	}
 
 }

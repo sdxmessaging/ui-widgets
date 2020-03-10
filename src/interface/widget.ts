@@ -17,16 +17,20 @@ export const enum FieldType {
 	label = "label",
 	trusted = "trusted",
 	// BaseInput
+	hidden = "hidden",
 	text = "text",
+	password = "password",
 	search = "search",
 	date = "date",
+	time = "time",
+	dateTimeLocal = "datetime-local",
 	number = "number",
 	range = "range",
 	email = "email",
 	url = "url",
 	tel = "tel",
 	color = "color",
-	// Custom
+	// Dedicated widget
 	textarea = "textarea",
 	checkbox = "checkbox",
 	select = "select",
@@ -68,10 +72,10 @@ type TAutocomplete = "off" | "on" |
 	"tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
 
 export interface IField {
-	readonly label: string;
-	// Standard HTML attributes
+	readonly label?: string;
+	// Standard HTML input attributes
 	readonly id: string;
-	readonly type: FieldType | string;
+	readonly type?: FieldType | string;
 	readonly name?: string;
 	readonly title?: string;
 	readonly placeholder?: string;

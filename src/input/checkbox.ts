@@ -10,7 +10,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
-			label, id, name = id, title = label,
+			label = "", id, name = id, title = label,
 			required, readonly, disabled, autocomplete,
 			containerClass = "", classes = ""
 		} = field;

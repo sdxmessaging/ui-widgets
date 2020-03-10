@@ -15,10 +15,10 @@ export declare function getLabel({ id, label, required }: TField): m.Vnode<any, 
 export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "" | "o-60" | "pointer";
 export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;
 export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;
 /**
  * Split given file name from extension
  */
