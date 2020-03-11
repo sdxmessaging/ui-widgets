@@ -135,6 +135,7 @@ export interface IFileWidget extends IBaseWidget {
 }
 export interface IPropWidget extends IBaseWidget {
 	readonly value: stream<TProp>;
+	readonly xform?: stream<TProp>;
 }
 
 // Editor signature inner widgets

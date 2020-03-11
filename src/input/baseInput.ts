@@ -7,7 +7,7 @@ import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
-	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
+	public view({ attrs: { field, value, xform = value } }: CVnode<IPropWidget>) {
 		const {
 			label, id, type = FieldType.text, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
@@ -24,7 +24,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
-				value: value(),
+				value: xform(),
 				class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)

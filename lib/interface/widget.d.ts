@@ -91,6 +91,7 @@ export interface IFileWidget extends IBaseWidget {
 }
 export interface IPropWidget extends IBaseWidget {
     readonly value: stream<TProp>;
+    readonly xform?: stream<TProp>;
 }
 export interface ISignWidget {
     readonly heightPct: number;

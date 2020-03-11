@@ -14,6 +14,10 @@ var checkVal = stream();
 var optVal = stream();
 var faceVal = stream();
 
+// Transform
+var xformValIn = stream("");
+var xformValOut = xformValIn.map((val) => val.toUpperCase());
+
 // Custom
 var value = stream("");
 var label = stream("Custom Input");
@@ -193,6 +197,30 @@ m.mount(document.getElementById("page"), {
 					}],
 				},
 				value: optVal
+			}))
+		]),
+
+		m("p", "Perform custom transforms by mapping the input stream to a new value"),
+		m("p", "Note that a transform stream value is fed back into the initial value on each update"),
+
+		// xform
+		m(".flex.mb2", [
+			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+				field: {
+					id: "xform-in-simple",
+					label: "Input Stream",
+					instant: true
+				},
+				value: xformValIn
+			})),
+			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				field: {
+					id: "xform-in-xform",
+					label: "Input Stream + Transform Stream (toUpperCase)",
+					instant: true
+				},
+				value: xformValIn,
+				xform: xformValOut
 			}))
 		]),
 
