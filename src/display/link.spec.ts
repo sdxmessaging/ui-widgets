@@ -9,16 +9,13 @@ import { Link } from "./link";
 
 o.spec("Link", () => {
 
-	o("url + classes", () => {
+	o("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("www.example.com");
 		m.mount(root, {
 			view: () => m(Link, {
 				field: {
-					id: "test",
-					label: "test",
-					type: FieldType.text,
-					classes: "test"
+					id: "test"
 				},
 				value
 			})
@@ -33,7 +30,6 @@ o.spec("Link", () => {
 			view: () => m(Link, {
 				field: {
 					id: "test",
-					label: "test",
 					type: FieldType.email
 				},
 				value
@@ -42,15 +38,18 @@ o.spec("Link", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("tel", () => {
+	o("configured tel", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("+1-541-754-3010");
 		m.mount(root, {
 			view: () => m(Link, {
 				field: {
 					id: "test",
-					label: "test",
-					type: FieldType.tel
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					type: FieldType.tel,
+					classes: "test",
 				},
 				value
 			})

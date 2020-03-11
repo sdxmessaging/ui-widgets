@@ -118,7 +118,6 @@ o.spec("Image orientation", () => {
 
 	// TODO Work out what the other bytes mean
 	o("no orientation", () => {
-
 		const buffer = new ArrayBuffer(128);
 		const view = new DataView(buffer);
 		// Mark first byte

@@ -9,59 +9,43 @@ import { BaseInput } from "./baseInput";
 
 o.spec("BaseInput", () => {
 
-	o("basic + classes", () => {
+	o("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(BaseInput, {
 				field: {
-					id: "test",
-					label: "test",
-					type: FieldType.text,
-					classes: "test"
+					id: "test"
 				},
 				value
+			})
+		});
+		// Input only
+		o(root.childNodes.length).equals(1);
+	});
+
+	o("configured", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("test");
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(BaseInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					type: FieldType.number,
+					classes: "test",
+					disabled: true,
+					instant: true
+				},
+				value,
+				xform
 			})
 		});
 		// Label + Input
 		o(root.childNodes.length).equals(2);
-	});
-
-	o("name + disabled + classes", () => {
-		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
-		m.mount(root, {
-			view: () => m(BaseInput, {
-				field: {
-					id: "test",
-					name: "custom",
-					label: "test",
-					type: FieldType.text,
-					disabled: true
-				},
-				value
-			})
-		});
-		o(root.childNodes.length).equals(2);
-	});
-
-	o("required + instant + no label + title", () => {
-		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
-		m.mount(root, {
-			view: () => m(BaseInput, {
-				field: {
-					id: "test",
-					label: "",
-					title: "test",
-					type: FieldType.text,
-					required: true,
-					instant: true
-				},
-				value
-			})
-		});
-		o(root.childNodes.length).equals(1);
 	});
 
 });

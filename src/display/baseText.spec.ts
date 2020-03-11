@@ -3,21 +3,19 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { TProp } from "../interface/widget";
 
 import { BaseText } from "./baseText";
 
 o.spec("BaseText", () => {
 
-	o("basic", () => {
+	o("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(BaseText, {
 				field: {
 					id: "test",
-					label: "test",
-					type: FieldType.text
 				},
 				value
 			})
@@ -26,15 +24,16 @@ o.spec("BaseText", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("no label + classes", () => {
+	o("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(BaseText, {
 				field: {
 					id: "test",
-					label: "",
-					type: FieldType.text,
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
 					classes: "test"
 				},
 				value

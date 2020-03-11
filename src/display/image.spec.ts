@@ -3,21 +3,19 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IFile } from "../interface/widget";
+import { IFile } from "../interface/widget";
 
 import { ImageList } from "./image";
 
 o.spec("ImageList", () => {
 
-	o("empty", () => {
+	o("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
 			view: () => m(ImageList, {
 				field: {
-					id: "test",
-					label: "test",
-					type: FieldType.imageMulti
+					id: "test"
 				},
 				value
 			})
@@ -25,7 +23,7 @@ o.spec("ImageList", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("multiple + classes", () => {
+	o("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -41,8 +39,9 @@ o.spec("ImageList", () => {
 			view: () => m(ImageList, {
 				field: {
 					id: "test",
-					label: "test",
-					type: FieldType.imageMulti,
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
 					classes: "test"
 				},
 				value

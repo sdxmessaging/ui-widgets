@@ -3,48 +3,45 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { TProp } from "../interface/widget";
 
 import { TextareaInput } from "./textarea";
 
 o.spec("TextareaInput", () => {
 
-	o("basic + name + instant + classes", () => {
+	o("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(TextareaInput, {
 				field: {
-					id: "test",
-					label: "test",
-					name: "test name",
-					type: FieldType.text,
-					classes: "test",
-					instant: true
+					id: "test"
 				},
 				value
 			})
 		});
 		// Label + Input
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
-	o("required + no label + title", () => {
+	o("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("test");
 		m.mount(root, {
 			view: () => m(TextareaInput, {
 				field: {
 					id: "test",
-					label: "",
-					title: "test",
-					type: FieldType.text,
-					required: true
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					classes: "test",
+					required: true,
+					instant: true
 				},
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		o(root.childNodes.length).equals(2);
 	});
 
 });

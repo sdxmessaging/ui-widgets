@@ -3,46 +3,40 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { TProp } from "../interface/widget";
 
 import { SelectInput } from "./select";
 
 o.spec("SelectInput", () => {
 
-	o("basic", () => {
+	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("val");
+		const value = stream<TProp>("");
 		m.mount(root, {
 			view: () => m(SelectInput, {
 				field: {
-					id: "test",
-					label: "test",
-					type: FieldType.radio,
-					options: [{
-						label: "Test Value",
-						value: "val"
-					}]
+					id: "test"
 				},
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
-	o("name + classes", () => {
+	o("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("val");
 		m.mount(root, {
 			view: () => m(SelectInput, {
 				field: {
 					id: "test",
-					label: "test",
-					name: "test name",
-					title: "test title",
-					type: FieldType.radio,
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
 					classes: "test",
+					disabled: true,
 					options: [{
-						label: "Test Value",
+						label: "val",
 						value: "val"
 					}]
 				},
@@ -52,22 +46,23 @@ o.spec("SelectInput", () => {
 		o(root.childNodes.length).equals(2);
 	});
 
-	o("missing value fallback", () => {
+	o("readonly", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("missing");
+		const value = stream<TProp>("");
 		m.mount(root, {
 			view: () => m(SelectInput, {
 				field: {
 					id: "test",
-					label: "test",
-					type: FieldType.radio,
-					// Value not present
-					options: []
+					readonly: true,
+					options: [{
+						label: "val",
+						value: "val"
+					}]
 				},
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
 });

@@ -3,7 +3,7 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { TProp } from "../interface/widget";
 
 import { Trusted } from "./trusted";
 
@@ -15,9 +15,7 @@ o.spec("Trusted", () => {
 		m.mount(root, {
 			view: () => m(Trusted, {
 				field: {
-					id: "test",
-					label: "test",
-					type: FieldType.text
+					id: "test"
 				},
 				value
 			})
