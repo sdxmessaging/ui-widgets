@@ -224,6 +224,36 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
+		m("h3", m("a#button.link[href=#button]", "Buttons")),
+		m("p", "Buttons are available in standard and hyperlink variants"),
+
+		m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
+			m(uiWidgets.Button, {
+				label: "Simple Button",
+				icon: "fa-toggle-on",
+				classes: "ma1",
+				onclick: () => console.log("Button Click")
+			}),
+			m(uiWidgets.ButtonLink, {
+				label: "Link Button",
+				icon: "fa-link",
+				classes: "ma1",
+				href: "#button"
+			}),
+			m(uiWidgets.NavButton, {
+				label: "Nav Button",
+				icon: "fa-home",
+				classes: "ma1",
+				onclick: () => console.log("Nav Button Click")
+			}),
+			m(uiWidgets.NavLink, {
+				label: "Nav Link",
+				icon: "fa-link",
+				classes: "ma1",
+				href: "#button"
+			}),
+		]),
+
 		m("h3", m("a#custom.link[href=#custom]", "Customise")),
 		m("p", "Widget options are simple to update"),
 
