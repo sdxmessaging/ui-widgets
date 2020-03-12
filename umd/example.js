@@ -51,25 +51,30 @@ m.mount(document.getElementById("page"), {
 	view: () => m(".mw8.pa3.mb5.center", [
 
 		m(".flex.flex-column.flex-row-l.fixed.top-0.right-0.bg-near-white", [
-			m(uiWidgets.NavButton, {
+			m(uiWidgets.NavLink, {
 				label: "Basic Usage",
 				icon: "fa-home",
-				onclick: () => window.location.hash = "basic"
+				href: "#basic"
 			}),
-			m(uiWidgets.NavButton, {
+			m(uiWidgets.NavLink, {
+				label: "Buttons",
+				icon: "fa-arrow-circle-right",
+				href: "#button"
+			}),
+			m(uiWidgets.NavLink, {
 				label: "Customise",
 				icon: "fa-edit",
-				onclick: () => window.location.hash = "custom"
+				href: "#custom"
 			}),
-			m(uiWidgets.NavButton, {
+			m(uiWidgets.NavLink, {
 				label: "File Support",
 				icon: "fa-file-alt",
-				onclick: () => window.location.hash = "files"
+				href: "#files"
 			}),
-			m(uiWidgets.NavButton, {
+			m(uiWidgets.NavLink, {
 				label: "Theme Support",
-				icon: "fa-pencil-ruler",
-				onclick: () => window.location.hash = "theme"
+				icon: "fa-paint-roller",
+				href: "#theme"
 			})
 		]),
 
@@ -230,7 +235,7 @@ m.mount(document.getElementById("page"), {
 		m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
 			m(uiWidgets.Button, {
 				label: "Simple Button",
-				icon: "fa-toggle-on",
+				icon: "fa-arrow-circle-down",
 				classes: "ma1",
 				onclick: () => console.log("Button Click")
 			}),
@@ -242,7 +247,7 @@ m.mount(document.getElementById("page"), {
 			}),
 			m(uiWidgets.NavButton, {
 				label: "Nav Button",
-				icon: "fa-home",
+				icon: "fa-arrow-circle-up",
 				classes: "ma1",
 				onclick: () => console.log("Nav Button Click")
 			}),
