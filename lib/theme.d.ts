@@ -16,5 +16,6 @@ export declare const actCls: stream<string>;
 export declare const filCls: stream<string>;
 export declare const drgCls: stream<string>;
 export declare const btnClass: stream<string>;
+export declare const navClass: stream<string>;
 export declare function updateTheme(newTheme: Partial<TThemeUpdate>): void;
 export declare function getIcon(iconClass: string): string;

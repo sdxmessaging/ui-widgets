@@ -4,7 +4,7 @@ import { IMithrilEvent } from "./interface/widget";
 import { getIcon, btnClass } from "./theme";
 import { getEnabledClass } from "./utils";
 
-interface IButton {
+export interface IButton {
 	readonly label?: string;
 	readonly type?: "submit" | "reset" | "button";
 	readonly title?: string;
@@ -18,15 +18,12 @@ interface IButton {
 export class Button implements ClassComponent<IButton> {
 
 	public view({ attrs: {
-		label, type = "button", title = label, icon, classes, disabled, style, onclick
+		label, type = "button", title = label, icon, classes = "", disabled, style, onclick
 	} }: CVnode<IButton>) {
 		return m("button.button-reset", {
-			type,
-			title,
-			disabled,
-			class: `${getEnabledClass(disabled)} ${btnClass()} ${classes}`,
-			style,
-			onclick,
+			type, title, disabled,
+			class: `${getEnabledClass(disabled)} ${btnClass()} ${classes}`, style,
+			onclick
 		},
 			icon ? m("i.fa-fw", {
 				class: `${label ? "mr2" : ""} ${getIcon(icon)}`

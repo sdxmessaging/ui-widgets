@@ -69,6 +69,8 @@ export const filCls = compositeClass(["filBrd", "filBrdCol"], [txtCls]);
 export const drgCls = compositeClass(["inpFnt", "filBrd", "drgCol", "drgBrdCol"]);
 // Global button
 export const btnClass = compositeClass(["btnBg", "btnCol", "btnFnt", "btnPad", "btnBrd"]);
+// Nav button
+export const navClass = compositeClass(["btnCol", "btnFnt"]);
 
 export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 	lodash.forEach(newTheme, (value, key) => {
