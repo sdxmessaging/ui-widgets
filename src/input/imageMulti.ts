@@ -5,9 +5,10 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { btnClass, drgCls, filCls, getIcon, thumbMaxSize } from "../theme";
+import { drgCls, filCls, getIcon, thumbMaxSize } from "../theme";
 import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
 
+import { Button } from "../button";
 import { Thumbnail } from "../display/thumbnail";
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
@@ -65,13 +66,11 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					src: imgSrc(file.path, file.dataUrl),
 					style: thumbMaxSize()
 				},
-					m(".pa2.absolute.top-0.right-0.child.pointer", {
-						title: `Remove ${file.name}`,
-						class: btnClass(),
-						onclick: removeFile(value, file.guid)
-					},
-						m("i.fa-lg", {
-							class: getIcon(config.deleteIcn)
+					m(".absolute.top-0.right-0.child",
+						m(Button, {
+							title: `Remove ${file.name}`,
+							icon: config.deleteIcn,
+							onclick: removeFile(value, file.guid)
 						})
 					)
 				))
