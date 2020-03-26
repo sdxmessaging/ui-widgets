@@ -60,7 +60,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {
-		return m("label", lodash.extend({
+		return m("label.db", lodash.extend({
 			for: id,
 			title,
 			class: `${getEnabledClass(disabled, readonly)} ${containerClass}`
