@@ -3,6 +3,7 @@ import stream from "mithril/stream";
 // Internal theme manager
 export interface ITheme {
 	// Icon
+	// TODO Retire in favour of full icon classes in config
 	readonly icon: stream<string>;
 	// Label
 	readonly lblCol: stream<string>;
@@ -24,6 +25,7 @@ export interface ITheme {
 	readonly drgCol: stream<string>;
 	readonly drgBrdCol: stream<string>;
 	// Button
+	// TODO Consolidate into single button class
 	readonly btnBg: stream<string>;
 	readonly btnCol: stream<string>;
 	readonly btnFnt: stream<string>;

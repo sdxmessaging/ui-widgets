@@ -83,3 +83,18 @@ export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 export function getIcon(iconClass: string): string {
 	return `${classMap.icon()} ${iconClass}`;
 }
+
+// Button context helpers
+const btnMap: Record<string, string> = {};
+
+export function updateButtonContext(newButtonContext: Record<string, string>) {
+	lodash.assign(btnMap, newButtonContext);
+}
+
+export function getButtonContext(key?: string): string {
+	if (key && key in btnMap) {
+		return btnMap[key];
+	} else {
+		return btnClass();
+	}
+}

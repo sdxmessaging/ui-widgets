@@ -1,7 +1,7 @@
 export * from "./interface/widget";
 
 export { updateConfig } from "./config";
-export { updateTheme, getIcon } from "./theme";
+export { updateTheme, getIcon, updateButtonContext } from "./theme";
 export { fileNameExtSplit, guid } from "./utils";
 
 export { Badge } from "./badge";

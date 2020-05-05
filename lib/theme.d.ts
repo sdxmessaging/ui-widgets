@@ -19,3 +19,5 @@ export declare const btnClass: stream<string>;
 export declare const navClass: stream<string>;
 export declare function updateTheme(newTheme: Partial<TThemeUpdate>): void;
 export declare function getIcon(iconClass: string): string;
+export declare function updateButtonContext(newButtonContext: Record<string, string>): void;
+export declare function getButtonContext(key?: string): string;

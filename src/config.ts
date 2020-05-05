@@ -3,7 +3,7 @@ import lodash from "lodash";
 import { IConfig } from "./interface/config";
 import { SignTypes } from "./interface/widget";
 
-export const confMap: IConfig = {
+const confMap: IConfig = {
 	imageMaxSize: 1280,
 	imageDispHeight: "16rem",
 	thumbDispHeight: "6rem",

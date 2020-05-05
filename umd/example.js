@@ -6,6 +6,11 @@ uiWidgets.updateConfig({
 	signFont: "Caveat"
 });
 
+uiWidgets.updateButtonContext({
+	invert: "bg-dark-gray light-blue pa2 ba br2 b--light-blue",
+	warn: "bg-orange black ph3 pv2 ba br-pill b--black b--dashed"
+});
+
 // Simple props
 var textVal = stream("Text");
 var dateVal = stream();
@@ -255,6 +260,30 @@ m.mount(document.getElementById("page"), {
 				label: "Nav Link",
 				icon: "fa-link",
 				classes: "ma1",
+				href: "#button"
+			})
+		]),
+
+		m("p", "Additional button themes can also be registered"),
+
+		m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
+			m(uiWidgets.Button, {
+				label: "Inverted",
+				icon: "fa-recycle",
+				context: "invert",
+				classes: "ma1"
+			}),
+			m(uiWidgets.Button, {
+				label: "Warning",
+				icon: "fa-exclamation-triangle",
+				context: "warn",
+				classes: "ma1"
+			}),
+			m(uiWidgets.ButtonLink, {
+				label: "Link Inverted",
+				icon: "fa-link",
+				classes: "ma1",
+				context: "invert",
 				href: "#button"
 			}),
 		]),

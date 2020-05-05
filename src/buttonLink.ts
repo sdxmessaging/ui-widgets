@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { getIcon, btnClass } from "./theme";
+import { getIcon, getButtonContext } from "./theme";
 
 export interface IButtonLink {
 	readonly label?: string;
@@ -11,17 +11,18 @@ export interface IButtonLink {
 	readonly target?: "_self" | "_blank" | "_parent" | "_top";
 	readonly download?: string;
 	readonly classes?: string;
+	readonly context?: string;
 	readonly style?: object;
 }
 
 export class ButtonLink implements ClassComponent<IButtonLink> {
 
 	public view({ attrs: {
-		label, title = label, icon, href, rel, target, download, classes = "", style
+		label, title = label, icon, href, rel, target, download, context, classes = "", style
 	} }: CVnode<IButtonLink>) {
 		return m("a.link", {
 			href, rel, target, download, title,
-			class: `${btnClass()} ${classes}`, style
+			class: `${getButtonContext(context)} ${classes}`, style
 		},
 			icon ? m("i.fa-fw", {
 				class: `${label ? "mr2" : ""} ${getIcon(icon)}`
