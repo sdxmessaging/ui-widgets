@@ -59,6 +59,7 @@ export interface IField {
     readonly pattern?: string;
     readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
     readonly spellcheck?: boolean;
+    readonly accept?: string;
     readonly instant?: boolean;
     readonly classes?: string;
     readonly containerClass?: string;

@@ -29,7 +29,7 @@ o.spec("FileInput", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("disabled + name + container", () => {
+	o("disabled + name + container + accept", () => {
 		const root = window.document.createElement("div");
 		const dragging = stream<boolean>(false);
 		m.mount(root, {
@@ -40,6 +40,7 @@ o.spec("FileInput", () => {
 					name: "Test",
 					disabled: true,
 					type: FieldType.file,
+					accept: ".pdf",
 					containerClass: "test"
 				},
 				dragging,

@@ -8,7 +8,7 @@ import { getEnabledClass, getLabelText } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
-	readonly accept?: string;
+	readonly defaultAccept?: string;
 	readonly multiple?: boolean;
 	readonly dragging: stream<boolean>;
 	onSet(setList: FileList | null): void;
@@ -51,12 +51,14 @@ export function change(setFiles: (setList: FileList | null) => void) {
 
 export class FileInput implements ClassComponent<IFileInput> {
 	public view({ attrs: {
+		defaultAccept = "*",
 		field: {
 			label, id, name = id, title = label,
 			required, readonly, disabled, autofocus,
+			accept = defaultAccept,
 			containerClass = ""
 		},
-		accept = "*", multiple = true,
+		multiple = true,
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {

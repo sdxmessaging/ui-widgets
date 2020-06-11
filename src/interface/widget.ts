@@ -92,12 +92,14 @@ export interface IField {
 	readonly pattern?: string;
 	readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
 	readonly spellcheck?: boolean;
+	// Standard file input attribute
+	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
 	readonly classes?: string;
 	readonly containerClass?: string;
 	readonly style?: Record<string, string>;
-	// No support
+	// Unsupported legacy field
 	readonly default?: string;
 }
 

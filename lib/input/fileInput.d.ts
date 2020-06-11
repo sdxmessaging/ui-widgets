@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 import { IMithrilEvent, TField } from "../interface/widget";
 export interface IFileInput {
     readonly field: TField;
-    readonly accept?: string;
+    readonly defaultAccept?: string;
     readonly multiple?: boolean;
     readonly dragging: stream<boolean>;
     onSet(setList: FileList | null): void;
@@ -15,5 +15,5 @@ export declare function change(setFiles: (setList: FileList | null) => void): ({
     target: HTMLInputElement;
 }) => void;
 export declare class FileInput implements ClassComponent<IFileInput> {
-    view({ attrs: { field: { label, id, name, title, required, readonly, disabled, autofocus, containerClass }, accept, multiple, dragging, onSet }, children }: CVnode<IFileInput>): m.Vnode<any, any>;
+    view({ attrs: { defaultAccept, field: { label, id, name, title, required, readonly, disabled, autofocus, accept, containerClass }, multiple, dragging, onSet }, children }: CVnode<IFileInput>): m.Vnode<any, any>;
 }

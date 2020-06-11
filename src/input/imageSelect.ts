@@ -45,7 +45,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 		const { classes = "" } = field;
 		return m(FileInput, {
 			field,
-			accept: "image/*",
+			defaultAccept: "image/*",
 			multiple: false,
 			dragging: this.dragging,
 			onSet: setFile(value, config.imageMaxSize)

@@ -49,7 +49,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 		return [
 			m(FileInput, {
 				field,
-				accept: "image/*",
+				defaultAccept: "image/*",
 				dragging: this.dragging,
 				onSet: addFiles(value, config.imageMaxSize)
 			},
