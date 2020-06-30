@@ -6,12 +6,12 @@ import { Button } from "./button";
 
 o.spec("Button", () => {
 
-	o("default + icon", () => {
+	o("default + right icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
 				label: "test",
-				icon: "fa-times"
+				rightIcon: "fa-times"
 			})
 		});
 		o(root.childNodes.length).equals(1);
@@ -22,7 +22,7 @@ o.spec("Button", () => {
 		o(btn.childNodes.length).equals(2);
 	});
 
-	o("submit", () => {
+	o("submit + no icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
@@ -38,11 +38,11 @@ o.spec("Button", () => {
 		o(btn.childNodes.length).equals(1);
 	});
 
-	o("disabled", () => {
+	o("disabled + icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
-				label: "test",
+				icon: "test",
 				disabled: true
 			})
 		});

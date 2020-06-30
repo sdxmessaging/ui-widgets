@@ -241,6 +241,7 @@ m.mount(document.getElementById("page"), {
 			m(uiWidgets.Button, {
 				label: "Simple Button",
 				icon: "fa-arrow-circle-down",
+				rightIcon: "fa-arrow-circle-down",
 				classes: "ma1",
 				onclick: () => console.log("Button Click")
 			}),
@@ -258,7 +259,7 @@ m.mount(document.getElementById("page"), {
 			}),
 			m(uiWidgets.NavLink, {
 				label: "Nav Link",
-				icon: "fa-link",
+				rightIcon: "fa-link",
 				classes: "ma1",
 				href: "#button"
 			})
@@ -269,7 +270,7 @@ m.mount(document.getElementById("page"), {
 		m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
 			m(uiWidgets.Button, {
 				label: "Inverted",
-				icon: "fa-recycle",
+				rightIcon: "fa-recycle",
 				context: "invert",
 				classes: "ma1"
 			}),

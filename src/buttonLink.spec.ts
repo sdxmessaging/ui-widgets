@@ -40,7 +40,7 @@ o.spec("ButtonLink", () => {
 			view: () => m(ButtonLink, {
 				label: "test",
 				title: "Test Title",
-				icon: "test",
+				rightIcon: "test",
 				href: "test",
 				rel: "test",
 				target: "_blank",

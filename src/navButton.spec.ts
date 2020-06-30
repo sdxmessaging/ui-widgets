@@ -32,19 +32,20 @@ o.spec("NavButton", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("disabled", () => {
+	o("disabled + icons", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(NavButton, {
 				label: "Disabled",
 				icon: "icon",
+				rightIcon: "icon",
 				disabled: true
 			})
 		});
 		o(root.childNodes.length).equals(1);
 		const btn = root.childNodes[0] as HTMLDivElement;
-		// Icon and text nodes
-		o(btn.childNodes.length).equals(2);
+		// Icon + text + right icon
+		o(btn.childNodes.length).equals(3);
 	});
 
 });

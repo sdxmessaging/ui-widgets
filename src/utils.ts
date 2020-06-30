@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { TField, TProp } from "./interface/widget";
 
-import { dspLblCls, lblCls } from "./theme";
+import { dspLblCls, getIcon, lblCls } from "./theme";
 
 declare global {
 	// eslint-disable-next-line @typescript-eslint/interface-name-prefix
@@ -58,6 +58,18 @@ export function getLabel({ id, label, required }: TField) {
 		for: id,
 		class: lblCls()
 	}, getLabelText(label, required)) : null;
+}
+
+export function labelIcon(leftIcon?: string, label?: string, rightIcon?: string) {
+	return [
+		leftIcon ? m("i.fa-fw", {
+			class: `${label ? "mr2" : ""} ${getIcon(leftIcon)}`
+		}) : null,
+		label,
+		rightIcon ? m("i.fa-fw", {
+			class: `${label ? "ml2" : ""} ${getIcon(rightIcon)}`
+		}) : null
+	];
 }
 
 // Common to interactive widgets

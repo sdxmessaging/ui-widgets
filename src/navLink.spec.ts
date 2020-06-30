@@ -41,6 +41,7 @@ o.spec("NavLink", () => {
 				label: "test",
 				title: "Test Title",
 				icon: "test",
+				rightIcon: "test",
 				href: "test",
 				rel: "test",
 				target: "_blank",
@@ -53,8 +54,8 @@ o.spec("NavLink", () => {
 		const link = root.childNodes[0] as HTMLLinkElement;
 		o(link.nodeName).equals("A");
 		o(link.getAttribute("target")).equals("_blank");
-		// Icon + Text
-		o(link.childNodes.length).equals(2);
+		// Icon + Text + right Icon
+		o(link.childNodes.length).equals(3);
 	});
 
 });
