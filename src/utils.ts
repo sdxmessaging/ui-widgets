@@ -225,7 +225,7 @@ export function rotateContext(ctx: CanvasRenderingContext2D, width: number, heig
  */
 export function resizeImage(file: File, maxSize: number, type?: string): Promise<string> {
 	if (!file.type.match(/image.*/)) {
-		return Promise.reject(new Error("File most be an image"));
+		return Promise.reject(new Error("File must be an image"));
 	}
 	return readOrientation(file)
 		.then((orientation) => new Promise((resolve) => {
