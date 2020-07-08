@@ -13,7 +13,7 @@ export interface IButton {
 	readonly context?: string;
 	readonly classes?: string;
 	readonly disabled?: boolean;
-	readonly style?: object;
+	readonly style?: Record<string, unknown>;
 	onclick?(evt: IMithrilEvent): void;
 }
 

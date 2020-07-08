@@ -92,7 +92,7 @@ o.spec("File", () => {
 		const file = new File(["test"], "test.txt");
 		resizeImage(file, 100)
 			.catch((err: Error) => {
-				o(err.message).equals("File most be an image");
+				o(err.message).equals("File must be an image");
 				done();
 			});
 	});

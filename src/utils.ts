@@ -6,7 +6,7 @@ import { TField, TProp } from "./interface/widget";
 import { dspLblCls, getIcon, lblCls } from "./theme";
 
 declare global {
-	// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+	// eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window { msCrypto: Crypto }
 }
 

@@ -14,7 +14,7 @@ export interface IButtonLink {
 	readonly download?: string;
 	readonly classes?: string;
 	readonly context?: string;
-	readonly style?: object;
+	readonly style?: Record<string, unknown>;
 }
 
 export class ButtonLink implements ClassComponent<IButtonLink> {

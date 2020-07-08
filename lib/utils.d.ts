@@ -16,10 +16,10 @@ export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?:
 export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "" | "o-60" | "pointer";
 export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<TProp>;
+}) => stream<string | number | boolean>;
 export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => stream<TProp>;
+}) => stream<string | number | boolean>;
 /**
  * Split given file name from extension
  */

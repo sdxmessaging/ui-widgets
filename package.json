@@ -24,30 +24,30 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/lodash": "^4.14.157",
-    "@types/mithril": "^2.0.2",
-    "@types/node": "^13.13.4",
+    "@types/mithril": "^2.0.3",
+    "@types/node": "^13.13.5",
     "@types/signature_pad": "^2.3.1",
-    "@typescript-eslint/eslint-plugin": "^2.31.0",
-    "@typescript-eslint/parser": "^2.31.0",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
     "canvas": "^2.6.1",
     "cross-env": "^7.0.2",
-    "eslint": "^6.8.0",
+    "eslint": "^7.4.0",
     "jsdom": "^16.2.2",
-    "nyc": "^15.0.1",
-    "ospec": "^4.0.1",
-    "rollup": "^2.7.6",
-    "rollup-plugin-terser": "^5.3.0",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.8.3"
+    "nyc": "^15.1.0",
+    "ospec": "^4.1.1",
+    "rollup": "^2.21.0",
+    "rollup-plugin-terser": "^6.1.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
   },
   "scripts": {
     "build": "tsc -b",
     "postbuild": "rollup -c --environment MINIFY",
     "watch": "tsc -w",
-    "bundle-watch": "rollup -c -w --environment MINIFY",
-    "test": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json ospec 'src/{**/*,*}.spec.ts' --require ts-node/register ./test-setup.ts",
-    "coverage": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json nyc ospec 'src/{**/*,*}.spec.ts' --require ts-node/register ./test-setup.ts",
-    "example": "open example.html",
-    "lint": "eslint --ext .ts src/"
+    "watch-bundle": "rollup -c -w --environment MINIFY",
+    "test": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json ospec 'src/{**/*,*}.spec.ts' --preload node_modules/ts-node/register ./test-setup.ts",
+    "coverage": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json nyc ospec 'src/{**/*,*}.spec.ts' --preload node_modules/ts-node/register ./test-setup.ts",
+    "lint": "eslint --ext .ts src/",
+    "example": "open example.html"
   }
 }
