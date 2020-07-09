@@ -39,8 +39,8 @@ o.spec("SelectText", () => {
 					title: "Test Title",
 					classes: "test",
 					options: [{
-						label: "label",
-						value: "val"
+						value: "val",
+						label: "label"
 					}]
 				},
 				value
@@ -51,6 +51,27 @@ o.spec("SelectText", () => {
 		o(content.childNodes.length).equals(2);
 		// Check value is resolved
 		o((content.childNodes[1] as HTMLSpanElement).getAttribute("title")).equals("label");
+	});
+
+	o("no label for value", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("val");
+		m.mount(root, {
+			view: () => m(SelectText, {
+				field: {
+					id: "test",
+					options: [{
+						value: "val"
+					}]
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+		const content = root.childNodes[0];
+		o(content.childNodes.length).equals(1);
+		// Check value fallback
+		o((content.childNodes[0] as HTMLSpanElement).getAttribute("title")).equals("val");
 	});
 
 });

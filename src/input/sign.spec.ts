@@ -37,9 +37,9 @@ o.spec("SignBuilder", () => {
 					type: FieldType.sign,
 					classes: "custom",
 					options: [{
-						label: "", value: SignTypes.Draw
+						value: SignTypes.Draw
 					}, {
-						label: "", value: "unknown"
+						value: "unknown"
 					}],
 					heightPct: 50
 				},

@@ -12,17 +12,17 @@ export class SelectText implements ClassComponent<IPropWidget> {
 		const { classes = "", style } = field;
 		// Get label for selected options (falling back to the value)
 		const option = lodash.find((field as IOptionField).options, { value: value() });
-		const label = option ? option.label : value();
+		const label = option ? option.label || option.value : value();
 		return m(".pa2.flex.flex-wrap", {
 			class: `${classMap.dspBrd()} ${classes}`,
 			style
 		}, [
-				getDisplayLabel(field),
-				m("span.ws-normal", {
-					title: label,
-					class: txtCls()
-				}, label)
-			]);
+			getDisplayLabel(field),
+			m("span.ws-normal", {
+				title: label,
+				class: txtCls()
+			}, label)
+		]);
 	}
 
 }

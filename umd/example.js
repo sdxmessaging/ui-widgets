@@ -13,6 +13,7 @@ uiWidgets.updateButtonContext({
 
 // Simple props
 var textVal = stream("Text");
+var currencyVal = stream();
 var dateVal = stream();
 var colVal = stream("#cc0011");
 var checkVal = stream();
@@ -113,6 +114,27 @@ m.mount(document.getElementById("page"), {
 					label: "Text Output"
 				},
 				value: textVal
+			}))
+		]),
+
+		// Currency
+		m(".flex.mb2", [
+			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CurrencyInput, {
+				field: {
+					id: "currency-in",
+					label: "Currency Input",
+					options: [{
+						value: "£"
+					}]
+				},
+				value: currencyVal
+			})),
+			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
+				field: {
+					id: "currency-out",
+					label: "Currency as Number Output"
+				},
+				value: currencyVal
 			}))
 		]),
 

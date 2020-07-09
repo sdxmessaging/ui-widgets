@@ -23,6 +23,7 @@ export declare const enum FieldType {
     url = "url",
     tel = "tel",
     color = "color",
+    currency = "currency",
     textarea = "textarea",
     checkbox = "checkbox",
     select = "select",
@@ -68,11 +69,11 @@ export interface IField {
 }
 export interface IOption {
     readonly value: TProp;
-    readonly label: string;
+    readonly label?: string;
     readonly icon?: string;
 }
 export interface IOptionField extends IField {
-    readonly type: FieldType.select | FieldType.radio;
+    readonly type: FieldType.select | FieldType.radio | FieldType.currency;
     readonly options: IOption[];
 }
 export interface ISignField extends IField {

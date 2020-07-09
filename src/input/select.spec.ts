@@ -36,7 +36,6 @@ o.spec("SelectInput", () => {
 					classes: "test",
 					disabled: true,
 					options: [{
-						label: "val",
 						value: "val"
 					}]
 				},
@@ -55,8 +54,8 @@ o.spec("SelectInput", () => {
 					id: "test",
 					readonly: true,
 					options: [{
-						label: "val",
-						value: "val"
+						value: "val",
+						label: "Value"
 					}]
 				},
 				value

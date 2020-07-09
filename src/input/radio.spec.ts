@@ -36,11 +36,10 @@ o.spec("RadioInput", () => {
 					classes: "test",
 					containerClass: "test",
 					options: [{
-						label: "val",
 						value: "val"
 					}, {
-						label: "val2",
 						value: "val2",
+						label: "val2",
 						icon: "test"
 					}]
 				},
