@@ -117,27 +117,6 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
-		// Currency
-		m(".flex.mb2", [
-			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CurrencyInput, {
-				field: {
-					id: "currency-in",
-					label: "Currency Input",
-					options: [{
-						value: "£"
-					}]
-				},
-				value: currencyVal
-			})),
-			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
-				field: {
-					id: "currency-out",
-					label: "Currency as Number Output"
-				},
-				value: currencyVal
-			}))
-		]),
-
 		// Date
 		m(".flex.mb2", [
 			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
@@ -231,6 +210,31 @@ m.mount(document.getElementById("page"), {
 				value: optVal
 			}))
 		]),
+
+		m("p", "The currency input stores values as the smallest monetary unit"),
+
+		// Currency/Number
+		m(".flex.mb2", [
+			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CurrencyInput, {
+				field: {
+					id: "currency-in-currency",
+					label: "Currency Input",
+					options: [{
+						value: "£"
+					}]
+				},
+				value: currencyVal
+			})),
+			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				field: {
+					id: "currency-in-number",
+					label: "Smallest Monetary Unit",
+					type: "number"
+				},
+				value: currencyVal
+			}))
+		]),
+		m("span.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
 
 		m("p", "Perform custom transforms by mapping the input stream to a new value"),
 		m("p", "Note that a transform stream value is fed back into the initial value on each update"),

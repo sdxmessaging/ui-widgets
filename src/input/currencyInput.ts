@@ -17,7 +17,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode, spellcheck,
 			instant, containerClass, classes = "",
 			options = [{ value: "$" }]
-		} = field as IOptionField
+		} = field as IOptionField;
 		return [
 			getLabel(field),
 			m(".w-100", {
@@ -33,7 +33,9 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 						max, maxlength, min, minlength, step, required,
 						readonly, disabled, autofocus, autocomplete,
 						pattern, inputmode, spellcheck,
-						value: numberToCurrencyStr(xform() as number),
+						value: lodash.isUndefined(xform())
+							? null
+							: numberToCurrencyStr(propToNumber(xform())),
 						class: `${getEnabledClass(disabled, true)} ${txtCls()} ${classes}`,
 						// Update value on change or input ("instant" option)
 						[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
@@ -45,15 +47,20 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 }
 
-// Only supports currencies with subunits
-export function currencyStrToNumber(val: string) {
+function propToNumber(value: TProp): number {
+	return lodash.isString(value) ? Number.parseInt(value) : Number(value);
+}
 
-	// TODO trim string to numbers and decimal point only
-	const inputStr = val.trim();
-
+/**
+ * Parse a currency string into a number
+ * @param currencyStr Value to convert e.g. "123.45"
+ * @return parsed value as smallest monetary unit e.g. 12345
+ */
+export function currencyStrToNumber(currencyStr: string) {
+	// Remove everything but digits and the decimal point
+	const inputStr = currencyStr.replace(/[^\d.]/g, "");
 	let left;
 	let right = 0;
-
 	// split number at decimal point
 	if (inputStr.indexOf(".") > -1) {
 		const decimalPos = inputStr.indexOf(".");
@@ -70,15 +77,18 @@ export function currencyStrToNumber(val: string) {
 	return left * 100 + right;
 }
 
-export function numberToCurrencyStr(val: number) {
-	if (!lodash.isFinite(val)) {
-		return val;
+/**
+ * Convert a number into a currency string
+ * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+ * @return currency string or the unitTotal if not a finite number e.g. "123.45" or NaN
+ */
+export function numberToCurrencyStr(unitTotal: number) {
+	if (!lodash.isFinite(unitTotal)) {
+		return undefined;
 	}
-	const valStr = String(val);
-
+	const valStr = String(Math.abs(unitTotal));
 	let left = "0";
 	let right = "";
-
 	if (valStr.length > 2) {
 		const decimalPos = valStr.length - 2;
 		left = valStr.substring(0, decimalPos);
@@ -86,7 +96,6 @@ export function numberToCurrencyStr(val: number) {
 	} else {
 		right = lodash.padStart(valStr, 2, "0");
 	}
-
 	return `${left}.${right}`;
 }
 

@@ -9,9 +9,9 @@ import { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, setCurrencyVal
 
 o.spec("CurrencyInput", () => {
 
-	o("minimal", () => {
+	o("minimal + empty stream", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(350);
+		const value = stream<TProp>();
 		m.mount(root, {
 			view: () => m(CurrencyInput, {
 				field: {
@@ -24,9 +24,24 @@ o.spec("CurrencyInput", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("configured", () => {
+	o("minimal + string stream", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(350);
+		const value = stream<TProp>("1");
+		m.mount(root, {
+			view: () => m(CurrencyInput, {
+				field: {
+					id: "test"
+				},
+				value
+			})
+		});
+		// Input only
+		o(root.childNodes.length).equals(1);
+	});
+
+	o("configured + number stream", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>(1);
 		const xform = value.map((val) => val);
 		m.mount(root, {
 			view: () => m(CurrencyInput, {
@@ -83,13 +98,20 @@ o.spec("currencyStrToNumber", () => {
 		o(currencyStrToNumber("1234567.89")).equals(123456789);
 	});
 
+	o("Additional text", () => {
+		o(currencyStrToNumber(" Value: £10.01p\n")).equals(1001);
+	});
+
+	o("Multiple decimal points", () => {
+		o(currencyStrToNumber("10.0.01")).equals(1000);
+	});
 });
 
 o.spec("numberToCurrencyStr", () => {
 
 	o("non-finite", () => {
 		o(numberToCurrencyStr((undefined as unknown) as number)).equals(undefined);
-		o(numberToCurrencyStr(Number.POSITIVE_INFINITY)).equals(Number.POSITIVE_INFINITY);
+		o(numberToCurrencyStr(Number.POSITIVE_INFINITY)).equals(undefined);
 	});
 
 	o("zero", () => {
