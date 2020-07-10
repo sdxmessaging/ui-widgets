@@ -16,8 +16,9 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode, spellcheck,
 			instant, containerClass, classes = "",
-			options = [{ value: "$" }]
+			options
 		} = field as IOptionField;
+		const currency = options && options.length ? options[0].value : "$"
 		return [
 			getLabel(field),
 			m(".w-100", {
@@ -27,7 +28,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 					class: inpCls(),
 					style: { "flex-shrink": 0 }
 				}, [
-					m("span.mr1", options[0].value),
+					m("span.mr1", currency),
 					m("input.input-reset.border-box.flex-auto.bg-transparent.bn", {
 						id, type: FieldType.text, name, title, placeholder,
 						max, maxlength, min, minlength, step, required,
