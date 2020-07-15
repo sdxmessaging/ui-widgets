@@ -38,11 +38,12 @@ o.spec("Button", () => {
 		o(btn.childNodes.length).equals(1);
 	});
 
-	o("disabled + icon", () => {
+	o("disabled + icon + right icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
 				icon: "test",
+				rightIcon: "test",
 				disabled: true
 			})
 		});
