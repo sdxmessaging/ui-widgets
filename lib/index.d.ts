@@ -18,6 +18,7 @@ export { ImagePreview } from "./display/imagePreview";
 export { Label } from "./input/label";
 export { BaseInput } from "./input/baseInput";
 export { CurrencyInput, currencyStrToNumber, numberToCurrencyStr } from "./input/currencyInput";
+export { DateInput } from "./input/dateInput";
 export { PasswordInput } from "./input/password";
 export { TextareaInput } from "./input/textarea";
 export { CheckboxInput } from "./input/checkbox";

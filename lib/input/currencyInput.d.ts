@@ -18,4 +18,4 @@ export declare function currencyStrToNumber(currencyStr: string): number;
 export declare function numberToCurrencyStr(unitTotal: number): string | undefined;
 export declare function setCurrencyValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => stream<TProp>;

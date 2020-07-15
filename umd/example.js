@@ -87,7 +87,7 @@ m.mount(document.getElementById("page"), {
 		m("h2", "ui-widgets"),
 
 		m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),
-		m("p", "Display components reflect changes made to the stream by input components. A stream can be used by multiple input components."),
+		m("p", "Display components reflect changes made to the stream by input components. A value stream can be used by multiple input components, values stay in sync with no additional code."),
 
 		// Text
 		m(".flex.mb2.items-center", [
@@ -118,15 +118,24 @@ m.mount(document.getElementById("page"), {
 		]),
 
 		// Date
-		m(".flex.mb2", [
-			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
-				field: {
-					id: "date-in",
-					label: "Date Input",
-					type: "date"
-				},
-				value: dateVal
-			})),
+		m(".flex.mb2.items-center", [
+			m(".flex.flex-column.w-50.mr2", [
+				m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
+					field: {
+						id: "date-in",
+						label: "Date Input (Browser Default)",
+						type: "date"
+					},
+					value: dateVal
+				})),
+				m(".pa2.ba.b--silver", m(uiWidgets.DateInput, {
+					field: {
+						id: "dob-in",
+						label: "Date Input (ui-widgets Bespoke)"
+					},
+					value: dateVal
+				}))
+			]),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 				field: {
 					id: "date-out",
@@ -174,38 +183,45 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
-		m("p", "Similar inputs can easily share a stream"),
-
 		// Select/Radio
-		m(".flex.mb2", [
-			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.SelectInput, {
+		m(".flex.mb2.items-center", [
+			m(".flex.flex-column.w-50.mr2", [
+				m(".pa2.mb2.ba.b--silver", m(uiWidgets.SelectInput, {
+					field: {
+						id: "select-in",
+						label: "Select Input",
+						type: "select",
+						options: [{
+							label: "Opt 1",
+							value: "1"
+						}, {
+							label: "Opt 2",
+							value: "2"
+						}]
+					},
+					value: optVal
+				})),
+				m(".pa2.ba.b--silver", m(uiWidgets.RadioInput, {
+					field: {
+						id: "radio-in",
+						label: "Radio Input",
+						type: "radio",
+						classes: "pa2",
+						options: [{
+							value: "1",
+							label: "Opt 1"
+						}, {
+							value: "2",
+							label: "Opt 2"
+						}],
+					},
+					value: optVal
+				}))
+			]),
+			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 				field: {
-					id: "select-in",
-					label: "Select Input",
-					type: "select",
-					options: [{
-						label: "Opt 1",
-						value: "1"
-					}, {
-						label: "Opt 2",
-						value: "2"
-					}]
-				},
-				value: optVal
-			})),
-			m(".w-50.pa2.ba.b--silver", m(uiWidgets.RadioInput, {
-				field: {
-					id: "radio-in",
-					label: "Radio Input",
-					type: "radio",
-					classes: "pa2",
-					options: [{
-						value: "1",
-						label: "Opt 1"
-					}, {
-						value: "2",
-						label: "Opt 2"
-					}],
+					id: "select-radio-out",
+					label: "Select/Radio Output"
 				},
 				value: optVal
 			}))
