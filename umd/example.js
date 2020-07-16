@@ -15,6 +15,7 @@ uiWidgets.updateButtonContext({
 var textVal = stream("Text");
 var currencyVal = stream();
 var dateVal = stream();
+var dateUsFormat = stream();
 var colVal = stream("#cc0011");
 var checkVal = stream();
 var optVal = stream();
@@ -124,17 +125,28 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "date-in",
 						label: "Date Input (Browser Default)",
-						type: "date"
+						type: "date",
 					},
 					value: dateVal
 				})),
-				m(".pa2.ba.b--silver", m(uiWidgets.DateInput, {
-					field: {
-						id: "dob-in",
-						label: "Date Input (ui-widgets Bespoke)"
-					},
-					value: dateVal
-				}))
+				m(".pa2.ba.b--silver", [
+					m(uiWidgets.DateInput, {
+						field: {
+							id: "dob-in",
+							label: "Date Input (ui-widgets Bespoke)",
+							options: dateUsFormat() ? [{ value: "en-US" }] : undefined
+						},
+						value: dateVal
+					}),
+					m(uiWidgets.CheckboxInput, {
+						field: {
+							id: "en-us-in",
+							label: "en-US input order",
+							classes: "fr f6"
+						},
+						value: dateUsFormat
+					})
+				])
 			]),
 			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 				field: {

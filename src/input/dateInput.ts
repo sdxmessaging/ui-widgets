@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
 import { inpCls, lblCls } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
@@ -49,66 +49,78 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
-			containerClass, classes = ""
-		} = field;
+			containerClass, classes = "",
+			options
+		} = field as IOptionField;
+		const locale = options && options.length ? options[0].value : "en-GB"
+		const classStr = `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`;
+		const styleSm = { "max-width": "5.4ex" };
+		const styleLg = { "max-width": "9ex" };
+		// Create DD-MM-YYYY inputs
+		const dayInput = m(".dib.mr2", [
+			m("label.db.mb1", {
+				for: `${id}-dd`,
+				class: lblCls()
+			}, "Day"),
+			m("input.input-reset.border-box", {
+				id: `${id}-dd`, name: `${name}-dd`,
+				type: FieldType.text, placeholder: "DD",
+				minlength: "2", maxlength: "2",
+				pattern: "[0-9]*", inputmode: "numeric",
+				required, readonly, disabled,
+				value: this.day(),
+				class: classStr, style: styleSm,
+				onchange: setValue(this.day as stream<TProp>)
+			})
+		]);
+		const monthInput = m(".dib.mr2", [
+			m("label.db.mb1", {
+				for: `${id}-mm`,
+				class: lblCls()
+			}, "Month"),
+			m("input.input-reset.border-box", {
+				id: `${id}-mm`, name: `${name}-mm`,
+				type: FieldType.text, placeholder: "MM",
+				minlength: "2", maxlength: "2",
+				pattern: "[0-9]*", inputmode: "numeric",
+				required, readonly, disabled,
+				value: this.month(),
+				class: classStr, style: styleSm,
+				onchange: setValue(this.month as stream<TProp>)
+			})
+		]);
+		const yearInput = m(".dib.mr2", [
+			m("label.db.mb1", {
+				for: `${id}-yyyy`,
+				class: lblCls()
+			}, "Year"),
+			m("input.input-reset.border-box", {
+				id: `${id}-yyyy`, name: `${name}-yyyy`,
+				type: FieldType.text, placeholder: "YYYY",
+				minlength: "4", maxlength: "4",
+				pattern: "[0-9]*", inputmode: "numeric",
+				required, readonly, disabled,
+				value: this.year(),
+				class: classStr, style: styleLg,
+				onchange: setValue(this.year as stream<TProp>)
+			})
+		]);
+		// Assemble date input (en-GB or en-US layouts)
 		return [
 			getLabel(field),
 			m(".w-100", {
 				id, title,
 				class: containerClass
-			}, [
-				m(".dib.mr2", [
-					m("label.db.mb1", {
-						for: `${id}-dd`,
-						class: lblCls()
-					}, "Day"),
-					m("input.input-reset.border-box", {
-						id: `${id}-dd`, name: `${name}-dd`,
-						type: FieldType.text, placeholder: "DD",
-						minlength: "2", maxlength: "2",
-						pattern: "[0-9]*", inputmode: "numeric",
-						required, readonly, disabled,
-						value: this.day(),
-						class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
-						style: { "max-width": "5.4ex" },
-						onchange: setValue(this.day as stream<TProp>)
-					})
-				]),
-				m(".dib.mr2", [
-					m("label.db.mb1", {
-						for: `${id}-mm`,
-						class: lblCls()
-					}, "Month"),
-					m("input.input-reset.border-box", {
-						id: `${id}-mm`, name: `${name}-mm`,
-						type: FieldType.text, placeholder: "MM",
-						minlength: "2", maxlength: "2",
-						pattern: "[0-9]*", inputmode: "numeric",
-						required, readonly, disabled,
-						value: this.month(),
-						class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
-						style: { "max-width": "5.4ex" },
-						onchange: setValue(this.month as stream<TProp>)
-					})
-				]),
-				m(".dib.mr2", [
-					m("label.db.mb1", {
-						for: `${id}-yyyy`,
-						class: lblCls()
-					}, "Year"),
-					m("input.input-reset.border-box", {
-						id: `${id}-yyyy`, name: `${name}-yyyy`,
-						type: FieldType.text, placeholder: "YYYY",
-						minlength: "4", maxlength: "4",
-						pattern: "[0-9]*", inputmode: "numeric",
-						required, readonly, disabled,
-						value: this.year(),
-						class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
-						style: { "max-width": "9ex" },
-						onchange: setValue(this.year as stream<TProp>)
-					})
+			}, locale === "en-US"
+				? [
+					monthInput,
+					dayInput,
+					yearInput
+				] : [
+					dayInput,
+					monthInput,
+					yearInput
 				])
-			])
 		];
 	}
 

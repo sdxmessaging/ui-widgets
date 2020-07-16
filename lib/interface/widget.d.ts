@@ -74,7 +74,6 @@ export interface IOption {
     readonly icon?: string;
 }
 export interface IOptionField extends IField {
-    readonly type: FieldType.select | FieldType.radio | FieldType.currency;
     readonly options: IOption[];
 }
 export interface ISignField extends IField {
