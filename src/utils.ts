@@ -264,3 +264,15 @@ export function textToImage(text: string, width: number, height: number, font: s
 	context.fillText(text, canvas.height * 0.05, fontSize);
 	return canvas.toDataURL();
 }
+
+// // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
+// // specs compliant (as of March 2018 only Chrome)
+// export function toFileList(fileList: IFile[]) {
+// 	const transfer = new ClipboardEvent('').clipboardData || new DataTransfer();
+// 	lodash.forEach(fileList, ({ file }) => {
+// 		if (file) {
+// 			transfer.items.add(file);
+// 		}
+// 	});
+// 	return transfer.files;
+// }
