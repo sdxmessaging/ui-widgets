@@ -46,6 +46,8 @@ o.spec("CardDateInput", () => {
 		});
 		// Label + Input
 		o(root.childNodes.length).equals(2);
+		// Set empty date
+		value("");
 		// Set partial date
 		value("01");
 		// Set valid date

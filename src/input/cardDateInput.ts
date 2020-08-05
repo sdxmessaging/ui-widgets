@@ -19,9 +19,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		value.map((newVal) => {
-			const [month, year] = String(newVal).split("/");
-			this.month(month || "");
-			this.year(year || "");
+			const [month, year = ""] = String(newVal).split("/");
+			this.month(month);
+			this.year(year);
 		});
 		// Update value when date changes
 		this.date.map((newDate) => {
