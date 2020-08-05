@@ -16,6 +16,7 @@ var textVal = stream("Text");
 var currencyVal = stream();
 var dateVal = stream();
 var dateUsFormat = stream();
+var cardVal = stream();
 var colVal = stream("#cc0011");
 var checkVal = stream();
 var optVal = stream();
@@ -262,7 +263,26 @@ m.mount(document.getElementById("page"), {
 				value: currencyVal
 			}))
 		]),
-		m("span.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
+		m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
+
+		// Card Date
+		m(".flex.mb2", [
+			m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CardDateInput, {
+				field: {
+					id: "card-in-date",
+					label: "Card Expiry MM/YY"
+				},
+				value: cardVal
+			})),
+			m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				field: {
+					id: "card-in-text",
+					label: "Card Expiry Plain Text",
+					type: "text"
+				},
+				value: cardVal
+			}))
+		]),
 
 		m("p", "Perform custom transforms by mapping the input stream to a new value"),
 		m("p", "Note that a transform stream value is fed back into the initial value on each update"),

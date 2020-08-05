@@ -1,5 +1,5 @@
-import stream from "mithril/stream";
 import lodash from "lodash";
+import stream from "mithril/stream";
 
 import { ITheme, TThemeKey, TThemeUpdate } from "./interface/theme";
 import { config } from "./config";
@@ -11,6 +11,9 @@ export function imgMaxSize() {
 export function thumbMaxSize() {
 	return { "max-height": config.thumbDispHeight };
 }
+
+export const styleSm = { "max-width": "5.4ex" };
+export const styleLg = { "max-width": "9ex" };
 
 export const classMap: ITheme = {
 	icon: stream("fas"),

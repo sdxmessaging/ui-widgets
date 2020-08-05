@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
-import { inpCls, lblCls } from "../theme";
+import { inpCls, lblCls, styleSm, styleLg } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class DateInput implements ClassComponent<IPropWidget> {
@@ -54,8 +54,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		} = field as IOptionField;
 		const locale = options && options.length ? options[0].value : "en-GB"
 		const classStr = `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`;
-		const styleSm = { "max-width": "5.4ex" };
-		const styleLg = { "max-width": "9ex" };
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
 			m("label.db.mb1", {

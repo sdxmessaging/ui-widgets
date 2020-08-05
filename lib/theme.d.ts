@@ -6,6 +6,12 @@ export declare function imgMaxSize(): {
 export declare function thumbMaxSize(): {
     "max-height": string;
 };
+export declare const styleSm: {
+    "max-width": string;
+};
+export declare const styleLg: {
+    "max-width": string;
+};
 export declare const classMap: ITheme;
 export declare const dspLblCls: stream<string>;
 export declare const lblCls: stream<string>;
