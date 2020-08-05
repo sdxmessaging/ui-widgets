@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
-import { inpCls, lblCls, styleSm } from "../theme";
+import { inpCls, lblCls, txtCls, styleSm } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
@@ -68,6 +68,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						onchange: setValue(this.month as stream<TProp>)
 					})
 				]),
+				m("span.mr2", {
+					class: txtCls()
+				}, "/"),
 				m(".dib.mr2", [
 					m("label.db.mb1", {
 						for: `${id}-yyyy`,
