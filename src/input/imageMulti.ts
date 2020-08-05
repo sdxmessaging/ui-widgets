@@ -6,7 +6,7 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { drgCls, filCls, getIcon, thumbMaxSize } from "../theme";
-import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
+import { dataURItoBlob, guid, imgSrc, resizeImage } from "../utils";
 
 import { Button } from "../button";
 import { Thumbnail } from "../display/thumbnail";
@@ -15,15 +15,12 @@ import { removeFile } from "./fileMulti";
 
 export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
 	return (addList: FileList | null) => {
-		const fileType = "image/jpeg";
 		const newFileList = fileList();
 		return Promise.all(lodash.map(addList, (file) => {
 			// Limit file dimensions
-			return resizeImage(file, maxSize, fileType).then((dataURL) => {
-				// Split original file name from extension
-				const [fName] = fileNameExtSplit(file.name);
-				const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
-					type: fileType
+			return resizeImage(file, maxSize, file.type).then((dataURL) => {
+				const newFile = new File([dataURItoBlob(dataURL)], file.name, {
+					type: file.type
 				});
 				newFileList.push({
 					guid: guid(),

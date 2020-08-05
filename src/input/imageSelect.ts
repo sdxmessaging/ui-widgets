@@ -6,7 +6,7 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { drgCls, filCls, getIcon, imgMaxSize } from "../theme";
-import { dataURItoBlob, fileNameExtSplit, guid, imgSrc, resizeImage } from "../utils";
+import { dataURItoBlob, guid, imgSrc, resizeImage } from "../utils";
 
 import { FileInput } from "./fileInput";
 
@@ -17,12 +17,9 @@ export function setFile(fileList: stream<IFile[]>, maxSize: number) {
 			return Promise.resolve();
 		}
 		// Limit file dimensions
-		const fileType = "image/jpeg";
-		return resizeImage(file, maxSize, fileType).then((dataURL) => {
-			// Split original file name from extension
-			const [fName] = fileNameExtSplit(file.name);
-			const newFile = new File([dataURItoBlob(dataURL)], `${fName}.jpg`, {
-				type: fileType
+		return resizeImage(file, maxSize, file.type).then((dataURL) => {
+			const newFile = new File([dataURItoBlob(dataURL)], file.name, {
+				type: file.type
 			});
 			fileList([{
 				guid: guid(),

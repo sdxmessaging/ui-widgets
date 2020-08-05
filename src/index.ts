@@ -27,7 +27,7 @@ export { ImagePreview } from "./display/imagePreview";
 export { Label } from "./input/label";
 // Prop
 export { BaseInput } from "./input/baseInput";
-export { CurrencyInput, currencyStrToNumber, numberToCurrencyStr } from "./input/currencyInput";
+export { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, numberToCurrencyTuple } from "./input/currencyInput";
 export { CardDateInput } from "./input/cardDateInput";
 export { DateInput } from "./input/dateInput";
 export { PasswordInput } from "./input/password";
