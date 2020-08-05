@@ -13,9 +13,15 @@ export declare function currencyStrToNumber(currencyStr: string): number;
 /**
  * Convert a number into a currency string
  * @param unitTotal total in smallest monetary unit to convert e.g. 12345
- * @return currency string or the unitTotal if not a finite number e.g. "123.45" or NaN
+ * @return currency string if finite number e.g. "123.45" or undefined
  */
 export declare function numberToCurrencyStr(unitTotal: number): string | undefined;
+/**
+ * Convert a number into a currency string pair
+ * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+ * @return currency string pair if finite number e.g. ["123", "45"] or undefined
+ */
+export declare function numberToCurrencyTuple(unitTotal: number): [string, string] | undefined;
 export declare function setCurrencyValue(val: stream<TProp>): ({ target: { value } }: {
     target: HTMLInputElement;
 }) => stream<TProp>;

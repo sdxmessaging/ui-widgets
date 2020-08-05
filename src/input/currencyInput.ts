@@ -81,23 +81,37 @@ export function currencyStrToNumber(currencyStr: string) {
 /**
  * Convert a number into a currency string
  * @param unitTotal total in smallest monetary unit to convert e.g. 12345
- * @return currency string or the unitTotal if not a finite number e.g. "123.45" or NaN
+ * @return currency string if finite number e.g. "123.45" or undefined
  */
 export function numberToCurrencyStr(unitTotal: number) {
+	const numPair = numberToCurrencyTuple(unitTotal);
+	if (numPair) {
+		return `${numPair[0]}.${numPair[1]}`;
+	} else {
+		return numPair;
+	}
+}
+
+/**
+ * Convert a number into a currency string pair
+ * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+ * @return currency string pair if finite number e.g. ["123", "45"] or undefined
+ */
+export function numberToCurrencyTuple(unitTotal: number): [string, string] | undefined {
 	if (!lodash.isFinite(unitTotal)) {
 		return undefined;
 	}
 	const valStr = String(Math.abs(unitTotal));
-	let left = "0";
-	let right = "";
+	let large = "0";
+	let small = "";
 	if (valStr.length > 2) {
 		const decimalPos = valStr.length - 2;
-		left = valStr.substring(0, decimalPos);
-		right = valStr.substring(decimalPos);
+		large = valStr.substring(0, decimalPos);
+		small = valStr.substring(decimalPos);
 	} else {
-		right = lodash.padStart(valStr, 2, "0");
+		small = lodash.padStart(valStr, 2, "0");
 	}
-	return `${left}.${right}`;
+	return [large, small];
 }
 
 // Currency TProp update helper
