@@ -33,6 +33,7 @@ export const enum FieldType {
 	// Dedicated widget
 	currency = "currency",
 	dateInput = "dateInput",
+	cardDate = "cardDate",
 	textarea = "textarea",
 	checkbox = "checkbox",
 	select = "select",

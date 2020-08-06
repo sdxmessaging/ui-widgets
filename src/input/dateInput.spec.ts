@@ -38,7 +38,8 @@ o.spec("DateInput", () => {
 					name: "Test Name",
 					title: "Test Title",
 					classes: "test",
-					disabled: true
+					disabled: true,
+					options: [{ value: "en-US" }]
 				},
 				value,
 				xform
