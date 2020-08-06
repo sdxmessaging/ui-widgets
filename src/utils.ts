@@ -1,7 +1,7 @@
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TField, TProp } from "./interface/widget";
+import { TProp } from "./interface/widget";
 
 import { dspLblCls, getIcon, lblCls } from "./theme";
 
@@ -44,15 +44,15 @@ export function imgSrc(path: string, dataUrl?: string): string {
 }
 
 // Used by display widgets
-// TODO Consolidate with getLabel
-export function getDisplayLabel({ label }: TField) {
+export function getDisplayLabel(label?: string) {
 	return label ? m("span.mr2.truncate", {
 		title: label,
 		class: dspLblCls()
 	}, label) : null;
 }
 
-export function getLabel({ id, label, required }: TField) {
+// Used by input widgets
+export function getLabel(id: string, label?: string, required?: boolean) {
 	return label ? m("label.mb1.db", {
 		title: label,
 		for: id,

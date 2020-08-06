@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
-import { inpCls, lblCls, styleSm, styleLg } from "../theme";
+import { inpCls, styleSm, styleLg } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class DateInput implements ClassComponent<IPropWidget> {
@@ -56,10 +56,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const classStr = `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`;
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
-			m("label.db.mb1", {
-				for: `${id}-dd`,
-				class: lblCls()
-			}, "Day"),
+			getLabel(`${id}-dd`, "Day"),
 			m("input.input-reset.border-box", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -72,10 +69,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const monthInput = m(".dib.mr2", [
-			m("label.db.mb1", {
-				for: `${id}-mm`,
-				class: lblCls()
-			}, "Month"),
+			getLabel(`${id}-mm`, "Month"),
 			m("input.input-reset.border-box", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -88,10 +82,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const yearInput = m(".dib.mr2", [
-			m("label.db.mb1", {
-				for: `${id}-yyyy`,
-				class: lblCls()
-			}, "Year"),
+			getLabel(`${id}-yyyy`, "Year"),
 			m("input.input-reset.border-box", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
@@ -105,7 +96,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return [
-			getLabel(field),
+			getLabel(id, label, required),
 			m(".w-100", {
 				id, title,
 				class: containerClass

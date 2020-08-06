@@ -1,6 +1,6 @@
 import m from "mithril";
 import stream from "mithril/stream";
-import { TField, TProp } from "./interface/widget";
+import { TProp } from "./interface/widget";
 declare global {
     interface Window {
         msCrypto: Crypto;
@@ -10,8 +10,8 @@ export declare function guid(): string;
 export declare function pxRatio(): number;
 export declare function getLabelText(label: string, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
-export declare function getDisplayLabel({ label }: TField): m.Vnode<any, any> | null;
-export declare function getLabel({ id, label, required }: TField): m.Vnode<any, any> | null;
+export declare function getDisplayLabel(label?: string): m.Vnode<any, any> | null;
+export declare function getLabel(id: string, label?: string, required?: boolean): m.Vnode<any, any> | null;
 export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?: string): (string | m.Vnode<any, any> | null | undefined)[];
 export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "" | "o-60" | "pointer";
 export declare function setValue(val: stream<TProp>): ({ target: { value } }: {

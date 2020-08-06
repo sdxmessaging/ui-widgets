@@ -10,13 +10,13 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
-			id, name = id,
+			label: lbl, id, name = id,
 			required, readonly, disabled, autocomplete,
 			containerClass = "flex-wrap", classes = "",
 			options
 		} = field as IOptionField;
 		return [
-			getLabel(field),
+			getLabel(id, lbl, required),
 			m(".flex", {
 				class: `${txtCls()} ${containerClass}`,
 				onchange: setValue(val)

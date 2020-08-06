@@ -11,9 +11,9 @@ import { Button } from "../button";
 
 export class SignDraw implements ClassComponent<ISignWidget> {
 
-	private signaturePad: SignaturePad | null = null;
+	private signaturePad!: SignaturePad;
 
-	private resizeHandler?: (() => void) & lodash.Cancelable;
+	private resizeHandler!: (() => void) & lodash.Cancelable;
 
 	public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
 		const canvas = dom.children[0] as HTMLCanvasElement;
@@ -38,11 +38,9 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 	}
 
 	public onremove() {
-		if (this.resizeHandler) {
-			this.resizeHandler.cancel();
-			window.removeEventListener("resize", this.resizeHandler);
-			window.removeEventListener("orientationchange", this.resizeHandler);
-		}
+		this.resizeHandler.cancel();
+		window.removeEventListener("resize", this.resizeHandler);
+		window.removeEventListener("orientationchange", this.resizeHandler);
 	}
 
 	public view({ attrs: { style, onSet, onCancel } }: CVnode<ISignWidget>) {
@@ -58,7 +56,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 					icon: config.applyIcn,
 					classes: "ma1",
 					onclick: () => {
-						if (this.signaturePad && !this.signaturePad.isEmpty()) {
+						if (!this.signaturePad.isEmpty()) {
 							onSet(this.signaturePad.toDataURL("image/png"));
 						}
 					}
@@ -80,9 +78,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 	}
 
 	private resetCanvas() {
-		if (this.signaturePad) {
-			this.signaturePad.clear();
-		}
+		this.signaturePad.clear();
 	}
 
 }

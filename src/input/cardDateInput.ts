@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
-import { inpCls, lblCls, txtCls, styleSm } from "../theme";
+import { inpCls, txtCls, styleSm } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
@@ -47,16 +47,13 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const classStr = `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`;
 		// Assemble date input (en-GB or en-US layouts)
 		return [
-			getLabel(field),
+			getLabel(id, label, required),
 			m(".w-100", {
 				id, title,
 				class: containerClass
 			}, [
 				m(".dib.mr2", [
-					m("label.db.mb1", {
-						for: `${id}-mm`,
-						class: lblCls()
-					}, "Month"),
+					getLabel(`${id}-mm`, "Month"),
 					m("input.input-reset.border-box", {
 						id: `${id}-mm`, name: `${name}-mm`,
 						type: FieldType.text, placeholder: "MM",
@@ -72,12 +69,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					class: txtCls()
 				}, "/"),
 				m(".dib.mr2", [
-					m("label.db.mb1", {
-						for: `${id}-yyyy`,
-						class: lblCls()
-					}, "Year"),
+					getLabel(`${id}-yyyy`, "Year"),
 					m("input.input-reset.border-box", {
-						id: `${id}-yyyy`, name: `${name}-yyyy`,
+						id: `${id}-yy`, name: `${name}-yy`,
 						type: FieldType.text, placeholder: "YY",
 						minlength: "4", maxlength: "4",
 						pattern: "[0-9]*", inputmode: "numeric",

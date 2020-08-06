@@ -57,7 +57,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
-			id,
+			label: lbl, id,
 			readonly, disabled,
 			classes = "", containerClass,
 			options = config.signOpts,
@@ -97,7 +97,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		return m(".relative", {
 			class: containerClass
 		}, [
-			getLabel(field),
+			getLabel(id, lbl),
 			readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {

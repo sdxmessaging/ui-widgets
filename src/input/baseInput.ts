@@ -16,7 +16,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			instant, containerClass, classes = ""
 		} = field;
 		return [
-			getLabel(field),
+			getLabel(id, label, required),
 			m(".w-100", {
 				class: containerClass
 			}, m("input.input-reset.border-box.w-100", {

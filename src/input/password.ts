@@ -22,7 +22,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 		} = field;
 		return [
 			m(".flex.justify-between", [
-				getLabel(field),
+				getLabel(id, label, required),
 				m(CheckboxInput, {
 					field: {
 						id: "showpass",

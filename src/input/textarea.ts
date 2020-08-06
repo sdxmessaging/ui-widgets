@@ -14,7 +14,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			instant, containerClass, classes = ""
 		} = field;
 		return [
-			getLabel(field),
+			getLabel(id, label, required),
 			m("div", {
 				class: containerClass
 			}, m("textarea.border-box.w-100[rows=3]", {

@@ -10,13 +10,13 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
-			id, name = id, title = field.label,
+			label: lbl, id, name = id, title = lbl,
 			required, readonly, disabled, autofocus, autocomplete,
 			containerClass, classes = "",
 			options
 		} = field as IOptionField;
 		return [
-			getLabel(field),
+			getLabel(id, lbl, required),
 			m(".w-100", {
 				class: containerClass
 			}, m("select.input-reset.border-box.w-100", {

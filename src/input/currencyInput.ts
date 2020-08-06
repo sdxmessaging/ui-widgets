@@ -20,7 +20,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$"
 		return [
-			getLabel(field),
+			getLabel(id, label, required),
 			m(".w-100", {
 				class: containerClass
 			},

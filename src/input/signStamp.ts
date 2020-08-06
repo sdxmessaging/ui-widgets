@@ -1,4 +1,3 @@
-// import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import m, { ClassComponent, CVnode, Children } from "mithril";
 
 import { ISignWidget } from "../interface/widget";
