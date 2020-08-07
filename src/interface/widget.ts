@@ -106,7 +106,7 @@ export interface IField {
 	readonly default?: string;
 }
 
-// Select/Radio widgets
+// Select/Radio options, config for other fields
 export interface IOption {
 	readonly value: TProp;
 	readonly label?: string;
@@ -114,12 +114,10 @@ export interface IOption {
 }
 
 export interface IOptionField extends IField {
-	readonly options: IOption[];
+	readonly options?: IOption[];
 }
 
-export interface ISignField extends IField {
-	readonly type: FieldType.sign;
-	readonly options?: IOption[];
+export interface ISignField extends IOptionField {
 	readonly heightPct?: number;
 }
 

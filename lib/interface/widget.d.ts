@@ -75,11 +75,9 @@ export interface IOption {
     readonly icon?: string;
 }
 export interface IOptionField extends IField {
-    readonly options: IOption[];
-}
-export interface ISignField extends IField {
-    readonly type: FieldType.sign;
     readonly options?: IOption[];
+}
+export interface ISignField extends IOptionField {
     readonly heightPct?: number;
 }
 export declare type TField = IField | IOptionField | ISignField;
