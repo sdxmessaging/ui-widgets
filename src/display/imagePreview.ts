@@ -17,7 +17,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 			style
 		}, [
 			getDisplayLabel(label),
-			file ? m("img.img.mt2.contain.self-center", {
+			file ? m("img.img.h-100.mt2.contain.self-center", {
 				title: file.name,
 				src: imgSrc(file.path, file.dataUrl),
 				style: imgMaxSize()
