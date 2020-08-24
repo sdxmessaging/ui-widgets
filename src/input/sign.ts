@@ -6,7 +6,7 @@ import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../inter
 
 import { config } from "../config";
 import { filCls, getIcon } from "../theme";
-import { dataURItoBlob, getLabel, guid, imgSrc, scaleRect } from "../utils";
+import { dataURItoBlob, fileConstructor, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
@@ -31,9 +31,7 @@ function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) {
 	return (setDataUrl: string) => {
 		return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
-			const newFile = new File([dataURItoBlob(scaledDataUrl)], `sign-${id}.png`, {
-				type: "image/png"
-			});
+			const newFile = fileConstructor(dataURItoBlob(scaledDataUrl), `sign-${id}.png`);
 			fileList([{
 				guid: guid(),
 				name: newFile.name,

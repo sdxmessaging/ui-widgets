@@ -6,7 +6,7 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { drgCls, filCls, getIcon, thumbMaxSize } from "../theme";
-import { dataURItoBlob, guid, imgSrc, resizeImage } from "../utils";
+import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
 
 import { Button } from "../button";
 import { Thumbnail } from "../display/thumbnail";
@@ -19,9 +19,7 @@ export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
 		return Promise.all(lodash.map(addList, (file) => {
 			// Limit file dimensions
 			return resizeImage(file, maxSize, file.type).then((dataURL) => {
-				const newFile = new File([dataURItoBlob(dataURL)], file.name, {
-					type: file.type
-				});
+				const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
 				newFileList.push({
 					guid: guid(),
 					name: newFile.name,

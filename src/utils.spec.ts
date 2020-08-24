@@ -6,6 +6,7 @@ import { TProp } from "./interface/widget";
 import {
 	dataURItoBlob,
 	fileNameExtSplit,
+	fileConstructor,
 	getOrientation,
 	guid,
 	resizeImage,
@@ -75,6 +76,9 @@ o.spec("File", () => {
 	o("create", () => {
 		const blob = dataURItoBlob("data:text/plain;charset=UTF-8;page=21,hello%20world");
 		o(blob.type).equals("text/plain");
+		const file = fileConstructor(blob, "testFile.txt");
+		o(file.name).equals("testFile.txt");
+		o(file.type).equals("text/plain");
 	});
 
 	o("resize", (done: () => void) => {

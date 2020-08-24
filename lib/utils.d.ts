@@ -26,6 +26,11 @@ export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: 
 export declare function fileNameExtSplit(fileName: string): [string, string];
 export declare function dataURItoBlob(dataURI: string): Blob;
 /**
+ * Convert a Blob into a file without using the File constructor
+ * Mutates input blob
+ */
+export declare function fileConstructor(blob: Blob, fileName: string): File;
+/**
  * Scale given width and height values if either exceed the giving limit
  * Returns integer values, rounding errors can significantly distort small rectangles
  */

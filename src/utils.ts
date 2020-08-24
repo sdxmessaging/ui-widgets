@@ -113,6 +113,18 @@ export function dataURItoBlob(dataURI: string): Blob {
 }
 
 /**
+ * Convert a Blob into a "File-like" object without using the File constructor
+ * Mutates input blob
+ */
+export function fileConstructor(blob: Blob, fileName: string) {
+	const lastModified = new Date().valueOf();
+	const mutableBlob = (blob as unknown) as Record<string, TProp>;
+	mutableBlob.name = fileName;
+	mutableBlob.lastModified = lastModified;
+	return blob as File;
+}
+
+/**
  * Scale given width and height values if either exceed the giving limit
  * Returns integer values, rounding errors can significantly distort small rectangles
  */
