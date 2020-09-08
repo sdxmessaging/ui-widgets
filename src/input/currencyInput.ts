@@ -49,7 +49,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 }
 
 function propToNumber(value: TProp): number {
-	return lodash.isString(value) ? Number.parseInt(value) : Number(value);
+	return lodash.isString(value) ? lodash.parseInt(value) : Number(value);
 }
 
 /**
@@ -67,13 +67,13 @@ export function currencyStrToNumber(currencyStr: string) {
 		const decimalPos = inputStr.indexOf(".");
 		const leftStr = inputStr.substring(0, decimalPos);
 		// Ensure left component has at least 1 character
-		left = Number.parseInt(lodash.padStart(leftStr, 1, "0"));
+		left = lodash.parseInt(lodash.padStart(leftStr, 1, "0"));
 		// Only accept first 2 figures after decimal
 		const rightStr = inputStr.substring(decimalPos + 1, Math.min(decimalPos + 3, inputStr.length));
 		// Ensure right component has 2 characters
-		right = Number.parseInt(lodash.padEnd(rightStr, 2, "0"));
+		right = lodash.parseInt(lodash.padEnd(rightStr, 2, "0"));
 	} else {
-		left = Number.parseInt(inputStr) || 0;
+		left = lodash.parseInt(inputStr) || 0;
 	}
 	return left * 100 + right;
 }

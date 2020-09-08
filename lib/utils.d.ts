@@ -26,7 +26,7 @@ export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: 
 export declare function fileNameExtSplit(fileName: string): [string, string];
 export declare function dataURItoBlob(dataURI: string): Blob;
 /**
- * Convert a Blob into a file without using the File constructor
+ * Convert a Blob into a "File-like" object without using the File constructor
  * Mutates input blob
  */
 export declare function fileConstructor(blob: Blob, fileName: string): File;
