@@ -13,7 +13,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 
 	private signaturePad!: SignaturePad;
 
-	private resizeHandler!: (() => void) & lodash.Cancelable;
+	private resizeHandler!: lodash.DebouncedFunc<() => void>;
 
 	public oncreate({ dom }: CVnodeDOM<ISignWidget>) {
 		const canvas = dom.children[0] as HTMLCanvasElement;
