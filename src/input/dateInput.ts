@@ -52,7 +52,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			containerClass, classes = "",
 			options
 		} = field as IOptionField;
-		const locale = options && options.length ? options[0].value : "en-GB"
+		const locale = options && options.length ? options[0].value : "en-GB";
 		const classStr = `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`;
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [

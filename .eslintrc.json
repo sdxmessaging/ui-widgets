@@ -18,6 +18,7 @@
 		"project": "./tsconfig.test.json"
 	},
 	"rules": {
+		"eol-last": "error",
 		"eqeqeq": ["error", "smart"],
 		"max-len": [
 			"warn",
@@ -30,6 +31,7 @@
 			}
 		],
 		"no-prototype-builtins": "off",
+		"semi": ["warn", "always"],
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"@typescript-eslint/explicit-module-boundary-types": "off",
 		"@typescript-eslint/naming-convention": [

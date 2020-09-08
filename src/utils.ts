@@ -5,6 +5,7 @@ import { TProp } from "./interface/widget";
 
 import { dspLblCls, getIcon, lblCls } from "./theme";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare global {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window { msCrypto: Crypto }
