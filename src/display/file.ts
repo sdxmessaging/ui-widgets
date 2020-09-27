@@ -17,16 +17,26 @@ export class FileList implements ClassComponent<IFileWidget> {
 		}, [
 			getDisplayLabel(label),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(), ({ name, path }) => {
-				return m("a.pa2.mv1.link.ba.b--black-20.dim.pointer[target=_blank]", {
-					href: path,
+				return m(".ba.b--black-20.pointer[target=_blank]", {
 					class: txtCls()
 				}, [
-					m("i.mr2", {
-						class: getIcon(config.downloadIcn)
-					}),
-					name
+					m("a.pa2.mv1.link.b--black-20.dim.pointer[target=_blank].dib ", {},
+						m("i.mr2", {
+							href: path,
+							class: getIcon(config.downloadIcn)
+						}),
+						name
+					),
+					m(".fr.dark-red.pointer.dim.dib.pt3.mr2", {
+						class: getIcon(config.cancelIcn),
+						onclick: function() {
+							console.log(value());
+							value([]);
+						}
+					},),
 				]);
-			}))
+			})), 
+
 		]);
 	}
 

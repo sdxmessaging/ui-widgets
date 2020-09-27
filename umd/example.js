@@ -482,14 +482,18 @@ m.mount(document.getElementById("page"), {
 						label: "File Output",
 						type: "file"
 					},
-					value: fileList
+					value: fileList,
+					onclick: function() {
+						console.log('click event for fileList') 
+						fileList([]) 
+					}
 				}))
 			]),
 			m(uiWidgets.Button, {
 				label: "Log File to Console",
 				icon: "fa-print",
 				classes: "mb2",
-				onclick: function () { console.log(fileList()); }
+				onclick: function () { console.log(fileList()); fileList("")}
 			}),
 
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
