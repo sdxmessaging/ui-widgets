@@ -482,11 +482,7 @@ m.mount(document.getElementById("page"), {
 						label: "File Output",
 						type: "file"
 					},
-					value: fileList,
-					onclick: function() {
-						console.log('click event for fileList') 
-						fileList([]) 
-					}
+					value: fileList
 				}))
 			]),
 			m(uiWidgets.Button, {
