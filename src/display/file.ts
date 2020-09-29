@@ -17,10 +17,10 @@ export class FileList implements ClassComponent<IFileWidget> {
 		}, [
 			getDisplayLabel(label),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(), ({ name, path }) => {
-				return m(".ba.b--black-20.pointer[target=_blank]", {
+				return m(".ba.b--black-20", {
 					class: txtCls()
 				}, [
-					m("a.pa2.mv1.link.b--black-20.dim.pointer[target=_blank].dib ", {},
+					m("a.pa2.mv1.link.b--black-20.dim.dib.pointer[target=_blank]",
 						m("i.mr2", {
 							href: path,
 							class: getIcon(config.downloadIcn)
@@ -29,14 +29,10 @@ export class FileList implements ClassComponent<IFileWidget> {
 					),
 					m(".fr.dark-red.pointer.dim.dib.pt3.mr2", {
 						class: getIcon(config.cancelIcn),
-						onclick: function() {
-							console.log(value());
-							value([]);
-						}
-					},),
+						onclick: () => value([])
+					})
 				]);
-			})), 
-
+			}))
 		]);
 	}
 

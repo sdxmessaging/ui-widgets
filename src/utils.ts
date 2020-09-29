@@ -86,7 +86,7 @@ export function setValue(val: stream<TProp>) {
 export function setCheck(chk: stream<TProp>) {
 	return ({ target: { checked } }: { target: HTMLInputElement }) => chk(checked);
 }
- 
+
 /**
  * Split given file name from extension
  */
