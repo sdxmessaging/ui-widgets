@@ -16,6 +16,7 @@ export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";
 export { iconMap, linkAttrs, Link } from "./display/link";
 export { Checkbox } from "./display/checkbox";
+export { Toggle } from "./display/toggle";
 // Prop (options)
 export { SelectText } from "./display/select";
 // File
@@ -33,6 +34,7 @@ export { DateInput } from "./input/dateInput";
 export { PasswordInput } from "./input/password";
 export { TextareaInput } from "./input/textarea";
 export { CheckboxInput } from "./input/checkbox";
+export { ToggleInput } from "./input/toggle";
 // Prop (options)
 export { RadioInput } from "./input/radio";
 export { SelectInput } from "./input/select";

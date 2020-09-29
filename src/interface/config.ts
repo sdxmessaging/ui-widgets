@@ -50,6 +50,8 @@ export interface IConfig {
 	cancelIcn: string;
 	checkIcn: string;
 	uncheckIcn: string;
+	toggleOnIcn: string;
+	toggleOffIcn: string;
 	uploadIcn: string;
 	downloadIcn: string;
 	deleteIcn: string;

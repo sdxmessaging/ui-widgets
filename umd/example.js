@@ -21,7 +21,7 @@ var colVal = stream("#cc0011");
 var checkVal = stream();
 var optVal = stream();
 var faceVal = stream();
-
+var toggleVal = stream();
 // Transform
 var xformValIn = stream("");
 var xformValOut = xformValIn.map(function (val) {
@@ -210,7 +210,24 @@ m.mount(document.getElementById("page"), {
 					value: checkVal
 				}))
 			]),
-
+			// Toggle 
+			m(".flex.mb2", [
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ToggleInput, {
+					field: {
+						id: "toggle-in",
+						label: "Toggle Input",
+						classes: "pa2"
+					},
+					value: toggleVal
+				})),
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.Toggle, {
+					field: {
+						id: "toggle-out",
+						label: "Toggle Output"
+					},
+					value: toggleVal
+				}))
+			]),
 			// Select/Radio
 			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
@@ -445,6 +462,14 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-disabled",
 							label: "Disabled",
+							type: "checkbox"
+						},
+						value: disabled
+					})),
+					m(".pa2.mb2.ba.b--silver", m(uiWidgets.ToggleInput, {
+						field: {
+							id: "custom-toggle",
+							label: "Disabled Toggle",
 							type: "checkbox"
 						},
 						value: disabled
