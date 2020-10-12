@@ -35,5 +35,4 @@ export class ToggleInput implements ClassComponent<IPropWidget> {
 			)
 		);
 	}
-
 }
