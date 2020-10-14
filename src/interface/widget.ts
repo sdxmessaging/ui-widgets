@@ -42,6 +42,7 @@ export const enum FieldType {
 	file = "file",
 	image = "image",
 	imageMulti = "imageMulti",
+	imageSelect = "imageSelect",
 	sign = "sign"
 }
 

@@ -31,21 +31,28 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const fileObj = lodash.head(value());
-		return m(FileInput, {
-			field,
-			multiple: false,
-			dragging: this.dragging,
-			onSet: setFile(value)
-		},
-			m(".pa2", {
-				class: this.dragging() ? drgCls() : filCls()
+		return m(FileInput, 
+			{
+				field,
+				multiple: false,
+				dragging: this.dragging,
+				onSet: setFile(value)
+			},
+			m(".ba.b--black-20.pa2", {
+				class: this.dragging() ? drgCls() : filCls(),
 			}, [
-					m("i.mr2", {
+				m("i.mr2", {
 						class: getIcon(config.uploadIcn)
 					}),
-					m("span", fileObj ? fileObj.name : config.addFileTxt)
+				m("span", fileObj ? fileObj.name : config.addFileTxt),	
+				(fileObj ?
+				m(".fr.dark-red.pointer.dim.dib.pt1.mr2", {
+					class: getIcon(config.cancelIcn),
+					onclick: (event: Event) => {value([]); event.preventDefault()}
+				})
+				: null)
 				]
-			)
+			),
 		);
 	}
 

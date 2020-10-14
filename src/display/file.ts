@@ -27,10 +27,6 @@ export class FileList implements ClassComponent<IFileWidget> {
 						}),
 						name
 					),
-					m(".fr.dark-red.pointer.dim.dib.pt3.mr2", {
-						class: getIcon(config.cancelIcn),
-						onclick: () => value([])
-					})
 				]);
 			}))
 		]);

@@ -39,6 +39,7 @@ var disabled = stream(false);
 // Files
 var fileList = stream([]);
 var imgList = stream([]);
+var imgInputList = stream([]);
 var signList = stream([]);
 
 // Theme
@@ -518,6 +519,25 @@ m.mount(document.getElementById("page"), {
 			}),
 
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
+			// ImageSelect/FileList
+			m(".flex.mb2", [
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageSelect, {
+					field: {
+						id: "image-in",
+						label: "Image Select Input",
+						type: "imageSelect"
+					},
+					value: imgInputList
+				})),
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+					field: {
+						id: "image-out",
+						label: "Image Select Output",
+						type: "fileMulti"
+					},
+					value: imgList
+				}))
+			]),
 
 			// ImageMulti/FileList
 			m(".flex.mb2", [

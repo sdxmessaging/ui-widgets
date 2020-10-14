@@ -48,7 +48,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			m(".w-100.pa1.contain.dt.tc", {
 				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
 			},
-				fileObj
+				(fileObj
 					? m("img.img.contain", {
 						title: fileObj.name,
 						src: imgSrc(fileObj.path, fileObj.dataUrl),
@@ -57,6 +57,13 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 					: m("i.fa-2x.dtc.v-mid", {
 						class: getIcon(config.cameraIcn)
 					})
+				),
+				(fileObj ?
+					m(".fr.dark-red.pointer.dim.dib.pt1.mr2", {
+						class: getIcon(config.cancelIcn),
+						onclick: (event: Event) => {value([]); event.preventDefault()}
+					})
+				: null)
 			)
 		);
 	}

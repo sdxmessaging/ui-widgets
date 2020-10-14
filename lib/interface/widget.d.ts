@@ -34,6 +34,7 @@ export declare const enum FieldType {
     file = "file",
     image = "image",
     imageMulti = "imageMulti",
+    imageSelect = "imageSelect",
     sign = "sign"
 }
 export declare const enum SignTypes {
