@@ -26,7 +26,7 @@ export class FileList implements ClassComponent<IFileWidget> {
 							class: getIcon(config.downloadIcn)
 						}),
 						name
-					),
+					)
 				]);
 			}))
 		]);

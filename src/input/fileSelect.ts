@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { drgCls, filCls, getIcon } from "../theme";
+import { drgCls, filCls, getIcon, navClass } from "../theme";
 import { guid } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -31,28 +31,28 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const fileObj = lodash.head(value());
-		return m(FileInput, 
+		return m(FileInput,
 			{
 				field,
 				multiple: false,
 				dragging: this.dragging,
 				onSet: setFile(value)
 			},
-			m(".ba.b--black-20.pa2", {
+			m(".flex.items-center.pa1.ba.b--black-20", {
 				class: this.dragging() ? drgCls() : filCls(),
 			}, [
-				m("i.mr2", {
-						class: getIcon(config.uploadIcn)
-					}),
-				m("span", fileObj ? fileObj.name : config.addFileTxt),	
-				(fileObj ?
-				m(".fr.dark-red.pointer.dim.dib.pt1.mr2", {
-					class: getIcon(config.cancelIcn),
-					onclick: (event: Event) => {value([]); event.preventDefault()}
-				})
-				: null)
-				]
-			),
+				m("i.pa1", {
+					class: getIcon(config.uploadIcn)
+				}),
+				m("span.ma1.flex-auto", fileObj ? fileObj.name : config.addFileTxt),
+				fileObj ? m("i.pa1.pointer.dim", {
+					class: `${navClass()} ${getIcon(config.cancelIcn)}`,
+					onclick: (event: Event) => {
+						event.preventDefault();
+						value([]);
+					}
+				}) : null
+			])
 		);
 	}
 

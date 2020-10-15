@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { drgCls, filCls, getIcon, imgMaxSize } from "../theme";
+import { drgCls, filCls, getIcon, imgMaxSize, navClass } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -45,26 +45,25 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			dragging: this.dragging,
 			onSet: setFile(value, config.imageMaxSize)
 		},
-			m(".w-100.pa1.contain.dt.tc", {
+			m(".relative.w-100.pa1.contain.dt.tc", {
 				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
-			},
-				(fileObj
-					? m("img.img.contain", {
-						title: fileObj.name,
-						src: imgSrc(fileObj.path, fileObj.dataUrl),
-						style: imgMaxSize()
-					})
-					: m("i.fa-2x.dtc.v-mid", {
-						class: getIcon(config.cameraIcn)
-					})
-				),
-				(fileObj ?
-					m(".fr.dark-red.pointer.dim.dib.pt1.mr2", {
-						class: getIcon(config.cancelIcn),
-						onclick: (event: Event) => {value([]); event.preventDefault()}
-					})
-				: null)
-			)
+			}, fileObj ? [
+				m("img.img.contain", {
+					title: fileObj.name,
+					src: imgSrc(fileObj.path, fileObj.dataUrl),
+					style: imgMaxSize()
+				}),
+				m(".absolute.top-0.right-0.pa1.pointer.dim", {
+					onclick: (event: Event) => {
+						event.preventDefault();
+						value([]);
+					}
+				}, m("i.pa1", {
+					class: `${navClass()} ${getIcon(config.cancelIcn)}`
+				}))
+			] : m("i.fa-2x.dtc.v-mid", {
+				class: getIcon(config.cameraIcn)
+			}))
 		);
 	}
 

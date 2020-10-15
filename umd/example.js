@@ -350,7 +350,9 @@ m.mount(document.getElementById("page"), {
 					icon: "fa-arrow-circle-down",
 					rightIcon: "fa-arrow-circle-down",
 					classes: "ma1",
-					onclick: function () { console.log("Button Click"); }
+					onclick: function () {
+						console.log("Button Click");
+					}
 				}),
 				m(uiWidgets.ButtonLink, {
 					label: "Link Button",
@@ -362,7 +364,9 @@ m.mount(document.getElementById("page"), {
 					label: "Nav Button",
 					icon: "fa-arrow-circle-up",
 					classes: "ma1",
-					onclick: function () { console.log("Nav Button Click"); }
+					onclick: function () {
+						console.log("Nav Button Click");
+					}
 				}),
 				m(uiWidgets.NavLink, {
 					label: "Nav Link",
@@ -515,7 +519,9 @@ m.mount(document.getElementById("page"), {
 				label: "Log File to Console",
 				icon: "fa-print",
 				classes: "mb2",
-				onclick: function () { console.log(fileList()); fileList("")}
+				onclick: function () {
+					console.log(fileList()); fileList("");
+				}
 			}),
 
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
@@ -532,26 +538,35 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "image-out",
-						label: "Image Select Output",
+						label: "File List Output",
 						type: "fileMulti"
 					},
-					value: imgList
+					value: imgInputList
 				}))
 			]),
 
-			// ImageMulti/FileList
+			m(uiWidgets.Button, {
+				label: "Log Image Select to Console",
+				icon: "fa-print",
+				classes: "mb2",
+				onclick: function () {
+					console.log(imgInputList());
+				}
+			}),
+
+			// ImageMulti/ImageList
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageMulti, {
 					field: {
-						id: "image-in",
-						label: "Image Input",
+						id: "image-multi-in",
+						label: "Image List Input",
 						type: "imageMulti"
 					},
 					value: imgList
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.ImageList, {
 					field: {
-						id: "image-out",
+						id: "image-multi-out",
 						label: "Image List Output",
 						type: "fileMulti"
 					},
@@ -564,7 +579,9 @@ m.mount(document.getElementById("page"), {
 					label: "Log Image List to Console",
 					icon: "fa-print",
 					classes: "mb2",
-					onclick: function () { console.log(imgList()); }
+					onclick: function () {
+						console.log(imgList());
+					}
 				})
 			),
 
@@ -592,7 +609,9 @@ m.mount(document.getElementById("page"), {
 				label: "Log Signature to Console",
 				icon: "fa-print",
 				classes: "mb2",
-				onclick: function () { console.log(signList()); }
+				onclick: function () {
+					console.log(signList());
+				}
 			}),
 
 			m("h3", m("a#theme.link[href=#theme]", "Theme Support")),
