@@ -475,7 +475,11 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-toggle",
 							label: "Disabled Toggle",
-							type: "checkbox"
+							type: "checkbox",
+							options: [
+								{label: "Label A", value: true},
+								{label: "Label B", value: false},
+							]
 						},
 						value: disabled
 					})),

@@ -1,38 +1,52 @@
 import m, { ClassComponent, CVnode } from "mithril";
-
-import { IPropWidget } from "../interface/widget";
+import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { getIcon, txtCls } from "../theme";
-import { getEnabledClass, getLabelText, setCheck } from "../utils";
+import { getEnabledClass, getLabelText } from "../utils";
 
 export class ToggleInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
-			label = "", id, name = id, title = label,
-			required, readonly, disabled, autocomplete,
-			containerClass = "", classes = ""
-		} = field;
+			label = "", 
+			title = label,
+			required, 
+			containerClass = "", 
+			disabled,
+			readonly,
+			classes = "", 
+			options
+		} = field as IOptionField;
+		let optionA, optionB;
+		if(options) { optionA = options[0] ? options[0] : null; optionB = options[1] ? options[1] : null}
 		return m(".w-100", {
 			class: `${txtCls()} ${containerClass}`,
-		},
-			m("label.flex.items-center", {
+		},	
+			m("span.pa1.flex.items-center.pointer", {
 				title,
-				class: `${getEnabledClass(disabled, readonly)} ${classes}`
+				class: `${getEnabledClass(disabled, readonly)} ${classes}`,
+				onclick: () => {
+					value() ? value(false) : value(true);
+				}
 			},
-				m("input.clip[type=checkbox]", {
-					id, name,
-					checked: value(),
-					required, autocomplete,
-					disabled: disabled || readonly,
-					onchange: setCheck(value),
-				}),
 				getLabelText(label, required),
+
+				(optionA ? 
+					m("label.pl2", {
+						class: `${value() ? "" : "fw6"}`
+					}, optionA?.label)
+				: null),
 				m("i.ml2", {
 					class: getIcon(value() ? config.toggleOnIcn : config.toggleOffIcn)
-				})
-			)
-		);
+				}),
+				(optionB ? 
+					m("label.pl1", {
+						class: `${value() ? "fw6" : ""}`
+					}, optionB?.label) 
+				: null)
+
+			),	
+		)	
 	}
 }
