@@ -1,4 +1,4 @@
-const ncp = require('ncp');
+
 const shell = require('shelljs');
 const currentVersion = require('../package.json').version;
 
@@ -86,7 +86,7 @@ const processArray: IProcess[] = [
 		rollback: (version) => {
 			shell.exec(`git tag -d v${version}`);
 		},
-		errMsg: 'Publish failed, versions between ui-widgets and ui-widgets-dist may be out of sync. See logs for more details',
+		errMsg: 'Publish failed. See logs for more details',
 		executeMsg: 'Git push on ui-widgets...'
 	},
 ];
