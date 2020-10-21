@@ -1,4 +1,4 @@
-const ncp = require('ncp');
+
 const shell = require('shelljs');
 const currentVersion = require('../package.json').version;
 
