@@ -70,7 +70,7 @@ const processArray: IProcess[] = [
 		executeMsg: 'Pulling changes on ui-widgets...'
 	},
 	{
-		execute: (version) => shell.exec(`npm run build && git add -A -- . && git commit -m 'build-file-for-version-${version}' -n -q`),
+		execute: () => shell.exec(`npm run build && git add -A -- .`),
 		rollback: () => null,
 		errMsg: 'Publish failed, could not version ui-widgets. See logs for more details',
 		executeMsg: 'Building ui-widgets...'
