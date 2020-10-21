@@ -46,11 +46,24 @@
   "scripts": {
     "build": "tsc -b",
     "postbuild": "rollup -c --environment MINIFY",
+    "precommit": "./scriptHelpers/precommit.sh",
+    "postcommit": "./scriptHelpers/postcommit.sh",
     "watch": "tsc -w",
     "watch-bundle": "rollup -c -w --environment MINIFY",
     "test": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json ospec 'src/{**/*,*}.spec.ts' --preload node_modules/ts-node/register ./test-setup.ts",
     "coverage": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json nyc ospec 'src/{**/*,*}.spec.ts' --preload node_modules/ts-node/register ./test-setup.ts",
     "lint": "eslint --ext .ts src/",
     "example": "open example.html"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "coverage",
+    "precommit"
+  ],
+  "post-commit": [
+    "postcommit"
+  ],
+  "pre-push": [
+    "test"
+  ]
 }
