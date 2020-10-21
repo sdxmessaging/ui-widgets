@@ -1,0 +1,19 @@
+
+name: Publish
+on:
+  push:
+    tags:
+       - v*
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: publish to registry
+        uses: actions/setup-node@v1
+      - run: rm .npmrc
+      - run: echo "registry=https://npm.pkg.github.com/sdxmessaging" > ~/.npmrc 
+      - run: npm publish
+
