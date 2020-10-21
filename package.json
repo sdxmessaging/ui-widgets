@@ -53,7 +53,8 @@
     "test": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json ospec 'src/{**/*,*}.spec.ts' --preload node_modules/ts-node/register ./test-setup.ts",
     "coverage": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=tsconfig.test.json nyc ospec 'src/{**/*,*}.spec.ts' --preload node_modules/ts-node/register ./test-setup.ts",
     "lint": "eslint --ext .ts src/",
-    "example": "open example.html"
+    "example": "open example.html",
+    "dist": "npx ts-node ./scriptHelpers/dist.ts BUMP=$BUMP"
   },
   "pre-commit": [
     "lint",
