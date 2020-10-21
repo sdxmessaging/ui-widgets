@@ -58,6 +58,7 @@
   },
   "pre-commit": [
     "lint",
+    "build",
     "coverage",
     "precommit"
   ],
