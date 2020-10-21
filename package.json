@@ -56,14 +56,8 @@
     "example": "open example.html",
     "dist": "npx ts-node ./scriptHelpers/dist.ts BUMP=$BUMP"
   },
-  "pre-commit": [
-    "lint",
-    "coverage",
-    "precommit"
-  ],
-  "post-commit": [
-    "postcommit"
-  ],
+  "pre-commit": [],
+  "post-commit": [],
   "pre-push": [
     "test"
   ]
