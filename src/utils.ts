@@ -1,7 +1,6 @@
 import m from "mithril";
-import stream from "mithril/stream";
 
-import { TProp } from "./interface/widget";
+import { TProp, TPropStream } from "./interface/widget";
 
 import { dspLblCls, getIcon, lblCls } from "./theme";
 
@@ -79,11 +78,11 @@ export function getEnabledClass(disabled?: boolean, readonly?: boolean) {
 }
 
 // Input widget TProp update helpers
-export function setValue(val: stream<TProp>) {
+export function setValue(val: TPropStream) {
 	return ({ target: { value } }: { target: HTMLInputElement }) => val(value);
 }
 
-export function setCheck(chk: stream<TProp>) {
+export function setCheck(chk: TPropStream) {
 	return ({ target: { checked } }: { target: HTMLInputElement }) => chk(checked);
 }
 

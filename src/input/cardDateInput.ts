@@ -18,7 +18,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		value.map((newVal) => {
+		(value as stream<TProp>).map((newVal) => {
 			const [month, year = ""] = String(newVal).split("/");
 			this.month(month);
 			this.year(year);
@@ -62,7 +62,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						required, readonly, disabled,
 						value: this.month(),
 						class: classStr, style: styleSm,
-						onchange: setValue(this.month as stream<TProp>)
+						onchange: setValue(this.month)
 					})
 				]),
 				m("span.mr2", {
@@ -78,7 +78,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						required, readonly, disabled,
 						value: this.year(),
 						class: classStr, style: styleSm,
-						onchange: setValue(this.year as stream<TProp>)
+						onchange: setValue(this.year)
 					})
 				])
 			])

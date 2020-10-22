@@ -2,6 +2,9 @@ import stream from "mithril/stream";
 
 export type TProp = string | number | boolean;
 
+// TODO Consider dropping stream<TProp> in a future version
+export type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
+
 export interface IFile {
 	readonly guid: string;
 	readonly name: string;
@@ -137,8 +140,8 @@ export interface IFileWidget extends IBaseWidget {
 	readonly value: stream<IFile[]>;
 }
 export interface IPropWidget extends IBaseWidget {
-	readonly value: stream<TProp>;
-	readonly xform?: stream<TProp>;
+	readonly value: TPropStream;
+	readonly xform?: TPropStream;
 }
 
 // Editor signature inner widgets

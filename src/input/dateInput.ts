@@ -20,7 +20,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		value.map((newVal) => {
+		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
 			if (lodash.isDate(date) && !isNaN(date.getTime())) {
 				this.day(lodash.padStart(String(date.getDate()), 2, "0"));
@@ -65,7 +65,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.day(),
 				class: classStr, style: styleSm,
-				onchange: setValue(this.day as stream<TProp>)
+				onchange: setValue(this.day)
 			})
 		]);
 		const monthInput = m(".dib.mr2", [
@@ -78,7 +78,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.month(),
 				class: classStr, style: styleSm,
-				onchange: setValue(this.month as stream<TProp>)
+				onchange: setValue(this.month)
 			})
 		]);
 		const yearInput = m(".dib.mr2", [
@@ -91,7 +91,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.year(),
 				class: classStr, style: styleLg,
-				onchange: setValue(this.year as stream<TProp>)
+				onchange: setValue(this.year)
 			})
 		]);
 		// Assemble date input (en-GB or en-US layouts)

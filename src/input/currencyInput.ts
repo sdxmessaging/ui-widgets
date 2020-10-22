@@ -1,8 +1,7 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
-import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { inpCls, txtCls } from "../theme";
 import { getEnabledClass, getLabel } from "../utils";
@@ -115,6 +114,6 @@ export function numberToCurrencyTuple(unitTotal: number): [string, string] | und
 }
 
 // Currency TProp update helper
-export function setCurrencyValue(val: stream<TProp>) {
+export function setCurrencyValue(val: TPropStream) {
 	return ({ target: { value } }: { target: HTMLInputElement }) => val(currencyStrToNumber(value));
 }

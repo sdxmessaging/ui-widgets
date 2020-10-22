@@ -1,6 +1,5 @@
 import m from "mithril";
-import stream from "mithril/stream";
-import { TProp } from "./interface/widget";
+import { TPropStream } from "./interface/widget";
 declare global {
     interface Window {
         msCrypto: Crypto;
@@ -13,13 +12,13 @@ export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function getDisplayLabel(label?: string): m.Vnode<any, any> | null;
 export declare function getLabel(id: string, label?: string, required?: boolean): m.Vnode<any, any> | null;
 export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?: string): (string | m.Vnode<any, any> | null | undefined)[];
-export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "" | "o-60" | "pointer";
-export declare function setValue(val: stream<TProp>): ({ target: { value } }: {
+export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "o-60" | "" | "pointer";
+export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
-export declare function setCheck(chk: stream<TProp>): ({ target: { checked } }: {
+}) => string | number | boolean | import("mithril/stream")<string>;
+export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => stream<string | number | boolean>;
+}) => string | number | boolean | import("mithril/stream")<boolean>;
 /**
  * Split given file name from extension
  */

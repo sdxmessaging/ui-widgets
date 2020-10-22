@@ -1,5 +1,6 @@
 import stream from "mithril/stream";
 export declare type TProp = string | number | boolean;
+export declare type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
 export interface IFile {
     readonly guid: string;
     readonly name: string;
@@ -92,8 +93,8 @@ export interface IFileWidget extends IBaseWidget {
     readonly value: stream<IFile[]>;
 }
 export interface IPropWidget extends IBaseWidget {
-    readonly value: stream<TProp>;
-    readonly xform?: stream<TProp>;
+    readonly value: TPropStream;
+    readonly xform?: TPropStream;
 }
 export interface ISignWidget {
     readonly heightPct: number;
