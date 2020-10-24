@@ -477,8 +477,8 @@ m.mount(document.getElementById("page"), {
 							label: "Disabled Toggle",
 							type: "checkbox",
 							options: [
-								{label: "Label A", value: true},
-								{label: "Label B", value: false},
+								{label: "Label A", value: false},
+								{label: "Label B", value: true},
 							]
 						},
 						value: disabled

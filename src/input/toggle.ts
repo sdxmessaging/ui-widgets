@@ -36,12 +36,12 @@ export class ToggleInput implements ClassComponent<IPropWidget> {
 				}),
 				(optionA ? 
 					m("label.pl2", {
-						class: `${value() ? "dn" : "fw6"}`
+						class: `${value() === optionA.value ? "fw6" : "dn"}`
 					}, optionA?.label)
 				: null),
 				(optionB ? 
 					m("label.pl1", {
-						class: `${value() ? "fw6" : "dn"}`
+						class: `${value() === optionB.value ? "fw6" : "dn"}`
 					}, optionB?.label) 
 				: null)
 
