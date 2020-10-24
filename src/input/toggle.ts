@@ -31,18 +31,17 @@ export class ToggleInput implements ClassComponent<IPropWidget> {
 				}
 			},
 				getLabelText(label, required),
-
-				(optionA ? 
-					m("label.pl2", {
-						class: `${value() ? "" : "fw6"}`
-					}, optionA?.label)
-				: null),
 				m("i.ml2", {
 					class: getIcon(value() ? config.toggleOnIcn : config.toggleOffIcn)
 				}),
+				(optionA ? 
+					m("label.pl2", {
+						class: `${value() ? "dn" : "fw6"}`
+					}, optionA?.label)
+				: null),
 				(optionB ? 
 					m("label.pl1", {
-						class: `${value() ? "fw6" : ""}`
+						class: `${value() ? "fw6" : "dn"}`
 					}, optionB?.label) 
 				: null)
 
