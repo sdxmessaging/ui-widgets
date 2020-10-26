@@ -35,7 +35,10 @@ o.spec("ToggleInput", () => {
 					title: "Test Title",
 					classes: "test",
 					containerClass: "test",
-					disabled: true
+					disabled: true,
+					options: [{
+						label: "test", value: true
+					}]
 				},
 				value
 			})

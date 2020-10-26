@@ -1,5 +1,6 @@
+import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
-import { IOptionField, IPropWidget } from "../interface/widget";
+import { IOption, IOptionField, IPropWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { getIcon, txtCls } from "../theme";
@@ -9,21 +10,19 @@ export class ToggleInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
-			label = "", 
-			title = label,
-			required, 
-			containerClass = "", 
-			disabled,
-			readonly,
-			classes = "", 
-			options
+			label = "", title = label,
+			required, readonly, disabled,
+			containerClass = "", classes = "",
+			options = []
 		} = field as IOptionField;
-		let optionA, optionB;
-		if(options) { optionA = options[0] ? options[0] : null; optionB = options[1] ? options[1] : null}
+		const valLabel = lodash.find(options,
+			// Empty value stream to be handled as false
+			lodash.matches<IOption>({ value: value() || false })
+		);
 		return m(".w-100", {
 			class: `${txtCls()} ${containerClass}`,
-		},	
-			m("span.pa1.flex.items-center.pointer", {
+		},
+			m("label.flex.items-center.pointer", {
 				title,
 				class: `${getEnabledClass(disabled, readonly)} ${classes}`,
 				onclick: () => {
@@ -34,18 +33,8 @@ export class ToggleInput implements ClassComponent<IPropWidget> {
 				m("i.ml2", {
 					class: getIcon(value() ? config.toggleOnIcn : config.toggleOffIcn)
 				}),
-				(optionA ? 
-					m("label.pl2", {
-						class: `${value() === optionA.value ? "fw6" : "dn"}`
-					}, optionA?.label)
-				: null),
-				(optionB ? 
-					m("label.pl1", {
-						class: `${value() === optionB.value ? "fw6" : "dn"}`
-					}, optionB?.label) 
-				: null)
-
-			),	
-		)	
+				valLabel ? m("span.ml2", valLabel.label) : null
+			)
+		);
 	}
 }

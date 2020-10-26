@@ -211,13 +211,19 @@ m.mount(document.getElementById("page"), {
 					value: checkVal
 				}))
 			]),
-			// Toggle 
+
+			// Toggle
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ToggleInput, {
 					field: {
 						id: "toggle-in",
 						label: "Toggle Input",
-						classes: "pa2"
+						classes: "pa2",
+						options: [{
+							label: "On", value: true
+						}, {
+							label: "Off", value: false
+						}]
 					},
 					value: toggleVal
 				})),
@@ -229,6 +235,7 @@ m.mount(document.getElementById("page"), {
 					value: toggleVal
 				}))
 			]),
+
 			// Select/Radio
 			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
@@ -458,16 +465,14 @@ m.mount(document.getElementById("page"), {
 					m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-readonly",
-							label: "Readonly",
-							type: "checkbox"
+							label: "Readonly"
 						},
 						value: readonly
 					})),
 					m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-disabled",
-							label: "Disabled",
-							type: "checkbox"
+							label: "Disabled"
 						},
 						value: disabled
 					})),
@@ -475,11 +480,10 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-toggle",
 							label: "Disabled Toggle",
-							type: "checkbox",
-							options: [
-								{label: "Label A", value: false},
-								{label: "Label B", value: true},
-							]
+							options: [{
+								label: "Disabled",
+								value: true
+							}]
 						},
 						value: disabled
 					})),
