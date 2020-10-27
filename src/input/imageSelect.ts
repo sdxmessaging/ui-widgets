@@ -5,10 +5,11 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { drgCls, filCls, getIcon, imgMaxSize, navClass } from "../theme";
+import { drgCls, filCls, getIcon, imgMaxSize } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
 
 import { FileInput } from "./fileInput";
+import { removeFile } from "./fileMulti";
 
 export function setFile(fileList: stream<IFile[]>, maxSize: number) {
 	return (setList: FileList | null) => {
@@ -36,7 +37,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const fileObj = lodash.head(value());
+		const file = lodash.head(value());
 		const { classes = "" } = field;
 		return m(FileInput, {
 			field,
@@ -47,19 +48,17 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 		},
 			m(".relative.w-100.pa1.contain.dt.tc", {
 				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
-			}, fileObj ? [
+			}, file ? [
 				m("img.img.contain", {
-					title: fileObj.name,
-					src: imgSrc(fileObj.path, fileObj.dataUrl),
+					title: file.name,
+					src: imgSrc(file.path, file.dataUrl),
 					style: imgMaxSize()
 				}),
 				m(".absolute.top-0.right-0.pa1.pointer.dim", {
-					onclick: (event: Event) => {
-						event.preventDefault();
-						value([]);
-					}
+					title: `Remove ${file.name}`,
+					onclick: removeFile(value, file.guid)
 				}, m("i.pa1", {
-					class: `${navClass()} ${getIcon(config.cancelIcn)}`
+					class: getIcon(config.cancelIcn)
 				}))
 			] : m("i.fa-2x.dtc.v-mid", {
 				class: getIcon(config.cameraIcn)

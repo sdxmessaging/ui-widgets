@@ -68,11 +68,11 @@ o.spec("FileMulti", () => {
 		}]);
 		// Attempt to remove file not present
 		const removeNone = removeFile(fileList, "n/a");
-		removeNone();
+		removeNone(new Event("click"));
 		o(fileList().length).equals(2);
 		// Remove first file
 		const remove1 = removeFile(fileList, "1");
-		remove1();
+		remove1(new Event("click"));
 		o(fileList().length).equals(1);
 		o(fileList()[0].guid).equals("2");
 	});

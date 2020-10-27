@@ -26,7 +26,8 @@ export function addFiles(fileList: stream<IFile[]>) {
 }
 
 export function removeFile(fileList: stream<IFile[]>, removeGuid: string) {
-	return () => {
+	return (event: Event) => {
+		event.preventDefault();
 		const newFileList = fileList();
 		lodash.remove(newFileList, { guid: removeGuid });
 		fileList(newFileList);
