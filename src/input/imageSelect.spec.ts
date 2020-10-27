@@ -7,7 +7,7 @@ import { FieldType, IFile } from "../interface/widget";
 import { dataURItoBlob } from "../utils";
 
 import { ImageSelect } from "./imageSelect";
-import { setFile } from "./imageSelect";
+import { addImages } from "./imageMulti";
 
 o.spec("ImageSelect", () => {
 
@@ -50,7 +50,7 @@ o.spec("ImageSelect", () => {
 
 	o("set 0", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
-		const add = setFile(fileList, 1024);
+		const add = addImages(fileList, 1024, true);
 		// Set empty file list
 		const emptyList = ([] as unknown) as FileList;
 		add(emptyList)
@@ -62,12 +62,12 @@ o.spec("ImageSelect", () => {
 
 	o("set 1", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
-		const add = setFile(fileList, 1024);
+		const add = addImages(fileList, 1024, true);
 		const file = new File([
 			dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
 		], "test.gif", { type: "image/gif" });
 		// Set 1 file
-		const addList = ([file, file] as unknown) as FileList;
+		const addList = ([file] as unknown) as FileList;
 		add(addList)
 			.then(() => {
 				o(fileList().length).equals(1);

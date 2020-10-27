@@ -10,9 +10,9 @@ import { guid } from "../utils";
 
 import { FileInput } from "./fileInput";
 
-export function addFiles(fileList: stream<IFile[]>) {
+export function addFiles(fileList: stream<IFile[]>, replace = false) {
 	return (addList: FileList | null) => {
-		const newFileList = fileList();
+		const newFileList = replace ? [] : fileList();
 		lodash.each(addList, (file: File) => {
 			newFileList.push({
 				guid: guid(),

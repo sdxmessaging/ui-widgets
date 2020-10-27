@@ -2,35 +2,15 @@ import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, IFileWidget } from "../interface/widget";
+import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { drgCls, filCls, getIcon, imgMaxSize } from "../theme";
-import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
+import { imgSrc } from "../utils";
 
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
-
-export function setFile(fileList: stream<IFile[]>, maxSize: number) {
-	return (setList: FileList | null) => {
-		const file = lodash.head(setList);
-		if (!file) {
-			return Promise.resolve();
-		}
-		// Limit file dimensions
-		return resizeImage(file, maxSize, file.type).then((dataURL) => {
-			const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
-			fileList([{
-				guid: guid(),
-				name: newFile.name,
-				path: "not_set",
-				file: newFile,
-				dataUrl: dataURL
-			}]);
-			m.redraw();
-		});
-	};
-}
+import { addImages } from "./imageMulti";
 
 export class ImageSelect implements ClassComponent<IFileWidget> {
 
@@ -44,7 +24,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			defaultAccept: "image/*",
 			multiple: false,
 			dragging: this.dragging,
-			onSet: setFile(value, config.imageMaxSize)
+			onSet: addImages(value, config.imageMaxSize, true)
 		},
 			m(".relative.w-100.pa1.contain.dt.tc", {
 				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`

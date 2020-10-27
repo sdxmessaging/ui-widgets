@@ -6,8 +6,7 @@ import stream from "mithril/stream";
 import { FieldType, IFile } from "../interface/widget";
 import { dataURItoBlob } from "../utils";
 
-import { ImageMulti } from "./imageMulti";
-import { addFiles } from "./imageMulti";
+import { addImages, ImageMulti } from "./imageMulti";
 
 o.spec("ImageMulti", () => {
 
@@ -50,7 +49,7 @@ o.spec("ImageMulti", () => {
 
 	o("add", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
-		const add = addFiles(fileList, 1024);
+		const add = addImages(fileList, 1024);
 		// Add 2 basic files
 		const file = new File([
 			dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")

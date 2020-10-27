@@ -13,9 +13,9 @@ import { Thumbnail } from "../display/thumbnail";
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
 
-export function addFiles(fileList: stream<IFile[]>, maxSize: number) {
+export function addImages(fileList: stream<IFile[]>, maxSize: number, replace = false) {
 	return (addList: FileList | null) => {
-		const newFileList = fileList();
+		const newFileList = replace ? [] : fileList();
 		return Promise.all(lodash.map(addList, (file) => {
 			// Limit file dimensions
 			return resizeImage(file, maxSize, file.type).then((dataURL) => {
@@ -46,7 +46,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				field,
 				defaultAccept: "image/*",
 				dragging: this.dragging,
-				onSet: addFiles(value, config.imageMaxSize)
+				onSet: addImages(value, config.imageMaxSize)
 			},
 				m(".w-100.pa1.dt.tc", {
 					class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
