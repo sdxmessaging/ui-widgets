@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { ISignWidget, TProp } from "../interface/widget";
+import { ISignWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { setValue } from "../utils";
@@ -40,7 +40,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 				onsubmit: applyText(this.text, heightPct, onSet)
 			},
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
-					oninput: setValue(this.text as stream<TProp>),
+					oninput: setValue(this.text),
 					value: this.text(),
 					style: {
 						"font-family": config.signFont

@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget } from "../interface/widget";
 
 import { inpCls, styleSm, styleLg } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
@@ -20,7 +20,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		(value as stream<TProp>).map((newVal) => {
+		(value as stream<unknown>).map((newVal) => {
 			const date = new Date(String(newVal));
 			if (lodash.isDate(date) && !isNaN(date.getTime())) {
 				this.day(lodash.padStart(String(date.getDate()), 2, "0"));
