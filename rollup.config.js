@@ -24,6 +24,7 @@ export default [{
 		format: "esm",
 		globals
 	},
+	context: "this",
 	plugins
 }, {
 	input: "lib/index.js",
@@ -34,5 +35,6 @@ export default [{
 		format: "umd",
 		globals
 	},
+	context: "uiWidgets",
 	plugins
 }];
