@@ -1,24 +1,10 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import { IConfig, TSubset } from "../interface/config";
 
-import { IPropWidget } from "../interface/widget";
+import { Checkbox } from "./checkbox";
 
-import { config } from "../config";
-import { classMap, getIcon } from "../theme";
-import { getDisplayLabel } from "../utils";
+export class Toggle extends Checkbox {
 
-export class Toggle implements ClassComponent<IPropWidget> {
-
-	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, classes = "", style } = field;
-		return m(".pa2.flex.items-center", {
-			class: `${classMap.dspBrd()} ${classes}`,
-			style
-		}, [
-				getDisplayLabel(label),
-				m("i", {
-					class: `${classMap.inpCol()} ${getIcon(value() ? config.toggleOnIcn : config.toggleOffIcn)}`
-				}) 
-			]);
-	}
+	protected onIcon: keyof TSubset<IConfig, string> = "toggleOnIcn";
+	protected offIcon: keyof TSubset<IConfig, string> = "toggleOffIcn";
 
 }

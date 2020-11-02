@@ -1,5 +1,6 @@
-import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget } from "../interface/widget";
-export declare class Toggle implements ClassComponent<IPropWidget> {
-    view({ attrs: { field, value } }: CVnode<IPropWidget>): m.Vnode<any, any>;
+import { IConfig, TSubset } from "../interface/config";
+import { Checkbox } from "./checkbox";
+export declare class Toggle extends Checkbox {
+    protected onIcon: keyof TSubset<IConfig, string>;
+    protected offIcon: keyof TSubset<IConfig, string>;
 }

@@ -1,24 +1,31 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
+import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
-import { classMap, getIcon } from "../theme";
+import { classMap, dspLblCls, getIcon } from "../theme";
 import { getDisplayLabel } from "../utils";
 
+import { CheckLabel } from "./checkLabel";
+
 export class Checkbox implements ClassComponent<IPropWidget> {
+
+	protected onIcon: keyof TSubset<IConfig, string> = "checkIcn";
+	protected offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, classes = "", style } = field;
 		return m(".pa2.flex.items-center", {
-			class: `${classMap.dspBrd()} ${classes}`,
+			class: `${classMap.dspBrd()} ${dspLblCls()} ${classes}`,
 			style
 		}, [
-				getDisplayLabel(label),
-				m("i", {
-					class: `${classMap.inpCol()} ${getIcon(value() ? config.checkIcn : config.uncheckIcn)}`
-				})
-			]);
+			getDisplayLabel(label),
+			m("i", {
+				class: `${classMap.inpCol()} ${getIcon(config[value() ? this.onIcon : this.offIcon])}`
+			}),
+			m(CheckLabel, { field, value })
+		]);
 	}
 
 }

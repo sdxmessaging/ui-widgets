@@ -1,12 +1,18 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
+import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
 import { getIcon, txtCls } from "../theme";
 import { getEnabledClass, getLabelText, setCheck } from "../utils";
 
+import { CheckLabel } from "../display/checkLabel";
+
 export class CheckboxInput implements ClassComponent<IPropWidget> {
+
+	protected onIcon: keyof TSubset<IConfig, string> = "checkIcn";
+	protected offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
@@ -30,8 +36,9 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				}),
 				getLabelText(label, required),
 				m("i.ml2", {
-					class: getIcon(value() ? config.checkIcn : config.uncheckIcn)
-				})
+					class: getIcon(config[value() ? this.onIcon : this.offIcon])
+				}),
+				m(CheckLabel, { field, value })
 			)
 		);
 	}

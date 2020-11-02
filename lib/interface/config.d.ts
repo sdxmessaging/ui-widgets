@@ -60,3 +60,9 @@ export interface IConfig {
     telIcn: string;
     linkIcn: string;
 }
+/**
+ * Pick keys from T where their respective value extends U
+ */
+export declare type TSubset<T, U> = Pick<T, {
+    [Key in keyof T]: T[Key] extends U ? Key : never;
+}[keyof T]>;

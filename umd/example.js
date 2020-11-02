@@ -193,6 +193,8 @@ m.mount(document.getElementById("page"), {
 				}))
 			]),
 
+			m("p", "Checkbox and Toggle inputs support conditional labels based on their value."),
+
 			// Checkbox
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CheckboxInput, {
@@ -206,7 +208,10 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.Checkbox, {
 					field: {
 						id: "check-out",
-						label: "Checkbox Output"
+						label: "Checkbox Output",
+						options: [{
+							label: "Unset", value: false
+						}]
 					},
 					value: checkVal
 				}))
@@ -230,7 +235,10 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.Toggle, {
 					field: {
 						id: "toggle-out",
-						label: "Toggle Output"
+						label: "Toggle Output",
+						options: [{
+							label: "On", value: true
+						}]
 					},
 					value: toggleVal
 				}))
