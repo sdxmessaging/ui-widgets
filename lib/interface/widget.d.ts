@@ -29,6 +29,7 @@ export declare const enum FieldType {
     cardDate = "cardDate",
     textarea = "textarea",
     checkbox = "checkbox",
+    toggle = "toggle",
     select = "select",
     radio = "radio",
     fileMulti = "fileMulti",
