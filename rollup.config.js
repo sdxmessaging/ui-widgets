@@ -35,6 +35,6 @@ export default [{
 		format: "umd",
 		globals
 	},
-	context: "uiWidgets",
+	context: "this",
 	plugins
 }];
