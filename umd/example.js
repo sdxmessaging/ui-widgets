@@ -438,6 +438,9 @@ m.mount(document.getElementById("page"), {
 								label: "Text",
 								value: "text"
 							}, {
+								label: "Password",
+								value: "password"
+							}, {
 								label: "Date",
 								value: "date"
 							}, {
