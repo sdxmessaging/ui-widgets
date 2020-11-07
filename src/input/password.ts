@@ -3,13 +3,13 @@ import stream from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { inpCls, lblCls } from "../theme";
+import { getIcon, inpCls, lblCls } from "../theme";
 import { config } from "../config";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 import { CheckboxInput } from "./checkbox";
 
-export class PasswordInput implements ClassComponent<IPropWidget> {
+export class PasswordInput implements ClassComponent<IPropWidget>  {
 
 	private showPassword: stream<TProp> = stream<TProp>(false);
 
@@ -32,22 +32,31 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 						containerClass: `mb1 ${lblCls()}`
 					},
 					value: this.showPassword
-				})
+				},
+				)
 			]),
-			m(".w-100", {
+			m(".w-100.mb10.relative", {
 				class: containerClass
-			}, m("input.input-reset.border-box.w-100", {
-				id, name, title, placeholder,
-				type: this.showPassword() ? "text" : "password",
-				maxlength, minlength, required,
-				readonly, disabled, autofocus, autocomplete,
-				value: value(),
-				class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
-				// Safari quirk
-				autocorrect: "off",
-				// Update value on change or input ("instant" option)
-				[instant ? "oninput" : "onchange"]: setValue(value)
-			}))
+			}, 
+				m("input.input-reset.border-box.w-100", {
+					id, name, title, placeholder,
+					type: this.showPassword() ? "text" : "password",
+					maxlength, minlength, required,
+					readonly, disabled, autofocus, autocomplete,
+					value: value(),
+					class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
+					// Safari quirk
+					autocorrect: "off",
+					// Update value on change or input ("instant" option)
+					[instant ? "oninput" : "onchange"]: setValue(value)
+				}),
+				m("i.pa1.absolute.bottom-0.right-0.pointer.dim", {
+					class: getIcon(this.showPassword() ? config.hidePassIcn : config.showPassIcn),
+					onclick: () => {
+						this.showPassword(!this.showPassword());
+					}
+				}),
+			),
 		];
 	}
 

@@ -39,6 +39,8 @@ const confMap: IConfig = {
 	uncheckIcn: "fa-square",
 	toggleOnIcn: "fa fa-toggle-on",
 	toggleOffIcn: "fa fa-toggle-off",
+	showPassIcn: "fa fa-eye",
+	hidePassIcn: "fa fa-eye-slash",
 	uploadIcn: "fa-file-upload",
 	downloadIcn: "fa-file-download",
 	deleteIcn: "fa-trash-alt",

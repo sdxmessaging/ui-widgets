@@ -22,6 +22,8 @@ var checkVal = stream();
 var optVal = stream();
 var faceVal = stream();
 var toggleVal = stream();
+var passVal = stream();
+var displayPassVal = stream(false);
 // Transform
 var xformValIn = stream("");
 var xformValOut = xformValIn.map(function (val) {
@@ -191,6 +193,17 @@ m.mount(document.getElementById("page"), {
 					},
 					value: colVal
 				}))
+			]),
+			// Password 
+			m(".flex.mb2", [
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.PasswordInput, {
+					field: {
+						id: "password-in",
+						label: "Password Input"
+					},
+					value: passVal,
+					showPassword: displayPassVal
+				})),
 			]),
 
 			m("p", "Checkbox and Toggle inputs support conditional labels based on their value."),

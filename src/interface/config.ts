@@ -52,6 +52,8 @@ export interface IConfig {
 	uncheckIcn: string;
 	toggleOnIcn: string;
 	toggleOffIcn: string;
+	showPassIcn: string;
+	hidePassIcn: string;
 	uploadIcn: string;
 	downloadIcn: string;
 	deleteIcn: string;
