@@ -109,6 +109,7 @@ export interface IField {
 	readonly style?: Record<string, string>;
 	// Unsupported legacy field
 	readonly default?: string;
+	readonly displayPasswordStrength?: boolean;
 }
 
 // Select/Radio options, config for other fields

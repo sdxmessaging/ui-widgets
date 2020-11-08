@@ -199,7 +199,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.PasswordInput, {
 					field: {
 						id: "password-in",
-						label: "Password Input"
+						label: "Password Input",
+						displayPasswordStrength: true
 					},
 					value: passVal,
 					showPassword: displayPassVal

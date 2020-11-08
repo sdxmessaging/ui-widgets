@@ -41,7 +41,6 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 						}
 					}
 				}) : null,
-
 				file ? m("i.pa1.pointer.dim", {
 					title: `Remove ${file.name}`,
 					class: getIcon(config.cancelIcn),
