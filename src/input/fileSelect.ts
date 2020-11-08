@@ -21,7 +21,6 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				field,
 				multiple: false,
 				dragging: this.dragging,
-				defaultAccept: "image/*",
 				onSet: addFiles(value, true)
 
 			},
@@ -69,11 +68,47 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 					icon = config.wordDocIcn
 					break;
 				};
-
-				case 'mp3': 
-				case 'mp4': 
-				case 'mov': 
+				case 'webm': 
+				case 'mkv': 
+				case 'flv': 
+				case 'vob': 
+				case 'ogv': 
+				case 'ogg': 
+				case 'drc': 
+				case 'gifv': 
+				case 'mng': 
 				case 'avi': 
+				case 'mts': 
+				case 'm2ts': 
+				case 'mov': 
+				case 'qt': 
+				case 'wmv': 
+				case 'yuv': 
+				case 'rm': 
+				case 'rmvb': 
+				case 'viv': 
+				case 'asf': 
+				case 'amv': 
+				case 'mp4': 
+				case 'm4p': 
+				case 'm4v': 
+				case 'mpg': 
+				case 'mp2': 
+				case 'mpeg': 
+				case 'mpe': 
+				case 'mpv': 
+				case 'm2v': 
+				case 'm4v': 
+				case 'svi': 
+				case '3gp': 
+				case 'mxf': 
+				case 'roq': 
+				case 'nsv': 
+				case 'flv': 
+				case 'f4v': 
+				case 'f4p': 
+				case 'f4a': 
+				case 'f4b': 
 				{
 					icon = config.videoFileIcn;
 					break;
@@ -144,6 +179,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 		} 
 		return icon;
 	}
+
 	returnFileExtension(file: any) {
 		const fileItem = file.name.split(".");
 		const fileIndex = fileItem.length - 1;
