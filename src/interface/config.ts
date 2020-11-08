@@ -62,6 +62,15 @@ export interface IConfig {
 	emailIcn: string;
 	telIcn: string;
 	linkIcn: string;
+	/** File Type Icons for file upload widgit */
+	wordDocIcn: string;
+	videoFileIcn: string;
+	pdfFileIcn: string;
+	musicFileIcn: string;
+	excelFileIcn: string;
+	fileIcn: string;
+	codeFileIcn: string;
+	
 }
 
 /**

@@ -48,7 +48,14 @@ const confMap: IConfig = {
 	imageIcn: "fa-image",
 	emailIcn: "fa-envelope",
 	telIcn: "fa-phone",
-	linkIcn: "fa-link"
+	linkIcn: "fa-link",
+	wordDocIcn: "fa-file-word",
+	videoFileIcn: "fa-file-video",
+	pdfFileIcn: "fa-file-pdf",
+	musicFileIcn: "fa-music-file",
+	excelFileIcn: "fa-file-excel",
+	fileIcn: "fa-file",
+	codeFileIcn: "fa-file-code"
 };
 
 export const config: Readonly<IConfig> = confMap;

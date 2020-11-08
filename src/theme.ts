@@ -87,6 +87,10 @@ export function getIcon(iconClass: string): string {
 	return `${classMap.icon()} ${iconClass}`;
 }
 
+export function getFileType(extension: string) {
+	console.log(extension);
+}
+
 // Button context helpers
 const btnMap: Record<string, string> = {};
 
