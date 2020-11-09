@@ -20,7 +20,7 @@ o.spec("PasswordInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
 	o("configured", () => {
