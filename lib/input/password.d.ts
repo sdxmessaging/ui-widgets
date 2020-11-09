@@ -5,5 +5,5 @@ export declare class PasswordInput implements ClassComponent<IPropWidget> {
     private passwordStrength;
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onremove(): void;
-    view({ attrs: { field, value } }: CVnode<IPropWidget>): (m.Vnode<any, any> | m.Vnode<any, any>[] | null)[];
+    view({ attrs: { field, value } }: CVnode<IPropWidget>): (m.Vnode<any, any> | null)[];
 }
