@@ -52,7 +52,7 @@ const confMap: IConfig = {
 	wordDocIcn: "fa-file-word",
 	videoFileIcn: "fa-file-video",
 	pdfFileIcn: "fa-file-pdf",
-	musicFileIcn: "fa-music-file",
+	musicFileIcn: "fa-file-audio",
 	excelFileIcn: "fa-file-excel",
 	fileIcn: "fa-file",
 	codeFileIcn: "fa-file-code"
