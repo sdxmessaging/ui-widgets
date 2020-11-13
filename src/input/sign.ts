@@ -2,6 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, ComponentTypes, CVnode } from "mithril";
 import stream from "mithril/stream";
 
+import { TStyle } from "../interface/theme";
 import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../interface/widget";
 
 import { config } from "../config";
@@ -61,8 +62,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			options = config.signOpts,
 			heightPct = config.signHeightPct
 		} = field as ISignField;
-		const style = {
-			"padding-bottom": `${heightPct}%`
+		const style: TStyle = {
+			paddingBottom: `${heightPct}%`
 		};
 		const fileObj = lodash.head(value());
 		// Convert options into widget descriptions

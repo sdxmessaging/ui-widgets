@@ -12,7 +12,9 @@ export class Badge implements ClassComponent<IBadge> {
 			children,
 			label ? m("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80", {
 				class: classes,
-				style: { "min-width": "0.65rem" }
+				style: {
+					minWidth: "0.65rem"
+				}
 			}, label) : null
 		]);
 	}

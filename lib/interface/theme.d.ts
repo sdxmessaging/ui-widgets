@@ -1,4 +1,5 @@
 import stream from "mithril/stream";
+export declare type TStyle = Partial<CSSStyleDeclaration> | Record<string, string>;
 export interface ITheme {
     readonly icon: stream<string>;
     readonly lblCol: stream<string>;

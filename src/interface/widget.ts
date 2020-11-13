@@ -1,5 +1,7 @@
 import stream from "mithril/stream";
 
+import { TStyle } from "./theme";
+
 export type TProp = string | number | boolean;
 
 // TODO Consider dropping stream<TProp> in a future version
@@ -106,7 +108,7 @@ export interface IField {
 	readonly instant?: boolean;
 	readonly classes?: string;
 	readonly containerClass?: string;
-	readonly style?: Record<string, string>;
+	readonly style?: TStyle;
 	// Unsupported legacy field
 	readonly default?: string;
 	readonly displayPasswordStrength?: boolean;
@@ -149,7 +151,7 @@ export interface IPropWidget extends IBaseWidget {
 // Editor signature inner widgets
 export interface ISignWidget {
 	readonly heightPct: number;
-	readonly style: Record<string, string>;
+	readonly style: TStyle;
 	onSet(dataUrl: string): void;
 	onCancel(): void;
 }

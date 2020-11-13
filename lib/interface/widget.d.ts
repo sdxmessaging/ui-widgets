@@ -1,4 +1,5 @@
 import stream from "mithril/stream";
+import { TStyle } from "./theme";
 export declare type TProp = string | number | boolean;
 export declare type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
 export interface IFile {
@@ -69,7 +70,7 @@ export interface IField {
     readonly instant?: boolean;
     readonly classes?: string;
     readonly containerClass?: string;
-    readonly style?: Record<string, string>;
+    readonly style?: TStyle;
     readonly default?: string;
     readonly displayPasswordStrength?: boolean;
 }
@@ -100,7 +101,7 @@ export interface IPropWidget extends IBaseWidget {
 }
 export interface ISignWidget {
     readonly heightPct: number;
-    readonly style: Record<string, string>;
+    readonly style: TStyle;
     onSet(dataUrl: string): void;
     onCancel(): void;
 }

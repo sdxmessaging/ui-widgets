@@ -1,5 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
+import { TStyle } from "./interface/theme";
 import { IMithrilEvent } from "./interface/widget";
 import { getButtonContext } from "./theme";
 import { getEnabledClass, labelIcon } from "./utils";
@@ -13,7 +14,7 @@ export interface IButton {
 	readonly context?: string;
 	readonly classes?: string;
 	readonly disabled?: boolean;
-	readonly style?: Record<string, unknown>;
+	readonly style?: TStyle;
 	onclick?(evt: IMithrilEvent): void;
 }
 

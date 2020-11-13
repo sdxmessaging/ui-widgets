@@ -1,5 +1,7 @@
 import stream from "mithril/stream";
 
+export type TStyle = Partial<CSSStyleDeclaration> | Record<string, string>;
+
 // Internal theme manager
 export interface ITheme {
 	// Icon
