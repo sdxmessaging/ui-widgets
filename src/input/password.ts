@@ -54,11 +54,9 @@ const passwordStrength = [{
 }, {
 	value: 1,
 	background: "bg-orange"
-
 }, {
 	value: 2,
 	background: "bg-yellow"
-
 }, {
 	value: 3,
 	background: "bg-light-green"
@@ -70,15 +68,15 @@ const passwordStrength = [{
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
 	private showPassword: stream<TProp> = stream<TProp>(false);
-	private passwordStrength!: stream<number>;
+	private passwordScore!: stream<number>;
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
-		this.passwordStrength = (value as stream<TProp>)
+		this.passwordScore = (value as stream<TProp>)
 			.map((newPass) => scorePassword(String(newPass)));
 	}
 
 	public onremove() {
-		this.passwordStrength.end();
+		this.passwordScore.end();
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
@@ -116,9 +114,9 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				),
 				displayPasswordStrength ? [
 					m(".w-100.dib", lodash.map(passwordStrength, (val) => m("div.h1.w-20.dib", {
-						class: this.passwordStrength() >= val.value ? val.background : "bg-grey"
+						class: this.passwordScore() >= val.value ? val.background : "bg-grey"
 					}))),
-					m(".w-100.f5", passwordStrengthStr(this.passwordStrength()))
+					m(".w-100.f5", passwordStrengthStr(this.passwordScore()))
 				] : null
 			)
 		];
