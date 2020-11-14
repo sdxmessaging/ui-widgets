@@ -23,6 +23,8 @@ export { SelectText } from "./display/select";
 export { FileList } from "./display/file";
 export { ImageList } from "./display/image";
 export { ImagePreview } from "./display/imagePreview";
+// Password Strength
+export { PasswordStrength } from "./display/passwordStrength";
 
 // Input widgets
 export { Label } from "./input/label";

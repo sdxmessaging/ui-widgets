@@ -16,6 +16,7 @@ export { SelectText } from "./display/select";
 export { FileList } from "./display/file";
 export { ImageList } from "./display/image";
 export { ImagePreview } from "./display/imagePreview";
+export { PasswordStrength } from "./display/passwordStrength";
 export { Label } from "./input/label";
 export { BaseInput } from "./input/baseInput";
 export { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, numberToCurrencyTuple } from "./input/currencyInput";
