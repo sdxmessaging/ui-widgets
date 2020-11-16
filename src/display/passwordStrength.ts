@@ -1,10 +1,12 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget, TProp } from "../interface/widget";
 import stream from "mithril/stream";
+
+import { IPropWidget, TProp } from "../interface/widget";
+
 import { getDisplayLabel } from "../utils";
 
-function scorePassword(value: string) {
+export function scorePassword(value: string) {
 	let totalScore = 0;
 	if (value) {
 		if (value.length >= 8) {
@@ -23,7 +25,7 @@ function scorePassword(value: string) {
 	return totalScore;
 }
 
-function passwordStrengthStr(value: number) {
+export function passwordStrengthStr(value: number) {
 	switch (value) {
 		case 0: {
 			return "Very Weak";
@@ -59,13 +61,11 @@ const passwordStrength = [{
 }, {
 	value: 4,
 	background: "bg-green"
-}];		
-
-
+}];
 
 export class PasswordStrength implements ClassComponent<IPropWidget> {
-    
-    private passwordScore!: stream<number>;
+
+	private passwordScore!: stream<number>;
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		this.passwordScore = (value as stream<TProp>)
@@ -75,15 +75,18 @@ export class PasswordStrength implements ClassComponent<IPropWidget> {
 	public onremove() {
 		this.passwordScore.end();
 	}
-    public view({attrs: { field } }: CVnode<IPropWidget>) {
-        const { label } = field;
-        return [
-            getDisplayLabel(label),
-            m(".w-100.dib", lodash.map(passwordStrength, (val) => m("div.h1.w-20.dib", {
-                    class: this.passwordScore() >= val.value ? val.background : "bg-grey"
-                }))),
-                m(".w-100.f5", passwordStrengthStr(this.passwordScore()))
-            ]
 
-    }
+	public view({ attrs: { field } }: CVnode<IPropWidget>) {
+		const { label, classes = "", style } = field;
+		return m(".flex.flex-column", {
+			class: classes,
+			style
+		}, [
+			getDisplayLabel(label),
+			m(".flex.mt1", lodash.map(passwordStrength, (val) => m(".h1.w-20", {
+				class: this.passwordScore() >= val.value ? val.background : "bg-transparent"
+			}))),
+			m("span.f5.truncate", passwordStrengthStr(this.passwordScore()))
+		]);
+	}
 }

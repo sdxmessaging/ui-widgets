@@ -200,17 +200,17 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "password-in",
 						label: "Password Input",
-						instant: true,
+						instant: true
 					},
 					value: passVal
 				})),
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.PasswordStrength, {
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.PasswordStrength, {
 					field: {
-						id: "password-strength",
+						id: "password-in-strength",
 						label: "Password Strength"
 					},
 					value: passVal
-				})),
+				}))
 			]),
 
 			m("p", "Checkbox and Toggle inputs support conditional labels based on their value."),

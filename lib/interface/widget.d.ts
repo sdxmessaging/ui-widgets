@@ -72,7 +72,6 @@ export interface IField {
     readonly containerClass?: string;
     readonly style?: TStyle;
     readonly default?: string;
-    readonly displayPasswordStrength?: boolean;
 }
 export interface IOption {
     readonly value: TProp;
