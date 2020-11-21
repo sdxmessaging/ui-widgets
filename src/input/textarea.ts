@@ -21,7 +21,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 				id, name, title,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 				value: value(),
-				class: `${getEnabledClass(disabled, true)} ${areaCls()} ${classes}`,
+				class: `${classes} ${getEnabledClass(disabled, true)} ${areaCls()}`,
 				style: { resize: "vertical" },
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)

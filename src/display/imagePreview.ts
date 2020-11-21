@@ -13,7 +13,7 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 		const { label, classes = "", style } = field;
 		const file = lodash.head(value());
 		return m(".pa2.flex.flex-column", {
-			class: `${classMap.dspBrd()} ${classes}`,
+			class: `${classes} ${classMap.dspBrd()}`,
 			style
 		}, [
 			getDisplayLabel(label),

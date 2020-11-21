@@ -17,7 +17,7 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, classes = "", style } = field;
 		return m(".pa2.flex.items-center", {
-			class: `${classMap.dspBrd()} ${dspLblCls()} ${classes}`,
+			class: `${classes} ${classMap.dspBrd()} ${dspLblCls()}`,
 			style
 		}, [
 			getDisplayLabel(label),

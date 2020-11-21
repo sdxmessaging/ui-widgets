@@ -12,7 +12,7 @@ export class NavLink implements ClassComponent<IButtonLink> {
 	} }: CVnode<IButtonLink>) {
 		return m("a.link.mh2.pa2.truncate", {
 			href, rel, target, download, title,
-			class: `${navClass()} ${classes}`, style
+			class: `${classes} ${navClass()}`, style
 		}, labelIcon(icon, label, rightIcon));
 	}
 

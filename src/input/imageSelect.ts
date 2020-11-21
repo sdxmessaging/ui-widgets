@@ -27,7 +27,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			onSet: addImages(value, config.imageMaxSize, true)
 		},
 			m(".relative.w-100.pa1.contain.dt.tc", {
-				class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
+				class: `${classes} ${this.dragging() ? drgCls() : filCls()}`
 			}, file ? [
 				m("img.img.contain", {
 					title: file.name,

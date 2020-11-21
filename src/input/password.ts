@@ -32,7 +32,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 						maxlength, minlength, required,
 						readonly, disabled, autofocus, autocomplete,
 						value: value(),
-						class: `${getEnabledClass(disabled, true)} ${txtCls()} ${classes}`,
+						class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()}`,
 						// Safari quirk
 						autocorrect: "off",
 						// Update value on change or input ("instant" option)

@@ -10,7 +10,7 @@ export class BaseText implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, classes = "", style } = field;
 		return m(".pa2.flex.flex-wrap", {
-			class: `${classMap.dspBrd()} ${classes}`,
+			class: `${classes} ${classMap.dspBrd()}`,
 			style
 		}, [
 			getDisplayLabel(label),

@@ -12,7 +12,7 @@ export class ImageList implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const { label, classes = "", style } = field;
 		return m(".pa2.flex.flex-column", {
-			class: `${classMap.dspBrd()} ${classes}`,
+			class: `${classes} ${classMap.dspBrd()}`,
 			style
 		}, [
 			getDisplayLabel(label),

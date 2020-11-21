@@ -36,7 +36,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 						value: lodash.isUndefined(xform())
 							? null
 							: numberToCurrencyStr(propToNumber(xform())),
-						class: `${getEnabledClass(disabled, true)} ${txtCls()} ${classes}`,
+						class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()}`,
 						// Update value on change or input ("instant" option)
 						[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
 					})

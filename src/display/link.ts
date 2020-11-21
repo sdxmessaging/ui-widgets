@@ -37,7 +37,7 @@ export class Link implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, type = FieldType.url, classes = "", style } = field;
 		return m(".pa2.flex.flex-wrap", {
-			class: `${classMap.dspBrd()} ${classes}`,
+			class: `${classes} ${classMap.dspBrd()}`,
 			style
 		}, [
 			getDisplayLabel(label),

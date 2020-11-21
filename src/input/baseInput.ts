@@ -25,7 +25,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
 				value: xform(),
-				class: `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`,
+				class: `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`,
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}))

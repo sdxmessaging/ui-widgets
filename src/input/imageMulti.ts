@@ -49,7 +49,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize)
 			},
 				m(".w-100.pa1.dt.tc", {
-					class: `${this.dragging() ? drgCls() : filCls()} ${classes}`
+					class: `${classes} ${this.dragging() ? drgCls() : filCls()}`
 				},
 					m("i.fa-2x.dtc.v-mid", {
 						class: getIcon(config.cameraIcn)

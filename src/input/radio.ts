@@ -25,7 +25,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				// No requirement for label "for" attribute
 				return m("label.flex.items-center", {
 					title: label,
-					class: `${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()} ${classes}`
+					class: `${classes} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
 				},
 					m("input.clip[type=radio]", {
 						name, value, checked,

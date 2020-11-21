@@ -24,7 +24,7 @@ export class ButtonLink implements ClassComponent<IButtonLink> {
 	} }: CVnode<IButtonLink>) {
 		return m("a.link", {
 			href, rel, target, download, title,
-			class: `${getButtonContext(context)} ${classes}`, style
+			class: `${classes} ${getButtonContext(context)}`, style
 		}, labelIcon(icon, label, rightIcon));
 	}
 

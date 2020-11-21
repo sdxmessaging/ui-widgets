@@ -23,7 +23,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 				id, name, title,
 				required, readonly, disabled, autofocus, autocomplete,
 				value: val(),
-				class: `${getEnabledClass(disabled, readonly)} ${inpCls()} ${classes}`,
+				class: `${classes} ${getEnabledClass(disabled, readonly)} ${inpCls()}`,
 				onchange: setValue(val)
 			},
 				lodash.map(options, ({ value, label = value }) => m("option", {

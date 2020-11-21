@@ -122,7 +122,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					// Display signature preview/creator
 					: m(".aspect-ratio.pointer", {
 						id,
-						class: `${filCls()} ${classes}`,
+						class: `${classes} ${filCls()}`,
 						style
 					}, fileObj
 						// Current signature

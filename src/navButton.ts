@@ -12,7 +12,7 @@ export class NavButton implements ClassComponent<IButton> {
 	} }: CVnode<IButton>) {
 		return m(".mh2.pa2.truncate", {
 			title, disabled,
-			class: `${getEnabledClass(disabled)} ${navClass()} ${classes}`, style,
+			class: `${classes} ${getEnabledClass(disabled)} ${navClass()}`, style,
 			onclick
 		}, labelIcon(icon, label, rightIcon));
 	}

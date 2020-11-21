@@ -44,7 +44,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled,
 			containerClass, classes = ""
 		} = field;
-		const classStr = `${getEnabledClass(disabled, true)} ${inpCls()} ${classes}`;
+		const classStr = `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`;
 		// Assemble date input (en-GB or en-US layouts)
 		return [
 			getLabel(id, label, required),

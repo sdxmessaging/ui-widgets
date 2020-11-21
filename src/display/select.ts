@@ -14,7 +14,7 @@ export class SelectText implements ClassComponent<IPropWidget> {
 		const option = lodash.find((field as IOptionField).options, { value: value() });
 		const label = option ? option.label || option.value : value();
 		return m(".pa2.flex.flex-wrap", {
-			class: `${classMap.dspBrd()} ${classes}`,
+			class: `${classes} ${classMap.dspBrd()}`,
 			style
 		}, [
 			getDisplayLabel(lbl),
