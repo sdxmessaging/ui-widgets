@@ -43,7 +43,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 						class: getIcon(this.showPassword() ? config.hidePassIcn : config.showPassIcn),
 						onclick: () => this.showPassword(!this.showPassword())
 					})
-				),
+				)
 			)
 		];
 	}
