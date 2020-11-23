@@ -9,7 +9,7 @@ import { drgCls, filCls, getIcon } from "../theme";
 
 import { FileInput } from "./fileInput";
 import { addFiles, removeFile } from "./fileMulti";
-import { checkConfigForIcon } from "../utils";
+import { getFileTypeIcon } from "../utils";
 
 export class FileSelect implements ClassComponent<IFileWidget> {
 
@@ -31,7 +31,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				}),
 				m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
 				file ? m("i.pa1", {
-					class: getIcon(checkConfigForIcon(file)),
+					class: getIcon(getFileTypeIcon(file)),
 					title: "Click to view file in new tab",
 					onclick: file.path !== "not_set"
 						? () => window.open(file.path, "_blank")

@@ -1,6 +1,5 @@
 import m from "mithril";
-import { TPropStream } from "./interface/widget";
-import { IFile } from './interface/widget';
+import { IFile, TPropStream } from "./interface/widget";
 declare global {
     interface Window {
         msCrypto: Crypto;
@@ -46,5 +45,4 @@ export declare function rotateContext(ctx: CanvasRenderingContext2D, width: numb
  */
 export declare function resizeImage(file: File, maxSize: number, type?: string): Promise<string>;
 export declare function textToImage(text: string, width: number, height: number, font: string): string;
-export declare function checkConfigForIcon(file?: IFile): string;
-export declare function fileExtension(file: IFile): string;
+export declare function getFileTypeIcon(file: IFile): string;

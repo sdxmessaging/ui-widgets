@@ -61,7 +61,7 @@ export interface IConfig {
     emailIcn: string;
     telIcn: string;
     linkIcn: string;
-    /** File Type Icons for file upload widgit */
+    /** File Type Icons for file upload widget */
     wordDocIcn: string;
     videoFileIcn: string;
     pdfFileIcn: string;

@@ -1,10 +1,10 @@
 import m from "mithril";
 
-import { TProp, TPropStream } from "./interface/widget";
+import { IFile, TProp, TPropStream } from "./interface/widget";
 
 import { dspLblCls, getIcon, lblCls } from "./theme";
-import { IFile } from './interface/widget';
 import { config } from "./config";
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare global {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -290,133 +290,100 @@ export function textToImage(text: string, width: number, height: number, font: s
 // 	return transfer.files;
 // }
 
-
-	// Should I move these functions to a separate config type of file ?
-export function checkConfigForIcon(file?: IFile) {
-		let icon = '';
-		if (file) {
-			const extension = fileExtension(file).toLowerCase();
-			switch (extension) {
-				case 'doc':
-				case 'docx':
-				case 'dot':
-				case 'wbk':
-				case 'docm':
-				case 'dotx':
-				case 'dotm':
-				case 'docb':
-				case 'txt':
-					{
-						icon = config.wordDocIcn;
-						break;
-					}
-				case 'webm':
-				case 'mkv':
-				case 'flv':
-				case 'vob':
-				case 'ogv':
-				case 'drc':
-				case 'gifv':
-				case 'mng':
-				case 'avi':
-				case 'mts':
-				case 'm2ts':
-				case 'mov':
-				case 'qt':
-				case 'wmv':
-				case 'yuv':
-				case 'rm':
-				case 'rmvb':
-				case 'viv':
-				case 'asf':
-				case 'amv':
-				case 'mp4':
-				case 'm4p':
-				case 'm4v':
-				case 'mpg':
-				case 'mp2':
-				case 'mpeg':
-				case 'mpe':
-				case 'mpv':
-				case 'm2v':
-				case 'svi':
-				case '3gp':
-				case 'mxf':
-				case 'roq':
-				case 'nsv':
-				case 'f4v':
-				case 'f4p':
-				case 'f4a':
-				case 'f4b':
-					{
-						icon = config.videoFileIcn;
-						break;
-					}
-				case 'pdf': {
-					icon = config.pdfFileIcn;
-					break;
-				}
-				case 'pcm':
-				case 'wav':
-				case 'aiff':
-				case 'mp3':
-				case 'aac':
-				case 'ogg':
-				case 'wma':
-				case 'flac':
-				case 'alac':
-					{
-						icon = config.musicFileIcn;
-						break;
-					}
-
-				case 'xls':
-				case 'xlt':
-				case 'xlm':
-				case 'xlsx':
-				case 'xlsm':
-				case 'xltx':
-				case 'xltm':
-				case 'xlsb':
-				case 'xla':
-				case 'xlam':
-				case 'xll':
-				case 'xlw':
-					{
-						icon = config.excelFileIcn;
-						break;
-					}
-				case 'html':
-				case 'js':
-				case 'css':
-				case 'scss':
-				case 'java':
-					{
-						icon = config.codeFileIcn;
-						break;
-					}
-				case 'jpg':
-				case 'jpeg':
-				case 'png':
-				case 'tiff':
-				case 'gif':
-				case 'svg':
-				case 'webp': {
-					icon = config.imageIcn;
-					break;
-				}
-				default: {
-					icon = config.fileIcn;
-					break;
-				}
-			}
+export function getFileTypeIcon(file: IFile) {
+	const [, extension] = fileNameExtSplit(file.name);
+	switch (extension.toLowerCase()) {
+		case '.doc':
+		case '.docx':
+		case '.dot':
+		case '.wbk':
+		case '.docm':
+		case '.dotx':
+		case '.dotm':
+		case '.docb':
+		case '.txt':
+			return config.wordDocIcn;
+		case '.webm':
+		case '.mkv':
+		case '.flv':
+		case '.vob':
+		case '.ogv':
+		case '.drc':
+		case '.gifv':
+		case '.mng':
+		case '.avi':
+		case '.mts':
+		case '.m2ts':
+		case '.mov':
+		case '.qt':
+		case '.wmv':
+		case '.yuv':
+		case '.rm':
+		case '.rmvb':
+		case '.viv':
+		case '.asf':
+		case '.amv':
+		case '.mp4':
+		case '.m4p':
+		case '.m4v':
+		case '.mpg':
+		case '.mp2':
+		case '.mpeg':
+		case '.mpe':
+		case '.mpv':
+		case '.m2v':
+		case '.svi':
+		case '.3gp':
+		case '.mxf':
+		case '.roq':
+		case '.nsv':
+		case '.f4v':
+		case '.f4p':
+		case '.f4a':
+		case '.f4b':
+			return config.videoFileIcn;
+		case '.pdf': {
+			return config.pdfFileIcn;
 		}
-		return icon;
-	}
+		case '.pcm':
+		case '.wav':
+		case '.aiff':
+		case '.mp3':
+		case '.aac':
+		case '.ogg':
+		case '.wma':
+		case '.flac':
+		case '.alac':
+			return config.musicFileIcn;
+		case '.xls':
+		case '.xlt':
+		case '.xlm':
+		case '.xlsx':
+		case '.xlsm':
+		case '.xltx':
+		case '.xltm':
+		case '.xlsb':
+		case '.xla':
+		case '.xlam':
+		case '.xll':
+		case '.xlw':
+			return config.excelFileIcn;
 
-	export function fileExtension(file: IFile) {
-		const fileItem = file.name.split(".");
-		const fileIndex = fileItem.length - 1;
-		const fileExtension = fileItem[fileIndex];
-		return fileExtension;
+		case '.html':
+		case '.js':
+		case '.css':
+		case '.scss':
+		case '.java':
+			return config.codeFileIcn;
+		case '.jpg':
+		case '.jpeg':
+		case '.png':
+		case '.tiff':
+		case '.gif':
+		case '.svg':
+		case '.webp':
+			return config.imageIcn;
+		default:
+			return config.fileIcn;
 	}
+}
