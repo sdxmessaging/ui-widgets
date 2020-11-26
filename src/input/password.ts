@@ -23,7 +23,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			m(".w-100", {
 				class: containerClass
 			},
-				m(".w-100.flex.items-center", {
+				m(".w-100.flex.items-center bg-white", {
 					class: inpCls(),
 				},
 					m("input.input-reset.border-box.flex-auto.bg-transparent.bn", {
