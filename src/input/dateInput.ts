@@ -95,26 +95,23 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		// Assemble date input (en-GB or en-US layouts)
-		return [
-			m("fieldset.bn.pa0", {
-				class: containerClass
-			}, 
+		return m("fieldset.pa0.bn", {
+			class: containerClass
+		}, [
 			getLabel(id, label, required),
-			m("div.w-100", {
-					id, title,
-					class: classes
-				}, locale === "en-US"
-					? [
-						monthInput,
-						dayInput,
-						yearInput
-					] : [
-						dayInput,
-						monthInput,
-						yearInput
-					])
-				)
-		];
+			m("div", {
+				id, title
+			}, locale === "en-US"
+				? [
+					monthInput,
+					dayInput,
+					yearInput
+				] : [
+					dayInput,
+					monthInput,
+					yearInput
+				])
+		]);
 	}
 
 }

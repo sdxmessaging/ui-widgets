@@ -40,45 +40,39 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { classes = "" } = field;
-		return [
-			m("fieldset.bn.pa0", {
-			}, 
-				m("div", {
-				
-				}, 
-
-					m(FileInput, {
-						field,
-						defaultAccept: "image/*",
-						dragging: this.dragging,
-						onSet: addImages(value, config.imageMaxSize)
-					},
-						m(".w-100.pa1.dt.tc", {
-							class: `${classes} ${this.dragging() ? drgCls() : filCls()}`
-						},
-							m("i.fa-2x.dtc.v-mid", {
-								class: getIcon(config.cameraIcn)
-							})
-						)
-					),
-					m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
-						lodash.map(value(), (file) => m(Thumbnail, {
-							src: imgSrc(file.path, file.dataUrl),
-							style: thumbMaxSize()
-						},
-							m(".absolute.top-0.right-0.child",
-								m(Button, {
-									title: `Remove ${file.name}`,
-									icon: config.deleteIcn,
-									onclick: removeFile(value, file.guid)
-								})
-							)
-						))
-					)
+		const { containerClass = "" } = field;
+		return m("fieldset.pa0.bn", {
+			class: containerClass
+		}, [
+			m(FileInput, {
+				field,
+				defaultAccept: "image/*",
+				dragging: this.dragging,
+				onSet: addImages(value, config.imageMaxSize)
+			},
+				m(".w-100.pa1.dt.tc", {
+					class: this.dragging() ? drgCls() : filCls()
+				},
+					m("i.fa-2x.dtc.v-mid", {
+						class: getIcon(config.cameraIcn)
+					})
 				)
+			),
+			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
+				lodash.map(value(), (file) => m(Thumbnail, {
+					src: imgSrc(file.path, file.dataUrl),
+					style: thumbMaxSize()
+				},
+					m(".absolute.top-0.right-0.child",
+						m(Button, {
+							title: `Remove ${file.name}`,
+							icon: config.deleteIcn,
+							onclick: removeFile(value, file.guid)
+						})
+					)
+				))
 			)
-		];
+		]);
 	}
 
 }

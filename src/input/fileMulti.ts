@@ -39,42 +39,39 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		return [
-			m("fieldset.bn.pa0", {
-			}, 
-				m("div", {
-				}, 
-					m(FileInput, {
-						field,
-						dragging: this.dragging,
-						onSet: addFiles(value)
-					},
-						m(".pa2", {
-							class: this.dragging() ? drgCls() : filCls()
-						}, [
-							m("i.mr2", {
-								class: getIcon(config.uploadIcn)
-							}),
-							m("span", config.addFilesTxt)
-						]
-						)
-					),
-					m(".flex.flex-column.mt1.nb1",
-						lodash.map(value(), (file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
-							m("i.mr2", {
-								class: getIcon(config.downloadIcn)
-							}),
-							file.name,
-							m("i.child.fr", {
-								title: `${config.remFileTtl} ${file.name}`,
-								class: getIcon(config.deleteIcn),
-								onclick: removeFile(value, file.guid)
-							})
-						]))
-					)
+		const { containerClass = "" } = field;
+		return m("fieldset.pa0.bn", {
+			class: containerClass
+		}, [
+			m(FileInput, {
+				field,
+				dragging: this.dragging,
+				onSet: addFiles(value)
+			},
+				m(".pa2", {
+					class: this.dragging() ? drgCls() : filCls()
+				}, [
+					m("i.mr2", {
+						class: getIcon(config.uploadIcn)
+					}),
+					m("span", config.addFilesTxt)
+				]
 				)
+			),
+			m(".flex.flex-column.mt1.nb1",
+				lodash.map(value(), (file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
+					m("i.mr2", {
+						class: getIcon(config.downloadIcn)
+					}),
+					file.name,
+					m("i.child.fr", {
+						title: `${config.remFileTtl} ${file.name}`,
+						class: getIcon(config.deleteIcn),
+						onclick: removeFile(value, file.guid)
+					})
+				]))
 			)
-		];
+		]);
 	}
 
 }

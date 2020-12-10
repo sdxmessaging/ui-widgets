@@ -18,33 +18,32 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			readonly, disabled, autofocus, autocomplete,
 			instant, containerClass, classes = ""
 		} = field;
-		return [
-			m("fieldset.bn.pa0", {
-				class: containerClass
+		return m("fieldset.pa0.bn", {
+			class: containerClass
+		}, [
+			getLabel(id, label, required),
+			m("div.w-100.flex.items-center.flex-auto bg-white", {
+				class: txtCls(),
 			},
-				getLabel(id, label, required),
-				m("div.w-100.flex.items-center.flex-auto bg-white", {
-					class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()} ${inpCls()} `,
-				},
-					m("input.w-100.bg-transparent.bn.outline-0", {
-						id, name, title, placeholder,
-						type: this.showPassword() ? "text" : "password",
-						maxlength, minlength, required,
-						readonly, disabled, autofocus, autocomplete,
-						value: value(),
-						// Safari quirk
-						autocorrect: "off",
-						// Update value on change or input ("instant" option)
-						[instant ? "oninput" : "onchange"]: setValue(value)
-					}),
-					m("i.ml1.pa1.fa-fw.pointer.dim", {
-						title: config.showPassTxt,
-						class: getIcon(this.showPassword() ? config.hidePassIcn : config.showPassIcn),
-						onclick: () => this.showPassword(!this.showPassword())
-					})
-				)
+				m("input.w-100.bg-transparent.bn.outline-0", {
+					id, name, title, placeholder,
+					type: this.showPassword() ? "text" : "password",
+					maxlength, minlength, required,
+					readonly, disabled, autofocus, autocomplete,
+					class: `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`,
+					value: value(),
+					// Safari quirk
+					autocorrect: "off",
+					// Update value on change or input ("instant" option)
+					[instant ? "oninput" : "onchange"]: setValue(value)
+				}),
+				m("i.ml1.pa1.fa-fw.pointer.dim", {
+					title: config.showPassTxt,
+					class: getIcon(this.showPassword() ? config.hidePassIcn : config.showPassIcn),
+					onclick: () => this.showPassword(!this.showPassword())
+				})
 			)
-		];
+		]);
 	}
 
 }

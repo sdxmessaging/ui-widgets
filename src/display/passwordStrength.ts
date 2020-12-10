@@ -17,8 +17,7 @@ export function scorePassword(value: string) {
 				totalScore = totalScore + 1;
 			}
 			// Check does string have 2 upper case and 3 lower case
-			if(/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
-				console.log('has 2 upper case:', totalScore);
+			if (/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
 				totalScore = totalScore + 1;
 			}
 			// Ensure string has 2 digits

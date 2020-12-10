@@ -21,13 +21,11 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			containerClass = "", classes = ""
 		} = field;
 		return m("fieldset.pa0.bn", {
-			class: `${txtCls()} ${containerClass}`,
-		} ,m("div", {
-			class: `${classes}`,
-		},
+			class: containerClass,
+		}, m("div", [
 			m("label.flex.items-center", {
 				title,
-				class: `${classes} ${getEnabledClass(disabled, readonly)}`
+				class: `${classes} ${getEnabledClass(disabled, readonly)} ${txtCls()}`
 			},
 				m("input.clip[type=checkbox].bg-transparent", {
 					id, name,
@@ -42,7 +40,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				}),
 				m(CheckLabel, { field, value })
 			)
-		));
+		]));
 	}
 
 }

@@ -41,8 +41,7 @@ export const classMap: ITheme = {
 	btnCol: stream("dark-gray"),
 	btnFnt: stream(""),
 	btnPad: stream("pa2"),
-	btnBrd: stream("bn br2"),
-	fldSet: stream("pa0 bn")
+	btnBrd: stream("bn br2")
 };
 
 // Merge theme entries into widget class helpers
@@ -88,9 +87,9 @@ export function getIcon(iconClass: string): string {
 	return `${classMap.icon()} ${iconClass}`;
 }
 
-export function getFileType(extension: string) {
-	console.log(extension);
-}
+// export function getFileType(extension: string) {
+// 	console.log(extension);
+// }
 
 // Button context helpers
 const btnMap: Record<string, string> = {};

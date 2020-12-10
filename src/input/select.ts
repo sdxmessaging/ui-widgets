@@ -15,27 +15,21 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			containerClass, classes = "",
 			options
 		} = field as IOptionField;
-		return [
-			m('fieldset.bn.pa0', {
-				class: containerClass
-			}, 
-				getLabel(id, lbl, required),
-				m("div.w-100", {
-					class: `${classes} ${getEnabledClass(disabled, readonly)} ${inpCls()}`,
-				}, m("select.w-100.bg-transparent.bn.outline-0", {
-					id, name, title,
-					required, readonly, disabled, autofocus, autocomplete,
-					value: val(),
-					onchange: setValue(val)
-				},
-					lodash.map(options, ({ value, label = value }) => m("option", {
-						value,
-						disabled: disabled || readonly
-					}, label))
-				))
-			)
-
-		];
+		return m("fieldset.pa0.bn", {
+			class: containerClass
+		}, [
+			getLabel(id, lbl, required),
+			m("div.w-100", m("select.w-100.bg-transparent.bn.outline-0", {
+				id, name, title,
+				required, readonly, disabled, autofocus, autocomplete,
+				class: `${classes} ${getEnabledClass(disabled, readonly)} ${inpCls()}`,
+				value: val(),
+				onchange: setValue(val)
+			}, lodash.map(options, ({ value, label = value }) => m("option", {
+				value,
+				disabled: disabled || readonly
+			}, label))))
+		]);
 	}
 
 }

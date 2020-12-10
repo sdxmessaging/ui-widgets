@@ -46,13 +46,12 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		} = field;
 		const classStr = `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`;
 		// Assemble date input (en-GB or en-US layouts)
-		return [
-			m('fieldset.bn.pa0', {
-				class: containerClass
-			}, 
-			getLabel(id, label, required),
-			m("div.w-100", {
-				id, title,
+		return m("fieldset.bn.pa0", {
+			class: containerClass
+		}, [
+			getLabel(`${id}-mm`, label, required),
+			m("div", {
+				title
 			}, [
 				m("div.dib.mr2", [
 					getLabel(`${id}-mm`, "Month"),
@@ -84,8 +83,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					})
 				])
 			])
-			)
-		];
+		]);
 	}
 
 }
