@@ -20,8 +20,9 @@ o.spec("DateInput", () => {
 				value
 			})
 		});
-		// Input only
 		o(root.childNodes.length).equals(1);
+		// Input only
+		o(root.childNodes[0].childNodes.length).equals(1);
 		// Cleanup
 		m.mount(root, null);
 	});
@@ -45,8 +46,9 @@ o.spec("DateInput", () => {
 				xform
 			})
 		});
+		o(root.childNodes.length).equals(1);
 		// Label + Input
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes[0].childNodes.length).equals(2);
 		// Set valid date
 		value("2020-01-01");
 		// Set invalid date

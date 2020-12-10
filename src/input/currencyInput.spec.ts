@@ -63,7 +63,7 @@ o.spec("CurrencyInput", () => {
 			})
 		});
 		// Label + Input
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
 	});
 
 });

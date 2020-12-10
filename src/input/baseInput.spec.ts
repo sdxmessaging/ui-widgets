@@ -20,8 +20,9 @@ o.spec("BaseInput", () => {
 				value
 			})
 		});
-		// Input only
 		o(root.childNodes.length).equals(1);
+		// Input only
+		o(root.childNodes[0].childNodes.length).equals(1);
 	});
 
 	o("configured", () => {
@@ -44,8 +45,9 @@ o.spec("BaseInput", () => {
 				xform
 			})
 		});
+		o(root.childNodes.length).equals(1);
 		// Label + Input
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 });

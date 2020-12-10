@@ -20,8 +20,8 @@ o.spec("TextareaInput", () => {
 				value
 			})
 		});
-		// Label + Input
 		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(1);
 	});
 
 	o("configured", () => {
@@ -41,7 +41,9 @@ o.spec("TextareaInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
+		// Label + Input
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 });

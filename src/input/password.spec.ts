@@ -21,6 +21,7 @@ o.spec("PasswordInput", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(1);
 	});
 
 	o("configured", () => {
@@ -40,7 +41,8 @@ o.spec("PasswordInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 });

@@ -24,7 +24,8 @@ o.spec("FileMulti", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 	o("single", () => {
@@ -44,7 +45,8 @@ o.spec("FileMulti", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 	o("add", () => {

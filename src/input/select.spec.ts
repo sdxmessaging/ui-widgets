@@ -21,6 +21,7 @@ o.spec("SelectInput", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(1);
 	});
 
 	o("configured", () => {
@@ -42,7 +43,8 @@ o.spec("SelectInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 	o("readonly", () => {
@@ -62,6 +64,7 @@ o.spec("SelectInput", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(1);
 	});
 
 });

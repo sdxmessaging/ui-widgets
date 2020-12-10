@@ -20,8 +20,9 @@ o.spec("CardDateInput", () => {
 				value
 			})
 		});
-		// Input only
 		o(root.childNodes.length).equals(1);
+		// Input only
+		o(root.childNodes[0].childNodes.length).equals(1);
 		// Cleanup
 		m.mount(root, null);
 	});
@@ -44,8 +45,9 @@ o.spec("CardDateInput", () => {
 				xform
 			})
 		});
+		o(root.childNodes.length).equals(1);
 		// Label + Input
-		o(root.childNodes.length).equals(2);
+		o(root.childNodes[0].childNodes.length).equals(2);
 		// Set empty date
 		value("");
 		// Set partial date
