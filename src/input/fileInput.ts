@@ -56,31 +56,38 @@ export class FileInput implements ClassComponent<IFileInput> {
 			label, id, name = id, title = label,
 			required, readonly, disabled, autofocus,
 			accept = defaultAccept,
-			containerClass = ""
+			containerClass = "", classes = ""
 		},
 		multiple = true,
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {
-		return m("label.db", lodash.extend({
-			for: id,
-			title,
-			class: `${getEnabledClass(disabled, readonly)} ${containerClass}`
-		}, disabled || readonly ? {} : {
-			ondragover: dragStart(dragging),
-			ondragleave: dragStop(dragging),
-			ondrop: drop(dragging, onSet)
-		}), [
-			m("input.clip[type=file]", {
-				id, name, multiple, accept,
-				required, autofocus,
-				disabled: disabled || readonly,
-				onchange: change(onSet)
-			}),
-			label ? m("span.db.mb1", {
-				class: lblCls()
-			}, getLabelText(label, required)) : null,
-			children
-		]);
+		return m("fieldset.bn.pa0", {
+			class: ` ${containerClass}`
+		}, 
+			m("div", {
+				class: `${getEnabledClass(disabled, readonly)} ${classes}`
+			}, 
+				m("label.db", lodash.extend({
+					for: id, 
+					title,
+				}, disabled || readonly ? {} : {
+					ondragover: dragStart(dragging),
+					ondragleave: dragStop(dragging),
+					ondrop: drop(dragging, onSet)
+				}), [
+					m("input.clip[type=file].bg-transparent.bn.outline-0", {
+						id, name, multiple, accept,
+						required, autofocus,
+						disabled: disabled || readonly,
+						onchange: change(onSet)
+					}),
+					label ? m("span.db.mb1", {
+						class: lblCls()
+					}, getLabelText(label, required)) : null,
+					children
+				])
+			)
+		)
 	}
 }

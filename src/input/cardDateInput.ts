@@ -47,14 +47,16 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const classStr = `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`;
 		// Assemble date input (en-GB or en-US layouts)
 		return [
-			getLabel(id, label, required),
-			m(".w-100", {
-				id, title,
+			m('fieldset.bn.pa0', {
 				class: containerClass
+			}, 
+			getLabel(id, label, required),
+			m("div.w-100", {
+				id, title,
 			}, [
-				m(".dib.mr2", [
+				m("div.dib.mr2", [
 					getLabel(`${id}-mm`, "Month"),
-					m("input.input-reset.border-box", {
+					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-mm`, name: `${name}-mm`,
 						type: FieldType.text, placeholder: "MM",
 						minlength: "2", maxlength: "2",
@@ -68,9 +70,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				m("span.mr2", {
 					class: txtCls()
 				}, "/"),
-				m(".dib.mr2", [
+				m("div.dib.mr2", [
 					getLabel(`${id}-yy`, "Year"),
-					m("input.input-reset.border-box", {
+					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-yy`, name: `${name}-yy`,
 						type: FieldType.text, placeholder: "YY",
 						minlength: "4", maxlength: "4",
@@ -82,6 +84,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					})
 				])
 			])
+			)
 		];
 	}
 

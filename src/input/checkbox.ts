@@ -20,14 +20,16 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autocomplete,
 			containerClass = "", classes = ""
 		} = field;
-		return m("div", {
+		return m("fieldset.pa0.bn", {
 			class: `${txtCls()} ${containerClass}`,
+		} ,m("div", {
+			class: `${classes}`,
 		},
 			m("label.flex.items-center", {
 				title,
 				class: `${classes} ${getEnabledClass(disabled, readonly)}`
 			},
-				m("input.clip[type=checkbox]", {
+				m("input.clip[type=checkbox].bg-transparent", {
 					id, name,
 					checked: value(),
 					required, autocomplete,
@@ -40,7 +42,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				}),
 				m(CheckLabel, { field, value })
 			)
-		);
+		));
 	}
 
 }

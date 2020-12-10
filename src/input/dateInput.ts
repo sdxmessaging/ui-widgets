@@ -57,7 +57,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
 			getLabel(`${id}-dd`, "Day"),
-			m("input.input-reset.border-box", {
+			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
 				minlength: "2", maxlength: "2",
@@ -70,7 +70,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		const monthInput = m(".dib.mr2", [
 			getLabel(`${id}-mm`, "Month"),
-			m("input.input-reset.border-box", {
+			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
 				minlength: "2", maxlength: "2",
@@ -83,7 +83,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		const yearInput = m(".dib.mr2", [
 			getLabel(`${id}-yyyy`, "Year"),
-			m("input.input-reset.border-box", {
+			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
 				minlength: "4", maxlength: "4",
@@ -96,20 +96,24 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return [
-			getLabel(id, label, required),
-			m(".w-100", {
-				id, title,
+			m("fieldset.bn.pa0", {
 				class: containerClass
-			}, locale === "en-US"
-				? [
-					monthInput,
-					dayInput,
-					yearInput
-				] : [
-					dayInput,
-					monthInput,
-					yearInput
-				])
+			}, 
+			getLabel(id, label, required),
+			m("div.w-100", {
+					id, title,
+					class: classes
+				}, locale === "en-US"
+					? [
+						monthInput,
+						dayInput,
+						yearInput
+					] : [
+						dayInput,
+						monthInput,
+						yearInput
+					])
+				)
 		];
 	}
 

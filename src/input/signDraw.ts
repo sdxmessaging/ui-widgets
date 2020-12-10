@@ -45,35 +45,42 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 
 	public view({ attrs: { style, onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
-			m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style },
-				m("canvas.aspect-ratio--object")
-			),
-			m(".absolute.top-0.right-0.z-999", {
-				style: { transform: "translateY(-100%)" }
-			}, [
-				m(Button, {
-					title: config.applyTtl,
-					icon: config.applyIcn,
-					classes: "ma1",
-					onclick: () => {
-						if (!this.signaturePad.isEmpty()) {
-							onSet(this.signaturePad.toDataURL("image/png"));
-						}
-					}
-				}),
-				m(Button, {
-					title: config.resetTtl,
-					icon: config.resetIcn,
-					classes: "ma1",
-					onclick: () => this.resetCanvas()
-				}),
-				m(Button, {
-					title: config.cancelTtl,
-					icon: config.cancelIcn,
-					classes: "ma1",
-					onclick: onCancel
-				})
-			]),
+			m("fieldset.bn.pa0", {
+			}, 
+				m("div", {
+				
+				}, 
+					m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style },
+						m("canvas.aspect-ratio--object")
+					),
+					m(".absolute.top-0.right-0.z-999", {
+						style: { transform: "translateY(-100%)" }
+					}, [
+						m(Button, {
+							title: config.applyTtl,
+							icon: config.applyIcn,
+							classes: "ma1",
+							onclick: () => {
+								if (!this.signaturePad.isEmpty()) {
+									onSet(this.signaturePad.toDataURL("image/png"));
+								}
+							}
+						}),
+						m(Button, {
+							title: config.resetTtl,
+							icon: config.resetIcn,
+							classes: "ma1",
+							onclick: () => this.resetCanvas()
+						}),
+						m(Button, {
+							title: config.cancelTtl,
+							icon: config.cancelIcn,
+							classes: "ma1",
+							onclick: onCancel
+						})
+					]),
+				)
+			)
 		];
 	}
 

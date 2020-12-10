@@ -35,40 +35,47 @@ export class SignType implements ClassComponent<ISignWidget> {
 
 	public view({ attrs: { heightPct, style, onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
-			m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
-				style,
-				onsubmit: applyText(this.text, heightPct, onSet)
-			},
-				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
-					oninput: setValue(this.text),
-					value: this.text(),
-					style: {
-						"font-family": config.signFont
-					}
-				})
-			),
-			m(".absolute.top-0.right-0.z-999", {
-				style: { transform: "translateY(-100%)" }
-			}, [
-				m(Button, {
-					title: config.applyTtl,
-					icon: config.applyIcn,
-					classes: "ma1",
-					onclick: applyText(this.text, heightPct, onSet)
-				}),
-				m(Button, {
-					title: config.resetTtl,
-					icon: config.resetIcn,
-					classes: "ma1",
-					onclick: () => this.text("")
-				}),
-				m(Button, {
-					title: config.cancelTtl,
-					icon: config.cancelIcn,
-					classes: "ma1",
-					onclick: onCancel
-				})
-			])
+			m("fieldset.bn.pa0", {
+			}, 
+				m("div", {
+				
+				}, 
+					m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
+						style,
+						onsubmit: applyText(this.text, heightPct, onSet)
+					},
+						m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
+							oninput: setValue(this.text),
+							value: this.text(),
+							style: {
+								"font-family": config.signFont
+							}
+						})
+					),
+					m(".absolute.top-0.right-0.z-999", {
+						style: { transform: "translateY(-100%)" }
+					}, [
+						m(Button, {
+							title: config.applyTtl,
+							icon: config.applyIcn,
+							classes: "ma1",
+							onclick: applyText(this.text, heightPct, onSet)
+						}),
+						m(Button, {
+							title: config.resetTtl,
+							icon: config.resetIcn,
+							classes: "ma1",
+							onclick: () => this.text("")
+						}),
+						m(Button, {
+							title: config.cancelTtl,
+							icon: config.cancelIcn,
+							classes: "ma1",
+							onclick: onCancel
+						})
+					])
+				)
+			)
 		];
 	}
 

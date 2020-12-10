@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import { IPropWidget, TPropStream } from "../interface/widget";
 export declare class CurrencyInput implements ClassComponent<IPropWidget> {
-    view({ attrs: { field, value, xform } }: CVnode<IPropWidget>): (m.Vnode<any, any> | null)[];
+    view({ attrs: { field, value, xform } }: CVnode<IPropWidget>): m.Vnode<any, any>[];
 }
 /**
  * Parse a currency string into a number

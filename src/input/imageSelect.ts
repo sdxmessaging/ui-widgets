@@ -19,31 +19,40 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { classes = "" } = field;
-		return m(FileInput, {
-			field,
-			defaultAccept: "image/*",
-			multiple: false,
-			dragging: this.dragging,
-			onSet: addImages(value, config.imageMaxSize, true)
-		},
-			m(".relative.w-100.pa1.contain.dt.tc", {
-				class: `${classes} ${this.dragging() ? drgCls() : filCls()}`
-			}, file ? [
-				m("img.img.contain", {
-					title: file.name,
-					src: imgSrc(file.path, file.dataUrl),
-					style: imgMaxSize()
-				}),
-				m(".absolute.top-0.right-0.pa1.pointer.dim", {
-					title: `Remove ${file.name}`,
-					onclick: removeFile(value, file.guid)
-				}, m("i.pa1", {
-					class: getIcon(config.cancelIcn)
-				}))
-			] : m("i.fa-2x.dtc.v-mid", {
-				class: getIcon(config.cameraIcn)
-			}))
+		const containerClass = "";
+		return m("fieldset.bn.pa0", {
+			class: `${containerClass}`
+		}, 
+			m("div", {
+				class: `${classes}`
+			}, 
+				m(FileInput, {
+						field,
+						defaultAccept: "image/*",
+						multiple: false,
+						dragging: this.dragging,
+						onSet: addImages(value, config.imageMaxSize, true)
+					},
+					m(".relative.w-100.pa1.contain.dt.tc", {
+						class: `${classes} ${this.dragging() ? drgCls() : filCls()}`
+					}, file ? [
+						m("img.img.contain", {
+							title: file.name,
+							src: imgSrc(file.path, file.dataUrl),
+							style: imgMaxSize()
+						}),
+						m(".absolute.top-0.right-0.pa1.pointer.dim", {
+							title: `Remove ${file.name}`,
+							onclick: removeFile(value, file.guid)
+						}, m("i.pa1", {
+							class: getIcon(config.cancelIcn)
+						}))
+					] : m("i.fa-2x.dtc.v-mid", {
+						class: getIcon(config.cameraIcn)
+						})
+					)
+				)
+			)
 		);
 	}
-
 }

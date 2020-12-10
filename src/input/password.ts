@@ -19,20 +19,19 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			instant, containerClass, classes = ""
 		} = field;
 		return [
-			getLabel(id, label, required),
-			m(".w-100", {
+			m("fieldset.bn.pa0", {
 				class: containerClass
 			},
-				m(".w-100.flex.items-center bg-white", {
-					class: inpCls(),
+				getLabel(id, label, required),
+				m("div.w-100.flex.items-center.flex-auto bg-white", {
+					class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()} ${inpCls()} `,
 				},
-					m("input.input-reset.border-box.flex-auto.bg-transparent.bn", {
+					m("input.w-100.bg-transparent.bn.outline-0", {
 						id, name, title, placeholder,
 						type: this.showPassword() ? "text" : "password",
 						maxlength, minlength, required,
 						readonly, disabled, autofocus, autocomplete,
 						value: value(),
-						class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()}`,
 						// Safari quirk
 						autocorrect: "off",
 						// Update value on change or input ("instant" option)

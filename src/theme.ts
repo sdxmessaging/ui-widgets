@@ -41,7 +41,8 @@ export const classMap: ITheme = {
 	btnCol: stream("dark-gray"),
 	btnFnt: stream(""),
 	btnPad: stream("pa2"),
-	btnBrd: stream("bn br2")
+	btnBrd: stream("bn br2"),
+	fldSet: stream("pa0 bn")
 };
 
 // Merge theme entries into widget class helpers

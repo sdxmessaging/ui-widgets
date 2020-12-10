@@ -18,30 +18,34 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
+		console.log(currency, containerClass);
 		return [
-			getLabel(id, label, required),
-			m(".w-100", {
-				class: containerClass
-			},
-				m(".w-100.flex.items-center", {
-					class: inpCls(),
-					style: { "flex-shrink": 0 }
-				}, [
-					m("span.mr1", currency),
-					m("input.input-reset.border-box.flex-auto.bg-transparent.bn", {
-						id, type: FieldType.text, name, title, placeholder,
-						max, maxlength, min, minlength, step, required,
-						readonly, disabled, autofocus, autocomplete,
-						pattern, inputmode, spellcheck,
-						value: lodash.isUndefined(xform())
-							? null
-							: numberToCurrencyStr(propToNumber(xform())),
-						class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()}`,
-						// Update value on change or input ("instant" option)
-						[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-					})
-				])
-			)
+			m('fieldset.pa0.bn', {
+				class: inpCls(),
+				style: { "flex-shrink": 0}
+			}, [
+				m('div', { 
+					class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()}`,
+				},
+					getLabel(id, label, required),
+					m('div.flex.items-center', {}, 
+						m("span.mr1", currency),
+						m("input.w-100.bg-transparent.bn.outline-0", {
+							id, type: FieldType.text, name, title, placeholder,
+							max, maxlength, min, minlength, step, required,
+							readonly, disabled, autofocus, autocomplete,
+							pattern, inputmode, spellcheck,
+							value: lodash.isUndefined(xform())
+								? null
+								: numberToCurrencyStr(propToNumber(xform())),
+							// Update value on change or input ("instant" option)
+							[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+						})
+
+					)
+				),
+
+			])
 		];
 	}
 

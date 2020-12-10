@@ -16,27 +16,31 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		return [
-			getLabel(id, lbl, required),
-			m(".flex", {
-				class: `${txtCls()} ${containerClass}`,
-				onchange: setValue(val)
-			}, lodash.map(options, ({ value, label = value, icon }) => {
-				const checked = val() === value;
-				// No requirement for label "for" attribute
-				return m("label.flex.items-center", {
-					title: label,
-					class: `${classes} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
-				},
-					m("input.clip[type=radio]", {
-						name, value, checked,
-						required, autocomplete,
-						disabled: disabled || readonly,
-					}),
-					icon ? m("i.fa-fw", {
-						class: getIcon(icon)
-					}) : label
-				);
-			}))
+			m('fieldset.bn.pa0', {
+				class: containerClass
+			}, 
+				getLabel(id, lbl, required),
+				m("div.flex", {
+					class: `${txtCls()} ${containerClass}`,
+					onchange: setValue(val)
+				}, lodash.map(options, ({ value, label = value, icon }) => {
+					const checked = val() === value;
+					// No requirement for label "for" attribute
+					return m("label.flex.items-center", {
+						title: label,
+						class: `${classes} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
+					},
+						m("input.clip[type=radio].bg-transparent.bn.outline-0", {
+							name, value, checked,
+							required, autocomplete,
+							disabled: disabled || readonly,
+						}),
+						icon ? m("i.fa-fw", {
+							class: getIcon(icon)
+						}) : label
+					);
+				}))
+			)
 		];
 	}
 

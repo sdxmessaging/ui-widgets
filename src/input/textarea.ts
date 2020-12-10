@@ -14,18 +14,22 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			instant, containerClass, classes = ""
 		} = field;
 		return [
-			getLabel(id, label, required),
-			m("div", {
+			m('fieldset.bn.pa0', {
 				class: containerClass
-			}, m("textarea.border-box.w-100[rows=3]", {
-				id, name, title,
-				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-				value: value(),
-				class: `${classes} ${getEnabledClass(disabled, true)} ${areaCls()}`,
-				style: { resize: "vertical" },
-				// Update value on change or input ("instant" option)
-				[instant ? "oninput" : "onchange"]: setValue(value)
-			}))
+			}, 
+				getLabel(id, label, required),
+				m("div", {
+					class: `${classes} ${getEnabledClass(disabled, true)} ${areaCls()}`
+				}, m("textarea.w-100[rows=3]", {
+						id, name, title,
+						placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
+						value: value(),
+						style: { resize: "vertical" },
+						// Update value on change or input ("instant" option)
+						[instant ? "oninput" : "onchange"]: setValue(value)
+					})
+				)
+			)
 		];
 	}
 

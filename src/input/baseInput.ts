@@ -3,7 +3,9 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IPropWidget } from "../interface/widget";
 
 import { inpCls } from "../theme";
-import { getEnabledClass, getLabel, setValue } from "../utils";
+import { 
+	getEnabledClass, 
+	getLabel, setValue } from "../utils";
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
@@ -13,22 +15,25 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode, spellcheck,
-			instant, containerClass, classes = ""
+			instant, containerClass, 
+			classes = ""
 		} = field;
 		return [
-			getLabel(id, label, required),
-			m(".w-100.bg-white", {
+			m("fieldset.bn.pa0", {
 				class: containerClass
-			}, m("input.input-reset.border-box.w-100", {
+			}, m("div", {
+				class: `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`,
+			}, 
+			getLabel(id, label, required),
+			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
 				value: xform(),
-				class: `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`,
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
-			}))
+			})))
 		];
 	}
 
