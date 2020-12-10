@@ -19,16 +19,18 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			class: containerClass
 		}, [
 			getLabel(id, lbl, required),
-			m("div.w-100", m("select.w-100.bg-transparent.bn.outline-0", {
-				id, name, title,
-				required, readonly, disabled, autofocus, autocomplete,
-				class: `${classes} ${getEnabledClass(disabled, readonly)} ${inpCls()}`,
-				value: val(),
-				onchange: setValue(val)
-			}, lodash.map(options, ({ value, label = value }) => m("option", {
-				value,
-				disabled: disabled || readonly
-			}, label))))
+			m("div.w-100",
+				m("select.w-100.bg-transparent.bn.outline-0", {
+					id, name, title,
+					required, readonly, disabled, autofocus, autocomplete,
+					class: `${classes} ${getEnabledClass(disabled, readonly)} ${inpCls()}`,
+					value: val(),
+					onchange: setValue(val)
+				}, lodash.map(options, ({ value, label = value }) => m("option", {
+					value,
+					disabled: disabled || readonly
+				}, label)))
+			)
 		]);
 	}
 
