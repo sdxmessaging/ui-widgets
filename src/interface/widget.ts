@@ -106,11 +106,20 @@ export interface IField {
 	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
+	// TODO Phase out string classes and containerClass in favour of new IClasses
+	// readonly classes?: IClasses;
 	readonly classes?: string;
 	readonly containerClass?: string;
 	readonly style?: TStyle;
 	// Unsupported legacy field
 	readonly default?: string;
+}
+
+export interface IClasses {
+	readonly wrapper?: string;
+	readonly label?: string;
+	readonly input?: string;
+	readonly inputWrapper?: string;
 }
 
 // Select/Radio options, config for other fields
