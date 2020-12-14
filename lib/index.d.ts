@@ -33,3 +33,4 @@ export { FileSelect } from "./input/fileSelect";
 export { ImageMulti } from "./input/imageMulti";
 export { ImageSelect } from "./input/imageSelect";
 export { SignBuilder } from "./input/sign";
+export { OmniFileInput } from "./input/omniFileInput";

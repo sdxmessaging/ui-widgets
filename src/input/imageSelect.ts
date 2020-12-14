@@ -25,7 +25,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 			m(FileInput, {
 				field,
 				defaultAccept: "image/*",
-				multiple: false,
+				multiple: false, 
 				dragging: this.dragging,
 				onSet: addImages(value, config.imageMaxSize, true)
 			},

@@ -387,3 +387,8 @@ export function getFileTypeIcon(file: IFile) {
 			return config.fileIcn;
 	}
 }
+
+export function isImage(fileType: string) { 
+	// Change to regex starts with "image/"
+	return fileType.includes('image');
+}
