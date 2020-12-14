@@ -115,13 +115,6 @@ export interface IField {
 	readonly default?: string;
 }
 
-export interface IClasses {
-	readonly wrapper?: string;
-	readonly label?: string;
-	readonly input?: string;
-	readonly inputWrapper?: string;
-}
-
 // Select/Radio options, config for other fields
 export interface IOption {
 	readonly value: TProp;

@@ -562,12 +562,14 @@ m.mount(document.getElementById("page"), {
 					console.log(fileList()); fileList("");
 				}
 			}),
-			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
+
+			m("p", "The OmniFileInput widget behaves like a file or image input based on the type of file set"),
+
 			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--siler", m(uiWidgets.OmniFileInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.OmniFileInput, {
 					field: {
 						id: "omni-file-in",
-						label: "Any File Input",
+						label: "Omni File Input",
 						type: "file"
 					},
 					value: omniInputList
@@ -575,13 +577,13 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "omni-file-out",
-						label: "Omni File Output",
+						label: "File List Output",
 						type: "file"
 					},
 					value: omniInputList
 				}))
-
 			]),
+
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
 			// ImageSelect/FileList
 			m(".flex.mb2", [
