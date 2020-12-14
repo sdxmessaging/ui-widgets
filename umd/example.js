@@ -42,7 +42,7 @@ var fileList = stream([]);
 var imgList = stream([]);
 var imgInputList = stream([]);
 var signList = stream([]);
-
+var omniInputList = stream([]);
 // Theme
 var lblCol = stream("silver");
 lblCol.map(function (newCls) {
@@ -562,7 +562,26 @@ m.mount(document.getElementById("page"), {
 					console.log(fileList()); fileList("");
 				}
 			}),
+			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
+			m(".flex.mb2", [
+				m(".w-50.pa2.mr2.ba.b--siler", m(uiWidgets.OmniFileInput, {
+					field: {
+						id: "omni-file-in",
+						label: "Any File Input",
+						type: "file"
+					},
+					value: omniInputList
+				})),
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+					field: {
+						id: "omni-file-out",
+						label: "Omni File Output",
+						type: "file"
+					},
+					value: omniInputList
+				}))
 
+			]),
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
 			// ImageSelect/FileList
 			m(".flex.mb2", [

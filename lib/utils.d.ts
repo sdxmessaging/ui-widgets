@@ -46,3 +46,4 @@ export declare function rotateContext(ctx: CanvasRenderingContext2D, width: numb
 export declare function resizeImage(file: File, maxSize: number, type?: string): Promise<string>;
 export declare function textToImage(text: string, width: number, height: number, font: string): string;
 export declare function getFileTypeIcon(file: IFile): string;
+export declare function isImage(fileType: string): boolean;
