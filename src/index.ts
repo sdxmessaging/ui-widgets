@@ -17,6 +17,7 @@ export { BaseText } from "./display/baseText";
 export { iconMap, linkAttrs, Link } from "./display/link";
 export { Checkbox } from "./display/checkbox";
 export { Toggle } from "./display/toggle";
+export { DisplayTypeComponent } from "./display/displayTypeComponent";
 // Prop (options)
 export { SelectText } from "./display/select";
 // File
@@ -47,3 +48,4 @@ export { ImageMulti } from "./input/imageMulti";
 export { ImageSelect } from "./input/imageSelect";
 export { SignBuilder } from "./input/sign";
 export { OmniFileInput } from "./input/omniFileInput";
+export { MultiOmniFileInput } from "./input/multiOmniFileInput";

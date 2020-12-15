@@ -8,15 +8,14 @@ import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage, get
 import { removeFile } from "./fileMulti";
 import { config } from "../config";
 
-export function addOmniFile(fileList: stream<IFile[]>, replace = true) {
-	return (addList: FileList | null) => {
+export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
+    return (addList: FileList | null) => {
         const newFileList = replace ? [] : fileList();
-        return new Promise((resolve, reject) => {
-            if (addList && addList.length) {
-                const addFile = addList[0];
-                if (isImage(addFile.type)) {
-                    resizeImage(addFile, config.imageMaxSize, addFile.type).then((dataURL) => {
-                        const newFile = fileConstructor(dataURItoBlob(dataURL), addFile.name);
+        if (addList && addList.length) {
+            return Promise.all(lodash.map(addList, (file) => {
+                if (isImage(file.type)) {
+                    return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
+                        const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
                         newFileList.push({
                             guid: guid(),
                             name: newFile.name,
@@ -24,48 +23,46 @@ export function addOmniFile(fileList: stream<IFile[]>, replace = true) {
                             file: newFile,
                             dataUrl: dataURL
                         });
-                        resolve();
                     });
                 } else {
                     newFileList.push({
                         guid: guid(),
-                        name: addFile.name,
+                        name: file.name,
                         path: "not_set",
-                        file: addFile,
+                        file: file,
                     });
-                    resolve();
+                    return Promise.resolve();
                 }
-            } else {
-                reject("No file has been input");
-            }
-        }).then(() => {
-            fileList(newFileList);
-            m.redraw();
-        })
-    };
-    
+            })).then(() => {
+                fileList(newFileList);
+                m.redraw();
+            });
+        } else {
+            return Promise.reject("No file selected to upload");
+        }
+    }
 }
 
 export class OmniFileInput implements ClassComponent<IFileWidget> {
-    
-	protected dragging: stream<boolean> = stream<boolean>(false);
+
+    protected dragging: stream<boolean> = stream<boolean>(false);
 
     public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const file = lodash.head(value());
-		const { containerClass = "" } = field;
-		return m("fieldset.pa0.bn", {
-			class: containerClass
-		}, [
-			m(FileInput, {
-				field,
-				defaultAccept: "*",
-				multiple: false, 
-				dragging: this.dragging,
-				onSet: addOmniFile(value, true)
-			},
-				m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
-					class: this.dragging() ? drgCls() : filCls()
-				}, file?.dataUrl ? [
+        const file = lodash.head(value());
+        const { containerClass = "" } = field;
+        return m("fieldset.pa0.bn", {
+            class: containerClass
+        }, [
+            m(FileInput, {
+                field,
+                defaultAccept: "*",
+                multiple: false,
+                dragging: this.dragging,
+                onSet: addOmniFiles(value, true)
+            },
+                m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
+                    class: this.dragging() ? drgCls() : filCls()
+                }, file?.dataUrl ? [
                     m('.w-100.tc', {},
                         m("img.img.contain", {
                             title: file.name,
@@ -79,27 +76,27 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
                             class: getIcon(config.cancelIcn)
                         }))
                     )
-				] : !file?.dataUrl ? [
+                ] : !file?.dataUrl ? [
                     m("i.pa1", {
-						class: getIcon(config.uploadIcn)
-					}),
-					m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
-					file ? m("i.pa1", {
-						class: getIcon(getFileTypeIcon(file)),
-						title: "Click to view file in new tab",
-						onclick: file.path !== "not_set"
-							? () => window.open(file.path, "_blank")
-							: undefined
-					}) : null,
-					file ? m("i.pa1.pointer.dim", {
-						title: `Remove ${file.name}`,
-						class: getIcon(config.cancelIcn),
-						onclick: removeFile(value, file.guid)
-					}) : null,
+                        class: getIcon(config.uploadIcn)
+                    }),
+                    m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
+                    file ? m("i.pa1", {
+                        class: getIcon(getFileTypeIcon(file)),
+                        title: "Click to view file in new tab",
+                        onclick: file.path !== "not_set"
+                            ? () => window.open(file.path, "_blank")
+                            : undefined
+                    }) : null,
+                    file ? m("i.pa1.pointer.dim", {
+                        title: `Remove ${file.name}`,
+                        class: getIcon(config.cancelIcn),
+                        onclick: removeFile(value, file.guid)
+                    }) : null,
                 ] : m("i.fa-2x.dtc.v-mid", {
                     class: getIcon(config.uploadIcn)
-				}))
-			)
-		]);
-	}
+                }))
+            )
+        ]);
+    }
 }

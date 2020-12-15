@@ -43,6 +43,7 @@ var imgList = stream([]);
 var imgInputList = stream([]);
 var signList = stream([]);
 var omniInputList = stream([]);
+var multiOmniInputList = stream([]);
 // Theme
 var lblCol = stream("silver");
 lblCol.map(function (newCls) {
@@ -562,13 +563,14 @@ m.mount(document.getElementById("page"), {
 					console.log(fileList()); fileList("");
 				}
 			}),
+
 			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
 			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--siler", m(uiWidgets.OmniFileInput, {
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.OmniFileInput, {
 					field: {
 						id: "omni-file-in",
 						label: "Any File Input",
-						type: "file"
+						type: "file",
 					},
 					value: omniInputList
 				})),
@@ -579,6 +581,32 @@ m.mount(document.getElementById("page"), {
 						type: "file"
 					},
 					value: omniInputList
+				}))
+
+			]),
+
+			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
+			m(".flex.mb2", [
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.MultiOmniFileInput, {
+					field: {
+						id: "multi-omni-file-in",
+						label: "Multiple Omni File Input",
+						type: "file",
+					},
+					showDisplay: false,
+					displayType: "list",
+					value: multiOmniInputList,
+				}),
+
+				
+				),
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+					field: {
+						id: "multi-omni-file-out",
+						label: "Multiple Omni File Output",
+						type: "file"
+					},
+					value: multiOmniInputList
 				}))
 
 			]),

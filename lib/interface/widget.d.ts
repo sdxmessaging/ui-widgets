@@ -91,12 +91,22 @@ export interface IMithrilEvent extends Event {
 interface IBaseWidget {
     readonly field: TField;
 }
+export interface IDisplayWidget {
+    readonly value: stream<IFile[]>;
+    readonly displayType: DisplayType;
+}
 export interface IFileWidget extends IBaseWidget {
     readonly value: stream<IFile[]>;
+    readonly displayType?: DisplayType;
+    readonly showDisplay?: boolean;
 }
 export interface IPropWidget extends IBaseWidget {
     readonly value: TPropStream;
     readonly xform?: TPropStream;
+}
+export declare const enum DisplayType {
+    thumbnail = "thumbnail",
+    list = "list"
 }
 export interface ISignWidget {
     readonly heightPct: number;
