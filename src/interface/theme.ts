@@ -2,6 +2,28 @@ import stream from "mithril/stream";
 
 export type TStyle = Partial<CSSStyleDeclaration> | Record<string, string>;
 
+export interface IClasses {
+	/* Widget outermost element */
+	readonly wrapper?: string;
+	/* Label */
+	readonly label?: string;
+	/* Input element if visible */
+	readonly input?: string;
+	/* Input element container (including "decorations" in more advanced widgets) */
+	readonly inputWrapper?: string;
+}
+
+export interface IClassMap extends IClasses {
+	/* Classes common to all buttons */
+	readonly button?: string;
+	/* Classes common to all nav buttons */
+	readonly navButton?: string;
+	/* Classes to be applied to the "Icon" in checkbox/toggle controls*/
+	readonly checkbox?: string;
+	/* Classes to add to a file inputWrapper when hovering a dragged file over it */
+	readonly fileHover?: string;
+}
+
 // Internal theme manager
 export interface ITheme {
 	// Icon

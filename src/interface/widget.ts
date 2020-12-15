@@ -106,6 +106,8 @@ export interface IField {
 	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
+	// TODO Phase out string classes and containerClass in favour of new IClasses
+	// readonly classes?: IClasses;
 	readonly classes?: string;
 	readonly containerClass?: string;
 	readonly style?: TStyle;

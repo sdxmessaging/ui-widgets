@@ -1,12 +1,15 @@
 import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
-import { FileInput } from "./fileInput";
 import stream from "mithril/stream";
+
 import { IFile, IFileWidget } from "../interface/widget";
+
+import { config } from "../config";
 import { drgCls, filCls, imgMaxSize, getIcon } from "../theme";
 import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage, getFileTypeIcon } from "../utils";
+
+import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
-import { config } from "../config";
 
 export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
     return (addList: FileList | null) => {

@@ -564,25 +564,25 @@ m.mount(document.getElementById("page"), {
 				}
 			}),
 
-			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
+			m("p", "The OmniFileInput widget behaves like a file or image input based on the type of file set"),
+
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.OmniFileInput, {
 					field: {
 						id: "omni-file-in",
-						label: "Any File Input",
-						type: "file",
+						label: "Omni File Input",
+						type: "file"
 					},
 					value: omniInputList
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "omni-file-out",
-						label: "Omni File Output",
+						label: "File List Output",
 						type: "file"
 					},
 					value: omniInputList
 				}))
-
 			]),
 
 			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
@@ -593,7 +593,7 @@ m.mount(document.getElementById("page"), {
 						label: "Multiple Omni File Input",
 						type: "file",
 					},
-					showDisplay: false,
+					showDisplay: true,
 					displayType: "list",
 					value: multiOmniInputList,
 				}),

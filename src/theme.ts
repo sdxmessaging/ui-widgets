@@ -101,3 +101,22 @@ export function getButtonContext(key?: string): string {
 		return btnClass();
 	}
 }
+
+// // Revised theme options using basic class strings
+// import { IClassMap } from "./interface/theme";
+
+// const classMapState: IClassMap = {
+// 	button: "bg-light-blue dark-gray pa2 bn br2",
+// 	navButton: "bg-light-blue dark-gray",
+
+// 	wrapper: "pa0 bn",
+// 	label: "f6 silver",
+// 	inputWrapper: "",
+// 	input: "h2 dark-gray fw2 bg-transparent bn outline-0"
+// };
+
+// export const newClassMap: Readonly<IClassMap> = classMapState;
+
+// export function updateClasses(newConfig: Partial<IClassMap>) {
+// 	lodash.assign(classMapState, newConfig);
+// }
