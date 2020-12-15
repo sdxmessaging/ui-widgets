@@ -585,7 +585,7 @@ m.mount(document.getElementById("page"), {
 				}))
 			]),
 
-			m("p", "Omni Input, widgit to accept all types of files and either display the image or list the file name based on the extension provided."),
+			m("p", "MultiOmniFileInput, widget to accept all types of files and either display the image or list the file name based on the displayType provided. Display portion of widget can also be hidden."),
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.MultiOmniFileInput, {
 					field: {
