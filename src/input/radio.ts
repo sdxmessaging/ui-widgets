@@ -12,28 +12,30 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		const {
 			label: lbl, id, name = id,
 			required, readonly, disabled, autocomplete,
-			containerClass = "flex-wrap", classes = "",
-			options
+			options,
+			uiClass = {}
 		} = field as IOptionField;
-		return m("fieldset.pa0.bn", {
-			// TODO break containerClass usage to match all other widgets
-			// class: containerClass
+		const { wrapper, label: uiLabel = "", inputWrapper = "", input } = uiClass;
+		
+		return m("fieldset.pa0.bn.flex-wrap", {
+			class: wrapper
 		}, [
-			getLabel(id, lbl, required),
+			getLabel(id, lbl, uiLabel, required),
 			m("div.flex", {
-				class: `${txtCls()} ${containerClass}`,
+				class: `${txtCls()} ${inputWrapper}`,
 				onchange: setValue(val)
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
 				return m("label.flex.items-center", {
 					title: label,
-					class: `${classes} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
+					class: `${uiLabel} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
 				},
 					m("input.clip[type=radio].bg-transparent.bn.outline-0", {
 						name, value, checked,
 						required, autocomplete,
 						disabled: disabled || readonly,
+						class: input
 					}),
 					icon ? m("i.fa-fw", {
 						class: getIcon(icon)

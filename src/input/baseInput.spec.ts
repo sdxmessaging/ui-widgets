@@ -38,6 +38,7 @@ o.spec("BaseInput", () => {
 					title: "Test Title",
 					type: FieldType.number,
 					classes: "test",
+					uiClass: {input: ""},
 					disabled: true,
 					instant: true
 				},

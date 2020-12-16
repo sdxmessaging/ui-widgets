@@ -53,11 +53,11 @@ export function getDisplayLabel(label?: string) {
 }
 
 // Used by input widgets
-export function getLabel(id: string, label?: string, required?: boolean) {
+export function getLabel(id: string, label?: string, labelClass = "", required?: boolean) {
 	return label ? m("label.mb1.db", {
 		title: label,
 		for: id,
-		class: lblCls()
+		class: `${lblCls()} ${labelClass}`
 	}, getLabelText(label, required)) : null;
 }
 

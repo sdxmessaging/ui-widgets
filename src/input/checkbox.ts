@@ -18,18 +18,23 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		const {
 			label = "", id, name = id, title = label,
 			required, readonly, disabled, autocomplete,
-			containerClass = "", classes = ""
+			uiClass = {}
 		} = field;
+		const { wrapper, label: uiLabel = "", inputWrapper, input = "" } = uiClass;
+
 		return m("fieldset.pa0.bn", {
-			class: containerClass,
-		}, m("div", [
+			class: wrapper,
+		}, m("div",{
+			class: inputWrapper
+		}, [
 			m("label.flex.items-center", {
 				title,
-				class: `${classes} ${getEnabledClass(disabled, readonly)} ${txtCls()}`
+				class: `${uiLabel} ${getEnabledClass(disabled, readonly)} ${txtCls()}`
 			},
 				m("input.clip[type=checkbox].bg-transparent", {
 					id, name,
 					checked: value(),
+					class: `${input}`,
 					required, autocomplete,
 					disabled: disabled || readonly,
 					onchange: setCheck(value),

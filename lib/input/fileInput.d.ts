@@ -15,5 +15,5 @@ export declare function change(setFiles: (setList: FileList | null) => void): ({
     target: HTMLInputElement;
 }) => void;
 export declare class FileInput implements ClassComponent<IFileInput> {
-    view({ attrs: { defaultAccept, field: { label, id, name, title, required, readonly, disabled, autofocus, accept, classes }, multiple, dragging, onSet }, children }: CVnode<IFileInput>): m.Vnode<any, any>;
+    view({ attrs: { defaultAccept, field: { label, id, name, title, required, readonly, disabled, autofocus, accept, uiClass, }, multiple, dragging, onSet }, children }: CVnode<IFileInput>): m.Vnode<any, any>;
 }

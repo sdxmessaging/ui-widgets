@@ -58,10 +58,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		const {
 			label: lbl, id,
 			readonly, disabled,
-			classes = "", containerClass,
+			uiClass = {},
 			options = config.signOpts,
 			heightPct = config.signHeightPct
 		} = field as ISignField;
+		const { wrapper, label: uiLabel } = uiClass;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
 		};
@@ -94,14 +95,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			this.component = opts[0].component;
 		}
 		return m("fieldset.bn.pa0.relative", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(id, lbl),
+			getLabel(id, lbl, uiLabel),
 			readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {
 					id,
-					class: classes,
 					style
 				},
 					// Current signature
@@ -119,10 +119,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						onSet: setFile(value, id, config.signMaxSize),
 						onCancel: () => this.component = undefined
 					})
+
 					// Display signature preview/creator
 					: m(".aspect-ratio.pointer", {
 						id,
-						class: `${classes} ${filCls()}`,
+						class: `${filCls()}`,
 						style
 					}, fileObj
 						// Current signature

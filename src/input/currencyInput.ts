@@ -14,16 +14,18 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode, spellcheck,
-			instant, containerClass, classes = "",
+			instant, uiClass = {},
 			options
 		} = field as IOptionField;
+		const { wrapper, label: uiLabel, inputWrapper = "", input = "" } = uiClass;
+
 		const currency = options && options.length ? options[0].value : "$";
 		return m("fieldset.pa0.bn.flex-shrink-0", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(id, label, required),
+			getLabel(id, label, uiLabel, required),
 			m("div.flex.items-center", {
-				class: `${classes} ${getEnabledClass(disabled, true)} ${txtCls()}`,
+				class: `${inputWrapper} ${getEnabledClass(disabled, true)} ${txtCls()}`,
 			},
 				m("span.mr1", currency),
 				m("input.w-100.bg-transparent.bn.outline-0", {
@@ -31,7 +33,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 					max, maxlength, min, minlength, step, required,
 					readonly, disabled, autofocus, autocomplete,
 					pattern, inputmode, spellcheck,
-					class: inpCls(),
+					class: `${inpCls()} ${input}`,
 					value: lodash.isUndefined(xform())
 						? null
 						: numberToCurrencyStr(propToNumber(xform())),

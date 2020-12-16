@@ -16,21 +16,22 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			label, id, name = id, title = label, placeholder,
 			maxlength, minlength, required,
 			readonly, disabled, autofocus, autocomplete,
-			instant, containerClass, classes = ""
+			instant, uiClass = {},
 		} = field;
+		const { wrapper, label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(id, label, required),
+			getLabel(id, label, uiLabel, required),
 			m("div.w-100.flex.items-center.flex-auto bg-white", {
-				class: txtCls(),
+				class: `${txtCls()} ${inputWrapper}`,
 			},
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, name, title, placeholder,
 					type: this.showPassword() ? "text" : "password",
 					maxlength, minlength, required,
 					readonly, disabled, autofocus, autocomplete,
-					class: `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`,
+					class: `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`,
 					value: value(),
 					// Safari quirk
 					autocorrect: "off",

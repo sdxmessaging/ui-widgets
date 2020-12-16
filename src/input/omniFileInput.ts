@@ -52,53 +52,59 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 
     public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
         const file = lodash.head(value());
-        const { containerClass = "" } = field;
+        const { uiClass = {} } = field;
+        const { wrapper, inputWrapper } = uiClass;
+
         return m("fieldset.pa0.bn", {
-            class: containerClass
+            class: wrapper
         }, [
-            m(FileInput, {
-                field,
-                defaultAccept: "*",
-                multiple: false,
-                dragging: this.dragging,
-                onSet: addOmniFiles(value, true)
+            m("div", {
+                class: inputWrapper
             },
-                m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
-                    class: this.dragging() ? drgCls() : filCls()
-                }, file?.dataUrl ? [
-                    m('.w-100.tc', {},
-                        m("img.img.contain", {
-                            title: file.name,
-                            src: imgSrc(file.path, file.dataUrl),
-                            style: imgMaxSize()
+                m(FileInput, {
+                    field,
+                    defaultAccept: "*",
+                    multiple: false,
+                    dragging: this.dragging,
+                    onSet: addOmniFiles(value, true)
+                },
+                    m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
+                        class: this.dragging() ? drgCls() : filCls()
+                    }, file?.dataUrl ? [
+                        m('.w-100.tc', {},
+                            m("img.img.contain", {
+                                title: file.name,
+                                src: imgSrc(file.path, file.dataUrl),
+                                style: imgMaxSize()
+                            }),
+                            m(".absolute.top-0.right-0.pa1.pointer.dim", {
+                                title: `Remove ${file.name}`,
+                                onclick: removeFile(value, file.guid)
+                            }, m("i.pa1", {
+                                class: getIcon(config.cancelIcn)
+                            }))
+                        )
+                    ] : !file?.dataUrl ? [
+                        m("i.pa1", {
+                            class: getIcon(config.uploadIcn)
                         }),
-                        m(".absolute.top-0.right-0.pa1.pointer.dim", {
+                        m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
+                        file ? m("i.pa1", {
+                            class: getIcon(getFileTypeIcon(file)),
+                            title: "Click to view file in new tab",
+                            onclick: file.path !== "not_set"
+                                ? () => window.open(file.path, "_blank")
+                                : undefined
+                        }) : null,
+                        file ? m("i.pa1.pointer.dim", {
                             title: `Remove ${file.name}`,
+                            class: getIcon(config.cancelIcn),
                             onclick: removeFile(value, file.guid)
-                        }, m("i.pa1", {
-                            class: getIcon(config.cancelIcn)
-                        }))
-                    )
-                ] : !file?.dataUrl ? [
-                    m("i.pa1", {
+                        }) : null,
+                    ] : m("i.fa-2x.dtc.v-mid", {
                         class: getIcon(config.uploadIcn)
-                    }),
-                    m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
-                    file ? m("i.pa1", {
-                        class: getIcon(getFileTypeIcon(file)),
-                        title: "Click to view file in new tab",
-                        onclick: file.path !== "not_set"
-                            ? () => window.open(file.path, "_blank")
-                            : undefined
-                    }) : null,
-                    file ? m("i.pa1.pointer.dim", {
-                        title: `Remove ${file.name}`,
-                        class: getIcon(config.cancelIcn),
-                        onclick: removeFile(value, file.guid)
-                    }) : null,
-                ] : m("i.fa-2x.dtc.v-mid", {
-                    class: getIcon(config.uploadIcn)
-                }))
+                    }))
+                )
             )
         ]);
     }

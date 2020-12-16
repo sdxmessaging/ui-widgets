@@ -11,17 +11,19 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
-			instant, containerClass, classes = ""
+			instant, uiClass = {},
 		} = field;
+		const { wrapper, inputWrapper, label: uiLabel = "", input = ""} = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(id, label, required),
+			getLabel(id, label, uiLabel, required),
 			m("div", {
+				class: inputWrapper
 			}, m("textarea.w-100[rows=3]", {
 				id, name, title,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-				class: `${classes} ${getEnabledClass(disabled, true)} ${areaCls()}`,
+				class: `${input} ${getEnabledClass(disabled, true)} ${areaCls()}`,
 				value: value(),
 				style: { resize: "vertical" },
 				// Update value on change or input ("instant" option)

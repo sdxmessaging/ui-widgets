@@ -11,35 +11,39 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
     protected dragging: stream<boolean> = stream<boolean>(false);
 
     public view({ attrs: { field, value, displayType = DisplayType.thumbnail, showDisplay } }: CVnode<IFileWidget>): Children {
-        const { containerClass = "" } = field;
+        const { uiClass = {} } = field;
+        const { wrapper, inputWrapper } = uiClass;
         return m(
             "fieldset.pa0.bn",
             {
-                class: containerClass,
+                class: wrapper,
             },
             [
-                m(
-                    FileInput,
-                    {
-                        field,
-                        defaultAccept: "*",
-                        dragging: this.dragging,
-                        onSet: addOmniFiles(value, false),
-                    },
-                    m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
-                        class: this.dragging() ? drgCls() : filCls(),
-                    },
-                        m("i.pa1", {
-                            class: getIcon(config.uploadIcn)
-                        }),
-                        m("span.ma1.flex-auto", config.addFileTxt),
-                    )
-                ),
-                showDisplay ?
-                    m(DisplayTypeComponent, {
-                        displayType: displayType,
-                        value: value
-                    }) : null
+                m("div", {
+                    class: inputWrapper,
+                }, 
+                    m(FileInput,
+                        {
+                            field,
+                            defaultAccept: "*",
+                            dragging: this.dragging,
+                            onSet: addOmniFiles(value, false),
+                        },
+                        m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
+                            class: this.dragging() ? drgCls() : filCls(),
+                        },
+                            m("i.pa1", {
+                                class: getIcon(config.uploadIcn)
+                            }),
+                            m("span.ma1.flex-auto", config.addFileTxt),
+                        )
+                    ),
+                    showDisplay ?
+                        m(DisplayTypeComponent, {
+                            displayType: displayType,
+                            value: value
+                        }) : null,
+                )
             ]
         );
     }

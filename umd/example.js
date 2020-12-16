@@ -36,7 +36,7 @@ var type = stream("text");
 var placeholder = stream("Placeholder");
 var readonly = stream(false);
 var disabled = stream(false);
-
+var displayFileList = stream(false);
 // Files
 var fileList = stream([]);
 var imgList = stream([]);
@@ -116,14 +116,16 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "text-in-input",
 							label: "Text Input (updates on input)",
-							instant: true
+							instant: true,
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 						},
 						value: textVal
 					})),
 					m(".pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 						field: {
 							id: "text-in-change",
-							label: "Text Input (updates on change)"
+							label: "Text Input (updates on change)",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 						},
 						value: textVal
 					}))
@@ -131,7 +133,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
 						id: "text-out",
-						label: "Text Output"
+						label: "Text Output",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 					},
 					value: textVal
 				}))
@@ -145,6 +148,7 @@ m.mount(document.getElementById("page"), {
 							id: "date-in",
 							label: "Date Input (Browser Default)",
 							type: "date",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 						},
 						value: dateVal
 					})),
@@ -153,7 +157,8 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "dob-in",
 								label: "Date Input (ui-widgets Bespoke)",
-								options: dateUsFormat() ? [{ value: "en-US" }] : undefined
+								options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
+								uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 							},
 							value: dateVal
 						}),
@@ -161,7 +166,8 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "en-us-in",
 								label: "en-US input order",
-								classes: "fr f6"
+								classes: "fr f6",
+								uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 							},
 							value: dateUsFormat
 						})
@@ -170,7 +176,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
 						id: "date-out",
-						label: "Date Output"
+						label: "Date Output",
 					},
 					value: dateVal
 				}))
@@ -182,14 +188,15 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "color-in",
 						label: "Colour Input",
-						type: "color"
+						type: "color",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 					},
 					value: colVal
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
 						id: "color-out",
-						label: "Colour Output"
+						label: "Colour Output",
 					},
 					value: colVal
 				}))
@@ -201,7 +208,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "password-in",
 						label: "Password Input",
-						instant: true
+						instant: true,
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 					},
 					value: passVal
 				})),
@@ -222,7 +230,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "check-in",
 						label: "Checkbox Input",
-						classes: "pa2"
+						classes: "pa2",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 					},
 					value: checkVal
 				})),
@@ -245,6 +254,7 @@ m.mount(document.getElementById("page"), {
 						id: "toggle-in",
 						label: "Toggle Input",
 						classes: "pa2",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 						options: [{
 							label: "On", value: true
 						}, {
@@ -273,6 +283,7 @@ m.mount(document.getElementById("page"), {
 							id: "select-in",
 							label: "Select Input",
 							type: "select",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 							options: [{
 								label: "Opt 1",
 								value: "1"
@@ -289,6 +300,7 @@ m.mount(document.getElementById("page"), {
 							label: "Radio Input",
 							type: "radio",
 							classes: "pa2",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 							options: [{
 								value: "1",
 								label: "Opt 1"
@@ -317,6 +329,7 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "currency-in-currency",
 						label: "Currency Input",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 						options: [{
 							value: "£"
 						}]
@@ -327,7 +340,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "currency-in-number",
 						label: "Smallest Monetary Unit",
-						type: "number"
+						type: "number",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: currencyVal
 				}))
@@ -339,7 +353,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CardDateInput, {
 					field: {
 						id: "card-in-date",
-						label: "Card Expiry MM/YY"
+						label: "Card Expiry MM/YY",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 					},
 					value: cardVal
 				})),
@@ -347,7 +362,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "card-in-text",
 						label: "Card Expiry Plain Text",
-						type: "text"
+						type: "text",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: cardVal
 				}))
@@ -362,7 +378,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "xform-in-simple",
 						label: "Input Stream",
-						instant: true
+						instant: true,
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: xformValIn
 				})),
@@ -370,7 +387,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "xform-in-xform",
 						label: "Input Stream + Transform Stream (toUpperCase)",
-						instant: true
+						instant: true,
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: xformValIn,
 					xform: xformValOut
@@ -446,7 +464,8 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-label",
 							label: "Label",
-							instant: true
+							instant: true,
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 						},
 						value: label
 					})),
@@ -455,6 +474,7 @@ m.mount(document.getElementById("page"), {
 							id: "custom-type",
 							label: "Type",
 							type: "select",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 							options: [{
 								label: "Text",
 								value: "text"
@@ -490,21 +510,24 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-placeholder",
 							label: "Placeholder",
-							instant: true
+							instant: true,
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 						},
 						value: placeholder
 					})),
 					m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-readonly",
-							label: "Readonly"
+							label: "Readonly",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 						},
 						value: readonly
 					})),
 					m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-disabled",
-							label: "Disabled"
+							label: "Disabled",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 						},
 						value: disabled
 					})),
@@ -512,6 +535,7 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-toggle",
 							label: "Disabled Toggle",
+							uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 							options: [{
 								label: "Disabled",
 								value: true
@@ -527,7 +551,8 @@ m.mount(document.getElementById("page"), {
 						type: type(),
 						placeholder: placeholder(),
 						readonly: readonly(),
-						disabled: disabled()
+						disabled: disabled(),
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: value
 				}))
@@ -542,7 +567,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "file-in",
 						label: "File Input",
-						type: "file"
+						type: "file",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: fileList
 				})),
@@ -571,7 +597,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "omni-file-in",
 						label: "Omni File Input",
-						type: "file"
+						type: "file",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: omniInputList
 				})),
@@ -592,13 +619,12 @@ m.mount(document.getElementById("page"), {
 						id: "multi-omni-file-in",
 						label: "Multiple Omni File Input",
 						type: "file",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
-					showDisplay: true,
-					displayType: "list",
+					showDisplay: displayFileList,
+					displayType: "thumbnail",
 					value: multiOmniInputList,
 				}),
-
-				
 				),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
@@ -607,8 +633,7 @@ m.mount(document.getElementById("page"), {
 						type: "file"
 					},
 					value: multiOmniInputList
-				}))
-
+				})),
 			]),
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
 			// ImageSelect/FileList
@@ -617,7 +642,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "image-in",
 						label: "Image Select Input",
-						type: "imageSelect"
+						type: "imageSelect",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: imgInputList
 				})),
@@ -625,7 +651,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "image-out",
 						label: "File List Output",
-						type: "fileMulti"
+						type: "fileMulti",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: imgInputList
 				}))
@@ -646,7 +673,8 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "image-multi-in",
 						label: "Image List Input",
-						type: "imageMulti"
+						type: "imageMulti",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: imgList
 				})),
@@ -711,14 +739,16 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-label-col",
-						label: "Label Colour"
+						label: "Label Colour",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: lblCol
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-label-fnt",
-						label: "Label Font"
+						label: "Label Font",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: lblFnt
 				}))
@@ -729,14 +759,16 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input-col",
-						label: "Input Colour"
+						label: "Input Colour",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: inpCol
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input-brd",
-						label: "Input Border"
+						label: "Input Border",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: inpBrd
 				}))
@@ -747,14 +779,16 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-button-bg",
-						label: "Button Background Colour"
+						label: "Button Background Colour",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
 					value: btnBg
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-button-brd",
-						label: "Button Border"
+						label: "Button Border",
+						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""}
 					},
 					value: btnBrd
 				}))
@@ -771,7 +805,7 @@ m.mount(document.getElementById("page"), {
 					type: "radio",
 					containerClass: "justify-between bg-near-white br-pill",
 					classes: "flex-auto justify-center pa2 bg-animate br-pill",
-					// classes: "pa2",
+					uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					options: [{
 						value: "1",
 						label: "Very unsatisfied",

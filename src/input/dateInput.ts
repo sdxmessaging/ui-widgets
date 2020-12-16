@@ -49,14 +49,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
-			containerClass, classes = "",
+			uiClass = {},
 			options
 		} = field as IOptionField;
+		const { wrapper, inputWrapper, input = "", label: uiLabel} = uiClass;
 		const locale = options && options.length ? options[0].value : "en-GB";
-		const classStr = `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`;
+		const classStr = `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`;
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
-			getLabel(`${id}-dd`, "Day"),
+			getLabel(`${id}-dd`, "Day", uiLabel),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -69,7 +70,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const monthInput = m(".dib.mr2", [
-			getLabel(`${id}-mm`, "Month"),
+			getLabel(`${id}-mm`, "Month", uiLabel),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -82,7 +83,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const yearInput = m(".dib.mr2", [
-			getLabel(`${id}-yyyy`, "Year"),
+			getLabel(`${id}-yyyy`, "Year", uiLabel),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
@@ -96,11 +97,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset.pa0.bn", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(id, label, required),
+			getLabel(id, label, uiLabel, required),
 			m("div", {
-				id, title
+				id, title,
+				class: inputWrapper
 			}, locale === "en-US"
 				? [
 					monthInput,

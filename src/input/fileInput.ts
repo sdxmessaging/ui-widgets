@@ -56,15 +56,16 @@ export class FileInput implements ClassComponent<IFileInput> {
 			label, id, name = id, title = label,
 			required, readonly, disabled, autofocus,
 			accept = defaultAccept,
-			classes = ""
+			uiClass = {},		
 		},
 		multiple = true,
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {
+		const { label: uiLabel = "" } = uiClass;
 		return m("label.db.pointer", lodash.extend({
 			for: id, title,
-			class: `${getEnabledClass(disabled, readonly)} ${classes}`
+			class: `${getEnabledClass(disabled, readonly)}`
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),
@@ -77,7 +78,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 				onchange: change(onSet)
 			}),
 			label ? m("span.db.mb1", {
-				class: lblCls()
+				class: `${uiLabel} ${lblCls()}`
 			}, getLabelText(label, required)) : null,
 			children
 		]);

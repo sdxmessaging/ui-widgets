@@ -13,21 +13,22 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode, spellcheck,
-			instant, containerClass,
-			classes = ""
+			instant, uiClass = {}
 		} = field;
+		const { wrapper, label: uiLabel, inputWrapper, input = "" } = uiClass;
+
 		return m("fieldset.pa0.bn", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(id, label, required),
+			getLabel(id, label, uiLabel, required ),
 			m("div", {
-				// TODO Input wrapper class
+				class: inputWrapper
 			}, m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
-				class: `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`,
+				class: `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`,
 				value: xform(),
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)

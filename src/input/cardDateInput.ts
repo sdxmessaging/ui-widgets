@@ -42,19 +42,22 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
-			containerClass, classes = ""
+			uiClass = {},
 		} = field;
-		const classStr = `${classes} ${getEnabledClass(disabled, true)} ${inpCls()}`;
+		const { wrapper, label: uiLabel, inputWrapper, input = "" } = uiClass;
+
+		const classStr = `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`;
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset.bn.pa0", {
-			class: containerClass
+			class: wrapper
 		}, [
-			getLabel(`${id}-mm`, label, required),
+			getLabel(`${id}-mm`, label, uiLabel, required),
 			m("div", {
-				title
+				title,
+				class: inputWrapper
 			}, [
 				m("div.dib.mr2", [
-					getLabel(`${id}-mm`, "Month"),
+					getLabel(`${id}-mm`, "Month", uiClass.label),
 					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-mm`, name: `${name}-mm`,
 						type: FieldType.text, placeholder: "MM",
@@ -70,7 +73,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					class: txtCls()
 				}, "/"),
 				m("div.dib.mr2", [
-					getLabel(`${id}-yy`, "Year"),
+					getLabel(`${id}-yy`, "Year", uiLabel),
 					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-yy`, name: `${name}-yy`,
 						type: FieldType.text, placeholder: "YY",

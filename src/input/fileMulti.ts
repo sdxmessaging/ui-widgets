@@ -39,9 +39,10 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { containerClass = "" } = field;
+		const { uiClass = { } } = field;
+		const { wrapper } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: containerClass
+			class: wrapper
 		}, [
 			m(FileInput, {
 				field,
@@ -71,6 +72,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					})
 				]))
 			)
+
 		]);
 	}
 
