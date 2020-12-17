@@ -94,7 +94,7 @@ interface IBaseWidget {
 }
 export interface IDisplayWidget {
     readonly value: stream<IFile[]>;
-    readonly displayType: DisplayType;
+    readonly displayType?: DisplayType;
 }
 export interface IFileWidget extends IBaseWidget {
     readonly value: stream<IFile[]>;
@@ -104,6 +104,12 @@ export interface IFileWidget extends IBaseWidget {
 export interface IPropWidget extends IBaseWidget {
     readonly value: TPropStream;
     readonly xform?: TPropStream;
+}
+export interface IThumbnailArgs {
+    title?: string;
+    src?: string;
+    data?: IFile;
+    style?: Partial<CSSStyleDeclaration>;
 }
 export declare const enum DisplayType {
     thumbnail = "thumbnail",

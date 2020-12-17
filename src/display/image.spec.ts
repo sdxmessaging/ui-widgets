@@ -28,7 +28,7 @@ o.spec("ImageList", () => {
 		const value = stream<IFile[]>([{
 			guid: "test",
 			name: "Test",
-			path: "/test/path"
+			path: "/test/path",
 		}, {
 			guid: "data",
 			name: "Data",
@@ -42,7 +42,7 @@ o.spec("ImageList", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test"
+					classes: "test",
 				},
 				value
 			})

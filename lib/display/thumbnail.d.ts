@@ -1,4 +1,5 @@
-import m, { Attributes, ClassComponent, CVnode } from "mithril";
-export declare class Thumbnail implements ClassComponent<Attributes> {
-    view({ children, attrs }: CVnode<Attributes>): m.Vnode<any, any>;
+import m, { ClassComponent, CVnode } from "mithril";
+import { IThumbnailArgs } from "../interface/widget";
+export declare class Thumbnail implements ClassComponent<IThumbnailArgs> {
+    view({ children, attrs }: CVnode<IThumbnailArgs>): m.Vnode<any, any>;
 }

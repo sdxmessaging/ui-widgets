@@ -7,9 +7,9 @@ import { FieldType, IFile } from "../interface/widget";
 
 import { MultiOmniFileInput } from "./multiOmniFileInput";
 
-o.spec("OmniFileInput", () => {
-
-	o("empty", () => {
+o.spec("MultiOmniFileInput", () => {
+    // Renders the file input 
+	o("renders input with empty stream", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -18,19 +18,20 @@ o.spec("OmniFileInput", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.file
-				},
+                },
+                showDisplay: stream<boolean>(false),
 				value
 			})
 		});
 		o(root.childNodes.length).equals(1);
     })
 
-    o("regular set file", () => {
+    o("renders input and sets stream to contain one file.", () => {
         const root = window.document.createElement("div");
         const value = stream<IFile[]>([{
 			guid: "test",
 			name: "Test",
-			path: "/test/path"
+            path: "/test/path",
         }]);        
         m.mount(root, {
             view: () => m(MultiOmniFileInput, {

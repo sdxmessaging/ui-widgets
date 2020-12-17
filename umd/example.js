@@ -621,7 +621,7 @@ m.mount(document.getElementById("page"), {
 						type: "file",
 						uiClass: {wrapper: "", inputWrapper: "", input: "", label: ""},
 					},
-					showDisplay: displayFileList,
+					showDisplay: true,
 					displayType: "thumbnail",
 					value: multiOmniInputList,
 				}),

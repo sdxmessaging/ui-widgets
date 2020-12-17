@@ -19,7 +19,8 @@ o.spec("FileMulti", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.fileMulti
+					type: FieldType.fileMulti,
+					// uiClass: {input: "", wrapper: "", inputWrapper: "", label: ""},
 				},
 				value
 			})
@@ -40,7 +41,8 @@ o.spec("FileMulti", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.fileMulti
+					type: FieldType.fileMulti,
+					// uiClass: {input: "", wrapper: "", inputWrapper: "", label: ""},
 				},
 				value
 			})
