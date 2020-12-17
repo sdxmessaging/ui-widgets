@@ -10,7 +10,7 @@ import { DisplayTypeComponent } from "../display/displayTypeComponent";
 export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
     protected dragging: stream<boolean> = stream<boolean>(false);
 
-    public view({ attrs: { field, value, displayType = DisplayType.thumbnail, showDisplay } }: CVnode<IFileWidget>): Children {
+    public view({ attrs: { field, value, displayType = DisplayType.thumbnail, showDisplay = true } }: CVnode<IFileWidget>): Children {
         const { uiClass = {} } = field;
         const { wrapper, inputWrapper } = uiClass;
         return m(

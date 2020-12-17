@@ -151,7 +151,7 @@ export interface IDisplayWidget {
 export interface IFileWidget extends IBaseWidget {
 	readonly value: stream<IFile[]>;
 	readonly displayType?: DisplayType;
-	readonly showDisplay?: stream<boolean>;
+	readonly showDisplay?: boolean;
 }
 export interface IPropWidget extends IBaseWidget {
 	readonly value: TPropStream;
