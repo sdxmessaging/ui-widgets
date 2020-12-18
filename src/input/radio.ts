@@ -15,27 +15,30 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			options,
 			uiClass = {}
 		} = field as IOptionField;
-		const { wrapper, label: uiLabel = "", inputWrapper = "", input } = uiClass;
-		
-		return m("fieldset.pa0.bn.flex-wrap", {
+		const {
+			wrapper, label: uiLabel = "",
+			inputWrapper = "nl1 nt1 nr1 nb1",
+			input = "dib ma1 pa2"
+		} = uiClass;
+
+		return m("fieldset.pa0.bn", {
 			class: wrapper
 		}, [
 			getLabel(id, lbl, uiLabel, required),
-			m("div.flex", {
+			m("div", {
 				class: `${txtCls()} ${inputWrapper}`,
 				onchange: setValue(val)
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
-				return m("label.flex.items-center", {
+				return m("label", {
 					title: label,
-					class: `${uiLabel} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
+					class: `${input} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
 				},
-					m("input.clip[type=radio].bg-transparent.bn.outline-0", {
+					m("input.clip[type=radio]", {
 						name, value, checked,
 						required, autocomplete,
-						disabled: disabled || readonly,
-						class: input
+						disabled: disabled || readonly
 					}),
 					icon ? m("i.fa-fw", {
 						class: getIcon(icon)

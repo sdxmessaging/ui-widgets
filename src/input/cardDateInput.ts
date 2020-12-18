@@ -57,7 +57,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				class: inputWrapper
 			}, [
 				m("div.dib.mr2", [
-					getLabel(`${id}-mm`, "Month", uiClass.label),
+					getLabel(`${id}-mm`, "Month", uiLabel),
 					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-mm`, name: `${name}-mm`,
 						type: FieldType.text, placeholder: "MM",
