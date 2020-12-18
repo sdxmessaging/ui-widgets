@@ -37,7 +37,25 @@ o.spec("OmniFileInput", () => {
 		});
 		o(root.childNodes.length).equals(1);
     })
-
+    o("configured ", () => {
+        const root = window.document.createElement("div");
+		const value = stream<IFile[]>([]);
+		m.mount(root, {
+			view: () => m(OmniFileInput, {
+				field: {
+					id: "test",
+					label: "test",
+                    type: FieldType.file,
+                    uiClass: {wrapper: "test"},
+                },
+                showDisplay: false,
+				value
+			})
+        });
+        o(root.childNodes.length).equals(1);
+        o(root.firstElementChild?.classList.length).equals(3);
+        o(root.firstElementChild?.classList.toString()).equals("pa0 bn test");
+    })
     o("regular set file", () => {
         const root = window.document.createElement("div");
         const value = stream<IFile[]>([{

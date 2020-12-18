@@ -28,14 +28,33 @@ o.spec("MultiOmniFileInput", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.file
+                    type: FieldType.file,
                 },
+                showDisplay: false,
 				value
 			})
 		});
 		o(root.childNodes.length).equals(1);
     })
-
+    o("configured ", () => {
+        const root = window.document.createElement("div");
+		const value = stream<IFile[]>([]);
+		m.mount(root, {
+			view: () => m(MultiOmniFileInput, {
+				field: {
+					id: "test",
+					label: "test",
+                    type: FieldType.file,
+                    uiClass: {wrapper: "test"},
+                },
+                showDisplay: false,
+				value
+			})
+        });
+        o(root.childNodes.length).equals(1);
+        o(root.firstElementChild?.classList.length).equals(3);
+        o(root.firstElementChild?.classList.toString()).equals("pa0 bn test");
+    })
     o("renders single image thumbnail.", () => {
         const root = window.document.createElement("div");
         const value = stream<IFile[]>([{
