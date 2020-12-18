@@ -20,7 +20,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 		return m("fieldset.pa0.bn", {
 			class: wrapper
 		}, [
-			getLabel(id, label, uiLabel, required ),
+			getLabel(id, label, uiLabel, required),
 			m("div", {
 				class: inputWrapper
 			}, m("input.w-100.bg-transparent.bn.outline-0", {

@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import stream from "mithril/stream";
 
+import { IClassMap } from "./interface/theme";
 import { ITheme, TThemeKey, TThemeUpdate } from "./interface/theme";
 import { config } from "./config";
 
@@ -15,6 +16,39 @@ export function thumbMaxSize() {
 export const styleSm = { "max-width": "5.4ex" };
 export const styleLg = { "max-width": "9ex" };
 
+// ui-widgets 1.4 theme map
+const classMapState: IClassMap = {
+	button: "bg-light-blue dark-gray pa2 bn br2",
+	navButton: "bg-light-blue dark-gray",
+	wrapper: "pa0 bn",
+	label: "f6 silver",
+	inputWrapper: "",
+	input: "h2 dark-gray fw2 bg-transparent bn outline-0"
+};
+
+export const theme: Readonly<IClassMap> = classMapState;
+
+export function updateClasses(newConfig: Partial<IClassMap>) {
+	lodash.assign(classMapState, newConfig);
+}
+
+// Button context helpers
+const btnMap: Record<string, string> = {};
+
+export function updateButtonContext(newButtonContext: Record<string, string>) {
+	lodash.assign(btnMap, newButtonContext);
+}
+
+export function getButtonContext(key?: string): string {
+	if (key && key in btnMap) {
+		return btnMap[key];
+	} else {
+		// TODO return empty class
+		return btnClass();
+	}
+}
+
+// TODO Retire legacy stream based theme
 export const classMap: ITheme = {
 	icon: stream("fas"),
 	// Label
@@ -83,40 +117,8 @@ export function updateTheme(newTheme: Partial<TThemeUpdate>) {
 	});
 }
 
+// TODO Remove, move classMap.icon into config for each icon
+// TODO Don't use getIcon when accepting passed icon strings (button, radio, etc.)
 export function getIcon(iconClass: string): string {
 	return `${classMap.icon()} ${iconClass}`;
 }
-
-// Button context helpers
-const btnMap: Record<string, string> = {};
-
-export function updateButtonContext(newButtonContext: Record<string, string>) {
-	lodash.assign(btnMap, newButtonContext);
-}
-
-export function getButtonContext(key?: string): string {
-	if (key && key in btnMap) {
-		return btnMap[key];
-	} else {
-		return btnClass();
-	}
-}
-
-// // Revised theme options using basic class strings
-// import { IClassMap } from "./interface/theme";
-
-// const classMapState: IClassMap = {
-// 	button: "bg-light-blue dark-gray pa2 bn br2",
-// 	navButton: "bg-light-blue dark-gray",
-
-// 	wrapper: "pa0 bn",
-// 	label: "f6 silver",
-// 	inputWrapper: "",
-// 	input: "h2 dark-gray fw2 bg-transparent bn outline-0"
-// };
-
-// export const newClassMap: Readonly<IClassMap> = classMapState;
-
-// export function updateClasses(newConfig: Partial<IClassMap>) {
-// 	lodash.assign(classMapState, newConfig);
-// }
