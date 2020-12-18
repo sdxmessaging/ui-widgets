@@ -101,9 +101,8 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
                             class: getIcon(config.cancelIcn),
                             onclick: removeFile(value, file.guid)
                         }) : null,
-                    ] : m("i.fa-2x.dtc.v-mid", {
-                        class: getIcon(config.uploadIcn)
-                    }))
+                    ] : null 
+                    )
                 )
             )
         ]);

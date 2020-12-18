@@ -390,5 +390,5 @@ export function getFileTypeIcon(file: IFile) {
 
 export function isImage(fileType: string) { 
 	// Change to regex starts with "image/"
-	return fileType.includes('image');
+	return fileType && fileType.includes('image');
 }
