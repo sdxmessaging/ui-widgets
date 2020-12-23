@@ -1,4 +1,5 @@
 export * from "./interface/widget";
+export * from './interface/theme';
 
 export { updateConfig } from "./config";
 export { updateTheme, getIcon, updateButtonContext } from "./theme";
