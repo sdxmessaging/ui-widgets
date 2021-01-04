@@ -58,7 +58,7 @@ var themeInputWrapper = stream("dark-gray");
 themeInputWrapper.map(function (newCls) {
 	uiWidgets.updateClasses({ inputWrapper: newCls });
 });
-var themeInput = stream("h2 dark-gray fw2 bg-transparent bn outline-0");
+var themeInput = stream("h2 dark-gray fw2");
 themeInput.map(function (newCls) {
 	uiWidgets.updateClasses({ input: newCls });
 });

@@ -21,7 +21,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 		const { uiClass = {} } = field;
 		const { wrapper } = uiClass;
 
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		},
 			m(FileInput, {
@@ -31,7 +31,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addImages(value, config.imageMaxSize, true)
 			},
-				m(".relative.w-100.pa1.contain.dt.tc", {
+				m(".relative.w-100.pa1.dt.tc", {
 					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
 				}, file ? [
 					m("img.img.contain", {

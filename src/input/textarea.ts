@@ -14,13 +14,13 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {},
 		} = field;
 		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),
 			m("div", {
 				class: `${inputWrapper} ${theme.inputWrapper}`
-			}, m("textarea.w-100[rows=3]", {
+			}, m("textarea.w-100.bg-transparent.bn.outline-0[rows=3]", {
 				id, name, title,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 				class: `${input} ${getEnabledClass(disabled, true)} ${theme.textarea}`,

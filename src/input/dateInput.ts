@@ -96,7 +96,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		// Assemble date input (en-GB or en-US layouts)
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),

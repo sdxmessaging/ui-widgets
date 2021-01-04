@@ -15,13 +15,8 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			options,
 			uiClass = {}
 		} = field as IOptionField;
-		const {
-			wrapper = "", label: uiLabel,
-			inputWrapper = "nl1 nt1 nr1 nb1",
-			input = "dib ma1 pa2"
-		} = uiClass;
-
-		return m("fieldset.pa0.bn", {
+		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, lbl, uiLabel, required),
@@ -31,7 +26,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
-				return m("label", {
+				return m("label.dib", {
 					title: label,
 					class: `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : ""} ${theme.radio}`
 				},

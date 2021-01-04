@@ -41,7 +41,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { uiClass = {} } = field;
 		const { wrapper = "" } = uiClass;
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			m(FileInput, {

@@ -82,9 +82,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 			}, getLabelText(label, required)) : null,
 			m("div", {
 				class: `${inputWrapper} ${theme.inputWrapper}`
-			},
-				children
-			)
+			}, children)
 		]);
 	}
 }

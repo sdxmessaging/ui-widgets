@@ -19,7 +19,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 		const file = lodash.head(value());
 		const { uiClass = {} } = field;
 		const { wrapper = "" } = uiClass;
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		},
 			m(FileInput, {
@@ -28,7 +28,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addFiles(value, true)
 			},
-				m(".flex.items-center.pa1.ba.b--black-20", {
+				m(".flex.items-center.pa1", {
 					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
 				}, [
 					m("i.pa1", {

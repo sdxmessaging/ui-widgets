@@ -19,11 +19,11 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {},
 		} = field;
 		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),
-			m("div.w-100.flex.items-center.flex-auto bg-white", {
+			m("div.w-100.flex.items-center", {
 				class: `${inputWrapper} ${theme.inputWrapper}`
 			},
 				m("input.w-100.bg-transparent.bn.outline-0", {

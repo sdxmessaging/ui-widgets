@@ -18,7 +18,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 	} }: CVnode<IFileWidget>): Children {
 		const { uiClass = {} } = field;
 		const { wrapper = "" } = uiClass;
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			m(FileInput, {
@@ -27,7 +27,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addOmniFiles(value, false),
 			},
-				m(".flex.items-center.pa1.ba.b--black-20.dt.relative", {
+				m(".flex.items-center.pa1.dt", {
 					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
 				}, [
 					m("i.pa1", {

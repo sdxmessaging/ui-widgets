@@ -20,7 +20,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 
 		const currency = options && options.length ? options[0].value : "$";
-		return m("fieldset.pa0.bn.flex-shrink-0", {
+		return m("fieldset.flex-shrink-0", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),

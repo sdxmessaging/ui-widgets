@@ -16,11 +16,11 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
-		return m("fieldset.pa0.bn", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, lbl, uiLabel, required),
-			m("div.w-100", {
+			m("div", {
 				class: `${inputWrapper} ${theme.inputWrapper}`
 			},
 				m("select.w-100.bg-transparent.bn.outline-0", {
