@@ -6,7 +6,7 @@ import { TStyle } from "../interface/theme";
 import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../interface/widget";
 
 import { config } from "../config";
-import { filCls, getIcon } from "../theme";
+import { theme } from "../theme";
 import { dataURItoBlob, fileConstructor, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
@@ -62,7 +62,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			options = config.signOpts,
 			heightPct = config.signHeightPct
 		} = field as ISignField;
-		const { wrapper, label: uiLabel } = uiClass;
+		const { wrapper = "", label: uiLabel } = uiClass;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
 		};
@@ -72,19 +72,19 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			if (type === SignTypes.Draw) {
 				return {
 					component: SignDraw,
-					icon: getIcon(config.drawIcn),
+					icon: config.drawIcn,
 					label: config.signDrawTxt
 				};
 			} else if (type === SignTypes.Type) {
 				return {
 					component: SignType,
-					icon: getIcon(config.typeIcn),
+					icon: config.typeIcn,
 					label: config.signTypeTxt
 				};
 			} else if (type === SignTypes.Stamp) {
 				return {
 					component: SignStamp,
-					icon: getIcon(config.stampIcn),
+					icon: config.stampIcn,
 					label: config.signStampTxt
 				};
 			}
@@ -95,7 +95,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			this.component = opts[0].component;
 		}
 		return m("fieldset.bn.pa0.relative", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, lbl, uiLabel),
 			readonly || disabled
@@ -123,7 +123,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					// Display signature preview/creator
 					: m(".aspect-ratio.pointer", {
 						id,
-						class: `${filCls()}`,
+						class: theme.fileInput,
 						style
 					}, fileObj
 						// Current signature
@@ -136,7 +136,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							// Remove signature button
 							m(".pa3.absolute.top-0.right-0.child",
 								m("i.fa-2x", {
-									class: getIcon(config.resetIcn)
+									class: config.resetIcn
 								})
 							)
 						])

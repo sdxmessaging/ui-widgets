@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IButton } from "./button";
 
-import { navClass } from "./theme";
+import { theme } from "./theme";
 import { getEnabledClass, labelIcon } from "./utils";
 
 export class NavButton implements ClassComponent<IButton> {
@@ -12,7 +12,7 @@ export class NavButton implements ClassComponent<IButton> {
 	} }: CVnode<IButton>) {
 		return m(".mh2.pa2.truncate", {
 			title, disabled,
-			class: `${classes} ${getEnabledClass(disabled)} ${navClass()}`, style,
+			class: `${classes} ${getEnabledClass(disabled)} ${theme.navButton}`, style,
 			onclick
 		}, labelIcon(icon, label, rightIcon));
 	}

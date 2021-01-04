@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { drgCls, filCls, getIcon } from "../theme";
+import { theme } from "../theme";
 
 import { FileInput } from "./fileInput";
 import { addFiles, removeFile } from "./fileMulti";
@@ -18,10 +18,10 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { uiClass = {} } = field;
-		const { wrapper, inputWrapper = "" } = uiClass;
+		const { wrapper = "" } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: wrapper
-		}, [
+			class: `${wrapper} ${theme.wrapper}`
+		},
 			m(FileInput, {
 				field,
 				multiple: false,
@@ -29,14 +29,14 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value, true)
 			},
 				m(".flex.items-center.pa1.ba.b--black-20", {
-					class: `${this.dragging() ? drgCls() : filCls()} ${inputWrapper}` ,
+					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
 				}, [
 					m("i.pa1", {
-						class: getIcon(config.uploadIcn)
+						class: config.uploadIcn
 					}),
 					m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
 					file ? m("i.pa1", {
-						class: getIcon(getFileTypeIcon(file)),
+						class: getFileTypeIcon(file),
 						title: "Click to view file in new tab",
 						onclick: file.path !== "not_set"
 							? () => window.open(file.path, "_blank")
@@ -44,11 +44,11 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 					}) : null,
 					file ? m("i.pa1.pointer.dim", {
 						title: `Remove ${file.name}`,
-						class: getIcon(config.cancelIcn),
+						class: config.cancelIcn,
 						onclick: removeFile(value, file.guid)
 					}) : null,
 				])
 			)
-		]);
+		);
 	}
 }

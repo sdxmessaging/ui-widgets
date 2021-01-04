@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IButtonLink } from "./buttonLink";
 
-import { navClass } from "./theme";
+import { theme } from "./theme";
 import { labelIcon } from "./utils";
 
 export class NavLink implements ClassComponent<IButtonLink> {
@@ -12,7 +12,7 @@ export class NavLink implements ClassComponent<IButtonLink> {
 	} }: CVnode<IButtonLink>) {
 		return m("a.link.mh2.pa2.truncate", {
 			href, rel, target, download, title,
-			class: `${classes} ${navClass()}`, style
+			class: `${classes} ${theme.navButton}`, style
 		}, labelIcon(icon, label, rightIcon));
 	}
 

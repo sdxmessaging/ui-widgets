@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { areaCls } from "../theme";
+import { theme } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
@@ -13,17 +13,17 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			instant, uiClass = {},
 		} = field;
-		const { wrapper, inputWrapper, label: uiLabel = "", input = ""} = uiClass;
+		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),
 			m("div", {
-				class: inputWrapper
+				class: `${inputWrapper} ${theme.inputWrapper}`
 			}, m("textarea.w-100[rows=3]", {
 				id, name, title,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-				class: `${input} ${getEnabledClass(disabled, true)} ${areaCls()}`,
+				class: `${input} ${getEnabledClass(disabled, true)} ${theme.textarea}`,
 				value: value(),
 				style: { resize: "vertical" },
 				// Update value on change or input ("instant" option)

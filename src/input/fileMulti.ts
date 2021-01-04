@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { drgCls, filCls, getIcon } from "../theme";
+import { theme } from "../theme";
 import { guid } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -39,10 +39,10 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { uiClass = { } } = field;
-		const { wrapper } = uiClass;
+		const { uiClass = {} } = field;
+		const { wrapper = "" } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			m(FileInput, {
 				field,
@@ -50,24 +50,24 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value)
 			},
 				m(".pa2", {
-					class: this.dragging() ? drgCls() : filCls()
+					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
 				}, [
 					m("i.mr2", {
-						class: getIcon(config.uploadIcn)
+						class: config.uploadIcn
 					}),
 					m("span", config.addFilesTxt)
 				]
 				)
 			),
-			m(".flex.flex-column.mt1.nb1",
-				lodash.map(value(), (file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
+			m(".flex.flex-column.mt1.nb1", lodash.map(value(),
+				(file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
 					m("i.mr2", {
-						class: getIcon(config.downloadIcn)
+						class: config.downloadIcn
 					}),
 					file.name,
 					m("i.child.fr", {
 						title: `${config.remFileTtl} ${file.name}`,
-						class: getIcon(config.deleteIcn),
+						class: config.deleteIcn,
 						onclick: removeFile(value, file.guid)
 					})
 				]))

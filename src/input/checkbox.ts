@@ -4,7 +4,7 @@ import { IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
-import { getIcon, txtCls } from "../theme";
+import { theme } from "../theme";
 import { getEnabledClass, getLabelText, setCheck } from "../utils";
 
 import { CheckLabel } from "../display/checkLabel";
@@ -20,16 +20,16 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autocomplete,
 			uiClass = {}
 		} = field;
-		const { wrapper, inputWrapper } = uiClass;
+		const { wrapper = "", inputWrapper = "" } = uiClass;
 
 		return m("fieldset.pa0.bn", {
-			class: wrapper,
+			class: `${wrapper} ${theme.wrapper}`,
 		}, m("div", {
-			class: inputWrapper
+			class: `${inputWrapper} ${theme.inputWrapper}`
 		}, [
 			m("label.flex.items-center", {
 				title,
-				class: `${getEnabledClass(disabled, readonly)} ${txtCls()}`
+				class: `${getEnabledClass(disabled, readonly)} ${theme.input}`
 			},
 				m("input.clip[type=checkbox]", {
 					id, name,
@@ -40,7 +40,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				}),
 				getLabelText(label, required),
 				m("i.ml2", {
-					class: getIcon(config[value() ? this.onIcon : this.offIcon])
+					class: config[value() ? this.onIcon : this.offIcon]
 				}),
 				m(CheckLabel, { field, value })
 			)

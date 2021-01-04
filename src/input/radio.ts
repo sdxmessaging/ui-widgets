@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { actCls, classMap, getIcon, txtCls } from "../theme";
+import { theme } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
@@ -16,24 +16,24 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field as IOptionField;
 		const {
-			wrapper, label: uiLabel = "",
+			wrapper = "", label: uiLabel,
 			inputWrapper = "nl1 nt1 nr1 nb1",
 			input = "dib ma1 pa2"
 		} = uiClass;
 
 		return m("fieldset.pa0.bn", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, lbl, uiLabel, required),
 			m("div", {
-				class: `${txtCls()} ${inputWrapper}`,
+				class: `${inputWrapper} ${theme.inputWrapper}`,
 				onchange: setValue(val)
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
 				return m("label", {
 					title: label,
-					class: `${input} ${getEnabledClass(disabled, readonly)} ${checked ? actCls() : "dim"} ${classMap.btnBrd()}`
+					class: `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : ""} ${theme.radio}`
 				},
 					m("input.clip[type=radio]", {
 						name, value, checked,
@@ -41,7 +41,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 						disabled: disabled || readonly
 					}),
 					icon ? m("i.fa-fw", {
-						class: getIcon(icon)
+						class: icon
 					}) : label
 				);
 			}))

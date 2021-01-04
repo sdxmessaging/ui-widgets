@@ -2,21 +2,22 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
-import { classMap, txtCls } from "../theme";
+import { theme } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export class BaseText implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, classes = "", style } = field;
+		const { label, uiClass = {}, style } = field;
+		const { wrapper = "" } = uiClass;
 		return m(".pa2.flex.flex-wrap", {
-			class: `${classes} ${classMap.dspBrd()}`,
+			class: `${wrapper} ${theme.wrapper}`,
 			style
 		}, [
 			getDisplayLabel(label),
 			m("span.ws-normal", {
 				title: value(),
-				class: txtCls()
+				class: theme.displayValue
 			}, value())
 		]);
 	}

@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget } from "../interface/widget";
 
-import { inpCls, styleSm, styleLg } from "../theme";
+import { theme, styleSm, styleLg } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class DateInput implements ClassComponent<IPropWidget> {
@@ -52,9 +52,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		const { wrapper, inputWrapper, input = "", label: uiLabel} = uiClass;
+		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		const locale = options && options.length ? options[0].value : "en-GB";
-		const classStr = `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`;
+		const classStr = `${input} ${getEnabledClass(disabled, true)} ${theme.input}`;
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
 			getLabel(`${id}-dd`, "Day", uiLabel),
@@ -97,12 +97,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset.pa0.bn", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),
 			m("div", {
 				id, title,
-				class: inputWrapper
+				class: `${inputWrapper} ${theme.inputWrapper}`
 			}, locale === "en-US"
 				? [
 					monthInput,

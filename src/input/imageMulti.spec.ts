@@ -24,7 +24,7 @@ o.spec("ImageMulti", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 	o("single + classes", () => {
@@ -46,7 +46,7 @@ o.spec("ImageMulti", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(1);
+		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
 	o("add", (done: () => void) => {

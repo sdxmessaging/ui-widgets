@@ -3,26 +3,26 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { config } from "../config";
-import { classMap, getIcon, txtCls } from "../theme";
+import { theme } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export function linkAttrs(fieldType: FieldType | string, value: TProp) {
 	if (fieldType === "email") {
 		return {
 			href: `mailto:${value}`,
-			class: txtCls()
+			class: theme.displayValue
 		};
 	} else if (fieldType === "tel") {
 		return {
 			href: `tel:${value}`,
-			class: txtCls()
+			class: theme.displayValue
 		};
 	} else {
 		// Assume standard urls
 		return {
 			href: value,
 			target: "_blank",
-			class: txtCls()
+			class: theme.displayValue
 		};
 	}
 }
@@ -35,15 +35,16 @@ export const iconMap: Record<string, string> = {
 export class Link implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, type = FieldType.url, classes = "", style } = field;
+		const { label, type = FieldType.url, uiClass = {}, style } = field;
+		const { wrapper = "" } = uiClass;
 		return m(".pa2.flex.flex-wrap", {
-			class: `${classes} ${classMap.dspBrd()}`,
+			class: `${wrapper} ${theme.wrapper}`,
 			style
 		}, [
 			getDisplayLabel(label),
 			m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()),
 				m("i.mr2", {
-					class: getIcon(iconMap[type] || config.linkIcn)
+					class: iconMap[type] || config.linkIcn
 				}),
 				value()
 			)

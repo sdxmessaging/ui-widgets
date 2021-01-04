@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
+
 import { IOption, IOptionField, IPropWidget } from "../interface/widget";
 
 export class CheckLabel implements ClassComponent<IPropWidget> {

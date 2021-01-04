@@ -7,7 +7,7 @@ uiWidgets.updateConfig({
 });
 
 uiWidgets.updateButtonContext({
-	invert: "bg-dark-gray light-blue pa2 ba br2 b--light-blue",
+	invert: "bg-dark-gray light-blue b--light-blue",
 	warn: "bg-orange black ph3 pv2 ba br-pill b--black b--dashed"
 });
 
@@ -44,32 +44,32 @@ var imgInputList = stream([]);
 var signList = stream([]);
 var omniInputList = stream([]);
 var multiOmniInputList = stream([]);
+
 // Theme
-var lblCol = stream("silver");
-lblCol.map(function (newCls) {
-	uiWidgets.updateTheme({ lblCol: newCls });
+var themeWrapper = stream("pa0 bn");
+themeWrapper.map(function (newCls) {
+	uiWidgets.updateClasses({ wrapper: newCls });
 });
-var lblFnt = stream("f6");
-lblFnt.map(function (newCls) {
-	uiWidgets.updateTheme({ lblFnt: newCls });
+var themeLabel = stream("f6 silver");
+themeLabel.map(function (newCls) {
+	uiWidgets.updateClasses({ label: newCls });
+});
+var themeInputWrapper = stream("dark-gray");
+themeInputWrapper.map(function (newCls) {
+	uiWidgets.updateClasses({ inputWrapper: newCls });
+});
+var themeInput = stream("h2 dark-gray fw2 bg-transparent bn outline-0");
+themeInput.map(function (newCls) {
+	uiWidgets.updateClasses({ input: newCls });
 });
 
-var inpCol = stream("dark-gray");
-inpCol.map(function (newCls) {
-	uiWidgets.updateTheme({ inpCol: newCls });
+var themeBtn = stream("pa2 bn br2");
+themeBtn.map(function (newCls) {
+	uiWidgets.updateClasses({ button: newCls });
 });
-var inpBrd = stream("bn");
-inpBrd.map(function (newCls) {
-	uiWidgets.updateTheme({ inpBrd: newCls });
-});
-
-var btnBg = stream("bg-light-blue");
-btnBg.map(function (newCls) {
-	uiWidgets.updateTheme({ btnBg: newCls });
-});
-var btnBrd = stream("bn br2");
-btnBrd.map(function (newCls) {
-	uiWidgets.updateTheme({ btnBrd: newCls });
+var themeNavBtn = stream("dark-gray");
+themeNavBtn.map(function (newCls) {
+	uiWidgets.updateClasses({ navButton: newCls });
 });
 
 m.mount(document.getElementById("page"), {
@@ -79,27 +79,27 @@ m.mount(document.getElementById("page"), {
 			m(".flex.flex-column.flex-row-l.fixed.top-0.right-0.bg-near-white", [
 				m(uiWidgets.NavLink, {
 					label: "Basic Usage",
-					icon: "fa-home",
+					icon: "fas fa-home",
 					href: "#basic"
 				}),
 				m(uiWidgets.NavLink, {
 					label: "Buttons",
-					icon: "fa-arrow-circle-right",
+					icon: "fas fa-arrow-circle-right",
 					href: "#button"
 				}),
 				m(uiWidgets.NavLink, {
 					label: "Customise",
-					icon: "fa-edit",
+					icon: "fas fa-edit",
 					href: "#custom"
 				}),
 				m(uiWidgets.NavLink, {
 					label: "File Support",
-					icon: "fa-file-alt",
+					icon: "fas fa-file-alt",
 					href: "#files"
 				}),
 				m(uiWidgets.NavLink, {
 					label: "Theme Support",
-					icon: "fa-paint-roller",
+					icon: "fas fa-paint-roller",
 					href: "#theme"
 				})
 			]),
@@ -384,8 +384,8 @@ m.mount(document.getElementById("page"), {
 			m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
 				m(uiWidgets.Button, {
 					label: "Simple Button",
-					icon: "fa-arrow-circle-down",
-					rightIcon: "fa-arrow-circle-down",
+					icon: "fas fa-arrow-circle-down",
+					rightIcon: "fas fa-arrow-circle-down",
 					classes: "ma1",
 					onclick: function () {
 						console.log("Button Click");
@@ -393,13 +393,13 @@ m.mount(document.getElementById("page"), {
 				}),
 				m(uiWidgets.ButtonLink, {
 					label: "Link Button",
-					icon: "fa-link",
+					icon: "fas fa-link",
 					classes: "ma1",
 					href: "#button"
 				}),
 				m(uiWidgets.NavButton, {
 					label: "Nav Button",
-					icon: "fa-arrow-circle-up",
+					icon: "fas fa-arrow-circle-up",
 					classes: "ma1",
 					onclick: function () {
 						console.log("Nav Button Click");
@@ -407,7 +407,7 @@ m.mount(document.getElementById("page"), {
 				}),
 				m(uiWidgets.NavLink, {
 					label: "Nav Link",
-					rightIcon: "fa-link",
+					rightIcon: "fas fa-link",
 					classes: "ma1",
 					href: "#button"
 				})
@@ -418,19 +418,19 @@ m.mount(document.getElementById("page"), {
 			m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
 				m(uiWidgets.Button, {
 					label: "Inverted",
-					rightIcon: "fa-recycle",
+					rightIcon: "fas fa-recycle",
 					context: "invert",
 					classes: "ma1"
 				}),
 				m(uiWidgets.Button, {
 					label: "Warning",
-					icon: "fa-exclamation-triangle",
+					icon: "fas fa-exclamation-triangle",
 					context: "warn",
 					classes: "ma1"
 				}),
 				m(uiWidgets.ButtonLink, {
 					label: "Link Inverted",
-					icon: "fa-link",
+					icon: "fas fa-link",
 					classes: "ma1",
 					context: "invert",
 					href: "#button"
@@ -558,7 +558,7 @@ m.mount(document.getElementById("page"), {
 			]),
 			m(uiWidgets.Button, {
 				label: "Log File to Console",
-				icon: "fa-print",
+				icon: "fas fa-print",
 				classes: "mb2",
 				onclick: function () {
 					console.log(fileList()); fileList("");
@@ -631,7 +631,7 @@ m.mount(document.getElementById("page"), {
 
 			m(uiWidgets.Button, {
 				label: "Log Image Select to Console",
-				icon: "fa-print",
+				icon: "fas fa-print",
 				classes: "mb2",
 				onclick: function () {
 					console.log(imgInputList());
@@ -661,7 +661,7 @@ m.mount(document.getElementById("page"), {
 			m(uiWidgets.Badge, { label: imgList().length },
 				m(uiWidgets.Button, {
 					label: "Log Image List to Console",
-					icon: "fa-print",
+					icon: "fas fa-print",
 					classes: "mb2",
 					onclick: function () {
 						console.log(imgList());
@@ -691,7 +691,7 @@ m.mount(document.getElementById("page"), {
 			]),
 			m(uiWidgets.Button, {
 				label: "Log Signature to Console",
-				icon: "fa-print",
+				icon: "fas fa-print",
 				classes: "mb2",
 				onclick: function () {
 					console.log(signList());
@@ -704,12 +704,12 @@ m.mount(document.getElementById("page"), {
 				m("a[href=https://tachyons.io/][target=_blank]", "Tachyons css")
 			),
 
-			// Labels
+			// Buttons
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "theme-label-col",
-						label: "Label Colour",
+						id: "theme-button",
+						label: "Button",
 						uiClass: {
 							wrapper: "",
 							label: "",
@@ -717,14 +717,14 @@ m.mount(document.getElementById("page"), {
 							input: ""
 						},
 					},
-					value: lblCol
+					value: themeBtn
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "theme-label-fnt",
-						label: "Label Font"
+						id: "theme-nav-button",
+						label: "Nav Button"
 					},
-					value: lblFnt
+					value: themeNavBtn
 				}))
 			]),
 
@@ -732,35 +732,33 @@ m.mount(document.getElementById("page"), {
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "theme-input-col",
-						label: "Input Colour"
+						id: "theme-wrapper",
+						label: "Widget Wrapper"
 					},
-					value: inpCol
+					value: themeWrapper
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "theme-input-brd",
-						label: "Input Border"
+						id: "theme-label",
+						label: "Widget Label"
 					},
-					value: inpBrd
+					value: themeLabel
 				}))
 			]),
-
-			// Buttons
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "theme-button-bg",
-						label: "Button Background Colour"
+						id: "theme-input-wrapper",
+						label: "Input Wrapper"
 					},
-					value: btnBg
+					value: themeInputWrapper
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "theme-button-brd",
-						label: "Button Border"
+						id: "theme-input",
+						label: "Input"
 					},
-					value: btnBrd
+					value: themeInput
 				}))
 			]),
 
@@ -780,23 +778,23 @@ m.mount(document.getElementById("page"), {
 					options: [{
 						value: "1",
 						label: "Very unsatisfied",
-						icon: "fa-angry fa-2x"
+						icon: "fas fa-angry fa-2x"
 					}, {
 						value: "2",
 						label: "Unsatisfied",
-						icon: "fa-frown fa-2x"
+						icon: "fas fa-frown fa-2x"
 					}, {
 						value: "3",
 						label: "Neutral",
-						icon: "fa-meh fa-2x"
+						icon: "fas fa-meh fa-2x"
 					}, {
 						value: "4",
 						label: "Satisfied",
-						icon: "fa-smile fa-2x"
+						icon: "fas fa-smile fa-2x"
 					}, {
 						value: "5",
 						label: "Very satisfied",
-						icon: "fa-grin-beam fa-2x"
+						icon: "fas fa-grin-beam fa-2x"
 					}],
 				},
 				value: faceVal

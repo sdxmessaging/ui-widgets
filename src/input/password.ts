@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { getIcon, inpCls, txtCls } from "../theme";
+import { theme } from "../theme";
 import { config } from "../config";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
@@ -18,20 +18,20 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			readonly, disabled, autofocus, autocomplete,
 			instant, uiClass = {},
 		} = field;
-		const { wrapper, label: uiLabel, inputWrapper = "", input = "" } = uiClass;
+		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),
 			m("div.w-100.flex.items-center.flex-auto bg-white", {
-				class: `${txtCls()} ${inputWrapper}`,
+				class: `${inputWrapper} ${theme.inputWrapper}`
 			},
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, name, title, placeholder,
 					type: this.showPassword() ? "text" : "password",
 					maxlength, minlength, required,
 					readonly, disabled, autofocus, autocomplete,
-					class: `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`,
+					class: `${input} ${getEnabledClass(disabled, true)} ${theme.input}`,
 					value: value(),
 					// Safari quirk
 					autocorrect: "off",
@@ -40,7 +40,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				}),
 				m("i.ml1.pa1.fa-fw.pointer.dim", {
 					title: config.showPassTxt,
-					class: getIcon(this.showPassword() ? config.hidePassIcn : config.showPassIcn),
+					class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
 					onclick: () => this.showPassword(!this.showPassword())
 				})
 			)

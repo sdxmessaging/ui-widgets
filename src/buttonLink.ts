@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { getButtonContext } from "./theme";
+import { getButtonContext, theme } from "./theme";
 import { labelIcon } from "./utils";
 
 export interface IButtonLink {
@@ -24,7 +24,7 @@ export class ButtonLink implements ClassComponent<IButtonLink> {
 	} }: CVnode<IButtonLink>) {
 		return m("a.link", {
 			href, rel, target, download, title,
-			class: `${classes} ${getButtonContext(context)}`, style
+			class: `${classes} ${getButtonContext(context)} ${theme.button}`, style
 		}, labelIcon(icon, label, rightIcon));
 	}
 

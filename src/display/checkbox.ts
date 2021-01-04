@@ -4,7 +4,7 @@ import { IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
-import { classMap, dspLblCls, getIcon } from "../theme";
+import { theme } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 import { CheckLabel } from "./checkLabel";
@@ -15,14 +15,15 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 	protected offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, classes = "", style } = field;
+		const { label, uiClass = {}, style } = field;
+		const { wrapper = "" } = uiClass;
 		return m(".pa2.flex.items-center", {
-			class: `${classes} ${classMap.dspBrd()} ${dspLblCls()}`,
+			class: `${wrapper} ${theme.wrapper}`,
 			style
 		}, [
 			getDisplayLabel(label),
 			m("i", {
-				class: `${classMap.inpCol()} ${getIcon(config[value() ? this.onIcon : this.offIcon])}`
+				class: `${theme.displayValue} ${config[value() ? this.onIcon : this.offIcon]}`
 			}),
 			m(CheckLabel, { field, value })
 		]);

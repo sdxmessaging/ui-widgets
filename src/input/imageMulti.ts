@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { drgCls, filCls, getIcon, thumbMaxSize } from "../theme";
+import { theme, thumbMaxSize } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
 
 import { Button } from "../button";
@@ -41,41 +41,37 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { uiClass = {} } = field;
-		const { wrapper, inputWrapper } = uiClass;
+		const { wrapper = "" } = uiClass;
 		return m("fieldset.pa0.bn", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
-			m("div", {
-				class: inputWrapper
+			m(FileInput, {
+				field,
+				defaultAccept: "image/*",
+				dragging: this.dragging,
+				onSet: addImages(value, config.imageMaxSize)
 			},
-				m(FileInput, {
-					field,
-					defaultAccept: "image/*",
-					dragging: this.dragging,
-					onSet: addImages(value, config.imageMaxSize)
+				m(".w-100.pa1.dt.tc", {
+					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
 				},
-					m(".w-100.pa1.dt.tc", {
-						class: this.dragging() ? drgCls() : filCls()
-					},
-						m("i.fa-2x.dtc.v-mid", {
-							class: getIcon(config.cameraIcn)
+					m("i.fa-2x.dtc.v-mid", {
+						class: config.cameraIcn
+					})
+				)
+			),
+			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
+				lodash.map(value(), (file) => m(Thumbnail, {
+					src: imgSrc(file.path, file.dataUrl),
+					style: thumbMaxSize()
+				},
+					m(".absolute.top-0.right-0.child",
+						m(Button, {
+							title: `Remove ${file.name}`,
+							icon: config.deleteIcn,
+							onclick: removeFile(value, file.guid)
 						})
 					)
-				),
-				m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
-					lodash.map(value(), (file) => m(Thumbnail, {
-						src: imgSrc(file.path, file.dataUrl),
-						style: thumbMaxSize()
-					},
-						m(".absolute.top-0.right-0.child",
-							m(Button, {
-								title: `Remove ${file.name}`,
-								icon: config.deleteIcn,
-								onclick: removeFile(value, file.guid)
-							})
-						)
-					))
-				)
+				))
 			)
 		]);
 	}

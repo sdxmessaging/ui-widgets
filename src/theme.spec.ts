@@ -1,35 +1,27 @@
 const o = require("ospec");
 
-import { TThemeUpdate } from "./interface/theme";
-import { getIcon, updateTheme } from "./theme";
-import { btnClass, getButtonContext, updateButtonContext } from "./theme";
+import { theme, updateClasses } from "./theme";
+import { getButtonContext, updateButtonContext } from "./theme";
 
 o.spec("Theme", () => {
 
-	o("Default icon style", () => {
-		o(getIcon("fa-test")).equals("fas fa-test");
-	});
-
-	o("Change icon style", () => {
-		updateTheme({
-			icon: "fal"
+	o("Update", () => {
+		updateClasses({
+			label: "test"
 		});
-		o(getIcon("fa-test")).equals("fal fa-test");
-	});
-
-	o("Unknown key", () => {
-		// Do nothing
-		updateTheme({
-			unknown: "key"
-		} as Partial<TThemeUpdate>);
+		o(theme.label).equals("test");
 	});
 
 });
 
 o.spec("Button Context", () => {
 
-	o("Default/unknown", () => {
-		o(getButtonContext("unknown")).equals(btnClass());
+	o("Default", () => {
+		o(getButtonContext()).equals("bg-light-blue dark-gray");
+	});
+
+	o("Unknown", () => {
+		o(getButtonContext("unknown")).equals("");
 	});
 
 	o("Set", () => {

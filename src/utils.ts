@@ -2,7 +2,7 @@ import m from "mithril";
 
 import { IFile, TProp, TPropStream } from "./interface/widget";
 
-import { dspLblCls, getIcon, lblCls } from "./theme";
+import { theme } from "./theme";
 import { config } from "./config";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,7 +48,7 @@ export function imgSrc(path: string, dataUrl?: string): string {
 export function getDisplayLabel(label?: string) {
 	return label ? m("span.mr2.truncate", {
 		title: label,
-		class: dspLblCls()
+		class: theme.displayLabel
 	}, label) : null;
 }
 
@@ -57,18 +57,18 @@ export function getLabel(id: string, label?: string, labelClass = "", required?:
 	return label ? m("label.mb1.db", {
 		title: label,
 		for: id,
-		class: `${lblCls()} ${labelClass}`
+		class: `${labelClass} ${theme.label}`
 	}, getLabelText(label, required)) : null;
 }
 
 export function labelIcon(leftIcon?: string, label?: string, rightIcon?: string) {
 	return [
 		leftIcon ? m("i.fa-fw", {
-			class: `${label ? "mr2" : ""} ${getIcon(leftIcon)}`
+			class: `${label ? "mr2" : ""} ${leftIcon}`
 		}) : null,
 		label,
 		rightIcon ? m("i.fa-fw", {
-			class: `${label ? "ml2" : ""} ${getIcon(rightIcon)}`
+			class: `${label ? "ml2" : ""} ${rightIcon}`
 		}) : null
 	];
 }

@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget } from "../interface/widget";
 
-import { inpCls, txtCls, styleSm } from "../theme";
+import { theme, styleSm } from "../theme";
 import { getEnabledClass, getLabel, setValue } from "../utils";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
@@ -44,17 +44,17 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled,
 			uiClass = {},
 		} = field;
-		const { wrapper, label: uiLabel, inputWrapper, input = "" } = uiClass;
+		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 
-		const classStr = `${input} ${getEnabledClass(disabled, true)} ${inpCls()}`;
+		const classStr = `${input} ${getEnabledClass(disabled, true)} ${theme.input}`;
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset.bn.pa0", {
-			class: wrapper
+			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(`${id}-mm`, label, uiLabel, required),
 			m("div", {
 				title,
-				class: inputWrapper
+				class: `${inputWrapper} ${theme.inputWrapper}`
 			}, [
 				m("div.dib.mr2", [
 					getLabel(`${id}-mm`, "Month", uiLabel),
@@ -69,9 +69,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						onchange: setValue(this.month)
 					})
 				]),
-				m("span.mr2", {
-					class: txtCls()
-				}, "/"),
+				m("span.mr2", "/"),
 				m("div.dib.mr2", [
 					getLabel(`${id}-yy`, "Year", uiLabel),
 					m("input.w-100.bg-transparent.bn.outline-0", {
