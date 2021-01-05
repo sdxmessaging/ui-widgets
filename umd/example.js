@@ -1,7 +1,5 @@
 'use strict';
 
-const { timeStamp } = require("console");
-
 var stream = m.stream;
 
 uiWidgets.updateConfig({
