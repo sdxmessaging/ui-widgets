@@ -51,4 +51,20 @@ o.spec("BaseInput", () => {
 		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
+	o("hidden", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("test");
+		m.mount(root, {
+			view: () => m(BaseInput, {
+				field: {
+					id: "test",
+					type: FieldType.hidden
+				},
+				value
+			})
+		});
+		o(root.childNodes.length).equals(1);
+		o(root.firstElementChild?.classList.contains("clip")).equals(true);
+	});
+
 });

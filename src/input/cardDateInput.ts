@@ -48,7 +48,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 		const classStr = `${input} ${getEnabledClass(disabled, true)} ${theme.input}`;
 		// Assemble date input (en-GB or en-US layouts)
-		return m("fieldset.bn.pa0", {
+		return m("fieldset", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(`${id}-mm`, label, uiLabel, required),

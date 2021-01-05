@@ -62,7 +62,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			options = config.signOpts,
 			heightPct = config.signHeightPct
 		} = field as ISignField;
-		const { wrapper = "", label: uiLabel } = uiClass;
+		const { wrapper = "", label: uiLabel, inputWrapper = "" } = uiClass;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
 		};
@@ -94,11 +94,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		if (opts.length === 1 && !fileObj) {
 			this.component = opts[0].component;
 		}
-		return m("fieldset.bn.pa0.relative", {
+		return m("fieldset.relative", {
 			class: `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, lbl, uiLabel),
-			readonly || disabled
+			m("div", {
+				class: `${inputWrapper} ${theme.inputWrapper}`
+			}, readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {
 					id,
@@ -152,6 +154,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							))
 						)
 					)
+			)
 		]);
 	}
 }

@@ -1,5 +1,7 @@
 'use strict';
 
+const { timeStamp } = require("console");
+
 var stream = m.stream;
 
 uiWidgets.updateConfig({
@@ -483,6 +485,9 @@ m.mount(document.getElementById("page"), {
 							}, {
 								label: "Range",
 								value: "range"
+							}, {
+								label: "Hidden",
+								value: "hidden"
 							}]
 						},
 						value: type

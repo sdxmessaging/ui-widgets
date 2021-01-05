@@ -17,7 +17,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 		} = field;
 		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: type === FieldType.hidden ? "clip" : `${wrapper} ${theme.wrapper}`
 		}, [
 			getLabel(id, label, uiLabel, required),
 			m("div", {
