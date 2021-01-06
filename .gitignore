@@ -72,7 +72,3 @@ typings/
 
 # next.js build output
 .next
-
-# ---- ITs
-.sonar
-.scannerwork
