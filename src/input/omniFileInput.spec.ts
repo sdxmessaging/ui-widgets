@@ -35,7 +35,7 @@ o.spec("OmniFileInput", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("configured ", () => {
+	o("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -134,9 +134,8 @@ o.spec("OmniFileInput", () => {
 		const add = addOmniFiles(fileList, true);
 		// Set empty file list
 		const emptyList = ([] as unknown) as FileList;
-		add(emptyList).catch((err) => {
+		add(emptyList).then(() => {
 			o(fileList().length).equals(0);
-			o(err).equals("No file selected to upload");
 			done();
 		});
 	});

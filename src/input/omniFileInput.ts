@@ -14,7 +14,7 @@ import { removeFile } from "./fileMulti";
 export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
 	return (addList: FileList | null) => {
 		const newFileList = replace ? [] : fileList();
-		if (addList && addList.length) {
+		if (fileList && fileList.length) {
 			return Promise.all(lodash.map(addList, (file) => {
 				if (isImage(file.type)) {
 					return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
@@ -41,7 +41,7 @@ export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
 				m.redraw();
 			});
 		} else {
-			return Promise.reject("No file selected to upload");
+			return Promise.resolve();
 		}
 	};
 }
@@ -63,11 +63,12 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addOmniFiles(value, true)
 			},
-				m(".flex.items-center.pa1.dt", {
+				m(".flex.items-center.pa1", {
 					class: fileInputCls(this.dragging())
-				},
-					file?.dataUrl ? [
-						m('.w-100.tc', {},
+				}, file ? file.dataUrl
+					? [
+						// Image preview
+						m(".relative.w-100.dt.tc",
 							m("img.img.contain", {
 								title: file.name,
 								src: imgSrc(file.path, file.dataUrl),
@@ -80,24 +81,29 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 								class: config.cancelIcn
 							}))
 						)
-					] : !file?.dataUrl ? [
+					] : [
+						// Non-image details
 						m("i.pa1", {
-							class: config.uploadIcn
-						}),
-						m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
-						file ? m("i.pa1", {
 							class: getFileTypeIcon(file),
 							title: "Click to view file in new tab",
 							onclick: file.path !== "not_set"
 								? () => window.open(file.path, "_blank")
 								: undefined
-						}) : null,
-						file ? m("i.pa1.pointer.dim", {
+						}),
+						m("span.ma1.flex-auto", file.name),
+						m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
 							class: config.cancelIcn,
 							onclick: removeFile(value, file.guid)
-						}) : null
-					] : null
+						})
+					]
+					: [
+						// File upload
+						m("i.pa1", {
+							class: config.uploadIcn
+						}),
+						m("span.ma1.flex-auto", config.addFileTxt)
+					]
 				)
 			)
 		);
