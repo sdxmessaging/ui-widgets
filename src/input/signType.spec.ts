@@ -3,6 +3,8 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
+import { config } from "../config";
+
 import { SignType } from "./signType";
 import { applyText } from "./signType";
 
@@ -19,6 +21,12 @@ o.spec("SignType", () => {
 			})
 		});
 		o(root.childNodes.length).equals(2);
+		// Test reset button
+		const resetBtn = root.querySelector(`[title=${config.resetTtl}]`);
+		o(resetBtn != null).equals(true);
+		if (resetBtn) {
+			resetBtn.dispatchEvent(new Event("click"));
+		}
 		// Force onupdate
 		m.redraw.sync();
 		m.mount(root, null);

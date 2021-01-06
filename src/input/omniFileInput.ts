@@ -14,35 +14,31 @@ import { removeFile } from "./fileMulti";
 export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
 	return (addList: FileList | null) => {
 		const newFileList = replace ? [] : fileList();
-		if (fileList && fileList.length) {
-			return Promise.all(lodash.map(addList, (file) => {
-				if (isImage(file.type)) {
-					return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
-						const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
-						newFileList.push({
-							guid: guid(),
-							name: newFile.name,
-							path: "not_set",
-							file: newFile,
-							dataUrl: dataURL
-						});
-					});
-				} else {
+		return Promise.all(lodash.map(addList, (file) => {
+			if (isImage(file.type)) {
+				return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
+					const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
 					newFileList.push({
 						guid: guid(),
-						name: file.name,
+						name: newFile.name,
 						path: "not_set",
-						file: file,
+						file: newFile,
+						dataUrl: dataURL
 					});
-					return Promise.resolve();
-				}
-			})).then(() => {
-				fileList(newFileList);
-				m.redraw();
-			});
-		} else {
-			return Promise.resolve();
-		}
+				});
+			} else {
+				newFileList.push({
+					guid: guid(),
+					name: file.name,
+					path: "not_set",
+					file: file,
+				});
+				return Promise.resolve();
+			}
+		})).then(() => {
+			fileList(newFileList);
+			m.redraw();
+		});
 	};
 }
 

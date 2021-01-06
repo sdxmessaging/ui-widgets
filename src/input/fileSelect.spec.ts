@@ -51,11 +51,6 @@ o.spec("FileSelect", () => {
 		const fileList = stream<IFile[]>([]);
 		const add = addFiles(fileList, true);
 		const file = { name: "Test" };
-		// Set empty file list
-		const emptyList = ([] as unknown) as FileList;
-		add(emptyList);
-		o(fileList().length).equals(0);
-		// Set 1 file
 		const addList = ([file] as unknown) as FileList;
 		add(addList);
 		o(fileList().length).equals(1);

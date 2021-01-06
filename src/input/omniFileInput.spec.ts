@@ -129,17 +129,6 @@ o.spec("OmniFileInput", () => {
 		// }
 	});
 
-	o("set empty file list", (done: () => void) => {
-		const fileList = stream<IFile[]>([]);
-		const add = addOmniFiles(fileList, true);
-		// Set empty file list
-		const emptyList = ([] as unknown) as FileList;
-		add(emptyList).then(() => {
-			o(fileList().length).equals(0);
-			done();
-		});
-	});
-
 	o("set non-image files", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addOmniFiles(fileList, true);

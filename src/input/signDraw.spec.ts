@@ -1,6 +1,7 @@
 const o = require("ospec");
 
 import m from "mithril";
+
 import { config } from "../config";
 
 import { SignDraw } from "./signDraw";

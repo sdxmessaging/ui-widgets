@@ -15,16 +15,16 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 
 	view({ attrs: { displayType = DisplayType.thumbnail, value } }: CVnode<IDisplayWidget>): Children {
 		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
-			lodash.map(value(), (data) => m(Thumbnail, {
-				src: imgSrc(data.path, data.dataUrl),
-				data: data,
+			lodash.map(value(), (file) => m(Thumbnail, {
+				src: imgSrc(file.path, file.dataUrl),
+				data: file,
 				style: thumbMaxSize(),
 			},
 				m(".absolute.top-0.right-0.child",
 					m(Button, {
-						title: `Remove ${data.name}`,
+						title: `Remove ${file.name}`,
 						icon: config.deleteIcn,
-						onclick: removeFile(value, data.guid)
+						onclick: removeFile(value, file.guid)
 					})
 				)
 			)),
