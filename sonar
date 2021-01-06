@@ -1,0 +1,1 @@
+sonar-scanner -Dsonar.projectKey=sdxmessaging_ui-widgets -Dsonar.organization=sdxmessaging -Dsonar.sources=src -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=6567fe6d79d9ec552c60d33ed02e7de0d78b2d2d
