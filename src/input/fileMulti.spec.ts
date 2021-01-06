@@ -19,7 +19,7 @@ o.spec("FileMulti", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.fileMulti,
+					type: FieldType.fileMulti
 				},
 				value
 			})
@@ -41,6 +41,7 @@ o.spec("FileMulti", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.fileMulti,
+					uiClass: {}
 				},
 				value
 			})

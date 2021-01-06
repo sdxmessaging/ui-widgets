@@ -29,23 +29,25 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addImages(value, config.imageMaxSize, true)
 			},
-				m(".relative.w-100.pa1.dt.tc", {
+				m(".pa1", {
 					class: fileInputCls(this.dragging())
-				}, file ? [
-					m("img.img.contain", {
-						title: file.name,
-						src: imgSrc(file.path, file.dataUrl),
-						style: imgMaxSize()
-					}),
-					m(".absolute.top-0.right-0.pa1.pointer.dim", {
-						title: `Remove ${file.name}`,
-						onclick: removeFile(value, file.guid)
-					}, m("i.pa1", {
-						class: config.cancelIcn
+				},
+					m(".relative.w-100.dt.tc", file ? [
+						m("img.img.contain", {
+							title: file.name,
+							src: imgSrc(file.path, file.dataUrl),
+							style: imgMaxSize()
+						}),
+						m(".absolute.top-0.right-0.pa1.pointer.dim", {
+							title: `Remove ${file.name}`,
+							onclick: removeFile(value, file.guid)
+						}, m("i.pa1", {
+							class: config.cancelIcn
+						}))
+					] : m("i.fa-2x.dtc.v-mid", {
+						class: config.cameraIcn
 					}))
-				] : m("i.fa-2x.dtc.v-mid", {
-					class: config.cameraIcn
-				}))
+				)
 			)
 		);
 	}

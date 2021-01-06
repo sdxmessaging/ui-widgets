@@ -38,7 +38,8 @@ o.spec("FileSelect", () => {
 				field: {
 					id: "test",
 					label: "test",
-					type: FieldType.file
+					type: FieldType.file,
+					uiClass: {}
 				},
 				value
 			})
