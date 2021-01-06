@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 import { DisplayType, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { theme } from "../theme";
+import { fileInputCls, wrapperCls } from "../theme";
 
 import { DisplayTypeComponent } from "../display/displayTypeComponent";
 import { addOmniFiles } from "./omniFileInput";
@@ -17,9 +17,8 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 		field, value, displayType = DisplayType.thumbnail, showDisplay = true
 	} }: CVnode<IFileWidget>): Children {
 		const { uiClass = {} } = field;
-		const { wrapper = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
 			m(FileInput, {
 				field,
@@ -28,7 +27,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				onSet: addOmniFiles(value, false),
 			},
 				m(".flex.items-center.pa1.dt", {
-					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
+					class: fileInputCls(this.dragging())
 				}, [
 					m("i.pa1", {
 						class: config.uploadIcn

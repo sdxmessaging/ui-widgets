@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { theme, imgMaxSize } from "../theme";
+import { fileInputCls, wrapperCls, imgMaxSize } from "../theme";
 import { imgSrc } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -19,10 +19,8 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { uiClass = {} } = field;
-		const { wrapper } = uiClass;
-
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		},
 			m(FileInput, {
 				field,
@@ -32,7 +30,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize, true)
 			},
 				m(".relative.w-100.pa1.dt.tc", {
-					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
+					class: fileInputCls(this.dragging())
 				}, file ? [
 					m("img.img.contain", {
 						title: file.name,

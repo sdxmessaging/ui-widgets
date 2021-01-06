@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
-import { theme } from "../theme";
-import { getEnabledClass, getLabelText } from "../utils";
+import { getEnabledClass, inputWrapperCls, labelCls } from "../theme";
+import { getLabelText } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -62,10 +62,9 @@ export class FileInput implements ClassComponent<IFileInput> {
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {
-		const { label: uiLabel = "", inputWrapper = "" } = uiClass;
 		return m("label.db.pointer", lodash.extend({
 			for: id, title,
-			class: `${getEnabledClass(disabled, readonly)}`
+			class: getEnabledClass(disabled, readonly)
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),
@@ -78,10 +77,10 @@ export class FileInput implements ClassComponent<IFileInput> {
 				onchange: change(onSet)
 			}),
 			label ? m("span.db.mb1", {
-				class: `${uiLabel} ${theme.label}`
+				class: labelCls(uiClass)
 			}, getLabelText(label, required)) : null,
 			m("div", {
-				class: `${inputWrapper} ${theme.inputWrapper}`
+				class: inputWrapperCls(uiClass)
 			}, children)
 		]);
 	}

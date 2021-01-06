@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { config } from "../config";
-import { theme } from "../theme";
+import { theme, wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export function linkAttrs(fieldType: FieldType | string, value: TProp) {
@@ -36,9 +36,8 @@ export class Link implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, type = FieldType.url, uiClass = {}, style } = field;
-		const { wrapper = "" } = uiClass;
 		return m(".pa2.flex.flex-wrap", {
-			class: `${wrapper} ${theme.wrapper}`,
+			class: wrapperCls(uiClass),
 			style
 		}, [
 			getDisplayLabel(label),

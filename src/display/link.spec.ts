@@ -49,7 +49,7 @@ o.spec("Link", () => {
 					name: "Test Name",
 					title: "Test Title",
 					type: FieldType.tel,
-					classes: "test",
+					uiClass: {}
 				},
 				value
 			})

@@ -34,7 +34,7 @@ o.spec("SelectInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test",
+					uiClass: {},
 					disabled: true,
 					options: [{
 						value: "val"

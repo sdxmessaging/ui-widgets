@@ -1,5 +1,6 @@
 import m from "mithril";
 import { IFile, TPropStream } from "./interface/widget";
+import { IWidgetClasses } from "./interface/theme";
 declare global {
     interface Window {
         msCrypto: Crypto;
@@ -10,9 +11,8 @@ export declare function pxRatio(): number;
 export declare function getLabelText(label: string, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function getDisplayLabel(label?: string): m.Vnode<any, any> | null;
-export declare function getLabel(id: string, label?: string, labelClass?: string, required?: boolean): m.Vnode<any, any> | null;
+export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string, required?: boolean): m.Vnode<any, any> | null;
 export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?: string): (string | m.Vnode<any, any> | null | undefined)[];
-export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "" | "o-60" | "pointer";
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
 }) => string | number | boolean | import("mithril/stream")<string>;

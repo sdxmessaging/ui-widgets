@@ -35,7 +35,7 @@ o.spec("SignBuilder", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.sign,
-					classes: "custom",
+					uiClass: {},
 					options: [{
 						value: SignTypes.Draw
 					}, {

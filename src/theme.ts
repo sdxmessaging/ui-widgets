@@ -1,6 +1,7 @@
 import lodash from "lodash";
 
-import { IClassMap } from "./interface/theme";
+import { IClassMap, IWidgetClasses } from "./interface/theme";
+
 import { config } from "./config";
 
 // Class/Theme helpers
@@ -52,4 +53,38 @@ export function getButtonContext(key = "default"): string {
 	} else {
 		return "";
 	}
+}
+
+// Class string helpers
+export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses) {
+	return merge ? `${wrapper} ${theme.wrapper}` : wrapper;
+}
+
+export function labelCls({ label = "", merge = true }: IWidgetClasses) {
+	return merge ? `${label} ${theme.label}` : label;
+}
+
+export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses) {
+	return merge ? `${inputWrapper} ${theme.inputWrapper}` : inputWrapper;
+}
+
+export function inputCls({ input = "", merge = true }: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
+	return `${input} ${getEnabledClass(disabled, readonly)} ${merge ? theme.input : ""}`;
+}
+
+export function textareaCls({ input = "", merge = true }: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
+	return `${input} ${getEnabledClass(disabled, readonly)} ${merge ? theme.textarea : ""}`;
+}
+
+export function radioInputCls({ input = "", merge = true }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean) {
+	return `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : ""} ${merge ? theme.radio : ""}`;
+}
+
+export function fileInputCls(dragging: boolean) {
+	return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
+}
+
+/** Set classes to indicate widget is disabled and/or cannot be interacted with */
+export function getEnabledClass(disabled?: boolean, readonly?: boolean) {
+	return disabled ? "o-60" : readonly ? "" : "pointer";
 }

@@ -27,7 +27,7 @@ o.spec("ImageMulti", () => {
 		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
-	o("single + classes", () => {
+	o("single + uiClass", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -40,7 +40,7 @@ o.spec("ImageMulti", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.imageMulti,
-					classes: "test"
+					uiClass: {}
 				},
 				value
 			})

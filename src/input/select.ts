@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { theme } from "../theme";
-import { getEnabledClass, getLabel, setValue } from "../utils";
+import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
@@ -15,18 +15,17 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(id, lbl, uiLabel, required),
+			getLabel(id, uiClass, lbl, required),
 			m("div", {
-				class: `${inputWrapper} ${theme.inputWrapper}`
+				class: inputWrapperCls(uiClass)
 			},
 				m("select.w-100.bg-transparent.bn.outline-0", {
 					id, name, title,
 					required, readonly, disabled, autofocus, autocomplete,
-					class: `${input} ${getEnabledClass(disabled, true)} ${theme.input}`,
+					class: inputCls(uiClass, disabled, true),
 					value: val(),
 					onchange: setValue(val)
 				}, lodash.map(options, ({ value, label = value }) => m("option", {

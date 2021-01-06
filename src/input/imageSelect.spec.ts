@@ -27,7 +27,7 @@ o.spec("ImageSelect", () => {
 		o(root.childNodes.length).equals(1);
 	});
 
-	o("single + classes", () => {
+	o("single + uiClass", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -40,7 +40,7 @@ o.spec("ImageSelect", () => {
 					id: "test",
 					label: "test",
 					type: FieldType.image,
-					classes: "test"
+					uiClass: {}
 				},
 				value
 			})

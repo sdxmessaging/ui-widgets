@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { TStyle } from "./interface/theme";
 import { IMithrilEvent } from "./interface/widget";
 
-import { getButtonContext, theme } from "./theme";
-import { getEnabledClass, labelIcon } from "./utils";
+import { getEnabledClass, getButtonContext, theme } from "./theme";
+import { labelIcon } from "./utils";
 
 export interface IButton {
 	readonly label?: string;

@@ -6,7 +6,7 @@ import { TStyle } from "../interface/theme";
 import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../interface/widget";
 
 import { config } from "../config";
-import { theme } from "../theme";
+import { theme, inputWrapperCls, wrapperCls } from "../theme";
 import { dataURItoBlob, fileConstructor, getLabel, guid, imgSrc, scaleRect } from "../utils";
 
 import { SignDraw } from "./signDraw";
@@ -62,7 +62,6 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			options = config.signOpts,
 			heightPct = config.signHeightPct
 		} = field as ISignField;
-		const { wrapper = "", label: uiLabel, inputWrapper = "" } = uiClass;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
 		};
@@ -95,11 +94,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			this.component = opts[0].component;
 		}
 		return m("fieldset.relative", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(id, lbl, uiLabel),
+			getLabel(id, uiClass, lbl),
 			m("div", {
-				class: `${inputWrapper} ${theme.inputWrapper}`
+				class: inputWrapperCls(uiClass)
 			}, readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {

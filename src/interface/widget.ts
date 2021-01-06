@@ -1,6 +1,6 @@
 import stream from "mithril/stream";
 
-import { IClasses, TStyle } from "./theme";
+import { IWidgetClasses, TStyle } from "./theme";
 
 export type TProp = string | number | boolean;
 
@@ -107,9 +107,7 @@ export interface IField {
 	// Widget attributes
 	readonly instant?: boolean;
 	// TODO Phase out string classes and containerClass in favour of new IClasses
-	readonly uiClass?: IClasses;
-	readonly classes?: string;
-	readonly containerClass?: string;
+	readonly uiClass?: IWidgetClasses;
 	readonly style?: TStyle;
 	// Unsupported legacy field
 	readonly default?: string;
@@ -142,10 +140,9 @@ interface IBaseWidget {
 	readonly field: TField;
 }
 
-
 export interface IDisplayWidget {
 	readonly value: stream<IFile[]>;
-	readonly displayType?: DisplayType;	
+	readonly displayType?: DisplayType;
 }
 
 export interface IFileWidget extends IBaseWidget {

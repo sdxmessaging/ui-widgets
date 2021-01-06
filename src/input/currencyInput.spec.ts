@@ -51,7 +51,7 @@ o.spec("CurrencyInput", () => {
 					name: "Test Name",
 					title: "Test Title",
 					type: FieldType.currency,
-					classes: "test",
+					uiClass: {},
 					disabled: true,
 					instant: true,
 					options: [{

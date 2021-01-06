@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { theme } from "../theme";
-import { getEnabledClass, getLabel, setValue } from "../utils";
+import { inputWrapperCls, radioInputCls, wrapperCls } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
@@ -15,20 +15,19 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			options,
 			uiClass = {}
 		} = field as IOptionField;
-		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(id, lbl, uiLabel, required),
+			getLabel(id, uiClass, lbl, required),
 			m("div", {
-				class: `${inputWrapper} ${theme.inputWrapper}`,
+				class: inputWrapperCls(uiClass),
 				onchange: setValue(val)
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
 				return m("label.dib", {
 					title: label,
-					class: `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : ""} ${theme.radio}`
+					class: radioInputCls(uiClass, checked, disabled, readonly)
 				},
 					m("input.clip[type=radio]", {
 						name, value, checked,

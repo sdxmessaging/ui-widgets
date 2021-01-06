@@ -38,7 +38,7 @@ o.spec("DateInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test",
+					uiClass: {},
 					disabled: true,
 					options: [{ value: "en-US" }]
 				},

@@ -2,8 +2,9 @@ import m from "mithril";
 
 import { IFile, TProp, TPropStream } from "./interface/widget";
 
-import { theme } from "./theme";
+import { labelCls, theme } from "./theme";
 import { config } from "./config";
+import { IWidgetClasses } from "./interface/theme";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare global {
@@ -53,11 +54,11 @@ export function getDisplayLabel(label?: string) {
 }
 
 // Used by input widgets
-export function getLabel(id: string, label?: string, labelClass = "", required?: boolean) {
+export function getLabel(id: string, uiClass: IWidgetClasses, label?: string, required?: boolean) {
 	return label ? m("label.mb1.db", {
 		title: label,
 		for: id,
-		class: `${labelClass} ${theme.label}`
+		class: labelCls(uiClass),
 	}, getLabelText(label, required)) : null;
 }
 
@@ -71,11 +72,6 @@ export function labelIcon(leftIcon?: string, label?: string, rightIcon?: string)
 			class: `${label ? "ml2" : ""} ${rightIcon}`
 		}) : null
 	];
-}
-
-// Common to interactive widgets
-export function getEnabledClass(disabled?: boolean, readonly?: boolean) {
-	return disabled ? "o-60" : readonly ? "" : "pointer";
 }
 
 // Input widget TProp update helpers

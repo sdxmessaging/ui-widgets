@@ -34,7 +34,7 @@ o.spec("BaseText", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test"
+					uiClass: {}
 				},
 				value
 			})

@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { theme } from "../theme";
+import { fileInputCls, wrapperCls } from "../theme";
 
 import { FileInput } from "./fileInput";
 import { addFiles, removeFile } from "./fileMulti";
@@ -18,9 +18,8 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { uiClass = {} } = field;
-		const { wrapper = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		},
 			m(FileInput, {
 				field,
@@ -29,7 +28,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value, true)
 			},
 				m(".flex.items-center.pa1", {
-					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
+					class: fileInputCls(this.dragging())
 				}, [
 					m("i.pa1", {
 						class: config.uploadIcn

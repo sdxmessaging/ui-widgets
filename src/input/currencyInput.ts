@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { theme } from "../theme";
-import { getEnabledClass, getLabel } from "../utils";
+import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { getLabel } from "../utils";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -17,15 +17,13 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {},
 			options
 		} = field as IOptionField;
-		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
-
 		const currency = options && options.length ? options[0].value : "$";
 		return m("fieldset.flex-shrink-0", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(id, label, uiLabel, required),
-			m("div.flex.items-center", {
-				class: `${inputWrapper} ${theme.inputWrapper}`
+			getLabel(id, uiClass, label, required),
+			m(".flex.items-center", {
+				class: inputWrapperCls(uiClass)
 			},
 				m("span.mr1", currency),
 				m("input.w-100.bg-transparent.bn.outline-0", {
@@ -33,7 +31,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 					max, maxlength, min, minlength, step, required,
 					readonly, disabled, autofocus, autocomplete,
 					pattern, inputmode, spellcheck,
-					class: `${input} ${getEnabledClass(disabled, true)} ${theme.input}`,
+					class: inputCls(uiClass, disabled, true),
 					value: lodash.isUndefined(xform())
 						? null
 						: numberToCurrencyStr(propToNumber(xform())),

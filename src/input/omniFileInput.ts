@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { imgMaxSize, theme } from "../theme";
+import { fileInputCls, wrapperCls, imgMaxSize } from "../theme";
 import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage, getFileTypeIcon } from "../utils";
 
 import { FileInput } from "./fileInput";
@@ -53,9 +53,8 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { uiClass = {} } = field;
-		const { wrapper = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		},
 			m(FileInput, {
 				field,
@@ -65,7 +64,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 				onSet: addOmniFiles(value, true)
 			},
 				m(".flex.items-center.pa1.dt", {
-					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
+					class: fileInputCls(this.dragging())
 				},
 					file?.dataUrl ? [
 						m('.w-100.tc', {},

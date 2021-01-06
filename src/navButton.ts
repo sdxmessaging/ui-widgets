@@ -2,8 +2,8 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IButton } from "./button";
 
-import { theme } from "./theme";
-import { getEnabledClass, labelIcon } from "./utils";
+import { getEnabledClass, theme } from "./theme";
+import { labelIcon } from "./utils";
 
 export class NavButton implements ClassComponent<IButton> {
 

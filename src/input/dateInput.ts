@@ -4,8 +4,8 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget } from "../interface/widget";
 
-import { theme, styleSm, styleLg } from "../theme";
-import { getEnabledClass, getLabel, setValue } from "../utils";
+import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class DateInput implements ClassComponent<IPropWidget> {
 
@@ -52,12 +52,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		const locale = options && options.length ? options[0].value : "en-GB";
-		const classStr = `${input} ${getEnabledClass(disabled, true)} ${theme.input}`;
+		const classStr = inputCls(uiClass, disabled, true);
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
-			getLabel(`${id}-dd`, "Day", uiLabel),
+			getLabel(`${id}-dd`, uiClass, "Day"),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -70,7 +69,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const monthInput = m(".dib.mr2", [
-			getLabel(`${id}-mm`, "Month", uiLabel),
+			getLabel(`${id}-mm`, uiClass, "Month"),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -83,7 +82,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const yearInput = m(".dib.mr2", [
-			getLabel(`${id}-yyyy`, "Year", uiLabel),
+			getLabel(`${id}-yyyy`, uiClass, "Year"),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
@@ -97,12 +96,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(id, label, uiLabel, required),
+			getLabel(id, uiClass, label, required),
 			m("div", {
 				id, title,
-				class: `${inputWrapper} ${theme.inputWrapper}`
+				class: inputWrapperCls(uiClass)
 			}, locale === "en-US"
 				? [
 					monthInput,

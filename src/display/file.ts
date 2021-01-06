@@ -4,16 +4,15 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { theme } from "../theme";
+import { theme, wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export class FileList implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const { label, uiClass = {}, style } = field;
-		const { wrapper = "" } = uiClass;
 		return m(".pa2.flex.flex-column", {
-			class: `${wrapper} ${theme.wrapper}`,
+			class: wrapperCls(uiClass),
 			style
 		}, [
 			getDisplayLabel(label),

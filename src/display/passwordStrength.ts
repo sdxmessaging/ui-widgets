@@ -88,9 +88,8 @@ export class PasswordStrength implements ClassComponent<IPropWidget> {
 	}
 
 	public view({ attrs: { field } }: CVnode<IPropWidget>) {
-		const { label, classes = "", style } = field;
+		const { label, style } = field;
 		return m(".flex.flex-column", {
-			class: classes,
 			style
 		}, [
 			getDisplayLabel(label),

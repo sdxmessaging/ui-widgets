@@ -3,9 +3,9 @@ import stream from "mithril/stream";
 
 import { IPropWidget, TProp } from "../interface/widget";
 
-import { theme } from "../theme";
 import { config } from "../config";
-import { getEnabledClass, getLabel, setValue } from "../utils";
+import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { getLabel, setValue } from "../utils";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
@@ -18,20 +18,19 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			readonly, disabled, autofocus, autocomplete,
 			instant, uiClass = {},
 		} = field;
-		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(id, label, uiLabel, required),
+			getLabel(id, uiClass, label, required),
 			m("div.w-100.flex.items-center", {
-				class: `${inputWrapper} ${theme.inputWrapper}`
+				class: inputWrapperCls(uiClass)
 			},
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, name, title, placeholder,
 					type: this.showPassword() ? "text" : "password",
 					maxlength, minlength, required,
 					readonly, disabled, autofocus, autocomplete,
-					class: `${input} ${getEnabledClass(disabled, true)} ${theme.input}`,
+					class: inputCls(uiClass, disabled, true),
 					value: value(),
 					// Safari quirk
 					autocorrect: "off",

@@ -1,5 +1,5 @@
 import stream from "mithril/stream";
-import { IClasses, TStyle } from "./theme";
+import { IWidgetClasses, TStyle } from "./theme";
 export declare type TProp = string | number | boolean;
 export declare type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
 export interface IFile {
@@ -68,9 +68,7 @@ export interface IField {
     readonly spellcheck?: boolean;
     readonly accept?: string;
     readonly instant?: boolean;
-    readonly uiClass?: IClasses;
-    readonly classes?: string;
-    readonly containerClass?: string;
+    readonly uiClass?: IWidgetClasses;
     readonly style?: TStyle;
     readonly default?: string;
 }

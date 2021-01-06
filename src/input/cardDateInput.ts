@@ -3,8 +3,9 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget } from "../interface/widget";
 
-import { theme, styleSm } from "../theme";
-import { getEnabledClass, getLabel, setValue } from "../utils";
+import { inputCls, inputWrapperCls, wrapperCls, styleSm } from "../theme";
+
+import { getLabel, setValue } from "../utils";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
@@ -44,20 +45,18 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled,
 			uiClass = {},
 		} = field;
-		const { wrapper = "", label: uiLabel, inputWrapper = "", input = "" } = uiClass;
-
-		const classStr = `${input} ${getEnabledClass(disabled, true)} ${theme.input}`;
+		const classStr = inputCls(uiClass, disabled, true);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
-			getLabel(`${id}-mm`, label, uiLabel, required),
+			getLabel(`${id}-mm`, uiClass, label, required),
 			m("div", {
 				title,
-				class: `${inputWrapper} ${theme.inputWrapper}`
+				class: inputWrapperCls(uiClass)
 			}, [
 				m("div.dib.mr2", [
-					getLabel(`${id}-mm`, "Month", uiLabel),
+					getLabel(`${id}-mm`, uiClass, "Month"),
 					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-mm`, name: `${name}-mm`,
 						type: FieldType.text, placeholder: "MM",
@@ -71,7 +70,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				]),
 				m("span.mr2", "/"),
 				m("div.dib.mr2", [
-					getLabel(`${id}-yy`, "Year", uiLabel),
+					getLabel(`${id}-yy`, uiClass, "Year"),
 					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-yy`, name: `${name}-yy`,
 						type: FieldType.text, placeholder: "YY",

@@ -24,12 +24,12 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 					m(Button, {
 						title: `Remove ${data.name}`,
 						icon: config.deleteIcn,
-						onclick: removeFile(value, data.guid),
+						onclick: removeFile(value, data.guid)
 					})
 				)
 			)),
-		) : displayType === DisplayType.list ? m(".pa2.flex.flex-column",
-			lodash.map(value(), (data) => m(".flex.items-center.pa1.ba.b--black-20", {}, [
+		) : m(".pa2.flex.flex-column",
+			lodash.map(value(), (data) => m(".flex.items-center.pa1.ba.b--black-20", [
 				m("i.pa1", {
 					class: config.uploadIcn
 				}),
@@ -45,8 +45,8 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 					title: `Remove ${data.name}`,
 					class: config.cancelIcn,
 					onclick: removeFile(value, data.guid)
-				}) : null,
-			])),
-		) : null;
+				}) : null
+			]))
+		);
 	}
 }

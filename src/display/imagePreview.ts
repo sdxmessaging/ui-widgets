@@ -4,17 +4,16 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { theme, imgMaxSize } from "../theme";
+import { imgMaxSize, theme, wrapperCls } from "../theme";
 import { getDisplayLabel, imgSrc } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const { label, uiClass = {}, style } = field;
-		const { wrapper = "" } = uiClass;
 		const file = lodash.head(value());
 		return m(".pa2.flex.flex-column", {
-			class: `${wrapper} ${theme.wrapper}`,
+			class: wrapperCls(uiClass),
 			style
 		}, [
 			getDisplayLabel(label),

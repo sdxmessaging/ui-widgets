@@ -34,7 +34,7 @@ o.spec("TextareaInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test",
+					uiClass: {},
 					required: true,
 					instant: true
 				},

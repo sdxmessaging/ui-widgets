@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { theme, thumbMaxSize } from "../theme";
+import { fileInputCls, wrapperCls, thumbMaxSize } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
 
 import { Button } from "../button";
@@ -41,9 +41,8 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { uiClass = {} } = field;
-		const { wrapper = "" } = uiClass;
 		return m("fieldset", {
-			class: `${wrapper} ${theme.wrapper}`
+			class: wrapperCls(uiClass)
 		}, [
 			m(FileInput, {
 				field,
@@ -52,7 +51,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize)
 			},
 				m(".w-100.pa1.dt.tc", {
-					class: `${theme.fileInput} ${this.dragging() ? theme.fileHover : ""}`
+					class: fileInputCls(this.dragging())
 				},
 					m("i.fa-2x.dtc.v-mid", {
 						class: config.cameraIcn

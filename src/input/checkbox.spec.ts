@@ -33,8 +33,7 @@ o.spec("CheckboxInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test",
-					containerClass: "test",
+					uiClass: {},
 					disabled: true
 				},
 				value

@@ -34,7 +34,7 @@ o.spec("PasswordInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test",
+					uiClass: {},
 					disabled: true,
 					instant: true
 				},

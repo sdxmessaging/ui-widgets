@@ -4,7 +4,7 @@ import { IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
-import { theme } from "../theme";
+import { theme, wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 import { CheckLabel } from "./checkLabel";
@@ -16,9 +16,8 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, uiClass = {}, style } = field;
-		const { wrapper = "" } = uiClass;
 		return m(".pa2.flex.items-center", {
-			class: `${wrapper} ${theme.wrapper}`,
+			class: wrapperCls(uiClass),
 			style
 		}, [
 			getDisplayLabel(label),

@@ -37,7 +37,7 @@ o.spec("SelectText", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					classes: "test",
+					uiClass: {},
 					options: [{
 						value: "val",
 						label: "label"
