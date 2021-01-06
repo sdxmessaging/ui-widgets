@@ -36,10 +36,10 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					disabled: disabled || readonly,
 					onchange: setCheck(value),
 				}),
-				getLabelText(label, required),
-				m("i.ml2", {
+				m("i.mr2", {
 					class: config[value() ? this.onIcon : this.offIcon]
 				}),
+				getLabelText(label, required),
 				m(CheckLabel, { field, value })
 			)
 		]));
