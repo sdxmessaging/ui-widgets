@@ -338,9 +338,8 @@ export function getFileTypeIcon(file: IFile) {
 		case '.f4a':
 		case '.f4b':
 			return config.videoFileIcn;
-		case '.pdf': {
+		case '.pdf':
 			return config.pdfFileIcn;
-		}
 		case '.pcm':
 		case '.wav':
 		case '.aiff':
@@ -364,7 +363,6 @@ export function getFileTypeIcon(file: IFile) {
 		case '.xll':
 		case '.xlw':
 			return config.excelFileIcn;
-
 		case '.html':
 		case '.js':
 		case '.css':

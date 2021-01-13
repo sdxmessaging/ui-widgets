@@ -26,10 +26,12 @@ const classMapState: IClassMap = {
 	textarea: "dark-gray fw2",
 	radio: "dark-gray pa2 br2",
 	radioChecked: "bg-light-blue",
+	radioUnchecked: "o-60",
 	fileInput: "dark-gray ba bw1 br3 b--dashed b--black-30",
 	fileHover: "blue b--blue",
 	displayLabel: "silver",
-	displayValue: "dark-gray"
+	displayValue: "dark-gray",
+	inputDisabled: "o-60"
 };
 
 export const theme: Readonly<IClassMap> = classMapState;
@@ -77,7 +79,7 @@ export function textareaCls({ input = "", merge = true }: IWidgetClasses, disabl
 }
 
 export function radioInputCls({ input = "", merge = true }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean) {
-	return `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : ""} ${merge ? theme.radio : ""}`;
+	return `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : theme.radioUnchecked} ${merge ? theme.radio : ""}`;
 }
 
 export function fileInputCls(dragging: boolean) {
@@ -86,5 +88,5 @@ export function fileInputCls(dragging: boolean) {
 
 /** Set classes to indicate widget is disabled and/or cannot be interacted with */
 export function getEnabledClass(disabled?: boolean, readonly?: boolean) {
-	return disabled ? "o-60" : readonly ? "" : "pointer";
+	return disabled ? theme.inputDisabled : readonly ? "" : "pointer";
 }

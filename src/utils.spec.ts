@@ -1,5 +1,6 @@
 const o = require("ospec");
 
+import lodash from "lodash";
 import stream from "mithril/stream";
 import { TProp } from "./interface/widget";
 
@@ -13,7 +14,8 @@ import {
 	rotateContext,
 	scaleRect,
 	setCheck,
-	setValue
+	setValue,
+	getFileTypeIcon
 } from "./utils";
 
 o.spec("Utils", () => {
@@ -175,6 +177,32 @@ o.spec("Canvas rotation", () => {
 		rotateContext(mockContext, 1, 1, 6);
 		rotateContext(mockContext, 1, 1, 7);
 		rotateContext(mockContext, 1, 1, 8);
+	});
+
+});
+
+o.spec("File icon", () => {
+
+	o("common extensions", () => {
+		lodash.each([
+			".doc", ".docx", ".dot", ".wbk", ".docm", ".dotx", ".dotm", ".docb",
+			".txt", ".webm", ".mkv", ".flv", ".vob", ".ogv", ".drc", ".gifv",
+			".mng", ".avi", ".mts", ".m2ts", ".mov", ".qt", ".wmv", ".yuv",
+			".rm", ".rmvb", ".viv", ".asf", ".amv", ".mp4", ".m4p", ".m4v",
+			".mpg", ".mp2", ".mpeg", ".mpe", ".mpv", ".m2v", ".svi", ".3gp",
+			".mxf", ".roq", ".nsv", ".f4v", ".f4p", ".f4a", ".f4b", ".pdf",
+			".pcm", ".wav", ".aiff", ".mp3", ".aac", ".ogg", ".wma", ".flac",
+			".alac", ".xls", ".xlt", ".xlm", ".xlsx", ".xlsm", ".xltx", ".xltm",
+			".xlsb", ".xla", ".xlam", ".xll", ".xlw", ".html", ".js", ".css",
+			".scss", ".java", ".jpg", ".jpeg", ".png", ".tiff", ".gif", ".svg",
+			".webp"
+		], (ext) => {
+			o(getFileTypeIcon({
+				guid: "test",
+				name: "test" + ext,
+				path: "test"
+			}).length > 0).equals(true);
+		});
 	});
 
 });

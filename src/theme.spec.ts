@@ -7,7 +7,6 @@ import {
 	inputCls, fileInputCls, textareaCls, radioInputCls,
 	inputWrapperCls, wrapperCls
 } from "./theme";
-// import { getEnabledClass } from "./theme";
 
 o.spec("Theme", () => {
 
@@ -67,7 +66,7 @@ o.spec("Theme Classes", () => {
 	});
 
 	o("radioInputCls", () => {
-		o(radioInputCls({}, false)).equals(` pointer  ${theme.radio}`);
+		o(radioInputCls({}, false)).equals(` pointer ${theme.radioUnchecked} ${theme.radio}`);
 		o(radioInputCls({ input: "test", merge: false }, true)).equals(`test pointer ${theme.radioChecked} `);
 	});
 

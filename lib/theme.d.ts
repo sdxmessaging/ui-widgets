@@ -23,4 +23,4 @@ export declare function textareaCls({ input, merge }: IWidgetClasses, disabled?:
 export declare function radioInputCls({ input, merge }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean): string;
 export declare function fileInputCls(dragging: boolean): string;
 /** Set classes to indicate widget is disabled and/or cannot be interacted with */
-export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): "" | "o-60" | "pointer";
+export declare function getEnabledClass(disabled?: boolean, readonly?: boolean): string | undefined;

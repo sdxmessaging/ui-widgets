@@ -17,17 +17,15 @@ export class FileList implements ClassComponent<IFileWidget> {
 		}, [
 			getDisplayLabel(label),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(), ({ name, path }) => {
-				return m(".ba.b--black-20", {
-					class: theme.displayValue
-				}, [
-					m("a.pa2.mv1.link.b--black-20.dim.dib.pointer[target=_blank]",
-						m("i.mr2", {
-							href: path,
-							class: config.downloadIcn
-						}),
-						name
-					)
-				]);
+				return m("a.pa2.mv1.link.ba.b--black-20.dim.dib.pointer[target=_blank]", {
+					class: theme.displayValue,
+					href: path
+				},
+					m("i.mr2", {
+						class: config.downloadIcn
+					}),
+					name
+				);
 			}))
 		]);
 	}

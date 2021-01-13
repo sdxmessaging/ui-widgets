@@ -29,6 +29,8 @@ export interface IClassMap extends IClasses {
 	readonly radio?: string;
 	/** Classes for selected radio option */
 	readonly radioChecked?: string;
+	/** Classes for deselected radio option */
+	readonly radioUnchecked?: string;
 	/** Classes for file "drop zone" */
 	readonly fileInput?: string;
 	/** Classes for file "drop zone" when dragging a file over it */
@@ -37,4 +39,6 @@ export interface IClassMap extends IClasses {
 	readonly displayLabel?: string;
 	/** Classes for display widget value */
 	readonly displayValue?: string;
+	/** Classes applied to any disabled input */
+	readonly inputDisabled?: string;
 }
