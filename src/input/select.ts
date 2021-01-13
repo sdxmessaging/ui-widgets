@@ -16,7 +16,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, lbl, required),
 			m("div", {
@@ -25,7 +25,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 				m("select.w-100.bg-transparent.bn.outline-0", {
 					id, name, title,
 					required, readonly, disabled, autofocus, autocomplete,
-					class: inputCls(uiClass, disabled, true),
+					class: inputCls(uiClass),
 					value: val(),
 					onchange: setValue(val)
 				}, lodash.map(options, ({ value, label = value }) => m("option", {

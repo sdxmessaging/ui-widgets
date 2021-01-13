@@ -2,12 +2,12 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 export declare function linkAttrs(fieldType: FieldType | string, value: TProp): {
     href: string;
-    class: string | undefined;
+    class: string;
     target?: undefined;
 } | {
     href: string | number | boolean;
     target: string;
-    class: string | undefined;
+    class: string;
 };
 export declare const iconMap: Record<string, string>;
 export declare class Link implements ClassComponent<IPropWidget> {

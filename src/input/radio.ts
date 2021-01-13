@@ -16,7 +16,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field as IOptionField;
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, lbl, required),
 			m("div", {

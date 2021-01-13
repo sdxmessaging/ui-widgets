@@ -16,9 +16,9 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 	public view({ attrs: {
 		field, value, displayType = DisplayType.thumbnail, showDisplay = true
 	} }: CVnode<IFileWidget>): Children {
-		const { uiClass = {} } = field;
+		const { disabled, uiClass = {} } = field;
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			m(FileInput, {
 				field,

@@ -17,9 +17,9 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
-		const { uiClass = {} } = field;
+		const { disabled, uiClass = {} } = field;
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		},
 			m(FileInput, {
 				field,

@@ -94,7 +94,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			this.component = opts[0].component;
 		}
 		return m("fieldset.relative", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, lbl),
 			m("div", {

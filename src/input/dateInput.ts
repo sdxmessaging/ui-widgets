@@ -53,7 +53,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const locale = options && options.length ? options[0].value : "en-GB";
-		const classStr = inputCls(uiClass, disabled, true);
+		const classStr = inputCls(uiClass);
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2", [
 			getLabel(`${id}-dd`, uiClass, "Day"),
@@ -96,7 +96,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, label, required),
 			m("div", {

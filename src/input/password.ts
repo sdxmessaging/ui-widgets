@@ -19,7 +19,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {},
 		} = field;
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, label, required),
 			m("div.w-100.flex.items-center", {
@@ -30,7 +30,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 					type: this.showPassword() ? "text" : "password",
 					maxlength, minlength, required,
 					readonly, disabled, autofocus, autocomplete,
-					class: inputCls(uiClass, disabled, true),
+					class: inputCls(uiClass),
 					value: value(),
 					// Safari quirk
 					autocorrect: "off",

@@ -16,7 +16,7 @@ export const styleSm = { "max-width": "5.4ex" };
 export const styleLg = { "max-width": "9ex" };
 
 // ui-widgets 1.4 theme map
-const classMapState: IClassMap = {
+const classMapState: Required<IClassMap> = {
 	wrapper: "pa0 bn",
 	label: "f6 silver",
 	inputWrapper: "dark-gray",
@@ -31,10 +31,10 @@ const classMapState: IClassMap = {
 	fileHover: "blue b--blue",
 	displayLabel: "silver",
 	displayValue: "dark-gray",
-	inputDisabled: "o-60"
+	inputDisabled: "o-40"
 };
 
-export const theme: Readonly<IClassMap> = classMapState;
+export const theme: Readonly<typeof classMapState> = classMapState;
 
 export function updateClasses(newConfig: Partial<IClassMap>) {
 	lodash.assign(classMapState, newConfig);
@@ -58,35 +58,38 @@ export function getButtonContext(key = "default"): string {
 }
 
 // Class string helpers
-export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses) {
-	return merge ? `${wrapper} ${theme.wrapper}` : wrapper;
+export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disabled?: boolean) {
+	return `${wrapper} ${merge ? theme.wrapper : ""} ${disabled ? theme.inputDisabled : ""}`;
 }
 
 export function labelCls({ label = "", merge = true }: IWidgetClasses) {
-	return merge ? `${label} ${theme.label}` : label;
+	return `${label} ${merge ? theme.label : ""}`;
 }
 
 export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses) {
-	return merge ? `${inputWrapper} ${theme.inputWrapper}` : inputWrapper;
+	return `${inputWrapper} ${merge ? theme.inputWrapper : ""}`;
 }
 
-export function inputCls({ input = "", merge = true }: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
-	return `${input} ${getEnabledClass(disabled, readonly)} ${merge ? theme.input : ""}`;
+export function inputCls({ input = "", merge = true }: IWidgetClasses) {
+	return `${input} ${merge ? theme.input : ""}`;
 }
 
-export function textareaCls({ input = "", merge = true }: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
-	return `${input} ${getEnabledClass(disabled, readonly)} ${merge ? theme.textarea : ""}`;
+export function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
+	return `${inputCls(uiClass)} ${pointerCls(disabled, readonly)}`;
+}
+
+export function textareaCls({ input = "", merge = true }: IWidgetClasses) {
+	return `${input} ${merge ? theme.textarea : ""}`;
 }
 
 export function radioInputCls({ input = "", merge = true }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean) {
-	return `${input} ${getEnabledClass(disabled, readonly)} ${checked ? theme.radioChecked : theme.radioUnchecked} ${merge ? theme.radio : ""}`;
+	return `${input} ${merge ? theme.radio : ""} ${checked ? theme.radioChecked : theme.radioUnchecked} ${pointerCls(disabled, readonly)}`;
 }
 
 export function fileInputCls(dragging: boolean) {
 	return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
 }
 
-/** Set classes to indicate widget is disabled and/or cannot be interacted with */
-export function getEnabledClass(disabled?: boolean, readonly?: boolean) {
-	return disabled ? theme.inputDisabled : readonly ? "" : "pointer";
+export function pointerCls(disabled?: boolean, readonly?: boolean) {
+	return disabled || readonly ? "" : "pointer";
 }

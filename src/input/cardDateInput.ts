@@ -45,10 +45,10 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled,
 			uiClass = {},
 		} = field;
-		const classStr = inputCls(uiClass, disabled, true);
+		const classStr = inputCls(uiClass);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(`${id}-mm`, uiClass, label, required),
 			m("div", {

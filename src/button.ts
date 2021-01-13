@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { TStyle } from "./interface/theme";
 import { IMithrilEvent } from "./interface/widget";
 
-import { getEnabledClass, getButtonContext, theme } from "./theme";
+import { getButtonContext, theme } from "./theme";
 import { labelIcon } from "./utils";
 
 export interface IButton {
@@ -26,7 +26,8 @@ export class Button implements ClassComponent<IButton> {
 	} }: CVnode<IButton>) {
 		return m("button.button-reset", {
 			type, title, disabled,
-			class: `${classes} ${getEnabledClass(disabled)} ${getButtonContext(context)} ${theme.button}`, style,
+			class: `${classes} ${disabled ? theme.inputDisabled : "pointer"} ${getButtonContext(context)} ${theme.button}`,
+			style,
 			onclick
 		}, labelIcon(icon, label, rightIcon));
 	}

@@ -47,12 +47,12 @@ o.spec("Theme Classes", () => {
 
 	o("labelCls", () => {
 		o(labelCls({})).equals(` ${theme.label}`);
-		o(labelCls({ label: "test", merge: false })).equals("test");
+		o(labelCls({ label: "test", merge: false })).equals("test ");
 	});
 
 	o("inputCls", () => {
-		o(inputCls({})).equals(` pointer ${theme.input}`);
-		o(inputCls({ input: "test", merge: false })).equals("test pointer ");
+		o(inputCls({})).equals(` ${theme.input}`);
+		o(inputCls({ input: "test", merge: false })).equals("test ");
 	});
 
 	o("fileInputCls", () => {
@@ -61,23 +61,23 @@ o.spec("Theme Classes", () => {
 	});
 
 	o("textareaCls", () => {
-		o(textareaCls({})).equals(` pointer ${theme.textarea}`);
-		o(textareaCls({ input: "test", merge: false })).equals("test pointer ");
+		o(textareaCls({})).equals(` ${theme.textarea}`);
+		o(textareaCls({ input: "test", merge: false })).equals("test ");
 	});
 
 	o("radioInputCls", () => {
-		o(radioInputCls({}, false)).equals(` pointer ${theme.radioUnchecked} ${theme.radio}`);
-		o(radioInputCls({ input: "test", merge: false }, true)).equals(`test pointer ${theme.radioChecked} `);
+		o(radioInputCls({}, false)).equals(` ${theme.radio} ${theme.radioUnchecked} pointer`);
+		o(radioInputCls({ input: "test", merge: false }, true)).equals(`test  ${theme.radioChecked} pointer`);
 	});
 
 	o("inputWrapper", () => {
 		o(inputWrapperCls({})).equals(` ${theme.inputWrapper}`);
-		o(inputWrapperCls({ inputWrapper: "test", merge: false })).equals("test");
+		o(inputWrapperCls({ inputWrapper: "test", merge: false })).equals("test ");
 	});
 
 	o("wrapperCls", () => {
-		o(wrapperCls({})).equals(` ${theme.wrapper}`);
-		o(wrapperCls({ wrapper: "test", merge: false })).equals("test");
+		o(wrapperCls({})).equals(` ${theme.wrapper} `);
+		o(wrapperCls({ wrapper: "test", merge: false })).equals("test  ");
 	});
 
 });

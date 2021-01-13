@@ -16,7 +16,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {}
 		} = field;
 		return m("fieldset", {
-			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass)
+			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, label, required),
 			m("div", {
@@ -26,7 +26,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
-				class: inputCls(uiClass, disabled, true),
+				class: inputCls(uiClass),
 				value: xform(),
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)

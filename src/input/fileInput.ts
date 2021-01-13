@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
-import { getEnabledClass, inputWrapperCls, labelCls } from "../theme";
+import { inputWrapperCls, labelCls, pointerCls } from "../theme";
 import { getLabelText } from "../utils";
 
 export interface IFileInput {
@@ -62,9 +62,9 @@ export class FileInput implements ClassComponent<IFileInput> {
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {
-		return m("label.db.pointer", lodash.extend({
+		return m("label.db", lodash.extend({
 			for: id, title,
-			class: getEnabledClass(disabled, readonly)
+			class: pointerCls(disabled, readonly)
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),

@@ -40,9 +40,9 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { uiClass = {} } = field;
+		const { disabled, uiClass = {} } = field;
 		return m("fieldset", {
-			class: wrapperCls(uiClass)
+			class: wrapperCls(uiClass, disabled)
 		}, [
 			m(FileInput, {
 				field,

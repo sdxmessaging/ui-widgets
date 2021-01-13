@@ -391,6 +391,12 @@ m.mount(document.getElementById("page"), {
 						console.log("Button Click");
 					}
 				}),
+				m(uiWidgets.Button, {
+					label: "Disabled Button",
+					classes: "ma1",
+					disabled: true
+					// onclick event will not fire on a disabled button
+				}),
 				m(uiWidgets.ButtonLink, {
 					label: "Link Button",
 					icon: "fas fa-link",
@@ -511,18 +517,7 @@ m.mount(document.getElementById("page"), {
 							label: "Disabled"
 						},
 						value: disabled
-					})),
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.ToggleInput, {
-						field: {
-							id: "custom-toggle",
-							label: "Disabled Toggle",
-							options: [{
-								label: "Disabled",
-								value: true
-							}]
-						},
-						value: disabled
-					})),
+					}))
 				]),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {

@@ -4,7 +4,7 @@ import { IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
-import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
 import { CheckLabel } from "../display/checkLabel";
@@ -21,13 +21,13 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		return m("fieldset", {
-			class: wrapperCls(uiClass),
+			class: wrapperCls(uiClass, disabled),
 		}, m("div", {
 			class: inputWrapperCls(uiClass)
 		}, [
 			m("label.flex.items-center", {
 				title,
-				class: inputCls(uiClass, disabled, readonly)
+				class: checkInputCls(uiClass, disabled, readonly)
 			},
 				m("input.clip[type=checkbox]", {
 					id, name,
