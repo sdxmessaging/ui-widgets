@@ -22,11 +22,14 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 	public view({ attrs: { heightPct, onSet } }: CVnode<ISignWidget>): Children {
 		return [
 			m("span.clip", { style: { "font-family": config.signFont } }, config.stampSetTxt),
-			m(Button, {
-				label: config.stampTxt,
-				classes: "w-100",
-				onclick: applyStamp(heightPct, onSet)
-			})
+			m(".flex",
+				m(Button, {
+					label: config.stampTxt,
+					classes: `flex-auto ${config.stampBtnClass}`,
+					context: config.stampBtnContext,
+					onclick: applyStamp(heightPct, onSet)
+				})
+			)
 		];
 	}
 

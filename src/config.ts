@@ -25,6 +25,8 @@ const confMap: IConfig = {
 	signTypeTxt: "Type",
 	signStampTxt: "Accept",
 	stampTxt: "Accept",
+	stampBtnClass: "",
+	stampBtnContext: "default",
 	stampSetTxt: "Accepted",
 	applyTtl: "Apply",
 	resetTtl: "Reset",

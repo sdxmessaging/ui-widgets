@@ -28,9 +28,13 @@ export interface IConfig {
     signTypeTxt: string;
     /** Signature "Stamp" button caption */
     signStampTxt: string;
-    /** Signature "Stamp" unchecked label */
+    /** Signature "Stamp" button label */
     stampTxt: string;
-    /** Signature "Stamp" checked label */
+    /** Signature "Stamp" button class */
+    stampBtnClass: string;
+    /** Signature "Stamp" button context */
+    stampBtnContext: string;
+    /** Signature "Stamp" application canvas text */
     stampSetTxt: string;
     /** Signature "Apply" button tooltip */
     applyTtl: string;
