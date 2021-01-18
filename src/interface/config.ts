@@ -15,6 +15,8 @@ export interface IConfig {
 	remFileTtl: string;
 	/** Password display toggle label */
 	showPassTxt: string;
+	/** Text to append to widget labels when field is required */
+	requiredLblPost: string;
 	/** Default options for signature creator */
 	signOpts: IOption[];
 	/** Maximum size for signature image in px */

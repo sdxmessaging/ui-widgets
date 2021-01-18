@@ -63,6 +63,15 @@ themeInput.map(function (newCls) {
 	uiWidgets.updateClasses({ input: newCls });
 });
 
+var themeRequired = stream("");
+themeRequired.map(function (newCls) {
+	uiWidgets.updateClasses({ requiredLabel: newCls });
+});
+var themeDisabled = stream("o-40");
+themeDisabled.map(function (newCls) {
+	uiWidgets.updateClasses({ disabledWrapper: newCls });
+});
+
 var themeBtn = stream("pa2 bn br2");
 themeBtn.map(function (newCls) {
 	uiWidgets.updateClasses({ button: newCls });
@@ -714,13 +723,15 @@ m.mount(document.getElementById("page"), {
 							inputWrapper: "",
 							input: ""
 						},
+						required: true
 					},
 					value: themeBtn
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-nav-button",
-						label: "Nav Button"
+						label: "Nav Button",
+						required: true
 					},
 					value: themeNavBtn
 				}))
@@ -731,14 +742,16 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-wrapper",
-						label: "Widget Wrapper"
+						label: "Widget Wrapper",
+						required: true
 					},
 					value: themeWrapper
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-label",
-						label: "Widget Label"
+						label: "Widget Label",
+						required: true
 					},
 					value: themeLabel
 				}))
@@ -747,16 +760,36 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input-wrapper",
-						label: "Input Wrapper"
+						label: "Input Wrapper",
+						required: true
 					},
 					value: themeInputWrapper
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input",
-						label: "Input"
+						label: "Input",
+						required: true
 					},
 					value: themeInput
+				}))
+			]),
+
+			// Required/disabled
+			m(".flex.mb2", [
+				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+					field: {
+						id: "required-input-wrapper",
+						label: "Required"
+					},
+					value: themeRequired
+				})),
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+					field: {
+						id: "disabled-input-wrapper",
+						label: "Disabled"
+					},
+					value: themeDisabled
 				}))
 			]),
 

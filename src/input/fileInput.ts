@@ -77,7 +77,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 				onchange: change(onSet)
 			}),
 			label ? m("span.db.mb1", {
-				class: labelCls(uiClass)
+				class: labelCls(uiClass, required)
 			}, getLabelText(label, required)) : null,
 			m("div", {
 				class: inputWrapperCls(uiClass)

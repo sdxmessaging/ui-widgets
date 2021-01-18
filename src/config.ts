@@ -11,6 +11,7 @@ const confMap: IConfig = {
 	addFilesTxt: "Add file(s)...",
 	remFileTtl: "Remove",
 	showPassTxt: "Show Password",
+	requiredLblPost: "",
 	signOpts: [{
 		label: "", value: SignTypes.Draw
 	}, {

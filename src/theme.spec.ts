@@ -46,8 +46,8 @@ o.spec("Button Context", () => {
 o.spec("Theme Classes", () => {
 
 	o("labelCls", () => {
-		o(labelCls({})).equals(` ${theme.label}`);
-		o(labelCls({ label: "test", merge: false })).equals("test ");
+		o(labelCls({})).equals(` ${theme.label} `);
+		o(labelCls({ label: "test", merge: false }, true)).equals(`test  ${theme.requiredLabel}`);
 	});
 
 	o("inputCls", () => {

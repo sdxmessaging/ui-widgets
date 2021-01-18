@@ -38,7 +38,7 @@ export function pxRatio() {
 }
 
 export function getLabelText(label: string, required?: boolean): string {
-	return required ? `${label}*` : label;
+	return required ? `${label}${config.requiredLblPost}` : label;
 }
 
 export function imgSrc(path: string, dataUrl?: string): string {
@@ -58,7 +58,7 @@ export function getLabel(id: string, uiClass: IWidgetClasses, label?: string, re
 	return label ? m("label.mb1.db", {
 		title: label,
 		for: id,
-		class: labelCls(uiClass),
+		class: labelCls(uiClass, required),
 	}, getLabelText(label, required)) : null;
 }
 

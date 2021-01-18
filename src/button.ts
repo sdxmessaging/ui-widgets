@@ -26,7 +26,7 @@ export class Button implements ClassComponent<IButton> {
 	} }: CVnode<IButton>) {
 		return m("button.button-reset", {
 			type, title, disabled,
-			class: `${classes} ${disabled ? theme.inputDisabled : "pointer"} ${getButtonContext(context)} ${theme.button}`,
+			class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
 			style,
 			onclick
 		}, labelIcon(icon, label, rightIcon));

@@ -45,4 +45,27 @@ o.spec("PasswordInput", () => {
 		o(root.childNodes[0].childNodes.length).equals(2);
 	});
 
+	o("toggle", () => {
+		const root = window.document.createElement("div");
+		const value = stream<TProp>("test");
+		m.mount(root, {
+			view: () => m(PasswordInput, {
+				field: {
+					id: "test"
+				},
+				value
+			})
+		});
+		const input = root.querySelector("input") as HTMLInputElement;
+		o(input != null).equals(true);
+		o(input.getAttribute("type")).equals("password");
+		// Click toggle
+		const toggleBtn = root.querySelector("i") as HTMLElement;
+		o(toggleBtn != null).equals(true);
+		toggleBtn.dispatchEvent(new Event("click"));
+		m.redraw.sync();
+		// Confirm input is no longer password
+		o(input.getAttribute("type")).equals("text");
+	});
+
 });

@@ -17,7 +17,7 @@ export declare function updateClasses(newConfig: Partial<IClassMap>): void;
 export declare function updateButtonContext(newButtonContext: Record<string, string>): void;
 export declare function getButtonContext(key?: string): string;
 export declare function wrapperCls({ wrapper, merge }: IWidgetClasses, disabled?: boolean): string;
-export declare function labelCls({ label, merge }: IWidgetClasses): string;
+export declare function labelCls({ label, merge }: IWidgetClasses, required?: boolean): string;
 export declare function inputWrapperCls({ inputWrapper, merge }: IWidgetClasses): string;
 export declare function inputCls({ input, merge }: IWidgetClasses): string;
 export declare function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean): string;

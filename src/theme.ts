@@ -31,7 +31,8 @@ const classMapState: Required<IClassMap> = {
 	fileHover: "blue b--blue",
 	displayLabel: "silver",
 	displayValue: "dark-gray",
-	inputDisabled: "o-40"
+	requiredLabel: "",
+	disabledWrapper: "o-40"
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
@@ -59,11 +60,11 @@ export function getButtonContext(key = "default"): string {
 
 // Class string helpers
 export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disabled?: boolean) {
-	return `${wrapper} ${merge ? theme.wrapper : ""} ${disabled ? theme.inputDisabled : ""}`;
+	return `${wrapper} ${merge ? theme.wrapper : ""} ${disabled ? theme.disabledWrapper : ""}`;
 }
 
-export function labelCls({ label = "", merge = true }: IWidgetClasses) {
-	return `${label} ${merge ? theme.label : ""}`;
+export function labelCls({ label = "", merge = true }: IWidgetClasses, required?: boolean) {
+	return `${label} ${merge ? theme.label : ""} ${required ? theme.requiredLabel : ""}`;
 }
 
 export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses) {
