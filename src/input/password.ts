@@ -16,6 +16,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			label, id, name = id, title = label, placeholder,
 			maxlength, minlength, required,
 			readonly, disabled, autofocus, autocomplete,
+			pattern, inputmode,
 			instant, uiClass = {},
 		} = field;
 		return m("fieldset", {
@@ -30,6 +31,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 					type: this.showPassword() ? "text" : "password",
 					maxlength, minlength, required,
 					readonly, disabled, autofocus, autocomplete,
+					pattern, inputmode,
 					class: inputCls(uiClass),
 					value: value(),
 					// Safari quirk
