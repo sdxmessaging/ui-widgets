@@ -18,7 +18,7 @@ export declare function updateButtonContext(newButtonContext: Record<string, str
 export declare function getButtonContext(key?: string): string;
 export declare function wrapperCls({ wrapper, merge }: IWidgetClasses, disabled?: boolean): string;
 export declare function labelCls({ label, merge }: IWidgetClasses, required?: boolean): string;
-export declare function inputWrapperCls({ inputWrapper, merge }: IWidgetClasses): string;
+export declare function inputWrapperCls({ inputWrapper, merge }: IWidgetClasses, invalid?: boolean): string;
 export declare function inputCls({ input, merge }: IWidgetClasses): string;
 export declare function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean): string;
 export declare function textareaCls({ input, merge }: IWidgetClasses): string;

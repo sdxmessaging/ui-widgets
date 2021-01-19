@@ -32,7 +32,8 @@ const classMapState: Required<IClassMap> = {
 	displayLabel: "silver",
 	displayValue: "dark-gray",
 	requiredLabel: "",
-	disabledWrapper: "o-40"
+	disabledWrapper: "o-40",
+	invalidInputWrapper: ""
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
@@ -67,8 +68,8 @@ export function labelCls({ label = "", merge = true }: IWidgetClasses, required?
 	return `${label} ${merge ? theme.label : ""} ${required ? theme.requiredLabel : ""}`;
 }
 
-export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses) {
-	return `${inputWrapper} ${merge ? theme.inputWrapper : ""}`;
+export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
+	return `${inputWrapper} ${merge ? theme.inputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""}`;
 }
 
 export function inputCls({ input = "", merge = true }: IWidgetClasses) {

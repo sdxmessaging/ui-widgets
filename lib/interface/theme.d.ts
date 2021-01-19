@@ -38,4 +38,6 @@ export interface IClassMap extends IClasses {
     readonly requiredLabel?: string;
     /** Classes applied to disabled widget wrapper */
     readonly disabledWrapper?: string;
+    /** Classes applied to widget wrapper when validation fails */
+    readonly invalidInputWrapper?: string;
 }

@@ -71,8 +71,9 @@ o.spec("Theme Classes", () => {
 	});
 
 	o("inputWrapper", () => {
-		o(inputWrapperCls({})).equals(` ${theme.inputWrapper}`);
-		o(inputWrapperCls({ inputWrapper: "test", merge: false })).equals("test ");
+		o(inputWrapperCls({})).equals(` ${theme.inputWrapper} `);
+		o(inputWrapperCls({}, false)).equals(` ${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		o(inputWrapperCls({ inputWrapper: "test", merge: false })).equals("test  ");
 	});
 
 	o("wrapperCls", () => {
