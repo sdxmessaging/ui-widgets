@@ -5,8 +5,9 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputCls, wrapperCls } from "../theme";
+import { fileInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { guid } from "../utils";
+import { fileInvalid } from "../validation";
 
 import { FileInput } from "./fileInput";
 
@@ -48,14 +49,17 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addFiles(value)
 			},
-				m(".pa2", {
-					class: fileInputCls(this.dragging())
-				}, [
-					m("i.mr2", {
-						class: config.uploadIcn
-					}),
-					m("span", config.addFilesTxt)
-				]
+				m("div", {
+					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+				},
+					m(".pa2", {
+						class: fileInputCls(this.dragging())
+					}, [
+						m("i.mr2", {
+							class: config.uploadIcn
+						}),
+						m("span", config.addFilesTxt)
+					])
 				)
 			),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(),
@@ -71,7 +75,6 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					})
 				]))
 			)
-
 		]);
 	}
 

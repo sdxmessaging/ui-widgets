@@ -286,7 +286,6 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "select-in",
 							label: "Select Input",
-							type: "select",
 							options: [{
 								label: "Opt 1",
 								value: "1"
@@ -301,7 +300,6 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "radio-in",
 							label: "Radio Input",
-							type: "radio",
 							options: [{
 								value: "1",
 								label: "Opt 1"
@@ -473,7 +471,6 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "custom-type",
 							label: "Type",
-							type: "select",
 							options: [{
 								label: "Text",
 								value: "text"
@@ -552,16 +549,14 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.FileSelect, {
 					field: {
 						id: "file-in",
-						label: "File Input",
-						type: "file"
+						label: "File Input"
 					},
 					value: fileList
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "image-out",
-						label: "File Output",
-						type: "file"
+						label: "File Output"
 					},
 					value: fileList
 				}))
@@ -581,16 +576,14 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.OmniFileInput, {
 					field: {
 						id: "omni-file-in",
-						label: "Omni File Input",
-						type: "file"
+						label: "Omni File Input"
 					},
 					value: omniInputList
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "omni-file-out",
-						label: "File List Output",
-						type: "file"
+						label: "File List Output"
 					},
 					value: omniInputList
 				}))
@@ -601,8 +594,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.MultiOmniFileInput, {
 					field: {
 						id: "multi-omni-file-in",
-						label: "Multiple Omni File Input",
-						type: "file"
+						label: "Multiple Omni File Input"
 					},
 					showDisplay: true,
 					displayType: "thumbnail",
@@ -612,8 +604,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "multi-omni-file-out",
-						label: "Multiple Omni File Output",
-						type: "file"
+						label: "Multiple Omni File Output"
 					},
 					value: multiOmniInputList
 				})),
@@ -624,16 +615,14 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageSelect, {
 					field: {
 						id: "image-in",
-						label: "Image Select Input",
-						type: "imageSelect"
+						label: "Image Select Input"
 					},
 					value: imgInputList
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
 						id: "image-out",
-						label: "File List Output",
-						type: "fileMulti"
+						label: "File List Output"
 					},
 					value: imgInputList
 				}))
@@ -653,16 +642,14 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageMulti, {
 					field: {
 						id: "image-multi-in",
-						label: "Image List Input",
-						type: "imageMulti"
+						label: "Image List Input"
 					},
 					value: imgList
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.ImageList, {
 					field: {
 						id: "image-multi-out",
-						label: "Image List Output",
-						type: "fileMulti"
+						label: "Image List Output"
 					},
 					value: imgList
 				}))
@@ -685,7 +672,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "sign-in",
 						label: "Signature Input",
-						type: "sign",
 						heightPct: 20
 					},
 					value: signList
@@ -693,8 +679,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.ImagePreview, {
 					field: {
 						id: "sign-out",
-						label: "Signature File Output",
-						type: "fileMulti"
+						label: "Signature File Output"
 					},
 					value: signList
 				}))
@@ -720,12 +705,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "theme-button",
 						label: "Button",
-						uiClass: {
-							wrapper: "",
-							label: "",
-							inputWrapper: "",
-							input: ""
-						},
 						required: true
 					},
 					value: themeBtn
@@ -804,7 +783,6 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "feedback-in",
 					label: "We value your feedback",
-					type: "radio",
 					uiClass: {
 						inputWrapper: "flex bg-near-white br-pill",
 						input: "flex-auto pa2 bg-animate br-pill tc"

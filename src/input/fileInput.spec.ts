@@ -49,8 +49,8 @@ o.spec("FileInput", () => {
 		});
 		o(root.childNodes.length).equals(1);
 		const label = root.childNodes[0] as HTMLLabelElement;
-		// Label has input, text nodes only
-		o(label.childNodes.length).equals(3);
+		// Label has clipped input, "label" span, and any passed child nodes
+		o(label.childNodes.length).equals(2);
 		o((label.childNodes[0] as HTMLInputElement).hasAttribute("disabled")).equals(true);
 	});
 

@@ -5,8 +5,9 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputCls, wrapperCls, imgMaxSize } from "../theme";
+import { fileInputCls, imgMaxSize, inputWrapperCls, wrapperCls } from "../theme";
 import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage, getFileTypeIcon } from "../utils";
+import { fileInvalid } from "../validation";
 
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
@@ -59,47 +60,50 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addOmniFiles(value, true)
 			},
-				m(".flex.items-center.pa1", {
-					class: fileInputCls(this.dragging())
-				}, file ? file.dataUrl
-					? [
-						// Image preview
-						m(".relative.w-100.dt.tc",
-							m("img.img.contain", {
-								title: file.name,
-								src: imgSrc(file.path, file.dataUrl),
-								style: imgMaxSize()
+				m("div", {
+					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+				},
+					m(".flex.items-center.pa1", {
+						class: fileInputCls(this.dragging())
+					}, file ? file.dataUrl
+						? [
+							// Image preview
+							m(".relative.w-100.dt.tc",
+								m("img.img.contain", {
+									title: file.name,
+									src: imgSrc(file.path, file.dataUrl),
+									style: imgMaxSize()
+								}),
+								m(".absolute.top-0.right-0.pa1.pointer.dim", {
+									title: `Remove ${file.name}`,
+									onclick: removeFile(value, file.guid)
+								}, m("i.pa1", {
+									class: config.cancelIcn
+								}))
+							)
+						] : [
+							// Non-image details
+							m("i.pa1", {
+								class: getFileTypeIcon(file),
+								title: "Click to view file in new tab",
+								onclick: file.path !== "not_set"
+									? () => window.open(file.path, "_blank")
+									: undefined
 							}),
-							m(".absolute.top-0.right-0.pa1.pointer.dim", {
+							m("span.ma1.flex-auto", file.name),
+							m("i.pa1.pointer.dim", {
 								title: `Remove ${file.name}`,
+								class: config.cancelIcn,
 								onclick: removeFile(value, file.guid)
-							}, m("i.pa1", {
-								class: config.cancelIcn
-							}))
-						)
-					] : [
-						// Non-image details
-						m("i.pa1", {
-							class: getFileTypeIcon(file),
-							title: "Click to view file in new tab",
-							onclick: file.path !== "not_set"
-								? () => window.open(file.path, "_blank")
-								: undefined
-						}),
-						m("span.ma1.flex-auto", file.name),
-						m("i.pa1.pointer.dim", {
-							title: `Remove ${file.name}`,
-							class: config.cancelIcn,
-							onclick: removeFile(value, file.guid)
-						})
-					]
-					: [
-						// File upload
-						m("i.pa1", {
-							class: config.uploadIcn
-						}),
-						m("span.ma1.flex-auto", config.addFileTxt)
-					]
+							})
+						] : [
+							// File upload
+							m("i.pa1", {
+								class: config.uploadIcn
+							}),
+							m("span.ma1.flex-auto", config.addFileTxt)
+						]
+					)
 				)
 			)
 		);

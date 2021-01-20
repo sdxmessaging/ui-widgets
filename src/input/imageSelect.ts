@@ -5,8 +5,9 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputCls, wrapperCls, imgMaxSize } from "../theme";
+import { fileInputCls, imgMaxSize, inputWrapperCls, wrapperCls } from "../theme";
 import { imgSrc } from "../utils";
+import { fileInvalid } from "../validation";
 
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
@@ -29,24 +30,28 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				dragging: this.dragging,
 				onSet: addImages(value, config.imageMaxSize, true)
 			},
-				m(".pa1", {
-					class: fileInputCls(this.dragging())
+				m("div", {
+					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
-					m(".relative.w-100.dt.tc", file ? [
-						m("img.img.contain", {
-							title: file.name,
-							src: imgSrc(file.path, file.dataUrl),
-							style: imgMaxSize()
-						}),
-						m(".absolute.top-0.right-0.pa1.pointer.dim", {
-							title: `Remove ${file.name}`,
-							onclick: removeFile(value, file.guid)
-						}, m("i.pa1", {
-							class: config.cancelIcn
+					m(".pa1", {
+						class: fileInputCls(this.dragging())
+					},
+						m(".relative.w-100.dt.tc", file ? [
+							m("img.img.contain", {
+								title: file.name,
+								src: imgSrc(file.path, file.dataUrl),
+								style: imgMaxSize()
+							}),
+							m(".absolute.top-0.right-0.pa1.pointer.dim", {
+								title: `Remove ${file.name}`,
+								onclick: removeFile(value, file.guid)
+							}, m("i.pa1", {
+								class: config.cancelIcn
+							}))
+						] : m("i.fa-2x.dtc.v-mid", {
+							class: config.cameraIcn
 						}))
-					] : m("i.fa-2x.dtc.v-mid", {
-						class: config.cameraIcn
-					}))
+					)
 				)
 			)
 		);

@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { IMithrilEvent, TField } from "../interface/widget";
-import { inputWrapperCls, labelCls, pointerCls } from "../theme";
+import { labelCls, pointerCls } from "../theme";
 import { getLabelText } from "../utils";
 
 export interface IFileInput {
@@ -78,9 +78,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 			label ? m("span.db.mb1", {
 				class: labelCls(uiClass, required)
 			}, getLabelText(label, required)) : null,
-			m("div", {
-				class: inputWrapperCls(uiClass)
-			}, children)
+			children
 		]);
 	}
 }

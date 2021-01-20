@@ -8,6 +8,7 @@ import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../inter
 import { config } from "../config";
 import { theme, inputWrapperCls, wrapperCls } from "../theme";
 import { dataURItoBlob, fileConstructor, getLabel, guid, imgSrc, scaleRect } from "../utils";
+import { fileInvalid } from "../validation";
 
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
@@ -98,7 +99,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		}, [
 			getLabel(id, uiClass, lbl),
 			m("div", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 			}, readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {
