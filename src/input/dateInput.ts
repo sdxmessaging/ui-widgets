@@ -6,6 +6,7 @@ import { FieldType, IOptionField, IPropWidget } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
 import { getLabel, setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 export class DateInput implements ClassComponent<IPropWidget> {
 
@@ -45,7 +46,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	public view({ attrs: { field } }: CVnode<IPropWidget>) {
+	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
@@ -101,7 +102,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			getLabel(id, uiClass, label, required),
 			m("div", {
 				id, title,
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, propInvalid(field, value()))
 			}, locale === "en-US"
 				? [
 					monthInput,

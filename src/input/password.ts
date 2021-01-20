@@ -6,6 +6,7 @@ import { IPropWidget, TProp } from "../interface/widget";
 import { config } from "../config";
 import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabel, setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
@@ -24,7 +25,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 		}, [
 			getLabel(id, uiClass, label, required),
 			m("div.w-100.flex.items-center", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, propInvalid(field, value()))
 			},
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, name, title, placeholder,

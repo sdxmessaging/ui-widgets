@@ -6,6 +6,8 @@ uiWidgets.updateConfig({
 	signFont: "Caveat"
 });
 
+uiWidgets.updateClasses({ invalidInputWrapper: "bg-washed-red" });
+
 uiWidgets.updateButtonContext({
 	invert: "bg-dark-gray light-blue b--light-blue",
 	warn: "bg-orange black ph3 pv2 ba br-pill b--black b--dashed"
@@ -117,6 +119,7 @@ m.mount(document.getElementById("page"), {
 
 			m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),
 			m("p", "Display components reflect changes made to the stream by input components. A value stream can be used by multiple input components, values stay in sync with no additional code."),
+			m("p", "Inputs can apply additional classes if they fail validation. Try removing the text from either of the two text inputs."),
 
 			// Text
 			m(".flex.mb2.items-center", [
@@ -129,10 +132,11 @@ m.mount(document.getElementById("page"), {
 						},
 						value: textVal
 					})),
-					m(".pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+					m(".pa2.ba.b--silver", m(uiWidgets.TextareaInput, {
 						field: {
 							id: "text-in-change",
-							label: "Text Input (updates on change)"
+							label: "Text Input (updates on change, value required)",
+							required: true
 						},
 						value: textVal
 					}))
@@ -140,8 +144,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
 						id: "text-out",
-						label: "Text Output",
-						uiClass: { wrapper: "", inputWrapper: "", input: "", label: "" }
+						label: "Text Output"
 					},
 					value: textVal
 				}))
@@ -305,7 +308,7 @@ m.mount(document.getElementById("page"), {
 							}, {
 								value: "2",
 								label: "Opt 2"
-							}],
+							}]
 						},
 						value: optVal
 					}))
@@ -779,15 +782,15 @@ m.mount(document.getElementById("page"), {
 			m(".flex.mb2", [
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "required-input-wrapper",
-						label: "Required"
+						id: "required-label",
+						label: "Required Label"
 					},
 					value: themeRequired
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
-						id: "disabled-input-wrapper",
-						label: "Disabled"
+						id: "disabled-wrapper",
+						label: "Disabled Wrapper"
 					},
 					value: themeDisabled
 				}))

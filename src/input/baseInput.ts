@@ -4,6 +4,7 @@ import { FieldType, IPropWidget } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabel, setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
@@ -20,7 +21,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 		}, [
 			getLabel(id, uiClass, label, required),
 			m("div", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			}, m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,

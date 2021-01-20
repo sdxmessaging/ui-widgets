@@ -5,6 +5,7 @@ import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../int
 
 import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabel } from "../utils";
+import { propInvalid } from "../validation";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -23,7 +24,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		}, [
 			getLabel(id, uiClass, label, required),
 			m(".flex.items-center", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			},
 				m("span.mr1", currency),
 				m("input.w-100.bg-transparent.bn.outline-0", {

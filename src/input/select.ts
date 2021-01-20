@@ -5,6 +5,7 @@ import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabel, setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
@@ -20,7 +21,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 		}, [
 			getLabel(id, uiClass, lbl, required),
 			m("div", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, propInvalid(field, val()))
 			},
 				m("select.w-100.bg-transparent.bn.outline-0", {
 					id, name, title,

@@ -51,17 +51,16 @@ export function change(setFiles: (setList: FileList | null) => void) {
 
 export class FileInput implements ClassComponent<IFileInput> {
 	public view({ attrs: {
-		defaultAccept = "*",
-		field: {
-			label, id, name = id, title = label,
-			required, readonly, disabled, autofocus,
-			accept = defaultAccept,
-			uiClass = {},
-		},
-		multiple = true,
+		field, defaultAccept = "*", multiple = true,
 		dragging,
 		onSet
 	}, children }: CVnode<IFileInput>) {
+		const {
+			label, id, name = id, title = label,
+			required, readonly, disabled, autofocus,
+			accept = defaultAccept,
+			uiClass = {}
+		} = field;
 		return m("label.db", lodash.extend({
 			for: id, title,
 			class: pointerCls(disabled, readonly)

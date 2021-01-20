@@ -6,5 +6,5 @@ export declare class CardDateInput implements ClassComponent<IPropWidget> {
     private date;
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onremove(): void;
-    view({ attrs: { field } }: CVnode<IPropWidget>): m.Vnode<any, any>;
+    view({ attrs: { field, value } }: CVnode<IPropWidget>): m.Vnode<any, any>;
 }

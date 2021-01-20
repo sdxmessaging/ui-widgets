@@ -5,6 +5,7 @@ import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { inputWrapperCls, radioInputCls, wrapperCls } from "../theme";
 import { getLabel, setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
@@ -20,7 +21,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		}, [
 			getLabel(id, uiClass, lbl, required),
 			m("div", {
-				class: inputWrapperCls(uiClass),
+				class: inputWrapperCls(uiClass, propInvalid(field, val())),
 				onchange: setValue(val)
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
