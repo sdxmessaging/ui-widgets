@@ -10,6 +10,7 @@ const confMap: IConfig = {
 	addFileTxt: "Upload...",
 	addFilesTxt: "Add file(s)...",
 	remFileTtl: "Remove",
+	openFileTxt: "Open file",
 	showPassTxt: "Show Password",
 	requiredLblPost: "",
 	signOpts: [{

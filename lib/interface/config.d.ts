@@ -12,6 +12,8 @@ export interface IConfig {
     addFilesTxt: string;
     /** File remove tooltip */
     remFileTtl: string;
+    /** Open file path label */
+    openFileTxt: string;
     /** Password display toggle label */
     showPassTxt: string;
     /** Text to append to widget labels when field is required */

@@ -1,7 +1,7 @@
 import m, { Children, ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { DisplayType, IFileWidget } from "../interface/widget";
+import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { fileInputCls, inputWrapperCls, wrapperCls } from "../theme";
@@ -15,7 +15,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: {
-		field, value, displayType = DisplayType.thumbnail, showDisplay = true
+		field, value, displayType, showDisplay = true
 	} }: CVnode<IFileWidget>): Children {
 		const { disabled, uiClass = {} } = field;
 		return m("fieldset", {
@@ -41,8 +41,8 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				)
 			),
 			showDisplay ? m(DisplayTypeComponent, {
-				displayType: displayType,
-				value: value
+				displayType,
+				value
 			}) : null
 		]);
 	}

@@ -55,7 +55,7 @@ o.spec("MultiOmniFileInput", () => {
 		// o(root.firstElementChild?.classList.toString()).equals("pa0 bn test");
 	});
 
-	o("renders single image thumbnail.", () => {
+	o("renders single file detail", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -70,10 +70,10 @@ o.spec("MultiOmniFileInput", () => {
 					label: "test",
 					type: FieldType.file
 				},
+				displayType: DisplayType.list,
 				value
 			})
 		});
-		m.redraw.sync();
 		o(root.childNodes.length).equals(1);
 	});
 
@@ -82,12 +82,11 @@ o.spec("MultiOmniFileInput", () => {
 		const value = stream<IFile[]>([{
 			guid: "test0",
 			name: "Test0",
-			path: "test0/image",
-		},
-		{
+			path: "test0/image"
+		}, {
 			guid: "test1",
 			name: "Test1",
-			path: "test1/image",
+			path: "test1/image"
 		}]);
 		m.mount(root, {
 			view: () => m(MultiOmniFileInput, {
@@ -96,12 +95,11 @@ o.spec("MultiOmniFileInput", () => {
 					label: "test",
 					type: FieldType.file,
 				},
-				displayType: DisplayType.thumbnail,
+				// Use default displayType value
 				value
 			})
 		});
 		const imageElements = root?.firstElementChild?.firstElementChild?.children[1]?.children;
-		m.redraw.sync();
 		lodash.forEach(imageElements, (element, index) => {
 			const image = element.firstElementChild;
 			const button = element.children[1].firstElementChild;
@@ -112,7 +110,6 @@ o.spec("MultiOmniFileInput", () => {
 			if (image) {
 				o(image.getAttribute("src")).equals("test" + index + "/image");
 			}
-
 		});
 	});
 
@@ -122,13 +119,12 @@ o.spec("MultiOmniFileInput", () => {
 			file: testFile,
 			guid: "test0",
 			name: "Test0",
-			path: "not_set",
-		},
-		{
+			path: "not_set"
+		}, {
 			file: testFile,
 			guid: "test1",
 			name: "Test1",
-			path: "not_set",
+			path: "not_set"
 		}]);
 		m.mount(root, {
 			view: () => m(MultiOmniFileInput, {
@@ -137,13 +133,11 @@ o.spec("MultiOmniFileInput", () => {
 					label: "test",
 					type: FieldType.file,
 				},
-
 				displayType: DisplayType.thumbnail,
 				value
 			})
 		});
 		const imageElements = root?.firstElementChild?.firstElementChild?.children[1]?.children;
-		m.redraw.sync();
 		lodash.forEach(imageElements, (element) => {
 			const div = element.firstElementChild;
 			const button = element.children[1].firstElementChild;

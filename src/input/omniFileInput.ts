@@ -6,9 +6,10 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { fileInputCls, imgMaxSize, inputWrapperCls, wrapperCls } from "../theme";
-import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage, getFileTypeIcon } from "../utils";
+import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
 import { fileInvalid } from "../validation";
 
+import { FileOpen } from "../display/fileOpen";
 import { FileInput } from "./fileInput";
 import { removeFile } from "./fileMulti";
 
@@ -83,13 +84,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 							)
 						] : [
 							// Non-image details
-							m("i.pa1", {
-								class: getFileTypeIcon(file),
-								title: "Click to view file in new tab",
-								onclick: file.path !== "not_set"
-									? () => window.open(file.path, "_blank")
-									: undefined
-							}),
+							m(FileOpen, file),
 							m("span.ma1.flex-auto", file.name),
 							m("i.pa1.pointer.dim", {
 								title: `Remove ${file.name}`,

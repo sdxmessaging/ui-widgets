@@ -7,10 +7,11 @@ import { IFileWidget } from "../interface/widget";
 import { config } from "../config";
 import { fileInputCls, inputWrapperCls, wrapperCls } from "../theme";
 
+import { fileInvalid } from "../validation";
+
+import { FileOpen } from "../display/fileOpen";
 import { FileInput } from "./fileInput";
 import { addFiles, removeFile } from "./fileMulti";
-import { getFileTypeIcon } from "../utils";
-import { fileInvalid } from "../validation";
 
 export class FileSelect implements ClassComponent<IFileWidget> {
 
@@ -38,13 +39,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 							class: config.uploadIcn
 						}),
 						m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
-						file ? m("i.pa1", {
-							class: getFileTypeIcon(file),
-							title: "Click to view file in new tab",
-							onclick: file.path !== "not_set"
-								? () => window.open(file.path, "_blank")
-								: undefined
-						}) : null,
+						file ? m(FileOpen, file) : null,
 						file ? m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
 							class: config.cancelIcn,
