@@ -6,13 +6,12 @@ import stream from "mithril/stream";
 import { TProp } from "../interface/widget";
 
 import { PasswordStrength } from "./passwordStrength";
-// TODO Test password scoring
-// import { passwordStrengthStr } from "./passwordStrength";
-// import { scorePassword } from "./passwordStrength";
+import { scorePassword } from "./passwordStrength";
+import { passwordStrengthStr } from "./passwordStrength";
 
 o.spec("PasswordStrength", () => {
 
-	o("minimal", () => {
+	o("component", () => {
 		const root = window.document.createElement("div");
 		const value = stream<TProp>("");
 		m.mount(root, {
@@ -26,23 +25,24 @@ o.spec("PasswordStrength", () => {
 		o(root.childNodes.length).equals(1);
 		const content = root.childNodes[0];
 		o(content.childNodes.length).equals(2);
+		// Cleanup
+		m.mount(root, null);
 	});
 
-	o("configured", () => {
-		const root = window.document.createElement("div");
-		const value = stream<TProp>("input");
-		m.mount(root, {
-			view: () => m(PasswordStrength, {
-				field: {
-					id: "test",
-					label: "Test Label"
-				},
-				value
-			})
+	o("scorePassword", () => {
+		o(scorePassword("short")).equals(0);
+		o(scorePassword("eightchar")).equals(1);
+		o(scorePassword("12345678")).equals(2);
+		o(scorePassword("twentyfourcharacterslong")).equals(2);
+		o(scorePassword("UpperUpper")).equals(2);
+		o(scorePassword("special$")).equals(2);
+	});
+
+	o("passwordStrengthStr", () => {
+		[0, 1, 2, 3, 4, 5].map((val) => {
+			o(passwordStrengthStr(val)).notEquals("");
 		});
-		o(root.childNodes.length).equals(1);
-		const content = root.childNodes[0];
-		o(content.childNodes.length).equals(3);
+		o(passwordStrengthStr(-1)).equals("");
 	});
 
 });

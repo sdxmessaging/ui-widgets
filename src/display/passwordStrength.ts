@@ -8,26 +8,24 @@ import { getDisplayLabel } from "../utils";
 
 export function scorePassword(value: string) {
 	let totalScore = 0;
-	if (value) {
-		// Min req for password is 8 characters
-		if (value.length >= 8) {
-			totalScore = 1;
-			// Extra points for longer password
-			if (value.length >= 24) {
-				totalScore = totalScore + 1;
-			}
-			// Check does string have 2 upper case and 3 lower case
-			if (/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
-				totalScore = totalScore + 1;
-			}
-			// Ensure string has 2 digits
-			if (/(?=.*[0-9].*[0-9])/.test(value)) {
-				totalScore = totalScore + 1;
-			}
-			// Ensure string has one special character
-			if (/(?=.*[!"£%^@#$&*])/.test(value)) {
-				totalScore = totalScore + 1;
-			}
+	// Min req for password is 8 characters
+	if (value.length >= 8) {
+		totalScore = 1;
+		// Extra points for longer password
+		if (value.length >= 24) {
+			totalScore = totalScore + 1;
+		}
+		// Check does string have 2 upper case and 3 lower case
+		if (/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
+			totalScore = totalScore + 1;
+		}
+		// Ensure string has 2 digits
+		if (/(?=.*[0-9].*[0-9])/.test(value)) {
+			totalScore = totalScore + 1;
+		}
+		// Ensure string has one special character
+		if (/(?=.*[!"£%^@#$&*])/.test(value)) {
+			totalScore = totalScore + 1;
 		}
 	}
 	return totalScore;
