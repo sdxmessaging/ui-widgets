@@ -32,9 +32,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		// Update value when date changes
 		this.date.map((newDate) => {
 			const date = new Date(String(newDate));
-			// Prevent recursive setting between streams
-			if (lodash.isDate(date) && !isNaN(date.getTime()) && newDate !== value()) {
-				value(newDate);
+			if (lodash.isDate(date) && !isNaN(date.getTime())) {
+				// Prevent recursive setting between streams
+				if (newDate !== value()) {
+					value(newDate);
+				}
+			} else {
+				value("");
 			}
 		});
 	}

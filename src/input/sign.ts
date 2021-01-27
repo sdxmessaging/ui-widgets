@@ -49,10 +49,15 @@ export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) 
 export class SignBuilder implements ClassComponent<IFileWidget> {
 
 	private component?: ComponentTypes<ISignWidget>;
+	private valUpdate!: stream<void>;
 
 	public oninit({ attrs: { value } }: CVnode<IFileWidget>) {
-		// Reset component on file change
-		value.map(() => this.component = undefined);
+		// Unset signature component on file change
+		this.valUpdate = value.map(() => this.setComponent());
+	}
+
+	public onremove() {
+		this.valUpdate.end();
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
@@ -92,7 +97,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		}).compact().value();
 		// Auto-select widget if there is only one option and no file
 		if (opts.length === 1 && !fileObj) {
-			this.component = opts[0].component;
+			this.setComponent(opts[0].component);
 		}
 		return m("fieldset.relative", {
 			class: wrapperCls(uiClass, disabled)
@@ -119,7 +124,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						heightPct,
 						style,
 						onSet: setFile(value, id, config.signMaxSize),
-						onCancel: () => this.component = undefined
+						onCancel: () => this.setComponent()
 					})
 
 					// Display signature preview/creator
@@ -145,7 +150,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						// Signature creation options
 						: m(".aspect-ratio--object.flex.items-stretch.justify-center",
 							lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.flex-wrap.justify-center.tc.dim", {
-								onclick: () => this.component = component
+								onclick: () => this.setComponent(component)
 							},
 								m("i.fa-2x.ma1", {
 									class: icon
@@ -156,5 +161,10 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					)
 			)
 		]);
+	}
+
+	// Set/unset signature creation component
+	private setComponent(newComp?: ComponentTypes<ISignWidget>) {
+		this.component = newComp;
 	}
 }

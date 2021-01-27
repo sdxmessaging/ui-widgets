@@ -58,8 +58,11 @@ o.spec("DateInput", () => {
 		o(dateIn != null).equals(true);
 		dateIn.value = "02";
 		dateIn.dispatchEvent(new Event("change"));
-		// Verify change
 		o(value()).equals("2020-01-02");
+		// Set invalid value
+		dateIn.value = "32";
+		dateIn.dispatchEvent(new Event("change"));
+		o(value()).equals("");
 		// Cleanup
 		m.mount(root, null);
 	});
