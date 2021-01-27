@@ -3,7 +3,7 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { FieldType } from "../interface/widget";
 
 import { Link } from "./link";
 
@@ -11,7 +11,7 @@ o.spec("Link", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("www.example.com");
+		const value = stream<string>("www.example.com");
 		m.mount(root, {
 			view: () => m(Link, {
 				field: {
@@ -25,7 +25,7 @@ o.spec("Link", () => {
 
 	o("email", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test@example.com");
+		const value = stream<string>("test@example.com");
 		m.mount(root, {
 			view: () => m(Link, {
 				field: {
@@ -40,7 +40,7 @@ o.spec("Link", () => {
 
 	o("configured tel", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("+1-541-754-3010");
+		const value = stream<string>("+1-541-754-3010");
 		m.mount(root, {
 			view: () => m(Link, {
 				field: {

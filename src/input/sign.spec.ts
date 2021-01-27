@@ -24,6 +24,8 @@ o.spec("SignBuilder", () => {
 			})
 		});
 		o(root.childNodes.length).equals(1);
+		// End stream depending on value change
+		m.mount(root, null);
 	});
 
 	o("options + heightPct", () => {

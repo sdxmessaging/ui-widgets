@@ -3,8 +3,6 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { PasswordStrength } from "./passwordStrength";
 import { scorePassword } from "./passwordStrength";
 import { passwordStrengthStr } from "./passwordStrength";
@@ -13,7 +11,7 @@ o.spec("PasswordStrength", () => {
 
 	o("component", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("");
+		const value = stream<string>("");
 		m.mount(root, {
 			view: () => m(PasswordStrength, {
 				field: {

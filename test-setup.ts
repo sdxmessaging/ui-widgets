@@ -15,6 +15,10 @@ Object.defineProperty(dom.window, "crypto", {
 		getRandomValues: (buffer: any) => nodeCrypto.randomFillSync(buffer)
 	}
 });
+// Stub window open (not supported)
+Object.defineProperty(dom.window, "open", {
+	value: () => null
+});
 // Copy props from window onto global (Blob, File, atob etc)
 Object.defineProperties(global, {
 	...Object.getOwnPropertyDescriptors(dom.window),

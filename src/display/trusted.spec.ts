@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { Trusted } from "./trusted";
 
 o.spec("Trusted", () => {
 
 	o("text", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("<h1>Title</h1><p>Content</p>");
+		const value = stream<string>("<h1>Title</h1><p>Content</p>");
 		m.mount(root, {
 			view: () => m(Trusted, {
 				field: {

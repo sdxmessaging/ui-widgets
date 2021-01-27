@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { TextareaInput } from "./textarea";
 
 o.spec("TextareaInput", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(TextareaInput, {
 				field: {
@@ -26,7 +24,7 @@ o.spec("TextareaInput", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(TextareaInput, {
 				field: {

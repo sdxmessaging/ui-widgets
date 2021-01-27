@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { SelectText } from "./select";
 
 o.spec("SelectText", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("val");
+		const value = stream<string>("val");
 		m.mount(root, {
 			view: () => m(SelectText, {
 				field: {
@@ -29,7 +27,7 @@ o.spec("SelectText", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("val");
+		const value = stream<string>("val");
 		m.mount(root, {
 			view: () => m(SelectText, {
 				field: {
@@ -55,7 +53,7 @@ o.spec("SelectText", () => {
 
 	o("no label for value", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("val");
+		const value = stream<string>("val");
 		m.mount(root, {
 			view: () => m(SelectText, {
 				field: {

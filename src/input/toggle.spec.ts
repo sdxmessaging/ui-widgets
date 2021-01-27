@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { ToggleInput } from "./toggle";
 
 o.spec("ToggleInput", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(false);
+		const value = stream<boolean>(false);
 		m.mount(root, {
 			view: () => m(ToggleInput, {
 				field: {
@@ -25,7 +23,7 @@ o.spec("ToggleInput", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(true);
+		const value = stream<boolean>(true);
 		m.mount(root, {
 			view: () => m(ToggleInput, {
 				field: {

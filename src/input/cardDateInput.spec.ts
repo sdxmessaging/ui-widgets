@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { CardDateInput } from "./cardDateInput";
 
 o.spec("CardDateInput", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>();
+		const value = stream<string>();
 		m.mount(root, {
 			view: () => m(CardDateInput, {
 				field: {
@@ -29,7 +27,7 @@ o.spec("CardDateInput", () => {
 
 	o("configured + value change", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>();
+		const value = stream<string>();
 		const xform = value.map((val) => val);
 		m.mount(root, {
 			view: () => m(CardDateInput, {

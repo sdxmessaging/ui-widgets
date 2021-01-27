@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IPropWidget, TProp } from "../interface/widget";
+import { IPropWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
@@ -10,7 +10,7 @@ import { propInvalid } from "../validation";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
-	private showPassword: stream<TProp> = stream<TProp>(false);
+	private showPassword = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {

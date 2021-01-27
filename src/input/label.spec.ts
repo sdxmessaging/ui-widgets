@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { Label } from "./label";
 
 o.spec("Label", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(true);
+		const value = stream<boolean>(true);
 		m.mount(root, {
 			view: () => m(Label, {
 				field: {
@@ -25,7 +23,7 @@ o.spec("Label", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(true);
+		const value = stream<boolean>(true);
 		m.mount(root, {
 			view: () => m(Label, {
 				field: {

@@ -2,7 +2,6 @@ const o = require("ospec");
 
 import lodash from "lodash";
 import stream from "mithril/stream";
-import { TProp } from "./interface/widget";
 
 import {
 	dataURItoBlob,
@@ -31,10 +30,10 @@ o.spec("Utils", () => {
 
 });
 
-o.spec("Input TProp update", () => {
+o.spec("Input value update", () => {
 
 	o("Update value", () => {
-		const value: stream<TProp> = stream<TProp>("Initial");
+		const value = stream<string>("Initial");
 		const mod = setValue(value);
 		const input = window.document.createElement("input");
 		input.value = "Update";
@@ -43,7 +42,7 @@ o.spec("Input TProp update", () => {
 	});
 
 	o("Update check", () => {
-		const check: stream<TProp> = stream<TProp>(true);
+		const check = stream<boolean>(true);
 		const mod = setCheck(check);
 		const input = window.document.createElement("input");
 		input.checked = false;

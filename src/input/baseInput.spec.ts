@@ -3,7 +3,7 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { FieldType } from "../interface/widget";
 
 import { BaseInput } from "./baseInput";
 
@@ -11,7 +11,7 @@ o.spec("BaseInput", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(BaseInput, {
 				field: {
@@ -27,7 +27,7 @@ o.spec("BaseInput", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		const xform = value.map((val) => val);
 		m.mount(root, {
 			view: () => m(BaseInput, {
@@ -52,7 +52,7 @@ o.spec("BaseInput", () => {
 
 	o("hidden", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(BaseInput, {
 				field: {

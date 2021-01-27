@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { PasswordInput } from "./password";
 
 o.spec("PasswordInput", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(PasswordInput, {
 				field: {
@@ -26,7 +24,7 @@ o.spec("PasswordInput", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(PasswordInput, {
 				field: {
@@ -47,7 +45,7 @@ o.spec("PasswordInput", () => {
 
 	o("toggle", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("test");
+		const value = stream<string>("test");
 		m.mount(root, {
 			view: () => m(PasswordInput, {
 				field: {

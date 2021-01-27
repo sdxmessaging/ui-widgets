@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IPropWidget } from "../interface/widget";
+import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm } from "../theme";
 
@@ -20,7 +20,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		(value as stream<unknown>).map((newVal) => {
+		(value as stream<TProp>).map((newVal) => {
 			const [month, year = ""] = String(newVal).split("/");
 			this.month(month);
 			this.year(year);

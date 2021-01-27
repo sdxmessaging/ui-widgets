@@ -3,7 +3,7 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, TProp } from "../interface/widget";
+import { FieldType } from "../interface/widget";
 
 import { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, setCurrencyValue } from "./currencyInput";
 
@@ -11,7 +11,7 @@ o.spec("CurrencyInput", () => {
 
 	o("minimal + empty stream", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>();
+		const value = stream<string>();
 		m.mount(root, {
 			view: () => m(CurrencyInput, {
 				field: {
@@ -26,7 +26,7 @@ o.spec("CurrencyInput", () => {
 
 	o("minimal + string stream", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("1");
+		const value = stream<string>("1");
 		m.mount(root, {
 			view: () => m(CurrencyInput, {
 				field: {
@@ -41,7 +41,7 @@ o.spec("CurrencyInput", () => {
 
 	o("configured + number stream", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>(1);
+		const value = stream<number>(1);
 		const xform = value.map((val) => val);
 		m.mount(root, {
 			view: () => m(CurrencyInput, {
@@ -139,7 +139,7 @@ o.spec("numberToCurrencyStr", () => {
 o.spec("setCurrencyValue", () => {
 
 	o("Update value", () => {
-		const value: stream<TProp> = stream<TProp>();
+		const value = stream<number>();
 		const mod = setCurrencyValue(value);
 		const input = window.document.createElement("input");
 		input.value = "1";

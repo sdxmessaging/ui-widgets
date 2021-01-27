@@ -3,15 +3,13 @@ const o = require("ospec");
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { TProp } from "../interface/widget";
-
 import { RadioInput } from "./radio";
 
 o.spec("RadioInput", () => {
 
 	o("minimal", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("");
+		const value = stream<string>("");
 		m.mount(root, {
 			view: () => m(RadioInput, {
 				field: {
@@ -26,7 +24,7 @@ o.spec("RadioInput", () => {
 
 	o("configured", () => {
 		const root = window.document.createElement("div");
-		const value = stream<TProp>("val");
+		const value = stream<string>("val");
 		m.mount(root, {
 			view: () => m(RadioInput, {
 				field: {
