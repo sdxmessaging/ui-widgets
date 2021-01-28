@@ -172,14 +172,18 @@ export function getOrientation(buffer: ArrayBuffer) {
 	return -1;
 }
 
-export function readOrientation(file: File): Promise<number> {
+export function readArrayBuffer(file: File): Promise<ArrayBuffer> {
 	return new Promise((resolve) => {
 		const reader = new FileReader();
 		reader.onload = () => {
-			resolve(getOrientation(reader.result as ArrayBuffer));
+			resolve(reader.result as ArrayBuffer);
 		};
 		reader.readAsArrayBuffer(file);
 	});
+}
+
+export function readOrientation(file: File): Promise<number> {
+	return readArrayBuffer(file).then(getOrientation);
 }
 
 export function rotateContext(ctx: CanvasRenderingContext2D, width: number, height: number, orientation?: number) {

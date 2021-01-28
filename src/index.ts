@@ -3,7 +3,11 @@ export * from "./interface/theme";
 
 export { updateConfig } from "./config";
 export { updateClasses, updateButtonContext } from "./theme";
-export { fileNameExtSplit, guid, dataURItoBlob } from "./utils";
+export {
+	fileNameExtSplit, guid,
+	dataURItoBlob, readArrayBuffer,
+	readOrientation, getOrientation
+} from "./utils";
 
 export { Badge } from "./badge";
 export { Button } from "./button";

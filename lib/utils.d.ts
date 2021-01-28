@@ -35,6 +35,7 @@ export declare function fileConstructor(blob: Blob, fileName: string): File;
  */
 export declare function scaleRect(width: number, height: number, limit: number): [number, number];
 export declare function getOrientation(buffer: ArrayBuffer): number;
+export declare function readArrayBuffer(file: File): Promise<ArrayBuffer>;
 export declare function readOrientation(file: File): Promise<number>;
 export declare function rotateContext(ctx: CanvasRenderingContext2D, width: number, height: number, orientation?: number): void;
 /**
