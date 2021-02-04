@@ -80,7 +80,7 @@ describe("File", () => {
 		expect(file.type).toBe("text/plain");
 	});
 
-	test("resize", (done: () => void) => {
+	test("resize", (done) => {
 		const file = new File([
 			dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
 		], "test.gif", { type: "image/gif" });
@@ -91,7 +91,7 @@ describe("File", () => {
 			});
 	});
 
-	test("resize error", (done: () => void) => {
+	test("resize error", (done) => {
 		const file = new File(["test"], "test.txt");
 		resizeImage(file, 100)
 			.catch((err: Error) => {

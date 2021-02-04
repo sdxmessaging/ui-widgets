@@ -127,7 +127,7 @@ describe("OmniFileInput", () => {
 		// }
 	});
 
-	test("set non-image files", (done: () => void) => {
+	test("set non-image files", (done) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addOmniFiles(fileList, true);
 		// Set 1 file
@@ -138,7 +138,7 @@ describe("OmniFileInput", () => {
 		});
 	});
 
-	test("set image files", (done: () => void) => {
+	test("set image files", (done) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addOmniFiles(fileList, false);
 		// Add 2 images files
