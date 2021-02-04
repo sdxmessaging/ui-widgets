@@ -7,5 +7,6 @@ module.exports = {
       tsconfig: 'tsconfig.test.json',
     },
   },
-  setupFilesAfterEnv: ['./test-setup.ts']
+  setupFilesAfterEnv: ['./test-setup.ts'],
+  "collectCoverage": true,
 };
