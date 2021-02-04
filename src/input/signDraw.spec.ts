@@ -1,14 +1,12 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { config } from "../config";
 
 import { SignDraw } from "./signDraw";
 
-o.spec("SignDraw", () => {
+describe("SignDraw", () => {
 
-	o("create/remove", () => {
+	test("create/remove", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignDraw, {
@@ -18,25 +16,25 @@ o.spec("SignDraw", () => {
 				onCancel: () => null
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(2);
 		// Test signature buttons
 		const applyBtn = root.querySelector(`[title=${config.applyTtl}]`);
-		o(applyBtn != null).equals(true);
+		expect(applyBtn != null).toBe(true);
 		if (applyBtn) {
 			applyBtn.dispatchEvent(new Event("click"));
 		}
 		const resetBtn = root.querySelector(`[title=${config.resetTtl}]`);
-		o(resetBtn != null).equals(true);
+		expect(resetBtn != null).toBe(true);
 		if (resetBtn) {
 			resetBtn.dispatchEvent(new Event("click"));
 		}
 		const cancelBtn = root.querySelector(`[title=${config.cancelTtl}]`);
-		o(cancelBtn != null).equals(true);
+		expect(cancelBtn != null).toBe(true);
 		if (cancelBtn) {
 			cancelBtn.dispatchEvent(new Event("click"));
 		}
 		m.mount(root, null);
-		o(root.childNodes.length).equals(0);
+		expect(root.childNodes.length).toBe(0);
 	});
 
 });

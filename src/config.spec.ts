@@ -1,14 +1,12 @@
-const o = require("ospec");
-
 import { config, updateConfig } from "./config";
 
-o.spec("Config", () => {
+describe("Config", () => {
 
-	o("updateConfig", () => {
+	test("updateConfig", () => {
 		updateConfig({
 			imageMaxSize: 640
 		});
-		o(config.imageMaxSize).equals(640);
+		expect(config.imageMaxSize).toBe(640);
 	});
 
 });

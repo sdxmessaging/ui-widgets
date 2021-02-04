@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import { theme, updateClasses } from "./theme";
 import { getButtonContext, updateButtonContext } from "./theme";
 import {
@@ -8,77 +6,77 @@ import {
 	inputWrapperCls, wrapperCls
 } from "./theme";
 
-o.spec("Theme", () => {
+describe("Theme", () => {
 
-	o("Update", () => {
+	test("Update", () => {
 		updateClasses({
 			label: "test"
 		});
-		o(theme.label).equals("test");
+		expect(theme.label).toBe("test");
 	});
 
 });
 
-o.spec("Button Context", () => {
+describe("Button Context", () => {
 
-	o("Default", () => {
-		o(getButtonContext()).equals("bg-light-blue dark-gray");
+	test("Default", () => {
+		expect(getButtonContext()).toBe("bg-light-blue dark-gray");
 	});
 
-	o("Unknown", () => {
-		o(getButtonContext("unknown")).equals("");
+	test("Unknown", () => {
+		expect(getButtonContext("unknown")).toBe("");
 	});
 
-	o("Set", () => {
+	test("Set", () => {
 		const testVal = "test";
 		updateButtonContext({ "test": testVal });
-		o(getButtonContext("test")).equals(testVal);
+		expect(getButtonContext("test")).toBe(testVal);
 	});
 
-	o("Update", () => {
+	test("Update", () => {
 		const testVal = "modified";
 		updateButtonContext({ "test": testVal });
-		o(getButtonContext("test")).equals(testVal);
+		expect(getButtonContext("test")).toBe(testVal);
 	});
 
 });
 
-o.spec("Theme Classes", () => {
+describe("Theme Classes", () => {
 
-	o("labelCls", () => {
-		o(labelCls({})).equals(` ${theme.label} `);
-		o(labelCls({ label: "test", merge: false }, true)).equals(`test  ${theme.requiredLabel}`);
+	test("labelCls", () => {
+		expect(labelCls({})).toBe(` ${theme.label} `);
+		expect(labelCls({ label: "test", merge: false }, true)).toBe(`test  ${theme.requiredLabel}`);
 	});
 
-	o("inputCls", () => {
-		o(inputCls({})).equals(` ${theme.input}`);
-		o(inputCls({ input: "test", merge: false })).equals("test ");
+	test("inputCls", () => {
+		expect(inputCls({})).toBe(` ${theme.input}`);
+		expect(inputCls({ input: "test", merge: false })).toBe("test ");
 	});
 
-	o("fileInputCls", () => {
-		o(fileInputCls(false)).equals(`${theme.fileInput} `);
-		o(fileInputCls(true)).equals(`${theme.fileInput} ${theme.fileHover}`);
+	test("fileInputCls", () => {
+		expect(fileInputCls(false)).toBe(`${theme.fileInput} `);
+		expect(fileInputCls(true)).toBe(`${theme.fileInput} ${theme.fileHover}`);
 	});
 
-	o("textareaCls", () => {
-		o(textareaCls({})).equals(` ${theme.textarea}`);
-		o(textareaCls({ input: "test", merge: false })).equals("test ");
+	test("textareaCls", () => {
+		expect(textareaCls({})).toBe(` ${theme.textarea}`);
+		expect(textareaCls({ input: "test", merge: false })).toBe("test ");
 	});
 
-	o("radioInputCls", () => {
-		o(radioInputCls({}, false)).equals(` ${theme.radio} ${theme.radioUnchecked} pointer`);
-		o(radioInputCls({ input: "test", merge: false }, true)).equals(`test  ${theme.radioChecked} pointer`);
+	test("radioInputCls", () => {
+		expect(radioInputCls({}, false)).toBe(` ${theme.radio} ${theme.radioUnchecked} pointer`);
+		expect(radioInputCls({ input: "test", merge: false }, true)).toBe(`test  ${theme.radioChecked} pointer`);
 	});
 
-	o("inputWrapper", () => {
-		o(inputWrapperCls({})).equals(` ${theme.inputWrapper} `);
-		o(inputWrapperCls({}, false)).equals(` ${theme.inputWrapper} ${theme.invalidInputWrapper}`);
-		o(inputWrapperCls({ inputWrapper: "test", merge: false })).equals("test  ");
+	test("inputWrapper", () => {
+		expect(inputWrapperCls({})).toBe(` ${theme.inputWrapper} `);
+		expect(inputWrapperCls({}, false)).toBe(` ${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		expect(inputWrapperCls({ inputWrapper: "test", merge: false })).toBe("test  ");
 	});
 
-	o("wrapperCls", () => {
-		o(wrapperCls({})).equals(` ${theme.wrapper} `);
-		o(wrapperCls({ wrapper: "test", merge: false })).equals("test  ");
+	test("wrapperCls", () => {
+		expect(wrapperCls({})).toBe(` ${theme.wrapper} `);
+		expect(wrapperCls({ wrapper: "test", merge: false })).toBe("test  ");
 	});
 
 });

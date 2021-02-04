@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -8,9 +6,9 @@ import { FieldType, IFile, SignTypes } from "../interface/widget";
 import { SignBuilder } from "./sign";
 import { setFile } from "./sign";
 
-o.spec("SignBuilder", () => {
+describe("SignBuilder", () => {
 
-	o("empty", () => {
+	test("empty", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -23,12 +21,12 @@ o.spec("SignBuilder", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		// End stream depending on value change
 		m.mount(root, null);
 	});
 
-	o("options + heightPct", () => {
+	test("options + heightPct", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -48,10 +46,10 @@ o.spec("SignBuilder", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("default", () => {
+	test("default", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -68,10 +66,10 @@ o.spec("SignBuilder", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("disabled", () => {
+	test("disabled", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -85,10 +83,10 @@ o.spec("SignBuilder", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("readonly", () => {
+	test("readonly", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -106,17 +104,16 @@ o.spec("SignBuilder", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("set", (done: () => void) => {
-		o.timeout(1000);
+	test("set", () => {
 		const fileList = stream<IFile[]>([]);
 		const set = setFile(fileList, "test", 100);
+		expect.assertions(1);
 		set("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
 			.then(() => {
-				o(fileList().length).equals(1);
-				done();
+				expect(fileList().length).toBe(1);
 			});
 	});
 

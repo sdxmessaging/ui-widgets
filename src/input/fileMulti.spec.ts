@@ -1,6 +1,4 @@
 
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -9,9 +7,9 @@ import { FieldType, IFile } from "../interface/widget";
 import { FileMulti } from "./fileMulti";
 import { addFiles, removeFile } from "./fileMulti";
 
-o.spec("FileMulti", () => {
+describe("FileMulti", () => {
 
-	o("empty", () => {
+	test("empty", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -24,11 +22,11 @@ o.spec("FileMulti", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	o("single", () => {
+	test("single", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -46,20 +44,20 @@ o.spec("FileMulti", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	o("add", () => {
+	test("add", () => {
 		const fileList = stream<IFile[]>([]);
 		const add = addFiles(fileList);
 		const file = { name: "Test" };
 		const addList = ([file, file] as unknown) as FileList;
 		add(addList);
-		o(fileList().length).equals(2);
+		expect(fileList().length).toBe(2);
 	});
 
-	o("remove", () => {
+	test("remove", () => {
 		const fileList = stream<IFile[]>([{
 			guid: "1",
 			name: "Test 1",
@@ -72,12 +70,12 @@ o.spec("FileMulti", () => {
 		// Attempt to remove file not present
 		const removeNone = removeFile(fileList, "n/a");
 		removeNone(new Event("click"));
-		o(fileList().length).equals(2);
+		expect(fileList().length).toBe(2);
 		// Remove first file
 		const remove1 = removeFile(fileList, "1");
 		remove1(new Event("click"));
-		o(fileList().length).equals(1);
-		o(fileList()[0].guid).equals("2");
+		expect(fileList().length).toBe(1);
+		expect(fileList()[0].guid).toBe("2");
 	});
 
 });

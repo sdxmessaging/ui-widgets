@@ -1,6 +1,4 @@
 
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -9,9 +7,9 @@ import { FieldType, IFile, IMithrilEvent } from "../interface/widget";
 import { FileInput } from "./fileInput";
 import { change, dragStart, dragStop, drop } from "./fileInput";
 
-o.spec("FileInput", () => {
+describe("FileInput", () => {
 
-	o("basic + no label + title", () => {
+	test("basic + no label + title", () => {
 		const root = window.document.createElement("div");
 		const dragging = stream<boolean>(false);
 		m.mount(root, {
@@ -26,10 +24,10 @@ o.spec("FileInput", () => {
 				onSet: () => null
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("disabled + name + uiClass + accept", () => {
+	test("disabled + name + uiClass + accept", () => {
 		const root = window.document.createElement("div");
 		const dragging = stream<boolean>(false);
 		m.mount(root, {
@@ -47,14 +45,14 @@ o.spec("FileInput", () => {
 				onSet: () => null
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const label = root.childNodes[0] as HTMLLabelElement;
 		// Label has clipped input, "label" span, and any passed child nodes
-		o(label.childNodes.length).equals(2);
-		o((label.childNodes[0] as HTMLInputElement).hasAttribute("disabled")).equals(true);
+		expect(label.childNodes.length).toBe(2);
+		expect((label.childNodes[0] as HTMLInputElement).hasAttribute("disabled")).toBe(true);
 	});
 
-	o("drag/drop", () => {
+	test("drag/drop", () => {
 		const dragState = stream<boolean>(false);
 		const fileList = stream<IFile[]>([]);
 		// Mock drag event with no dataTransfer.files
@@ -67,29 +65,29 @@ o.spec("FileInput", () => {
 		// Start drag
 		const start = dragStart(dragState);
 		start(dummyEvt);
-		o(dragState()).equals(true);
+		expect(dragState()).toBe(true);
 		// Repeat drag
 		start(dummyEvt);
-		o(dragState()).equals(true);
+		expect(dragState()).toBe(true);
 		// End drag
 		const stop = dragStop(dragState);
 		stop(dummyEvt);
-		o(dragState()).equals(false);
+		expect(dragState()).toBe(false);
 		// Drop file
 		const set = drop(dragState, (setList) => {
 			// No files on event dataTransfer
-			o(setList).equals(undefined);
+			expect(setList).toBe(undefined);
 		});
 		set(dummyEvt);
-		o(dragState()).equals(false);
-		o(fileList().length).equals(0);
+		expect(dragState()).toBe(false);
+		expect(fileList().length).toBe(0);
 	});
 
-	o("change", () => {
+	test("change", () => {
 		const fileList = stream<IFile[]>([]);
 		// Mock callback
-		const spy = o.spy(() => null);
-		const set = change(spy);
+		const mockCallback = jest.fn((value) => value);
+		const set = change(mockCallback);
 		// Mock input with FileList
 		const file = { name: "Test" };
 		const addList = [file];
@@ -99,9 +97,9 @@ o.spec("FileInput", () => {
 			} as HTMLInputElement
 		});
 		// Validate callback
-		o(spy.callCount).equals(1);
-		o(spy.args[0]).deepEquals(addList);
-		o(fileList().length).equals(0);
+		expect(mockCallback.mock.calls.length).toBe(1);
+		expect(mockCallback.mock.results[0].value).toMatchObject(addList);
+		expect(fileList().length).toBe(0);
 	});
 
 });

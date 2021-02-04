@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { PasswordInput } from "./password";
 
-o.spec("PasswordInput", () => {
+describe("PasswordInput", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -18,11 +16,11 @@ o.spec("PasswordInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -39,11 +37,11 @@ o.spec("PasswordInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	o("toggle", () => {
+	test("toggle", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -55,15 +53,15 @@ o.spec("PasswordInput", () => {
 			})
 		});
 		const input = root.querySelector("input") as HTMLInputElement;
-		o(input != null).equals(true);
-		o(input.getAttribute("type")).equals("password");
+		expect(input != null).toBe(true);
+		expect(input.getAttribute("type")).toBe("password");
 		// Click toggle
 		const toggleBtn = root.querySelector("i") as HTMLElement;
-		o(toggleBtn != null).equals(true);
+		expect(toggleBtn != null).toBe(true);
 		toggleBtn.dispatchEvent(new Event("click"));
 		m.redraw.sync();
 		// Confirm input is no longer password
-		o(input.getAttribute("type")).equals("text");
+		expect(input.getAttribute("type")).toBe("text");
 	});
 
 });

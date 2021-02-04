@@ -1,40 +1,38 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { ButtonLink } from "./buttonLink";
 
-o.spec("ButtonLink", () => {
+describe("ButtonLink", () => {
 
-	o("minimal label", () => {
+	test("minimal label", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(ButtonLink, {
 				label: "Test Label"
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const link = root.childNodes[0] as HTMLLinkElement;
-		o(link.nodeName).equals("A");
+		expect(link.nodeName).toBe("A");
 		// Text only
-		o(link.childNodes.length).equals(1);
+		expect(link.childNodes.length).toBe(1);
 	});
 
-	o("minimal icon", () => {
+	test("minimal icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(ButtonLink, {
 				icon: "test"
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const link = root.childNodes[0] as HTMLLinkElement;
-		o(link.nodeName).equals("A");
+		expect(link.nodeName).toBe("A");
 		// Icon only
-		o(link.childNodes.length).equals(1);
+		expect(link.childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(ButtonLink, {
@@ -49,12 +47,12 @@ o.spec("ButtonLink", () => {
 				style: { test: "value" }
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const link = root.childNodes[0] as HTMLLinkElement;
-		o(link.nodeName).equals("A");
-		o(link.getAttribute("target")).equals("_blank");
+		expect(link.nodeName).toBe("A");
+		expect(link.getAttribute("target")).toBe("_blank");
 		// Icon + Text
-		o(link.childNodes.length).equals(2);
+		expect(link.childNodes.length).toBe(2);
 	});
 
 });

@@ -1,12 +1,10 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { FileOpen } from "./fileOpen";
 
-o.spec("FileOpen", () => {
+describe("FileOpen", () => {
 
-	o("click", () => {
+	test("click", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(FileOpen, {
@@ -15,13 +13,13 @@ o.spec("FileOpen", () => {
 				path: "not_set"
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		// Click element
 		const openBtn = root.childNodes[0];
 		openBtn.dispatchEvent(new Event("click"));
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(FileOpen, {

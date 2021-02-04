@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -7,9 +5,9 @@ import { FieldType } from "../interface/widget";
 
 import { BaseInput } from "./baseInput";
 
-o.spec("BaseInput", () => {
+describe("BaseInput", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -20,12 +18,12 @@ o.spec("BaseInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		// Input only
-		o(root.childNodes[0].childNodes.length).equals(1);
+		expect(root.childNodes[0].childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		const xform = value.map((val) => val);
@@ -45,12 +43,12 @@ o.spec("BaseInput", () => {
 				xform
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		// Label + Input
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	o("hidden", () => {
+	test("hidden", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -62,8 +60,8 @@ o.spec("BaseInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.firstElementChild?.classList.contains("clip")).equals(true);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.firstElementChild?.classList.contains("clip")).toBe(true);
 	});
 
 });

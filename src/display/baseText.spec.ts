@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { BaseText } from "./baseText";
 
-o.spec("BaseText", () => {
+describe("BaseText", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -19,10 +17,10 @@ o.spec("BaseText", () => {
 			})
 		});
 		// Container element (Label + Input children)
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test");
 		m.mount(root, {
@@ -37,7 +35,7 @@ o.spec("BaseText", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });

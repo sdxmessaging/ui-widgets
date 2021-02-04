@@ -1,29 +1,27 @@
-const o = require("ospec");
-
 import { propInvalid, fileInvalid } from "./validation";
 
-o.spec("propInvalid", () => {
-	o("required", () => {
-		o(propInvalid({
+describe("propInvalid", () => {
+	test("required", () => {
+		expect(propInvalid({
 			id: "test",
-		}, "")).equals(false);
-		o(propInvalid({
+		}, "")).toBe(false);
+		expect(propInvalid({
 			id: "test",
 			required: true
-		}, "")).equals(true);
+		}, "")).toBe(true);
 	});
 });
 
-o.spec("fileInvalid", () => {
+describe("fileInvalid", () => {
 
-	o("required", () => {
-		o(fileInvalid({
+	test("required", () => {
+		expect(fileInvalid({
 			id: "test",
-		}, [])).equals(false);
-		o(fileInvalid({
+		}, [])).toBe(false);
+		expect(fileInvalid({
 			id: "test",
 			required: true
-		}, [])).equals(true);
+		}, [])).toBe(true);
 	});
 
 });

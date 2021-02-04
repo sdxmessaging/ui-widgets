@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { CheckboxInput } from "./checkbox";
 
-o.spec("CheckboxInput", () => {
+describe("CheckboxInput", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<boolean>(false);
 		m.mount(root, {
@@ -18,10 +16,10 @@ o.spec("CheckboxInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<boolean>(true);
 		m.mount(root, {
@@ -37,7 +35,7 @@ o.spec("CheckboxInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });

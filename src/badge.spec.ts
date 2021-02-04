@@ -1,20 +1,18 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { Badge } from "./badge";
 
-o.spec("Badge", () => {
+describe("Badge", () => {
 
-	o("default + no label", () => {
+	test("default + no label", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Badge, {})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.children.length).toBe(1);
 	});
 
-	o("class + label", () => {
+	test("class + label", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Badge, {
@@ -24,7 +22,7 @@ o.spec("Badge", () => {
 				m("span", "Badge content")
 			)
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });

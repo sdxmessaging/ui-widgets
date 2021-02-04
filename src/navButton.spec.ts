@@ -1,24 +1,22 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { NavButton } from "./navButton";
 
-o.spec("NavButton", () => {
+describe("NavButton", () => {
 
-	o("icon only", () => {
+	test("icon only", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(NavButton, {
 				icon: "icon"
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const btn = root.childNodes[0] as HTMLDivElement;
-		o(btn.childNodes.length).equals(1);
+		expect(btn.childNodes.length).toBe(1);
 	});
 
-	o("label only", () => {
+	test("label only", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(NavButton, {
@@ -29,10 +27,10 @@ o.spec("NavButton", () => {
 				onclick: () => null
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("disabled + icons", () => {
+	test("disabled + icons", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(NavButton, {
@@ -42,10 +40,10 @@ o.spec("NavButton", () => {
 				disabled: true
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const btn = root.childNodes[0] as HTMLDivElement;
 		// Icon + text + right icon
-		o(btn.childNodes.length).equals(3);
+		expect(btn.childNodes.length).toBe(3);
 	});
 
 });

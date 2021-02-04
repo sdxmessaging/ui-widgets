@@ -1,4 +1,3 @@
-const o = require("ospec");
 import lodash from "lodash";
 import m from "mithril";
 import stream from "mithril/stream";
@@ -15,10 +14,10 @@ const testFile = new File([
 	dataURItoBlob("data:text/plain;base64,Cg==")
 ], "test.txt", { type: "text/plain" });
 
-o.spec("MultiOmniFileInput", () => {
+describe("MultiOmniFileInput", () => {
 
 	// Renders the file input 
-	o("renders input with empty stream", () => {
+	test("renders input with empty stream", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -32,10 +31,10 @@ o.spec("MultiOmniFileInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured ", () => {
+	test("configured ", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -50,12 +49,12 @@ o.spec("MultiOmniFileInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.firstElementChild?.classList.length).equals(3);
-		// o(root.firstElementChild?.classList.toString()).equals("pa0 bn test");
+		expect(root.childNodes.length).toBe(1);
+		expect(root.firstElementChild?.classList.length).toBe(3);
+		// expect(root.firstElementChild?.classList.toString()).toBe("pa0 bn test");
 	});
 
-	o("renders single file detail", () => {
+	test("renders single file detail", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -74,10 +73,10 @@ o.spec("MultiOmniFileInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("renders image thumbnails with src string.", () => {
+	test("renders image thumbnails with src string.", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test0",
@@ -103,17 +102,17 @@ o.spec("MultiOmniFileInput", () => {
 		lodash.forEach(imageElements, (element, index) => {
 			const image = element.firstElementChild;
 			const button = element.children[1].firstElementChild;
-			o(image).notEquals(null);
-			o(image).notEquals(undefined);
-			o(button).notEquals(null);
-			o(button).notEquals(undefined);
+			expect(image).not.toBe(null);
+			expect(image).not.toBe(undefined);
+			expect(button).not.toBe(null);
+			expect(button).not.toBe(undefined);
 			if (image) {
-				o(image.getAttribute("src")).equals("test" + index + "/image");
+				expect(image.getAttribute("src")).toBe("test" + index + "/image");
 			}
 		});
 	});
 
-	o("renders div with class of fa of some sort to render an icon rather than an image", () => {
+	test("renders div with class of fa of some sort to render an icon rather than an image", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			file: testFile,
@@ -141,12 +140,12 @@ o.spec("MultiOmniFileInput", () => {
 		lodash.forEach(imageElements, (element) => {
 			const div = element.firstElementChild;
 			const button = element.children[1].firstElementChild;
-			o(div).notEquals(null);
-			o(div).notEquals(undefined);
-			o(button).notEquals(null);
-			o(button).notEquals(undefined);
+			expect(div).not.toBe(null);
+			expect(div).not.toBe(undefined);
+			expect(button).not.toBe(null);
+			expect(button).not.toBe(undefined);
 			if (div) {
-				o(div.hasAttribute("tooltip")).equals(true);
+				expect(div.hasAttribute("tooltip")).toBe(true);
 			}
 		});
 	});

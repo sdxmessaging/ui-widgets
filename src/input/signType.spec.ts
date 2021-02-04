@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -8,9 +6,9 @@ import { config } from "../config";
 import { SignType } from "./signType";
 import { applyText } from "./signType";
 
-o.spec("SignType", () => {
+describe("SignType", () => {
 
-	o("create/remove", () => {
+	test("create/remove", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignType, {
@@ -20,30 +18,29 @@ o.spec("SignType", () => {
 				onCancel: () => null
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(2);
 		// Test reset button
 		const resetBtn = root.querySelector(`[title=${config.resetTtl}]`);
-		o(resetBtn != null).equals(true);
+		expect(resetBtn != null).toBe(true);
 		if (resetBtn) {
 			resetBtn.dispatchEvent(new Event("click"));
 		}
 		// Force onupdate
 		m.redraw.sync();
 		m.mount(root, null);
-		o(root.childNodes.length).equals(0);
+		expect(root.childNodes.length).toBe(0);
 	});
 
-	o("apply", () => {
+	test("apply", () => {
 		const text: stream<string> = stream<string>("");
-		const spy = o.spy(() => null);
-		const apply = applyText(text, 25, spy);
-		// Spy should not be called with empty text
+		const mockCallback = jest.fn();
+		const apply = applyText(text, 25, mockCallback);
+		// mockCallback should not be called with empty text
 		apply();
-		o(spy.callCount).equals(0);
+		expect(mockCallback.mock.calls.length).toBe(0);
 		text("test");
 		apply();
-		o(spy.callCount).equals(1);
-		// spy.args[0] will be a base64 encoded png of text on a canvas
+		expect(mockCallback.mock.calls.length).toBe(1);
 	});
 
 });

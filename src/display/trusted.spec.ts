@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { Trusted } from "./trusted";
 
-o.spec("Trusted", () => {
+describe("Trusted", () => {
 
-	o("text", () => {
+	test("text", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("<h1>Title</h1><p>Content</p>");
 		m.mount(root, {
@@ -18,10 +16,10 @@ o.spec("Trusted", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const content = root.childNodes[0].childNodes;
 		// 2 trusted elements
-		o(content.length).equals(2);
+		expect(content.length).toBe(2);
 	});
 
 });

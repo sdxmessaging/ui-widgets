@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -17,9 +15,9 @@ const testFile = new File([
 	dataURItoBlob("data:text/plain;base64,Cg==")
 ], "test.txt", { type: "text/plain" });
 
-o.spec("OmniFileInput", () => {
+describe("OmniFileInput", () => {
 
-	o("empty", () => {
+	test("empty", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -32,10 +30,10 @@ o.spec("OmniFileInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -50,12 +48,12 @@ o.spec("OmniFileInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.firstElementChild?.classList.length).equals(3);
-		// o(root.firstElementChild?.classList.toString()).equals("pa0 bn test");
+		expect(root.childNodes.length).toBe(1);
+		expect(root.firstElementChild?.classList.length).toBe(3);
+		// expect(root.firstElementChild?.classList.toString()).toBe("pa0 bn test");
 	});
 
-	o("regular set file", () => {
+	test("regular set file", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -72,10 +70,10 @@ o.spec("OmniFileInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("renders image with src string.", () => {
+	test("renders image with src string.", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test0",
@@ -95,14 +93,14 @@ o.spec("OmniFileInput", () => {
 			})
 		});
 		const imgElem = root?.firstElementChild?.firstElementChild?.children[2].firstElementChild?.firstElementChild?.firstElementChild;
-		o(imgElem).notEquals(null);
-		o(imgElem).notEquals(undefined);
+		expect(imgElem).not.toBe(null);
+		expect(imgElem).not.toBe(undefined);
 		if (imgElem) {
-			o(imgElem.getAttribute("src")).equals("test0/image");
+			expect(imgElem.getAttribute("src")).toBe("test0/image");
 		}
 	});
 
-	o("renders div with a tooltip with file is not image", () => {
+	test("renders div with a tooltip with file is not image", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			file: testFile,
@@ -122,35 +120,35 @@ o.spec("OmniFileInput", () => {
 			})
 		});
 		// const fileName = root?.firstElementChild?.firstElementChild?.firstElementChild?.children[2]?.firstElementChild?.children[1]?.innerHTML;
-		// o(fileName).notEquals(null);
-		// o(fileName).notEquals(undefined);
+		// expect(fileName).not.toBe(null);
+		// expect(fileName).not.toBe(undefined);
 		// if (fileName) {
-		// 	o(fileName).equals("Test0");
+		// 	expect(fileName).toBe("Test0");
 		// }
 	});
 
-	o("set non-image files", (done: () => void) => {
+	test("set non-image files", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addOmniFiles(fileList, true);
 		// Set 1 file
 		const addList = ([testFile, testFile] as unknown) as FileList;
 		add(addList).then(() => {
-			o(addList.length).equals(2);
+			expect(addList.length).toBe(2);
 			done();
 		});
 	});
 
-	o("set image files", (done: () => void) => {
+	test("set image files", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addOmniFiles(fileList, false);
 		// Add 2 images files
 		add(([testImage, testImage] as unknown) as FileList).then(() => {
-			o(fileList().length).equals(2);
+			expect(fileList().length).toBe(2);
 			done();
 		});
 	});
 
-	o("remove file from the stream", () => {
+	test("remove file from the stream", () => {
 		const fileList = stream<IFile[]>([{
 			guid: "1",
 			name: "Test 1",
@@ -163,12 +161,12 @@ o.spec("OmniFileInput", () => {
 		// Attempt to remove file not present 
 		const removeNone = removeFile(fileList, "n/a");
 		removeNone(new Event("click"));
-		o(fileList().length).equals(2);
+		expect(fileList().length).toBe(2);
 		// Remove first file
 		const remove1 = removeFile(fileList, "1");
 		remove1(new Event("click"));
-		o(fileList().length).equals(1);
-		o(fileList()[0].guid).equals("2");
+		expect(fileList().length).toBe(1);
+		expect(fileList()[0].guid).toBe("2");
 	});
 
 });

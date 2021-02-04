@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -7,9 +5,9 @@ import { IFile } from "../interface/widget";
 
 import { ImageList } from "./image";
 
-o.spec("ImageList", () => {
+describe("ImageList", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -20,10 +18,10 @@ o.spec("ImageList", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -47,7 +45,7 @@ o.spec("ImageList", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });

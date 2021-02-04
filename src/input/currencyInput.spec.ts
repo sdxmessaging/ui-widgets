@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -7,9 +5,9 @@ import { FieldType } from "../interface/widget";
 
 import { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, setCurrencyValue } from "./currencyInput";
 
-o.spec("CurrencyInput", () => {
+describe("CurrencyInput", () => {
 
-	o("minimal + empty stream", () => {
+	test("minimal + empty stream", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
 		m.mount(root, {
@@ -21,10 +19,10 @@ o.spec("CurrencyInput", () => {
 			})
 		});
 		// Input only
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("minimal + string stream", () => {
+	test("minimal + string stream", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("1");
 		m.mount(root, {
@@ -36,10 +34,10 @@ o.spec("CurrencyInput", () => {
 			})
 		});
 		// Input only
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured + number stream", () => {
+	test("configured + number stream", () => {
 		const root = window.document.createElement("div");
 		const value = stream<number>(1);
 		const xform = value.map((val) => val);
@@ -63,88 +61,88 @@ o.spec("CurrencyInput", () => {
 			})
 		});
 		// Label + Input
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });
 
-o.spec("currencyStrToNumber", () => {
+describe("currencyStrToNumber", () => {
 
-	o("empty", () => {
-		o(currencyStrToNumber("")).equals(0);
+	test("empty", () => {
+		expect(currencyStrToNumber("")).toBe(0);
 	});
 
-	o("subunit - 1 place", () => {
-		o(currencyStrToNumber(".1")).equals(10);
+	test("subunit - 1 place", () => {
+		expect(currencyStrToNumber(".1")).toBe(10);
 	});
 
-	o("subunit - 2 places", () => {
-		o(currencyStrToNumber(".01")).equals(1);
+	test("subunit - 2 places", () => {
+		expect(currencyStrToNumber(".01")).toBe(1);
 	});
 
-	o("full - no subunit", () => {
-		o(currencyStrToNumber("1")).equals(100);
+	test("full - no subunit", () => {
+		expect(currencyStrToNumber("1")).toBe(100);
 	});
 
-	o("full - 1 place", () => {
-		o(currencyStrToNumber("1.1")).equals(110);
+	test("full - 1 place", () => {
+		expect(currencyStrToNumber("1.1")).toBe(110);
 	});
 
-	o("full - 2 places", () => {
-		o(currencyStrToNumber("1.01")).equals(101);
+	test("full - 2 places", () => {
+		expect(currencyStrToNumber("1.01")).toBe(101);
 	});
 
-	o("full - large number", () => {
-		o(currencyStrToNumber("1234567.89")).equals(123456789);
+	test("full - large number", () => {
+		expect(currencyStrToNumber("1234567.89")).toBe(123456789);
 	});
 
-	o("Additional text", () => {
-		o(currencyStrToNumber(" Value: £10.01p\n")).equals(1001);
+	test("Additional text", () => {
+		expect(currencyStrToNumber(" Value: £10.01p\n")).toBe(1001);
 	});
 
-	o("Multiple decimal points", () => {
-		o(currencyStrToNumber("10.0.01")).equals(1000);
+	test("Multiple decimal points", () => {
+		expect(currencyStrToNumber("10.0.01")).toBe(1000);
 	});
 });
 
-o.spec("numberToCurrencyStr", () => {
+describe("numberToCurrencyStr", () => {
 
-	o("non-finite", () => {
-		o(numberToCurrencyStr((undefined as unknown) as number)).equals(undefined);
-		o(numberToCurrencyStr(Number.POSITIVE_INFINITY)).equals(undefined);
+	test("non-finite", () => {
+		expect(numberToCurrencyStr((undefined as unknown) as number)).toBe(undefined);
+		expect(numberToCurrencyStr(Number.POSITIVE_INFINITY)).toBe(undefined);
 	});
 
-	o("zero", () => {
-		o(numberToCurrencyStr(0)).equals("0.00");
+	test("zero", () => {
+		expect(numberToCurrencyStr(0)).toBe("0.00");
 	});
 
-	o("< 10", () => {
-		o(numberToCurrencyStr(1)).equals("0.01");
+	test("< 10", () => {
+		expect(numberToCurrencyStr(1)).toBe("0.01");
 	});
 
-	o("< 100", () => {
-		o(numberToCurrencyStr(10)).equals("0.10");
+	test("< 100", () => {
+		expect(numberToCurrencyStr(10)).toBe("0.10");
 	});
 
-	o("> 100", () => {
-		o(numberToCurrencyStr(110)).equals("1.10");
+	test("> 100", () => {
+		expect(numberToCurrencyStr(110)).toBe("1.10");
 	});
 
-	o("large number", () => {
-		o(numberToCurrencyStr(123456789)).equals("1234567.89");
+	test("large number", () => {
+		expect(numberToCurrencyStr(123456789)).toBe("1234567.89");
 	});
 
 });
 
-o.spec("setCurrencyValue", () => {
+describe("setCurrencyValue", () => {
 
-	o("Update value", () => {
+	test("Update value", () => {
 		const value = stream<number>();
 		const mod = setCurrencyValue(value);
 		const input = window.document.createElement("input");
 		input.value = "1";
 		mod({ target: input });
-		o(value()).equals(100);
+		expect(value()).toBe(100);
 	});
 
 });

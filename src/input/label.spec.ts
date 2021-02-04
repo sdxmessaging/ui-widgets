@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { Label } from "./label";
 
-o.spec("Label", () => {
+describe("Label", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<boolean>(true);
 		m.mount(root, {
@@ -18,10 +16,10 @@ o.spec("Label", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<boolean>(true);
 		m.mount(root, {
@@ -35,7 +33,7 @@ o.spec("Label", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });

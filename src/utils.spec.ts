@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import lodash from "lodash";
 import stream from "mithril/stream";
 
@@ -17,112 +15,112 @@ import {
 	getFileTypeIcon
 } from "./utils";
 
-o.spec("Utils", () => {
+describe("Utils", () => {
 
-	o("Create unique ID", () => {
-		o(guid().length).equals(36);
+	test("Create unique ID", () => {
+		expect(guid().length).toBe(36);
 	});
 
-	o("File name handling", () => {
-		o(fileNameExtSplit("test.complex.extension")).deepEquals(["test.complex", ".extension"]);
-		o(fileNameExtSplit("test no ext")).deepEquals(["test no ext", ""]);
+	test("File name handling", () => {
+		expect(fileNameExtSplit("test.complex.extension")).toMatchObject(["test.complex", ".extension"]);
+		expect(fileNameExtSplit("test no ext")).toMatchObject(["test no ext", ""]);
 	});
 
 });
 
-o.spec("Input value update", () => {
+describe("Input value update", () => {
 
-	o("Update value", () => {
+	test("Update value", () => {
 		const value = stream<string>("Initial");
 		const mod = setValue(value);
 		const input = window.document.createElement("input");
 		input.value = "Update";
 		mod({ target: input });
-		o(value()).equals(input.value);
+		expect(value()).toBe(input.value);
 	});
 
-	o("Update check", () => {
+	test("Update check", () => {
 		const check = stream<boolean>(true);
 		const mod = setCheck(check);
 		const input = window.document.createElement("input");
 		input.checked = false;
 		mod({ target: input });
-		o(check()).equals(input.checked);
+		expect(check()).toBe(input.checked);
 	});
 
 });
 
-o.spec("Scale rectangle", () => {
+describe("Scale rectangle", () => {
 
-	o("width exceed", () => {
-		o(scaleRect(12, 6, 8)).deepEquals([8, 4]);
+	test("width exceed", () => {
+		expect(scaleRect(12, 6, 8)).toMatchObject([8, 4]);
 	});
 
-	o("width within", () => {
-		o(scaleRect(12, 6, 12)).deepEquals([12, 6]);
+	test("width within", () => {
+		expect(scaleRect(12, 6, 12)).toMatchObject([12, 6]);
 	});
 
-	o("height exceed", () => {
-		o(scaleRect(6, 12, 8)).deepEquals([4, 8]);
+	test("height exceed", () => {
+		expect(scaleRect(6, 12, 8)).toMatchObject([4, 8]);
 	});
 
-	o("height within", () => {
-		o(scaleRect(6, 12, 12)).deepEquals([6, 12]);
+	test("height within", () => {
+		expect(scaleRect(6, 12, 12)).toMatchObject([6, 12]);
 	});
 
 });
 
-o.spec("File", () => {
+describe("File", () => {
 
-	o("create", () => {
+	test("create", () => {
 		const blob = dataURItoBlob("data:text/plain;charset=UTF-8;page=21,hello%20world");
-		o(blob.type).equals("text/plain");
+		expect(blob.type).toBe("text/plain");
 		const file = fileConstructor(blob, "testFile.txt");
-		o(file.name).equals("testFile.txt");
-		o(file.type).equals("text/plain");
+		expect(file.name).toBe("testFile.txt");
+		expect(file.type).toBe("text/plain");
 	});
 
-	o("resize", (done: () => void) => {
+	test("resize", (done: () => void) => {
 		const file = new File([
 			dataURItoBlob("data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
 		], "test.gif", { type: "image/gif" });
 		resizeImage(file, 100, "image/png")
 			.then((dataUrl) => {
-				o(dataUrl.length > 0).equals(true);
+				expect(dataUrl.length > 0).toBe(true);
 				done();
 			});
 	});
 
-	o("resize error", (done: () => void) => {
+	test("resize error", (done: () => void) => {
 		const file = new File(["test"], "test.txt");
 		resizeImage(file, 100)
 			.catch((err: Error) => {
-				o(err.message).equals("File must be an image");
+				expect(err.message).toBe("File must be an image");
 				done();
 			});
 	});
 
 });
 
-o.spec("Image orientation", () => {
+describe("Image orientation", () => {
 
-	o("no jpeg marker", () => {
+	test("no jpeg marker", () => {
 		const buffer = new ArrayBuffer(8);
 		const orientation = getOrientation(buffer);
-		o(orientation).equals(-2);
+		expect(orientation).toBe(-2);
 	});
 
-	o("no exif", () => {
+	test("no exif", () => {
 		const buffer = new ArrayBuffer(8);
 		const view = new DataView(buffer, 0, buffer.byteLength);
 		// Mark first byte
 		view.setUint16(0, 0xFFD8, false);
 		const orientation = getOrientation(buffer);
-		o(orientation).equals(-1);
+		expect(orientation).toBe(-1);
 	});
 
 	// TODO Work out what the other bytes mean
-	o("no orientation", () => {
+	test("no orientation", () => {
 		const buffer = new ArrayBuffer(128);
 		const view = new DataView(buffer);
 		// Mark first byte
@@ -130,10 +128,10 @@ o.spec("Image orientation", () => {
 		view.setUint16(2, 0xFFE1, false);
 		view.setUint32(6, 0x00000000, false);
 		const orientation = getOrientation(buffer);
-		o(orientation).equals(-1);
+		expect(orientation).toBe(-1);
 	});
 
-	o("orientation", () => {
+	test("orientation", () => {
 		const buffer = new ArrayBuffer(128);
 		const view = new DataView(buffer);
 		// Mark first bytes
@@ -151,12 +149,12 @@ o.spec("Image orientation", () => {
 		view.setUint16(34, 0x0112, false);
 		view.setUint16(42, 0x0004, false);
 		const orientation = getOrientation(buffer);
-		o(orientation).equals(4);
+		expect(orientation).toBe(4);
 	});
 
 });
 
-o.spec("Canvas rotation", () => {
+describe("Canvas rotation", () => {
 
 	const mockContext = ({
 		translate: () => null,
@@ -164,7 +162,7 @@ o.spec("Canvas rotation", () => {
 		scale: () => null
 	} as unknown) as CanvasRenderingContext2D;
 
-	o("cases", () => {
+	test("cases", () => {
 		// No action
 		rotateContext(mockContext, 1, 1, -1);
 		rotateContext(mockContext, 1, 1, 9);
@@ -180,9 +178,9 @@ o.spec("Canvas rotation", () => {
 
 });
 
-o.spec("File icon", () => {
+describe("File icon", () => {
 
-	o("common extensions", () => {
+	test("common extensions", () => {
 		lodash.each([
 			".doc", ".docx", ".dot", ".wbk", ".docm", ".dotx", ".dotm", ".docb",
 			".txt", ".webm", ".mkv", ".flv", ".vob", ".ogv", ".drc", ".gifv",
@@ -196,11 +194,11 @@ o.spec("File icon", () => {
 			".scss", ".java", ".jpg", ".jpeg", ".png", ".tiff", ".gif", ".svg",
 			".webp"
 		], (ext) => {
-			o(getFileTypeIcon({
+			expect(getFileTypeIcon({
 				guid: "test",
 				name: "test" + ext,
 				path: "test"
-			}).length > 0).equals(true);
+			}).length > 0).toBe(true);
 		});
 	});
 

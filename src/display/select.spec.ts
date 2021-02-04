@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { SelectText } from "./select";
 
-o.spec("SelectText", () => {
+describe("SelectText", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("val");
 		m.mount(root, {
@@ -18,14 +16,14 @@ o.spec("SelectText", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const content = root.childNodes[0];
-		o(content.childNodes.length).equals(1);
+		expect(content.childNodes.length).toBe(1);
 		// Check value fallback
-		o((content.childNodes[0] as HTMLSpanElement).getAttribute("title")).equals("val");
+		expect((content.childNodes[0] as HTMLSpanElement).getAttribute("title")).toBe("val");
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("val");
 		m.mount(root, {
@@ -44,14 +42,14 @@ o.spec("SelectText", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const content = root.childNodes[0];
-		o(content.childNodes.length).equals(2);
+		expect(content.childNodes.length).toBe(2);
 		// Check value is resolved
-		o((content.childNodes[1] as HTMLSpanElement).getAttribute("title")).equals("label");
+		expect((content.childNodes[1] as HTMLSpanElement).getAttribute("title")).toBe("label");
 	});
 
-	o("no label for value", () => {
+	test("no label for value", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("val");
 		m.mount(root, {
@@ -65,11 +63,11 @@ o.spec("SelectText", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const content = root.childNodes[0];
-		o(content.childNodes.length).equals(1);
+		expect(content.childNodes.length).toBe(1);
 		// Check value fallback
-		o((content.childNodes[0] as HTMLSpanElement).getAttribute("title")).equals("val");
+		expect((content.childNodes[0] as HTMLSpanElement).getAttribute("title")).toBe("val");
 	});
 
 });

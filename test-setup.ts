@@ -1,33 +1,33 @@
 // tslint:disable no-var-requires
-const o = require("ospec");
 const canvas = require("canvas");
 const jsdom = require("jsdom");
-const nodeCrypto = require("crypto");
+const nodeCrypto = require('crypto');
 
-const dom = new jsdom.JSDOM("", {
-	// Enable requestAnimationFrame
-	pretendToBeVisual: true,
-});
 
-// Stub basic crypto
-Object.defineProperty(dom.window, "crypto", {
+
+/// Stub basic crypto
+Object.defineProperty(global.self, "crypto", {
 	value: {
 		getRandomValues: (buffer: any) => nodeCrypto.randomFillSync(buffer)
 	}
 });
+
+
+
+
 // Stub window open (not supported)
-Object.defineProperty(dom.window, "open", {
+Object.defineProperty(global.self, "open", {
 	value: () => null
 });
-// Copy props from window onto global (Blob, File, atob etc)
+// // Copy props from window onto global (Blob, File, atob etc)
 Object.defineProperties(global, {
-	...Object.getOwnPropertyDescriptors(dom.window),
+	//...Object.getOwnPropertyDescriptors(dom.window),
 	...Object.getOwnPropertyDescriptors(canvas),
 	...Object.getOwnPropertyDescriptors(global)
 });
 
 // Initial Mithril load
-require("mithril");
+//require("mithril");
 
 // Cleanup
-o.after(() => dom.window.close());
+afterAll(() => global.self.close());

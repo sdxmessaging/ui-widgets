@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { SelectInput } from "./select";
 
-o.spec("SelectInput", () => {
+describe("SelectInput", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("");
 		m.mount(root, {
@@ -18,11 +16,11 @@ o.spec("SelectInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("val");
 		m.mount(root, {
@@ -41,11 +39,11 @@ o.spec("SelectInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	o("readonly", () => {
+	test("readonly", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("");
 		m.mount(root, {
@@ -61,8 +59,8 @@ o.spec("SelectInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(1);
 	});
 
 });

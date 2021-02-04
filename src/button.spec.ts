@@ -1,12 +1,10 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { Button } from "./button";
 
-o.spec("Button", () => {
+describe("Button", () => {
 
-	o("default + right icon", () => {
+	test("default + right icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
@@ -14,15 +12,15 @@ o.spec("Button", () => {
 				rightIcon: "fa-times"
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const btn = root.childNodes[0] as HTMLButtonElement;
-		o(btn.nodeName).equals("BUTTON");
-		o(btn.getAttribute("type")).equals("button");
+		expect(btn.nodeName).toBe("BUTTON");
+		expect(btn.getAttribute("type")).toBe("button");
 		// Icon and text nodes
-		o(btn.childNodes.length).equals(2);
+		expect(btn.childNodes.length).toBe(2);
 	});
 
-	o("submit + no icon", () => {
+	test("submit + no icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
@@ -30,15 +28,15 @@ o.spec("Button", () => {
 				type: "submit"
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const btn = root.childNodes[0] as HTMLButtonElement;
-		o(btn.nodeName).equals("BUTTON");
-		o(btn.getAttribute("type")).equals("submit");
+		expect(btn.nodeName).toBe("BUTTON");
+		expect(btn.getAttribute("type")).toBe("submit");
 		// Text node only
-		o(btn.childNodes.length).equals(1);
+		expect(btn.childNodes.length).toBe(1);
 	});
 
-	o("disabled + icon + right icon", () => {
+	test("disabled + icon + right icon", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(Button, {
@@ -47,10 +45,10 @@ o.spec("Button", () => {
 				disabled: true
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		const btn = root.childNodes[0] as HTMLButtonElement;
-		o(btn.nodeName).equals("BUTTON");
-		o(btn.hasAttribute("disabled")).equals(true);
+		expect(btn.nodeName).toBe("BUTTON");
+		expect(btn.hasAttribute("disabled")).toBe(true);
 	});
 
 });

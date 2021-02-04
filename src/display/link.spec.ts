@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -7,9 +5,9 @@ import { FieldType } from "../interface/widget";
 
 import { Link } from "./link";
 
-o.spec("Link", () => {
+describe("Link", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("www.example.com");
 		m.mount(root, {
@@ -20,10 +18,10 @@ o.spec("Link", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("email", () => {
+	test("email", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("test@example.com");
 		m.mount(root, {
@@ -35,10 +33,10 @@ o.spec("Link", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("configured tel", () => {
+	test("configured tel", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("+1-541-754-3010");
 		m.mount(root, {
@@ -54,7 +52,7 @@ o.spec("Link", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
 });

@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -9,9 +7,9 @@ import { dataURItoBlob } from "../utils";
 import { ImageSelect } from "./imageSelect";
 import { addImages } from "./imageMulti";
 
-o.spec("ImageSelect", () => {
+describe("ImageSelect", () => {
 
-	o("empty", () => {
+	test("empty", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -24,10 +22,10 @@ o.spec("ImageSelect", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("single + uiClass", () => {
+	test("single + uiClass", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -45,22 +43,22 @@ o.spec("ImageSelect", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("set 0", (done: () => void) => {
+	test("set 0", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addImages(fileList, 1024, true);
 		// Set empty file list
 		const emptyList = ([] as unknown) as FileList;
 		add(emptyList)
 			.then(() => {
-				o(fileList().length).equals(0);
+				expect(fileList().length).toBe(0);
 				done();
 			});
 	});
 
-	o("set 1", (done: () => void) => {
+	test("set 1", (done: () => void) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addImages(fileList, 1024, true);
 		const file = new File([
@@ -70,7 +68,7 @@ o.spec("ImageSelect", () => {
 		const addList = ([file] as unknown) as FileList;
 		add(addList)
 			.then(() => {
-				o(fileList().length).equals(1);
+				expect(fileList().length).toBe(1);
 				done();
 			});
 	});

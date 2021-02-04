@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 
 import { SignStamp } from "./signStamp";
 import { applyStamp } from "./signStamp";
 
-o.spec("SignStamp", () => {
+describe("SignStamp", () => {
 
-	o("create/remove", () => {
+	test("create/remove", () => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(SignStamp, {
@@ -17,18 +15,18 @@ o.spec("SignStamp", () => {
 				onCancel: () => null
 			})
 		});
-		o(root.childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(2);
 		// Force onupdate
 		m.redraw.sync();
 		m.mount(root, null);
-		o(root.childNodes.length).equals(0);
+		expect(root.childNodes.length).toBe(0);
 	});
 
-	o("apply", () => {
-		const spy = o.spy(() => null);
-		const apply = applyStamp(25, spy);
+	test("apply", () => {
+		const mockCallback = jest.fn();
+		const apply = applyStamp(25, mockCallback);
 		apply();
-		o(spy.callCount).equals(1);
+		expect(mockCallback.mock.calls.length).toBe(1);
 	});
 
 });

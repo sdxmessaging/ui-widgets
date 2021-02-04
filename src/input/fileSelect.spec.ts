@@ -1,5 +1,3 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
@@ -8,9 +6,9 @@ import { FieldType, IFile } from "../interface/widget";
 import { FileSelect } from "./fileSelect";
 import { addFiles } from "./fileMulti";
 
-o.spec("FileSelect", () => {
+describe("FileSelect", () => {
 
-	o("empty", () => {
+	test("empty", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([]);
 		m.mount(root, {
@@ -23,10 +21,10 @@ o.spec("FileSelect", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("single", () => {
+	test("single", () => {
 		const root = window.document.createElement("div");
 		const value = stream<IFile[]>([{
 			guid: "test",
@@ -44,16 +42,18 @@ o.spec("FileSelect", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 	});
 
-	o("set", () => {
+	test("set", () => {
+
+		//global.crypto.getRandomValues = (buffer: any) => crypto.randomFillSync(buffer);
 		const fileList = stream<IFile[]>([]);
 		const add = addFiles(fileList, true);
 		const file = { name: "Test" };
 		const addList = ([file] as unknown) as FileList;
 		add(addList);
-		o(fileList().length).equals(1);
+		expect(fileList().length).toBe(1);
 	});
 
 });

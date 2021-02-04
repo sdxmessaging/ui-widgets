@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { CardDateInput } from "./cardDateInput";
 
-o.spec("CardDateInput", () => {
+describe("CardDateInput", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
 		m.mount(root, {
@@ -18,14 +16,14 @@ o.spec("CardDateInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		// Input only
-		o(root.childNodes[0].childNodes.length).equals(1);
+		expect(root.childNodes[0].childNodes.length).toBe(1);
 		// Cleanup
 		m.mount(root, null);
 	});
 
-	o("configured + value change", () => {
+	test("configured + value change", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
 		const xform = value.map((val) => val);
@@ -43,9 +41,9 @@ o.spec("CardDateInput", () => {
 				xform
 			})
 		});
-		o(root.childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
 		// Label + Input
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 		// Set empty date
 		value("");
 		// Set partial date
@@ -54,11 +52,11 @@ o.spec("CardDateInput", () => {
 		value("01/20");
 		// Get month input and update value
 		const dateIn = root.querySelector("#test-mm") as HTMLInputElement;
-		o(dateIn != null).equals(true);
+		expect(dateIn != null).toBe(true);
 		dateIn.value = "02";
 		dateIn.dispatchEvent(new Event("change"));
 		// Verify change
-		o(value()).equals("02/20");
+		expect(value()).toBe("02/20");
 		// Cleanup
 		m.mount(root, null);
 	});

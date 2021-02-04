@@ -1,13 +1,11 @@
-const o = require("ospec");
-
 import m from "mithril";
 import stream from "mithril/stream";
 
 import { RadioInput } from "./radio";
 
-o.spec("RadioInput", () => {
+describe("RadioInput", () => {
 
-	o("minimal", () => {
+	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("");
 		m.mount(root, {
@@ -18,11 +16,11 @@ o.spec("RadioInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(1);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(1);
 	});
 
-	o("configured", () => {
+	test("configured", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("val");
 		m.mount(root, {
@@ -44,8 +42,8 @@ o.spec("RadioInput", () => {
 				value
 			})
 		});
-		o(root.childNodes.length).equals(1);
-		o(root.childNodes[0].childNodes.length).equals(2);
+		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
 });
