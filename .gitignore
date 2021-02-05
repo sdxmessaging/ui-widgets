@@ -72,3 +72,5 @@ typings/
 
 # next.js build output
 .next
+coverage/coverage-final.json
+coverage/clover.xml
