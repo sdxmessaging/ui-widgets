@@ -6,5 +6,8 @@ module.exports = {
 			tsconfig: 'tsconfig.test.json',
 		},
 	},
-	setupFiles: ['./test-setup.ts']
+	setupFiles: ['./test-setup.ts'],
+	testPathIgnorePatterns : [
+		".js" 
+	  ]
 };
