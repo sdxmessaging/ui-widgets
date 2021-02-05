@@ -2,7 +2,7 @@
 sonar
 .scannerwork
 
-#Test coverage
+# Test coverage
 coverage
 
 # TypeScript --incremental
@@ -75,4 +75,3 @@ typings/
 
 # next.js build output
 .next
-
