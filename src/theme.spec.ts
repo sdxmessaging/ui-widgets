@@ -43,6 +43,11 @@ describe("Button Context", () => {
 
 describe("Theme Classes", () => {
 
+	// Set invalid class for testing
+	updateClasses({
+		invalidInputWrapper: "invalid"
+	});
+
 	test("labelCls", () => {
 		expect(labelCls({})).toBe(` ${theme.label} `);
 		expect(labelCls({ label: "test", merge: false }, true)).toBe(`test  ${theme.requiredLabel}`);
@@ -70,7 +75,7 @@ describe("Theme Classes", () => {
 
 	test("inputWrapper", () => {
 		expect(inputWrapperCls({})).toBe(` ${theme.inputWrapper} `);
-		expect(inputWrapperCls({}, false)).toBe(` ${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		expect(inputWrapperCls({}, true)).toBe(` ${theme.inputWrapper} ${theme.invalidInputWrapper}`);
 		expect(inputWrapperCls({ inputWrapper: "test", merge: false })).toBe("test  ");
 	});
 

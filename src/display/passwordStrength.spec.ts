@@ -21,6 +21,9 @@ describe("PasswordStrength", () => {
 		expect(root.childNodes.length).toBe(1);
 		const content = root.childNodes[0];
 		expect(content.childNodes.length).toBe(2);
+		// Set password (with score > 0) and redraw
+		value("eightchar");
+		m.redraw.sync();
 		// Cleanup
 		m.mount(root, null);
 	});

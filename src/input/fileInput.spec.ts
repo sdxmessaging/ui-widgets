@@ -83,6 +83,27 @@ describe("FileInput", () => {
 		expect(fileList().length).toBe(0);
 	});
 
+	test("drag/drop", () => {
+		const dragState = stream<boolean>(false);
+		const fileList = stream<IFile[]>([]);
+		// Mock drag event with no dataTransfer.files
+		const dummyEvt = ({
+			preventDefault: () => null
+		} as unknown) as DragEvent & IMithrilEvent;
+		// Start drag
+		const start = dragStart(dragState);
+		start(dummyEvt);
+		expect(dragState()).toBe(true);
+		// Drop file
+		const set = drop(dragState, (setList) => {
+			// No event dataTransfer
+			expect(setList).toBe(undefined);
+		});
+		set(dummyEvt);
+		expect(dragState()).toBe(false);
+		expect(fileList().length).toBe(0);
+	});
+
 	test("change", () => {
 		const fileList = stream<IFile[]>([]);
 		// Mock callback
