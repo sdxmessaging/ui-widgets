@@ -46,7 +46,7 @@ describe("ImageSelect", () => {
 		expect(root.childNodes.length).toBe(1);
 	});
 
-	test("set 0", (done: () => void) => {
+	test("set 0", (done) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addImages(fileList, 1024, true);
 		// Set empty file list
@@ -58,7 +58,7 @@ describe("ImageSelect", () => {
 			});
 	});
 
-	test("set 1", (done: () => void) => {
+	test("set 1", (done) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addImages(fileList, 1024, true);
 		const file = new File([

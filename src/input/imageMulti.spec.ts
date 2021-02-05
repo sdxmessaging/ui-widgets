@@ -47,7 +47,7 @@ describe("ImageMulti", () => {
 		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	test("add", (done: () => void) => {
+	test("add", (done) => {
 		const fileList = stream<IFile[]>([]);
 		const add = addImages(fileList, 1024);
 		// Add 2 basic files
