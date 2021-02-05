@@ -17,9 +17,9 @@
   "module": "./dist/index.js",
   "types": "./lib/index.d.ts",
   "dependencies": {
-    "lodash": "^4.17.20",
-    "mithril": "^2.0.4",
-    "signature_pad": "^3.0.0-beta.3"
+    "lodash": "4.17.20",
+    "mithril": "2.0.4",
+    "signature_pad": "3.0.0-beta.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.168",
