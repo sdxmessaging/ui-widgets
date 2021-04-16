@@ -4,9 +4,11 @@ export * from "./interface/theme";
 export { updateConfig } from "./config";
 export { updateClasses, updateButtonContext } from "./theme";
 export {
-	fileNameExtSplit, guid,
-	dataURItoBlob, readArrayBuffer,
-	readOrientation, getOrientation
+	dataURItoBlob,
+	fileConstructor, fileNameExtSplit,
+	getOrientation, guid,
+	readArrayBuffer, readOrientation,
+	resizeImage, scaleRect
 } from "./utils";
 
 export { Badge } from "./badge";
