@@ -1,5 +1,5 @@
 import m from "mithril";
-import { IFile, TPropStream } from "./interface/widget";
+import { IFile, TProp, TPropStream } from "./interface/widget";
 import { IWidgetClasses } from "./interface/theme";
 declare global {
     interface Window {
@@ -15,10 +15,10 @@ export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: st
 export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?: string): (string | m.Vnode<any, any> | null | undefined)[];
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => string | number | boolean | import("mithril/stream")<string>;
+}) => TProp | import("mithril/stream")<string>;
 export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => string | number | boolean | import("mithril/stream")<boolean>;
+}) => import("mithril/stream")<boolean> | TProp;
 /**
  * Split given file name from extension
  */

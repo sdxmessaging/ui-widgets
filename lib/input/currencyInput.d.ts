@@ -1,5 +1,5 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget, TPropStream } from "../interface/widget";
+import { IPropWidget, TProp, TPropStream } from "../interface/widget";
 export declare class CurrencyInput implements ClassComponent<IPropWidget> {
     view({ attrs: { field, value, xform } }: CVnode<IPropWidget>): m.Vnode<any, any>;
 }
@@ -23,4 +23,4 @@ export declare function numberToCurrencyStr(unitTotal: number): string | undefin
 export declare function numberToCurrencyTuple(unitTotal: number): [string, string] | undefined;
 export declare function setCurrencyValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => string | number | boolean | import("mithril/stream")<number>;
+}) => TProp | import("mithril/stream")<number>;
