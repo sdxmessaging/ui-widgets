@@ -672,7 +672,9 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "sign-in",
 						label: "Signature Input",
-						heightPct: 20
+						heightPct: 20,
+						stampTxt: "Apply Stamp",
+						stampSetTxt: "Signature"
 					},
 					value: signList
 				})),

@@ -10,6 +10,8 @@ describe("SignStamp", () => {
 		m.mount(root, {
 			view: () => m(SignStamp, {
 				heightPct: 25,
+				stampTxt: "",
+				stampSetTxt: "",
 				style: {},
 				onSet: () => null,
 				onCancel: () => null
@@ -24,7 +26,7 @@ describe("SignStamp", () => {
 
 	test("apply", () => {
 		const mockCallback = jest.fn();
-		const apply = applyStamp(25, mockCallback);
+		const apply = applyStamp(25, "", mockCallback);
 		apply();
 		expect(mockCallback.mock.calls.length).toBe(1);
 	});

@@ -41,7 +41,9 @@ describe("SignBuilder", () => {
 					}, {
 						value: "unknown"
 					}],
-					heightPct: 50
+					heightPct: 50,
+					stampTxt: "test",
+					stampSetTxt: "test-signature"
 				},
 				value
 			})

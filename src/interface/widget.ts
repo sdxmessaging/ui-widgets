@@ -126,9 +126,21 @@ export interface IOptionField extends IField {
 
 export interface ISignField extends IOptionField {
 	readonly heightPct?: number;
+	readonly stampTxt?: string;
+	readonly stampSetTxt?: string;
 }
 
 export type TField = IField | IOptionField | ISignField;
+
+// Editor signature inner widgets
+export interface ISignWidget {
+	readonly heightPct: number;
+	readonly stampTxt: string;
+	readonly stampSetTxt: string;
+	readonly style: TStyle;
+	onSet(dataUrl: string): void;
+	onCancel(): void;
+}
 
 // Mithril event handler helper
 export interface IMithrilEvent extends Event {
@@ -166,12 +178,4 @@ export interface IThumbnailArgs {
 export const enum DisplayType {
 	thumbnail = "thumbnail",
 	list = "list"
-}
-
-// Editor signature inner widgets
-export interface ISignWidget {
-	readonly heightPct: number;
-	readonly style: TStyle;
-	onSet(dataUrl: string): void;
-	onCancel(): void;
 }

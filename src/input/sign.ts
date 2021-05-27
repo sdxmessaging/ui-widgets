@@ -66,7 +66,9 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			readonly, disabled,
 			uiClass = {},
 			options = config.signOpts,
-			heightPct = config.signHeightPct
+			heightPct = config.signHeightPct,
+			stampTxt = config.stampTxt,
+			stampSetTxt = config.stampSetTxt
 		} = field as ISignField;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
@@ -122,6 +124,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				: this.component
 					? m(this.component, {
 						heightPct,
+						stampTxt,
+						stampSetTxt,
 						style,
 						onSet: setFile(value, id, config.signMaxSize),
 						onCancel: () => this.setComponent()

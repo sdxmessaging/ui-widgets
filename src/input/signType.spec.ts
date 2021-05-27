@@ -13,6 +13,8 @@ describe("SignType", () => {
 		m.mount(root, {
 			view: () => m(SignType, {
 				heightPct: 25,
+				stampTxt: "",
+				stampSetTxt: "",
 				style: {},
 				onSet: () => null,
 				onCancel: () => null

@@ -82,8 +82,18 @@ export interface IOptionField extends IField {
 }
 export interface ISignField extends IOptionField {
     readonly heightPct?: number;
+    readonly stampTxt?: string;
+    readonly stampSetTxt?: string;
 }
 export declare type TField = IField | IOptionField | ISignField;
+export interface ISignWidget {
+    readonly heightPct: number;
+    readonly stampTxt: string;
+    readonly stampSetTxt: string;
+    readonly style: TStyle;
+    onSet(dataUrl: string): void;
+    onCancel(): void;
+}
 export interface IMithrilEvent extends Event {
     redraw: boolean;
 }
@@ -112,11 +122,5 @@ export interface IThumbnailArgs {
 export declare const enum DisplayType {
     thumbnail = "thumbnail",
     list = "list"
-}
-export interface ISignWidget {
-    readonly heightPct: number;
-    readonly style: TStyle;
-    onSet(dataUrl: string): void;
-    onCancel(): void;
 }
 export {};

@@ -11,6 +11,8 @@ describe("SignDraw", () => {
 		m.mount(root, {
 			view: () => m(SignDraw, {
 				heightPct: 25,
+				stampTxt: "",
+				stampSetTxt: "",
 				style: {},
 				onSet: () => null,
 				onCancel: () => null

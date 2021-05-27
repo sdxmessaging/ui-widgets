@@ -13,21 +13,21 @@ export function createStamp(sign: string, heightPct: number): string {
 	return textToImage(sign, width, height, config.signFont);
 }
 
-export function applyStamp(heightPct: number, callback: ISignWidget["onSet"]) {
-	return () => callback(createStamp(config.stampSetTxt, heightPct));
+export function applyStamp(heightPct: number, stampTxt: string, callback: ISignWidget["onSet"]) {
+	return () => callback(createStamp(stampTxt, heightPct));
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {
 
-	public view({ attrs: { heightPct, onSet } }: CVnode<ISignWidget>): Children {
+	public view({ attrs: { heightPct, stampTxt, stampSetTxt, onSet } }: CVnode<ISignWidget>): Children {
 		return [
-			m("span.clip", { style: { "font-family": config.signFont } }, config.stampSetTxt),
+			m("span.clip", { style: { "font-family": config.signFont } }, stampSetTxt),
 			m(".flex",
 				m(Button, {
-					label: config.stampTxt,
+					label: stampTxt,
 					classes: `flex-auto ${config.stampBtnClass}`,
 					context: config.stampBtnContext,
-					onclick: applyStamp(heightPct, onSet)
+					onclick: applyStamp(heightPct, stampSetTxt, onSet)
 				})
 			)
 		];
