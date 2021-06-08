@@ -1,13 +1,11 @@
+/** @type {import("ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
-	preset: 'ts-jest',
-	testEnvironment: 'jsdom',
+	preset: "ts-jest",
+	testEnvironment: "jsdom",
 	globals: {
-		'ts-jest': {
-			tsconfig: 'tsconfig.test.json',
+		"ts-jest": {
+			tsconfig: "tsconfig.test.json",
 		},
 	},
-	setupFiles: ['./test-setup.ts'],
-	testPathIgnorePatterns : [
-		".js" 
-	  ]
+	setupFiles: ["./test-setup.ts"],
 };
