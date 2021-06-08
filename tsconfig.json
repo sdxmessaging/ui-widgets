@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
-		"target": "es5",
-		"module": "es2015",
+		"target": "ES2015",
+		"module": "ES2015",
 		"declaration": true,
 		"rootDir": "./src",
 		"outDir": "./lib",
@@ -10,10 +10,8 @@
 		"allowSyntheticDefaultImports": true,
 		"lib": [
 			"dom",
-			"es5",
-			"scripthost",
-			"es2015.iterable",
-			"es2015.promise"
+			"ES2015",
+			"scripthost"
 		],
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,

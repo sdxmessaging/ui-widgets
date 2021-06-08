@@ -183,7 +183,7 @@ m.mount(document.getElementById("page"), {
 						})
 					])
 				]),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
+				m(".w-50.pa2.ba.b--silver", m(uiWidgets.DateText, {
 					field: {
 						id: "date-out",
 						label: "Date Output",
