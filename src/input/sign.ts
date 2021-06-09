@@ -139,6 +139,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					}, fileObj
 						// Current signature
 						? m(".aspect-ratio--object.hide-child.dim", {
+							style: { "pointer-events": "none" },
 							onclick: () => value([])
 						}, [
 							m("img.img.w-100.absolute", {
@@ -154,12 +155,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						// Signature creation options
 						: m(".aspect-ratio--object.flex.items-stretch.justify-center",
 							lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.flex-wrap.justify-center.tc.dim", {
+								title: label,
 								onclick: () => this.setComponent(component)
 							},
 								m("i.fa-2x.ma1", {
-									class: icon
+									class: icon,
 								}),
-								m("span.ma1", label)
+								m("span.ma1.dn.db-ns", label)
 							))
 						)
 					)
