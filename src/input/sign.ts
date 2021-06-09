@@ -114,7 +114,9 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					style
 				},
 					// Current signature
-					fileObj ? m(".aspect-ratio--object",
+					fileObj ? m(".aspect-ratio--object", {
+						style: { "pointer-events": "none" },
+					},
 						m("img.img.w-100.absolute", {
 							src: imgSrc(fileObj.path, fileObj.dataUrl)
 						}),
@@ -139,7 +141,6 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					}, fileObj
 						// Current signature
 						? m(".aspect-ratio--object.hide-child.dim", {
-							style: { "pointer-events": "none" },
 							onclick: () => value([])
 						}, [
 							m("img.img.w-100.absolute", {
