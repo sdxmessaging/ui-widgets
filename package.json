@@ -54,7 +54,7 @@
     "example": "open example.html",
     "precommit": "./scriptHelpers/precommit.sh",
     "postcommit": "./scriptHelpers/postcommit.sh",
-    "dist": "npx ts-node ./scriptHelpers/dist.ts BUMP=$BUMP"
+    "dist": "ts-node ./scriptHelpers/dist.ts BUMP=$BUMP"
   },
   "pre-push": [
     "test"
