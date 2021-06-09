@@ -8,14 +8,16 @@ const enum versionBump {
 	PATCH = "patch"
 }
 
-const bumpType = process.argv.reduce(
-	(acc, arg): versionBump =>
-		arg.includes("BUMP") ? arg.split("=")[1].toLowerCase() as versionBump : acc as versionBump,
-	versionBump.PATCH
-) as versionBump;
+const bumpType = process.argv.reduce<versionBump>((acc, arg) => {
+	switch (arg.toLowerCase()) {
+		case versionBump.MAJOR: return versionBump.MAJOR;
+		case versionBump.MINOR: return versionBump.MINOR;
+		default: return acc;
+	}
+}, versionBump.PATCH);
 
 const bumpVersion = ((bumpType: versionBump) => {
-	const [major, minor, patch] = currentVersion.split(".").map((str: string) => Number(str));
+	const [major, minor, patch] = currentVersion.split(".").map(Number);
 	switch (bumpType) {
 		case versionBump.MAJOR:
 			return `${major + 1}.0.0`
@@ -36,9 +38,9 @@ interface IProcess {
 class ProcessStack {
 
 	private version: string;
-	private processArray: IProcess[];
+	private processArray: ReadonlyArray<IProcess>;
 
-	constructor(processArray: IProcess[], version: string) {
+	constructor(processArray: ReadonlyArray<IProcess>, version: string) {
 		this.version = version;
 		this.processArray = processArray;
 	}
@@ -66,7 +68,7 @@ class ProcessStack {
 	}
 }
 
-const processArray: IProcess[] = [
+const processArray: ReadonlyArray<IProcess> = [
 	// Pull
 	{
 		execute: () => shell.exec("git pull -q"),
