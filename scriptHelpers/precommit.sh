@@ -1,4 +1,0 @@
-
-echo 
-touch ".commit"
-exit

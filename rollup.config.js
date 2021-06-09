@@ -1,13 +1,15 @@
 import { terser } from "rollup-plugin-terser";
 
-export const globals = {
+const globals = {
 	"lodash": "_",
 	"mithril": "m",
 	"mithril/stream": "m.stream",
 	"signature_pad": "SignaturePad"
 };
 
-export const external = Object.keys(globals);
+const external = Object.keys(globals);
+
+const banner = `/* @preserve built on: ${new Date().toJSON()} */`;
 
 const plugins = [];
 if (process.env.MINIFY) {
@@ -20,6 +22,7 @@ export default [{
 	input: "lib/index.js",
 	external,
 	output: {
+		banner,
 		dir: "dist",
 		format: "esm",
 		globals
@@ -30,6 +33,7 @@ export default [{
 	input: "lib/index.js",
 	external,
 	output: {
+		banner,
 		name: "uiWidgets",
 		dir: "umd",
 		format: "umd",

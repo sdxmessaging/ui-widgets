@@ -33,9 +33,8 @@
     "eslint": "7.28.0",
     "jest": "27.0.4",
     "jest-cli": "27.0.4",
-    "post-commit": "0.0.1",
-    "pre-commit": "1.2.2",
     "pre-push": "0.1.1",
+    "rimraf": "3.0.2",
     "rollup": "2.51.1",
     "rollup-plugin-terser": "7.0.2",
     "shelljs": "0.8.4",
@@ -43,10 +42,11 @@
     "typescript": "4.2.4"
   },
   "scripts": {
+    "prebuild": "rimraf lib tsconfig.tsbuildinfo",
     "build": "tsc -b",
     "postbuild": "rollup -c --environment MINIFY",
     "watch": "tsc -w",
-    "watch-bundle": "rollup -c -w --environment MINIFY",
+    "watch-bundle": "rollup -c -w --environment FAST",
     "watch-test": "jest --watch",
     "test": "jest",
     "coverage": "jest --coverage",
@@ -56,8 +56,6 @@
     "postcommit": "./scriptHelpers/postcommit.sh",
     "dist": "npx ts-node ./scriptHelpers/dist.ts BUMP=$BUMP"
   },
-  "pre-commit": [],
-  "post-commit": [],
   "pre-push": [
     "test"
   ]
