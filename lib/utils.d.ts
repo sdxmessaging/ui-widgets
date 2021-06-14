@@ -1,11 +1,6 @@
 import m from "mithril";
 import { IFile, TProp, TPropStream } from "./interface/widget";
 import { IWidgetClasses } from "./interface/theme";
-declare global {
-    interface Window {
-        msCrypto: Crypto;
-    }
-}
 export declare function guid(): string;
 export declare function pxRatio(): number;
 export declare function getLabelText(label: string, required?: boolean): string;

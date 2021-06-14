@@ -14,6 +14,13 @@ import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
 import { SignStamp } from "./signStamp";
 
+// Map SignTypes enum values to widgets
+const componentMap: Readonly<Record<SignTypes, ComponentTypes<ISignWidget>>> = {
+	[SignTypes.Draw]: SignDraw,
+	[SignTypes.Type]: SignType,
+	[SignTypes.Stamp]: SignStamp
+};
+
 function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
 	return new Promise((resolve) => {
 		const image = new Image();
@@ -48,12 +55,12 @@ export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) 
 
 export class SignBuilder implements ClassComponent<IFileWidget> {
 
-	private component?: ComponentTypes<ISignWidget>;
+	private signType?: SignTypes;
 	private valUpdate!: stream<void>;
 
 	public oninit({ attrs: { value } }: CVnode<IFileWidget>) {
 		// Unset signature component on file change
-		this.valUpdate = value.map(() => this.setComponent());
+		this.valUpdate = value.map(() => this.setSignType());
 	}
 
 	public onremove() {
@@ -78,19 +85,19 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		const opts = lodash(options).map(({ value: type }) => {
 			if (type === SignTypes.Draw) {
 				return {
-					component: SignDraw,
+					type,
 					icon: config.drawIcn,
 					label: config.signDrawTxt
 				};
 			} else if (type === SignTypes.Type) {
 				return {
-					component: SignType,
+					type,
 					icon: config.typeIcn,
 					label: config.signTypeTxt
 				};
 			} else if (type === SignTypes.Stamp) {
 				return {
-					component: SignStamp,
+					type,
 					icon: config.stampIcn,
 					label: config.signStampTxt
 				};
@@ -99,14 +106,16 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		}).compact().value();
 		// Auto-select widget if there is only one option and no file
 		if (opts.length === 1 && !fileObj) {
-			this.setComponent(opts[0].component);
+			this.setSignType(opts[0].type);
 		}
 		return m("fieldset.relative", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, lbl),
 			m("div", {
-				class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+				class: this.signType !== SignTypes.Stamp
+					? inputWrapperCls(uiClass, fileInvalid(field, value()))
+					: undefined
 			}, readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {
@@ -115,7 +124,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				},
 					// Current signature
 					fileObj ? m(".aspect-ratio--object", {
-						style: { "pointer-events": "none" },
+						style: { "pointer-events": "none" }
 					},
 						m("img.img.w-100.absolute", {
 							src: imgSrc(fileObj.path, fileObj.dataUrl)
@@ -123,14 +132,14 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					) : null
 				)
 				// Use signature creation component (if set)
-				: this.component
-					? m(this.component, {
+				: this.signType
+					? m(componentMap[this.signType], {
 						heightPct,
 						stampTxt,
 						stampSetTxt,
 						style,
 						onSet: setFile(value, id, config.signMaxSize),
-						onCancel: () => this.setComponent()
+						onCancel: () => this.setSignType()
 					})
 
 					// Display signature preview/creator
@@ -154,15 +163,15 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							)
 						])
 						// Signature creation options
-						: m(".aspect-ratio--object.flex.items-stretch.justify-center",
-							lodash.map(opts, ({ component, icon, label }) => m(".flex-auto.flex.flex-column.flex-wrap.justify-center.tc.dim", {
+						: m(".aspect-ratio--object.flex",
+							lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
 								title: label,
-								onclick: () => this.setComponent(component)
+								onclick: () => this.setSignType(type)
 							},
 								m("i.fa-2x.ma1", {
 									class: icon,
 								}),
-								m("span.ma1.dn.db-ns", label)
+								m("span.ma1.dn.db-ns.truncate", label)
 							))
 						)
 					)
@@ -171,7 +180,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 	}
 
 	// Set/unset signature creation component
-	private setComponent(newComp?: ComponentTypes<ISignWidget>) {
-		this.component = newComp;
+	private setSignType(type?: SignTypes) {
+		this.signType = type;
 	}
 }
