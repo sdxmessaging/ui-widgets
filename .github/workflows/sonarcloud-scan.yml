@@ -1,5 +1,6 @@
 name: Sonarcloud-scan
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
