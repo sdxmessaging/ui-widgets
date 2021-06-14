@@ -6,12 +6,6 @@ import { labelCls, theme } from "./theme";
 import { config } from "./config";
 import { IWidgetClasses } from "./interface/theme";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare global {
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	interface Window { msCrypto: Crypto }
-}
-
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
 	// Add to 0x100 to pad small numbers with leading 0
@@ -19,7 +13,7 @@ function toHex(inp: number): string {
 }
 export function guid(): string {
 	const bytes = new Uint8Array(16);
-	const crypto = window.crypto || window.msCrypto;
+	const crypto = window.crypto;
 	crypto.getRandomValues(bytes);
 	return ([
 		toHex(bytes[0]), toHex(bytes[1]),
