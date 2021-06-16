@@ -92,12 +92,8 @@ describe("OmniFileInput", () => {
 				value
 			})
 		});
-		const imgElem = root?.firstElementChild?.firstElementChild?.children[2].firstElementChild?.firstElementChild?.firstElementChild;
-		expect(imgElem).not.toBe(null);
-		expect(imgElem).not.toBe(undefined);
-		if (imgElem) {
-			expect(imgElem.getAttribute("src")).toBe("test0/image");
-		}
+		const imgElem = root.querySelector("img[title=Test0]");
+		expect(imgElem).toBeDefined();
 	});
 
 	test("renders div with a tooltip with file is not image", () => {

@@ -1,9 +1,14 @@
-const canvas = require("canvas");
 const nodeCrypto = require("crypto");
 
+Object.defineProperty(global.Image.prototype, "src", {
+	set(_) {
+		if (this.onload) {
+			this.onload();
+		}
+	}
+});
+
 Object.defineProperties(global.self, {
-	// Add canvas support
-	...Object.getOwnPropertyDescriptors(canvas),
 	// Add basic crypto
 	crypto: {
 		value: {
