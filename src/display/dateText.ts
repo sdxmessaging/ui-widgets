@@ -14,7 +14,7 @@ export class DateText implements ClassComponent<IPropWidget> {
 	}
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
-		this.formatted = value.map(this.formatter);
+		this.formatted = (value as stream<TProp>).map(this.formatter);
 	}
 
 	public onremove() {
