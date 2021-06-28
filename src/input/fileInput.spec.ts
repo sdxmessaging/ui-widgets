@@ -76,7 +76,7 @@ describe("FileInput", () => {
 		// Drop file
 		const set = drop(dragState, (setList) => {
 			// No files on event dataTransfer
-			expect(setList).toBe(undefined);
+			expect(setList).toBeUndefined();
 		});
 		set(dummyEvt);
 		expect(dragState()).toBe(false);
@@ -97,7 +97,7 @@ describe("FileInput", () => {
 		// Drop file
 		const set = drop(dragState, (setList) => {
 			// No event dataTransfer
-			expect(setList).toBe(undefined);
+			expect(setList).toBeUndefined();
 		});
 		set(dummyEvt);
 		expect(dragState()).toBe(false);

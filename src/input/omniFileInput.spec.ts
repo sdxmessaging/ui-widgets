@@ -93,7 +93,7 @@ describe("OmniFileInput", () => {
 			})
 		});
 		const imgElem = root.querySelector("img[title=Test0]");
-		expect(imgElem).toBeDefined();
+		expect(imgElem).not.toBeNull();
 	});
 
 	test("renders div with a tooltip with file is not image", () => {
@@ -115,12 +115,8 @@ describe("OmniFileInput", () => {
 				value
 			})
 		});
-		// const fileName = root?.firstElementChild?.firstElementChild?.firstElementChild?.children[2]?.firstElementChild?.children[1]?.innerHTML;
-		// expect(fileName).not.toBe(null);
-		// expect(fileName).not.toBe(undefined);
-		// if (fileName) {
-		// 	expect(fileName).toBe("Test0");
-		// }
+		const fileIcon = root.querySelector("span[title=Test0]");
+		expect(fileIcon).not.toBeNull();
 	});
 
 	test("set non-image files", (done) => {

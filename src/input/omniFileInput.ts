@@ -85,19 +85,21 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 						] : [
 							// Non-image details
 							m(FileOpen, file),
-							m("span.ma1.flex-auto", file.name),
+							m("span.ma1.flex-auto", {
+								title: file.name,
+							}, file.name),
 							m("i.pa1.pointer.dim", {
 								title: `Remove ${file.name}`,
 								class: config.cancelIcn,
 								onclick: removeFile(value, file.guid)
 							})
 						] : [
-							// File upload
-							m("i.pa1", {
-								class: config.uploadIcn
-							}),
-							m("span.ma1.flex-auto", config.addFileTxt)
-						]
+						// File upload
+						m("i.pa1", {
+							class: config.uploadIcn
+						}),
+						m("span.ma1.flex-auto", config.addFileTxt)
+					]
 					)
 				)
 			)

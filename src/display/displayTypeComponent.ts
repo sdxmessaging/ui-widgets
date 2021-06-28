@@ -34,7 +34,9 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 				m("i.pa1", {
 					class: config.uploadIcn
 				}),
-				m("span.ma1.flex-auto", file.name),
+				m("span.ma1.flex-auto", {
+					title: file.name
+				}, file.name),
 				m(FileOpen, file),
 				m("i.pa1.pointer.dim", {
 					title: `Remove ${file.name}`,

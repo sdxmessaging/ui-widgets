@@ -100,15 +100,11 @@ describe("MultiOmniFileInput", () => {
 		});
 		const imageElements = root?.firstElementChild?.firstElementChild?.children[1]?.children;
 		lodash.forEach(imageElements, (element, index) => {
-			const image = element.firstElementChild;
-			const button = element.children[1].firstElementChild;
-			expect(image).not.toBe(null);
-			expect(image).not.toBe(undefined);
-			expect(button).not.toBe(null);
-			expect(button).not.toBe(undefined);
-			if (image) {
-				expect(image.getAttribute("src")).toBe("test" + index + "/image");
-			}
+			const image = element.firstElementChild as HTMLElement;
+			expect(image).not.toBeNull();
+			expect(image.getAttribute("src")).toBe("test" + index + "/image");
+			const button = element.children[1].firstElementChild as HTMLElement;
+			expect(button).not.toBeNull();
 		});
 	});
 
@@ -138,15 +134,11 @@ describe("MultiOmniFileInput", () => {
 		});
 		const imageElements = root?.firstElementChild?.firstElementChild?.children[1]?.children;
 		lodash.forEach(imageElements, (element) => {
-			const div = element.firstElementChild;
-			const button = element.children[1].firstElementChild;
-			expect(div).not.toBe(null);
-			expect(div).not.toBe(undefined);
-			expect(button).not.toBe(null);
-			expect(button).not.toBe(undefined);
-			if (div) {
-				expect(div.hasAttribute("tooltip")).toBe(true);
-			}
+			const div = element.firstElementChild as HTMLElement;
+			expect(div).not.toBeNull();
+			expect(div.hasAttribute("tooltip")).toBe(true);
+			const button = element.children[1].firstElementChild as HTMLElement;
+			expect(button).not.toBeNull();
 		});
 	});
 

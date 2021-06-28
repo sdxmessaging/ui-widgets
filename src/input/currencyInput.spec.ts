@@ -108,8 +108,8 @@ describe("currencyStrToNumber", () => {
 describe("numberToCurrencyStr", () => {
 
 	test("non-finite", () => {
-		expect(numberToCurrencyStr((undefined as unknown) as number)).toBe(undefined);
-		expect(numberToCurrencyStr(Number.POSITIVE_INFINITY)).toBe(undefined);
+		expect(numberToCurrencyStr((undefined as unknown) as number)).toBeUndefined();
+		expect(numberToCurrencyStr(Number.POSITIVE_INFINITY)).toBeUndefined();
 	});
 
 	test("zero", () => {
