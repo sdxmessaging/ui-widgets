@@ -4,12 +4,14 @@ export * from "./interface/theme";
 export { updateConfig } from "./config";
 export { updateClasses, updateButtonContext } from "./theme";
 export {
-	dataURItoBlob,
-	fileConstructor, fileNameExtSplit,
-	getOrientation, guid,
-	readArrayBuffer, readOrientation,
-	resizeImage, scaleRect
+	guid, pxRatio, fileNameExtSplit,
+	dataURItoBlob, fileConstructor, dataUrlToFile
 } from "./utils";
+export {
+	getOrientation, readArrayBuffer, readOrientation,
+	scaleRect, resizeImage, scaleDataUrl,
+	textToImage, createStamp,
+} from "./imageUtils";
 
 export { Badge } from "./badge";
 export { Button } from "./button";

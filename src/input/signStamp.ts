@@ -3,18 +3,12 @@ import m, { ClassComponent, CVnode, Children } from "mithril";
 import { ISignWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { textToImage } from "../utils";
+import { createStamp } from "../imageUtils";
 
 import { Button } from "../button";
 
-export function createStamp(sign: string, heightPct: number): string {
-	const width = config.signMaxSize;
-	const height = 0.01 * heightPct * width;
-	return textToImage(sign, width, height, config.signFont);
-}
-
 export function applyStamp(heightPct: number, stampTxt: string, callback: ISignWidget["onSet"]) {
-	return () => callback(createStamp(stampTxt, heightPct));
+	return () => callback(createStamp(stampTxt, heightPct), { text: stampTxt });
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {

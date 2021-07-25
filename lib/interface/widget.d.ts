@@ -1,6 +1,7 @@
 import stream from "mithril/stream";
 import { IWidgetClasses, TStyle } from "./theme";
 export declare type TProp = string | number | boolean;
+export declare type TPropMap = Record<string, TProp>;
 export declare type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
 export interface IFile {
     readonly guid: string;
@@ -8,6 +9,7 @@ export interface IFile {
     readonly path: string;
     readonly file?: File;
     readonly dataUrl?: string;
+    readonly metadata?: TPropMap;
 }
 export declare const enum FieldType {
     label = "label",
@@ -91,7 +93,7 @@ export interface ISignWidget {
     readonly stampTxt: string;
     readonly stampSetTxt: string;
     readonly style: TStyle;
-    onSet(dataUrl: string): void;
+    onSet(dataUrl: string, metadata?: TPropMap): void;
     onCancel(): void;
 }
 export interface IMithrilEvent extends Event {

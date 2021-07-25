@@ -5,15 +5,14 @@ import { ISignWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { setValue } from "../utils";
+import { createStamp } from "../imageUtils";
 
 import { Button } from "../button";
-
-import { createStamp } from "./signStamp";
 
 export function applyText(text: stream<string>, heightPct: number, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
-			callback(createStamp(text(), heightPct));
+			callback(createStamp(text(), heightPct), { text: text() });
 		}
 		return false;
 	};

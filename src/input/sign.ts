@@ -3,11 +3,12 @@ import m, { ClassComponent, ComponentTypes, CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { TStyle } from "../interface/theme";
-import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes } from "../interface/widget";
+import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes, TPropMap } from "../interface/widget";
 
 import { config } from "../config";
 import { theme, inputWrapperCls, wrapperCls } from "../theme";
-import { dataURItoBlob, fileConstructor, getLabel, guid, imgSrc, scaleRect } from "../utils";
+import { getLabel, imgSrc, dataUrlToFile } from "../utils";
+import { scaleDataUrl } from "../imageUtils";
 import { fileInvalid } from "../validation";
 
 import { SignDraw } from "./signDraw";
@@ -21,33 +22,10 @@ const componentMap: Readonly<Record<SignTypes, ComponentTypes<ISignWidget>>> = {
 	[SignTypes.Stamp]: SignStamp
 };
 
-function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string> {
-	return new Promise((resolve) => {
-		const image = new Image();
-		image.onload = () => {
-			const canvas = document.createElement("canvas");
-			const [width, height] = scaleRect(image.width, image.height, maxSize);
-			canvas.width = width;
-			canvas.height = height;
-			const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-			context.drawImage(image, 0, 0, width, height);
-			resolve(canvas.toDataURL());
-		};
-		image.src = dataUrl;
-	});
-}
-
 export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) {
-	return (setDataUrl: string) => {
+	return (setDataUrl: string, metadata?: TPropMap) => {
 		return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
-			const newFile = fileConstructor(dataURItoBlob(scaledDataUrl), `sign-${id}.png`);
-			fileList([{
-				guid: guid(),
-				name: newFile.name,
-				path: "not_set",
-				file: newFile,
-				dataUrl: scaledDataUrl
-			}]);
+			fileList([dataUrlToFile(scaledDataUrl, `sign-${id}.png`, metadata)]);
 			m.redraw();
 		});
 	};
@@ -139,7 +117,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						stampSetTxt,
 						style,
 						onSet: setFile(value, id, config.signMaxSize),
-						onCancel: () => this.setSignType()
+						onCancel: lodash.bind(this.setSignType, this, undefined)
 					})
 
 					// Display signature preview/creator
@@ -150,7 +128,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					}, fileObj
 						// Current signature
 						? m(".aspect-ratio--object.hide-child.dim", {
-							onclick: () => value([])
+							onclick: lodash.bind(value, this, [])
 						}, [
 							m("img.img.w-100.absolute", {
 								src: imgSrc(fileObj.path, fileObj.dataUrl)
@@ -166,7 +144,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						: m(".aspect-ratio--object.flex",
 							lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
 								title: label,
-								onclick: () => this.setSignType(type)
+								onclick: lodash.bind(this.setSignType, this, type)
 							},
 								m("i.fa-2x.ma1", {
 									class: icon,

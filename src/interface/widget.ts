@@ -4,6 +4,8 @@ import { IWidgetClasses, TStyle } from "./theme";
 
 export type TProp = string | number | boolean;
 
+export type TPropMap = Record<string, TProp>;
+
 // TODO Consider dropping stream<TProp> in a future version
 export type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
 
@@ -16,6 +18,8 @@ export interface IFile {
 	readonly file?: File;
 	// Image input preview
 	readonly dataUrl?: string;
+	// Any other info
+	readonly metadata?: TPropMap;
 }
 
 export const enum FieldType {
@@ -138,7 +142,7 @@ export interface ISignWidget {
 	readonly stampTxt: string;
 	readonly stampSetTxt: string;
 	readonly style: TStyle;
-	onSet(dataUrl: string): void;
+	onSet(dataUrl: string, metadata?: TPropMap): void;
 	onCancel(): void;
 }
 
