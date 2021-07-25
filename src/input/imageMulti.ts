@@ -6,7 +6,8 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { fileInputCls, inputWrapperCls, wrapperCls, thumbMaxSize } from "../theme";
-import { dataURItoBlob, fileConstructor, guid, imgSrc, resizeImage } from "../utils";
+import { dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
+import { resizeImage } from "../imageUtils";
 import { fileInvalid } from "../validation";
 
 import { Button } from "../button";
