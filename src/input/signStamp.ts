@@ -8,7 +8,7 @@ import { createStamp } from "../imageUtils";
 import { Button } from "../button";
 
 export function applyStamp(heightPct: number, stampTxt: string, callback: ISignWidget["onSet"]) {
-	return () => callback(createStamp(stampTxt, heightPct), { text: stampTxt });
+	return () => callback(createStamp(stampTxt, heightPct), { text: stampTxt, heightPct });
 }
 
 export class SignStamp implements ClassComponent<ISignWidget> {

@@ -175,6 +175,7 @@ export function textToImage(text: string, width: number, height: number, font: s
 
 export function createStamp(sign: string, heightPct: number): string {
 	const width = config.signMaxSize;
+	// Signatures assumed wider than their height
 	const height = 0.01 * heightPct * width;
 	return textToImage(sign, width, height, config.signFont);
 }

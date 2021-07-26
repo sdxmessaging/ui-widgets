@@ -12,7 +12,7 @@ import { Button } from "../button";
 export function applyText(text: stream<string>, heightPct: number, callback: ISignWidget["onSet"]) {
 	return () => {
 		if (text()) {
-			callback(createStamp(text(), heightPct), { text: text() });
+			callback(createStamp(text(), heightPct), { text: text(), heightPct });
 		}
 		return false;
 	};
