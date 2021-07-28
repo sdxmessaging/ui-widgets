@@ -26,8 +26,9 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			class: inputWrapperCls(uiClass)
 		}, [
 			m("label.flex.items-center", {
-				title,
-				class: checkInputCls(uiClass, disabled, readonly)
+				"title": title,
+				"class": checkInputCls(uiClass, disabled, readonly),
+				"data-input-id": id
 			},
 				m("input.clip[type=checkbox]", {
 					id, name,

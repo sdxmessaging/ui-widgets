@@ -27,8 +27,9 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				const checked = val() === value;
 				// No requirement for label "for" attribute
 				return m("label.dib", {
-					title: label,
-					class: radioInputCls(uiClass, checked, disabled, readonly)
+					"title": label,
+					"class": radioInputCls(uiClass, checked, disabled, readonly),
+					"data-input-id": id
 				},
 					m("input.clip[type=radio]", {
 						name, value, checked,
