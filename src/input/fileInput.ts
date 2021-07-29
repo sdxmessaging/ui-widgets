@@ -62,8 +62,10 @@ export class FileInput implements ClassComponent<IFileInput> {
 			uiClass = {}
 		} = field;
 		return m("label.db", lodash.extend({
-			for: id, title,
-			class: pointerCls(disabled, readonly)
+			"for": id,
+			"title": title,
+			"class": pointerCls(disabled, readonly),
+			"data-input-id": id
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),
