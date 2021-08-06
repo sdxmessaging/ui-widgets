@@ -60,7 +60,8 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 				defaultAccept: "*",
 				multiple: false,
 				dragging: this.dragging,
-				onSet: addOmniFiles(value, true)
+				onSet: addOmniFiles(value, true),
+				value
 			},
 				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))

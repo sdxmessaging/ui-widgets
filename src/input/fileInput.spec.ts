@@ -20,6 +20,7 @@ describe("FileInput", () => {
 					type: FieldType.file,
 					title: "test title"
 				},
+				value: stream<IFile[]>([]),
 				dragging,
 				onSet: () => null
 			})
@@ -41,6 +42,7 @@ describe("FileInput", () => {
 					uiClass: {},
 					accept: ".pdf"
 				},
+				value: stream<IFile[]>([]),
 				dragging,
 				onSet: () => null
 			})

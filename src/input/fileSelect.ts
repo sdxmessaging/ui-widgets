@@ -27,7 +27,8 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				field,
 				multiple: false,
 				dragging: this.dragging,
-				onSet: addFiles(value, true)
+				onSet: addFiles(value, true),
+				value
 			},
 				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))

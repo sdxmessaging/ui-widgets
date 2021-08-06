@@ -47,7 +47,8 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 			m(FileInput, {
 				field,
 				dragging: this.dragging,
-				onSet: addFiles(value)
+				onSet: addFiles(value),
+				value
 			},
 				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))

@@ -28,7 +28,8 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				defaultAccept: "image/*",
 				multiple: false,
 				dragging: this.dragging,
-				onSet: addImages(value, config.imageMaxSize, true)
+				onSet: addImages(value, config.imageMaxSize, true),
+				value
 			},
 				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))

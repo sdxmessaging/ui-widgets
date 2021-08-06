@@ -50,7 +50,8 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				field,
 				defaultAccept: "image/*",
 				dragging: this.dragging,
-				onSet: addImages(value, config.imageMaxSize)
+				onSet: addImages(value, config.imageMaxSize),
+				value
 			},
 				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))

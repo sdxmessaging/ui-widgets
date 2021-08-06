@@ -26,6 +26,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				defaultAccept: "*",
 				dragging: this.dragging,
 				onSet: addOmniFiles(value, false),
+				value
 			},
 				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
