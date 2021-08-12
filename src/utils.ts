@@ -70,11 +70,15 @@ export function labelIcon(leftIcon?: string, label?: string, rightIcon?: string)
 
 // Input widget TProp update helpers
 export function setValue(val: TPropStream) {
-	return ({ target: { value } }: { target: HTMLInputElement }) => val(value);
+	return function ({ target: { value } }: { target: HTMLInputElement }) {
+		val(value);
+	};
 }
 
 export function setCheck(chk: TPropStream) {
-	return ({ target: { checked } }: { target: HTMLInputElement }) => chk(checked);
+	return function ({ target: { checked } }: { target: HTMLInputElement }) {
+		chk(checked);
+	};
 }
 
 /**

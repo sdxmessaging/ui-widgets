@@ -10,10 +10,10 @@ export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: st
 export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?: string): (string | m.Vnode<any, any> | null | undefined)[];
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => import("./interface/widget").TProp | import("mithril/stream")<string>;
+}) => void;
 export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
     target: HTMLInputElement;
-}) => import("mithril/stream")<boolean> | import("./interface/widget").TProp;
+}) => void;
 /**
  * Split given file name from extension
  */
