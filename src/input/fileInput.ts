@@ -1,13 +1,14 @@
 import lodash from "lodash";
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { IMithrilEvent, TField } from "../interface/widget";
+import { IFile, IMithrilEvent, TField } from "../interface/widget";
 import { labelCls, pointerCls } from "../theme";
 import { getLabelText } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
+	readonly value: stream<IFile[]>;
 	readonly defaultAccept?: string;
 	readonly multiple?: boolean;
 	readonly dragging: stream<boolean>;
@@ -50,6 +51,14 @@ export function change(setFiles: (setList: FileList | null) => void) {
 }
 
 export class FileInput implements ClassComponent<IFileInput> {
+	public oncreate({ dom, attrs: { value } }: CVnodeDOM<IFileInput>) {
+		value.map((list) => {
+			if (list.length === 0) {
+				(dom.firstChild as HTMLInputElement).value = "";
+			}
+		});
+	}
+
 	public view({ attrs: {
 		field, defaultAccept = "*", multiple = true,
 		dragging,

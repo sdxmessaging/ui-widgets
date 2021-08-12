@@ -1,8 +1,9 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
-import { IMithrilEvent, TField } from "../interface/widget";
+import { IFile, IMithrilEvent, TField } from "../interface/widget";
 export interface IFileInput {
     readonly field: TField;
+    readonly value: stream<IFile[]>;
     readonly defaultAccept?: string;
     readonly multiple?: boolean;
     readonly dragging: stream<boolean>;
@@ -15,5 +16,6 @@ export declare function change(setFiles: (setList: FileList | null) => void): ({
     target: HTMLInputElement;
 }) => void;
 export declare class FileInput implements ClassComponent<IFileInput> {
+    oncreate({ dom, attrs: { value } }: CVnodeDOM<IFileInput>): void;
     view({ attrs: { field, defaultAccept, multiple, dragging, onSet }, children }: CVnode<IFileInput>): m.Vnode<any, any>;
 }
