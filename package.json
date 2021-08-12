@@ -19,7 +19,8 @@
   "dependencies": {
     "lodash": "4.17.21",
     "mithril": "2.0.4",
-    "signature_pad": "3.0.0-beta.4"
+    "signature_pad": "3.0.0-beta.4",
+    "ts-node": "^10.2.0"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
@@ -52,9 +53,9 @@
     "coverage": "jest --coverage",
     "lint": "eslint --ext .ts src/",
     "example": "open example.html",
-    "dist": "npx ts-node ./scriptHelpers/dist.ts",
-    "dist-minor": "npx ts-node ./scriptHelpers/dist.ts minor",
-    "dist-major": "npx ts-node ./scriptHelpers/dist.ts major"
+    "dist": "ts-node ./scriptHelpers/dist.ts",
+    "dist-minor": "ts-node ./scriptHelpers/dist.ts minor",
+    "dist-major": "ts-node ./scriptHelpers/dist.ts major"
   },
   "pre-push": [
     "test"
