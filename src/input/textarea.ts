@@ -14,13 +14,13 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			instant, uiClass = {},
 		} = field;
-		return m("fieldset", {
+		return m("fieldset.flex.flex-column.h-100", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, label, required),
-			m("div", {
+			m(".h-100", {
 				class: inputWrapperCls(uiClass, propInvalid(field, value()))
-			}, m("textarea.w-100.bg-transparent.bn.outline-0[rows=3]", {
+			}, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
 				id, name, title,
 				placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 				class: textareaCls(uiClass),
