@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { Children, ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { IFileWidget } from "../interface/widget";
+import { DisplayType, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
 import { fileInputCls, inputWrapperCls, wrapperCls } from "../theme";
@@ -17,9 +17,12 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	protected dragging: stream<boolean> = stream<boolean>(false);
 
-	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
+	public view({ attrs: { field, value, displayType } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { disabled, uiClass = {} } = field;
+		const innerText = displayType === DisplayType.none || !file
+			? config.addFileTxt
+			: file.name;
 		return m("fieldset", {
 			class: wrapperCls(uiClass, disabled)
 		},
@@ -39,13 +42,15 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 						m("i.pa1", {
 							class: config.uploadIcn
 						}),
-						m("span.ma1.flex-auto", file ? file.name : config.addFileTxt),
-						file ? m(FileOpen, file) : null,
-						file ? m("i.pa1.pointer.dim", {
-							title: `Remove ${file.name}`,
-							class: config.cancelIcn,
-							onclick: removeFile(value, file.guid)
-						}) : null
+						m("span.ma1.flex-auto", innerText),
+						file && displayType !== DisplayType.none ? [
+							m(FileOpen, file),
+							m("i.pa1.pointer.dim", {
+								title: `Remove ${file.name}`,
+								class: config.cancelIcn,
+								onclick: removeFile(value, file.guid)
+							})
+						] : null
 					])
 				)
 			)

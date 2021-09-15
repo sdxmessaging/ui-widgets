@@ -122,6 +122,7 @@ export interface IThumbnailArgs {
     style?: Partial<CSSStyleDeclaration>;
 }
 export declare const enum DisplayType {
+    none = "none",
     thumbnail = "thumbnail",
     list = "list"
 }

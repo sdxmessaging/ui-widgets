@@ -180,6 +180,7 @@ export interface IThumbnailArgs {
 }
 
 export const enum DisplayType {
+	none = "none",
 	thumbnail = "thumbnail",
 	list = "list"
 }

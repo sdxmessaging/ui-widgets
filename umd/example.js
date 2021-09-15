@@ -551,7 +551,8 @@ m.mount(document.getElementById("page"), {
 						id: "file-in",
 						label: "File Input"
 					},
-					value: fileList
+					value: fileList,
+					displayType: "none"
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
 					field: {
@@ -566,7 +567,7 @@ m.mount(document.getElementById("page"), {
 				icon: "fas fa-print",
 				classes: "mb2",
 				onclick: function () {
-					console.log(fileList()); fileList("");
+					console.log(fileList());
 				}
 			}),
 

@@ -1,7 +1,7 @@
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IFile } from "../interface/widget";
+import { DisplayType, FieldType, IFile } from "../interface/widget";
 
 import { FileSelect } from "./fileSelect";
 import { addFiles } from "./fileMulti";
@@ -40,6 +40,28 @@ describe("FileSelect", () => {
 					uiClass: {}
 				},
 				value
+			})
+		});
+		expect(root.childNodes.length).toBe(1);
+	});
+
+	test("no display", () => {
+		const root = window.document.createElement("div");
+		const value = stream<IFile[]>([{
+			guid: "test",
+			name: "Test",
+			path: "/test/path"
+		}]);
+		m.mount(root, {
+			view: () => m(FileSelect, {
+				field: {
+					id: "test",
+					label: "test",
+					type: FieldType.file,
+					uiClass: {}
+				},
+				value,
+				displayType: DisplayType.none
 			})
 		});
 		expect(root.childNodes.length).toBe(1);
