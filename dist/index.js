@@ -1302,12 +1302,10 @@ class DateInput {
         });
     }
     oncreate({ dom }) {
-        const inputList = dom.querySelectorAll("input");
+        const input = dom.querySelector("input");
         this.valid.map((valid) => {
             const validityMessage = valid ? "" : "Invalid Date";
-            inputList.forEach((element) => {
-                element.setCustomValidity(validityMessage);
-            });
+            input.setCustomValidity(validityMessage);
         });
     }
     onremove() {

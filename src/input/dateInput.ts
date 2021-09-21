@@ -50,12 +50,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		const inputList = dom.querySelectorAll("input");
+		const input = dom.querySelector("input") as HTMLInputElement;
 		this.valid.map((valid) => {
 			const validityMessage = valid ? "" : "Invalid Date";
-			inputList.forEach((element) => {
-				element.setCustomValidity(validityMessage);
-			});
+			input.setCustomValidity(validityMessage);
 		});
 	}
 
