@@ -13,10 +13,21 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
 	private month = stream<string>();
 	private year = stream<string>();
+	private valid = stream.lift(
+		(day, month, year) => {
+			const newYear = parseInt(year);
+			const newMonth = parseInt(month) - 1;
+			const newDay = parseInt(day);
+			const newDate = new Date(newYear, newMonth, newDay);
+			return newDate.getFullYear() === newYear
+				&& newDate.getMonth() === newMonth && newDate.getDate() === newDay;
+		},
+		this.day, this.month, this.year
+	);
 	// Combine date parts
 	private date = stream.lift(
-		(day, month, year) => `${year}-${month}-${day}`,
-		this.day, this.month, this.year
+		(day, month, year, valid) => valid ? `${year}-${month}-${day}` : "",
+		this.day, this.month, this.year, this.valid
 	);
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
@@ -31,14 +42,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		});
 		// Update value when date changes
 		this.date.map((newDate) => {
-			const date = new Date(String(newDate));
-			if (lodash.isDate(date) && !isNaN(date.getTime())) {
-				// Prevent recursive setting between streams
-				if (newDate !== value()) {
-					value(newDate);
-				}
-			} else {
-				value("");
+			// Prevent recursive setting between streams
+			if (newDate !== value()) {
+				value(newDate);
 			}
 		});
 	}
@@ -106,7 +112,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			getLabel(id, uiClass, label, required),
 			m("div", {
 				id, title,
-				class: inputWrapperCls(uiClass, propInvalid(field, value()))
+				class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
+				"aria-invalid": String(!this.valid())
 			}, locale === "en-US"
 				? [
 					monthInput,

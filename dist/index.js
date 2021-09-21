@@ -1,2 +1,2034 @@
-/* @preserve built on: 2021-09-15T10:37:06.333Z */
-import e from"lodash";import t from"mithril";import a from"mithril/stream";import s from"signature_pad";const n={imageMaxSize:1280,imageDispHeight:"16rem",thumbDispHeight:"6rem",addFileTxt:"Upload...",addFilesTxt:"Add file(s)...",remFileTtl:"Remove",openFileTxt:"Open file",showPassTxt:"Show Password",requiredLblPost:"",signOpts:[{label:"",value:"draw"},{label:"",value:"type"},{label:"",value:"stamp"}],signMaxSize:640,signHeightPct:25,signFont:"sans-serif",signDrawTxt:"Draw",signTypeTxt:"Type",signStampTxt:"Accept",stampTxt:"Accept",stampBtnClass:"",stampBtnContext:"default",stampSetTxt:"Accepted",applyTtl:"Apply",resetTtl:"Reset",cancelTtl:"Cancel",drawIcn:"fas fa-signature",typeIcn:"fas fa-keyboard",stampIcn:"fas fa-check",applyIcn:"fas fa-check",resetIcn:"fas fa-eraser",cancelIcn:"fas fa-times",checkIcn:"far fa-check-square",uncheckIcn:"far fa-square",toggleOnIcn:"fas fa-toggle-on",toggleOffIcn:"fas fa-toggle-off",showPassIcn:"fas fa-eye",hidePassIcn:"fas fa-eye-slash",uploadIcn:"fas fa-file-upload",downloadIcn:"fas fa-file-download",deleteIcn:"fas fa-trash-alt",cameraIcn:"fas fa-camera",imageIcn:"fas fa-image",emailIcn:"fas fa-envelope",telIcn:"fas fa-phone",linkIcn:"fas fa-link",wordDocIcn:"fas fa-file-word",videoFileIcn:"fas fa-file-video",pdfFileIcn:"fas fa-file-pdf",musicFileIcn:"fas fa-file-audio",excelFileIcn:"fas fa-file-excel",fileIcn:"fas fa-file",codeFileIcn:"fas fa-file-code"};const l=n;function i(t){e.assign(n,t)}function r(){return{"max-height":l.imageDispHeight}}function c(){return{"max-height":l.thumbDispHeight}}const o={"max-width":"5.4ex"};const d={"max-width":"9ex"};const u={wrapper:"pa0 bn",label:"f6 silver",inputWrapper:"dark-gray",input:"h2 dark-gray fw2",button:"pa2 bn br2",navButton:"dark-gray",textarea:"dark-gray fw2",radio:"dark-gray pa2 br2",radioChecked:"bg-light-blue",radioUnchecked:"o-60",fileInput:"dark-gray ba bw1 br3 b--dashed b--black-30",fileHover:"blue b--blue",displayLabel:"silver",displayValue:"dark-gray",requiredLabel:"",disabledWrapper:"o-40",invalidInputWrapper:""};const p=u;function f(t){e.assign(u,t)}const m={default:"bg-light-blue dark-gray"};function h(t){e.assign(m,t)}function g(e="default"){if(e&&e in m){return m[e]}else{return""}}function b({wrapper:e="",merge:t=true},a){return`${e} ${t?p.wrapper:""} ${a?p.disabledWrapper:""}`}function v({label:e="",merge:t=true},a){return`${e} ${t?p.label:""} ${a?p.requiredLabel:""}`}function y({inputWrapper:e="",merge:t=true},a){return`${e} ${t?p.inputWrapper:""} ${a?p.invalidInputWrapper:""}`}function w({input:e="",merge:t=true}){return`${e} ${t?p.input:""}`}function x(e,t,a){return`${w(e)} ${T(t,a)}`}function I({input:e="",merge:t=true}){return`${e} ${t?p.textarea:""}`}function $({input:e="",merge:t=true},a,s,n){return`${e} ${t?p.radio:""} ${a?p.radioChecked:p.radioUnchecked} ${T(s,n)}`}function k(e){return`${p.fileInput} ${e?p.fileHover:""}`}function T(e,t){return e||t?"":"pointer"}function S(e){return(e+256).toString(16).substr(1)}function C(){const e=new Uint8Array(16);const t=window.crypto;t.getRandomValues(e);return[S(e[0]),S(e[1]),S(e[2]),S(e[3]),"-",S(e[4]),S(e[5]),"-",S(e[6]),S(e[7]),"-",S(e[8]),S(e[9]),"-",S(e[10]),S(e[11]),S(e[12]),S(e[13]),S(e[14]),S(e[15])].join("")}function P(){return Math.max(window.devicePixelRatio,1)}function U(e,t){return t?`${e}${l.requiredLblPost}`:e}function q(e,t){return t?t:e}function D(e){return e?t("span.mr2.truncate",{title:e,class:p.displayLabel},e):null}function F(e,a,s,n){return s?t("label.mb1.db",{title:s,for:e,class:v(a,n)},U(s,n)):null}function M(e,a,s){return[e?t("i.fa-fw",{class:`${a?"mr2":""} ${e}`}):null,a,s?t("i.fa-fw",{class:`${a?"ml2":""} ${s}`}):null]}function z(e){return function({target:{value:t}}){e(t)}}function A(e){return function({target:{checked:t}}){e(t)}}function L(e){const t=e.lastIndexOf(".");if(t===-1){return[e,""]}else{return[e.substr(0,t),e.substr(t)]}}function R(e){const t=e.split(",");const a=t[0].indexOf("base64")>=0?atob(t[1]):unescape(t[1]);const s=t[0].split(":")[1].split(";")[0];const n=a.length;const l=new Uint8Array(n);for(let e=0;e<n;e++){l[e]=a.charCodeAt(e)}return new Blob([l],{type:s})}function H(e,t){const a=(new Date).valueOf();const s=e;s.name=t;s.lastModified=a;return e}function W(e,t,a){const s=H(R(e),t);return{guid:C(),name:s.name,path:"not_set",file:s,dataUrl:e,metadata:a}}function O(e){const[,t]=L(e.name);switch(t.toLowerCase()){case".doc":case".docx":case".dot":case".wbk":case".docm":case".dotx":case".dotm":case".docb":case".txt":return l.wordDocIcn;case".webm":case".mkv":case".flv":case".vob":case".ogv":case".drc":case".gifv":case".mng":case".avi":case".mts":case".m2ts":case".mov":case".qt":case".wmv":case".yuv":case".rm":case".rmvb":case".viv":case".asf":case".amv":case".mp4":case".m4p":case".m4v":case".mpg":case".mp2":case".mpeg":case".mpe":case".mpv":case".m2v":case".svi":case".3gp":case".mxf":case".roq":case".nsv":case".f4v":case".f4p":case".f4a":case".f4b":return l.videoFileIcn;case".pdf":return l.pdfFileIcn;case".pcm":case".wav":case".aiff":case".mp3":case".aac":case".ogg":case".wma":case".flac":case".alac":return l.musicFileIcn;case".xls":case".xlt":case".xlm":case".xlsx":case".xlsm":case".xltx":case".xltm":case".xlsb":case".xla":case".xlam":case".xll":case".xlw":return l.excelFileIcn;case".html":case".js":case".css":case".scss":case".java":return l.codeFileIcn;case".jpg":case".jpeg":case".png":case".tiff":case".gif":case".svg":case".webp":return l.imageIcn;default:return l.fileIcn}}function V(e){return e&&e.includes("image")}function j(e){const t=Math.min(e.byteLength,64*1024);const a=new DataView(e,0,t);if(a.getUint16(0,false)!==65496){return-2}const s=a.byteLength;let n=2;while(n<s){const e=a.getUint16(n,false);n+=2;if(e===65505){n+=2;if(a.getUint32(n,false)!==1165519206){return-1}n+=6;const e=a.getUint16(n,false)===18761;n+=a.getUint32(n+4,e);const t=a.getUint16(n,e);n+=2;for(let s=0;s<t;s++){if(a.getUint16(n+s*12,e)===274){return a.getUint16(n+s*12+8,e)}}}else if((e&65280)!==65280){break}else{n+=a.getUint16(n,false)}}return-1}function B(e){return new Promise(t=>{const a=new FileReader;a.onload=()=>{t(a.result)};a.readAsArrayBuffer(e)})}function _(e){return B(e).then(j)}function E(e,t,a,s){if(!s||s>8){return}switch(s){case 2:e.translate(t,0);e.scale(-1,1);return;case 3:e.translate(t,a);e.rotate(Math.PI);return;case 4:e.translate(0,a);e.scale(1,-1);return;case 5:e.rotate(.5*Math.PI);e.scale(1,-1);return;case 6:e.rotate(.5*Math.PI);e.translate(0,-a);return;case 7:e.rotate(.5*Math.PI);e.translate(t,-a);e.scale(-1,1);return;case 8:e.rotate(-.5*Math.PI);e.translate(-t,0);return}}function Y(e,t,a){if(e>t){if(e>a){return[a,Math.round(t*a/e)]}}else if(t>a){return[Math.round(e*a/t),a]}return[e,t]}function N(e,t,a){if(!e.type.match(/image.*/)){return Promise.reject(new Error("File must be an image"))}return _(e).then(s=>new Promise(n=>{const l=new Image;l.onload=()=>{const e=document.createElement("canvas");const[i,r]=Y(l.width,l.height,t);if(s>4){e.width=r;e.height=i}else{e.width=i;e.height=r}const c=e.getContext("2d");E(c,i,r,s);c.drawImage(l,0,0,i,r);n(e.toDataURL(a))};const i=new FileReader;i.onload=()=>l.src=i.result;i.readAsDataURL(e)}))}function Z(e,t){return new Promise(a=>{const s=new Image;s.onload=()=>{const e=document.createElement("canvas");const[n,l]=Y(s.width,s.height,t);e.width=n;e.height=l;const i=e.getContext("2d");i.drawImage(s,0,0,n,l);a(e.toDataURL())};s.src=e})}function G(e,t,a,s){const n=document.createElement("canvas");n.width=t;n.height=a;const l=.56*n.height;const i=n.getContext("2d");i.textBaseline="middle";i.font=`${l}px ${s}`;i.fillText(e,n.height*.05,l);return n.toDataURL()}function J(e,t){const a=l.signMaxSize;const s=.01*t*a;return G(e,a,s,l.signFont)}class K{view({attrs:{label:e,classes:a="bg-red"},children:s}){return t(".relative.dib",[s,e?t("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80",{class:a,style:{minWidth:"0.65rem"}},e):null])}}class Q{view({attrs:{label:e,type:a="button",title:s=e,icon:n,rightIcon:l,context:i,classes:r="",disabled:c,style:o,onclick:d}}){return t("button.button-reset",{type:a,title:s,disabled:c,class:`${r} ${c?p.disabledWrapper:"pointer"} ${g(i)} ${p.button}`,style:o,onclick:d},M(n,e,l))}}class X{view({attrs:{label:e,title:a=e,icon:s,rightIcon:n,href:l,rel:i,target:r,download:c,context:o,classes:d="",style:u}}){return t("a.link.flex.items-center",{href:l,rel:i,target:r,download:c,title:a,class:`${d} ${g(o)} ${p.button}`,style:u},M(s,e,n))}}class ee{view({attrs:{label:e,title:a=e,icon:s,rightIcon:n,classes:l="",disabled:i,style:r,onclick:c}}){return t(".mh2.pa2.truncate",{title:a,disabled:i,class:`${l} ${i?p.disabledWrapper:"pointer"} ${p.navButton}`,style:r,onclick:c},M(s,e,n))}}class te{view({attrs:{label:e,title:a=e,icon:s,rightIcon:n,href:l,rel:i,target:r,download:c,classes:o="",style:d}}){return t("a.link.mh2.pa2.truncate",{href:l,rel:i,target:r,download:c,title:a,class:`${o} ${p.navButton}`,style:d},M(s,e,n))}}class ae{view({attrs:{field:{style:e},value:a}}){return t(".pa2",{style:e},t.trust(a()))}}class se{view({attrs:{field:e,value:a}}){const{label:s,uiClass:n={},style:l}=e;return t(".pa2.flex.flex-wrap",{class:b(n),style:l},[D(s),t("span.ws-normal",{title:a(),class:p.displayValue},a())])}}class ne{formatter(e){return e?new Date(String(e)).toLocaleDateString():e}oninit({attrs:{value:e}}){this.formatted=e.map(this.formatter)}onremove(){this.formatted.end(true)}view({attrs:{field:e}}){return t(se,{field:e,value:this.formatted})}}function le(e,t){if(e==="email"){return{href:`mailto:${t}`,class:p.displayValue}}else if(e==="tel"){return{href:`tel:${t}`,class:p.displayValue}}else{return{href:t,target:"_blank",class:p.displayValue}}}const ie={email:l.emailIcn,tel:l.telIcn};class re{view({attrs:{field:e,value:a}}){const{label:s,type:n="url",uiClass:i={},style:r}=e;return t(".pa2.flex.flex-wrap",{class:b(i),style:r},[D(s),t("a.link.dim.pointer.ws-normal",le(n,a()),t("i.mr2",{class:ie[n]||l.linkIcn}),a())])}}class ce{view({attrs:{field:a,value:s}}){const{options:n=[]}=a;const l=e.find(n,e.matches({value:s()||false}));return l?t("span.ml2",l.label):null}}class oe{constructor(){this.onIcon="checkIcn";this.offIcon="uncheckIcn"}view({attrs:{field:e,value:a}}){const{label:s,uiClass:n={},style:i}=e;return t(".pa2.flex.items-center",{class:b(n),style:i},[D(s),t("i",{class:`${p.displayValue} ${l[a()?this.onIcon:this.offIcon]}`}),t(ce,{field:e,value:a})])}}class de extends oe{constructor(){super(...arguments);this.onIcon="toggleOnIcn";this.offIcon="toggleOffIcn"}}function ue(e,t){if(e.required){return!t}return false}function pe(e,t){if(e.required){return t.length<1}return false}function fe(e){return t=>{t.preventDefault();if(t.dataTransfer){t.dataTransfer.dropEffect="copy"}if(e()){t.redraw=false}e(true)}}function me(e){return t=>{t.preventDefault();e(false)}}function he(e,t){return a=>{a.preventDefault();e(false);if(a.dataTransfer){t(a.dataTransfer.files)}}}function ge(e){return({target:{files:t}})=>e(t)}class be{oncreate({dom:e,attrs:{value:t}}){t.map(t=>{if(t.length===0){e.firstChild.value=""}})}view({attrs:{field:a,defaultAccept:s="*",multiple:n=true,dragging:l,onSet:i},children:r}){const{label:c,id:o,name:d=o,title:u=c,required:p,readonly:f,disabled:m,autofocus:h,accept:g=s,uiClass:b={}}=a;return t("label.db",e.extend({for:o,title:u,class:T(m,f),"data-input-id":o},m||f?{}:{ondragover:fe(l),ondragleave:me(l),ondrop:he(l,i)}),[t("input.clip[type=file].bg-transparent.bn.outline-0",{id:o,name:d,multiple:n,accept:g,required:p,autofocus:h,disabled:m||f,onchange:ge(i)}),c?t("span.db.mb1",{class:v(b,p)},U(c,p)):null,r])}}function ve(t,a=false){return s=>{const n=a?[]:t();e.each(s,e=>{n.push({guid:C(),name:e.name,path:"not_set",file:e})});t(n)}}function ye(t,a){return s=>{s.preventDefault();const n=t();e.remove(n,{guid:a});t(n)}}class we{constructor(){this.dragging=a(false)}view({attrs:{field:a,value:s}}){const{disabled:n,uiClass:i={}}=a;return t("fieldset",{class:b(i,n)},[t(be,{field:a,dragging:this.dragging,onSet:ve(s),value:s},t("div",{class:y(i,pe(a,s()))},t(".pa2",{class:k(this.dragging())},[t("i.mr2",{class:l.uploadIcn}),t("span",l.addFilesTxt)]))),t(".flex.flex-column.mt1.nb1",e.map(s(),e=>t("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer",[t("i.mr2",{class:l.downloadIcn}),e.name,t("i.child.fr",{title:`${l.remFileTtl} ${e.name}`,class:l.deleteIcn,onclick:ye(s,e.guid)})])))])}}class xe{view({children:e,attrs:a}){return t(".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child",[a.src&&a.src!=="not_set"?t("img.contain",{src:a.src}):null,a.data&&a.data.file&&(a.src==="not_set"||!a.src)?t("div.contain.tc.br5.6rem",{class:`${O(a.data)} fa-2x`,tooltip:a.data.file.type}):null,e])}}class Ie{view({attrs:e}){return t("i.pa1",{class:O(e),title:l.openFileTxt,onclick:e.path!=="not_set"?()=>window.open(e.path,"_blank"):undefined})}}class $e{view({attrs:{displayType:a="thumbnail",value:s}}){return a==="thumbnail"?t(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",e.map(s(),e=>t(xe,{src:q(e.path,e.dataUrl),data:e,style:c()},t(".absolute.top-0.right-0.child",t(Q,{title:`Remove ${e.name}`,icon:l.deleteIcn,onclick:ye(s,e.guid)}))))):t(".pa2.flex.flex-column",e.map(s(),e=>t(".flex.items-center.pa1.ba.b--black-20",[t("i.pa1",{class:l.uploadIcn}),t("span.ma1.flex-auto",{title:e.name},e.name),t(Ie,e),t("i.pa1.pointer.dim",{title:`Remove ${e.name}`,class:l.cancelIcn,onclick:ye(s,e.guid)})])))}}class ke{view({attrs:{field:a,value:s}}){const{label:n,uiClass:l={},style:i}=a;const r=e.find(a.options,{value:s()});const c=r?r.label||r.value:s();return t(".pa2.flex.flex-wrap",{class:b(l),style:i},[D(n),t("span.ws-normal",{title:c,class:p.displayValue},c)])}}class Te{view({attrs:{field:a,value:s}}){const{label:n,uiClass:i={},style:r}=a;return t(".pa2.flex.flex-column",{class:b(i),style:r},[D(n),t(".flex.flex-column.mt1.nb1",e.map(s(),({name:e,path:a})=>t("a.pa2.mv1.link.ba.b--black-20.dim.dib.pointer[target=_blank]",{class:p.displayValue,href:a},t("i.mr2",{class:l.downloadIcn}),e)))])}}class Se{view({attrs:{field:a,value:s}}){const{label:n,uiClass:l={},style:i}=a;return t(".pa2.flex.flex-column",{class:b(l),style:i},[D(n),t(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",e.map(s(),({name:e,path:a,dataUrl:s})=>t(xe,{title:e,src:q(a,s),style:c()})))])}}class Ce{view({attrs:{field:a,value:s}}){const{label:n,uiClass:i={},style:c}=a;const o=e.head(s());return t(".pa2.flex.flex-column",{class:b(i),style:c},[D(n),o?t("img.img.h-100.mt2.contain.self-center",{title:o.name,src:q(o.path,o.dataUrl),style:r()}):t("i.mt2",{class:`${p.displayValue} ${l.imageIcn}`})])}}function Pe(e){let t=0;if(e.length>=8){t=1;if(e.length>=24){t=t+1}if(/(?=.*[A-Z].*[A-Z])/.test(e)&&/(?=.*[a-z].*[a-z].*[a-z])/.test(e)){t=t+1}if(/(?=.*[0-9].*[0-9])/.test(e)){t=t+1}if(/(?=.*[!"£%^@#$&*])/.test(e)){t=t+1}}return t}function Ue(e){switch(e){case 0:{return"Invalid"}case 1:{return"Very Weak"}case 2:{return"Weak"}case 3:{return"Average"}case 4:{return"Strong"}case 5:{return"Very Strong"}}return""}const qe=[{value:1,background:"bg-dark-red"},{value:2,background:"bg-orange"},{value:3,background:"bg-yellow"},{value:4,background:"bg-light-green"},{value:5,background:"bg-green"}];class De{oninit({attrs:{value:e}}){this.passwordScore=e.map(e=>Pe(String(e)))}onremove(){this.passwordScore.end()}view({attrs:{field:a}}){const{label:s,style:n}=a;return t(".flex.flex-column",{style:n},[D(s),t(".flex.mt1",e.map(qe,e=>t(".h1.w-20",{class:this.passwordScore()>=e.value?e.background:"bg-transparent"}))),t("span.f5.truncate",Ue(this.passwordScore()))])}}class Fe{view({attrs:{field:{label:e="",title:a=e,required:s}}}){return t("label.mb2",{title:a},U(e,s))}}class Me{view({attrs:{field:e,value:a,xform:s=a}}){const{label:n,id:l,type:i="text",name:r=l,title:c=n,placeholder:o,max:d,maxlength:u,min:p,minlength:f,step:m,required:h,readonly:g,disabled:v,autofocus:x,autocomplete:I,pattern:$,inputmode:k,spellcheck:T,instant:S,uiClass:C={}}=e;return t("fieldset",{class:i==="hidden"?"clip":b(C,v)},[F(l,C,n,h),t("div",{class:y(C,ue(e,s()))},t("input.w-100.bg-transparent.bn.outline-0",{id:l,type:i,name:r,title:c,placeholder:o,max:d,maxlength:u,min:p,minlength:f,step:m,required:h,readonly:g,disabled:v,autofocus:x,autocomplete:I,pattern:$,inputmode:k,spellcheck:T,class:w(C),value:s(),[S?"oninput":"onchange"]:z(a)}))])}}class ze{view({attrs:{field:a,value:s,xform:n=s}}){const{label:l,id:i,name:r=i,title:c=l,placeholder:o,max:d,maxlength:u,min:p,minlength:f,step:m,required:h,readonly:g,disabled:v,autofocus:x,autocomplete:I,pattern:$,inputmode:k,spellcheck:T,instant:S,uiClass:C={},options:P}=a;const U=P&&P.length?P[0].value:"$";return t("fieldset.flex-shrink-0",{class:b(C,v)},[F(i,C,l,h),t(".flex.items-center",{class:y(C,ue(a,n()))},t("span.mr1",U),t("input.w-100.bg-transparent.bn.outline-0",{id:i,type:"text",name:r,title:c,placeholder:o,max:d,maxlength:u,min:p,minlength:f,step:m,required:h,readonly:g,disabled:v,autofocus:x,autocomplete:I,pattern:$,inputmode:k,spellcheck:T,class:w(C),value:e.isUndefined(n())?null:Re(Ae(n())),[S?"oninput":"onchange"]:We(s)}))])}}function Ae(t){return e.isString(t)?e.parseInt(t):Number(t)}function Le(t){const a=t.replace(/[^\d.]/g,"");let s;let n=0;if(a.indexOf(".")>-1){const t=a.indexOf(".");const l=a.substring(0,t);s=e.parseInt(e.padStart(l,1,"0"));const i=a.substring(t+1,Math.min(t+3,a.length));n=e.parseInt(e.padEnd(i,2,"0"))}else{s=e.parseInt(a)||0}return s*100+n}function Re(e){const t=He(e);if(t){return`${t[0]}.${t[1]}`}else{return t}}function He(t){if(!e.isFinite(t)){return undefined}const a=String(Math.abs(t));let s="0";let n="";if(a.length>2){const e=a.length-2;s=a.substring(0,e);n=a.substring(e)}else{n=e.padStart(a,2,"0")}return[s,n]}function We(e){return({target:{value:t}})=>e(Le(t))}class Oe{constructor(){this.month=a();this.year=a();this.date=a.lift((e,t)=>`${e}/${t}`,this.month,this.year)}oninit({attrs:{value:e}}){e.map(e=>{const[t,a=""]=String(e).split("/");this.month(t);this.year(a)});this.date.map(t=>{if(t!==e()){e(t)}})}onremove(){this.date.end(true);this.year.end(true);this.month.end(true)}view({attrs:{field:e,value:a}}){const{label:s,id:n,name:l=n,title:i=s,required:r,readonly:c,disabled:d,uiClass:u={}}=e;const p=w(u);return t("fieldset",{class:b(u,d)},[F(`${n}-mm`,u,s,r),t("div",{title:i,class:y(u,ue(e,a()))},[t("div.dib.mr2",[F(`${n}-mm`,u,"Month"),t("input.w-100.bg-transparent.bn.outline-0",{id:`${n}-mm`,name:`${l}-mm`,type:"text",placeholder:"MM",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:r,readonly:c,disabled:d,value:this.month(),class:p,style:o,onchange:z(this.month)})]),t("span.mr2","/"),t("div.dib.mr2",[F(`${n}-yy`,u,"Year"),t("input.w-100.bg-transparent.bn.outline-0",{id:`${n}-yy`,name:`${l}-yy`,type:"text",placeholder:"YY",minlength:"4",maxlength:"4",pattern:"[0-9]*",inputmode:"numeric",required:r,readonly:c,disabled:d,value:this.year(),class:p,style:o,onchange:z(this.year)})])])])}}class Ve{constructor(){this.day=a();this.month=a();this.year=a();this.date=a.lift((e,t,a)=>`${a}-${t}-${e}`,this.day,this.month,this.year)}oninit({attrs:{value:t}}){t.map(t=>{const a=new Date(String(t));if(e.isDate(a)&&!isNaN(a.getTime())){this.day(e.padStart(String(a.getDate()),2,"0"));this.month(e.padStart(String(1+a.getMonth()),2,"0"));this.year(String(a.getFullYear()))}});this.date.map(a=>{const s=new Date(String(a));if(e.isDate(s)&&!isNaN(s.getTime())){if(a!==t()){t(a)}}else{t("")}})}onremove(){this.date.end(true);this.year.end(true);this.month.end(true);this.day.end(true)}view({attrs:{field:e,value:a}}){const{label:s,id:n,name:l=n,title:i=s,required:r,readonly:c,disabled:u,uiClass:p={},options:f}=e;const m=f&&f.length?f[0].value:"en-GB";const h=w(p);const g=t(".dib.mr2",[F(`${n}-dd`,p,"Day"),t("input.w-100.bg-transparent.bn.outline-0",{id:`${n}-dd`,name:`${l}-dd`,type:"text",placeholder:"DD",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:r,readonly:c,disabled:u,value:this.day(),class:h,style:o,onchange:z(this.day)})]);const v=t(".dib.mr2",[F(`${n}-mm`,p,"Month"),t("input.w-100.bg-transparent.bn.outline-0",{id:`${n}-mm`,name:`${l}-mm`,type:"text",placeholder:"MM",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:r,readonly:c,disabled:u,value:this.month(),class:h,style:o,onchange:z(this.month)})]);const x=t(".dib.mr2",[F(`${n}-yyyy`,p,"Year"),t("input.w-100.bg-transparent.bn.outline-0",{id:`${n}-yyyy`,name:`${l}-yyyy`,type:"text",placeholder:"YYYY",minlength:"4",maxlength:"4",pattern:"[0-9]*",inputmode:"numeric",required:r,readonly:c,disabled:u,value:this.year(),class:h,style:d,onchange:z(this.year)})]);return t("fieldset",{class:b(p,u)},[F(n,p,s,r),t("div",{id:n,title:i,class:y(p,ue(e,a()))},m==="en-US"?[v,g,x]:[g,v,x])])}}class je{constructor(){this.showPassword=a(false)}view({attrs:{field:e,value:a}}){const{label:s,id:n,name:i=n,title:r=s,placeholder:c,maxlength:o,minlength:d,required:u,readonly:p,disabled:f,autofocus:m,autocomplete:h,pattern:g,inputmode:v,instant:x,uiClass:I={}}=e;return t("fieldset",{class:b(I,f)},[F(n,I,s,u),t("div.w-100.flex.items-center",{class:y(I,ue(e,a()))},t("input.w-100.bg-transparent.bn.outline-0",{id:n,name:i,title:r,placeholder:c,type:this.showPassword()?"text":"password",maxlength:o,minlength:d,required:u,readonly:p,disabled:f,autofocus:m,autocomplete:h,pattern:g,inputmode:v,class:w(I),value:a(),autocorrect:"off",[x?"oninput":"onchange"]:z(a)}),t("i.ml1.pa1.fa-fw.pointer.dim",{title:l.showPassTxt,class:this.showPassword()?l.hidePassIcn:l.showPassIcn,onclick:()=>this.showPassword(!this.showPassword())}))])}}class Be{view({attrs:{field:e,value:a}}){const{label:s,id:n,name:l=n,title:i=s,placeholder:r,required:c,readonly:o,disabled:d,autofocus:u,autocomplete:p,spellcheck:f,instant:m,uiClass:h={}}=e;return t("fieldset.flex.flex-column.h-100",{class:b(h,d)},[F(n,h,s,c),t(".h-100",{class:y(h,ue(e,a()))},t("textarea.w-100.bg-transparent.bn.outline-0.h-100",{id:n,name:l,title:i,placeholder:r,required:c,readonly:o,disabled:d,autofocus:u,autocomplete:p,spellcheck:f,class:I(h),value:a(),style:{resize:"none"},[m?"oninput":"onchange"]:z(a)}))])}}class _e{constructor(){this.onIcon="checkIcn";this.offIcon="uncheckIcn"}view({attrs:{field:e,value:a}}){const{label:s="",id:n,name:i=n,title:r=s,required:c,readonly:o,disabled:d,autocomplete:u,uiClass:p={}}=e;return t("fieldset",{class:b(p,d)},t("div",{class:y(p)},[t("label.flex.items-center",{title:r,class:x(p,d,o),"data-input-id":n},t("input.clip[type=checkbox]",{id:n,name:i,checked:a(),required:c,autocomplete:u,disabled:d||o,onchange:A(a)}),t("i.mr2",{class:l[a()?this.onIcon:this.offIcon]}),U(s,c),t(ce,{field:e,value:a}))]))}}class Ee extends _e{constructor(){super(...arguments);this.onIcon="toggleOnIcn";this.offIcon="toggleOffIcn"}}class Ye{view({attrs:{field:a,value:s}}){const{label:n,id:l,name:i=l,required:r,readonly:c,disabled:o,autocomplete:d,options:u,uiClass:p={}}=a;return t("fieldset",{class:b(p,o)},[F(l,p,n,r),t("div",{class:y(p,ue(a,s())),onchange:z(s)},e.map(u,({value:e,label:a=e,icon:n})=>{const u=s()===e;return t("label.dib",{title:a,class:$(p,u,o,c),"data-input-id":l},t("input.clip[type=radio]",{name:i,value:e,checked:u,required:r,autocomplete:d,disabled:o||c}),n?t("i.fa-fw",{class:n}):a)}))])}}class Ne{view({attrs:{field:a,value:s}}){const{label:n,id:l,name:i=l,title:r=n,required:c,readonly:o,disabled:d,autofocus:u,autocomplete:p,uiClass:f={},options:m}=a;return t("fieldset",{class:b(f,d)},[F(l,f,n,c),t("div",{class:y(f,ue(a,s()))},t("select.w-100.bg-transparent.bn.outline-0",{id:l,name:i,title:r,required:c,readonly:o,disabled:d,autofocus:u,autocomplete:p,class:w(f),value:s(),onchange:z(s)},e.map(m,({value:e,label:a=e})=>t("option",{value:e,disabled:d||o},a))))])}}class Ze{constructor(){this.dragging=a(false)}view({attrs:{field:a,value:s,displayType:n}}){const i=e.head(s());const{disabled:r,uiClass:c={}}=a;const o=n==="none"||!i?l.addFileTxt:i.name;return t("fieldset",{class:b(c,r)},t(be,{field:a,multiple:false,dragging:this.dragging,onSet:ve(s,true),value:s},t("div",{class:y(c,pe(a,s()))},t(".flex.items-center.pa1",{class:k(this.dragging())},[t("i.pa1",{class:l.uploadIcn}),t("span.ma1.flex-auto",o),i&&n!=="none"?[t(Ie,i),t("i.pa1.pointer.dim",{title:`Remove ${i.name}`,class:l.cancelIcn,onclick:ye(s,i.guid)})]:null]))))}}function Ge(a,s,n=false){return l=>{const i=n?[]:a();return Promise.all(e.map(l,e=>N(e,s,e.type).then(t=>{const a=H(R(t),e.name);i.push({guid:C(),name:a.name,path:"not_set",file:a,dataUrl:t})}))).then(()=>{a(i);t.redraw()})}}class Je{constructor(){this.dragging=a(false)}view({attrs:{field:a,value:s}}){const{disabled:n,uiClass:i={}}=a;return t("fieldset",{class:b(i,n)},[t(be,{field:a,defaultAccept:"image/*",dragging:this.dragging,onSet:Ge(s,l.imageMaxSize),value:s},t("div",{class:y(i,pe(a,s()))},t(".w-100.pa1.dt.tc",{class:k(this.dragging())},t("i.fa-2x.dtc.v-mid",{class:l.cameraIcn})))),t(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",e.map(s(),e=>t(xe,{src:q(e.path,e.dataUrl),style:c()},t(".absolute.top-0.right-0.child",t(Q,{title:`Remove ${e.name}`,icon:l.deleteIcn,onclick:ye(s,e.guid)})))))])}}class Ke{constructor(){this.dragging=a(false)}view({attrs:{field:a,value:s}}){const n=e.head(s());const{disabled:i,uiClass:c={}}=a;return t("fieldset",{class:b(c,i)},t(be,{field:a,defaultAccept:"image/*",multiple:false,dragging:this.dragging,onSet:Ge(s,l.imageMaxSize,true),value:s},t("div",{class:y(c,pe(a,s()))},t(".pa1",{class:k(this.dragging())},t(".relative.w-100.dt.tc",n?[t("img.img.contain",{title:n.name,src:q(n.path,n.dataUrl),style:r()}),t(".absolute.top-0.right-0.pa1.pointer.dim",{title:`Remove ${n.name}`,onclick:ye(s,n.guid)},t("i.pa1",{class:l.cancelIcn}))]:t("i.fa-2x.dtc.v-mid",{class:l.cameraIcn}))))))}}class Qe{oncreate({dom:t}){const a=t.children[0];const n=P();this.signaturePad=new s(a,{minWidth:.5*n,maxWidth:1.5*n});const l=()=>{const e=P();a.width=a.offsetWidth*e;a.height=a.offsetHeight*e;const t=a.getContext("2d");t.scale(e,e);this.resetCanvas()};this.resizeHandler=e.debounce(l,250);window.addEventListener("resize",this.resizeHandler);window.addEventListener("orientationchange",this.resizeHandler);l()}onremove(){this.resizeHandler.cancel();window.removeEventListener("resize",this.resizeHandler);window.removeEventListener("orientationchange",this.resizeHandler)}view({attrs:{style:e,onSet:a,onCancel:s}}){return[t(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30",{style:e},t("canvas.aspect-ratio--object")),t(".absolute.top-0.right-0.z-999",{style:{transform:"translateY(-100%)"}},[t(Q,{title:l.applyTtl,icon:l.applyIcn,classes:"ma1",onclick:()=>{if(!this.signaturePad.isEmpty()){a(this.signaturePad.toDataURL("image/png"))}}}),t(Q,{title:l.resetTtl,icon:l.resetIcn,classes:"ma1",onclick:()=>this.resetCanvas()}),t(Q,{title:l.cancelTtl,icon:l.cancelIcn,classes:"ma1",onclick:s})])]}resetCanvas(){this.signaturePad.clear()}}function Xe(e,t,a){return()=>{if(e()){a(J(e(),t),{text:e(),heightPct:t})}return false}}class et{constructor(){this.text=a("")}oncreate({dom:e}){const t=e.children[0];t.focus({preventScroll:false});this.scaleText(e)}onupdate({dom:e}){this.scaleText(e)}view({attrs:{heightPct:e,style:a,onSet:s,onCancel:n}}){return[t("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30",{style:a,onsubmit:Xe(this.text,e,s)},t("input.aspect-ratio--object.pa2.ba.bw0[type=text]",{oninput:z(this.text),value:this.text(),style:{"font-family":l.signFont}})),t(".absolute.top-0.right-0.z-999",{style:{transform:"translateY(-100%)"}},[t(Q,{title:l.applyTtl,icon:l.applyIcn,classes:"ma1",onclick:Xe(this.text,e,s)}),t(Q,{title:l.resetTtl,icon:l.resetIcn,classes:"ma1",onclick:()=>this.text("")}),t(Q,{title:l.cancelTtl,icon:l.cancelIcn,classes:"ma1",onclick:n})])]}scaleText(e){const t=e.clientHeight;e.style.fontSize=`${.56*t}px`}}function tt(e,t,a){return()=>a(J(t,e),{text:t,heightPct:e})}class at{view({attrs:{heightPct:e,stampTxt:a,stampSetTxt:s,onSet:n}}){return[t("span.clip",{style:{"font-family":l.signFont}},s),t(".flex",t(Q,{label:a,classes:`flex-auto ${l.stampBtnClass}`,context:l.stampBtnContext,onclick:tt(e,s,n)}))]}}const st={["draw"]:Qe,["type"]:et,["stamp"]:at};function nt(e,a,s){return(n,l)=>Z(n,s).then(s=>{e([W(s,`sign-${a}.png`,l)]);t.redraw()})}class lt{oninit({attrs:{value:e}}){this.valUpdate=e.map(()=>this.setSignType())}onremove(){this.valUpdate.end()}view({attrs:{field:a,value:s}}){const{label:n,id:i,readonly:r,disabled:c,uiClass:o={},options:d=l.signOpts,heightPct:u=l.signHeightPct,stampTxt:f=l.stampTxt,stampSetTxt:m=l.stampSetTxt}=a;const h={paddingBottom:`${u}%`};const g=e.head(s());const v=e(d).map(({value:e})=>{if(e==="draw"){return{type:e,icon:l.drawIcn,label:l.signDrawTxt}}else if(e==="type"){return{type:e,icon:l.typeIcn,label:l.signTypeTxt}}else if(e==="stamp"){return{type:e,icon:l.stampIcn,label:l.signStampTxt}}return null}).compact().value();if(v.length===1&&!g){this.setSignType(v[0].type)}return t("fieldset.relative",{class:b(o,c)},[F(i,o,n),t("div",{class:this.signType!=="stamp"?y(o,pe(a,s())):undefined},r||c?t(".aspect-ratio",{id:i,style:h},g?t(".aspect-ratio--object",{style:{"pointer-events":"none"}},t("img.img.w-100.absolute",{src:q(g.path,g.dataUrl)})):null):this.signType?t(st[this.signType],{heightPct:u,stampTxt:f,stampSetTxt:m,style:h,onSet:nt(s,i,l.signMaxSize),onCancel:e.bind(this.setSignType,this,undefined)}):t(".aspect-ratio.pointer",{id:i,class:p.fileInput,style:h},g?t(".aspect-ratio--object.hide-child.dim",{onclick:e.bind(s,this,[])},[t("img.img.w-100.absolute",{src:q(g.path,g.dataUrl)}),t(".pa3.absolute.top-0.right-0.child",t("i.fa-2x",{class:l.resetIcn}))]):t(".aspect-ratio--object.flex",e.map(v,({type:a,icon:s,label:n})=>t(".flex-auto.flex.items-center.justify-center.dim",{title:n,onclick:e.bind(this.setSignType,this,a)},t("i.fa-2x.ma1",{class:s}),t("span.ma1.dn.db-ns.truncate",n))))))])}setSignType(e){this.signType=e}}function it(a,s){return n=>{const i=s?[]:a();return Promise.all(e.map(n,e=>{if(V(e.type)){return N(e,l.imageMaxSize,e.type).then(t=>{const a=H(R(t),e.name);i.push({guid:C(),name:a.name,path:"not_set",file:a,dataUrl:t})})}else{i.push({guid:C(),name:e.name,path:"not_set",file:e});return Promise.resolve()}})).then(()=>{a(i);t.redraw()})}}class rt{constructor(){this.dragging=a(false)}view({attrs:{field:a,value:s}}){const n=e.head(s());const{disabled:i,uiClass:c={}}=a;return t("fieldset",{class:b(c,i)},t(be,{field:a,defaultAccept:"*",multiple:false,dragging:this.dragging,onSet:it(s,true),value:s},t("div",{class:y(c,pe(a,s()))},t(".flex.items-center.pa1",{class:k(this.dragging())},n?n.dataUrl?[t(".relative.w-100.dt.tc",t("img.img.contain",{title:n.name,src:q(n.path,n.dataUrl),style:r()}),t(".absolute.top-0.right-0.pa1.pointer.dim",{title:`Remove ${n.name}`,onclick:ye(s,n.guid)},t("i.pa1",{class:l.cancelIcn})))]:[t(Ie,n),t("span.ma1.flex-auto",{title:n.name},n.name),t("i.pa1.pointer.dim",{title:`Remove ${n.name}`,class:l.cancelIcn,onclick:ye(s,n.guid)})]:[t("i.pa1",{class:l.uploadIcn}),t("span.ma1.flex-auto",l.addFileTxt)]))))}}class ct{constructor(){this.dragging=a(false)}view({attrs:{field:e,value:a,displayType:s,showDisplay:n=true}}){const{disabled:i,uiClass:r={}}=e;return t("fieldset",{class:b(r,i)},[t(be,{field:e,defaultAccept:"*",dragging:this.dragging,onSet:it(a,false),value:a},t("div",{class:y(r,pe(e,a()))},t(".flex.items-center.pa1.dt",{class:k(this.dragging())},[t("i.pa1",{class:l.uploadIcn}),t("span.ma1.flex-auto",l.addFileTxt)]))),n?t($e,{displayType:s,value:a}):null])}}export{K as Badge,Me as BaseInput,se as BaseText,Q as Button,X as ButtonLink,Oe as CardDateInput,oe as Checkbox,_e as CheckboxInput,ze as CurrencyInput,Ve as DateInput,ne as DateText,$e as DisplayTypeComponent,Te as FileList,we as FileMulti,Ze as FileSelect,Se as ImageList,Je as ImageMulti,Ce as ImagePreview,Ke as ImageSelect,Fe as Label,re as Link,ct as MultiOmniFileInput,ee as NavButton,te as NavLink,rt as OmniFileInput,je as PasswordInput,De as PasswordStrength,Ye as RadioInput,Ne as SelectInput,ke as SelectText,lt as SignBuilder,Be as TextareaInput,de as Toggle,Ee as ToggleInput,ae as Trusted,J as createStamp,Le as currencyStrToNumber,R as dataURItoBlob,W as dataUrlToFile,H as fileConstructor,L as fileNameExtSplit,j as getOrientation,C as guid,ie as iconMap,le as linkAttrs,Re as numberToCurrencyStr,He as numberToCurrencyTuple,P as pxRatio,B as readArrayBuffer,_ as readOrientation,N as resizeImage,Z as scaleDataUrl,Y as scaleRect,G as textToImage,h as updateButtonContext,f as updateClasses,i as updateConfig};
+/* @preserve built on: 2021-09-21T14:17:23.190Z */
+import lodash from 'lodash';
+import m from 'mithril';
+import stream from 'mithril/stream';
+import SignaturePad from 'signature_pad';
+
+const confMap = {
+    imageMaxSize: 1280,
+    imageDispHeight: "16rem",
+    thumbDispHeight: "6rem",
+    addFileTxt: "Upload...",
+    addFilesTxt: "Add file(s)...",
+    remFileTtl: "Remove",
+    openFileTxt: "Open file",
+    showPassTxt: "Show Password",
+    requiredLblPost: "",
+    signOpts: [{
+            label: "", value: "draw" /* Draw */
+        }, {
+            label: "", value: "type" /* Type */
+        }, {
+            label: "", value: "stamp" /* Stamp */
+        }],
+    signMaxSize: 640,
+    signHeightPct: 25,
+    signFont: "sans-serif",
+    signDrawTxt: "Draw",
+    signTypeTxt: "Type",
+    signStampTxt: "Accept",
+    stampTxt: "Accept",
+    stampBtnClass: "",
+    stampBtnContext: "default",
+    stampSetTxt: "Accepted",
+    applyTtl: "Apply",
+    resetTtl: "Reset",
+    cancelTtl: "Cancel",
+    drawIcn: "fas fa-signature",
+    typeIcn: "fas fa-keyboard",
+    stampIcn: "fas fa-check",
+    applyIcn: "fas fa-check",
+    resetIcn: "fas fa-eraser",
+    cancelIcn: "fas fa-times",
+    checkIcn: "far fa-check-square",
+    uncheckIcn: "far fa-square",
+    toggleOnIcn: "fas fa-toggle-on",
+    toggleOffIcn: "fas fa-toggle-off",
+    showPassIcn: "fas fa-eye",
+    hidePassIcn: "fas fa-eye-slash",
+    uploadIcn: "fas fa-file-upload",
+    downloadIcn: "fas fa-file-download",
+    deleteIcn: "fas fa-trash-alt",
+    cameraIcn: "fas fa-camera",
+    imageIcn: "fas fa-image",
+    emailIcn: "fas fa-envelope",
+    telIcn: "fas fa-phone",
+    linkIcn: "fas fa-link",
+    wordDocIcn: "fas fa-file-word",
+    videoFileIcn: "fas fa-file-video",
+    pdfFileIcn: "fas fa-file-pdf",
+    musicFileIcn: "fas fa-file-audio",
+    excelFileIcn: "fas fa-file-excel",
+    fileIcn: "fas fa-file",
+    codeFileIcn: "fas fa-file-code"
+};
+const config = confMap;
+function updateConfig(newConfig) {
+    lodash.assign(confMap, newConfig);
+}
+
+// Class/Theme helpers
+function imgMaxSize() {
+    return { "max-height": config.imageDispHeight };
+}
+function thumbMaxSize() {
+    return { "max-height": config.thumbDispHeight };
+}
+const styleSm = { "max-width": "5.4ex" };
+const styleLg = { "max-width": "9ex" };
+// ui-widgets 1.4 theme map
+const classMapState = {
+    wrapper: "pa0 bn",
+    label: "f6 silver",
+    inputWrapper: "dark-gray",
+    input: "h2 dark-gray fw2",
+    button: "pa2 bn br2",
+    navButton: "dark-gray",
+    textarea: "dark-gray fw2",
+    radio: "dark-gray pa2 br2",
+    radioChecked: "bg-light-blue",
+    radioUnchecked: "o-60",
+    fileInput: "dark-gray ba bw1 br3 b--dashed b--black-30",
+    fileHover: "blue b--blue",
+    displayLabel: "silver",
+    displayValue: "dark-gray",
+    requiredLabel: "",
+    disabledWrapper: "o-40",
+    invalidInputWrapper: ""
+};
+const theme = classMapState;
+function updateClasses(newConfig) {
+    lodash.assign(classMapState, newConfig);
+}
+// Button context helpers
+const btnMap = {
+    default: "bg-light-blue dark-gray"
+};
+function updateButtonContext(newButtonContext) {
+    lodash.assign(btnMap, newButtonContext);
+}
+function getButtonContext(key = "default") {
+    if (key && key in btnMap) {
+        return btnMap[key];
+    }
+    else {
+        return "";
+    }
+}
+// Class string helpers
+function wrapperCls({ wrapper = "", merge = true }, disabled) {
+    return `${wrapper} ${merge ? theme.wrapper : ""} ${disabled ? theme.disabledWrapper : ""}`;
+}
+function labelCls({ label = "", merge = true }, required) {
+    return `${label} ${merge ? theme.label : ""} ${required ? theme.requiredLabel : ""}`;
+}
+function inputWrapperCls({ inputWrapper = "", merge = true }, invalid) {
+    return `${inputWrapper} ${merge ? theme.inputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""}`;
+}
+function inputCls({ input = "", merge = true }) {
+    return `${input} ${merge ? theme.input : ""}`;
+}
+function checkInputCls(uiClass, disabled, readonly) {
+    return `${inputCls(uiClass)} ${pointerCls(disabled, readonly)}`;
+}
+function textareaCls({ input = "", merge = true }) {
+    return `${input} ${merge ? theme.textarea : ""}`;
+}
+function radioInputCls({ input = "", merge = true }, checked, disabled, readonly) {
+    return `${input} ${merge ? theme.radio : ""} ${checked ? theme.radioChecked : theme.radioUnchecked} ${pointerCls(disabled, readonly)}`;
+}
+function fileInputCls(dragging) {
+    return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
+}
+function pointerCls(disabled, readonly) {
+    return disabled || readonly ? "" : "pointer";
+}
+
+// Create "v4-like" (no fixed version id) uuid (based on node-uuid)
+function toHex(inp) {
+    // Add to 0x100 to pad small numbers with leading 0
+    return (inp + 0x100).toString(16).substr(1);
+}
+function guid() {
+    const bytes = new Uint8Array(16);
+    const crypto = window.crypto;
+    crypto.getRandomValues(bytes);
+    return ([
+        toHex(bytes[0]), toHex(bytes[1]),
+        toHex(bytes[2]), toHex(bytes[3]), "-",
+        toHex(bytes[4]), toHex(bytes[5]), "-",
+        toHex(bytes[6]), toHex(bytes[7]), "-",
+        toHex(bytes[8]), toHex(bytes[9]), "-",
+        toHex(bytes[10]), toHex(bytes[11]),
+        toHex(bytes[12]), toHex(bytes[13]),
+        toHex(bytes[14]), toHex(bytes[15])
+    ]).join("");
+}
+function pxRatio() {
+    return Math.max(window.devicePixelRatio, 1);
+}
+function getLabelText(label, required) {
+    return required ? `${label}${config.requiredLblPost}` : label;
+}
+function imgSrc(path, dataUrl) {
+    return dataUrl ? dataUrl : path;
+}
+// Used by display widgets
+function getDisplayLabel(label) {
+    return label ? m("span.mr2.truncate", {
+        title: label,
+        class: theme.displayLabel
+    }, label) : null;
+}
+// Used by input widgets
+function getLabel(id, uiClass, label, required) {
+    return label ? m("label.mb1.db", {
+        title: label,
+        for: id,
+        class: labelCls(uiClass, required),
+    }, getLabelText(label, required)) : null;
+}
+function labelIcon(leftIcon, label, rightIcon) {
+    return [
+        leftIcon ? m("i.fa-fw", {
+            class: `${label ? "mr2" : ""} ${leftIcon}`
+        }) : null,
+        label,
+        rightIcon ? m("i.fa-fw", {
+            class: `${label ? "ml2" : ""} ${rightIcon}`
+        }) : null
+    ];
+}
+// Input widget TProp update helpers
+function setValue(val) {
+    return function ({ target: { value } }) {
+        val(value);
+    };
+}
+function setCheck(chk) {
+    return function ({ target: { checked } }) {
+        chk(checked);
+    };
+}
+/**
+ * Split given file name from extension
+ */
+function fileNameExtSplit(fileName) {
+    const extIdx = fileName.lastIndexOf(".");
+    if (extIdx === -1) {
+        return [fileName, ""];
+    }
+    else {
+        return [fileName.substr(0, extIdx), fileName.substr(extIdx)];
+    }
+}
+function dataURItoBlob(dataURI) {
+    const dataUriList = dataURI.split(",");
+    const bytes = dataUriList[0].indexOf("base64") >= 0 ?
+        atob(dataUriList[1]) :
+        unescape(dataUriList[1]);
+    const mimeType = dataUriList[0].split(":")[1].split(";")[0];
+    const bytesTotal = bytes.length;
+    const byteArray = new Uint8Array(bytesTotal);
+    for (let idx = 0; idx < bytesTotal; idx++) {
+        byteArray[idx] = bytes.charCodeAt(idx);
+    }
+    return new Blob([byteArray], { type: mimeType });
+}
+/**
+ * Convert a Blob into a "File-like" object without using the File constructor
+ * Mutates input blob
+ */
+function fileConstructor(blob, fileName) {
+    const lastModified = new Date().valueOf();
+    const mutableBlob = blob;
+    mutableBlob.name = fileName;
+    mutableBlob.lastModified = lastModified;
+    return blob;
+}
+function dataUrlToFile(dataUrl, name, metadata) {
+    const newFile = fileConstructor(dataURItoBlob(dataUrl), name);
+    return {
+        guid: guid(),
+        name: newFile.name,
+        path: "not_set",
+        file: newFile,
+        dataUrl: dataUrl,
+        metadata
+    };
+}
+// // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
+// // specs compliant (as of March 2018 only Chrome)
+// export function toFileList(fileList: IFile[]) {
+// 	const transfer = new ClipboardEvent("").clipboardData || new DataTransfer();
+// 	lodash.forEach(fileList, ({ file }) => {
+// 		if (file) {
+// 			transfer.items.add(file);
+// 		}
+// 	});
+// 	return transfer.files;
+// }
+function getFileTypeIcon(file) {
+    const [, extension] = fileNameExtSplit(file.name);
+    switch (extension.toLowerCase()) {
+        case '.doc':
+        case '.docx':
+        case '.dot':
+        case '.wbk':
+        case '.docm':
+        case '.dotx':
+        case '.dotm':
+        case '.docb':
+        case '.txt':
+            return config.wordDocIcn;
+        case '.webm':
+        case '.mkv':
+        case '.flv':
+        case '.vob':
+        case '.ogv':
+        case '.drc':
+        case '.gifv':
+        case '.mng':
+        case '.avi':
+        case '.mts':
+        case '.m2ts':
+        case '.mov':
+        case '.qt':
+        case '.wmv':
+        case '.yuv':
+        case '.rm':
+        case '.rmvb':
+        case '.viv':
+        case '.asf':
+        case '.amv':
+        case '.mp4':
+        case '.m4p':
+        case '.m4v':
+        case '.mpg':
+        case '.mp2':
+        case '.mpeg':
+        case '.mpe':
+        case '.mpv':
+        case '.m2v':
+        case '.svi':
+        case '.3gp':
+        case '.mxf':
+        case '.roq':
+        case '.nsv':
+        case '.f4v':
+        case '.f4p':
+        case '.f4a':
+        case '.f4b':
+            return config.videoFileIcn;
+        case '.pdf':
+            return config.pdfFileIcn;
+        case '.pcm':
+        case '.wav':
+        case '.aiff':
+        case '.mp3':
+        case '.aac':
+        case '.ogg':
+        case '.wma':
+        case '.flac':
+        case '.alac':
+            return config.musicFileIcn;
+        case '.xls':
+        case '.xlt':
+        case '.xlm':
+        case '.xlsx':
+        case '.xlsm':
+        case '.xltx':
+        case '.xltm':
+        case '.xlsb':
+        case '.xla':
+        case '.xlam':
+        case '.xll':
+        case '.xlw':
+            return config.excelFileIcn;
+        case '.html':
+        case '.js':
+        case '.css':
+        case '.scss':
+        case '.java':
+            return config.codeFileIcn;
+        case '.jpg':
+        case '.jpeg':
+        case '.png':
+        case '.tiff':
+        case '.gif':
+        case '.svg':
+        case '.webp':
+            return config.imageIcn;
+        default:
+            return config.fileIcn;
+    }
+}
+function isImage(fileType) {
+    // Change to regex starts with "image/"
+    return fileType && fileType.includes('image');
+}
+
+function getOrientation(buffer) {
+    // Image exif data in first 64k of file
+    const viewLen = Math.min(buffer.byteLength, 64 * 1024);
+    const view = new DataView(buffer, 0, viewLen);
+    if (view.getUint16(0, false) !== 0xFFD8) {
+        return -2;
+    }
+    const length = view.byteLength;
+    let offset = 2;
+    while (offset < length) {
+        const marker = view.getUint16(offset, false);
+        offset += 2;
+        if (marker === 0xFFE1) {
+            offset += 2;
+            if (view.getUint32(offset, false) !== 0x45786966) {
+                return -1;
+            }
+            offset += 6;
+            const little = view.getUint16(offset, false) === 0x4949;
+            offset += view.getUint32(offset + 4, little);
+            const tags = view.getUint16(offset, little);
+            offset += 2;
+            for (let i = 0; i < tags; i++) {
+                if (view.getUint16(offset + (i * 12), little) === 0x0112) {
+                    return view.getUint16(offset + (i * 12) + 8, little);
+                }
+            }
+        }
+        else if ((marker & 0xFF00) !== 0xFF00) {
+            break;
+        }
+        else {
+            offset += view.getUint16(offset, false);
+        }
+    }
+    return -1;
+}
+function readArrayBuffer(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            resolve(reader.result);
+        };
+        reader.readAsArrayBuffer(file);
+    });
+}
+function readOrientation(file) {
+    return readArrayBuffer(file).then(getOrientation);
+}
+function rotateContext(ctx, width, height, orientation) {
+    if (!orientation || orientation > 8) {
+        return;
+    }
+    switch (orientation) {
+        case 2:
+            // Horizontal flip
+            ctx.translate(width, 0);
+            ctx.scale(-1, 1);
+            return;
+        case 3:
+            // 180 rotate anticlockwise
+            ctx.translate(width, height);
+            ctx.rotate(Math.PI);
+            return;
+        case 4:
+            // Vertical flip
+            ctx.translate(0, height);
+            ctx.scale(1, -1);
+            return;
+        case 5:
+            // Vertical flip + 90 rotate clockwise
+            ctx.rotate(0.5 * Math.PI);
+            ctx.scale(1, -1);
+            return;
+        case 6:
+            // 90 rotate clockwise
+            ctx.rotate(0.5 * Math.PI);
+            ctx.translate(0, -height);
+            return;
+        case 7:
+            // Horizontal flip + 90 rotate clockwise
+            ctx.rotate(0.5 * Math.PI);
+            ctx.translate(width, -height);
+            ctx.scale(-1, 1);
+            return;
+        case 8:
+            // 90 rotate anticlockwise
+            ctx.rotate(-0.5 * Math.PI);
+            ctx.translate(-width, 0);
+            return;
+    }
+}
+/**
+ * Scale given width and height values if either exceed the giving limit
+ * Returns integer values, rounding errors can significantly distort small rectangles
+ */
+function scaleRect(width, height, limit) {
+    if (width > height) {
+        if (width > limit) {
+            return [limit, Math.round(height * limit / width)];
+        }
+    }
+    else if (height > limit) {
+        return [Math.round(width * limit / height), limit];
+    }
+    return [width, height];
+}
+/**
+ * Shrink an image if width/height exceeds a given maximum
+ * @param file Image file to resize
+ * @param maxSize Maximum dimension size in pixels
+ * @param type Image MIME type to return
+ */
+function resizeImage(file, maxSize, type) {
+    if (!file.type.match(/image.*/)) {
+        return Promise.reject(new Error("File must be an image"));
+    }
+    return readOrientation(file)
+        .then((orientation) => new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            const [width, height] = scaleRect(image.width, image.height, maxSize);
+            // Orientations after 4 are rotated 90 degrees
+            if (orientation > 4) {
+                canvas.width = height;
+                canvas.height = width;
+            }
+            else {
+                canvas.width = width;
+                canvas.height = height;
+            }
+            const context = canvas.getContext("2d");
+            rotateContext(context, width, height, orientation);
+            context.drawImage(image, 0, 0, width, height);
+            resolve(canvas.toDataURL(type));
+        };
+        const reader = new FileReader();
+        reader.onload = () => image.src = reader.result;
+        reader.readAsDataURL(file);
+    }));
+}
+function scaleDataUrl(dataUrl, maxSize) {
+    return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            const [width, height] = scaleRect(image.width, image.height, maxSize);
+            canvas.width = width;
+            canvas.height = height;
+            const context = canvas.getContext("2d");
+            context.drawImage(image, 0, 0, width, height);
+            resolve(canvas.toDataURL());
+        };
+        image.src = dataUrl;
+    });
+}
+// Create dataURL image from given text
+function textToImage(text, width, height, font) {
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const fontSize = 0.56 * canvas.height;
+    const context = canvas.getContext("2d");
+    context.textBaseline = "middle";
+    context.font = `${fontSize}px ${font}`;
+    context.fillText(text, canvas.height * 0.05, fontSize);
+    return canvas.toDataURL();
+}
+function createStamp(sign, heightPct) {
+    const width = config.signMaxSize;
+    // Signatures assumed wider than their height
+    const height = 0.01 * heightPct * width;
+    return textToImage(sign, width, height, config.signFont);
+}
+
+class Badge {
+    view({ attrs: { label, classes = "bg-red" }, children }) {
+        return m(".relative.dib", [
+            children,
+            label ? m("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80", {
+                class: classes,
+                style: {
+                    minWidth: "0.65rem"
+                }
+            }, label) : null
+        ]);
+    }
+}
+
+class Button {
+    view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", disabled, style, onclick } }) {
+        return m("button.button-reset", {
+            type, title, disabled,
+            class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
+            style,
+            onclick
+        }, labelIcon(icon, label, rightIcon));
+    }
+}
+
+class ButtonLink {
+    view({ attrs: { label, title = label, icon, rightIcon, href, rel, target, download, context, classes = "", style } }) {
+        return m("a.link.flex.items-center", {
+            href, rel, target, download, title,
+            class: `${classes} ${getButtonContext(context)} ${theme.button}`, style
+        }, labelIcon(icon, label, rightIcon));
+    }
+}
+
+class NavButton {
+    view({ attrs: { label, title = label, icon, rightIcon, classes = "", disabled, style, onclick } }) {
+        return m(".mh2.pa2.truncate", {
+            title, disabled,
+            class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${theme.navButton}`,
+            style,
+            onclick
+        }, labelIcon(icon, label, rightIcon));
+    }
+}
+
+class NavLink {
+    view({ attrs: { label, title = label, icon, rightIcon, href, rel, target, download, classes = "", style } }) {
+        return m("a.link.mh2.pa2.truncate", {
+            href, rel, target, download, title,
+            class: `${classes} ${theme.navButton}`, style
+        }, labelIcon(icon, label, rightIcon));
+    }
+}
+
+class Trusted {
+    view({ attrs: { field: { style }, value } }) {
+        return m(".pa2", {
+            style
+        }, m.trust(value()));
+    }
+}
+
+class BaseText {
+    view({ attrs: { field, value } }) {
+        const { label, uiClass = {}, style } = field;
+        return m(".pa2.flex.flex-wrap", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(label),
+            m("span.ws-normal", {
+                title: value(),
+                class: theme.displayValue
+            }, value())
+        ]);
+    }
+}
+
+class DateText {
+    formatter(val) {
+        return val ? new Date(String(val)).toLocaleDateString() : val;
+    }
+    oninit({ attrs: { value } }) {
+        this.formatted = value.map(this.formatter);
+    }
+    onremove() {
+        this.formatted.end(true);
+    }
+    view({ attrs: { field } }) {
+        return m(BaseText, {
+            field,
+            value: this.formatted
+        });
+    }
+}
+
+function linkAttrs(fieldType, value) {
+    if (fieldType === "email") {
+        return {
+            href: `mailto:${value}`,
+            class: theme.displayValue
+        };
+    }
+    else if (fieldType === "tel") {
+        return {
+            href: `tel:${value}`,
+            class: theme.displayValue
+        };
+    }
+    else {
+        // Assume standard urls
+        return {
+            href: value,
+            target: "_blank",
+            class: theme.displayValue
+        };
+    }
+}
+const iconMap = {
+    email: config.emailIcn,
+    tel: config.telIcn
+};
+class Link {
+    view({ attrs: { field, value } }) {
+        const { label, type = "url" /* url */, uiClass = {}, style } = field;
+        return m(".pa2.flex.flex-wrap", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(label),
+            m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()), m("i.mr2", {
+                class: iconMap[type] || config.linkIcn
+            }), value())
+        ]);
+    }
+}
+
+class CheckLabel {
+    view({ attrs: { field, value } }) {
+        const { options = [] } = field;
+        const valLabel = lodash.find(options, 
+        // Empty value stream to be handled as false
+        lodash.matches({ value: value() || false }));
+        return valLabel ? m("span.ml2", valLabel.label) : null;
+    }
+}
+
+class Checkbox {
+    constructor() {
+        this.onIcon = "checkIcn";
+        this.offIcon = "uncheckIcn";
+    }
+    view({ attrs: { field, value } }) {
+        const { label, uiClass = {}, style } = field;
+        return m(".pa2.flex.items-center", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(label),
+            m("i", {
+                class: `${theme.displayValue} ${config[value() ? this.onIcon : this.offIcon]}`
+            }),
+            m(CheckLabel, { field, value })
+        ]);
+    }
+}
+
+class Toggle extends Checkbox {
+    constructor() {
+        super(...arguments);
+        this.onIcon = "toggleOnIcn";
+        this.offIcon = "toggleOffIcn";
+    }
+}
+
+// TODO Expand validation for field input masks, min/max, minlength/maxlength etc.
+function propInvalid(field, value) {
+    if (field.required) {
+        return !value;
+    }
+    return false;
+}
+function fileInvalid(field, value) {
+    if (field.required) {
+        return value.length < 1;
+    }
+    return false;
+}
+
+function dragStart(state) {
+    return (evt) => {
+        evt.preventDefault();
+        if (evt.dataTransfer) {
+            evt.dataTransfer.dropEffect = "copy";
+        }
+        // Prevent excessive redraws if dragging state is already set
+        if (state()) {
+            evt.redraw = false;
+        }
+        state(true);
+    };
+}
+function dragStop(state) {
+    return (evt) => {
+        evt.preventDefault();
+        state(false);
+    };
+}
+function drop(state, setFiles) {
+    return (evt) => {
+        evt.preventDefault();
+        state(false);
+        if (evt.dataTransfer) {
+            setFiles(evt.dataTransfer.files);
+        }
+    };
+}
+function change(setFiles) {
+    return ({ target: { files } }) => setFiles(files);
+}
+class FileInput {
+    oncreate({ dom, attrs: { value } }) {
+        value.map((list) => {
+            if (list.length === 0) {
+                dom.firstChild.value = "";
+            }
+        });
+    }
+    view({ attrs: { field, defaultAccept = "*", multiple = true, dragging, onSet }, children }) {
+        const { label, id, name = id, title = label, required, readonly, disabled, autofocus, accept = defaultAccept, uiClass = {} } = field;
+        return m("label.db", lodash.extend({
+            "for": id,
+            "title": title,
+            "class": pointerCls(disabled, readonly),
+            "data-input-id": id
+        }, disabled || readonly ? {} : {
+            ondragover: dragStart(dragging),
+            ondragleave: dragStop(dragging),
+            ondrop: drop(dragging, onSet)
+        }), [
+            m("input.clip[type=file].bg-transparent.bn.outline-0", {
+                id, name, multiple, accept,
+                required, autofocus,
+                disabled: disabled || readonly,
+                onchange: change(onSet)
+            }),
+            label ? m("span.db.mb1", {
+                class: labelCls(uiClass, required)
+            }, getLabelText(label, required)) : null,
+            children
+        ]);
+    }
+}
+
+function addFiles(fileList, replace = false) {
+    return (addList) => {
+        const newFileList = replace ? [] : fileList();
+        lodash.each(addList, (file) => {
+            newFileList.push({
+                guid: guid(),
+                name: file.name,
+                path: "not_set",
+                file: file
+            });
+        });
+        fileList(newFileList);
+    };
+}
+function removeFile(fileList, removeGuid) {
+    return (event) => {
+        event.preventDefault();
+        const newFileList = fileList();
+        lodash.remove(newFileList, { guid: removeGuid });
+        fileList(newFileList);
+    };
+}
+class FileMulti {
+    constructor() {
+        this.dragging = stream(false);
+    }
+    view({ attrs: { field, value } }) {
+        const { disabled, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            m(FileInput, {
+                field,
+                dragging: this.dragging,
+                onSet: addFiles(value),
+                value
+            }, m("div", {
+                class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+            }, m(".pa2", {
+                class: fileInputCls(this.dragging())
+            }, [
+                m("i.mr2", {
+                    class: config.uploadIcn
+                }),
+                m("span", config.addFilesTxt)
+            ]))),
+            m(".flex.flex-column.mt1.nb1", lodash.map(value(), (file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
+                m("i.mr2", {
+                    class: config.downloadIcn
+                }),
+                file.name,
+                m("i.child.fr", {
+                    title: `${config.remFileTtl} ${file.name}`,
+                    class: config.deleteIcn,
+                    onclick: removeFile(value, file.guid)
+                })
+            ])))
+        ]);
+    }
+}
+
+class Thumbnail {
+    view({ children, attrs }) {
+        return m(".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child", [
+            attrs.src && attrs.src !== "not_set" ? m("img.contain", { src: attrs.src }) : null,
+            attrs.data && attrs.data.file && (attrs.src === "not_set" || !attrs.src) ? (m("div.contain.tc.br5.6rem", {
+                class: `${getFileTypeIcon(attrs.data)} fa-2x`,
+                tooltip: attrs.data.file.type
+            })) : null,
+            children
+        ]);
+    }
+}
+
+class FileOpen {
+    view({ attrs }) {
+        return m("i.pa1", {
+            class: getFileTypeIcon(attrs),
+            title: config.openFileTxt,
+            onclick: attrs.path !== "not_set"
+                ? () => window.open(attrs.path, "_blank")
+                : undefined
+        });
+    }
+}
+
+class DisplayTypeComponent {
+    view({ attrs: { displayType = "thumbnail" /* thumbnail */, value } }) {
+        return displayType === "thumbnail" /* thumbnail */ ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash.map(value(), (file) => m(Thumbnail, {
+            src: imgSrc(file.path, file.dataUrl),
+            data: file,
+            style: thumbMaxSize(),
+        }, m(".absolute.top-0.right-0.child", m(Button, {
+            title: `Remove ${file.name}`,
+            icon: config.deleteIcn,
+            onclick: removeFile(value, file.guid)
+        }))))) : m(".pa2.flex.flex-column", lodash.map(value(), (file) => m(".flex.items-center.pa1.ba.b--black-20", [
+            m("i.pa1", {
+                class: config.uploadIcn
+            }),
+            m("span.ma1.flex-auto", {
+                title: file.name
+            }, file.name),
+            m(FileOpen, file),
+            m("i.pa1.pointer.dim", {
+                title: `Remove ${file.name}`,
+                class: config.cancelIcn,
+                onclick: removeFile(value, file.guid)
+            })
+        ])));
+    }
+}
+
+class SelectText {
+    view({ attrs: { field, value } }) {
+        const { label: lbl, uiClass = {}, style } = field;
+        // Get label for selected options (falling back to the value)
+        const option = lodash.find(field.options, { value: value() });
+        const label = option ? option.label || option.value : value();
+        return m(".pa2.flex.flex-wrap", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(lbl),
+            m("span.ws-normal", {
+                title: label,
+                class: theme.displayValue
+            }, label)
+        ]);
+    }
+}
+
+class FileList {
+    view({ attrs: { field, value } }) {
+        const { label, uiClass = {}, style } = field;
+        return m(".pa2.flex.flex-column", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(label),
+            m(".flex.flex-column.mt1.nb1", lodash.map(value(), ({ name, path }) => {
+                return m("a.pa2.mv1.link.ba.b--black-20.dim.dib.pointer[target=_blank]", {
+                    class: theme.displayValue,
+                    href: path
+                }, m("i.mr2", {
+                    class: config.downloadIcn
+                }), name);
+            }))
+        ]);
+    }
+}
+
+class ImageList {
+    view({ attrs: { field, value } }) {
+        const { label, uiClass = {}, style } = field;
+        return m(".pa2.flex.flex-column", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(label),
+            m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
+                title: name,
+                src: imgSrc(path, dataUrl),
+                style: thumbMaxSize()
+            })))
+        ]);
+    }
+}
+
+class ImagePreview {
+    view({ attrs: { field, value } }) {
+        const { label, uiClass = {}, style } = field;
+        const file = lodash.head(value());
+        return m(".pa2.flex.flex-column", {
+            class: wrapperCls(uiClass),
+            style
+        }, [
+            getDisplayLabel(label),
+            file ? m("img.img.h-100.mt2.contain.self-center", {
+                title: file.name,
+                src: imgSrc(file.path, file.dataUrl),
+                style: imgMaxSize()
+            }) : m("i.mt2", {
+                class: `${theme.displayValue} ${config.imageIcn}`
+            })
+        ]);
+    }
+}
+
+function scorePassword(value) {
+    let totalScore = 0;
+    // Min req for password is 8 characters
+    if (value.length >= 8) {
+        totalScore = 1;
+        // Extra points for longer password
+        if (value.length >= 24) {
+            totalScore = totalScore + 1;
+        }
+        // Check does string have 2 upper case and 3 lower case
+        if (/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
+            totalScore = totalScore + 1;
+        }
+        // Ensure string has 2 digits
+        if (/(?=.*[0-9].*[0-9])/.test(value)) {
+            totalScore = totalScore + 1;
+        }
+        // Ensure string has one special character
+        if (/(?=.*[!"£%^@#$&*])/.test(value)) {
+            totalScore = totalScore + 1;
+        }
+    }
+    return totalScore;
+}
+function passwordStrengthStr(value) {
+    switch (value) {
+        case 0: {
+            return "Invalid";
+        }
+        case 1: {
+            return "Very Weak";
+        }
+        case 2: {
+            return "Weak";
+        }
+        case 3: {
+            return "Average";
+        }
+        case 4: {
+            return "Strong";
+        }
+        case 5: {
+            return "Very Strong";
+        }
+    }
+    return "";
+}
+const passwordStrength = [{
+        value: 1,
+        background: "bg-dark-red"
+    }, {
+        value: 2,
+        background: "bg-orange"
+    }, {
+        value: 3,
+        background: "bg-yellow"
+    }, {
+        value: 4,
+        background: "bg-light-green"
+    }, {
+        value: 5,
+        background: "bg-green"
+    }];
+class PasswordStrength {
+    oninit({ attrs: { value } }) {
+        this.passwordScore = value
+            .map((newPass) => scorePassword(String(newPass)));
+    }
+    onremove() {
+        this.passwordScore.end();
+    }
+    view({ attrs: { field } }) {
+        const { label, style } = field;
+        return m(".flex.flex-column", {
+            style
+        }, [
+            getDisplayLabel(label),
+            m(".flex.mt1", lodash.map(passwordStrength, (val) => m(".h1.w-20", {
+                class: this.passwordScore() >= val.value ? val.background : "bg-transparent"
+            }))),
+            m("span.f5.truncate", passwordStrengthStr(this.passwordScore()))
+        ]);
+    }
+}
+
+class Label {
+    view({ attrs: { field: { label = "", title = label, required } } }) {
+        return m("label.mb2", { title }, getLabelText(label, required));
+    }
+}
+
+class BaseInput {
+    view({ attrs: { field, value, xform = value } }) {
+        const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {} } = field;
+        return m("fieldset", {
+            class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, label, required),
+            m("div", {
+                class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+            }, m("input.w-100.bg-transparent.bn.outline-0", {
+                id, type, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: xform(),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            }))
+        ]);
+    }
+}
+
+class CurrencyInput {
+    view({ attrs: { field, value, xform = value } }) {
+        const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
+        const currency = options && options.length ? options[0].value : "$";
+        return m("fieldset.flex-shrink-0", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, label, required),
+            m(".flex.items-center", {
+                class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+            }, m("span.mr1", currency), m("input.w-100.bg-transparent.bn.outline-0", {
+                id, type: "text" /* text */, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: lodash.isUndefined(xform())
+                    ? null
+                    : numberToCurrencyStr(propToNumber(xform())),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+            }))
+        ]);
+    }
+}
+function propToNumber(value) {
+    return lodash.isString(value) ? lodash.parseInt(value) : Number(value);
+}
+/**
+ * Parse a currency string into a number
+ * @param currencyStr Value to convert e.g. "123.45"
+ * @return parsed value as smallest monetary unit e.g. 12345
+ */
+function currencyStrToNumber(currencyStr) {
+    // Remove everything but digits and the decimal point
+    const inputStr = currencyStr.replace(/[^\d.]/g, "");
+    let left;
+    let right = 0;
+    // split number at decimal point
+    if (inputStr.indexOf(".") > -1) {
+        const decimalPos = inputStr.indexOf(".");
+        const leftStr = inputStr.substring(0, decimalPos);
+        // Ensure left component has at least 1 character
+        left = lodash.parseInt(lodash.padStart(leftStr, 1, "0"));
+        // Only accept first 2 figures after decimal
+        const rightStr = inputStr.substring(decimalPos + 1, Math.min(decimalPos + 3, inputStr.length));
+        // Ensure right component has 2 characters
+        right = lodash.parseInt(lodash.padEnd(rightStr, 2, "0"));
+    }
+    else {
+        left = lodash.parseInt(inputStr) || 0;
+    }
+    return left * 100 + right;
+}
+/**
+ * Convert a number into a currency string
+ * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+ * @return currency string if finite number e.g. "123.45" or undefined
+ */
+function numberToCurrencyStr(unitTotal) {
+    const numPair = numberToCurrencyTuple(unitTotal);
+    if (numPair) {
+        return `${numPair[0]}.${numPair[1]}`;
+    }
+    else {
+        return numPair;
+    }
+}
+/**
+ * Convert a number into a currency string pair
+ * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+ * @return currency string pair if finite number e.g. ["123", "45"] or undefined
+ */
+function numberToCurrencyTuple(unitTotal) {
+    if (!lodash.isFinite(unitTotal)) {
+        return undefined;
+    }
+    const valStr = String(Math.abs(unitTotal));
+    let large = "0";
+    let small = "";
+    if (valStr.length > 2) {
+        const decimalPos = valStr.length - 2;
+        large = valStr.substring(0, decimalPos);
+        small = valStr.substring(decimalPos);
+    }
+    else {
+        small = lodash.padStart(valStr, 2, "0");
+    }
+    return [large, small];
+}
+// Currency TProp update helper
+function setCurrencyValue(val) {
+    return ({ target: { value } }) => val(currencyStrToNumber(value));
+}
+
+class CardDateInput {
+    constructor() {
+        this.month = stream();
+        this.year = stream();
+        // Combine date parts
+        this.date = stream.lift((month, year) => `${month}/${year}`, this.month, this.year);
+    }
+    oninit({ attrs: { value } }) {
+        // Split value into date parts
+        value.map((newVal) => {
+            const [month, year = ""] = String(newVal).split("/");
+            this.month(month);
+            this.year(year);
+        });
+        // Update value when date changes
+        this.date.map((newDate) => {
+            // Prevent recursive setting between streams
+            if (newDate !== value()) {
+                value(newDate);
+            }
+        });
+    }
+    onremove() {
+        this.date.end(true);
+        this.year.end(true);
+        this.month.end(true);
+    }
+    view({ attrs: { field, value } }) {
+        const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, } = field;
+        const classStr = inputCls(uiClass);
+        // Assemble date input (en-GB or en-US layouts)
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(`${id}-mm`, uiClass, label, required),
+            m("div", {
+                title,
+                class: inputWrapperCls(uiClass, propInvalid(field, value()))
+            }, [
+                m("div.dib.mr2", [
+                    getLabel(`${id}-mm`, uiClass, "Month"),
+                    m("input.w-100.bg-transparent.bn.outline-0", {
+                        id: `${id}-mm`, name: `${name}-mm`,
+                        type: "text" /* text */, placeholder: "MM",
+                        minlength: "2", maxlength: "2",
+                        pattern: "[0-9]*", inputmode: "numeric",
+                        required, readonly, disabled,
+                        value: this.month(),
+                        class: classStr, style: styleSm,
+                        onchange: setValue(this.month)
+                    })
+                ]),
+                m("span.mr2", "/"),
+                m("div.dib.mr2", [
+                    getLabel(`${id}-yy`, uiClass, "Year"),
+                    m("input.w-100.bg-transparent.bn.outline-0", {
+                        id: `${id}-yy`, name: `${name}-yy`,
+                        type: "text" /* text */, placeholder: "YY",
+                        minlength: "4", maxlength: "4",
+                        pattern: "[0-9]*", inputmode: "numeric",
+                        required, readonly, disabled,
+                        value: this.year(),
+                        class: classStr, style: styleSm,
+                        onchange: setValue(this.year)
+                    })
+                ])
+            ])
+        ]);
+    }
+}
+
+class DateInput {
+    constructor() {
+        this.day = stream();
+        this.month = stream();
+        this.year = stream();
+        this.valid = stream.lift((day, month, year) => {
+            const newYear = parseInt(year);
+            const newMonth = parseInt(month) - 1;
+            const newDay = parseInt(day);
+            const newDate = new Date(newYear, newMonth, newDay);
+            return newDate.getFullYear() === newYear
+                && newDate.getMonth() === newMonth && newDate.getDate() === newDay;
+        }, this.day, this.month, this.year);
+        // Combine date parts
+        this.date = stream.lift((day, month, year, valid) => valid ? `${year}-${month}-${day}` : "", this.day, this.month, this.year, this.valid);
+    }
+    oninit({ attrs: { value } }) {
+        // Split value into date parts
+        value.map((newVal) => {
+            const date = new Date(String(newVal));
+            if (lodash.isDate(date) && !isNaN(date.getTime())) {
+                this.day(lodash.padStart(String(date.getDate()), 2, "0"));
+                this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
+                this.year(String(date.getFullYear()));
+            }
+        });
+        // Update value when date changes
+        this.date.map((newDate) => {
+            // Prevent recursive setting between streams
+            if (newDate !== value()) {
+                value(newDate);
+            }
+        });
+    }
+    onremove() {
+        this.date.end(true);
+        this.year.end(true);
+        this.month.end(true);
+        this.day.end(true);
+    }
+    view({ attrs: { field, value } }) {
+        const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
+        const locale = options && options.length ? options[0].value : "en-GB";
+        const classStr = inputCls(uiClass);
+        // Create DD-MM-YYYY inputs
+        const dayInput = m(".dib.mr2", [
+            getLabel(`${id}-dd`, uiClass, "Day"),
+            m("input.w-100.bg-transparent.bn.outline-0", {
+                id: `${id}-dd`, name: `${name}-dd`,
+                type: "text" /* text */, placeholder: "DD",
+                minlength: "2", maxlength: "2",
+                pattern: "[0-9]*", inputmode: "numeric",
+                required, readonly, disabled,
+                value: this.day(),
+                class: classStr, style: styleSm,
+                onchange: setValue(this.day)
+            })
+        ]);
+        const monthInput = m(".dib.mr2", [
+            getLabel(`${id}-mm`, uiClass, "Month"),
+            m("input.w-100.bg-transparent.bn.outline-0", {
+                id: `${id}-mm`, name: `${name}-mm`,
+                type: "text" /* text */, placeholder: "MM",
+                minlength: "2", maxlength: "2",
+                pattern: "[0-9]*", inputmode: "numeric",
+                required, readonly, disabled,
+                value: this.month(),
+                class: classStr, style: styleSm,
+                onchange: setValue(this.month)
+            })
+        ]);
+        const yearInput = m(".dib.mr2", [
+            getLabel(`${id}-yyyy`, uiClass, "Year"),
+            m("input.w-100.bg-transparent.bn.outline-0", {
+                id: `${id}-yyyy`, name: `${name}-yyyy`,
+                type: "text" /* text */, placeholder: "YYYY",
+                minlength: "4", maxlength: "4",
+                pattern: "[0-9]*", inputmode: "numeric",
+                required, readonly, disabled,
+                value: this.year(),
+                class: classStr, style: styleLg,
+                onchange: setValue(this.year)
+            })
+        ]);
+        // Assemble date input (en-GB or en-US layouts)
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, label, required),
+            m("div", {
+                id, title,
+                class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
+                "aria-invalid": String(!this.valid())
+            }, locale === "en-US"
+                ? [
+                    monthInput,
+                    dayInput,
+                    yearInput
+                ] : [
+                dayInput,
+                monthInput,
+                yearInput
+            ])
+        ]);
+    }
+}
+
+class PasswordInput {
+    constructor() {
+        this.showPassword = stream(false);
+    }
+    view({ attrs: { field, value } }) {
+        const { label, id, name = id, title = label, placeholder, maxlength, minlength, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, instant, uiClass = {}, } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, label, required),
+            m("div.w-100.flex.items-center", {
+                class: inputWrapperCls(uiClass, propInvalid(field, value()))
+            }, m("input.w-100.bg-transparent.bn.outline-0", {
+                id, name, title, placeholder,
+                type: this.showPassword() ? "text" : "password",
+                maxlength, minlength, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode,
+                class: inputCls(uiClass),
+                value: value(),
+                // Safari quirk
+                autocorrect: "off",
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            }), m("i.ml1.pa1.fa-fw.pointer.dim", {
+                title: config.showPassTxt,
+                class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
+                onclick: () => this.showPassword(!this.showPassword())
+            }))
+        ]);
+    }
+}
+
+class TextareaInput {
+    view({ attrs: { field, value } }) {
+        const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, } = field;
+        return m("fieldset.flex.flex-column.h-100.w-100", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, label, required),
+            m(".h-100", {
+                class: inputWrapperCls(uiClass, propInvalid(field, value()))
+            }, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+                id, name, title,
+                placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
+                class: textareaCls(uiClass),
+                value: value(),
+                style: { resize: "none" },
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            }))
+        ]);
+    }
+}
+
+class CheckboxInput {
+    constructor() {
+        this.onIcon = "checkIcn";
+        this.offIcon = "uncheckIcn";
+    }
+    view({ attrs: { field, value } }) {
+        const { label = "", id, name = id, title = label, required, readonly, disabled, autocomplete, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled),
+        }, m("div", {
+            class: inputWrapperCls(uiClass)
+        }, [
+            m("label.flex.items-center", {
+                "title": title,
+                "class": checkInputCls(uiClass, disabled, readonly),
+                "data-input-id": id
+            }, m("input.clip[type=checkbox]", {
+                id, name,
+                checked: value(),
+                required, autocomplete,
+                disabled: disabled || readonly,
+                onchange: setCheck(value),
+            }), m("i.mr2", {
+                class: config[value() ? this.onIcon : this.offIcon]
+            }), getLabelText(label, required), m(CheckLabel, { field, value }))
+        ]));
+    }
+}
+
+class ToggleInput extends CheckboxInput {
+    constructor() {
+        super(...arguments);
+        this.onIcon = "toggleOnIcn";
+        this.offIcon = "toggleOffIcn";
+    }
+}
+
+class RadioInput {
+    view({ attrs: { field, value: val } }) {
+        const { label: lbl, id, name = id, required, readonly, disabled, autocomplete, options, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, lbl, required),
+            m("div", {
+                class: inputWrapperCls(uiClass, propInvalid(field, val())),
+                onchange: setValue(val)
+            }, lodash.map(options, ({ value, label = value, icon }) => {
+                const checked = val() === value;
+                // No requirement for label "for" attribute
+                return m("label.dib", {
+                    "title": label,
+                    "class": radioInputCls(uiClass, checked, disabled, readonly),
+                    "data-input-id": id
+                }, m("input.clip[type=radio]", {
+                    name, value, checked,
+                    required, autocomplete,
+                    disabled: disabled || readonly
+                }), icon ? m("i.fa-fw", {
+                    class: icon
+                }) : label);
+            }))
+        ]);
+    }
+}
+
+class SelectInput {
+    view({ attrs: { field, value: val } }) {
+        const { label: lbl, id, name = id, title = lbl, required, readonly, disabled, autofocus, autocomplete, uiClass = {}, options } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, lbl, required),
+            m("div", {
+                class: inputWrapperCls(uiClass, propInvalid(field, val()))
+            }, m("select.w-100.bg-transparent.bn.outline-0", {
+                id, name, title,
+                required, readonly, disabled, autofocus, autocomplete,
+                class: inputCls(uiClass),
+                value: val(),
+                onchange: setValue(val)
+            }, lodash.map(options, ({ value, label = value }) => m("option", {
+                value,
+                disabled: disabled || readonly
+            }, label))))
+        ]);
+    }
+}
+
+class FileSelect {
+    constructor() {
+        this.dragging = stream(false);
+    }
+    view({ attrs: { field, value, displayType } }) {
+        const file = lodash.head(value());
+        const { disabled, uiClass = {} } = field;
+        const innerText = displayType === "none" /* none */ || !file
+            ? config.addFileTxt
+            : file.name;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, m(FileInput, {
+            field,
+            multiple: false,
+            dragging: this.dragging,
+            onSet: addFiles(value, true),
+            value
+        }, m("div", {
+            class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+        }, m(".flex.items-center.pa1", {
+            class: fileInputCls(this.dragging())
+        }, [
+            m("i.pa1", {
+                class: config.uploadIcn
+            }),
+            m("span.ma1.flex-auto", innerText),
+            file && displayType !== "none" /* none */ ? [
+                m(FileOpen, file),
+                m("i.pa1.pointer.dim", {
+                    title: `Remove ${file.name}`,
+                    class: config.cancelIcn,
+                    onclick: removeFile(value, file.guid)
+                })
+            ] : null
+        ]))));
+    }
+}
+
+function addImages(fileList, maxSize, replace = false) {
+    return (addList) => {
+        const newFileList = replace ? [] : fileList();
+        return Promise.all(lodash.map(addList, (file) => {
+            // Limit file dimensions
+            return resizeImage(file, maxSize, file.type).then((dataURL) => {
+                const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
+                newFileList.push({
+                    guid: guid(),
+                    name: newFile.name,
+                    path: "not_set",
+                    file: newFile,
+                    dataUrl: dataURL
+                });
+            });
+        })).then(() => {
+            fileList(newFileList);
+            m.redraw();
+        });
+    };
+}
+class ImageMulti {
+    constructor() {
+        this.dragging = stream(false);
+    }
+    view({ attrs: { field, value } }) {
+        const { disabled, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            m(FileInput, {
+                field,
+                defaultAccept: "image/*",
+                dragging: this.dragging,
+                onSet: addImages(value, config.imageMaxSize),
+                value
+            }, m("div", {
+                class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+            }, m(".w-100.pa1.dt.tc", {
+                class: fileInputCls(this.dragging())
+            }, m("i.fa-2x.dtc.v-mid", {
+                class: config.cameraIcn
+            })))),
+            m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash.map(value(), (file) => m(Thumbnail, {
+                src: imgSrc(file.path, file.dataUrl),
+                style: thumbMaxSize()
+            }, m(".absolute.top-0.right-0.child", m(Button, {
+                title: `Remove ${file.name}`,
+                icon: config.deleteIcn,
+                onclick: removeFile(value, file.guid)
+            })))))
+        ]);
+    }
+}
+
+class ImageSelect {
+    constructor() {
+        this.dragging = stream(false);
+    }
+    view({ attrs: { field, value } }) {
+        const file = lodash.head(value());
+        const { disabled, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, m(FileInput, {
+            field,
+            defaultAccept: "image/*",
+            multiple: false,
+            dragging: this.dragging,
+            onSet: addImages(value, config.imageMaxSize, true),
+            value
+        }, m("div", {
+            class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+        }, m(".pa1", {
+            class: fileInputCls(this.dragging())
+        }, m(".relative.w-100.dt.tc", file ? [
+            m("img.img.contain", {
+                title: file.name,
+                src: imgSrc(file.path, file.dataUrl),
+                style: imgMaxSize()
+            }),
+            m(".absolute.top-0.right-0.pa1.pointer.dim", {
+                title: `Remove ${file.name}`,
+                onclick: removeFile(value, file.guid)
+            }, m("i.pa1", {
+                class: config.cancelIcn
+            }))
+        ] : m("i.fa-2x.dtc.v-mid", {
+            class: config.cameraIcn
+        }))))));
+    }
+}
+
+class SignDraw {
+    oncreate({ dom }) {
+        const canvas = dom.children[0];
+        const initialRatio = pxRatio();
+        this.signaturePad = new SignaturePad(canvas, {
+            minWidth: 0.5 * initialRatio,
+            maxWidth: 1.5 * initialRatio
+        });
+        // Create resize handler
+        const resizeCanvas = () => {
+            const resizeRatio = pxRatio();
+            canvas.width = canvas.offsetWidth * resizeRatio;
+            canvas.height = canvas.offsetHeight * resizeRatio;
+            const context = canvas.getContext("2d");
+            context.scale(resizeRatio, resizeRatio);
+            this.resetCanvas();
+        };
+        this.resizeHandler = lodash.debounce(resizeCanvas, 250);
+        window.addEventListener("resize", this.resizeHandler);
+        window.addEventListener("orientationchange", this.resizeHandler);
+        resizeCanvas();
+    }
+    onremove() {
+        this.resizeHandler.cancel();
+        window.removeEventListener("resize", this.resizeHandler);
+        window.removeEventListener("orientationchange", this.resizeHandler);
+    }
+    view({ attrs: { style, onSet, onCancel } }) {
+        return [
+            m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style }, m("canvas.aspect-ratio--object")),
+            m(".absolute.top-0.right-0.z-999", {
+                style: { transform: "translateY(-100%)" }
+            }, [
+                m(Button, {
+                    title: config.applyTtl,
+                    icon: config.applyIcn,
+                    classes: "ma1",
+                    onclick: () => {
+                        if (!this.signaturePad.isEmpty()) {
+                            onSet(this.signaturePad.toDataURL("image/png"));
+                        }
+                    }
+                }),
+                m(Button, {
+                    title: config.resetTtl,
+                    icon: config.resetIcn,
+                    classes: "ma1",
+                    onclick: () => this.resetCanvas()
+                }),
+                m(Button, {
+                    title: config.cancelTtl,
+                    icon: config.cancelIcn,
+                    classes: "ma1",
+                    onclick: onCancel
+                })
+            ]),
+        ];
+    }
+    resetCanvas() {
+        this.signaturePad.clear();
+    }
+}
+
+function applyText(text, heightPct, callback) {
+    return () => {
+        if (text()) {
+            callback(createStamp(text(), heightPct), { text: text(), heightPct });
+        }
+        return false;
+    };
+}
+class SignType {
+    constructor() {
+        this.text = stream("");
+    }
+    oncreate({ dom }) {
+        const input = dom.children[0];
+        input.focus({ preventScroll: false });
+        this.scaleText(dom);
+    }
+    onupdate({ dom }) {
+        this.scaleText(dom);
+    }
+    view({ attrs: { heightPct, style, onSet, onCancel } }) {
+        return [
+            m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
+                style,
+                onsubmit: applyText(this.text, heightPct, onSet)
+            }, m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
+                oninput: setValue(this.text),
+                value: this.text(),
+                style: {
+                    "font-family": config.signFont
+                }
+            })),
+            m(".absolute.top-0.right-0.z-999", {
+                style: { transform: "translateY(-100%)" }
+            }, [
+                m(Button, {
+                    title: config.applyTtl,
+                    icon: config.applyIcn,
+                    classes: "ma1",
+                    onclick: applyText(this.text, heightPct, onSet)
+                }),
+                m(Button, {
+                    title: config.resetTtl,
+                    icon: config.resetIcn,
+                    classes: "ma1",
+                    onclick: () => this.text("")
+                }),
+                m(Button, {
+                    title: config.cancelTtl,
+                    icon: config.cancelIcn,
+                    classes: "ma1",
+                    onclick: onCancel
+                })
+            ])
+        ];
+    }
+    // Post render update text input font based on container size
+    scaleText(container) {
+        const height = container.clientHeight;
+        container.style.fontSize = `${0.56 * height}px`;
+    }
+}
+
+function applyStamp(heightPct, stampTxt, callback) {
+    return () => callback(createStamp(stampTxt, heightPct), { text: stampTxt, heightPct });
+}
+class SignStamp {
+    view({ attrs: { heightPct, stampTxt, stampSetTxt, onSet } }) {
+        return [
+            m("span.clip", { style: { "font-family": config.signFont } }, stampSetTxt),
+            m(".flex", m(Button, {
+                label: stampTxt,
+                classes: `flex-auto ${config.stampBtnClass}`,
+                context: config.stampBtnContext,
+                onclick: applyStamp(heightPct, stampSetTxt, onSet)
+            }))
+        ];
+    }
+}
+
+// Map SignTypes enum values to widgets
+const componentMap = {
+    ["draw" /* Draw */]: SignDraw,
+    ["type" /* Type */]: SignType,
+    ["stamp" /* Stamp */]: SignStamp
+};
+function setFile(fileList, id, maxSize) {
+    return (setDataUrl, metadata) => {
+        return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
+            fileList([dataUrlToFile(scaledDataUrl, `sign-${id}.png`, metadata)]);
+            m.redraw();
+        });
+    };
+}
+class SignBuilder {
+    oninit({ attrs: { value } }) {
+        // Unset signature component on file change
+        this.valUpdate = value.map(() => this.setSignType());
+    }
+    onremove() {
+        this.valUpdate.end();
+    }
+    view({ attrs: { field, value } }) {
+        const { label: lbl, id, readonly, disabled, uiClass = {}, options = config.signOpts, heightPct = config.signHeightPct, stampTxt = config.stampTxt, stampSetTxt = config.stampSetTxt } = field;
+        const style = {
+            paddingBottom: `${heightPct}%`
+        };
+        const fileObj = lodash.head(value());
+        // Convert options into widget descriptions
+        const opts = lodash(options).map(({ value: type }) => {
+            if (type === "draw" /* Draw */) {
+                return {
+                    type,
+                    icon: config.drawIcn,
+                    label: config.signDrawTxt
+                };
+            }
+            else if (type === "type" /* Type */) {
+                return {
+                    type,
+                    icon: config.typeIcn,
+                    label: config.signTypeTxt
+                };
+            }
+            else if (type === "stamp" /* Stamp */) {
+                return {
+                    type,
+                    icon: config.stampIcn,
+                    label: config.signStampTxt
+                };
+            }
+            return null;
+        }).compact().value();
+        // Auto-select widget if there is only one option and no file
+        if (opts.length === 1 && !fileObj) {
+            this.setSignType(opts[0].type);
+        }
+        return m("fieldset.relative", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, lbl),
+            m("div", {
+                class: this.signType !== "stamp" /* Stamp */
+                    ? inputWrapperCls(uiClass, fileInvalid(field, value()))
+                    : undefined
+            }, readonly || disabled
+                // Display component in "readonly" mode
+                ? m(".aspect-ratio", {
+                    id,
+                    style
+                }, 
+                // Current signature
+                fileObj ? m(".aspect-ratio--object", {
+                    style: { "pointer-events": "none" }
+                }, m("img.img.w-100.absolute", {
+                    src: imgSrc(fileObj.path, fileObj.dataUrl)
+                })) : null)
+                // Use signature creation component (if set)
+                : this.signType
+                    ? m(componentMap[this.signType], {
+                        heightPct,
+                        stampTxt,
+                        stampSetTxt,
+                        style,
+                        onSet: setFile(value, id, config.signMaxSize),
+                        onCancel: lodash.bind(this.setSignType, this, undefined)
+                    })
+                    // Display signature preview/creator
+                    : m(".aspect-ratio.pointer", {
+                        id,
+                        class: theme.fileInput,
+                        style
+                    }, fileObj
+                        // Current signature
+                        ? m(".aspect-ratio--object.hide-child.dim", {
+                            onclick: lodash.bind(value, this, [])
+                        }, [
+                            m("img.img.w-100.absolute", {
+                                src: imgSrc(fileObj.path, fileObj.dataUrl)
+                            }),
+                            // Remove signature button
+                            m(".pa3.absolute.top-0.right-0.child", m("i.fa-2x", {
+                                class: config.resetIcn
+                            }))
+                        ])
+                        // Signature creation options
+                        : m(".aspect-ratio--object.flex", lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
+                            title: label,
+                            onclick: lodash.bind(this.setSignType, this, type)
+                        }, m("i.fa-2x.ma1", {
+                            class: icon,
+                        }), m("span.ma1.dn.db-ns.truncate", label))))))
+        ]);
+    }
+    // Set/unset signature creation component
+    setSignType(type) {
+        this.signType = type;
+    }
+}
+
+function addOmniFiles(fileList, replace) {
+    return (addList) => {
+        const newFileList = replace ? [] : fileList();
+        return Promise.all(lodash.map(addList, (file) => {
+            if (isImage(file.type)) {
+                return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
+                    const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
+                    newFileList.push({
+                        guid: guid(),
+                        name: newFile.name,
+                        path: "not_set",
+                        file: newFile,
+                        dataUrl: dataURL
+                    });
+                });
+            }
+            else {
+                newFileList.push({
+                    guid: guid(),
+                    name: file.name,
+                    path: "not_set",
+                    file: file,
+                });
+                return Promise.resolve();
+            }
+        })).then(() => {
+            fileList(newFileList);
+            m.redraw();
+        });
+    };
+}
+class OmniFileInput {
+    constructor() {
+        this.dragging = stream(false);
+    }
+    view({ attrs: { field, value } }) {
+        const file = lodash.head(value());
+        const { disabled, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, m(FileInput, {
+            field,
+            defaultAccept: "*",
+            multiple: false,
+            dragging: this.dragging,
+            onSet: addOmniFiles(value, true),
+            value
+        }, m("div", {
+            class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+        }, m(".flex.items-center.pa1", {
+            class: fileInputCls(this.dragging())
+        }, file ? file.dataUrl
+            ? [
+                // Image preview
+                m(".relative.w-100.dt.tc", m("img.img.contain", {
+                    title: file.name,
+                    src: imgSrc(file.path, file.dataUrl),
+                    style: imgMaxSize()
+                }), m(".absolute.top-0.right-0.pa1.pointer.dim", {
+                    title: `Remove ${file.name}`,
+                    onclick: removeFile(value, file.guid)
+                }, m("i.pa1", {
+                    class: config.cancelIcn
+                })))
+            ] : [
+            // Non-image details
+            m(FileOpen, file),
+            m("span.ma1.flex-auto", {
+                title: file.name,
+            }, file.name),
+            m("i.pa1.pointer.dim", {
+                title: `Remove ${file.name}`,
+                class: config.cancelIcn,
+                onclick: removeFile(value, file.guid)
+            })
+        ] : [
+            // File upload
+            m("i.pa1", {
+                class: config.uploadIcn
+            }),
+            m("span.ma1.flex-auto", config.addFileTxt)
+        ]))));
+    }
+}
+
+class MultiOmniFileInput {
+    constructor() {
+        this.dragging = stream(false);
+    }
+    view({ attrs: { field, value, displayType, showDisplay = true } }) {
+        const { disabled, uiClass = {} } = field;
+        return m("fieldset", {
+            class: wrapperCls(uiClass, disabled)
+        }, [
+            m(FileInput, {
+                field,
+                defaultAccept: "*",
+                dragging: this.dragging,
+                onSet: addOmniFiles(value, false),
+                value
+            }, m("div", {
+                class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+            }, m(".flex.items-center.pa1.dt", {
+                class: fileInputCls(this.dragging())
+            }, [
+                m("i.pa1", {
+                    class: config.uploadIcn
+                }),
+                m("span.ma1.flex-auto", config.addFileTxt)
+            ]))),
+            showDisplay ? m(DisplayTypeComponent, {
+                displayType,
+                value
+            }) : null
+        ]);
+    }
+}
+
+export { Badge, BaseInput, BaseText, Button, ButtonLink, CardDateInput, Checkbox, CheckboxInput, CurrencyInput, DateInput, DateText, DisplayTypeComponent, FileList, FileMulti, FileSelect, ImageList, ImageMulti, ImagePreview, ImageSelect, Label, Link, MultiOmniFileInput, NavButton, NavLink, OmniFileInput, PasswordInput, PasswordStrength, RadioInput, SelectInput, SelectText, SignBuilder, TextareaInput, Toggle, ToggleInput, Trusted, createStamp, currencyStrToNumber, dataURItoBlob, dataUrlToFile, fileConstructor, fileNameExtSplit, getOrientation, guid, iconMap, linkAttrs, numberToCurrencyStr, numberToCurrencyTuple, pxRatio, readArrayBuffer, readOrientation, resizeImage, scaleDataUrl, scaleRect, textToImage, updateButtonContext, updateClasses, updateConfig };

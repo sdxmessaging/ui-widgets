@@ -4,6 +4,7 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     private day;
     private month;
     private year;
+    private valid;
     private date;
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onremove(): void;
