@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
@@ -46,6 +46,16 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			if (newDate !== value()) {
 				value(newDate);
 			}
+		});
+	}
+
+	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
+		const inputList = dom.querySelectorAll("input");
+		this.valid.map((valid) => {
+			const validityMessage = valid ? "" : "Invalid Date";
+			inputList.forEach((element) => {
+				element.setCustomValidity(validityMessage);
+			});
 		});
 	}
 
@@ -113,7 +123,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			m("div", {
 				id, title,
 				class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
-				"aria-invalid": String(!this.valid())
 			}, locale === "en-US"
 				? [
 					monthInput,

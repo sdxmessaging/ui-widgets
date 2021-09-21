@@ -1309,6 +1309,15 @@
                 }
             });
         }
+        oncreate({ dom }) {
+            const inputList = dom.querySelectorAll("input");
+            this.valid.map((valid) => {
+                const validityMessage = valid ? "" : "Invalid Date";
+                inputList.forEach((element) => {
+                    element.setCustomValidity(validityMessage);
+                });
+            });
+        }
         onremove() {
             this.date.end(true);
             this.year.end(true);
@@ -1367,7 +1376,6 @@
                 m__default['default']("div", {
                     id, title,
                     class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
-                    "aria-invalid": String(!this.valid())
                 }, locale === "en-US"
                     ? [
                         monthInput,
