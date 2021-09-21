@@ -14,7 +14,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			instant, uiClass = {},
 		} = field;
-		return m("fieldset.flex.flex-column.h-100", {
+		return m("fieldset.flex.flex-column.h-100.w-100", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, label, required),
