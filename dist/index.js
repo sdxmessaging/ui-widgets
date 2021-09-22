@@ -1285,14 +1285,14 @@ class DateInput {
     }
     oninit({ attrs: { value } }) {
         // Split value into date parts
-        value.map((newVal) => {
-            const date = new Date(String(newVal));
-            if (lodash.isDate(date) && !isNaN(date.getTime())) {
-                // this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-                // this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
-                this.year(String(date.getFullYear()));
-            }
-        });
+        // (value as stream<TProp>).map((newVal) => {
+        // 	const date = new Date(String(newVal));
+        // 	if (lodash.isDate(date) && !isNaN(date.getTime())) {
+        // 		this.day(lodash.padStart(String(date.getDate()), 2, "0"));
+        // 		this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
+        // 		this.year(String(date.getFullYear()));
+        // 	}
+        // });
         // Update value when date changes
         this.date.map((newDate) => {
             // Prevent recursive setting between streams
