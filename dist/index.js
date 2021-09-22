@@ -1326,8 +1326,8 @@ class DateInput {
         const self = this.dom.querySelector(`#${id}-${selfType}`);
         const prevValue = streamType() ? streamType() : "";
         const value = self.value;
-        const notPureNumber = !(/^\d*$/.test(value));
-        if (!notPureNumber || value === "") {
+        const pureInteger = /^\d*$/.test(value);
+        if (pureInteger || value === "") {
             streamType(value);
         }
         else {
