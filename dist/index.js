@@ -1329,6 +1329,7 @@ class DateInput {
     view({ attrs: { field, value } }) {
         const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
         const locale = options && options.length ? options[0].value : "en-GB";
+        const isUsLocale = locale === "en-US";
         const classStr = inputCls(uiClass);
         // Create DD-MM-YYYY inputs
         const dayInput = m(".dib.mr2", [
@@ -1340,7 +1341,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.day(),
-                oninput: (event) => this.autoAdvance(event, id, "dd", "mm"),
+                oninput: (event) => this.autoAdvance(event, id, "dd", isUsLocale ? "yyyy" : "mm"),
                 class: classStr, style: styleSm,
                 onchange: setValue(this.day)
             })
@@ -1354,7 +1355,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
-                oninput: (event) => this.autoAdvance(event, id, "mm", "yyyy"),
+                oninput: (event) => this.autoAdvance(event, id, "mm", isUsLocale ? "dd" : "yyyy"),
                 class: classStr, style: styleSm,
                 onchange: setValue(this.month)
             })
@@ -1381,7 +1382,7 @@ class DateInput {
             m("div", {
                 id, title,
                 class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
-            }, locale === "en-US"
+            }, isUsLocale
                 ? [
                     monthInput,
                     dayInput,
