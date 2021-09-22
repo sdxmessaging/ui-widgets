@@ -53,11 +53,11 @@ describe("DateInput", () => {
 		const dateIn = root.querySelector("#test-dd") as HTMLInputElement;
 		expect(dateIn != null).toBe(true);
 		dateIn.value = "02";
-		dateIn.dispatchEvent(new Event("change"));
+		dateIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("2020-01-02");
 		// Set invalid value
 		dateIn.value = "32";
-		dateIn.dispatchEvent(new Event("change"));
+		dateIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("");
 		// Cleanup
 		m.mount(root, null);
