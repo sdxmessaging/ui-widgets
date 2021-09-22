@@ -70,8 +70,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		id: string, self: HTMLInputElement, targetType: string | undefined, streamValue: string) {
 
 		const maxLength = parseInt(self.getAttribute("maxlength") as string);
-		const length = streamValue.length;
-		if (length === maxLength && targetType) {
+		if (streamValue.length === maxLength && targetType) {
 			const next = this.dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
 			next.focus();
 		}
@@ -82,18 +81,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const self = this.dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 		const prevValue = streamType() ? streamType() : "";
 		const value = self.value;
-		const valueInt = parseInt(value);
-		if (!isNaN(valueInt)) {
-			streamType(String(valueInt));
-		}
-		else if (value === "") {
+		const notPureNumber = !(/^\d*$/.test(value));
+		if (!notPureNumber || value === "") {
 			streamType(value);
 		}
 		else {
 			streamType(prevValue);
 		}
 
-		this.autoAdvance(id, self, targetType, String(valueInt));
+		this.autoAdvance(id, self, targetType, streamType() as string);
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {

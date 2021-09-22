@@ -1317,8 +1317,7 @@ class DateInput {
     }
     autoAdvance(id, self, targetType, streamValue) {
         const maxLength = parseInt(self.getAttribute("maxlength"));
-        const length = streamValue.length;
-        if (length === maxLength && targetType) {
+        if (streamValue.length === maxLength && targetType) {
             const next = this.dom.querySelector(`#${id}-${targetType}`);
             next.focus();
         }
@@ -1327,17 +1326,14 @@ class DateInput {
         const self = this.dom.querySelector(`#${id}-${selfType}`);
         const prevValue = streamType() ? streamType() : "";
         const value = self.value;
-        const valueInt = parseInt(value);
-        if (!isNaN(valueInt)) {
-            streamType(String(valueInt));
-        }
-        else if (value === "") {
+        const notPureNumber = !(/^\d*$/.test(value));
+        if (!notPureNumber || value === "") {
             streamType(value);
         }
         else {
             streamType(prevValue);
         }
-        this.autoAdvance(id, self, targetType, String(valueInt));
+        this.autoAdvance(id, self, targetType, streamType());
     }
     view({ attrs: { field, value } }) {
         const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
