@@ -29,6 +29,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		(day, month, year, valid) => valid ? `${year}-${month}-${day}` : "",
 		this.day, this.month, this.year, this.valid
 	);
+	private dom!: Element;
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
@@ -55,6 +56,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			const validityMessage = valid ? "" : "Invalid Date";
 			input.setCustomValidity(validityMessage);
 		});
+		this.dom = dom;
 	}
 
 	public onremove() {
@@ -65,11 +67,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	private autoAdvance(event: KeyboardEvent & IMithrilEvent, id: string, selfType: string, targetType?: string) {
-		const self = document.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
+		const self = this.dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 		const maxLength = parseInt(self.getAttribute("maxlength") as string);
 		const length = self.value.length;
 		if (length === maxLength && targetType) {
-			const next = document.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
+			const next = this.dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
 			next.focus();
 		}
 		else {

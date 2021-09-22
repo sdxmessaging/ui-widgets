@@ -1307,6 +1307,7 @@ class DateInput {
             const validityMessage = valid ? "" : "Invalid Date";
             input.setCustomValidity(validityMessage);
         });
+        this.dom = dom;
     }
     onremove() {
         this.date.end(true);
@@ -1315,11 +1316,11 @@ class DateInput {
         this.day.end(true);
     }
     autoAdvance(event, id, selfType, targetType) {
-        const self = document.querySelector(`#${id}-${selfType}`);
+        const self = this.dom.querySelector(`#${id}-${selfType}`);
         const maxLength = parseInt(self.getAttribute("maxlength"));
         const length = self.value.length;
         if (length === maxLength && targetType) {
-            const next = document.querySelector(`#${id}-${targetType}`);
+            const next = this.dom.querySelector(`#${id}-${targetType}`);
             next.focus();
         }
         else {
