@@ -1314,6 +1314,18 @@ class DateInput {
         this.month.end(true);
         this.day.end(true);
     }
+    autoAdvance(event, id, selfType, targetType) {
+        const self = document.querySelector(`#${id}-${selfType}`);
+        const maxLength = parseInt(self.getAttribute("maxlength"));
+        const length = self.value.length;
+        if (length === maxLength && targetType) {
+            const next = document.querySelector(`#${id}-${targetType}`);
+            next.focus();
+        }
+        else {
+            event.redraw = false;
+        }
+    }
     view({ attrs: { field, value } }) {
         const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
         const locale = options && options.length ? options[0].value : "en-GB";
@@ -1328,6 +1340,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.day(),
+                oninput: (event) => this.autoAdvance(event, id, "dd", "mm"),
                 class: classStr, style: styleSm,
                 onchange: setValue(this.day)
             })
@@ -1341,6 +1354,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
+                oninput: (event) => this.autoAdvance(event, id, "mm", "yyyy"),
                 class: classStr, style: styleSm,
                 onchange: setValue(this.month)
             })
@@ -1354,6 +1368,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.year(),
+                oninput: (event) => this.autoAdvance(event, id, "yyyy"),
                 class: classStr, style: styleLg,
                 onchange: setValue(this.year)
             })

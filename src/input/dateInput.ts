@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IMithrilEvent, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
 import { getLabel, setValue } from "../utils";
@@ -64,6 +64,22 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
+	private autoAdvance(event: KeyboardEvent & IMithrilEvent, id: string, selfType: string,
+		targetType?: string) {
+
+		const self = document.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
+		const maxLength = parseInt(self.getAttribute("maxlength") as string);
+		const length = self.value.length;
+		if (length === maxLength && targetType) {
+			const next = document.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
+			next.focus();
+		}
+		else {
+			event.redraw = false;
+		}
+
+	}
+
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
 			label, id, name = id, title = label,
@@ -83,6 +99,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
+				oninput: (event: KeyboardEvent & IMithrilEvent) => this.autoAdvance(event, id, "dd", "mm"),
 				class: classStr, style: styleSm,
 				onchange: setValue(this.day)
 			})
@@ -96,6 +113,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
+				oninput: (event: KeyboardEvent & IMithrilEvent) => this.autoAdvance(event, id, "mm", "yyyy"),
 				class: classStr, style: styleSm,
 				onchange: setValue(this.month)
 			})
@@ -109,6 +127,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
+				oninput: (event: KeyboardEvent & IMithrilEvent) => this.autoAdvance(event, id, "yyyy"),
 				class: classStr, style: styleLg,
 				onchange: setValue(this.year)
 			})
