@@ -1288,8 +1288,8 @@ class DateInput {
         value.map((newVal) => {
             const date = new Date(String(newVal));
             if (lodash.isDate(date) && !isNaN(date.getTime())) {
-                this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-                this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
+                // this.day(lodash.padStart(String(date.getDate()), 2, "0"));
+                // this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
                 this.year(String(date.getFullYear()));
             }
         });
@@ -1326,15 +1326,20 @@ class DateInput {
         switch (type) {
             case "dd": return [
                 isNaN(firstCharValue) || firstCharValue <= 3,
-                isNaN(secondCharValue) || ((firstCharValue === 3 && secondCharValue <= 1)) || firstCharValue < 3
+                (isNaN(secondCharValue) || ((firstCharValue === 3 && secondCharValue <= 1))
+                    || firstCharValue < 3) && !(firstCharValue === 0 && secondCharValue === 0)
             ];
             case "mm": return [
+                // month from 01 to 12
                 isNaN(firstCharValue) || firstCharValue <= 1,
-                isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue <= 2)) || firstCharValue < 1
+                (isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue <= 2))
+                    || firstCharValue < 1) && !(firstCharValue === 0 && secondCharValue === 0)
             ];
             case "yyyy": return [
-                isNaN(firstCharValue) || firstCharValue >= 2,
-                true
+                // year has to start from 1 or above
+                isNaN(firstCharValue) || (firstCharValue >= 1 && firstCharValue < 3),
+                // min 1900
+                isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue === 9)) || (firstCharValue === 2)
             ];
             default: return [false, false];
         }
