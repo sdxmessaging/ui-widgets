@@ -64,9 +64,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	private autoAdvance(event: KeyboardEvent & IMithrilEvent, id: string, selfType: string,
-		targetType?: string) {
-
+	private autoAdvance(event: KeyboardEvent & IMithrilEvent, id: string, selfType: string, targetType?: string) {
 		const self = document.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 		const maxLength = parseInt(self.getAttribute("maxlength") as string);
 		const length = self.value.length;
@@ -77,7 +75,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		else {
 			event.redraw = false;
 		}
-
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
