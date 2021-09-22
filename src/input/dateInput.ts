@@ -1,8 +1,7 @@
-import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TPropStream } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
 import { getLabel } from "../utils";
@@ -33,14 +32,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		(value as stream<TProp>).map((newVal) => {
-			const date = new Date(String(newVal));
-			if (lodash.isDate(date) && !isNaN(date.getTime())) {
-				// this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-				// this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
-				this.year(String(date.getFullYear()));
-			}
-		});
+		// (value as stream<TProp>).map((newVal) => {
+		// 	const date = new Date(String(newVal));
+		// 	if (lodash.isDate(date) && !isNaN(date.getTime())) {
+		// 		this.day(lodash.padStart(String(date.getDate()), 2, "0"));
+		// 		this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
+		// 		this.year(String(date.getFullYear()));
+		// 	}
+		// });
 		// Update value when date changes
 		this.date.map((newDate) => {
 			// Prevent recursive setting between streams
