@@ -1315,17 +1315,29 @@ class DateInput {
         this.month.end(true);
         this.day.end(true);
     }
-    autoAdvance(event, id, selfType, targetType) {
-        const self = this.dom.querySelector(`#${id}-${selfType}`);
+    autoAdvance(id, self, targetType, streamValue) {
         const maxLength = parseInt(self.getAttribute("maxlength"));
-        const length = self.value.length;
+        const length = streamValue.length;
         if (length === maxLength && targetType) {
             const next = this.dom.querySelector(`#${id}-${targetType}`);
             next.focus();
         }
-        else {
-            event.redraw = false;
+    }
+    handleDateChange(streamType, id, selfType, targetType) {
+        const self = this.dom.querySelector(`#${id}-${selfType}`);
+        const prevValue = streamType() ? streamType() : "";
+        const value = self.value;
+        const valueInt = parseInt(value);
+        if (!isNaN(valueInt)) {
+            streamType(String(valueInt));
         }
+        else if (value === "") {
+            streamType(value);
+        }
+        else {
+            streamType(prevValue);
+        }
+        this.autoAdvance(id, self, targetType, String(valueInt));
     }
     view({ attrs: { field, value } }) {
         const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
@@ -1342,9 +1354,8 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.day(),
-                oninput: (event) => this.autoAdvance(event, id, "dd", isUsLocale ? "yyyy" : "mm"),
+                oninput: () => this.handleDateChange(this.day, id, "dd", isUsLocale ? "yyyy" : "mm"),
                 class: classStr, style: styleSm,
-                onchange: setValue(this.day)
             })
         ]);
         const monthInput = m(".dib.mr2", [
@@ -1356,9 +1367,8 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
-                oninput: (event) => this.autoAdvance(event, id, "mm", isUsLocale ? "dd" : "yyyy"),
+                oninput: () => this.handleDateChange(this.month, id, "mm", isUsLocale ? "dd" : "yyyy"),
                 class: classStr, style: styleSm,
-                onchange: setValue(this.month)
             })
         ]);
         const yearInput = m(".dib.mr2", [
@@ -1370,9 +1380,8 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.year(),
-                oninput: (event) => this.autoAdvance(event, id, "yyyy"),
+                oninput: () => this.handleDateChange(this.year, id, "yyyy"),
                 class: classStr, style: styleLg,
-                onchange: setValue(this.year)
             })
         ]);
         // Assemble date input (en-GB or en-US layouts)

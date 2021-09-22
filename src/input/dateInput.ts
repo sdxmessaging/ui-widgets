@@ -2,10 +2,10 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IMithrilEvent, IOptionField, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
-import { getLabel, setValue } from "../utils";
+import { getLabel } from "../utils";
 import { propInvalid } from "../validation";
 
 export class DateInput implements ClassComponent<IPropWidget> {
@@ -66,17 +66,34 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	private autoAdvance(event: KeyboardEvent & IMithrilEvent, id: string, selfType: string, targetType?: string) {
-		const self = this.dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
+	private autoAdvance(
+		id: string, self: HTMLInputElement, targetType: string | undefined, streamValue: string) {
+
 		const maxLength = parseInt(self.getAttribute("maxlength") as string);
-		const length = self.value.length;
+		const length = streamValue.length;
 		if (length === maxLength && targetType) {
 			const next = this.dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
 			next.focus();
 		}
-		else {
-			event.redraw = false;
+	}
+	private handleDateChange(streamType: TPropStream, id: string,
+		selfType: string, targetType?: string) {
+
+		const self = this.dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
+		const prevValue = streamType() ? streamType() : "";
+		const value = self.value;
+		const valueInt = parseInt(value);
+		if (!isNaN(valueInt)) {
+			streamType(String(valueInt));
 		}
+		else if (value === "") {
+			streamType(value);
+		}
+		else {
+			streamType(prevValue);
+		}
+
+		this.autoAdvance(id, self, targetType, String(valueInt));
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
@@ -99,9 +116,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				oninput: (event: KeyboardEvent & IMithrilEvent) => this.autoAdvance(event, id, "dd", isUsLocale ? "yyyy" : "mm"),
+				oninput: () => this.handleDateChange(this.day, id, "dd", isUsLocale ? "yyyy" : "mm"),
 				class: classStr, style: styleSm,
-				onchange: setValue(this.day)
+
 			})
 		]);
 		const monthInput = m(".dib.mr2", [
@@ -113,9 +130,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				oninput: (event: KeyboardEvent & IMithrilEvent) => this.autoAdvance(event, id, "mm", isUsLocale ? "dd" : "yyyy"),
+				oninput: () => this.handleDateChange(this.month, id, "mm", isUsLocale ? "dd" : "yyyy"),
 				class: classStr, style: styleSm,
-				onchange: setValue(this.month)
 			})
 		]);
 		const yearInput = m(".dib.mr2", [
@@ -127,9 +143,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				oninput: (event: KeyboardEvent & IMithrilEvent) => this.autoAdvance(event, id, "yyyy"),
+				oninput: () => this.handleDateChange(this.year, id, "yyyy"),
 				class: classStr, style: styleLg,
-				onchange: setValue(this.year)
 			})
 		]);
 		// Assemble date input (en-GB or en-US layouts)
