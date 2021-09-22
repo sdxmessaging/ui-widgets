@@ -1285,7 +1285,7 @@
                 const newMonth = parseInt(month) - 1;
                 const newDay = parseInt(day);
                 const newDate = new Date(newYear, newMonth, newDay);
-                return newDate.getFullYear() === newYear
+                return newDate.getFullYear() === newYear && year.length === 4
                     && newDate.getMonth() === newMonth && newDate.getDate() === newDay;
             }, this.day, this.month, this.year);
             // Combine date parts
