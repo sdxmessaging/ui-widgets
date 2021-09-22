@@ -1326,8 +1326,26 @@ class DateInput {
         const self = this.dom.querySelector(`#${id}-${selfType}`);
         const prevValue = streamType() ? streamType() : "";
         const value = self.value;
-        const pureInteger = /^\d*$/.test(value);
-        if (pureInteger || value === "") {
+        const isPureInteger = /^\d*$/.test(value);
+        const firstCharValue = parseInt(value.charAt(0));
+        const secondCharValue = parseInt(value.charAt(1));
+        let startingValid;
+        let endingValid;
+        if (selfType === "dd") {
+            startingValid = isNaN(firstCharValue) || firstCharValue <= 3;
+            endingValid = isNaN(secondCharValue)
+                || ((firstCharValue === 3 && secondCharValue <= 1)) || firstCharValue < 3;
+        }
+        else if (selfType === "mm") {
+            startingValid = isNaN(firstCharValue) || firstCharValue < 2;
+            endingValid = isNaN(secondCharValue)
+                || ((firstCharValue === 1 && secondCharValue <= 2)) || firstCharValue < 1;
+        }
+        else {
+            startingValid = isNaN(firstCharValue) || firstCharValue >= 2;
+            endingValid = true;
+        }
+        if ((isPureInteger || value === "") && startingValid && endingValid) {
             streamType(value);
         }
         else {
