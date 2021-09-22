@@ -27,7 +27,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	// Combine date parts
 	private date = stream.lift(
 		(day, month, year, valid) => valid ? `${year}-${month}-${day}` : "",
-		this.day, this.month, this.year, this.valid
+		this.day, this.month, this.year, this.valid,
 	);
 	private dom!: Element;
 
@@ -66,13 +66,29 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	private autoAdvance(
-		id: string, self: HTMLInputElement, targetType: string | undefined, streamValue: string) {
-
+	private autoAdvance(id: string, self: HTMLInputElement, targetType: string | undefined, streamValue: string) {
 		const maxLength = parseInt(self.getAttribute("maxlength") as string);
 		if (streamValue.length === maxLength && targetType) {
 			const next = this.dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
 			next.focus();
+		}
+	}
+
+	private getBooleans(type: string, firstCharValue: number, secondCharValue: number): ReadonlyArray<boolean> {
+		switch (type) {
+			case "dd": return [
+				isNaN(firstCharValue) || firstCharValue <= 3,
+				isNaN(secondCharValue) || ((firstCharValue === 3 && secondCharValue <= 1)) || firstCharValue < 3
+			];
+			case "mm": return [
+				isNaN(firstCharValue) || firstCharValue <= 1,
+				isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue <= 2)) || firstCharValue < 1
+			];
+			case "yyyy": return [
+				isNaN(firstCharValue) || firstCharValue >= 2,
+				true
+			];
+			default: return [false, false];
 		}
 	}
 
@@ -87,27 +103,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const firstCharValue = parseInt(value.charAt(0));
 		const secondCharValue = parseInt(value.charAt(1));
 
-		let startingValid: boolean;
-		let endingValid: boolean;
-		if (selfType === "dd") {
-			startingValid = isNaN(firstCharValue) || firstCharValue <= 3;
-			endingValid = isNaN(secondCharValue)
-				|| ((firstCharValue === 3 && secondCharValue <= 1)) || firstCharValue < 3;
-		}
-		else if (selfType === "mm") {
-			startingValid = isNaN(firstCharValue) || firstCharValue < 2;
-			endingValid = isNaN(secondCharValue)
-				|| ((firstCharValue === 1 && secondCharValue <= 2)) || firstCharValue < 1;
-		}
-		else {
-			startingValid = isNaN(firstCharValue) || firstCharValue >= 2;
-			endingValid = true;
-		}
+		const valid = this.getBooleans(selfType, firstCharValue, secondCharValue);
+		const startingValid = valid[0];
+		const endingValid = valid[1];
 
 		if ((isPureInteger || value === "") && startingValid && endingValid) {
 			streamType(value);
 		}
-
 		else {
 			streamType(prevValue);
 		}

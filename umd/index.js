@@ -1330,6 +1330,23 @@
                 next.focus();
             }
         }
+        getBooleans(type, firstCharValue, secondCharValue) {
+            switch (type) {
+                case "dd": return [
+                    isNaN(firstCharValue) || firstCharValue <= 3,
+                    isNaN(secondCharValue) || ((firstCharValue === 3 && secondCharValue <= 1)) || firstCharValue < 3
+                ];
+                case "mm": return [
+                    isNaN(firstCharValue) || firstCharValue <= 1,
+                    isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue <= 2)) || firstCharValue < 1
+                ];
+                case "yyyy": return [
+                    isNaN(firstCharValue) || firstCharValue >= 2,
+                    true
+                ];
+                default: return [false, false];
+            }
+        }
         handleDateChange(streamType, id, selfType, targetType) {
             const self = this.dom.querySelector(`#${id}-${selfType}`);
             const prevValue = streamType() ? streamType() : "";
@@ -1337,22 +1354,9 @@
             const isPureInteger = /^\d*$/.test(value);
             const firstCharValue = parseInt(value.charAt(0));
             const secondCharValue = parseInt(value.charAt(1));
-            let startingValid;
-            let endingValid;
-            if (selfType === "dd") {
-                startingValid = isNaN(firstCharValue) || firstCharValue <= 3;
-                endingValid = isNaN(secondCharValue)
-                    || ((firstCharValue === 3 && secondCharValue <= 1)) || firstCharValue < 3;
-            }
-            else if (selfType === "mm") {
-                startingValid = isNaN(firstCharValue) || firstCharValue < 2;
-                endingValid = isNaN(secondCharValue)
-                    || ((firstCharValue === 1 && secondCharValue <= 2)) || firstCharValue < 1;
-            }
-            else {
-                startingValid = isNaN(firstCharValue) || firstCharValue >= 2;
-                endingValid = true;
-            }
+            const valid = this.getBooleans(selfType, firstCharValue, secondCharValue);
+            const startingValid = valid[0];
+            const endingValid = valid[1];
             if ((isPureInteger || value === "") && startingValid && endingValid) {
                 streamType(value);
             }
