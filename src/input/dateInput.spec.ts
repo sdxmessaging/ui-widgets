@@ -58,7 +58,7 @@ describe("DateInput", () => {
 		// Set invalid value
 		dateIn.value = "32";
 		dateIn.dispatchEvent(new Event("input"));
-		expect(value()).toBe("");
+		expect(value()).toBe("2020-01-02");
 		// Cleanup
 		m.mount(root, null);
 	});
