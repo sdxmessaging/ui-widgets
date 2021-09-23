@@ -231,6 +231,33 @@ function dateInRange(type, first, second) {
         ];
     }
 }
+function autoAdvance(id, self, targetType, streamValue, dom) {
+    const maxLength = parseInt(self.getAttribute("maxlength"));
+    if (streamValue.length === maxLength && targetType) {
+        const next = dom.querySelector(`#${id}-${targetType}`);
+        next.focus();
+    }
+}
+function handleDateChange(streamType, id, selfType, dom, typing, targetType) {
+    typing(true);
+    const self = dom.querySelector(`#${id}-${selfType}`);
+    const prevValue = streamType() ? streamType() : "";
+    const value = self.value;
+    const isNumeric = /^\d*$/.test(value);
+    const firstCharValue = parseInt(value.charAt(0));
+    const secondCharValue = parseInt(value.charAt(1));
+    const valid = dateInRange(selfType, firstCharValue, secondCharValue);
+    const startingValid = valid[0];
+    const endingValid = valid[1];
+    if ((isNumeric || value === "") && startingValid && endingValid) {
+        streamType(value);
+    }
+    else {
+        streamType(prevValue);
+    }
+    autoAdvance(id, self, targetType, streamType(), dom);
+    typing(false);
+}
 /**
  * Split given file name from extension
  */
@@ -1337,33 +1364,6 @@ class DateInput {
         this.month.end(true);
         this.day.end(true);
     }
-    autoAdvance(id, self, targetType, streamValue) {
-        const maxLength = parseInt(self.getAttribute("maxlength"));
-        if (streamValue.length === maxLength && targetType) {
-            const next = this.dom.querySelector(`#${id}-${targetType}`);
-            next.focus();
-        }
-    }
-    handleDateChange(streamType, id, selfType, targetType) {
-        this.typing(true);
-        const self = this.dom.querySelector(`#${id}-${selfType}`);
-        const prevValue = streamType() ? streamType() : "";
-        const value = self.value;
-        const isNumeric = /^\d*$/.test(value);
-        const firstCharValue = parseInt(value.charAt(0));
-        const secondCharValue = parseInt(value.charAt(1));
-        const valid = dateInRange(selfType, firstCharValue, secondCharValue);
-        const startingValid = valid[0];
-        const endingValid = valid[1];
-        if ((isNumeric || value === "") && startingValid && endingValid) {
-            streamType(value);
-        }
-        else {
-            streamType(prevValue);
-        }
-        this.autoAdvance(id, self, targetType, streamType());
-        this.typing(false);
-    }
     view({ attrs: { field, value } }) {
         const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
         const locale = options && options.length ? options[0].value : "en-GB";
@@ -1379,7 +1379,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.day(),
-                oninput: () => this.handleDateChange(this.day, id, "dd", isUsLocale ? "yyyy" : "mm"),
+                oninput: () => handleDateChange(this.day, id, "dd", this.dom, this.typing, isUsLocale ? "yyyy" : "mm"),
                 class: classStr, style: styleSm,
             })
         ]);
@@ -1392,7 +1392,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
-                oninput: () => this.handleDateChange(this.month, id, "mm", isUsLocale ? "dd" : "yyyy"),
+                oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, isUsLocale ? "dd" : "yyyy"),
                 class: classStr, style: styleSm,
             })
         ]);
@@ -1405,7 +1405,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.year(),
-                oninput: () => this.handleDateChange(this.year, id, "yyyy"),
+                oninput: () => handleDateChange(this.year, id, "yyyy", this.dom, this.typing),
                 class: classStr, style: styleLg,
             })
         ]);

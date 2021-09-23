@@ -2,10 +2,10 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
-import { dateInRange, getLabel, TDateInputType } from "../utils";
+import { getLabel, handleDateChange } from "../utils";
 import { propInvalid } from "../validation";
 
 export class DateInput implements ClassComponent<IPropWidget> {
@@ -67,40 +67,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	private autoAdvance(id: string, self: HTMLInputElement, targetType: string | undefined, streamValue: string) {
-		const maxLength = parseInt(self.getAttribute("maxlength") as string);
-		if (streamValue.length === maxLength && targetType) {
-			const next = this.dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
-			next.focus();
-		}
-	}
-
-	private handleDateChange(streamType: TPropStream, id: string,
-		selfType: TDateInputType, targetType?: string) {
-
-		this.typing(true);
-		const self = this.dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
-		const prevValue = streamType() ? streamType() : "";
-		const value = self.value;
-		const isNumeric = /^\d*$/.test(value);
-		const firstCharValue = parseInt(value.charAt(0));
-		const secondCharValue = parseInt(value.charAt(1));
-
-		const valid = dateInRange(selfType, firstCharValue, secondCharValue);
-		const startingValid = valid[0];
-		const endingValid = valid[1];
-
-		if ((isNumeric || value === "") && startingValid && endingValid) {
-			streamType(value);
-		}
-		else {
-			streamType(prevValue);
-		}
-
-		this.autoAdvance(id, self, targetType, streamType() as string);
-		this.typing(false);
-	}
-
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
 			label, id, name = id, title = label,
@@ -121,7 +87,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				oninput: () => this.handleDateChange(this.day, id, "dd", isUsLocale ? "yyyy" : "mm"),
+				oninput: () => handleDateChange(this.day, id, "dd", this.dom, this.typing, isUsLocale ? "yyyy" : "mm"),
 				class: classStr, style: styleSm,
 
 			})
@@ -135,7 +101,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				oninput: () => this.handleDateChange(this.month, id, "mm", isUsLocale ? "dd" : "yyyy"),
+				oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, isUsLocale ? "dd" : "yyyy"),
 				class: classStr, style: styleSm,
 			})
 		]);
@@ -148,7 +114,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				oninput: () => this.handleDateChange(this.year, id, "yyyy"),
+				oninput: () => handleDateChange(this.year, id, "yyyy", this.dom, this.typing),
 				class: classStr, style: styleLg,
 			})
 		]);
