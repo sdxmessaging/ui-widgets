@@ -21,14 +21,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			const newDay = parseInt(day);
 			const newDate = new Date(newYear, newMonth, newDay);
 			return newDate.getFullYear() === newYear && year.length === 4
-				&& newDate.getMonth() === newMonth && newDate.getDate() === newDay;
+				&& newDate.getMonth() === newMonth && newDate.getDate() === newDay
+				&& day.length === 2 && month.length === 2;
 		},
 		this.day, this.month, this.year
 	);
 	// Combine date parts
 	private date = stream.lift(
 		(day, month, year, valid) => valid ? `${year}-${month}-${day}` : "",
-		this.day, this.month, this.year, this.valid,
+		this.day, this.month, this.year, this.valid
 	);
 	private dom!: Element;
 

@@ -121,6 +121,7 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	dom: Element, typing: stream<boolean>, targetType?: TDateInputType) {
 
 	typing(true);
+
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const prevValue = streamType() ? streamType() : "";
 	const value = self.value;
@@ -133,6 +134,7 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	const endingValid = valid[1];
 
 	if ((isNumeric || value === "") && startingValid && endingValid) {
+
 		streamType(value);
 	}
 	else {
