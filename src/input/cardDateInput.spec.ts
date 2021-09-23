@@ -51,12 +51,30 @@ describe("CardDateInput", () => {
 		// Set valid date
 		value("01/20");
 		// Get month input and update value
-		const dateIn = root.querySelector("#test-mm") as HTMLInputElement;
-		expect(dateIn != null).toBe(true);
-		dateIn.value = "02";
-		dateIn.dispatchEvent(new Event("change"));
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+
+		expect(monthIn != null).toBe(true);
+		expect(yearIn != null).toBe(true);
+
+		monthIn.value = "02";
+		monthIn.dispatchEvent(new Event("input"));
 		// Verify change
 		expect(value()).toBe("02/20");
+
+		yearIn.value = "99";
+		yearIn.dispatchEvent(new Event("input"));
+		expect(value()).toBe("02/99");
+
+		monthIn.value = "13";
+		yearIn.value = "00";
+		monthIn.dispatchEvent(new Event("input"));
+		yearIn.dispatchEvent(new Event("input"));
+		expect(value()).toBe("02/00");
+
+		monthIn.value = "00";
+		monthIn.dispatchEvent(new Event("input"));
+		expect(value()).toBe("02/00");
 		// Cleanup
 		m.mount(root, null);
 	});
