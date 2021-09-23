@@ -81,7 +81,6 @@ export function setCheck(chk: TPropStream) {
 	};
 }
 
-// TODO add "yy" case for card date input
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 
 export function dateInRange(type: TDateInputType, first: number, second: number): ReadonlyArray<boolean> {

@@ -1252,10 +1252,8 @@ class CardDateInput {
         this.month = stream();
         this.year = stream();
         this.valid = stream.lift((month, year) => {
-            const newYear = parseInt(year);
-            const newMonth = parseInt(month) - 1;
-            const newDate = new Date(newYear, newMonth);
-            return year.length === 2 && newDate.getMonth() === newMonth && month.length === 2;
+            // month is set between 1-12 elsewhere
+            return year.length === 2 && month.length === 2;
         }, this.month, this.year);
         // Combine date parts
         this.date = stream.lift((month, year, valid) => valid ? `${month}/${year}` : "", this.month, this.year, this.valid);

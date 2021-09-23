@@ -14,11 +14,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private year = stream<string>();
 	private valid = stream.lift(
 		(month, year) => {
-			const newYear = parseInt(year);
-			const newMonth = parseInt(month) - 1;
-
-			const newDate = new Date(newYear, newMonth);
-			return year.length === 2 && newDate.getMonth() === newMonth && month.length === 2;
+			// month is set between 1-12 elsewhere
+			return year.length === 2 && month.length === 2;
 		},
 		this.month, this.year
 	);

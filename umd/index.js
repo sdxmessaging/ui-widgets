@@ -1260,10 +1260,8 @@
             this.month = stream__default['default']();
             this.year = stream__default['default']();
             this.valid = stream__default['default'].lift((month, year) => {
-                const newYear = parseInt(year);
-                const newMonth = parseInt(month) - 1;
-                const newDate = new Date(newYear, newMonth);
-                return year.length === 2 && newDate.getMonth() === newMonth && month.length === 2;
+                // month is set between 1-12 elsewhere
+                return year.length === 2 && month.length === 2;
             }, this.month, this.year);
             // Combine date parts
             this.date = stream__default['default'].lift((month, year, valid) => valid ? `${month}/${year}` : "", this.month, this.year, this.valid);
