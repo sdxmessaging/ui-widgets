@@ -213,16 +213,16 @@ function setCheck(chk) {
 function dateInRange(type, first, second) {
     switch (type) {
         case "dd":
-            return (isNaN(first) || first <= 3) && (isNaN(second) || ((first === 3 && second <= 1))
-                || first < 3) && !(first === 0 && second === 0);
+            return (isNaN(first) || first <= 3) && ((isNaN(second) || ((first === 3 && second <= 1))
+                || first < 3) && !(first === 0 && second === 0));
         // month from 01 to 12
         case "mm":
-            return (isNaN(first) || first <= 1) && (isNaN(second) || ((first === 1 && second <= 2))
-                || first < 1) && !(first === 0 && second === 0);
+            return (isNaN(first) || first <= 1) && ((isNaN(second) || ((first === 1 && second <= 2))
+                || first < 1) && !(first === 0 && second === 0));
         // year has to start from 1 or above & min 1900
         case "yyyy":
             return (isNaN(first) || (first >= 1 && first < 3)) &&
-                isNaN(second) || ((first === 1 && second === 9)) || (first === 2);
+                (isNaN(second) || ((first === 1 && second === 9)) || (first === 2));
         case "yy":
             return isNaN(first) || first >= 0;
     }
