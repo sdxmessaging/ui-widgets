@@ -1280,6 +1280,7 @@
             this.day = stream__default['default']();
             this.month = stream__default['default']();
             this.year = stream__default['default']();
+            this.typing = stream__default['default'](false);
             this.valid = stream__default['default'].lift((day, month, year) => {
                 const newYear = parseInt(year);
                 const newMonth = parseInt(month) - 1;
@@ -1293,14 +1294,14 @@
         }
         oninit({ attrs: { value } }) {
             // Split value into date parts
-            // (value as stream<TProp>).map((newVal) => {
-            // 	const date = new Date(String(newVal));
-            // 	if (lodash.isDate(date) && !isNaN(date.getTime())) {
-            // 		this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-            // 		this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
-            // 		this.year(String(date.getFullYear()));
-            // 	}
-            // });
+            value.map((newVal) => {
+                const date = new Date(String(newVal));
+                if (lodash__default['default'].isDate(date) && !isNaN(date.getTime()) && !this.typing()) {
+                    this.day(lodash__default['default'].padStart(String(date.getDate()), 2, "0"));
+                    this.month(lodash__default['default'].padStart(String(1 + date.getMonth()), 2, "0"));
+                    this.year(String(date.getFullYear()));
+                }
+            });
             // Update value when date changes
             this.date.map((newDate) => {
                 // Prevent recursive setting between streams
@@ -1353,6 +1354,7 @@
             }
         }
         handleDateChange(streamType, id, selfType, targetType) {
+            this.typing(true);
             const self = this.dom.querySelector(`#${id}-${selfType}`);
             const prevValue = streamType() ? streamType() : "";
             const value = self.value;
@@ -1369,6 +1371,7 @@
                 streamType(prevValue);
             }
             this.autoAdvance(id, self, targetType, streamType());
+            this.typing(false);
         }
         view({ attrs: { field, value } }) {
             const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;

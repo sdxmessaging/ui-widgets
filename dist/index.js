@@ -1272,6 +1272,7 @@ class DateInput {
         this.day = stream();
         this.month = stream();
         this.year = stream();
+        this.typing = stream(false);
         this.valid = stream.lift((day, month, year) => {
             const newYear = parseInt(year);
             const newMonth = parseInt(month) - 1;
@@ -1285,14 +1286,14 @@ class DateInput {
     }
     oninit({ attrs: { value } }) {
         // Split value into date parts
-        // (value as stream<TProp>).map((newVal) => {
-        // 	const date = new Date(String(newVal));
-        // 	if (lodash.isDate(date) && !isNaN(date.getTime())) {
-        // 		this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-        // 		this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
-        // 		this.year(String(date.getFullYear()));
-        // 	}
-        // });
+        value.map((newVal) => {
+            const date = new Date(String(newVal));
+            if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.typing()) {
+                this.day(lodash.padStart(String(date.getDate()), 2, "0"));
+                this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
+                this.year(String(date.getFullYear()));
+            }
+        });
         // Update value when date changes
         this.date.map((newDate) => {
             // Prevent recursive setting between streams
@@ -1345,6 +1346,7 @@ class DateInput {
         }
     }
     handleDateChange(streamType, id, selfType, targetType) {
+        this.typing(true);
         const self = this.dom.querySelector(`#${id}-${selfType}`);
         const prevValue = streamType() ? streamType() : "";
         const value = self.value;
@@ -1361,6 +1363,7 @@ class DateInput {
             streamType(prevValue);
         }
         this.autoAdvance(id, self, targetType, streamType());
+        this.typing(false);
     }
     view({ attrs: { field, value } }) {
         const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;

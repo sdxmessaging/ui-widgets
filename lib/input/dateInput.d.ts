@@ -4,6 +4,7 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     private day;
     private month;
     private year;
+    private typing;
     private valid;
     private date;
     private dom;

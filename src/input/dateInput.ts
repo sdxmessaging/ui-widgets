@@ -1,7 +1,8 @@
+import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TPropStream } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
 import { getLabel } from "../utils";
@@ -12,6 +13,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
 	private month = stream<string>();
 	private year = stream<string>();
+	private typing = stream<boolean>(false);
 	private valid = stream.lift(
 		(day, month, year) => {
 			const newYear = parseInt(year);
@@ -32,14 +34,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		// (value as stream<TProp>).map((newVal) => {
-		// 	const date = new Date(String(newVal));
-		// 	if (lodash.isDate(date) && !isNaN(date.getTime())) {
-		// 		this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-		// 		this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
-		// 		this.year(String(date.getFullYear()));
-		// 	}
-		// });
+		(value as stream<TProp>).map((newVal) => {
+			const date = new Date(String(newVal));
+			if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.typing()) {
+				this.day(lodash.padStart(String(date.getDate()), 2, "0"));
+				this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
+				this.year(String(date.getFullYear()));
+			}
+		});
 		// Update value when date changes
 		this.date.map((newDate) => {
 			// Prevent recursive setting between streams
@@ -100,6 +102,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private handleDateChange(streamType: TPropStream, id: string,
 		selfType: string, targetType?: string) {
 
+		this.typing(true);
 		const self = this.dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 		const prevValue = streamType() ? streamType() : "";
 		const value = self.value;
@@ -119,6 +122,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}
 
 		this.autoAdvance(id, self, targetType, streamType() as string);
+		this.typing(false);
 	}
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
