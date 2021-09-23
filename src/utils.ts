@@ -83,7 +83,7 @@ export function setCheck(chk: TPropStream) {
 }
 
 // TODO add "yy" case for card date input
-export type TDateInputType = "dd" | "mm" | "yyyy";
+export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 
 export function dateInRange(type: TDateInputType, first: number, second: number): ReadonlyArray<boolean> {
 	switch (type) {
@@ -103,6 +103,11 @@ export function dateInRange(type: TDateInputType, first: number, second: number)
 			isNaN(first) || (first >= 1 && first < 3),
 			// min 1900
 			isNaN(second) || ((first === 1 && second === 9)) || (first === 2)
+		];
+		case "yy": return [
+			// year has to start from 0 or above
+			isNaN(first) || first >= 0,
+			true
 		];
 	}
 }
