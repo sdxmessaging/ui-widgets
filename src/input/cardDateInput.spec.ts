@@ -86,3 +86,30 @@ describe("CardDateInput", () => {
 	});
 
 });
+
+test("auto advance", () => {
+	const root = window.document.createElement("div");
+	const value = stream<string>();
+	const xform = value.map((val) => val);
+	m.mount(root, {
+		view: () => m(CardDateInput, {
+			field: {
+				id: "test",
+				label: "Test Label",
+				name: "Test Name",
+				title: "Test Title",
+				uiClass: {},
+				disabled: true
+			},
+			value,
+			xform
+		})
+	});
+	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+	const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+	const yearInSpy = jest.spyOn(yearIn, 'focus');
+
+	monthIn.value = "02";
+	monthIn.dispatchEvent(new Event("input"));
+	expect(yearInSpy).toBeCalledTimes(1);
+});

@@ -4,6 +4,9 @@ import stream from "mithril/stream";
 import { DateInput } from "./dateInput";
 
 describe("DateInput", () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
 
 	test("minimal", () => {
 		const root = window.document.createElement("div");
@@ -151,7 +154,7 @@ test("configured + value change - GB locale", () => {
 	// Label + Input
 	expect(root.childNodes[0].childNodes.length).toBe(2);
 	value("2020-01-01");
-	// Get day input and update value
+	// Get date inputs and update value
 	const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
 	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
 	const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
@@ -165,4 +168,78 @@ test("configured + value change - GB locale", () => {
 	expect(value()).toBe("2020-12-31");
 });
 
-test.todo("auto advance check");
+test("auto advance - locale GB", () => {
+	const root = window.document.createElement("div");
+	const value = stream<string>();
+	const xform = value.map((val) => val);
+	m.mount(root, {
+		view: () => m(DateInput, {
+			field: {
+				id: "test",
+				label: "Test Label",
+				name: "Test Name",
+				title: "Test Title",
+				uiClass: {},
+				disabled: true,
+				options: [{ value: "en-GB" }]
+			},
+			value,
+			xform
+		})
+	});
+	const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+	const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+	const monthInSpy = jest.spyOn(monthIn, 'focus');
+	const yearInSpy = jest.spyOn(yearIn, 'focus');
+
+	dayIn.value = "0";
+	dayIn.dispatchEvent(new Event("input"));
+	expect(monthInSpy).toBeCalledTimes(0);
+	expect(yearInSpy).toBeCalledTimes(0);
+
+	dayIn.value = "01";
+	dayIn.dispatchEvent(new Event("input"));
+	expect(monthInSpy).toBeCalledTimes(1);
+	expect(yearInSpy).toBeCalledTimes(0);
+
+	monthIn.value = "02";
+	monthIn.dispatchEvent(new Event("input"));
+	expect(yearInSpy).toBeCalledTimes(1);
+
+});
+
+test("auto advance - locale US", () => {
+	const root = window.document.createElement("div");
+	const value = stream<string>();
+	const xform = value.map((val) => val);
+	m.mount(root, {
+		view: () => m(DateInput, {
+			field: {
+				id: "test",
+				label: "Test Label",
+				name: "Test Name",
+				title: "Test Title",
+				uiClass: {},
+				disabled: true,
+				options: [{ value: "en-US" }]
+			},
+			value,
+			xform
+		})
+	});
+	const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+	const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+	const yearInSpy = jest.spyOn(yearIn, 'focus');
+	const dayInSpy = jest.spyOn(dayIn, 'focus');
+
+	monthIn.value = "02";
+	monthIn.dispatchEvent(new Event("input"));
+	expect(dayInSpy).toBeCalledTimes(1);
+
+	dayIn.value = "01";
+	dayIn.dispatchEvent(new Event("input"));
+	expect(yearInSpy).toBeCalledTimes(1);
+
+});
