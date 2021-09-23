@@ -75,6 +75,12 @@ describe("CardDateInput", () => {
 		monthIn.value = "00";
 		monthIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("02/00");
+
+		monthIn.value = "1";
+		yearIn.value = "0";
+		monthIn.dispatchEvent(new Event("input"));
+		yearIn.dispatchEvent(new Event("input"));
+		expect(value()).toBe("");
 		// Cleanup
 		m.mount(root, null);
 	});
