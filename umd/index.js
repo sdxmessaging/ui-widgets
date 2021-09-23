@@ -237,6 +237,11 @@
                 // min 1900
                 isNaN(second) || ((first === 1 && second === 9)) || (first === 2)
             ];
+            case "yy": return [
+                // year has to start from 0 or above
+                isNaN(first) || first >= 0,
+                true
+            ];
         }
     }
     function autoAdvance(id, self, targetType, streamValue, dom) {
@@ -1256,15 +1261,24 @@
         constructor() {
             this.month = stream__default['default']();
             this.year = stream__default['default']();
+            this.typing = stream__default['default'](false);
+            this.valid = stream__default['default'].lift((month, year) => {
+                const newYear = parseInt(year);
+                const newMonth = parseInt(month) - 1;
+                const newDate = new Date(newYear, newMonth);
+                return year.length === 2 && newDate.getMonth() === newMonth && month.length === 2;
+            }, this.month, this.year);
             // Combine date parts
-            this.date = stream__default['default'].lift((month, year) => `${month}/${year}`, this.month, this.year);
+            this.date = stream__default['default'].lift((month, year, valid) => valid ? `${month}/${year}` : "", this.month, this.year, this.valid);
         }
         oninit({ attrs: { value } }) {
             // Split value into date parts
             value.map((newVal) => {
-                const [month, year = ""] = String(newVal).split("/");
-                this.month(month);
-                this.year(year);
+                if (!this.typing()) {
+                    const [month, year = ""] = String(newVal).split("/");
+                    this.month(month);
+                    this.year(year);
+                }
             });
             // Update value when date changes
             this.date.map((newDate) => {
@@ -1274,13 +1288,21 @@
                 }
             });
         }
+        oncreate({ dom }) {
+            const input = dom.querySelector("input");
+            this.valid.map((valid) => {
+                const validityMessage = valid ? "" : "Invalid Date";
+                input.setCustomValidity(validityMessage);
+            });
+            this.dom = dom;
+        }
         onremove() {
             this.date.end(true);
             this.year.end(true);
             this.month.end(true);
         }
         view({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, } = field;
+            const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {} } = field;
             const classStr = inputCls(uiClass);
             // Assemble date input (en-GB or en-US layouts)
             return m__default['default']("fieldset", {
@@ -1301,7 +1323,7 @@
                             required, readonly, disabled,
                             value: this.month(),
                             class: classStr, style: styleSm,
-                            onchange: setValue(this.month)
+                            oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, "yy")
                         })
                     ]),
                     m__default['default']("span.mr2", "/"),
@@ -1310,12 +1332,12 @@
                         m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                             id: `${id}-yy`, name: `${name}-yy`,
                             type: "text" /* text */, placeholder: "YY",
-                            minlength: "4", maxlength: "4",
+                            minlength: "2", maxlength: "2",
                             pattern: "[0-9]*", inputmode: "numeric",
                             required, readonly, disabled,
                             value: this.year(),
                             class: classStr, style: styleSm,
-                            onchange: setValue(this.year)
+                            oninput: () => handleDateChange(this.year, id, "yy", this.dom, this.typing)
                         })
                     ])
                 ])

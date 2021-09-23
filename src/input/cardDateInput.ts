@@ -1,29 +1,43 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm } from "../theme";
 
-import { getLabel, setValue } from "../utils";
+import { getLabel, handleDateChange } from "../utils";
 import { propInvalid } from "../validation";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
 	private month = stream<string>();
 	private year = stream<string>();
-	// Combine date parts
-	private date = stream.lift(
-		(month, year) => `${month}/${year}`,
+	private typing = stream<boolean>(false);
+	private valid = stream.lift(
+		(month, year) => {
+			const newYear = parseInt(year);
+			const newMonth = parseInt(month) - 1;
+
+			const newDate = new Date(newYear, newMonth);
+			return year.length === 2 && newDate.getMonth() === newMonth && month.length === 2;
+		},
 		this.month, this.year
 	);
+	// Combine date parts
+	private date = stream.lift(
+		(month, year, valid) => valid ? `${month}/${year}` : "",
+		this.month, this.year, this.valid
+	);
 
+	private dom!: Element;
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
-			const [month, year = ""] = String(newVal).split("/");
-			this.month(month);
-			this.year(year);
+			if (!this.typing()) {
+				const [month, year = ""] = String(newVal).split("/");
+				this.month(month);
+				this.year(year);
+			}
 		});
 		// Update value when date changes
 		this.date.map((newDate) => {
@@ -32,6 +46,15 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				value(newDate);
 			}
 		});
+	}
+
+	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
+		const input = dom.querySelector("input") as HTMLInputElement;
+		this.valid.map((valid) => {
+			const validityMessage = valid ? "" : "Invalid Date";
+			input.setCustomValidity(validityMessage);
+		});
+		this.dom = dom;
 	}
 
 	public onremove() {
@@ -44,7 +67,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
-			uiClass = {},
+			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
 		// Assemble date input (en-GB or en-US layouts)
@@ -66,7 +89,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						required, readonly, disabled,
 						value: this.month(),
 						class: classStr, style: styleSm,
-						onchange: setValue(this.month)
+						oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, "yy")
 					})
 				]),
 				m("span.mr2", "/"),
@@ -75,12 +98,12 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					m("input.w-100.bg-transparent.bn.outline-0", {
 						id: `${id}-yy`, name: `${name}-yy`,
 						type: FieldType.text, placeholder: "YY",
-						minlength: "4", maxlength: "4",
+						minlength: "2", maxlength: "2",
 						pattern: "[0-9]*", inputmode: "numeric",
 						required, readonly, disabled,
 						value: this.year(),
 						class: classStr, style: styleSm,
-						onchange: setValue(this.year)
+						oninput: () => handleDateChange(this.year, id, "yy", this.dom, this.typing)
 					})
 				])
 			])
