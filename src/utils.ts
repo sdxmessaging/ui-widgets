@@ -81,6 +81,31 @@ export function setCheck(chk: TPropStream) {
 	};
 }
 
+// TODO add "yy" case for card date input
+export type TDateInputType = "dd" | "mm" | "yyyy";
+
+export function dateInRange(type: TDateInputType, first: number, second: number): ReadonlyArray<boolean> {
+	switch (type) {
+		case "dd": return [
+			isNaN(first) || first <= 3,
+			(isNaN(second) || ((first === 3 && second <= 1))
+				|| first < 3) && !(first === 0 && second === 0)
+		];
+		case "mm": return [
+			// month from 01 to 12
+			isNaN(first) || first <= 1,
+			(isNaN(second) || ((first === 1 && second <= 2))
+				|| first < 1) && !(first === 0 && second === 0)
+		];
+		case "yyyy": return [
+			// year has to start from 1 or above
+			isNaN(first) || (first >= 1 && first < 3),
+			// min 1900
+			isNaN(second) || ((first === 1 && second === 9)) || (first === 2)
+		];
+	}
+}
+
 /**
  * Split given file name from extension
  */

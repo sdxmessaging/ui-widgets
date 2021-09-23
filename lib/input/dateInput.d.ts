@@ -12,7 +12,6 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
     private autoAdvance;
-    private getBooleans;
     private handleDateChange;
     view({ attrs: { field, value } }: CVnode<IPropWidget>): m.Vnode<any, any>;
 }

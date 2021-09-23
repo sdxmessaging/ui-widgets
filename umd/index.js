@@ -218,6 +218,27 @@
             chk(checked);
         };
     }
+    function dateInRange(type, first, second) {
+        switch (type) {
+            case "dd": return [
+                isNaN(first) || first <= 3,
+                (isNaN(second) || ((first === 3 && second <= 1))
+                    || first < 3) && !(first === 0 && second === 0)
+            ];
+            case "mm": return [
+                // month from 01 to 12
+                isNaN(first) || first <= 1,
+                (isNaN(second) || ((first === 1 && second <= 2))
+                    || first < 1) && !(first === 0 && second === 0)
+            ];
+            case "yyyy": return [
+                // year has to start from 1 or above
+                isNaN(first) || (first >= 1 && first < 3),
+                // min 1900
+                isNaN(second) || ((first === 1 && second === 9)) || (first === 2)
+            ];
+        }
+    }
     /**
      * Split given file name from extension
      */
@@ -1331,40 +1352,18 @@
                 next.focus();
             }
         }
-        getBooleans(type, firstCharValue, secondCharValue) {
-            switch (type) {
-                case "dd": return [
-                    isNaN(firstCharValue) || firstCharValue <= 3,
-                    (isNaN(secondCharValue) || ((firstCharValue === 3 && secondCharValue <= 1))
-                        || firstCharValue < 3) && !(firstCharValue === 0 && secondCharValue === 0)
-                ];
-                case "mm": return [
-                    // month from 01 to 12
-                    isNaN(firstCharValue) || firstCharValue <= 1,
-                    (isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue <= 2))
-                        || firstCharValue < 1) && !(firstCharValue === 0 && secondCharValue === 0)
-                ];
-                case "yyyy": return [
-                    // year has to start from 1 or above
-                    isNaN(firstCharValue) || (firstCharValue >= 1 && firstCharValue < 3),
-                    // min 1900
-                    isNaN(secondCharValue) || ((firstCharValue === 1 && secondCharValue === 9)) || (firstCharValue === 2)
-                ];
-                default: return [false, false];
-            }
-        }
         handleDateChange(streamType, id, selfType, targetType) {
             this.typing(true);
             const self = this.dom.querySelector(`#${id}-${selfType}`);
             const prevValue = streamType() ? streamType() : "";
             const value = self.value;
-            const isPureInteger = /^\d*$/.test(value);
+            const isNumeric = /^\d*$/.test(value);
             const firstCharValue = parseInt(value.charAt(0));
             const secondCharValue = parseInt(value.charAt(1));
-            const valid = this.getBooleans(selfType, firstCharValue, secondCharValue);
+            const valid = dateInRange(selfType, firstCharValue, secondCharValue);
             const startingValid = valid[0];
             const endingValid = valid[1];
-            if ((isPureInteger || value === "") && startingValid && endingValid) {
+            if ((isNumeric || value === "") && startingValid && endingValid) {
                 streamType(value);
             }
             else {

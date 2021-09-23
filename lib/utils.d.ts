@@ -14,6 +14,8 @@ export declare function setValue(val: TPropStream): ({ target: { value } }: {
 export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
     target: HTMLInputElement;
 }) => void;
+export declare type TDateInputType = "dd" | "mm" | "yyyy";
+export declare function dateInRange(type: TDateInputType, first: number, second: number): ReadonlyArray<boolean>;
 /**
  * Split given file name from extension
  */
