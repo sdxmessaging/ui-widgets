@@ -83,30 +83,21 @@ export function setCheck(chk: TPropStream) {
 
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 
-export function dateInRange(type: TDateInputType, first: number, second: number): ReadonlyArray<boolean> {
+export function dateInRange(type: TDateInputType, first: number, second: number) {
 	switch (type) {
-		case "dd": return [
-			isNaN(first) || first <= 3,
-			(isNaN(second) || ((first === 3 && second <= 1))
-				|| first < 3) && !(first === 0 && second === 0)
-		];
-		case "mm": return [
-			// month from 01 to 12
-			isNaN(first) || first <= 1,
-			(isNaN(second) || ((first === 1 && second <= 2))
-				|| first < 1) && !(first === 0 && second === 0)
-		];
-		case "yyyy": return [
-			// year has to start from 1 or above
-			isNaN(first) || (first >= 1 && first < 3),
-			// min 1900
-			isNaN(second) || ((first === 1 && second === 9)) || (first === 2)
-		];
-		case "yy": return [
-			// year has to start from 0 or above
-			isNaN(first) || first >= 0,
-			true
-		];
+		case "dd":
+			return (isNaN(first) || first <= 3) && (isNaN(second) || ((first === 3 && second <= 1))
+				|| first < 3) && !(first === 0 && second === 0);
+		// month from 01 to 12
+		case "mm":
+			return (isNaN(first) || first <= 1) && (isNaN(second) || ((first === 1 && second <= 2))
+				|| first < 1) && !(first === 0 && second === 0);
+		// year has to start from 1 or above & min 1900
+		case "yyyy":
+			return (isNaN(first) || (first >= 1 && first < 3)) &&
+				isNaN(second) || ((first === 1 && second === 9)) || (first === 2);
+		case "yy":
+			return isNaN(first) || first >= 0;
 	}
 }
 
@@ -130,12 +121,9 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	const firstCharValue = parseInt(value.charAt(0));
 	const secondCharValue = parseInt(value.charAt(1));
 
-	const valid = dateInRange(selfType, firstCharValue, secondCharValue);
-	const startingValid = valid[0];
-	const endingValid = valid[1];
+	const validDateRange = dateInRange(selfType, firstCharValue, secondCharValue);
 
-	if ((isNumeric || value === "") && startingValid && endingValid) {
-
+	if ((isNumeric || value === "") && validDateRange) {
 		streamType(value);
 	}
 	else {
