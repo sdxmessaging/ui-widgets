@@ -4,9 +4,6 @@ import stream from "mithril/stream";
 import { DateInput } from "./dateInput";
 
 describe("DateInput", () => {
-	afterEach(() => {
-		jest.restoreAllMocks();
-	});
 
 	test("minimal", () => {
 		const root = window.document.createElement("div");
