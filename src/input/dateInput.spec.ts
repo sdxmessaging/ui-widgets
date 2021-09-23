@@ -48,20 +48,20 @@ describe("DateInput", () => {
 		// Set valid date
 		value("2020-01-01");
 		// Set invalid date
-		// value("2020-01-32");
+		value("2020-01-32");
 		// Get day input and update value
-		// const dateIn = root.querySelector("#test-dd") as HTMLInputElement;
-		// expect(dateIn != null).toBe(true);
+		const dateIn = root.querySelector("#test-dd") as HTMLInputElement;
+		expect(dateIn != null).toBe(true);
 
-		// dateIn.value = "02";
+		dateIn.value = "02";
 
-		// dateIn.dispatchEvent(new Event("input"));
+		dateIn.dispatchEvent(new Event("input"));
 
-		// expect(value()).toBe("2020-01-02");
-		// // Set invalid value
-		// dateIn.value = "32";
-		// dateIn.dispatchEvent(new Event("input"));
-		// expect(value()).toBe("2020-01-02");
+		expect(value()).toBe("2020-01-02");
+		// Set invalid value
+		dateIn.value = "32";
+		dateIn.dispatchEvent(new Event("input"));
+		expect(value()).toBe("2020-01-02");
 		// Cleanup
 		m.mount(root, null);
 	});
