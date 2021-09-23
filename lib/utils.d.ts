@@ -1,7 +1,6 @@
 import m from "mithril";
 import { IFile, TPropMap, TPropStream } from "./interface/widget";
 import { IWidgetClasses } from "./interface/theme";
-import stream from "mithril/stream";
 export declare function guid(): string;
 export declare function pxRatio(): number;
 export declare function getLabelText(label: string, required?: boolean): string;
@@ -17,7 +16,7 @@ export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
 }) => void;
 export declare type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export declare function dateInRange(type: TDateInputType, first: number, second: number): ReadonlyArray<boolean>;
-export declare function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType, dom: Element, typing: stream<boolean>, targetType?: TDateInputType): void;
+export declare function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType, dom: Element, targetType?: TDateInputType): void;
 /**
  * Split given file name from extension
  */

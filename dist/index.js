@@ -243,8 +243,7 @@ function autoAdvance(id, self, targetType, streamValue, dom) {
         next.focus();
     }
 }
-function handleDateChange(streamType, id, selfType, dom, typing, targetType) {
-    typing(true);
+function handleDateChange(streamType, id, selfType, dom, targetType) {
     const self = dom.querySelector(`#${id}-${selfType}`);
     const prevValue = streamType() ? streamType() : "";
     const value = self.value;
@@ -261,7 +260,6 @@ function handleDateChange(streamType, id, selfType, dom, typing, targetType) {
         streamType(prevValue);
     }
     autoAdvance(id, self, targetType, streamType(), dom);
-    typing(false);
 }
 /**
  * Split given file name from extension
@@ -1253,7 +1251,6 @@ class CardDateInput {
     constructor() {
         this.month = stream();
         this.year = stream();
-        this.typing = stream(false);
         this.valid = stream.lift((month, year) => {
             const newYear = parseInt(year);
             const newMonth = parseInt(month) - 1;
@@ -1266,11 +1263,9 @@ class CardDateInput {
     oninit({ attrs: { value } }) {
         // Split value into date parts
         value.map((newVal) => {
-            if (!this.typing()) {
-                const [month, year = ""] = String(newVal).split("/");
-                this.month(month);
-                this.year(year);
-            }
+            const [month, year = ""] = String(newVal).split("/");
+            month.length === 2 && this.month(month);
+            year.length === 2 && this.year(year);
         });
         // Update value when date changes
         this.date.map((newDate) => {
@@ -1315,7 +1310,7 @@ class CardDateInput {
                         required, readonly, disabled,
                         value: this.month(),
                         class: classStr, style: styleSm,
-                        oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, "yy")
+                        oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
                     })
                 ]),
                 m("span.mr2", "/"),
@@ -1329,7 +1324,7 @@ class CardDateInput {
                         required, readonly, disabled,
                         value: this.year(),
                         class: classStr, style: styleSm,
-                        oninput: () => handleDateChange(this.year, id, "yy", this.dom, this.typing)
+                        oninput: () => handleDateChange(this.year, id, "yy", this.dom)
                     })
                 ])
             ])
@@ -1342,7 +1337,6 @@ class DateInput {
         this.day = stream();
         this.month = stream();
         this.year = stream();
-        this.typing = stream(false);
         this.valid = stream.lift((day, month, year) => {
             const newYear = parseInt(year);
             const newMonth = parseInt(month) - 1;
@@ -1359,7 +1353,7 @@ class DateInput {
         // Split value into date parts
         value.map((newVal) => {
             const date = new Date(String(newVal));
-            if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.typing()) {
+            if (lodash.isDate(date) && !isNaN(date.getTime())) {
                 this.day(lodash.padStart(String(date.getDate()), 2, "0"));
                 this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
                 this.year(String(date.getFullYear()));
@@ -1402,7 +1396,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.day(),
-                oninput: () => handleDateChange(this.day, id, "dd", this.dom, this.typing, isUsLocale ? "yyyy" : "mm"),
+                oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
                 class: classStr, style: styleSm,
             })
         ]);
@@ -1415,7 +1409,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
-                oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, isUsLocale ? "dd" : "yyyy"),
+                oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
                 class: classStr, style: styleSm,
             })
         ]);
@@ -1428,7 +1422,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.year(),
-                oninput: () => handleDateChange(this.year, id, "yyyy", this.dom, this.typing),
+                oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
                 class: classStr, style: styleLg,
             })
         ]);

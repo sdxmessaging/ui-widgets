@@ -3,7 +3,6 @@ import { IPropWidget } from "../interface/widget";
 export declare class CardDateInput implements ClassComponent<IPropWidget> {
     private month;
     private year;
-    private typing;
     private valid;
     private date;
     private dom;

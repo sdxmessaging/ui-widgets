@@ -12,7 +12,6 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 	private month = stream<string>();
 	private year = stream<string>();
-	private typing = stream<boolean>(false);
 	private valid = stream.lift(
 		(month, year) => {
 			const newYear = parseInt(year);
@@ -33,11 +32,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
-			if (!this.typing()) {
-				const [month, year = ""] = String(newVal).split("/");
-				this.month(month);
-				this.year(year);
-			}
+			const [month, year = ""] = String(newVal).split("/");
+			month.length === 2 && this.month(month);
+			year.length === 2 && this.year(year);
 		});
 		// Update value when date changes
 		this.date.map((newDate) => {
@@ -89,7 +86,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						required, readonly, disabled,
 						value: this.month(),
 						class: classStr, style: styleSm,
-						oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, "yy")
+						oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
 					})
 				]),
 				m("span.mr2", "/"),
@@ -103,7 +100,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						required, readonly, disabled,
 						value: this.year(),
 						class: classStr, style: styleSm,
-						oninput: () => handleDateChange(this.year, id, "yy", this.dom, this.typing)
+						oninput: () => handleDateChange(this.year, id, "yy", this.dom)
 					})
 				])
 			])

@@ -13,7 +13,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
 	private month = stream<string>();
 	private year = stream<string>();
-	private typing = stream<boolean>(false);
 	private valid = stream.lift(
 		(day, month, year) => {
 			const newYear = parseInt(year);
@@ -37,7 +36,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
-			if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.typing()) {
+			if (lodash.isDate(date) && !isNaN(date.getTime())) {
 				this.day(lodash.padStart(String(date.getDate()), 2, "0"));
 				this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
 				this.year(String(date.getFullYear()));
@@ -88,7 +87,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				oninput: () => handleDateChange(this.day, id, "dd", this.dom, this.typing, isUsLocale ? "yyyy" : "mm"),
+				oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
 				class: classStr, style: styleSm,
 
 			})
@@ -102,7 +101,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, isUsLocale ? "dd" : "yyyy"),
+				oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
 				class: classStr, style: styleSm,
 			})
 		]);
@@ -115,7 +114,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				oninput: () => handleDateChange(this.year, id, "yyyy", this.dom, this.typing),
+				oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
 				class: classStr, style: styleLg,
 			})
 		]);

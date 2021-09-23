@@ -5,7 +5,6 @@ import { IFile, TPropMap, TPropStream } from "./interface/widget";
 import { labelCls, theme } from "./theme";
 import { config } from "./config";
 import { IWidgetClasses } from "./interface/theme";
-import stream from "mithril/stream";
 
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
@@ -123,9 +122,7 @@ function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputT
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
-	dom: Element, typing: stream<boolean>, targetType?: TDateInputType) {
-
-	typing(true);
+	dom: Element, targetType?: TDateInputType) {
 
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const prevValue = streamType() ? streamType() : "";
@@ -147,7 +144,6 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	}
 
 	autoAdvance(id, self, targetType, streamType() as string, dom);
-	typing(false);
 }
 
 /**

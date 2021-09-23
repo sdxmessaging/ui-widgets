@@ -251,8 +251,7 @@
             next.focus();
         }
     }
-    function handleDateChange(streamType, id, selfType, dom, typing, targetType) {
-        typing(true);
+    function handleDateChange(streamType, id, selfType, dom, targetType) {
         const self = dom.querySelector(`#${id}-${selfType}`);
         const prevValue = streamType() ? streamType() : "";
         const value = self.value;
@@ -269,7 +268,6 @@
             streamType(prevValue);
         }
         autoAdvance(id, self, targetType, streamType(), dom);
-        typing(false);
     }
     /**
      * Split given file name from extension
@@ -1261,7 +1259,6 @@
         constructor() {
             this.month = stream__default['default']();
             this.year = stream__default['default']();
-            this.typing = stream__default['default'](false);
             this.valid = stream__default['default'].lift((month, year) => {
                 const newYear = parseInt(year);
                 const newMonth = parseInt(month) - 1;
@@ -1274,11 +1271,9 @@
         oninit({ attrs: { value } }) {
             // Split value into date parts
             value.map((newVal) => {
-                if (!this.typing()) {
-                    const [month, year = ""] = String(newVal).split("/");
-                    this.month(month);
-                    this.year(year);
-                }
+                const [month, year = ""] = String(newVal).split("/");
+                month.length === 2 && this.month(month);
+                year.length === 2 && this.year(year);
             });
             // Update value when date changes
             this.date.map((newDate) => {
@@ -1323,7 +1318,7 @@
                             required, readonly, disabled,
                             value: this.month(),
                             class: classStr, style: styleSm,
-                            oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, "yy")
+                            oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
                         })
                     ]),
                     m__default['default']("span.mr2", "/"),
@@ -1337,7 +1332,7 @@
                             required, readonly, disabled,
                             value: this.year(),
                             class: classStr, style: styleSm,
-                            oninput: () => handleDateChange(this.year, id, "yy", this.dom, this.typing)
+                            oninput: () => handleDateChange(this.year, id, "yy", this.dom)
                         })
                     ])
                 ])
@@ -1350,7 +1345,6 @@
             this.day = stream__default['default']();
             this.month = stream__default['default']();
             this.year = stream__default['default']();
-            this.typing = stream__default['default'](false);
             this.valid = stream__default['default'].lift((day, month, year) => {
                 const newYear = parseInt(year);
                 const newMonth = parseInt(month) - 1;
@@ -1367,7 +1361,7 @@
             // Split value into date parts
             value.map((newVal) => {
                 const date = new Date(String(newVal));
-                if (lodash__default['default'].isDate(date) && !isNaN(date.getTime()) && !this.typing()) {
+                if (lodash__default['default'].isDate(date) && !isNaN(date.getTime())) {
                     this.day(lodash__default['default'].padStart(String(date.getDate()), 2, "0"));
                     this.month(lodash__default['default'].padStart(String(1 + date.getMonth()), 2, "0"));
                     this.year(String(date.getFullYear()));
@@ -1410,7 +1404,7 @@
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.day(),
-                    oninput: () => handleDateChange(this.day, id, "dd", this.dom, this.typing, isUsLocale ? "yyyy" : "mm"),
+                    oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
                     class: classStr, style: styleSm,
                 })
             ]);
@@ -1423,7 +1417,7 @@
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.month(),
-                    oninput: () => handleDateChange(this.month, id, "mm", this.dom, this.typing, isUsLocale ? "dd" : "yyyy"),
+                    oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
                     class: classStr, style: styleSm,
                 })
             ]);
@@ -1436,7 +1430,7 @@
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.year(),
-                    oninput: () => handleDateChange(this.year, id, "yyyy", this.dom, this.typing),
+                    oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
                     class: classStr, style: styleLg,
                 })
             ]);
