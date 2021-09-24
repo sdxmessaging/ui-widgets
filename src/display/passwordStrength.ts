@@ -6,6 +6,10 @@ import { IPropWidget, TProp } from "../interface/widget";
 
 import { getDisplayLabel } from "../utils";
 
+function countMatches(input: string, pattern: RegExp) {
+	return (input.match(pattern) || []).length;
+}
+
 export function scorePassword(value: string) {
 	let totalScore = 0;
 	// Min req for password is 8 characters
@@ -15,16 +19,16 @@ export function scorePassword(value: string) {
 		if (value.length >= 24) {
 			totalScore = totalScore + 1;
 		}
-		// Check does string have 2 upper case and 3 lower case
-		if (/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
+		// At least 2 upper and 3 lower case characters
+		if (countMatches(value, /[A-Z]/g) > 1 && countMatches(value, /[a-z]/g) > 2) {
 			totalScore = totalScore + 1;
 		}
-		// Ensure string has 2 digits
-		if (/(?=.*[0-9].*[0-9])/.test(value)) {
+		// At least 2 digits
+		if (countMatches(value, /[\d]/g) > 1) {
 			totalScore = totalScore + 1;
 		}
-		// Ensure string has one special character
-		if (/(?=.*[!"£%^@#$&*])/.test(value)) {
+		// At least one special character
+		if (countMatches(value, /[!"£%^@#$&*]/g) > 0) {
 			totalScore = totalScore + 1;
 		}
 	}
