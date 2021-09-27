@@ -5,7 +5,7 @@ import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls, inputWrapperCls, wrapperCls, styleSm } from "../theme";
 
-import { getLabel, handleDateChange } from "../utils";
+import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 import { propInvalid } from "../validation";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
@@ -34,20 +34,12 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			year.length === 2 && this.year(year);
 		});
 		// Update value when date changes
-		this.date.map((newDate) => {
-			// Prevent recursive setting between streams
-			if (newDate !== value()) {
-				value(newDate);
-			}
-		});
+		updateNewValue(this.date, value);
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
 		const input = dom.querySelector("input") as HTMLInputElement;
-		this.valid.map((valid) => {
-			const validityMessage = valid ? "" : "Invalid Date";
-			input.setCustomValidity(validityMessage);
-		});
+		setCustomValidityMessage(input, this.valid, "Invalid Date");
 		this.dom = dom;
 	}
 

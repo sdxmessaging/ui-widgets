@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-09-21T14:17:23.190Z */
+/* @preserve built on: 2021-09-24T07:29:07.824Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
@@ -234,6 +234,20 @@
             case "yy":
                 return isNaN(first) || first >= 0;
         }
+    }
+    function setCustomValidityMessage(input, validStream, message) {
+        validStream.map((valid) => {
+            const validityMessage = valid ? "" : `${message}`;
+            input.setCustomValidity(validityMessage);
+        });
+    }
+    function updateNewValue(targetStream, valueStream) {
+        targetStream.map((newValue) => {
+            // Prevent recursive setting between streams
+            if (newValue !== valueStream()) {
+                valueStream(newValue);
+            }
+        });
     }
     function autoAdvance(id, self, targetType, streamValue, dom) {
         const maxLength = parseInt(self.getAttribute("maxlength"));
@@ -1035,6 +1049,9 @@
         }
     }
 
+    function countMatches(input, pattern) {
+        return (input.match(pattern) || []).length;
+    }
     function scorePassword(value) {
         let totalScore = 0;
         // Min req for password is 8 characters
@@ -1044,16 +1061,16 @@
             if (value.length >= 24) {
                 totalScore = totalScore + 1;
             }
-            // Check does string have 2 upper case and 3 lower case
-            if (/(?=.*[A-Z].*[A-Z])/.test(value) && /(?=.*[a-z].*[a-z].*[a-z])/.test(value)) {
+            // At least 2 upper and 3 lower case characters
+            if (countMatches(value, /[A-Z]/g) > 1 && countMatches(value, /[a-z]/g) > 2) {
                 totalScore = totalScore + 1;
             }
-            // Ensure string has 2 digits
-            if (/(?=.*[0-9].*[0-9])/.test(value)) {
+            // At least 2 digits
+            if (countMatches(value, /[\d]/g) > 1) {
                 totalScore = totalScore + 1;
             }
-            // Ensure string has one special character
-            if (/(?=.*[!"£%^@#$&*])/.test(value)) {
+            // At least one special character
+            if (countMatches(value, /[!"£%^@#$&*]/g) > 0) {
                 totalScore = totalScore + 1;
             }
         }
@@ -1263,19 +1280,11 @@
                 year.length === 2 && this.year(year);
             });
             // Update value when date changes
-            this.date.map((newDate) => {
-                // Prevent recursive setting between streams
-                if (newDate !== value()) {
-                    value(newDate);
-                }
-            });
+            updateNewValue(this.date, value);
         }
         oncreate({ dom }) {
             const input = dom.querySelector("input");
-            this.valid.map((valid) => {
-                const validityMessage = valid ? "" : "Invalid Date";
-                input.setCustomValidity(validityMessage);
-            });
+            setCustomValidityMessage(input, this.valid, "Invalid Date");
             this.dom = dom;
         }
         onremove() {
@@ -1355,19 +1364,11 @@
                 }
             });
             // Update value when date changes
-            this.date.map((newDate) => {
-                // Prevent recursive setting between streams
-                if (newDate !== value()) {
-                    value(newDate);
-                }
-            });
+            updateNewValue(this.date, value);
         }
         oncreate({ dom }) {
             const input = dom.querySelector("input");
-            this.valid.map((valid) => {
-                const validityMessage = valid ? "" : "Invalid Date";
-                input.setCustomValidity(validityMessage);
-            });
+            setCustomValidityMessage(input, this.valid, "Invalid Date");
             this.dom = dom;
         }
         onremove() {

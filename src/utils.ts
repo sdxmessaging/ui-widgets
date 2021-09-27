@@ -101,6 +101,22 @@ export function dateInRange(type: TDateInputType, first: number, second: number)
 	}
 }
 
+export function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStream, message: string) {
+	validStream.map((valid) => {
+		const validityMessage = valid ? "" : `${message}`;
+		input.setCustomValidity(validityMessage);
+	});
+}
+
+export function updateNewValue(targetStream: TPropStream, valueStream: TPropStream) {
+	targetStream.map((newValue) => {
+		// Prevent recursive setting between streams
+		if (newValue !== valueStream()) {
+			valueStream(newValue);
+		}
+	});
+}
+
 function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputType | undefined,
 	streamValue: string, dom: Element) {
 

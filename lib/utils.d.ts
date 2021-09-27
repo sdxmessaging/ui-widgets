@@ -16,6 +16,8 @@ export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
 }) => void;
 export declare type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export declare function dateInRange(type: TDateInputType, first: number, second: number): boolean;
+export declare function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStream, message: string): void;
+export declare function updateNewValue(targetStream: TPropStream, valueStream: TPropStream): void;
 export declare function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType, dom: Element, targetType?: TDateInputType): void;
 /**
  * Split given file name from extension
