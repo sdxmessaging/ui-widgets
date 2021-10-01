@@ -170,7 +170,7 @@ export interface IFileWidget extends IBaseWidget {
 export interface IPropWidget extends IBaseWidget {
 	readonly value: TPropStream;
 	readonly xform?: TPropStream;
-	readonly labelStyle?: "internal" | "external";
+	readonly floatLabel?: boolean;
 }
 
 export interface IThumbnailArgs {

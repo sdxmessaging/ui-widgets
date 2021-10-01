@@ -80,7 +80,7 @@ describe("BaseInput", () => {
 					disabled: true,
 					instant: true
 				},
-				labelStyle: 'internal',
+				floatLabel: true,
 				value,
 				xform
 			})
