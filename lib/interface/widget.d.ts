@@ -114,6 +114,7 @@ export interface IFileWidget extends IBaseWidget {
 export interface IPropWidget extends IBaseWidget {
     readonly value: TPropStream;
     readonly xform?: TPropStream;
+    readonly labelStyle?: "internal" | "external";
 }
 export interface IThumbnailArgs {
     title?: string;
