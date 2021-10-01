@@ -78,9 +78,9 @@ describe("BaseInput", () => {
 					type: FieldType.number,
 					uiClass: {},
 					disabled: true,
-					instant: true
+					instant: true,
+					floatLabel: true
 				},
-				floatLabel: true,
 				value,
 				xform
 			})

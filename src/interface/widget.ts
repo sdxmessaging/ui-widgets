@@ -110,7 +110,7 @@ export interface IField {
 	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
-	// TODO Phase out string classes and containerClass in favour of new IClasses
+	readonly floatLabel?: boolean;
 	readonly uiClass?: IWidgetClasses;
 	readonly style?: TStyle;
 	// Unsupported legacy field
@@ -170,7 +170,6 @@ export interface IFileWidget extends IBaseWidget {
 export interface IPropWidget extends IBaseWidget {
 	readonly value: TPropStream;
 	readonly xform?: TPropStream;
-	readonly floatLabel?: boolean;
 }
 
 export interface IThumbnailArgs {

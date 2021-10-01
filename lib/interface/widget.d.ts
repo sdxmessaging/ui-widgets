@@ -70,6 +70,7 @@ export interface IField {
     readonly spellcheck?: boolean;
     readonly accept?: string;
     readonly instant?: boolean;
+    readonly floatLabel?: boolean;
     readonly uiClass?: IWidgetClasses;
     readonly style?: TStyle;
     readonly default?: string;
@@ -114,7 +115,6 @@ export interface IFileWidget extends IBaseWidget {
 export interface IPropWidget extends IBaseWidget {
     readonly value: TPropStream;
     readonly xform?: TPropStream;
-    readonly floatLabel?: boolean;
 }
 export interface IThumbnailArgs {
     title?: string;

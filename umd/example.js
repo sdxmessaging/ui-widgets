@@ -129,9 +129,9 @@ m.mount(document.getElementById("page"), {
 						id: "text-in-input",
 						label: "Text Input (updates on input)",
 						instant: true,
+						floatLabel: true
 					},
 					value: textVal1,
-					labelStyle: 'internal'
 				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
