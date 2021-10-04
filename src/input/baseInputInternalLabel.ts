@@ -46,12 +46,14 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 				pointerEvents: 'none'
 			}
 		}, [
-			m("label.absolute.db.top-0.left-0", {
+			m("label.absolute.db.top-0.left-0.z-9999", {
 				title: label,
 				style: {
-					transform: this.selected() ? 'translate(-8px, -16px) scale(0.8)' : 'translate(14px, 16px) scale(1)',
+					transform: this.selected() ? 'translate(18px, -17px) scale(0.8)' : 'translate(14px, 16px) scale(1)',
 					transition: `transform ${this.selected() ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
-					opacity: this.selected() ? 1 : 0.6
+					opacity: this.selected() ? 1 : 0.6,
+					transformOrigin: 'top left',
+					wordSpacing: '2px',
 				}
 			}, label),
 			m("div",
@@ -81,11 +83,17 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 						style: {
 							visibility: 'hidden',
 							maxWidth: this.selected() ? '100%' : '0.01px',
-							height: '0.8em',
+							height: '11px',
 							fontSize: '0.8em',
 							transition: `max-width ${this.selected() ? '0.4s' : '0.3s'} ease-in-out`
 						}
-					}, label)
+					}, m('span', {
+						style: {
+							paddingLeft: '5px',
+							paddingRight: '5px',
+							display: 'inline-block'
+						}
+					}, label))
 				)
 			)
 		]);
