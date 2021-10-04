@@ -110,7 +110,7 @@ export interface IField {
 	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
-	// TODO Phase out string classes and containerClass in favour of new IClasses
+	readonly floatLabel?: boolean;
 	readonly uiClass?: IWidgetClasses;
 	readonly style?: TStyle;
 	// Unsupported legacy field

@@ -70,6 +70,7 @@ export interface IField {
     readonly spellcheck?: boolean;
     readonly accept?: string;
     readonly instant?: boolean;
+    readonly floatLabel?: boolean;
     readonly uiClass?: IWidgetClasses;
     readonly style?: TStyle;
     readonly default?: string;

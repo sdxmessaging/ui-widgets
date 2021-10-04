@@ -14,6 +14,7 @@ uiWidgets.updateButtonContext({
 });
 
 // Simple props
+var textVal1 = stream("")
 var textVal = stream("Text");
 var currencyVal = stream();
 var dateVal = stream();
@@ -123,30 +124,21 @@ m.mount(document.getElementById("page"), {
 
 			// Text
 			m(".flex.mb2.items-center", [
-				m(".flex.flex-column.w-50.mr2", [
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
-						field: {
-							id: "text-in-input",
-							label: "Text Input (updates on input)",
-							instant: true
-						},
-						value: textVal
-					})),
-					m(".pa2.ba.b--silver", m(uiWidgets.TextareaInput, {
-						field: {
-							id: "text-in-change",
-							label: "Text Input (updates on change, value required)",
-							required: true
-						},
-						value: textVal
-					}))
-				]),
+				m('.w-50', m(uiWidgets.BaseInput, {
+					field: {
+						id: "text-in-input",
+						label: "Text Input (updates on input)",
+						instant: true,
+						floatLabel: true
+					},
+					value: textVal1,
+				})),
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
 						id: "text-out",
 						label: "Text Output"
 					},
-					value: textVal
+					value: textVal1
 				}))
 			]),
 
