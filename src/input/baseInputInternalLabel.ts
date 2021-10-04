@@ -40,23 +40,34 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value, xform = value } }: CVnode<IPropWidget>) {
 		const { label, id, type = FieldType.text, name = id, title = label, disabled, instant, uiClass = {} } = field;
-		return m(".relative", {
+		return m(".relative.flex", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
-				pointerEvents: 'none'
+				pointerEvents: 'none',
+				// border: 'solid red 1px'
+				height: '4rem'
 			}
 		}, [
-			m("label.absolute.db.top-0.left-0.z-9999", {
+			m("label.db.top-0.left-0.z-9999.absolute", {
 				title: label,
 				style: {
-					transform: this.selected() ? 'translate(18px, -17px) scale(0.8)' : 'translate(14px, 16px) scale(1)',
+					transform: this.selected() ? 'translate(16px, -4px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
 					transition: `transform ${this.selected() ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
-					opacity: this.selected() ? 1 : 0.6,
+					opacity: this.selected() ? 0.8 : 0.6,
 					transformOrigin: 'top left',
 					wordSpacing: '2px',
+					height: '100%'
 				}
 			}, label),
-			m("div",
+			m(".flex", {
+				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
+				style: {
+					// width: '-webkit-fill-available'
+					width: '100%',
+					marginLeft: '2px',
+					marginRight: '2px',
+				}
+			},
 				m("input.w-100.bg-transparent.bn.outline-0.static.h-100", {
 					...field,
 					name,
@@ -65,18 +76,18 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 					// Update value on change or input ("instant" option)
 					[instant ? "oninput" : "onchange"]: setValue(value),
 					style: {
-						padding: '16.5px 14px',
-						pointerEvents: 'auto'
+						// padding: '20px 14px 6px 14px',
+						pointerEvents: 'auto',
+						margin: '0 1rem'
 					},
-
 				}),
 				m('fieldset.absolute',
 					{
-						class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 						style: {
-							top: '-5px',
 							inset: '-11px 0 0',
-							padding: '0 8px'
+							padding: '0 8px',
+							top: '0',
+							left: '0'
 						}
 					},
 					m('legend.db.pa0.w-auto', {
