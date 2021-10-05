@@ -141,6 +141,24 @@ m.mount(document.getElementById("page"), {
 					value: textVal1
 				}))
 			]),
+			m('.ma3', m(uiWidgets.BaseInput, {
+				field: {
+					id: "text-in-input",
+					label: "T",
+					instant: true,
+					floatLabel: true
+				},
+				value: textVal1,
+			})),
+			m('.ma3', m(uiWidgets.BaseInput, {
+				field: {
+					id: "text-in-input",
+					label: "Some really really really long label",
+					instant: true,
+					floatLabel: true
+				},
+				value: textVal1,
+			})),
 
 			// Date
 			m(".flex.mb2.items-center", [
