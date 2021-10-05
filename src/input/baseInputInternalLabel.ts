@@ -23,6 +23,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				pointerEvents: 'none',
+				border: 'none'
 			}
 		}, [
 			m("label.db.top-0.left-0.z-9999.absolute", {
@@ -59,10 +60,10 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 				m('fieldset.absolute.ba.b--light-gray',
 					{
 						style: {
-							top: '-6px',
-							right: '-3px',
-							bottom: '-1px',
-							left: '-3px',
+							top: '-5px',
+							right: '-2px',
+							bottom: '0px',
+							left: '-2px',
 							padding: '0 8px',
 						},
 					},
