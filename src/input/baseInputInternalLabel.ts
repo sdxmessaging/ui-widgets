@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TPropStream } from "../interface/widget";
 
-import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { inputWrapperCls, wrapperCls } from "../theme";
 import { setValue } from "../utils";
 import { propInvalid } from "../validation";
 
@@ -11,6 +11,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 	private selected = stream(false);
 	private value!: TPropStream;
 	private inputEl!: HTMLInputElement;
+	private floatLabel = false;
 
 	private focusIn = () => {
 		this.selected(true);
@@ -23,8 +24,13 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 	};
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
-		this.selected.map(m.redraw);
 		this.value = value;
+		this.selected.map(m.redraw);
+	}
+
+	public onupdate({ attrs: { field: { shrink } } }: CVnode<IPropWidget>) {
+		this.floatLabel = shrink || this.selected();
+		m.redraw();
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
@@ -44,41 +50,36 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				pointerEvents: 'none',
-				// border: 'solid red 1px'
 				height: '4rem'
 			}
 		}, [
 			m("label.db.top-0.left-0.z-9999.absolute", {
 				title: label,
 				style: {
-					transform: this.selected() ? 'translate(16px, -4px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
-					transition: `transform ${this.selected() ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
-					opacity: this.selected() ? 0.8 : 0.6,
+					transform: this.floatLabel ? 'translate(16px, -4px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
+					transition: `transform ${this.floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
+					opacity: this.floatLabel ? 0.8 : 0.6,
 					transformOrigin: 'top left',
 					wordSpacing: '2px',
-					height: '100%'
 				}
 			}, label),
 			m(".flex", {
-				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 				style: {
-					// width: '-webkit-fill-available'
 					width: '100%',
 					marginLeft: '2px',
 					marginRight: '2px',
 				}
 			},
-				m("input.w-100.bg-transparent.bn.outline-0.static.h-100", {
+				m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", {
 					...field,
 					name,
 					title,
-					class: inputCls(uiClass),
 					// Update value on change or input ("instant" option)
 					[instant ? "oninput" : "onchange"]: setValue(value),
 					style: {
 						// padding: '20px 14px 6px 14px',
 						pointerEvents: 'auto',
-						margin: '0 1rem'
+						margin: '0 1rem',
 					},
 				}),
 				m('fieldset.absolute',
@@ -87,16 +88,18 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 							inset: '-11px 0 0',
 							padding: '0 8px',
 							top: '0',
-							left: '0'
-						}
+							left: '0',
+							marginInlineStart: '2px',
+						},
+						class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 					},
 					m('legend.db.pa0.w-auto', {
 						style: {
 							visibility: 'hidden',
-							maxWidth: this.selected() ? '100%' : '0.01px',
+							maxWidth: this.floatLabel ? '100%' : '0.01px',
 							height: '11px',
 							fontSize: '0.8em',
-							transition: `max-width ${this.selected() ? '0.4s' : '0.3s'} ease-in-out`
+							transition: `max-width ${this.floatLabel ? '0.4s' : '0.3s'} ease-in-out`,
 						}
 					}, m('span', {
 						style: {

@@ -8,9 +8,9 @@ import { BaseInputInternalLabel } from "./baseInputInternalLabel";
 export class BaseInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
-		const { field: { floatLabel } } = attrs;
+		const { field: { floatLabel, shrink } } = attrs;
 		return !floatLabel
-			? m(BaseInputExternalLabel, attrs)
+			? m(BaseInputExternalLabel, attrs, shrink)
 			: m(BaseInputInternalLabel, attrs);
 	}
 }
