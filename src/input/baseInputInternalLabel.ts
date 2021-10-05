@@ -24,12 +24,13 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			style: {
 				pointerEvents: 'none',
 				height: '4rem',
+				// border: 'solid red 1px'
 			}
 		}, [
 			m("label.db.top-0.left-0.z-9999.absolute", {
 				title: label,
 				style: {
-					transform: floatLabel ? 'translate(16px, 0px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
+					transform: floatLabel ? 'translate(12px, -10px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
 					transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
 					opacity: floatLabel ? 0.8 : 0.6,
 					transformOrigin: 'top left',
@@ -39,7 +40,8 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			m(".flex", {
 				style: {
 					width: '100%',
-				}
+				},
+				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
 				m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", {
 					...field,
@@ -62,8 +64,8 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 							bottom: '-1px',
 							left: '-3px',
 							padding: '0 8px',
+							// border: 'solid green 1px'
 						},
-						class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 					},
 					m('legend.db.pa0.w-auto', {
 						style: {
