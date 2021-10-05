@@ -36,11 +36,10 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 					fontSize: '1rem',
 				}
 			}, label),
-			m(".flex.bn", {
+			m(".flex.bn.h2", {
 				style: {
 					width: '100%',
 					margin: '0px',
-					height: '32px'
 				},
 				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
@@ -54,7 +53,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 					[instant ? "oninput" : "onchange"]: setValue(value),
 					style: {
 						pointerEvents: 'auto',
-						margin: '0 1rem',
+						margin: '0 0.5rem'
 					},
 				}),
 				m('fieldset.absolute.ba.b--light-gray',
