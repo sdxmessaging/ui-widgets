@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-05T09:57:02.419Z */
+/* @preserve built on: 2021-10-05T12:26:33.949Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
@@ -1214,7 +1214,6 @@
                         bottom: '-1px',
                         left: '-3px',
                         padding: '0 8px',
-                        border: 'solid red 1px'
                     },
                     class: inputWrapperCls(uiClass, propInvalid(field, xform())),
                 }, m__default['default']('legend.db.pa0.w-auto', {

@@ -62,7 +62,6 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 							bottom: '-1px',
 							left: '-3px',
 							padding: '0 8px',
-							border: 'solid red 1px'
 						},
 						class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 					},

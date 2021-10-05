@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-05T09:57:02.419Z */
+/* @preserve built on: 2021-10-05T12:26:33.949Z */
 import lodash from 'lodash';
 import m from 'mithril';
 import stream from 'mithril/stream';
@@ -1206,7 +1206,6 @@ class BaseInputInternalLabel {
                     bottom: '-1px',
                     left: '-3px',
                     padding: '0 8px',
-                    border: 'solid red 1px'
                 },
                 class: inputWrapperCls(uiClass, propInvalid(field, xform())),
             }, m('legend.db.pa0.w-auto', {
