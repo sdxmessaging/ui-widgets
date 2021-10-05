@@ -141,7 +141,7 @@ m.mount(document.getElementById("page"), {
 					value: textVal1
 				}))
 			]),
-			m('.ma3', m(uiWidgets.BaseInput, {
+			m('.mb2', m(uiWidgets.BaseInput, {
 				field: {
 					id: "text-in-input",
 					label: "T",
@@ -150,7 +150,7 @@ m.mount(document.getElementById("page"), {
 				},
 				value: textVal1,
 			})),
-			m('.ma3', m(uiWidgets.BaseInput, {
+			m('.mb2', m(uiWidgets.BaseInput, {
 				field: {
 					id: "text-in-input",
 					label: "Some really really really long label",
