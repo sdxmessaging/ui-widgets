@@ -111,6 +111,7 @@ export interface IField {
 	// Widget attributes
 	readonly instant?: boolean;
 	readonly floatLabel?: boolean;
+	readonly shrink?: boolean;
 	readonly uiClass?: IWidgetClasses;
 	readonly style?: TStyle;
 	// Unsupported legacy field
