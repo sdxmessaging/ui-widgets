@@ -19,18 +19,16 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value, xform = value } }: CVnode<IPropWidget>) {
 		const { label, id, type = FieldType.text, name = id, title = label, disabled, instant, uiClass = {}, shrink } = field;
 		const floatLabel = shrink || value() || this.selected;
-		return m("fieldset.relative.flex", {
+		return m("fieldset.relative.flex.mb2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				pointerEvents: 'none',
-				height: '4rem',
-				// border: 'solid red 1px'
 			}
 		}, [
 			m("label.db.top-0.left-0.z-9999.absolute", {
 				title: label,
 				style: {
-					transform: floatLabel ? 'translate(12px, -10px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
+					transform: floatLabel ? 'translate(14px, -7px) scale(0.6)' : 'translate(10px, 9px) scale(1)',
 					transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
 					opacity: floatLabel ? 0.8 : 0.6,
 					transformOrigin: 'top left',
@@ -40,6 +38,8 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			m(".flex", {
 				style: {
 					width: '100%',
+					margin: '0px',
+					border: 'none'
 				},
 				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
@@ -56,7 +56,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 						margin: '0 1rem',
 					},
 				}),
-				m('fieldset.absolute',
+				m('fieldset.absolute.ba.b--light-gray',
 					{
 						style: {
 							top: '-6px',
@@ -64,7 +64,6 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 							bottom: '-1px',
 							left: '-3px',
 							padding: '0 8px',
-							// border: 'solid green 1px'
 						},
 					},
 					m('legend.db.pa0.w-auto', {
@@ -77,8 +76,8 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 						}
 					}, m('span', {
 						style: {
-							paddingLeft: '5px',
-							paddingRight: '5px',
+							// paddingLeft: '5px',
+							// paddingRight: '5px',
 							display: 'inline-block'
 						}
 					}, label))
