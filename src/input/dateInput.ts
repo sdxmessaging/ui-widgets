@@ -111,7 +111,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mb2 ma0' : ''}`,
+			class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''}`,
 		}, [
 			!floatLabel ? getLabel(id, uiClass, label, required) : null,
 			floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {
@@ -126,6 +126,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}, label),
 			m(".flex", {
 				id, title,
+				style: { margin: '0px' },
 				class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
 				${floatLabel ? 'items-center w-100' : ''}`,
 			}, isUsLocale
@@ -138,7 +139,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					monthInput,
 					yearInput
 				],
-				floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0.ba',
+				floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0',
 					{
 						style: {
 							inset: '0',
