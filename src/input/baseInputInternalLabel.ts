@@ -36,6 +36,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 					transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
 					opacity: floatLabel ? 0.8 : 0.6,
 					transformOrigin: 'top left',
+					// Essential for the legend to fit the correct amount of space
 					wordSpacing: '2px',
 					fontSize: '1rem',
 				}
