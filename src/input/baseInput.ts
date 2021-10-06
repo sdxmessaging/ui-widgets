@@ -10,7 +10,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field: { floatLabel, shrink } } = attrs;
 		return !floatLabel
-			? m(BaseInputExternalLabel, attrs, shrink)
-			: m(BaseInputInternalLabel, attrs);
+			? m(BaseInputExternalLabel, attrs)
+			: m(BaseInputInternalLabel, attrs, shrink);
 	}
 }
