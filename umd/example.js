@@ -171,6 +171,16 @@ m.mount(document.getElementById("page"), {
 				value: currencyVal,
 			})),
 
+			m('.mb2', m(uiWidgets.TextareaInput, {
+				field: {
+					id: "text-area-input",
+					label: "Text Area",
+					instant: true,
+					floatLabel: true
+				},
+				value: currencyVal,
+			})),
+
 			// Date
 			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
