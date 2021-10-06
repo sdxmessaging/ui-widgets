@@ -1535,7 +1535,7 @@
                         top: '-5px',
                         padding: '0 8px',
                     },
-                }, m__default['default']('legend.db.pa0.w-auto', {
+                }, m__default['default']('legend.db.pa0', {
                     style: {
                         visibility: 'hidden',
                         maxWidth: '100%',
@@ -1546,7 +1546,6 @@
                     style: {
                         paddingLeft: '5px',
                         paddingRight: '5px',
-                        display: 'inline-block'
                     }
                 }, label)))),
             ]);

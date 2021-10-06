@@ -146,7 +146,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 							padding: '0 8px',
 						},
 					},
-					m('legend.db.pa0.w-auto', {
+					m('legend.db.pa0', {
 						style: {
 							visibility: 'hidden',
 							maxWidth: '100%',
@@ -157,7 +157,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 						style: {
 							paddingLeft: '5px',
 							paddingRight: '5px',
-							display: 'inline-block'
 						}
 					}, label))
 				)

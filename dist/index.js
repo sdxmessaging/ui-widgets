@@ -1527,7 +1527,7 @@ class DateInput {
                     top: '-5px',
                     padding: '0 8px',
                 },
-            }, m('legend.db.pa0.w-auto', {
+            }, m('legend.db.pa0', {
                 style: {
                     visibility: 'hidden',
                     maxWidth: '100%',
@@ -1538,7 +1538,6 @@ class DateInput {
                 style: {
                     paddingLeft: '5px',
                     paddingRight: '5px',
-                    display: 'inline-block'
                 }
             }, label)))),
         ]);
