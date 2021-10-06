@@ -1194,6 +1194,7 @@
                         transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
                         opacity: floatLabel ? 0.8 : 0.6,
                         transformOrigin: 'top left',
+                        // Essential for the legend to fit the correct amount of space
                         wordSpacing: '2px',
                         fontSize: '1rem',
                     }
@@ -1204,13 +1205,15 @@
                         margin: '0px',
                     },
                     class: inputWrapperCls(uiClass, propInvalid(field, xform())),
+                }, m__default['default']('.flex.flex-row', {
+                    style: {
+                        margin: '0 0.5rem',
+                        pointerEvents: 'auto',
+                    }
                 }, m__default['default']("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", Object.assign(Object.assign({}, field), { name,
                     title, onfocus: this.focusIn, onblur: this.focusOut, 
                     // Update value on change or input ("instant" option)
-                    [instant ? "oninput" : "onchange"]: setValue(value), style: {
-                        pointerEvents: 'auto',
-                        margin: '0 0.5rem'
-                    } })), m__default['default']('fieldset.absolute.ba.b--light-gray', {
+                    [instant ? "oninput" : "onchange"]: setValue(value) }))), m__default['default']('fieldset.absolute.ba.b--light-gray', {
                     style: {
                         top: '-5px',
                         right: '-2px',
@@ -1516,10 +1519,10 @@
                         fontSize: '.7rem',
                     }
                 }, label),
-                m__default['default'](".flex.w-100", {
+                m__default['default'](".flex", {
                     id, title,
                     class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
-				${floatLabel ? 'items-center' : ''}`,
+				${floatLabel ? 'items-center w-100' : ''}`,
                 }, isUsLocale
                     ? [
                         monthInput,
