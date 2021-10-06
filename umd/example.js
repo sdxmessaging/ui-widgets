@@ -202,18 +202,21 @@ m.mount(document.getElementById("page"), {
 					value: dateVal
 				}))
 			]),
-			m("w-100.flex",
-				m(uiWidgets.DateInput, {
-					field: {
-						id: "dob-in",
-						// label: "Date of Birth",
-						label: "Date Input (ui-widgets Bespoke)",
-						options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
-						floatLabel: true
+			// m("w-100.flex",
+			m(uiWidgets.DateInput, {
+				field: {
+					id: "dob-in",
+					// label: "Date of Birth",
+					label: "Date Input (ui-widgets Bespoke)",
+					options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
+					floatLabel: true,
+					uiClass: {
+						wrapper: "h3 w-100"
 					},
-					value: dateVal
-				}),
-			),
+				},
+				value: dateVal
+			}),
+			// ),
 
 			// Colour
 			m(".flex.mb2", [

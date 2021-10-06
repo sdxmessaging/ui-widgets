@@ -127,7 +127,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			m(".flex.w-100", {
 				id, title,
 				class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
-				${floatLabel ? 'justify-center' : ''}`,
+				${floatLabel ? 'items-center' : ''}`,
 			}, isUsLocale
 				? [
 					monthInput,
