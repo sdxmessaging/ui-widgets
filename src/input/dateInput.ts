@@ -7,7 +7,6 @@ import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
 import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 import { propInvalid } from "../validation";
-
 export class DateInput implements ClassComponent<IPropWidget> {
 
 	private day = stream<string>();
@@ -64,14 +63,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
 			uiClass = {},
-			options
+			options, floatLabel
 		} = field as IOptionField;
 		const locale = options && options.length ? options[0].value : "en-GB";
 		const isUsLocale = locale === "en-US";
 		const classStr = inputCls(uiClass);
 		// Create DD-MM-YYYY inputs
-		const dayInput = m(".dib.mr2", [
-			getLabel(`${id}-dd`, uiClass, "Day"),
+		const dayInput = m(".dib.mr2.z-999", [
+			!floatLabel ? getLabel(`${id}-dd`, uiClass, "Day") : null,
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -84,8 +83,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 			})
 		]);
-		const monthInput = m(".dib.mr2", [
-			getLabel(`${id}-mm`, uiClass, "Month"),
+		const monthInput = m(".dib.mr2.z-999", [
+			!floatLabel ? getLabel(`${id}-mm`, uiClass, "Month") : null,
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -97,8 +96,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				class: classStr, style: styleSm,
 			})
 		]);
-		const yearInput = m(".dib.mr2", [
-			getLabel(`${id}-yyyy`, uiClass, "Year"),
+		const yearInput = m(".dib.mr2.z-999", [
+			!floatLabel ? getLabel(`${id}-yyyy`, uiClass, "Year") : null,
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
@@ -112,12 +111,23 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: wrapperCls(uiClass, disabled)
+			class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mb2 ma0' : ''}`,
 		}, [
-			getLabel(id, uiClass, label, required),
-			m("div", {
+			!floatLabel ? getLabel(id, uiClass, label, required) : null,
+			floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {
+				title: label,
+				style: {
+					transform: 'translate(14px, -7px)',
+					opacity: 0.8,
+					transformOrigin: 'top left',
+					// wordSpacing: '2px',
+					fontSize: '.7rem',
+				}
+			}, label),
+			m(".flex.w-100", {
 				id, title,
-				class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
+				class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
+				${floatLabel ? 'items-center' : ''}`,
 			}, isUsLocale
 				? [
 					monthInput,
@@ -127,7 +137,30 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					dayInput,
 					monthInput,
 					yearInput
-				])
+				],
+				floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0.ba',
+					{
+						style: {
+							inset: '0',
+							top: '-5px',
+							padding: '0 8px',
+						},
+					},
+					m('legend.db.pa0', {
+						style: {
+							visibility: 'hidden',
+							maxWidth: '100%',
+							height: '11px',
+							fontSize: '0.7rem',
+						}
+					}, m('span', {
+						style: {
+							paddingLeft: '5px',
+							paddingRight: '5px',
+						}
+					}, label))
+				)
+			),
 		]);
 	}
 
