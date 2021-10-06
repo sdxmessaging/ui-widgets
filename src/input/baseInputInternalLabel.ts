@@ -17,7 +17,10 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 	};
 
 	public view({ attrs: { field, value, xform = value } }: CVnode<IPropWidget>) {
-		const { label, id, type = FieldType.text, name = id, title = label, disabled, instant, uiClass = {}, shrink } = field;
+		const {
+			label, id, type = FieldType.text, name = id,
+			title = label, disabled, instant, uiClass = {}, shrink
+		} = field;
 		const floatLabel = shrink || value() || this.selected;
 		return m("fieldset.relative.flex.mb2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
