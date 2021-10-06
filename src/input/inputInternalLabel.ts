@@ -24,14 +24,10 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 			label, type = FieldType.text, disabled, uiClass = {}, shrink
 		} = field;
 		const floatLabel = shrink || value() || this.selected;
-		return m("fieldset.relative.flex.mb2", {
+		return m("fieldset.relative.flex.mt2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
-			style: {
-				pointerEvents: 'none',
-				border: 'none'
-			}
 		}, [
-			m("label.db.top-0.left-0.z-9999.absolute", {
+			m("label.db.top-0.left-0.absolute", {
 				title: label,
 				style: {
 					transform: floatLabel ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
@@ -43,16 +39,14 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					fontSize: '1rem',
 				}
 			}, label),
-			m(".flex.bn.h2", {
+			m(".flex.w-100.pa2", {
 				style: {
-					width: '100%',
 					margin: '0px',
 				},
 				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
-				m('.flex.flex-row', {
+				m('.flex.flex-row.w-100', {
 					style: {
-						margin: '0 0.5rem',
 						pointerEvents: 'auto',
 					}
 				}, this.viewInput(vnode)),
@@ -77,7 +71,6 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 						style: {
 							paddingLeft: '5px',
 							paddingRight: '5px',
-							display: 'inline-block'
 						}
 					}, label))
 				)
