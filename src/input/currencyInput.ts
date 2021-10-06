@@ -45,7 +45,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 }
 
-function propToNumber(value: TProp): number {
+export function propToNumber(value: TProp): number {
 	return lodash.isString(value) ? lodash.parseInt(value) : Number(value);
 }
 
