@@ -176,7 +176,7 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "dob-in",
 								label: "Date Input (ui-widgets Bespoke)",
-								options: dateUsFormat() ? [{ value: "en-US" }] : undefined
+								options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
 							},
 							value: dateVal
 						}),
@@ -193,6 +193,7 @@ m.mount(document.getElementById("page"), {
 						})
 					])
 				]),
+
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.DateText, {
 					field: {
 						id: "date-out",
@@ -201,6 +202,18 @@ m.mount(document.getElementById("page"), {
 					value: dateVal
 				}))
 			]),
+			m("w-100.flex",
+				m(uiWidgets.DateInput, {
+					field: {
+						id: "dob-in",
+						// label: "Date of Birth",
+						label: "Date Input (ui-widgets Bespoke)",
+						options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
+						floatLabel: true
+					},
+					value: dateVal
+				}),
+			),
 
 			// Colour
 			m(".flex.mb2", [

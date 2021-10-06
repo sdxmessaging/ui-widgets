@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-05T12:26:33.949Z */
+/* @preserve built on: 2021-10-05T14:51:29.487Z */
 import lodash from 'lodash';
 import m from 'mithril';
 import stream from 'mithril/stream';
@@ -1172,49 +1172,50 @@ class BaseInputInternalLabel {
     view({ attrs: { field, value, xform = value } }) {
         const { label, id, type = "text" /* text */, name = id, title = label, disabled, instant, uiClass = {}, shrink } = field;
         const floatLabel = shrink || value() || this.selected;
-        return m("fieldset.relative.flex", {
+        return m("fieldset.relative.flex.mb2", {
             class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
             style: {
                 pointerEvents: 'none',
-                height: '4rem',
+                border: 'none'
             }
         }, [
             m("label.db.top-0.left-0.z-9999.absolute", {
                 title: label,
                 style: {
-                    transform: floatLabel ? 'translate(16px, 0px) scale(0.8)' : 'translate(14px, 15px) scale(1)',
+                    transform: floatLabel ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
                     transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
                     opacity: floatLabel ? 0.8 : 0.6,
                     transformOrigin: 'top left',
                     wordSpacing: '2px',
+                    fontSize: '1rem',
                 }
             }, label),
-            m(".flex", {
+            m(".flex.bn.h2", {
                 style: {
                     width: '100%',
-                }
+                    margin: '0px',
+                },
+                class: inputWrapperCls(uiClass, propInvalid(field, xform())),
             }, m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", Object.assign(Object.assign({}, field), { name,
                 title, onfocus: this.focusIn, onblur: this.focusOut, 
                 // Update value on change or input ("instant" option)
                 [instant ? "oninput" : "onchange"]: setValue(value), style: {
                     pointerEvents: 'auto',
-                    margin: '0 1rem',
-                } })), m('fieldset.absolute', {
+                    margin: '0 0.5rem'
+                } })), m('fieldset.absolute.ba.b--light-gray', {
                 style: {
-                    top: '-6px',
-                    right: '-3px',
-                    bottom: '-1px',
-                    left: '-3px',
+                    top: '-5px',
+                    right: '-2px',
+                    bottom: '0px',
+                    left: '-2px',
                     padding: '0 8px',
                 },
-                class: inputWrapperCls(uiClass, propInvalid(field, xform())),
             }, m('legend.db.pa0.w-auto', {
                 style: {
                     visibility: 'hidden',
                     maxWidth: floatLabel ? '100%' : '0.01px',
                     height: '11px',
-                    fontSize: '0.8em',
-                    transition: `max-width ${floatLabel ? '0.4s' : '0.3s'} ease-in-out`,
+                    fontSize: '0.7rem',
                 }
             }, m('span', {
                 style: {
@@ -1231,8 +1232,8 @@ class BaseInput {
     view({ attrs }) {
         const { field: { floatLabel, shrink } } = attrs;
         return !floatLabel
-            ? m(BaseInputExternalLabel, attrs, shrink)
-            : m(BaseInputInternalLabel, attrs);
+            ? m(BaseInputExternalLabel, attrs)
+            : m(BaseInputInternalLabel, attrs, shrink);
     }
 }
 
@@ -1448,13 +1449,13 @@ class DateInput {
         this.day.end(true);
     }
     view({ attrs: { field, value } }) {
-        const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options } = field;
+        const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options, floatLabel } = field;
         const locale = options && options.length ? options[0].value : "en-GB";
         const isUsLocale = locale === "en-US";
         const classStr = inputCls(uiClass);
         // Create DD-MM-YYYY inputs
-        const dayInput = m(".dib.mr2", [
-            getLabel(`${id}-dd`, uiClass, "Day"),
+        const dayInput = m(".dib.mr2.z-999", [
+            !floatLabel ? getLabel(`${id}-dd`, uiClass, "Day") : null,
             m("input.w-100.bg-transparent.bn.outline-0", {
                 id: `${id}-dd`, name: `${name}-dd`,
                 type: "text" /* text */, placeholder: "DD",
@@ -1466,8 +1467,8 @@ class DateInput {
                 class: classStr, style: styleSm,
             })
         ]);
-        const monthInput = m(".dib.mr2", [
-            getLabel(`${id}-mm`, uiClass, "Month"),
+        const monthInput = m(".dib.mr2.z-999", [
+            !floatLabel ? getLabel(`${id}-mm`, uiClass, "Month") : null,
             m("input.w-100.bg-transparent.bn.outline-0", {
                 id: `${id}-mm`, name: `${name}-mm`,
                 type: "text" /* text */, placeholder: "MM",
@@ -1479,8 +1480,8 @@ class DateInput {
                 class: classStr, style: styleSm,
             })
         ]);
-        const yearInput = m(".dib.mr2", [
-            getLabel(`${id}-yyyy`, uiClass, "Year"),
+        const yearInput = m(".dib.mr2.z-999", [
+            !floatLabel ? getLabel(`${id}-yyyy`, uiClass, "Year") : null,
             m("input.w-100.bg-transparent.bn.outline-0", {
                 id: `${id}-yyyy`, name: `${name}-yyyy`,
                 type: "text" /* text */, placeholder: "YYYY",
@@ -1494,12 +1495,23 @@ class DateInput {
         ]);
         // Assemble date input (en-GB or en-US layouts)
         return m("fieldset", {
-            class: wrapperCls(uiClass, disabled)
+            class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mb2 ma0' : ''}`,
         }, [
-            getLabel(id, uiClass, label, required),
-            m("div", {
+            !floatLabel ? getLabel(id, uiClass, label, required) : null,
+            floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {
+                title: label,
+                style: {
+                    transform: 'translate(14px, -7px)',
+                    opacity: 0.8,
+                    transformOrigin: 'top left',
+                    // wordSpacing: '2px',
+                    fontSize: '.7rem',
+                }
+            }, label),
+            m(".flex.w-100", {
                 id, title,
-                class: inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid()),
+                class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
+				${floatLabel ? 'justify-center' : ''}`,
             }, isUsLocale
                 ? [
                     monthInput,
@@ -1509,7 +1521,26 @@ class DateInput {
                 dayInput,
                 monthInput,
                 yearInput
-            ])
+            ], floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0.ba', {
+                style: {
+                    inset: '0',
+                    top: '-5px',
+                    padding: '0 8px',
+                },
+            }, m('legend.db.pa0.w-auto', {
+                style: {
+                    visibility: 'hidden',
+                    maxWidth: '100%',
+                    height: '11px',
+                    fontSize: '0.7rem',
+                }
+            }, m('span', {
+                style: {
+                    paddingLeft: '5px',
+                    paddingRight: '5px',
+                    display: 'inline-block'
+                }
+            }, label)))),
         ]);
     }
 }
