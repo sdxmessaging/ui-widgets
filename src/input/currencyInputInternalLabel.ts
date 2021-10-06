@@ -21,7 +21,7 @@ export class CurrencyInputInternalLabel implements ClassComponent<IPropWidget> {
 
 		const currency = options && options.length ? options[0].value : "$";
 
-		return m("fieldset.relative.flex.mb2", {
+		return m("fieldset.relative.flex.mv2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				pointerEvents: 'none',

@@ -1180,7 +1180,7 @@
         view({ attrs: { field, value, xform = value } }) {
             const { label, id, type = "text" /* text */, name = id, title = label, disabled, instant, uiClass = {}, shrink } = field;
             const floatLabel = shrink || value() || this.selected;
-            return m__default['default']("fieldset.relative.flex.mv2", {
+            return m__default['default']("fieldset.relative.flex.mt2", {
                 class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
                 style: {
                     pointerEvents: 'none',
@@ -1204,10 +1204,15 @@
                         margin: '0px',
                     },
                     class: inputWrapperCls(uiClass, propInvalid(field, xform())),
+                }, m__default['default']('.flex.flex-row.w-100', {
+                    style: {
+                        margin: '0 0.5rem',
+                        pointerEvents: 'auto',
+                    }
                 }, m__default['default']("input.w-100.bg-transparent.bn.outline-0.h-100", Object.assign(Object.assign({}, field), { name,
-                    title, onfocus: this.focusIn, onblur: this.focusOut, style: { pointerEvents: 'auto' }, 
+                    title, onfocus: this.focusIn, onblur: this.focusOut, 
                     // Update value on change or input ("instant" option)
-                    [instant ? "oninput" : "onchange"]: setValue(value) })), m__default['default']('fieldset.absolute.ba.b--light-gray.ma0', {
+                    [instant ? "oninput" : "onchange"]: setValue(value) }))), m__default['default']('fieldset.absolute.ba.b--light-gray.ma0', {
                     style: {
                         inset: '0',
                         top: '-5px',
@@ -1338,7 +1343,7 @@
         view({ attrs: { field, value, xform = value } }) {
             const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, type = "text" /* text */, instant, uiClass = {}, options } = field;
             const currency = options && options.length ? options[0].value : "$";
-            return m__default['default']("fieldset.relative.flex.mb2", {
+            return m__default['default']("fieldset.relative.flex.mv2", {
                 class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
                 style: {
                     pointerEvents: 'none',
@@ -1566,7 +1571,7 @@
             ]);
             // Assemble date input (en-GB or en-US layouts)
             return m__default['default']("fieldset", {
-                class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mv2' : ''}`,
+                class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''}`,
             }, [
                 !floatLabel ? getLabel(id, uiClass, label, required) : null,
                 floatLabel && m__default['default']("label.db.top-0.left-0.z-9999.absolute", {

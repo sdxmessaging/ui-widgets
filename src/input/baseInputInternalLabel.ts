@@ -22,7 +22,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			title = label, disabled, instant, uiClass = {}, shrink
 		} = field;
 		const floatLabel = shrink || value() || this.selected;
-		return m("fieldset.relative.flex.mv2", {
+		return m("fieldset.relative.flex.mt2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				pointerEvents: 'none',
@@ -47,18 +47,22 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 				},
 				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
-
-				m("input.w-100.bg-transparent.bn.outline-0.h-100", {
-					...field,
-					name,
-					title,
-					onfocus: this.focusIn,
-					onblur: this.focusOut,
-					style: { pointerEvents: 'auto' },
-					// Update value on change or input ("instant" option)
-					[instant ? "oninput" : "onchange"]: setValue(value),
-				}),
-
+				m('.flex.flex-row.w-100', {
+					style: {
+						margin: '0 0.5rem',
+						pointerEvents: 'auto',
+					}
+				},
+					m("input.w-100.bg-transparent.bn.outline-0.h-100", {
+						...field,
+						name,
+						title,
+						onfocus: this.focusIn,
+						onblur: this.focusOut,
+						// Update value on change or input ("instant" option)
+						[instant ? "oninput" : "onchange"]: setValue(value),
+					}),
+				),
 				m('fieldset.absolute.ba.b--light-gray.ma0',
 					{
 						style: {

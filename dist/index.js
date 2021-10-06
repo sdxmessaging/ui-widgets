@@ -1172,7 +1172,7 @@ class BaseInputInternalLabel {
     view({ attrs: { field, value, xform = value } }) {
         const { label, id, type = "text" /* text */, name = id, title = label, disabled, instant, uiClass = {}, shrink } = field;
         const floatLabel = shrink || value() || this.selected;
-        return m("fieldset.relative.flex.mv2", {
+        return m("fieldset.relative.flex.mt2", {
             class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
             style: {
                 pointerEvents: 'none',
@@ -1196,10 +1196,15 @@ class BaseInputInternalLabel {
                     margin: '0px',
                 },
                 class: inputWrapperCls(uiClass, propInvalid(field, xform())),
+            }, m('.flex.flex-row.w-100', {
+                style: {
+                    margin: '0 0.5rem',
+                    pointerEvents: 'auto',
+                }
             }, m("input.w-100.bg-transparent.bn.outline-0.h-100", Object.assign(Object.assign({}, field), { name,
-                title, onfocus: this.focusIn, onblur: this.focusOut, style: { pointerEvents: 'auto' }, 
+                title, onfocus: this.focusIn, onblur: this.focusOut, 
                 // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setValue(value) })), m('fieldset.absolute.ba.b--light-gray.ma0', {
+                [instant ? "oninput" : "onchange"]: setValue(value) }))), m('fieldset.absolute.ba.b--light-gray.ma0', {
                 style: {
                     inset: '0',
                     top: '-5px',
@@ -1330,7 +1335,7 @@ class CurrencyInputInternalLabel {
     view({ attrs: { field, value, xform = value } }) {
         const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, type = "text" /* text */, instant, uiClass = {}, options } = field;
         const currency = options && options.length ? options[0].value : "$";
-        return m("fieldset.relative.flex.mb2", {
+        return m("fieldset.relative.flex.mv2", {
             class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
             style: {
                 pointerEvents: 'none',
@@ -1558,7 +1563,7 @@ class DateInput {
         ]);
         // Assemble date input (en-GB or en-US layouts)
         return m("fieldset", {
-            class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mv2' : ''}`,
+            class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''}`,
         }, [
             !floatLabel ? getLabel(id, uiClass, label, required) : null,
             floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {

@@ -111,7 +111,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		]);
 		// Assemble date input (en-GB or en-US layouts)
 		return m("fieldset", {
-			class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mv2' : ''}`,
+			class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''}`,
 		}, [
 			!floatLabel ? getLabel(id, uiClass, label, required) : null,
 			floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {
