@@ -22,7 +22,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			title = label, disabled, instant, uiClass = {}, shrink
 		} = field;
 		const floatLabel = shrink || value() || this.selected;
-		return m("fieldset.relative.flex.mb2", {
+		return m("fieldset.relative.flex.mv2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				pointerEvents: 'none',
@@ -41,39 +41,33 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 					fontSize: '1rem',
 				}
 			}, label),
-			m(".flex.bn.h2", {
+			m(".flex.w-100.h2", {
 				style: {
-					width: '100%',
 					margin: '0px',
 				},
 				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
-				m('.flex.flex-row', {
-					style: {
-						margin: '0 0.5rem',
-						pointerEvents: 'auto',
-					}
-				},
-					m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", {
-						...field,
-						name,
-						title,
-						onfocus: this.focusIn,
-						onblur: this.focusOut,
-						// Update value on change or input ("instant" option)
-						[instant ? "oninput" : "onchange"]: setValue(value),
-					})),
-				m('fieldset.absolute.ba.b--light-gray',
+
+				m("input.w-100.bg-transparent.bn.outline-0.h-100", {
+					...field,
+					name,
+					title,
+					onfocus: this.focusIn,
+					onblur: this.focusOut,
+					style: { pointerEvents: 'auto' },
+					// Update value on change or input ("instant" option)
+					[instant ? "oninput" : "onchange"]: setValue(value),
+				}),
+
+				m('fieldset.absolute.ba.b--light-gray.ma0',
 					{
 						style: {
+							inset: '0',
 							top: '-5px',
-							right: '-2px',
-							bottom: '0px',
-							left: '-2px',
 							padding: '0 8px',
 						},
 					},
-					m('legend.db.pa0.w-auto', {
+					m('legend.db.pa0', {
 						style: {
 							visibility: 'hidden',
 							maxWidth: floatLabel ? '100%' : '0.01px',
@@ -84,7 +78,6 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 						style: {
 							paddingLeft: '5px',
 							paddingRight: '5px',
-							display: 'inline-block'
 						}
 					}, label))
 				)

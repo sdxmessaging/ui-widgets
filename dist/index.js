@@ -1172,7 +1172,7 @@ class BaseInputInternalLabel {
     view({ attrs: { field, value, xform = value } }) {
         const { label, id, type = "text" /* text */, name = id, title = label, disabled, instant, uiClass = {}, shrink } = field;
         const floatLabel = shrink || value() || this.selected;
-        return m("fieldset.relative.flex.mb2", {
+        return m("fieldset.relative.flex.mv2", {
             class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
             style: {
                 pointerEvents: 'none',
@@ -1191,29 +1191,21 @@ class BaseInputInternalLabel {
                     fontSize: '1rem',
                 }
             }, label),
-            m(".flex.bn.h2", {
+            m(".flex.w-100.h2", {
                 style: {
-                    width: '100%',
                     margin: '0px',
                 },
                 class: inputWrapperCls(uiClass, propInvalid(field, xform())),
-            }, m('.flex.flex-row', {
-                style: {
-                    margin: '0 0.5rem',
-                    pointerEvents: 'auto',
-                }
-            }, m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", Object.assign(Object.assign({}, field), { name,
-                title, onfocus: this.focusIn, onblur: this.focusOut, 
+            }, m("input.w-100.bg-transparent.bn.outline-0.h-100", Object.assign(Object.assign({}, field), { name,
+                title, onfocus: this.focusIn, onblur: this.focusOut, style: { pointerEvents: 'auto' }, 
                 // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setValue(value) }))), m('fieldset.absolute.ba.b--light-gray', {
+                [instant ? "oninput" : "onchange"]: setValue(value) })), m('fieldset.absolute.ba.b--light-gray.ma0', {
                 style: {
+                    inset: '0',
                     top: '-5px',
-                    right: '-2px',
-                    bottom: '0px',
-                    left: '-2px',
                     padding: '0 8px',
                 },
-            }, m('legend.db.pa0.w-auto', {
+            }, m('legend.db.pa0', {
                 style: {
                     visibility: 'hidden',
                     maxWidth: floatLabel ? '100%' : '0.01px',
@@ -1224,7 +1216,6 @@ class BaseInputInternalLabel {
                 style: {
                     paddingLeft: '5px',
                     paddingRight: '5px',
-                    display: 'inline-block'
                 }
             }, label))))
         ]);
@@ -1333,6 +1324,75 @@ function numberToCurrencyTuple(unitTotal) {
 // Currency TProp update helper
 function setCurrencyValue(val) {
     return ({ target: { value } }) => val(currencyStrToNumber(value));
+}
+
+class CurrencyInputInternalLabel {
+    view({ attrs: { field, value, xform = value } }) {
+        const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, type = "text" /* text */, instant, uiClass = {}, options } = field;
+        const currency = options && options.length ? options[0].value : "$";
+        return m("fieldset.relative.flex.mb2", {
+            class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
+            style: {
+                pointerEvents: 'none',
+                border: 'none'
+            }
+        }, [
+            m("label.db.top-0.left-0.z-9999.absolute", {
+                title: label,
+                style: {
+                    transform: 'translate(15px, -7px) scale(0.7)',
+                    opacity: 0.8,
+                    transformOrigin: 'top left',
+                    wordSpacing: '2px',
+                    fontSize: '1rem',
+                }
+            }, label),
+            m(".flex.bn.h2", {
+                style: {
+                    width: '100%',
+                    margin: '0px',
+                },
+                class: inputWrapperCls(uiClass, propInvalid(field, xform())),
+            }, m('.flex.flex-row', {
+                style: {
+                    margin: '0 0.5rem',
+                    pointerEvents: 'auto',
+                }
+            }, m("span.mr1.self-center", currency), m("input.w-100.bg-transparent.bn.outline-0", {
+                id, type: "text" /* text */, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: lodash.isUndefined(xform())
+                    ? null
+                    : numberToCurrencyStr(propToNumber(xform())),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+            })), m('fieldset.absolute.ba.b--light-gray', {
+                style: {
+                    top: '-5px',
+                    right: '-2px',
+                    bottom: '0px',
+                    left: '-2px',
+                    padding: '0 8px',
+                },
+            }, m('legend.db.pa0.w-auto', {
+                style: {
+                    visibility: 'hidden',
+                    maxWidth: '100%',
+                    height: '11px',
+                    fontSize: '0.7rem',
+                }
+            }, m('span', {
+                style: {
+                    paddingLeft: '5px',
+                    paddingRight: '5px',
+                    display: 'inline-block'
+                }
+            }, label))))
+        ]);
+    }
 }
 
 class CardDateInput {
@@ -1498,7 +1558,7 @@ class DateInput {
         ]);
         // Assemble date input (en-GB or en-US layouts)
         return m("fieldset", {
-            class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mb2 ma0' : ''}`,
+            class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mv2' : ''}`,
         }, [
             !floatLabel ? getLabel(id, uiClass, label, required) : null,
             floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {
@@ -1513,6 +1573,7 @@ class DateInput {
             }, label),
             m(".flex", {
                 id, title,
+                style: { margin: '0px' },
                 class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
 				${floatLabel ? 'items-center w-100' : ''}`,
             }, isUsLocale
@@ -1524,7 +1585,7 @@ class DateInput {
                 dayInput,
                 monthInput,
                 yearInput
-            ], floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0.ba', {
+            ], floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0', {
                 style: {
                     inset: '0',
                     top: '-5px',
@@ -2204,4 +2265,4 @@ class MultiOmniFileInput {
     }
 }
 
-export { Badge, BaseInput, BaseText, Button, ButtonLink, CardDateInput, Checkbox, CheckboxInput, CurrencyInput, DateInput, DateText, DisplayTypeComponent, FileList, FileMulti, FileSelect, ImageList, ImageMulti, ImagePreview, ImageSelect, Label, Link, MultiOmniFileInput, NavButton, NavLink, OmniFileInput, PasswordInput, PasswordStrength, RadioInput, SelectInput, SelectText, SignBuilder, TextareaInput, Toggle, ToggleInput, Trusted, createStamp, currencyStrToNumber, dataURItoBlob, dataUrlToFile, fileConstructor, fileNameExtSplit, getOrientation, guid, iconMap, linkAttrs, numberToCurrencyStr, numberToCurrencyTuple, pxRatio, readArrayBuffer, readOrientation, resizeImage, scaleDataUrl, scaleRect, textToImage, updateButtonContext, updateClasses, updateConfig };
+export { Badge, BaseInput, BaseText, Button, ButtonLink, CardDateInput, Checkbox, CheckboxInput, CurrencyInput, CurrencyInputInternalLabel, DateInput, DateText, DisplayTypeComponent, FileList, FileMulti, FileSelect, ImageList, ImageMulti, ImagePreview, ImageSelect, Label, Link, MultiOmniFileInput, NavButton, NavLink, OmniFileInput, PasswordInput, PasswordStrength, RadioInput, SelectInput, SelectText, SignBuilder, TextareaInput, Toggle, ToggleInput, Trusted, createStamp, currencyStrToNumber, dataURItoBlob, dataUrlToFile, fileConstructor, fileNameExtSplit, getOrientation, guid, iconMap, linkAttrs, numberToCurrencyStr, numberToCurrencyTuple, pxRatio, readArrayBuffer, readOrientation, resizeImage, scaleDataUrl, scaleRect, textToImage, updateButtonContext, updateClasses, updateConfig };
