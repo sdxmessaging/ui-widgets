@@ -48,19 +48,21 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 				},
 				class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 			},
-				m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", {
-					...field,
-					name,
-					title,
-					onfocus: this.focusIn,
-					onblur: this.focusOut,
-					// Update value on change or input ("instant" option)
-					[instant ? "oninput" : "onchange"]: setValue(value),
+				m('.flex.flex-row', {
 					style: {
+						margin: '0 0.5rem',
 						pointerEvents: 'auto',
-						margin: '0 0.5rem'
-					},
-				}),
+					}
+				},
+					m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", {
+						...field,
+						name,
+						title,
+						onfocus: this.focusIn,
+						onblur: this.focusOut,
+						// Update value on change or input ("instant" option)
+						[instant ? "oninput" : "onchange"]: setValue(value),
+					})),
 				m('fieldset.absolute.ba.b--light-gray',
 					{
 						style: {
