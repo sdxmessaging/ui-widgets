@@ -16,6 +16,7 @@ uiWidgets.updateButtonContext({
 // Simple props
 var textVal1 = stream("")
 var textVal = stream("Text");
+var textareaVal = stream("");
 var currencyVal = stream();
 var dateVal = stream();
 var dateUsFormat = stream();
@@ -176,9 +177,10 @@ m.mount(document.getElementById("page"), {
 					id: "text-area-input",
 					label: "Text Area",
 					instant: true,
-					floatLabel: true
+					floatLabel: true,
+					shrink: true
 				},
-				value: currencyVal,
+				value: textareaVal,
 			})),
 
 			// Date
