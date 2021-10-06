@@ -172,13 +172,13 @@ m.mount(document.getElementById("page"), {
 				value: currencyVal,
 			})),
 
-			m('.mb2', m(uiWidgets.TextareaInput, {
+			m('.mb2', m(uiWidgets.TextareaInputInternalLabel, {
 				field: {
 					id: "text-area-input",
 					label: "Text Area",
 					instant: true,
 					floatLabel: true,
-					shrink: true
+					// shrink: true
 				},
 				value: textareaVal,
 			})),
@@ -234,7 +234,7 @@ m.mount(document.getElementById("page"), {
 						options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
 						floatLabel: true,
 						uiClass: {
-							wrapper: "h3 w-100"
+							wrapper: " w-100"
 						},
 					},
 					value: dateVal
