@@ -155,9 +155,20 @@ m.mount(document.getElementById("page"), {
 					id: "text-in-input",
 					label: "Some really really really long label",
 					instant: true,
-					floatLabel: true
+					floatLabel: true,
+					shrink: true
 				},
 				value: textVal1,
+			})),
+			m('.mb2', m(uiWidgets.CurrencyInputInternalLabel, {
+				field: {
+					id: "pound-input",
+					label: "Amount Spent",
+					options: [{
+						value: "£"
+					}]
+				},
+				value: currencyVal,
 			})),
 
 			// Date

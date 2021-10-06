@@ -42,6 +42,7 @@ export { Label } from "./input/label";
 // Prop
 export { BaseInput } from "./input/baseInput";
 export { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, numberToCurrencyTuple } from "./input/currencyInput";
+export { CurrencyInputInternalLabel } from './input/currencyInputInternalLabel';
 export { CardDateInput } from "./input/cardDateInput";
 export { DateInput } from "./input/dateInput";
 export { PasswordInput } from "./input/password";
