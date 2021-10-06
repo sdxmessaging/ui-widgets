@@ -1,27 +1,26 @@
+import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
-import { FieldType, IPropWidget } from "../interface/widget";
-import { inputWrapperCls, wrapperCls } from "../theme";
-import { setValue } from "../utils";
+import { FieldType, IPropWidget, IOptionField } from "../interface/widget";
+import { inputWrapperCls, wrapperCls, inputCls } from "../theme";
 import { propInvalid } from "../validation";
-// import { propInvalid } from "../validation";
+import { numberToCurrencyStr, propToNumber, setCurrencyValue } from "./currencyInput";
 
-export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
-	private selected = false;
-
-	private focusIn = () => {
-		this.selected = true;
-	};
-
-	private focusOut = () => {
-		this.selected = false;
-	};
+export class CurrencyInputInternalLabel implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value, xform = value } }: CVnode<IPropWidget>) {
+
 		const {
-			label, id, type = FieldType.text, name = id,
-			title = label, disabled, instant, uiClass = {}, shrink
-		} = field;
-		const floatLabel = shrink || value() || this.selected;
+			label, id, name = id, title = label, placeholder,
+			max, maxlength, min, minlength, step, required,
+			readonly, disabled, autofocus, autocomplete,
+			pattern, inputmode, spellcheck,
+			type = FieldType.text,
+			instant, uiClass = {},
+			options
+		} = field as IOptionField;
+
+		const currency = options && options.length ? options[0].value : "$";
+
 		return m("fieldset.relative.flex.mb2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
@@ -32,11 +31,9 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 			m("label.db.top-0.left-0.z-9999.absolute", {
 				title: label,
 				style: {
-					transform: floatLabel ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
-					transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
-					opacity: floatLabel ? 0.8 : 0.6,
+					transform: 'translate(15px, -7px) scale(0.7)',
+					opacity: 0.8,
 					transformOrigin: 'top left',
-					// Essential for the legend to fit the correct amount of space
 					wordSpacing: '2px',
 					fontSize: '1rem',
 				}
@@ -54,15 +51,20 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 						pointerEvents: 'auto',
 					}
 				},
-					m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", {
-						...field,
-						name,
-						title,
-						onfocus: this.focusIn,
-						onblur: this.focusOut,
+					m("span.mr1.self-center", currency),
+					m("input.w-100.bg-transparent.bn.outline-0", {
+						id, type: FieldType.text, name, title, placeholder,
+						max, maxlength, min, minlength, step, required,
+						readonly, disabled, autofocus, autocomplete,
+						pattern, inputmode, spellcheck,
+						class: inputCls(uiClass),
+						value: lodash.isUndefined(xform())
+							? null
+							: numberToCurrencyStr(propToNumber(xform())),
 						// Update value on change or input ("instant" option)
-						[instant ? "oninput" : "onchange"]: setValue(value),
-					})),
+						[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+					})
+				),
 				m('fieldset.absolute.ba.b--light-gray',
 					{
 						style: {
@@ -76,7 +78,7 @@ export class BaseInputInternalLabel implements ClassComponent<IPropWidget> {
 					m('legend.db.pa0.w-auto', {
 						style: {
 							visibility: 'hidden',
-							maxWidth: floatLabel ? '100%' : '0.01px',
+							maxWidth: '100%',
 							height: '11px',
 							fontSize: '0.7rem',
 						}
