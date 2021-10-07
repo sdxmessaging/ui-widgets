@@ -35,7 +35,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
-			if (lodash.isDate(date) && !isNaN(date.getTime()) && this.date()) {
+			if (lodash.isDate(date) && !isNaN(date.getTime())) {
 				this.day(lodash.padStart(String(date.getDate()), 2, "0"));
 				this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
 				this.year(String(date.getFullYear()));
