@@ -21,7 +21,6 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-		console.log('floatLabel', floatLabel);
 
 		const internalLabelView = m('.flex.flex-row.w-100',
 			m("span.mr1.self-center", currency),
