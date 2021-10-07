@@ -54,11 +54,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					padding: "0.4em 10px"
 				},
 			},
-				m('.flex.flex-row.w-100', {
-					style: {
-						pointerEvents: 'auto',
-					}
-				}, this.viewInput(vnode)),
+				m('.flex.flex-row.w-100', this.viewInput(vnode)),
 				m('fieldset.absolute.ba.b--light-gray.ph1',
 					{
 						style: {
@@ -66,7 +62,8 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 							right: '-2px',
 							bottom: '0px',
 							left: '-2px',
-							border: 'solid 1px'
+							border: 'solid 1px',
+							pointerEvents: 'none'
 						},
 						class: inputWrapperCls(uiClass, propInvalid(field, xform())),
 
