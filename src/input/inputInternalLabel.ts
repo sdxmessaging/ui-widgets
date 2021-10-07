@@ -24,13 +24,13 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 			label, type = FieldType.text, disabled, uiClass = {}, shrink
 		} = field;
 		const floatLabel = shrink || value() || this.selected;
-		return m("fieldset.relative.flex", {
+		return m("fieldset.relative.flex.mt2", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 		}, [
 			m("label.db.top-0.left-0.absolute", {
 				title: label,
 				style: {
-					transform: floatLabel ? 'translate(12px, -4px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
+					transform: floatLabel ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
 					transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
 					opacity: floatLabel ? 0.8 : 0.6,
 					transformOrigin: 'top left',
@@ -39,7 +39,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					fontSize: '1rem',
 				}
 			}, label),
-			m("fieldset.flex.w-100.pa1.ba", {
+			m(".flex.w-100.pa2", {
 				style: {
 					margin: '0px',
 				},
@@ -50,19 +50,30 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 						pointerEvents: 'auto',
 					}
 				}, this.viewInput(vnode)),
-				m('legend.db.pa0.w-auto.ma1', {
-					style: {
-						visibility: 'hidden',
-						maxWidth: floatLabel ? '100%' : '0.01px',
-						height: '11px',
-						fontSize: '0.7rem',
-					}
-				}, m('span', {
-					style: {
-						paddingLeft: '3px',
-						paddingRight: '5px',
-					}
-				}, label))
+				m('fieldset.absolute.ba.b--light-gray',
+					{
+						style: {
+							top: '-5px',
+							right: '-2px',
+							bottom: '0px',
+							left: '-2px',
+							padding: '0 8px',
+						},
+					},
+					m('legend.db.pa0.w-auto', {
+						style: {
+							visibility: 'hidden',
+							maxWidth: floatLabel ? '100%' : '0.01px',
+							height: '11px',
+							fontSize: '0.7rem',
+						}
+					}, m('span', {
+						style: {
+							paddingLeft: '5px',
+							paddingRight: '5px',
+						}
+					}, label))
+				)
 			)
 		]);
 	}
