@@ -75,6 +75,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 						style: {
 							visibility: 'hidden',
 							maxWidth: floatLabel ? '100%' : '0.01px',
+							transition: "max-width 0.3s",
 							height: '11px',
 							fontSize: '0.7em',
 						}
