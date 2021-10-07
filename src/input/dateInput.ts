@@ -7,8 +7,10 @@ import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget
 import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
 import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 import { propInvalid } from "../validation";
-export class DateInput implements ClassComponent<IPropWidget> {
 
+import { DateInputInternalLabel } from "./dateInputInternalLabel";
+
+export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
 	private month = stream<string>();
 	private year = stream<string>();
@@ -58,19 +60,19 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<IPropWidget>) {
 		const {
 			label, id, name = id, title = label,
 			required, readonly, disabled,
-			uiClass = {},
-			options, floatLabel
-		} = field as IOptionField;
+			uiClass = {}, floatLabel,
+			options
+		} = attrs.field as IOptionField;
+		const { value } = attrs;
 		const locale = options && options.length ? options[0].value : "en-GB";
 		const isUsLocale = locale === "en-US";
 		const classStr = inputCls(uiClass);
 		// Create DD-MM-YYYY inputs
 		const dayInput = m(".dib.mr2.z-999", [
-			!floatLabel ? getLabel(`${id}-dd`, uiClass, "Day") : null,
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -84,7 +86,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const monthInput = m(".dib.mr2.z-999", [
-			!floatLabel ? getLabel(`${id}-mm`, uiClass, "Month") : null,
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -97,7 +98,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const yearInput = m(".dib.mr2.z-999", [
-			!floatLabel ? getLabel(`${id}-yyyy`, uiClass, "Year") : null,
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
@@ -110,59 +110,21 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		// Assemble date input (en-GB or en-US layouts)
-		return m("fieldset", {
-			class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''}`,
-		}, [
-			!floatLabel ? getLabel(id, uiClass, label, required) : null,
-			floatLabel && m("label.db.top-0.left-0.z-9999.absolute", {
-				title: label,
-				style: {
-					transform: 'translate(14px, -7px)',
-					opacity: 0.8,
-					transformOrigin: 'top left',
-					// wordSpacing: '2px',
-					fontSize: '.7rem',
-				}
-			}, label),
-			m(".flex", {
-				id, title,
-				style: { margin: '0px' },
-				class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
-				${floatLabel ? 'items-center w-100' : ''}`,
-			}, isUsLocale
-				? [
-					monthInput,
-					dayInput,
-					yearInput
-				] : [
-					dayInput,
-					monthInput,
-					yearInput
-				],
-				floatLabel && m('fieldset.absolute.ba.b--light-gray.ma0',
-					{
-						style: {
-							inset: '0',
-							top: '-5px',
-							padding: '0 8px',
-						},
-					},
-					m('legend.db.pa0', {
-						style: {
-							visibility: 'hidden',
-							maxWidth: '100%',
-							height: '11px',
-							fontSize: '0.7rem',
-						}
-					}, m('span', {
-						style: {
-							paddingLeft: '5px',
-							paddingRight: '5px',
-						}
-					}, label))
-				)
-			),
-		]);
+		const dateInput = isUsLocale ? [monthInput, dayInput, yearInput] : [dayInput, monthInput, yearInput];
+
+		return !floatLabel
+			? m("fieldset", {
+				class: wrapperCls(uiClass, disabled)
+			}, [
+				getLabel(id, uiClass, label, required),
+				m("div", {
+					id, title,
+					class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()) || !this.valid()),
+				}, dateInput)
+			])
+			:
+			m(DateInputInternalLabel, { ...attrs, children: dateInput });
+
 	}
 
 }
