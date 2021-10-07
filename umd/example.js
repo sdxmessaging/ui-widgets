@@ -172,7 +172,7 @@ m.mount(document.getElementById("page"), {
 				value: currencyVal,
 			})),
 
-			m('.mb2', m(uiWidgets.TextareaInputInternalLabel, {
+			m('.mb2', m(uiWidgets.TextareaInput, {
 				field: {
 					id: "text-area-input",
 					label: "Text Area",
