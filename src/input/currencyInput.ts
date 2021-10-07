@@ -46,7 +46,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			},
 				m("span.mr1", currency),
-				m("input.w-100.bg-transparent.bn.outline-0", {
+				m("input.w-100.bg-transparent.bn.outline-0.z-999", {
 					id, type: FieldType.text, name, title, placeholder,
 					max, maxlength, min, minlength, step, required,
 					readonly, disabled, autofocus, autocomplete,

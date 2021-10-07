@@ -1,16 +1,41 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IPropWidget } from "../interface/widget";
-import { BaseInputExternalLabel } from "./baseInputExternalLabel";
-import { BaseInputInternalLabel } from "./baseInputInternalLabel";
+import { FieldType, IPropWidget } from "../interface/widget";
 
+import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { getLabel, setValue } from "../utils";
+import { propInvalid } from "../validation";
+import { ViewInputOverride } from "./viewInputOverride";
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
-		const { field: { floatLabel, shrink } } = attrs;
-		return !floatLabel
-			? m(BaseInputExternalLabel, attrs)
-			: m(BaseInputInternalLabel, attrs, shrink);
+		const { field, value, xform = value } = attrs;
+		const {
+			label, id, type = FieldType.text, name = id, title = label, placeholder,
+			max, maxlength, min, minlength, step, required,
+			readonly, disabled, autofocus, autocomplete,
+			pattern, inputmode, spellcheck,
+			instant, uiClass = {}, floatLabel
+		} = field;
+		const input = m("input.w-100.bg-transparent.bn.outline-0.z-999", {
+			id, type, name, title, placeholder,
+			max, maxlength, min, minlength, step, required,
+			readonly, disabled, autofocus, autocomplete,
+			pattern, inputmode, spellcheck,
+			class: inputCls(uiClass),
+			value: xform(),
+			// Update value on change or input ("instant" option)
+			[instant ? "oninput" : "onchange"]: setValue(value)
+		});
+		return !floatLabel ? m("fieldset", {
+			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)
+		}, [
+			getLabel(id, uiClass, label, required),
+			m("div", {
+				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+			}, input)
+		]) : m(ViewInputOverride, { ...attrs, children: input });
 	}
+
 }
