@@ -30,11 +30,8 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 		} = field;
 		const floatLabel = shrink || value() || this.selected;
 
-		return m("fieldset.relative.flex", {
-			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
-			style: {
-				marginTop: "0.4em",
-			}
+		return m("fieldset.relative.flex.mt2", {
+			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)
 		}, [
 			m("label.db.top-0.left-0.absolute.z-999", {
 				title: label,
