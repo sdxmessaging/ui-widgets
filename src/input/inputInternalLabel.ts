@@ -33,7 +33,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 		return m("fieldset.relative.flex", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
-				marginTop: "0.4em",
+				marginTop: "calc(0.4em + 0.5rem)",
 			}
 		}, [
 			m("label.db.top-0.left-0.absolute.z-999", {
@@ -48,9 +48,10 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					wordSpacing: '2px',
 				}
 			}, label),
-			m(".flex.w-100.pa2", {
+			m(".flex.w-100", {
 				style: {
 					margin: '0px',
+					padding: "0.4em 10px"
 				},
 			},
 				m('.flex.flex-row.w-100', {

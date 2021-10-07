@@ -20,7 +20,7 @@ export class CurrencyInputInternalLabel extends InputInternalLabel {
 		const currency = options && options.length ? options[0].value : "$";
 		return m('.flex.flex-row.w-100',
 			m("span.mr1.self-center", currency),
-			m("input.w-100.bg-transparent.bn.outline-0.z-999", {
+			m("input.w-100.self-center.bg-transparent.bn.outline-0.z-999", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,
