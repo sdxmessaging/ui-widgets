@@ -16,6 +16,7 @@ uiWidgets.updateButtonContext({
 // Simple props
 var textVal1 = stream("")
 var textVal = stream("Text");
+var textareaVal = stream("");
 var currencyVal = stream();
 var dateVal = stream();
 var dateUsFormat = stream();
@@ -171,6 +172,17 @@ m.mount(document.getElementById("page"), {
 				value: currencyVal,
 			})),
 
+			m('.mb2', m(uiWidgets.TextareaInputInternalLabel, {
+				field: {
+					id: "text-area-input",
+					label: "Text Area",
+					instant: true,
+					floatLabel: true,
+					// shrink: true
+				},
+				value: textareaVal,
+			})),
+
 			// Date
 			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
@@ -222,7 +234,7 @@ m.mount(document.getElementById("page"), {
 						options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
 						floatLabel: true,
 						uiClass: {
-							wrapper: "h3 w-100"
+							wrapper: " w-100"
 						},
 					},
 					value: dateVal

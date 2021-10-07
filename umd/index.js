@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-06T09:07:27.331Z */
+/* @preserve built on: 2021-10-05T14:51:29.487Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
@@ -1623,23 +1623,67 @@
     }
 
     class TextareaInput {
+        constructor() {
+            this.selected = false;
+            this.focusIn = () => {
+                this.selected = true;
+            };
+            this.focusOut = () => {
+                this.selected = false;
+            };
+        }
         view({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, } = field;
+            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, floatLabel, shrink } = field;
+            const shrunk = shrink || value() || this.selected;
             return m__default['default']("fieldset", {
-                class: wrapperCls(uiClass, disabled)
+                class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''} `
             }, [
-                getLabel(id, uiClass, label, required),
-                m__default['default']("div", {
-                    class: inputWrapperCls(uiClass, propInvalid(field, value()))
+                !floatLabel && getLabel(id, uiClass, label, required),
+                floatLabel && m__default['default']("label.db.top-0.left-0.absolute", {
+                    title: label,
+                    style: {
+                        transform: shrunk ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
+                        transition: `transform ${shrunk ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
+                        opacity: shrunk ? 0.8 : 0.6,
+                        transformOrigin: 'top left',
+                        // wordSpacing: '2px',
+                        fontSize: '1rem',
+                    }
+                }, label),
+                m__default['default'](".flex", {
+                    class: `${inputWrapperCls(uiClass, propInvalid(field, value()))} ${floatLabel ? 'w-100 pa2' : ''}`,
+                    style: {
+                        margin: '0px'
+                    }
                 }, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
                     id, name, title,
                     placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-                    class: textareaCls(uiClass),
+                    class: `${textareaCls(uiClass)} ${floatLabel ? 'z-999' : ''}`,
                     value: value(),
                     style: { resize: "none" },
+                    onfocus: this.focusIn,
+                    onblur: this.focusOut,
                     // Update value on change or input ("instant" option)
                     [instant ? "oninput" : "onchange"]: setValue(value)
-                }))
+                }), floatLabel && m__default['default']('fieldset.absolute.ba.b--light-gray.ma0', {
+                    style: {
+                        inset: '0',
+                        top: '-5px',
+                        padding: '0 8px',
+                    },
+                }, m__default['default']('legend.db.pa0', {
+                    style: {
+                        visibility: 'hidden',
+                        maxWidth: '100%',
+                        height: '11px',
+                        fontSize: '0.7rem',
+                    }
+                }, m__default['default']('span', {
+                    style: {
+                        paddingLeft: '5px',
+                        paddingRight: '5px',
+                    }
+                }, label))))
             ]);
         }
     }
