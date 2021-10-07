@@ -26,9 +26,9 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value, xform = value } } = vnode;
 		const {
-			label, type = FieldType.text, disabled, uiClass = {}, shrink
+			label, type = FieldType.text, disabled, uiClass = {}, animate = false
 		} = field;
-		const floatLabel = shrink || value() || this.selected;
+		const shrink = !animate || value() || this.selected;
 
 		return m("fieldset.relative.flex", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
@@ -36,13 +36,13 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 				marginTop: "calc(0.4em + 0.5rem)",
 			}
 		}, [
-			m("label.db.top-0.left-0.absolute.z-999", {
+			m("label.db.top-0.left-0.absolute.z-5", {
 				title: label,
 				style: {
-					transform: floatLabel ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
-					transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
+					transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
+					transition: `transform ${shrink ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
 					display: this.wrapperHeight ? "inherit" : "none",
-					opacity: floatLabel ? 0.8 : 0.6,
+					opacity: shrink ? 0.8 : 0.6,
 					transformOrigin: 'top left',
 					// Essential for the legend to fit the correct amount of space
 					wordSpacing: '2px',
@@ -54,7 +54,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					padding: "0.4em 10px"
 				},
 			},
-				m('.flex.flex-row.w-100', this.viewInput(vnode)),
+				m('.flex.flex-row.w-100', { onfocusin: this.focusIn, onfocusout: this.focusOut }, this.viewInput(vnode)),
 				m('fieldset.absolute.ba.b--light-gray.ph1',
 					{
 						style: {
@@ -71,7 +71,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					m('legend.db.pa0.w-auto', {
 						style: {
 							visibility: 'hidden',
-							maxWidth: floatLabel ? '100%' : '0.01px',
+							maxWidth: shrink ? '100%' : '0.01px',
 							transition: "max-width 0.3s",
 							height: '11px',
 							fontSize: '0.7em',

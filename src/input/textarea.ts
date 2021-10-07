@@ -16,7 +16,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {}, floatLabel
 		} = attrs.field;
 		const { value } = attrs;
-		const textarea = [m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+		const textarea = m("textarea.w-100.bg-transparent.bn.outline-0.h-100.z-999", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			class: textareaCls(uiClass),
@@ -24,7 +24,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			style: { resize: "none" },
 			// Update value on change or input ("instant" option)
 			[instant ? "oninput" : "onchange"]: setValue(value)
-		})];
+		});
 		return !floatLabel ? m("fieldset", {
 			class: wrapperCls(uiClass, disabled)
 		}, [

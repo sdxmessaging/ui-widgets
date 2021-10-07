@@ -18,7 +18,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode, spellcheck,
 			instant, uiClass = {}, floatLabel
 		} = field;
-		const input = m("input.w-100.bg-transparent.bn.outline-0", {
+		const input = m("input.w-100.bg-transparent.bn.outline-0.z-999", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
