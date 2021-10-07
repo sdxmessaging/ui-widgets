@@ -1,3 +1,4 @@
+import { Children } from "mithril";
 import stream from "mithril/stream";
 import { IWidgetClasses, TStyle } from "./theme";
 export declare type TProp = string | number | boolean;
@@ -116,6 +117,7 @@ export interface IFileWidget extends IBaseWidget {
 export interface IPropWidget extends IBaseWidget {
     readonly value: TPropStream;
     readonly xform?: TPropStream;
+    readonly children?: Children;
 }
 export interface IThumbnailArgs {
     title?: string;

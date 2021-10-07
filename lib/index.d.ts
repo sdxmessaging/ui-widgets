@@ -29,6 +29,7 @@ export { CardDateInput } from "./input/cardDateInput";
 export { DateInput } from "./input/dateInput";
 export { PasswordInput } from "./input/password";
 export { TextareaInput } from "./input/textarea";
+export { TextareaInputInternalLabel } from "./input/textareaInputInternalLabel";
 export { CheckboxInput } from "./input/checkbox";
 export { ToggleInput } from "./input/toggle";
 export { RadioInput } from "./input/radio";

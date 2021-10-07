@@ -9,5 +9,5 @@ export declare class CardDateInput implements ClassComponent<IPropWidget> {
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
-    view({ attrs: { field, value } }: CVnode<IPropWidget>): m.Vnode<any, any>;
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<any, any> | m.Vnode<IPropWidget, unknown>;
 }

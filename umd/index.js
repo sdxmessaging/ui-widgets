@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-05T14:51:29.487Z */
+/* @preserve built on: 2021-10-07T13:09:26.489Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
@@ -89,7 +89,7 @@
         wrapper: "pa0 bn",
         label: "f6 silver",
         inputWrapper: "dark-gray",
-        input: "h2 dark-gray fw2",
+        input: "dark-gray fw2",
         button: "pa2 bn br2",
         navButton: "dark-gray",
         textarea: "dark-gray fw2",
@@ -1179,60 +1179,59 @@
         viewInput(vnode) {
             return m__default['default']('span', vnode.attrs.value());
         }
+        oncreate({ dom }) {
+            this.wrapperHeight = dom.clientHeight;
+            m__default['default'].redraw();
+        }
         view(vnode) {
             const { attrs: { field, value, xform = value } } = vnode;
             const { label, type = "text" /* text */, disabled, uiClass = {}, shrink } = field;
             const floatLabel = shrink || value() || this.selected;
-            return m__default['default']("fieldset.relative.flex.mb2", {
+            return m__default['default']("fieldset.relative.flex", {
                 class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
                 style: {
-                    pointerEvents: 'none',
-                    border: 'none'
+                    marginTop: "calc(0.4em + 0.5rem)",
                 }
             }, [
-                m__default['default']("label.db.top-0.left-0.z-9999.absolute", {
+                m__default['default']("label.db.top-0.left-0.absolute.z-999", {
                     title: label,
                     style: {
-                        transform: floatLabel ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
+                        transform: floatLabel ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
                         transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
+                        display: this.wrapperHeight ? "inherit" : "none",
                         opacity: floatLabel ? 0.8 : 0.6,
                         transformOrigin: 'top left',
                         // Essential for the legend to fit the correct amount of space
                         wordSpacing: '2px',
-                        fontSize: '1rem',
                     }
                 }, label),
-                m__default['default'](".flex.bn.h2", {
+                m__default['default'](".flex.w-100", {
                     style: {
-                        width: '100%',
                         margin: '0px',
+                        padding: "0.4em 10px"
                     },
-                    class: inputWrapperCls(uiClass, propInvalid(field, xform())),
-                }, m__default['default']('.flex.flex-row', {
-                    style: {
-                        margin: '0 0.5rem',
-                        pointerEvents: 'auto',
-                    }
-                }, this.viewInput(vnode)), m__default['default']('fieldset.absolute.ba.b--light-gray', {
+                }, m__default['default']('.flex.flex-row.w-100', this.viewInput(vnode)), m__default['default']('fieldset.absolute.ba.b--light-gray.ph1', {
                     style: {
                         top: '-5px',
                         right: '-2px',
                         bottom: '0px',
                         left: '-2px',
-                        padding: '0 8px',
+                        border: 'solid 1px',
+                        pointerEvents: 'none'
                     },
+                    class: inputWrapperCls(uiClass, propInvalid(field, xform())),
                 }, m__default['default']('legend.db.pa0.w-auto', {
                     style: {
                         visibility: 'hidden',
                         maxWidth: floatLabel ? '100%' : '0.01px',
+                        transition: "max-width 0.3s",
                         height: '11px',
-                        fontSize: '0.7rem',
+                        fontSize: '0.7em',
                     }
                 }, m__default['default']('span', {
                     style: {
                         paddingLeft: '5px',
                         paddingRight: '5px',
-                        display: 'inline-block'
                     }
                 }, label))))
             ]);
@@ -1361,7 +1360,7 @@
         viewInput({ attrs: { field, value, xform = value } }) {
             const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
             const currency = options && options.length ? options[0].value : "$";
-            return m__default['default']('.flex.flex-row', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+            return m__default['default']('.flex.flex-row.w-100', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.self-center.bg-transparent.bn.outline-0.z-999", {
                 id, type: "text" /* text */, name, title, placeholder,
                 max, maxlength, min, minlength, step, required,
                 readonly, disabled, autofocus, autocomplete,
@@ -1373,6 +1372,16 @@
                 // Update value on change or input ("instant" option)
                 [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
             }));
+        }
+    }
+
+    class ViewInputOverride extends InputInternalLabel {
+        constructor() {
+            super(...arguments);
+            this.selected = true;
+        }
+        viewInput({ attrs: { children } }) {
+            return children;
         }
     }
 
@@ -1407,47 +1416,47 @@
             this.year.end(true);
             this.month.end(true);
         }
-        view({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {} } = field;
+        view({ attrs }) {
+            const { field, value } = attrs;
+            const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, floatLabel } = field;
             const classStr = inputCls(uiClass);
+            const dateInputs = [
+                m__default['default']("div.dib.mr2", [
+                    m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                        id: `${id}-mm`, name: `${name}-mm`,
+                        type: "text" /* text */, placeholder: "MM",
+                        minlength: "2", maxlength: "2",
+                        pattern: "[0-9]*", inputmode: "numeric",
+                        required, readonly, disabled,
+                        value: this.month(),
+                        class: classStr, style: styleSm,
+                        oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
+                    })
+                ]),
+                m__default['default']("span.mr2", "/"),
+                m__default['default']("div.dib.mr2", [
+                    m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                        id: `${id}-yy`, name: `${name}-yy`,
+                        type: "text" /* text */, placeholder: "YY",
+                        minlength: "2", maxlength: "2",
+                        pattern: "[0-9]*", inputmode: "numeric",
+                        required, readonly, disabled,
+                        value: this.year(),
+                        class: classStr, style: styleSm,
+                        oninput: () => handleDateChange(this.year, id, "yy", this.dom)
+                    })
+                ])
+            ];
             // Assemble date input (en-GB or en-US layouts)
-            return m__default['default']("fieldset", {
+            return !floatLabel ? m__default['default']("fieldset", {
                 class: wrapperCls(uiClass, disabled)
             }, [
                 getLabel(`${id}-mm`, uiClass, label, required),
                 m__default['default']("div", {
                     title,
                     class: inputWrapperCls(uiClass, propInvalid(field, value()))
-                }, [
-                    m__default['default']("div.dib.mr2", [
-                        getLabel(`${id}-mm`, uiClass, "Month"),
-                        m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
-                            id: `${id}-mm`, name: `${name}-mm`,
-                            type: "text" /* text */, placeholder: "MM",
-                            minlength: "2", maxlength: "2",
-                            pattern: "[0-9]*", inputmode: "numeric",
-                            required, readonly, disabled,
-                            value: this.month(),
-                            class: classStr, style: styleSm,
-                            oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
-                        })
-                    ]),
-                    m__default['default']("span.mr2", "/"),
-                    m__default['default']("div.dib.mr2", [
-                        getLabel(`${id}-yy`, uiClass, "Year"),
-                        m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
-                            id: `${id}-yy`, name: `${name}-yy`,
-                            type: "text" /* text */, placeholder: "YY",
-                            minlength: "2", maxlength: "2",
-                            pattern: "[0-9]*", inputmode: "numeric",
-                            required, readonly, disabled,
-                            value: this.year(),
-                            class: classStr, style: styleSm,
-                            oninput: () => handleDateChange(this.year, id, "yy", this.dom)
-                        })
-                    ])
-                ])
-            ]);
+                }, dateInputs)
+            ]) : m__default['default'](ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: dateInputs }));
         }
     }
 
@@ -1492,14 +1501,14 @@
             this.month.end(true);
             this.day.end(true);
         }
-        view({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, options, floatLabel } = field;
+        view({ attrs }) {
+            const { label, id, name = id, title = label, required, readonly, disabled, uiClass = {}, floatLabel, options } = attrs.field;
+            const { value } = attrs;
             const locale = options && options.length ? options[0].value : "en-GB";
             const isUsLocale = locale === "en-US";
             const classStr = inputCls(uiClass);
             // Create DD-MM-YYYY inputs
             const dayInput = m__default['default'](".dib.mr2.z-999", [
-                !floatLabel ? getLabel(`${id}-dd`, uiClass, "Day") : null,
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id: `${id}-dd`, name: `${name}-dd`,
                     type: "text" /* text */, placeholder: "DD",
@@ -1512,7 +1521,6 @@
                 })
             ]);
             const monthInput = m__default['default'](".dib.mr2.z-999", [
-                !floatLabel ? getLabel(`${id}-mm`, uiClass, "Month") : null,
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id: `${id}-mm`, name: `${name}-mm`,
                     type: "text" /* text */, placeholder: "MM",
@@ -1525,7 +1533,6 @@
                 })
             ]);
             const yearInput = m__default['default'](".dib.mr2.z-999", [
-                !floatLabel ? getLabel(`${id}-yyyy`, uiClass, "Year") : null,
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id: `${id}-yyyy`, name: `${name}-yyyy`,
                     type: "text" /* text */, placeholder: "YYYY",
@@ -1538,54 +1545,18 @@
                 })
             ]);
             // Assemble date input (en-GB or en-US layouts)
-            return m__default['default']("fieldset", {
-                class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''}`,
-            }, [
-                !floatLabel ? getLabel(id, uiClass, label, required) : null,
-                floatLabel && m__default['default']("label.db.top-0.left-0.z-9999.absolute", {
-                    title: label,
-                    style: {
-                        transform: 'translate(14px, -7px)',
-                        opacity: 0.8,
-                        transformOrigin: 'top left',
-                        // wordSpacing: '2px',
-                        fontSize: '.7rem',
-                    }
-                }, label),
-                m__default['default'](".flex", {
-                    id, title,
-                    style: { margin: '0px' },
-                    class: `${inputWrapperCls(uiClass, propInvalid(field, value()) || !this.valid())}
-				${floatLabel ? 'items-center w-100' : ''}`,
-                }, isUsLocale
-                    ? [
-                        monthInput,
-                        dayInput,
-                        yearInput
-                    ] : [
-                    dayInput,
-                    monthInput,
-                    yearInput
-                ], floatLabel && m__default['default']('fieldset.absolute.ba.b--light-gray.ma0', {
-                    style: {
-                        inset: '0',
-                        top: '-5px',
-                        padding: '0 8px',
-                    },
-                }, m__default['default']('legend.db.pa0', {
-                    style: {
-                        visibility: 'hidden',
-                        maxWidth: '100%',
-                        height: '11px',
-                        fontSize: '0.7rem',
-                    }
-                }, m__default['default']('span', {
-                    style: {
-                        paddingLeft: '5px',
-                        paddingRight: '5px',
-                    }
-                }, label)))),
-            ]);
+            const dateInput = isUsLocale ? [monthInput, dayInput, yearInput] : [dayInput, monthInput, yearInput];
+            return !floatLabel
+                ? m__default['default']("fieldset", {
+                    class: wrapperCls(uiClass, disabled)
+                }, [
+                    getLabel(id, uiClass, label, required),
+                    m__default['default']("div", {
+                        id, title,
+                        class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()) || !this.valid()),
+                    }, dateInput)
+                ])
+                : m__default['default'](ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: dateInput }));
         }
     }
 
@@ -1622,69 +1593,51 @@
         }
     }
 
-    class TextareaInput {
-        constructor() {
-            this.selected = false;
-            this.focusIn = () => {
-                this.selected = true;
-            };
-            this.focusOut = () => {
-                this.selected = false;
-            };
+    class TextareaInputInternalLabel extends InputInternalLabel {
+        viewInput({ attrs: { field, value } }) {
+            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {} } = field;
+            return m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100.z-999", {
+                id, name, title,
+                placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
+                class: textareaCls(uiClass),
+                value: value(),
+                onfocus: this.focusIn,
+                onblur: this.focusOut,
+                style: { resize: "none" },
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            });
         }
+    }
+
+    class TextareaInputExternalLabel {
         view({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, floatLabel, shrink } = field;
-            const shrunk = shrink || value() || this.selected;
+            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, } = field;
             return m__default['default']("fieldset", {
-                class: `${wrapperCls(uiClass, disabled)} ${floatLabel ? 'relative flex mt2' : ''} `
+                class: wrapperCls(uiClass, disabled)
             }, [
-                !floatLabel && getLabel(id, uiClass, label, required),
-                floatLabel && m__default['default']("label.db.top-0.left-0.absolute", {
-                    title: label,
-                    style: {
-                        transform: shrunk ? 'translate(15px, -7px) scale(0.7)' : 'translate(10px, 9px) scale(1)',
-                        transition: `transform ${shrunk ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
-                        opacity: shrunk ? 0.8 : 0.6,
-                        transformOrigin: 'top left',
-                        // wordSpacing: '2px',
-                        fontSize: '1rem',
-                    }
-                }, label),
-                m__default['default'](".flex", {
-                    class: `${inputWrapperCls(uiClass, propInvalid(field, value()))} ${floatLabel ? 'w-100 pa2' : ''}`,
-                    style: {
-                        margin: '0px'
-                    }
+                getLabel(id, uiClass, label, required),
+                m__default['default']("div", {
+                    class: inputWrapperCls(uiClass, propInvalid(field, value()))
                 }, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
                     id, name, title,
                     placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-                    class: `${textareaCls(uiClass)} ${floatLabel ? 'z-999' : ''}`,
+                    class: textareaCls(uiClass),
                     value: value(),
                     style: { resize: "none" },
-                    onfocus: this.focusIn,
-                    onblur: this.focusOut,
                     // Update value on change or input ("instant" option)
                     [instant ? "oninput" : "onchange"]: setValue(value)
-                }), floatLabel && m__default['default']('fieldset.absolute.ba.b--light-gray.ma0', {
-                    style: {
-                        inset: '0',
-                        top: '-5px',
-                        padding: '0 8px',
-                    },
-                }, m__default['default']('legend.db.pa0', {
-                    style: {
-                        visibility: 'hidden',
-                        maxWidth: '100%',
-                        height: '11px',
-                        fontSize: '0.7rem',
-                    }
-                }, m__default['default']('span', {
-                    style: {
-                        paddingLeft: '5px',
-                        paddingRight: '5px',
-                    }
-                }, label))))
+                }))
             ]);
+        }
+    }
+
+    class TextareaInput {
+        view({ attrs }) {
+            const { field: { floatLabel, shrink = false } } = attrs;
+            return !floatLabel
+                ? m__default['default'](TextareaInputExternalLabel, attrs)
+                : m__default['default'](TextareaInputInternalLabel, attrs, shrink);
         }
     }
 
@@ -2323,6 +2276,7 @@
     exports.SelectText = SelectText;
     exports.SignBuilder = SignBuilder;
     exports.TextareaInput = TextareaInput;
+    exports.TextareaInputInternalLabel = TextareaInputInternalLabel;
     exports.Toggle = Toggle;
     exports.ToggleInput = ToggleInput;
     exports.Trusted = Trusted;

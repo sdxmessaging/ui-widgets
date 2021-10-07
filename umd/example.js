@@ -182,7 +182,6 @@ m.mount(document.getElementById("page"), {
 				},
 				value: textareaVal,
 			})),
-
 			// Date
 			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
@@ -412,6 +411,16 @@ m.mount(document.getElementById("page"), {
 					value: cardVal
 				}))
 			]),
+
+			m('.mb2', m(uiWidgets.CardDateInput, {
+				field: {
+					id: "card-date-internal",
+					label: "Card Date Internal",
+					instant: true,
+					floatLabel: true,
+				},
+				value: cardVal,
+			})),
 
 			m("p", "Perform custom transforms by mapping the input stream to a new value"),
 			m("p", "Note that a transform stream value is fed back into the initial value on each update"),
