@@ -64,7 +64,7 @@ describe("DateInput", () => {
 		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
 
-		expect(value()).toBe("2020-01-01");
+		expect(value()).toBe("");
 		// Set invalid value
 		dayIn.value = "00";
 		monthIn.value = "00";
@@ -74,7 +74,7 @@ describe("DateInput", () => {
 		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
 
-		expect(value()).toBe("1900-01-01");
+		expect(value()).toBe("");
 
 		dayIn.value = "31";
 		monthIn.value = "12";
@@ -162,7 +162,7 @@ test("configured + value change - GB locale", () => {
 	dayIn.dispatchEvent(new Event("input"));
 	monthIn.dispatchEvent(new Event("input"));
 	yearIn.dispatchEvent(new Event("input"));
-	expect(value()).toBe("2020-12-31");
+	expect(value()).toBe("");
 });
 
 test("auto advance - locale GB", () => {
