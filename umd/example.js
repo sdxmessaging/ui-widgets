@@ -130,7 +130,8 @@ m.mount(document.getElementById("page"), {
 						id: "text-in-input",
 						label: "Text Input (updates on input)",
 						instant: true,
-						floatLabel: true
+						floatLabel: true,
+						animate: true
 					},
 					value: textVal1,
 				})),
@@ -157,11 +158,11 @@ m.mount(document.getElementById("page"), {
 					label: "Some really really really long label",
 					instant: true,
 					floatLabel: true,
-					shrink: true
+					animate: false
 				},
 				value: textVal1,
 			})),
-			m('.mb2', m(uiWidgets.CurrencyInputInternalLabel, {
+			m('.mb2', m(uiWidgets.CurrencyInput, {
 				field: {
 					id: "pound-input",
 					label: "Amount Spent",
@@ -178,7 +179,7 @@ m.mount(document.getElementById("page"), {
 					label: "Text Area",
 					instant: true,
 					floatLabel: true,
-					// shrink: true
+					animate: true
 				},
 				value: textareaVal,
 			})),
