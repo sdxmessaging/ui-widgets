@@ -6,20 +6,39 @@ import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../int
 import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabel } from "../utils";
 import { propInvalid } from "../validation";
+import { ViewInputOverride } from "./viewInputOverride";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
-	public view({ attrs: { field, value, xform = value } }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<IPropWidget>) {
+		const { field, value, xform = value } = attrs;
 		const {
 			label, id, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
-			pattern, inputmode, spellcheck,
+			pattern, inputmode, spellcheck, floatLabel,
 			instant, uiClass = {},
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-		return m("fieldset.flex-shrink-0", {
+		console.log('floatLabel', floatLabel);
+
+		const internalLabelView = m('.flex.flex-row.w-100',
+			m("span.mr1.self-center", currency),
+			m("input.w-100.self-center.bg-transparent.bn.outline-0.z-999", {
+				id, type: FieldType.text, name, title, placeholder,
+				max, maxlength, min, minlength, step, required,
+				readonly, disabled, autofocus, autocomplete,
+				pattern, inputmode, spellcheck,
+				class: inputCls(uiClass),
+				value: lodash.isUndefined(xform())
+					? null
+					: numberToCurrencyStr(propToNumber(xform())),
+				// Update value on change or input ("instant" option)
+				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+			}));
+
+		return !floatLabel ? m("fieldset.flex-shrink-0", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, label, required),
@@ -40,7 +59,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 					[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
 				})
 			)
-		]);
+		]) : m(ViewInputOverride, { ...attrs, children: internalLabelView });
 	}
 
 }
