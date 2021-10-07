@@ -8,7 +8,7 @@ import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../them
 import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 import { propInvalid } from "../validation";
 
-import { DateInputInternalLabel } from "./dateInputInternalLabel";
+import { ViewInputOverride } from "./viewInputOverride";
 
 export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
@@ -122,8 +122,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()) || !this.valid()),
 				}, dateInput)
 			])
-			:
-			m(DateInputInternalLabel, { ...attrs, children: dateInput });
+			: m(ViewInputOverride, { ...attrs, children: dateInput });
 
 	}
 
