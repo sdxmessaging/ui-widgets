@@ -1,4 +1,4 @@
-import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
+import m, { Children, ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { FieldType, IPropWidget } from "../interface/widget";
 import { inputWrapperCls, wrapperCls } from "../theme";
 import { propInvalid } from "../validation";
@@ -14,7 +14,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 		this.selected = false;
 	};
 
-	protected viewInput(vnode: CVnode<IPropWidget>) {
+	protected viewInput(vnode: CVnode<IPropWidget>): Children {
 		return m('span', vnode.attrs.value());
 	}
 
