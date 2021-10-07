@@ -18,7 +18,7 @@ export class CurrencyInputInternalLabel extends InputInternalLabel {
 		} = field as IOptionField;
 
 		const currency = options && options.length ? options[0].value : "$";
-		return m('.flex.flex-row',
+		return m('.flex.flex-row.w-100',
 			m("span.mr1.self-center", currency),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
