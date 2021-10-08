@@ -1164,7 +1164,7 @@ class InputInternalLabel {
                 marginBottom: "calc(0.4em + 0.5rem)",
             }
         }, [
-            m("label.db.top-0.left-0.absolute", {
+            m("label.db.top-0.left-0.absolute.z-1", {
                 title: label,
                 style: {
                     transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
@@ -1182,7 +1182,7 @@ class InputInternalLabel {
                     margin: '0px',
                     padding: "0.4em 10px"
                 },
-            }, m('.flex.flex-row.w-100', { onfocusin: this.focusIn, onfocusout: this.focusOut }, this.viewInput(vnode)), m('fieldset.absolute.ba.b--light-gray.ph1', {
+            }, m('.flex.flex-row.w-100.z-1', { onfocusin: this.focusIn, onfocusout: this.focusOut }, this.viewInput(vnode)), m('fieldset.absolute.ba.b--light-gray.ph1', {
                 style: {
                     top: '-5px',
                     right: '-2px',
