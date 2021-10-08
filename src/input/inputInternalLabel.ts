@@ -1,6 +1,6 @@
 import m, { Children, ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { FieldType, IPropWidget } from "../interface/widget";
-import { inputWrapperCls, wrapperCls } from "../theme";
+import { inputWrapperCls, labelCls, wrapperCls } from "../theme";
 import { propInvalid } from "../validation";
 
 export class InputInternalLabel implements ClassComponent<IPropWidget> {
@@ -26,7 +26,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value, xform = value } } = vnode;
 		const {
-			label, type = FieldType.text, disabled, uiClass = {}, animate = false, id
+			label, type = FieldType.text, disabled, uiClass = {}, animate = false, id, required
 		} = field;
 		const shrink = !animate || value() || this.selected;
 		console.log(id);
@@ -39,6 +39,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 		}, [
 			m("label.db.top-0.left-0.absolute.z-1", {
 				title: label,
+				class: labelCls(uiClass, required),
 				style: {
 					transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
 					transition: `transform ${shrink ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
