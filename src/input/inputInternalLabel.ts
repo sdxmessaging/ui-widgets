@@ -22,6 +22,13 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 		this.wrapperHeight = dom.clientHeight;
 		m.redraw();
 	}
+	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
+		if (dom.clientHeight !== this.wrapperHeight) {
+			this.wrapperHeight = dom.clientHeight;
+			m.redraw();
+		}
+
+	}
 
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value, xform = value } } = vnode;
