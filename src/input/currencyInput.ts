@@ -22,9 +22,8 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
 
-		const internalLabelView = m('.flex.flex-row.w-100',
-			m("span.mr1.self-center", currency),
-			m("input.w-100.self-center.bg-transparent.bn.outline-0.z-999", {
+		const internalLabelView = m('.flex.flex-row.w-100', m("span.mr1.self-center", currency),
+			m("input.w-100.bg-transparent.bn.outline-0.z-999", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,
@@ -43,20 +42,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			getLabel(id, uiClass, label, required),
 			m(".flex.items-center", {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
-			},
-				m("span.mr1", currency),
-				m("input.w-100.bg-transparent.bn.outline-0.z-999", {
-					id, type: FieldType.text, name, title, placeholder,
-					max, maxlength, min, minlength, step, required,
-					readonly, disabled, autofocus, autocomplete,
-					pattern, inputmode, spellcheck,
-					class: inputCls(uiClass),
-					value: lodash.isUndefined(xform())
-						? null
-						: numberToCurrencyStr(propToNumber(xform())),
-					// Update value on change or input ("instant" option)
-					[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-				})
+			}, internalLabelView
 			)
 		]) : m(ViewInputOverride, { ...attrs, children: internalLabelView });
 	}

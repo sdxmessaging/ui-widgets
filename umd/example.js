@@ -168,7 +168,8 @@ m.mount(document.getElementById("page"), {
 					label: "Amount Spent",
 					options: [{
 						value: "£"
-					}]
+					}],
+					floatLabel: true
 				},
 				value: currencyVal,
 			})),
