@@ -1160,7 +1160,8 @@ class InputInternalLabel {
         return m("fieldset.relative.flex", {
             class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
             style: {
-            // marginTop: "calc(0.4em + 0.5rem)",
+                marginTop: "calc(0.4em + 0.5rem)",
+                marginBottom: "calc(0.4em + 0.5rem)",
             }
         }, [
             m("label.db.top-0.left-0.absolute", {
