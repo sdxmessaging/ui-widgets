@@ -16,7 +16,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {}, floatLabel
 		} = attrs.field;
 		const { value } = attrs;
-		const textarea = m("textarea.w-100.bg-transparent.bn.outline-0.h-100.z-999", {
+		const textarea = m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			class: textareaCls(uiClass),

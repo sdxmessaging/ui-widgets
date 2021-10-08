@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-07T13:09:26.489Z */
+/* @preserve built on: 2021-10-07T13:57:28.651Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
@@ -1143,29 +1143,6 @@
         }
     }
 
-    class BaseInputExternalLabel {
-        view({ attrs: { field, value, xform = value } }) {
-            const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {} } = field;
-            return m__default['default']("fieldset", {
-                class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)
-            }, [
-                getLabel(id, uiClass, label, required),
-                m__default['default']("div", {
-                    class: inputWrapperCls(uiClass, propInvalid(field, xform()))
-                }, m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
-                    id, type, name, title, placeholder,
-                    max, maxlength, min, minlength, step, required,
-                    readonly, disabled, autofocus, autocomplete,
-                    pattern, inputmode, spellcheck,
-                    class: inputCls(uiClass),
-                    value: xform(),
-                    // Update value on change or input ("instant" option)
-                    [instant ? "oninput" : "onchange"]: setValue(value)
-                }))
-            ]);
-        }
-    }
-
     class InputInternalLabel {
         constructor() {
             this.selected = false;
@@ -1185,32 +1162,34 @@
         }
         view(vnode) {
             const { attrs: { field, value, xform = value } } = vnode;
-            const { label, type = "text" /* text */, disabled, uiClass = {}, shrink } = field;
-            const floatLabel = shrink || value() || this.selected;
+            const { label, type = "text" /* text */, disabled, uiClass = {}, animate = false, id } = field;
+            const shrink = !animate || value() || this.selected;
+            console.log(id);
             return m__default['default']("fieldset.relative.flex", {
                 class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
                 style: {
-                    marginTop: "calc(0.4em + 0.5rem)",
+                // marginTop: "calc(0.4em + 0.5rem)",
                 }
             }, [
-                m__default['default']("label.db.top-0.left-0.absolute.z-999", {
+                m__default['default']("label.db.top-0.left-0.absolute", {
                     title: label,
                     style: {
-                        transform: floatLabel ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
-                        transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
+                        transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
+                        transition: `transform ${shrink ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
                         display: this.wrapperHeight ? "inherit" : "none",
-                        opacity: floatLabel ? 0.8 : 0.6,
+                        opacity: shrink ? 0.8 : 0.6,
                         transformOrigin: 'top left',
                         // Essential for the legend to fit the correct amount of space
                         wordSpacing: '2px',
-                    }
+                    },
+                    for: id
                 }, label),
                 m__default['default'](".flex.w-100", {
                     style: {
                         margin: '0px',
                         padding: "0.4em 10px"
                     },
-                }, m__default['default']('.flex.flex-row.w-100', this.viewInput(vnode)), m__default['default']('fieldset.absolute.ba.b--light-gray.ph1', {
+                }, m__default['default']('.flex.flex-row.w-100', { onfocusin: this.focusIn, onfocusout: this.focusOut }, this.viewInput(vnode)), m__default['default']('fieldset.absolute.ba.b--light-gray.ph1', {
                     style: {
                         top: '-5px',
                         right: '-2px',
@@ -1223,7 +1202,7 @@
                 }, m__default['default']('legend.db.pa0.w-auto', {
                     style: {
                         visibility: 'hidden',
-                        maxWidth: floatLabel ? '100%' : '0.01px',
+                        maxWidth: shrink ? '100%' : '0.01px',
                         transition: "max-width 0.3s",
                         height: '11px',
                         fontSize: '0.7em',
@@ -1238,48 +1217,62 @@
         }
     }
 
-    class BaseInputInternalLabel extends InputInternalLabel {
-        viewInput({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, instant } = field;
-            return m__default['default']("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", Object.assign(Object.assign({}, field), { name,
-                title, onfocus: this.focusIn, onblur: this.focusOut, 
-                // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setValue(value) }));
+    class ViewInputOverride extends InputInternalLabel {
+        viewInput({ attrs: { children } }) {
+            return children;
         }
     }
 
     class BaseInput {
         view({ attrs }) {
-            const { field: { floatLabel, shrink } } = attrs;
-            return !floatLabel
-                ? m__default['default'](BaseInputExternalLabel, attrs)
-                : m__default['default'](BaseInputInternalLabel, attrs, shrink);
+            const { field, value, xform = value } = attrs;
+            const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, floatLabel } = field;
+            const input = m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                id, type, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: xform(),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            });
+            return !floatLabel ? m__default['default']("fieldset", {
+                class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)
+            }, [
+                getLabel(id, uiClass, label, required),
+                m__default['default']("div", {
+                    class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+                }, input)
+            ]) : m__default['default'](ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: input }));
         }
     }
 
     class CurrencyInput {
-        view({ attrs: { field, value, xform = value } }) {
-            const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
+        view({ attrs }) {
+            const { field, value, xform = value } = attrs;
+            const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, floatLabel, instant, uiClass = {}, options } = field;
             const currency = options && options.length ? options[0].value : "$";
-            return m__default['default']("fieldset.flex-shrink-0", {
+            const internalLabelView = m__default['default']('.flex.flex-row.w-100', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                id, type: "text" /* text */, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: lodash__default['default'].isUndefined(xform())
+                    ? null
+                    : numberToCurrencyStr(propToNumber(xform())),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+            }));
+            return !floatLabel ? m__default['default']("fieldset.flex-shrink-0", {
                 class: wrapperCls(uiClass, disabled)
             }, [
                 getLabel(id, uiClass, label, required),
                 m__default['default'](".flex.items-center", {
                     class: inputWrapperCls(uiClass, propInvalid(field, xform()))
-                }, m__default['default']("span.mr1", currency), m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
-                    id, type: "text" /* text */, name, title, placeholder,
-                    max, maxlength, min, minlength, step, required,
-                    readonly, disabled, autofocus, autocomplete,
-                    pattern, inputmode, spellcheck,
-                    class: inputCls(uiClass),
-                    value: lodash__default['default'].isUndefined(xform())
-                        ? null
-                        : numberToCurrencyStr(propToNumber(xform())),
-                    // Update value on change or input ("instant" option)
-                    [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-                }))
-            ]);
+                }, internalLabelView)
+            ]) : m__default['default'](ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: internalLabelView }));
         }
     }
     function propToNumber(value) {
@@ -1350,39 +1343,6 @@
     // Currency TProp update helper
     function setCurrencyValue(val) {
         return ({ target: { value } }) => val(currencyStrToNumber(value));
-    }
-
-    class CurrencyInputInternalLabel extends InputInternalLabel {
-        constructor() {
-            super(...arguments);
-            this.selected = true;
-        }
-        viewInput({ attrs: { field, value, xform = value } }) {
-            const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
-            const currency = options && options.length ? options[0].value : "$";
-            return m__default['default']('.flex.flex-row.w-100', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.self-center.bg-transparent.bn.outline-0.z-999", {
-                id, type: "text" /* text */, name, title, placeholder,
-                max, maxlength, min, minlength, step, required,
-                readonly, disabled, autofocus, autocomplete,
-                pattern, inputmode, spellcheck,
-                class: inputCls(uiClass),
-                value: lodash__default['default'].isUndefined(xform())
-                    ? null
-                    : numberToCurrencyStr(propToNumber(xform())),
-                // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-            }));
-        }
-    }
-
-    class ViewInputOverride extends InputInternalLabel {
-        constructor() {
-            super(...arguments);
-            this.selected = true;
-        }
-        viewInput({ attrs: { children } }) {
-            return children;
-        }
     }
 
     class CardDateInput {
@@ -1508,7 +1468,7 @@
             const isUsLocale = locale === "en-US";
             const classStr = inputCls(uiClass);
             // Create DD-MM-YYYY inputs
-            const dayInput = m__default['default'](".dib.mr2.z-999", [
+            const dayInput = m__default['default'](".dib.mr2", [
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id: `${id}-dd`, name: `${name}-dd`,
                     type: "text" /* text */, placeholder: "DD",
@@ -1520,7 +1480,7 @@
                     class: classStr, style: styleSm,
                 })
             ]);
-            const monthInput = m__default['default'](".dib.mr2.z-999", [
+            const monthInput = m__default['default'](".dib.mr2", [
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id: `${id}-mm`, name: `${name}-mm`,
                     type: "text" /* text */, placeholder: "MM",
@@ -1532,7 +1492,7 @@
                     class: classStr, style: styleSm,
                 })
             ]);
-            const yearInput = m__default['default'](".dib.mr2.z-999", [
+            const yearInput = m__default['default'](".dib.mr2", [
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id: `${id}-yyyy`, name: `${name}-yyyy`,
                     type: "text" /* text */, placeholder: "YYYY",
@@ -1593,51 +1553,27 @@
         }
     }
 
-    class TextareaInputInternalLabel extends InputInternalLabel {
-        viewInput({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {} } = field;
-            return m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100.z-999", {
+    class TextareaInput {
+        view({ attrs }) {
+            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, floatLabel } = attrs.field;
+            const { value } = attrs;
+            const textarea = m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
                 id, name, title,
                 placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
                 class: textareaCls(uiClass),
                 value: value(),
-                onfocus: this.focusIn,
-                onblur: this.focusOut,
                 style: { resize: "none" },
                 // Update value on change or input ("instant" option)
                 [instant ? "oninput" : "onchange"]: setValue(value)
             });
-        }
-    }
-
-    class TextareaInputExternalLabel {
-        view({ attrs: { field, value } }) {
-            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, } = field;
-            return m__default['default']("fieldset", {
+            return !floatLabel ? m__default['default']("fieldset", {
                 class: wrapperCls(uiClass, disabled)
             }, [
                 getLabel(id, uiClass, label, required),
                 m__default['default']("div", {
-                    class: inputWrapperCls(uiClass, propInvalid(field, value()))
-                }, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
-                    id, name, title,
-                    placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-                    class: textareaCls(uiClass),
-                    value: value(),
-                    style: { resize: "none" },
-                    // Update value on change or input ("instant" option)
-                    [instant ? "oninput" : "onchange"]: setValue(value)
-                }))
-            ]);
-        }
-    }
-
-    class TextareaInput {
-        view({ attrs }) {
-            const { field: { floatLabel, shrink = false } } = attrs;
-            return !floatLabel
-                ? m__default['default'](TextareaInputExternalLabel, attrs)
-                : m__default['default'](TextareaInputInternalLabel, attrs, shrink);
+                    class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()))
+                }, textarea)
+            ]) : m__default['default'](ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: textarea }));
         }
     }
 
@@ -2252,7 +2188,6 @@
     exports.Checkbox = Checkbox;
     exports.CheckboxInput = CheckboxInput;
     exports.CurrencyInput = CurrencyInput;
-    exports.CurrencyInputInternalLabel = CurrencyInputInternalLabel;
     exports.DateInput = DateInput;
     exports.DateText = DateText;
     exports.DisplayTypeComponent = DisplayTypeComponent;
@@ -2276,7 +2211,6 @@
     exports.SelectText = SelectText;
     exports.SignBuilder = SignBuilder;
     exports.TextareaInput = TextareaInput;
-    exports.TextareaInputInternalLabel = TextareaInputInternalLabel;
     exports.Toggle = Toggle;
     exports.ToggleInput = ToggleInput;
     exports.Trusted = Trusted;

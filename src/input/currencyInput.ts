@@ -23,7 +23,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		const currency = options && options.length ? options[0].value : "$";
 
 		const internalLabelView = m('.flex.flex-row.w-100', m("span.mr1.self-center", currency),
-			m("input.w-100.bg-transparent.bn.outline-0.z-999", {
+			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete,

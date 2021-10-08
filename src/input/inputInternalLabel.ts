@@ -26,17 +26,17 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value, xform = value } } = vnode;
 		const {
-			label, type = FieldType.text, disabled, uiClass = {}, animate = false
+			label, type = FieldType.text, disabled, uiClass = {}, animate = false, id
 		} = field;
 		const shrink = !animate || value() || this.selected;
-
+		console.log(id);
 		return m("fieldset.relative.flex", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
 				// marginTop: "calc(0.4em + 0.5rem)",
 			}
 		}, [
-			m("label.db.top-0.left-0.absolute.z-5", {
+			m("label.db.top-0.left-0.absolute", {
 				title: label,
 				style: {
 					transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
@@ -46,7 +46,8 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 					transformOrigin: 'top left',
 					// Essential for the legend to fit the correct amount of space
 					wordSpacing: '2px',
-				}
+				},
+				for: id
 			}, label),
 			m(".flex.w-100", {
 				style: {

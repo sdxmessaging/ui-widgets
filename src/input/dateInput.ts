@@ -72,7 +72,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const isUsLocale = locale === "en-US";
 		const classStr = inputCls(uiClass);
 		// Create DD-MM-YYYY inputs
-		const dayInput = m(".dib.mr2.z-999", [
+		const dayInput = m(".dib.mr2", [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -85,7 +85,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 			})
 		]);
-		const monthInput = m(".dib.mr2.z-999", [
+		const monthInput = m(".dib.mr2", [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -97,7 +97,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				class: classStr, style: styleSm,
 			})
 		]);
-		const yearInput = m(".dib.mr2.z-999", [
+		const yearInput = m(".dib.mr2", [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",

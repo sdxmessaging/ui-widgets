@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-07T13:09:26.489Z */
+/* @preserve built on: 2021-10-07T13:57:28.651Z */
 import lodash from 'lodash';
 import m from 'mithril';
 import stream from 'mithril/stream';
@@ -1135,29 +1135,6 @@ class Label {
     }
 }
 
-class BaseInputExternalLabel {
-    view({ attrs: { field, value, xform = value } }) {
-        const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {} } = field;
-        return m("fieldset", {
-            class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)
-        }, [
-            getLabel(id, uiClass, label, required),
-            m("div", {
-                class: inputWrapperCls(uiClass, propInvalid(field, xform()))
-            }, m("input.w-100.bg-transparent.bn.outline-0", {
-                id, type, name, title, placeholder,
-                max, maxlength, min, minlength, step, required,
-                readonly, disabled, autofocus, autocomplete,
-                pattern, inputmode, spellcheck,
-                class: inputCls(uiClass),
-                value: xform(),
-                // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setValue(value)
-            }))
-        ]);
-    }
-}
-
 class InputInternalLabel {
     constructor() {
         this.selected = false;
@@ -1177,32 +1154,34 @@ class InputInternalLabel {
     }
     view(vnode) {
         const { attrs: { field, value, xform = value } } = vnode;
-        const { label, type = "text" /* text */, disabled, uiClass = {}, shrink } = field;
-        const floatLabel = shrink || value() || this.selected;
+        const { label, type = "text" /* text */, disabled, uiClass = {}, animate = false, id } = field;
+        const shrink = !animate || value() || this.selected;
+        console.log(id);
         return m("fieldset.relative.flex", {
             class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
             style: {
-                marginTop: "calc(0.4em + 0.5rem)",
+            // marginTop: "calc(0.4em + 0.5rem)",
             }
         }, [
-            m("label.db.top-0.left-0.absolute.z-999", {
+            m("label.db.top-0.left-0.absolute", {
                 title: label,
                 style: {
-                    transform: floatLabel ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
-                    transition: `transform ${floatLabel ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
+                    transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
+                    transition: `transform ${shrink ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
                     display: this.wrapperHeight ? "inherit" : "none",
-                    opacity: floatLabel ? 0.8 : 0.6,
+                    opacity: shrink ? 0.8 : 0.6,
                     transformOrigin: 'top left',
                     // Essential for the legend to fit the correct amount of space
                     wordSpacing: '2px',
-                }
+                },
+                for: id
             }, label),
             m(".flex.w-100", {
                 style: {
                     margin: '0px',
                     padding: "0.4em 10px"
                 },
-            }, m('.flex.flex-row.w-100', this.viewInput(vnode)), m('fieldset.absolute.ba.b--light-gray.ph1', {
+            }, m('.flex.flex-row.w-100', { onfocusin: this.focusIn, onfocusout: this.focusOut }, this.viewInput(vnode)), m('fieldset.absolute.ba.b--light-gray.ph1', {
                 style: {
                     top: '-5px',
                     right: '-2px',
@@ -1215,7 +1194,7 @@ class InputInternalLabel {
             }, m('legend.db.pa0.w-auto', {
                 style: {
                     visibility: 'hidden',
-                    maxWidth: floatLabel ? '100%' : '0.01px',
+                    maxWidth: shrink ? '100%' : '0.01px',
                     transition: "max-width 0.3s",
                     height: '11px',
                     fontSize: '0.7em',
@@ -1230,48 +1209,62 @@ class InputInternalLabel {
     }
 }
 
-class BaseInputInternalLabel extends InputInternalLabel {
-    viewInput({ attrs: { field, value } }) {
-        const { label, id, name = id, title = label, instant } = field;
-        return m("input.w-100.bg-transparent.bn.outline-0.static.h-100.z-999", Object.assign(Object.assign({}, field), { name,
-            title, onfocus: this.focusIn, onblur: this.focusOut, 
-            // Update value on change or input ("instant" option)
-            [instant ? "oninput" : "onchange"]: setValue(value) }));
+class ViewInputOverride extends InputInternalLabel {
+    viewInput({ attrs: { children } }) {
+        return children;
     }
 }
 
 class BaseInput {
     view({ attrs }) {
-        const { field: { floatLabel, shrink } } = attrs;
-        return !floatLabel
-            ? m(BaseInputExternalLabel, attrs)
-            : m(BaseInputInternalLabel, attrs, shrink);
+        const { field, value, xform = value } = attrs;
+        const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, floatLabel } = field;
+        const input = m("input.w-100.bg-transparent.bn.outline-0", {
+            id, type, name, title, placeholder,
+            max, maxlength, min, minlength, step, required,
+            readonly, disabled, autofocus, autocomplete,
+            pattern, inputmode, spellcheck,
+            class: inputCls(uiClass),
+            value: xform(),
+            // Update value on change or input ("instant" option)
+            [instant ? "oninput" : "onchange"]: setValue(value)
+        });
+        return !floatLabel ? m("fieldset", {
+            class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)
+        }, [
+            getLabel(id, uiClass, label, required),
+            m("div", {
+                class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+            }, input)
+        ]) : m(ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: input }));
     }
 }
 
 class CurrencyInput {
-    view({ attrs: { field, value, xform = value } }) {
-        const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
+    view({ attrs }) {
+        const { field, value, xform = value } = attrs;
+        const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, floatLabel, instant, uiClass = {}, options } = field;
         const currency = options && options.length ? options[0].value : "$";
-        return m("fieldset.flex-shrink-0", {
+        const internalLabelView = m('.flex.flex-row.w-100', m("span.mr1.self-center", currency), m("input.w-100.bg-transparent.bn.outline-0", {
+            id, type: "text" /* text */, name, title, placeholder,
+            max, maxlength, min, minlength, step, required,
+            readonly, disabled, autofocus, autocomplete,
+            pattern, inputmode, spellcheck,
+            class: inputCls(uiClass),
+            value: lodash.isUndefined(xform())
+                ? null
+                : numberToCurrencyStr(propToNumber(xform())),
+            // Update value on change or input ("instant" option)
+            [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+        }));
+        return !floatLabel ? m("fieldset.flex-shrink-0", {
             class: wrapperCls(uiClass, disabled)
         }, [
             getLabel(id, uiClass, label, required),
             m(".flex.items-center", {
                 class: inputWrapperCls(uiClass, propInvalid(field, xform()))
-            }, m("span.mr1", currency), m("input.w-100.bg-transparent.bn.outline-0", {
-                id, type: "text" /* text */, name, title, placeholder,
-                max, maxlength, min, minlength, step, required,
-                readonly, disabled, autofocus, autocomplete,
-                pattern, inputmode, spellcheck,
-                class: inputCls(uiClass),
-                value: lodash.isUndefined(xform())
-                    ? null
-                    : numberToCurrencyStr(propToNumber(xform())),
-                // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-            }))
-        ]);
+            }, internalLabelView)
+        ]) : m(ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: internalLabelView }));
     }
 }
 function propToNumber(value) {
@@ -1342,39 +1335,6 @@ function numberToCurrencyTuple(unitTotal) {
 // Currency TProp update helper
 function setCurrencyValue(val) {
     return ({ target: { value } }) => val(currencyStrToNumber(value));
-}
-
-class CurrencyInputInternalLabel extends InputInternalLabel {
-    constructor() {
-        super(...arguments);
-        this.selected = true;
-    }
-    viewInput({ attrs: { field, value, xform = value } }) {
-        const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
-        const currency = options && options.length ? options[0].value : "$";
-        return m('.flex.flex-row.w-100', m("span.mr1.self-center", currency), m("input.w-100.self-center.bg-transparent.bn.outline-0.z-999", {
-            id, type: "text" /* text */, name, title, placeholder,
-            max, maxlength, min, minlength, step, required,
-            readonly, disabled, autofocus, autocomplete,
-            pattern, inputmode, spellcheck,
-            class: inputCls(uiClass),
-            value: lodash.isUndefined(xform())
-                ? null
-                : numberToCurrencyStr(propToNumber(xform())),
-            // Update value on change or input ("instant" option)
-            [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-        }));
-    }
-}
-
-class ViewInputOverride extends InputInternalLabel {
-    constructor() {
-        super(...arguments);
-        this.selected = true;
-    }
-    viewInput({ attrs: { children } }) {
-        return children;
-    }
 }
 
 class CardDateInput {
@@ -1500,7 +1460,7 @@ class DateInput {
         const isUsLocale = locale === "en-US";
         const classStr = inputCls(uiClass);
         // Create DD-MM-YYYY inputs
-        const dayInput = m(".dib.mr2.z-999", [
+        const dayInput = m(".dib.mr2", [
             m("input.w-100.bg-transparent.bn.outline-0", {
                 id: `${id}-dd`, name: `${name}-dd`,
                 type: "text" /* text */, placeholder: "DD",
@@ -1512,7 +1472,7 @@ class DateInput {
                 class: classStr, style: styleSm,
             })
         ]);
-        const monthInput = m(".dib.mr2.z-999", [
+        const monthInput = m(".dib.mr2", [
             m("input.w-100.bg-transparent.bn.outline-0", {
                 id: `${id}-mm`, name: `${name}-mm`,
                 type: "text" /* text */, placeholder: "MM",
@@ -1524,7 +1484,7 @@ class DateInput {
                 class: classStr, style: styleSm,
             })
         ]);
-        const yearInput = m(".dib.mr2.z-999", [
+        const yearInput = m(".dib.mr2", [
             m("input.w-100.bg-transparent.bn.outline-0", {
                 id: `${id}-yyyy`, name: `${name}-yyyy`,
                 type: "text" /* text */, placeholder: "YYYY",
@@ -1585,51 +1545,27 @@ class PasswordInput {
     }
 }
 
-class TextareaInputInternalLabel extends InputInternalLabel {
-    viewInput({ attrs: { field, value } }) {
-        const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {} } = field;
-        return m("textarea.w-100.bg-transparent.bn.outline-0.h-100.z-999", {
+class TextareaInput {
+    view({ attrs }) {
+        const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, floatLabel } = attrs.field;
+        const { value } = attrs;
+        const textarea = m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
             id, name, title,
             placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
             class: textareaCls(uiClass),
             value: value(),
-            onfocus: this.focusIn,
-            onblur: this.focusOut,
             style: { resize: "none" },
             // Update value on change or input ("instant" option)
             [instant ? "oninput" : "onchange"]: setValue(value)
         });
-    }
-}
-
-class TextareaInputExternalLabel {
-    view({ attrs: { field, value } }) {
-        const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {}, } = field;
-        return m("fieldset", {
+        return !floatLabel ? m("fieldset", {
             class: wrapperCls(uiClass, disabled)
         }, [
             getLabel(id, uiClass, label, required),
             m("div", {
-                class: inputWrapperCls(uiClass, propInvalid(field, value()))
-            }, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
-                id, name, title,
-                placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-                class: textareaCls(uiClass),
-                value: value(),
-                style: { resize: "none" },
-                // Update value on change or input ("instant" option)
-                [instant ? "oninput" : "onchange"]: setValue(value)
-            }))
-        ]);
-    }
-}
-
-class TextareaInput {
-    view({ attrs }) {
-        const { field: { floatLabel, shrink = false } } = attrs;
-        return !floatLabel
-            ? m(TextareaInputExternalLabel, attrs)
-            : m(TextareaInputInternalLabel, attrs, shrink);
+                class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()))
+            }, textarea)
+        ]) : m(ViewInputOverride, Object.assign(Object.assign({}, attrs), { children: textarea }));
     }
 }
 
@@ -2235,4 +2171,4 @@ class MultiOmniFileInput {
     }
 }
 
-export { Badge, BaseInput, BaseText, Button, ButtonLink, CardDateInput, Checkbox, CheckboxInput, CurrencyInput, CurrencyInputInternalLabel, DateInput, DateText, DisplayTypeComponent, FileList, FileMulti, FileSelect, ImageList, ImageMulti, ImagePreview, ImageSelect, Label, Link, MultiOmniFileInput, NavButton, NavLink, OmniFileInput, PasswordInput, PasswordStrength, RadioInput, SelectInput, SelectText, SignBuilder, TextareaInput, TextareaInputInternalLabel, Toggle, ToggleInput, Trusted, createStamp, currencyStrToNumber, dataURItoBlob, dataUrlToFile, fileConstructor, fileNameExtSplit, getOrientation, guid, iconMap, linkAttrs, numberToCurrencyStr, numberToCurrencyTuple, pxRatio, readArrayBuffer, readOrientation, resizeImage, scaleDataUrl, scaleRect, textToImage, updateButtonContext, updateClasses, updateConfig };
+export { Badge, BaseInput, BaseText, Button, ButtonLink, CardDateInput, Checkbox, CheckboxInput, CurrencyInput, DateInput, DateText, DisplayTypeComponent, FileList, FileMulti, FileSelect, ImageList, ImageMulti, ImagePreview, ImageSelect, Label, Link, MultiOmniFileInput, NavButton, NavLink, OmniFileInput, PasswordInput, PasswordStrength, RadioInput, SelectInput, SelectText, SignBuilder, TextareaInput, Toggle, ToggleInput, Trusted, createStamp, currencyStrToNumber, dataURItoBlob, dataUrlToFile, fileConstructor, fileNameExtSplit, getOrientation, guid, iconMap, linkAttrs, numberToCurrencyStr, numberToCurrencyTuple, pxRatio, readArrayBuffer, readOrientation, resizeImage, scaleDataUrl, scaleRect, textToImage, updateButtonContext, updateClasses, updateConfig };
