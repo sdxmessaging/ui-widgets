@@ -25,6 +25,9 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode, spellcheck,
 			class: inputCls(uiClass),
 			value: xform(),
+			style: {
+				height: 'auto'
+			},
 			// Update value on change or input ("instant" option)
 			[instant ? "oninput" : "onchange"]: setValue(value)
 		});
