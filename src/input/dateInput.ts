@@ -72,7 +72,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const isUsLocale = locale === "en-US";
 		const classStr = inputCls(uiClass);
 		// Create DD-MM-YYYY inputs
-		const dayInput = m(".dib.mr2", [
+		const dayInput = m(".dib", [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -81,11 +81,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.day(),
 				oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
-				class: classStr, style: styleSm,
-
+				class: classStr,
+				style: {
+					maxWidth: '3ex',
+					textAlign: this.day() && this.day().length === 2 ? "center" : "left"
+				}
 			})
 		]);
-		const monthInput = m(".dib.mr2", [
+		const monthInput = m(".dib", [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
@@ -94,10 +97,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.month(),
 				oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
-				class: classStr, style: styleSm,
+				class: classStr,
+				style: {
+					maxWidth: "3.5ex",
+					textAlign: this.month() && this.month().length === 2 ? "center" : "left"
+				}
 			})
 		]);
-		const yearInput = m(".dib.mr2", [
+		const yearInput = m(".dib", [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
@@ -106,11 +113,17 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.year(),
 				oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
-				class: classStr, style: styleLg,
+				class: classStr,
+				// style: styleLg,
+				style: {
+					maxWidth: '5ch',
+				}
 			})
 		]);
+		const slash = m('span.self-center', '/');
 		// Assemble date input (en-GB or en-US layouts)
-		const dateInput = isUsLocale ? [monthInput, dayInput, yearInput] : [dayInput, monthInput, yearInput];
+		const dateInput = isUsLocale ? [monthInput, slash, dayInput, slash, yearInput]
+			: [dayInput, slash, monthInput, slash, yearInput];
 
 		return !floatLabel
 			? m("fieldset", {
