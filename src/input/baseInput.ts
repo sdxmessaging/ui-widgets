@@ -25,9 +25,7 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode, spellcheck,
 			class: inputCls(uiClass),
 			value: xform(),
-			style: {
-				height: 'auto'
-			},
+			style: type === FieldType.text ? { height: "auto" } : null,
 			// Update value on change or input ("instant" option)
 			[instant ? "oninput" : "onchange"]: setValue(value)
 		});
