@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
-import { inputCls, inputWrapperCls, wrapperCls, styleSm, styleLg } from "../theme";
+import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 import { propInvalid } from "../validation";
 
