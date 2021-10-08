@@ -29,7 +29,8 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 			label, type = FieldType.text, disabled, uiClass = {}, animate = false, id, required
 		} = field;
 		const shrink = !animate || value() || this.selected;
-		console.log(id);
+		const defaultPosition = `translate(10px, ${type === FieldType.textarea ? "10px" : `calc(${this.wrapperHeight / 2}px - 0.5em)`}) scale(1)`;
+
 		return m("fieldset.relative.flex", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
@@ -41,7 +42,7 @@ export class InputInternalLabel implements ClassComponent<IPropWidget> {
 				title: label,
 				class: labelCls(uiClass, required),
 				style: {
-					transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : `translate(10px, calc(${this.wrapperHeight / 2}px - 0.5em)) scale(1)`,
+					transform: shrink ? 'translate(10px, -0.4em) scale(0.7)' : defaultPosition,
 					transition: `transform ${shrink ? '0.3s' : '0.4s'} ease-in-out, opacity 0.4s ease-in-out`,
 					display: this.wrapperHeight ? "inherit" : "none",
 					opacity: shrink ? 0.8 : 0.6,
