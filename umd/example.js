@@ -54,7 +54,7 @@ var themeWrapper = stream("pa0 bn");
 themeWrapper.map(function (newCls) {
 	uiWidgets.updateClasses({ wrapper: newCls });
 });
-var themeLabel = stream("f6 silver");
+var themeLabel = stream("silver");
 themeLabel.map(function (newCls) {
 	uiWidgets.updateClasses({ label: newCls });
 });
@@ -180,7 +180,8 @@ m.mount(document.getElementById("page"), {
 					label: "Text Area",
 					instant: true,
 					floatLabel: true,
-					animate: true
+					animate: true,
+					type: "textarea"
 				},
 				value: textareaVal,
 			})),
