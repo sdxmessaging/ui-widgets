@@ -23,7 +23,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 		const innerText = displayType === DisplayType.none || !file
 			? config.addFileTxt
 			: file.name;
-		return m("fieldset", {
+		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
 			m(FileInput, {
@@ -33,7 +33,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value, true),
 				value
 			},
-				m("div", {
+				m("fieldset", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".flex.items-center.pa1", {

@@ -41,7 +41,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { disabled, uiClass = {} } = field;
-		return m("fieldset", {
+		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			m(FileInput, {
@@ -50,7 +50,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value),
 				value
 			},
-				m("div", {
+				m("fieldset", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".pa2", {

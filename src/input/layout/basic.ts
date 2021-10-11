@@ -13,13 +13,13 @@ export class Basic implements ClassComponent<IPropWidget> {
 		const { field, value, xform = value } = attrs;
 		const { label, id, type = FieldType.text, required, disabled, uiClass = {} } = field;
 		// Wrapper
-		return m("fieldset", {
+		return m("div", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)
 		}, [
 			// Basic label
 			getLabel(id, uiClass, label, required),
 			// Input wrapper
-			m("div", {
+			m("fieldset", {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			},
 				// Input

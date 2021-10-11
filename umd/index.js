@@ -1,2 +1,2223 @@
-/* @preserve built on: 2021-10-11T09:04:51.511Z */
-(function(e,t){typeof exports==="object"&&typeof module!=="undefined"?t(exports,require("lodash"),require("mithril"),require("mithril/stream"),require("signature_pad")):typeof define==="function"&&define.amd?define(["exports","lodash","mithril","mithril/stream","signature_pad"],t):(e=typeof globalThis!=="undefined"?globalThis:e||self,t(e.uiWidgets={},e._,e.m,e.m.stream,e.SignaturePad))})(this,(function(e,t,a,l,n){"use strict";function s(e){return e&&typeof e==="object"&&"default"in e?e:{default:e}}var i=s(t);var r=s(a);var c=s(l);var u=s(n);const d={imageMaxSize:1280,imageDispHeight:"16rem",thumbDispHeight:"6rem",addFileTxt:"Upload...",addFilesTxt:"Add file(s)...",remFileTtl:"Remove",openFileTxt:"Open file",showPassTxt:"Show Password",requiredLblPost:"",signOpts:[{label:"",value:"draw"},{label:"",value:"type"},{label:"",value:"stamp"}],signMaxSize:640,signHeightPct:25,signFont:"sans-serif",signDrawTxt:"Draw",signTypeTxt:"Type",signStampTxt:"Accept",stampTxt:"Accept",stampBtnClass:"",stampBtnContext:"default",stampSetTxt:"Accepted",applyTtl:"Apply",resetTtl:"Reset",cancelTtl:"Cancel",drawIcn:"fas fa-signature",typeIcn:"fas fa-keyboard",stampIcn:"fas fa-check",applyIcn:"fas fa-check",resetIcn:"fas fa-eraser",cancelIcn:"fas fa-times",checkIcn:"far fa-check-square",uncheckIcn:"far fa-square",toggleOnIcn:"fas fa-toggle-on",toggleOffIcn:"fas fa-toggle-off",showPassIcn:"fas fa-eye",hidePassIcn:"fas fa-eye-slash",uploadIcn:"fas fa-file-upload",downloadIcn:"fas fa-file-download",deleteIcn:"fas fa-trash-alt",cameraIcn:"fas fa-camera",imageIcn:"fas fa-image",emailIcn:"fas fa-envelope",telIcn:"fas fa-phone",linkIcn:"fas fa-link",wordDocIcn:"fas fa-file-word",videoFileIcn:"fas fa-file-video",pdfFileIcn:"fas fa-file-pdf",musicFileIcn:"fas fa-file-audio",excelFileIcn:"fas fa-file-excel",fileIcn:"fas fa-file",codeFileIcn:"fas fa-file-code"};const o=d;function f(e){i["default"].assign(d,e)}function p(){return{"max-height":o.imageDispHeight}}function m(){return{"max-height":o.thumbDispHeight}}const h={"max-width":"5.4ex"};const g={wrapper:"pa0 bn",label:"f6 silver",inputWrapper:"dark-gray",input:"dark-gray fw2",button:"pa2 bn br2",navButton:"dark-gray",textarea:"dark-gray fw2",radio:"dark-gray pa2 br2",radioChecked:"bg-light-blue",radioUnchecked:"o-60",fileInput:"dark-gray ba bw1 br3 b--dashed b--black-30",fileHover:"blue b--blue",displayLabel:"silver",displayValue:"dark-gray",requiredLabel:"",disabledWrapper:"o-40",invalidInputWrapper:""};const b=g;function y(e){i["default"].assign(g,e)}const v={default:"bg-light-blue dark-gray"};function x(e){i["default"].assign(v,e)}function w(e="default"){if(e&&e in v){return v[e]}else{return""}}function I({wrapper:e="",merge:t=true},a){return`${e} ${t?b.wrapper:""} ${a?b.disabledWrapper:""}`}function k({label:e="",merge:t=true},a){return`${e} ${t?b.label:""} ${a?b.requiredLabel:""}`}function $({inputWrapper:e="",merge:t=true},a){return`${e} ${t?b.inputWrapper:""} ${a?b.invalidInputWrapper:""}`}function T({input:e="",merge:t=true}){return`${e} ${t?b.input:""}`}function S(e,t,a){return`${T(e)} ${U(t,a)}`}function C({input:e="",merge:t=true}){return`${e} ${t?b.textarea:""}`}function q({input:e="",merge:t=true},a,l,n){return`${e} ${t?b.radio:""} ${a?b.radioChecked:b.radioUnchecked} ${U(l,n)}`}function P(e){return`${b.fileInput} ${e?b.fileHover:""}`}function U(e,t){return e||t?"":"pointer"}function D(e){return(e+256).toString(16).substr(1)}function F(){const e=new Uint8Array(16);const t=window.crypto;t.getRandomValues(e);return[D(e[0]),D(e[1]),D(e[2]),D(e[3]),"-",D(e[4]),D(e[5]),"-",D(e[6]),D(e[7]),"-",D(e[8]),D(e[9]),"-",D(e[10]),D(e[11]),D(e[12]),D(e[13]),D(e[14]),D(e[15])].join("")}function M(){return Math.max(window.devicePixelRatio,1)}function A(e,t){return t?`${e}${o.requiredLblPost}`:e}function L(e,t){return t?t:e}function H(e){return e?r["default"]("span.mr2.truncate",{title:e,class:b.displayLabel},e):null}function z(e,t,a,l){return a?r["default"]("label.mb1.db",{title:a,for:e,class:k(t,l)},A(a,l)):null}function B(e,t,a){return[e?r["default"]("i.fa-fw",{class:`${t?"mr2":""} ${e}`}):null,t,a?r["default"]("i.fa-fw",{class:`${t?"ml2":""} ${a}`}):null]}function O(e){return function({target:{value:t}}){e(t)}}function R(e){return function({target:{checked:t}}){e(t)}}function N(e,t,a){switch(e){case"dd":return(isNaN(t)||t<=3)&&((isNaN(a)||t===3&&a<=1||t<3)&&!(t===0&&a===0));case"mm":return(isNaN(t)||t<=1)&&((isNaN(a)||t===1&&a<=2||t<1)&&!(t===0&&a===0));case"yyyy":return(isNaN(t)||t>=1&&t<3)&&(isNaN(a)||t===1&&a===9||t===2);case"yy":return isNaN(t)||t>=0}}function W(e,t,a){t.map(t=>{const l=t?"":`${a}`;e.setCustomValidity(l)})}function _(e,t){e.map(e=>{if(e!==t()){t(e)}})}function j(e,t,a,l,n){const s=parseInt(t.getAttribute("maxlength"));if(l.length===s&&a){const t=n.querySelector(`#${e}-${a}`);t.focus()}}function V(e,t,a,l,n){const s=l.querySelector(`#${t}-${a}`);const i=e()?e():"";const r=s.value;const c=/^\d*$/.test(r);const u=parseInt(r.charAt(0));const d=parseInt(r.charAt(1));const o=N(a,u,d);if((c||r==="")&&o){e(r)}else{e(i)}j(t,s,n,e(),l)}function E(e){const t=e.lastIndexOf(".");if(t===-1){return[e,""]}else{return[e.substr(0,t),e.substr(t)]}}function Y(e){const t=e.split(",");const a=t[0].indexOf("base64")>=0?atob(t[1]):unescape(t[1]);const l=t[0].split(":")[1].split(";")[0];const n=a.length;const s=new Uint8Array(n);for(let e=0;e<n;e++){s[e]=a.charCodeAt(e)}return new Blob([s],{type:l})}function G(e,t){const a=(new Date).valueOf();const l=e;l.name=t;l.lastModified=a;return e}function Z(e,t,a){const l=G(Y(e),t);return{guid:F(),name:l.name,path:"not_set",file:l,dataUrl:e,metadata:a}}function J(e){const[,t]=E(e.name);switch(t.toLowerCase()){case".doc":case".docx":case".dot":case".wbk":case".docm":case".dotx":case".dotm":case".docb":case".txt":return o.wordDocIcn;case".webm":case".mkv":case".flv":case".vob":case".ogv":case".drc":case".gifv":case".mng":case".avi":case".mts":case".m2ts":case".mov":case".qt":case".wmv":case".yuv":case".rm":case".rmvb":case".viv":case".asf":case".amv":case".mp4":case".m4p":case".m4v":case".mpg":case".mp2":case".mpeg":case".mpe":case".mpv":case".m2v":case".svi":case".3gp":case".mxf":case".roq":case".nsv":case".f4v":case".f4p":case".f4a":case".f4b":return o.videoFileIcn;case".pdf":return o.pdfFileIcn;case".pcm":case".wav":case".aiff":case".mp3":case".aac":case".ogg":case".wma":case".flac":case".alac":return o.musicFileIcn;case".xls":case".xlt":case".xlm":case".xlsx":case".xlsm":case".xltx":case".xltm":case".xlsb":case".xla":case".xlam":case".xll":case".xlw":return o.excelFileIcn;case".html":case".js":case".css":case".scss":case".java":return o.codeFileIcn;case".jpg":case".jpeg":case".png":case".tiff":case".gif":case".svg":case".webp":return o.imageIcn;default:return o.fileIcn}}function K(e){return e&&e.includes("image")}function Q(e){const t=Math.min(e.byteLength,64*1024);const a=new DataView(e,0,t);if(a.getUint16(0,false)!==65496){return-2}const l=a.byteLength;let n=2;while(n<l){const e=a.getUint16(n,false);n+=2;if(e===65505){n+=2;if(a.getUint32(n,false)!==1165519206){return-1}n+=6;const e=a.getUint16(n,false)===18761;n+=a.getUint32(n+4,e);const t=a.getUint16(n,e);n+=2;for(let l=0;l<t;l++){if(a.getUint16(n+l*12,e)===274){return a.getUint16(n+l*12+8,e)}}}else if((e&65280)!==65280){break}else{n+=a.getUint16(n,false)}}return-1}function X(e){return new Promise(t=>{const a=new FileReader;a.onload=()=>{t(a.result)};a.readAsArrayBuffer(e)})}function ee(e){return X(e).then(Q)}function te(e,t,a,l){if(!l||l>8){return}switch(l){case 2:e.translate(t,0);e.scale(-1,1);return;case 3:e.translate(t,a);e.rotate(Math.PI);return;case 4:e.translate(0,a);e.scale(1,-1);return;case 5:e.rotate(.5*Math.PI);e.scale(1,-1);return;case 6:e.rotate(.5*Math.PI);e.translate(0,-a);return;case 7:e.rotate(.5*Math.PI);e.translate(t,-a);e.scale(-1,1);return;case 8:e.rotate(-.5*Math.PI);e.translate(-t,0);return}}function ae(e,t,a){if(e>t){if(e>a){return[a,Math.round(t*a/e)]}}else if(t>a){return[Math.round(e*a/t),a]}return[e,t]}function le(e,t,a){if(!e.type.match(/image.*/)){return Promise.reject(new Error("File must be an image"))}return ee(e).then(l=>new Promise(n=>{const s=new Image;s.onload=()=>{const e=document.createElement("canvas");const[i,r]=ae(s.width,s.height,t);if(l>4){e.width=r;e.height=i}else{e.width=i;e.height=r}const c=e.getContext("2d");te(c,i,r,l);c.drawImage(s,0,0,i,r);n(e.toDataURL(a))};const i=new FileReader;i.onload=()=>s.src=i.result;i.readAsDataURL(e)}))}function ne(e,t){return new Promise(a=>{const l=new Image;l.onload=()=>{const e=document.createElement("canvas");const[n,s]=ae(l.width,l.height,t);e.width=n;e.height=s;const i=e.getContext("2d");i.drawImage(l,0,0,n,s);a(e.toDataURL())};l.src=e})}function se(e,t,a,l){const n=document.createElement("canvas");n.width=t;n.height=a;const s=.56*n.height;const i=n.getContext("2d");i.textBaseline="middle";i.font=`${s}px ${l}`;i.fillText(e,n.height*.05,s);return n.toDataURL()}function ie(e,t){const a=o.signMaxSize;const l=.01*t*a;return se(e,a,l,o.signFont)}class re{view({attrs:{label:e,classes:t="bg-red"},children:a}){return r["default"](".relative.dib",[a,e?r["default"]("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80",{class:t,style:{minWidth:"0.65rem"}},e):null])}}class ce{view({attrs:{label:e,type:t="button",title:a=e,icon:l,rightIcon:n,context:s,classes:i="",disabled:c,style:u,onclick:d}}){return r["default"]("button.button-reset",{type:t,title:a,disabled:c,class:`${i} ${c?b.disabledWrapper:"pointer"} ${w(s)} ${b.button}`,style:u,onclick:d},B(l,e,n))}}class ue{view({attrs:{label:e,title:t=e,icon:a,rightIcon:l,href:n,rel:s,target:i,download:c,context:u,classes:d="",style:o}}){return r["default"]("a.link.flex.items-center",{href:n,rel:s,target:i,download:c,title:t,class:`${d} ${w(u)} ${b.button}`,style:o},B(a,e,l))}}class de{view({attrs:{label:e,title:t=e,icon:a,rightIcon:l,classes:n="",disabled:s,style:i,onclick:c}}){return r["default"](".mh2.pa2.truncate",{title:t,disabled:s,class:`${n} ${s?b.disabledWrapper:"pointer"} ${b.navButton}`,style:i,onclick:c},B(a,e,l))}}class oe{view({attrs:{label:e,title:t=e,icon:a,rightIcon:l,href:n,rel:s,target:i,download:c,classes:u="",style:d}}){return r["default"]("a.link.mh2.pa2.truncate",{href:n,rel:s,target:i,download:c,title:t,class:`${u} ${b.navButton}`,style:d},B(a,e,l))}}class fe{view({attrs:{field:{style:e},value:t}}){return r["default"](".pa2",{style:e},r["default"].trust(t()))}}class pe{view({attrs:{field:e,value:t}}){const{label:a,uiClass:l={},style:n}=e;return r["default"](".pa2.flex.flex-wrap",{class:I(l),style:n},[H(a),r["default"]("span.ws-normal",{title:t(),class:b.displayValue},t())])}}class me{formatter(e){return e?new Date(String(e)).toLocaleDateString():e}oninit({attrs:{value:e}}){this.formatted=e.map(this.formatter)}onremove(){this.formatted.end(true)}view({attrs:{field:e}}){return r["default"](pe,{field:e,value:this.formatted})}}function he(e,t){if(e==="email"){return{href:`mailto:${t}`,class:b.displayValue}}else if(e==="tel"){return{href:`tel:${t}`,class:b.displayValue}}else{return{href:t,target:"_blank",class:b.displayValue}}}const ge={email:o.emailIcn,tel:o.telIcn};class be{view({attrs:{field:e,value:t}}){const{label:a,type:l="url",uiClass:n={},style:s}=e;return r["default"](".pa2.flex.flex-wrap",{class:I(n),style:s},[H(a),r["default"]("a.link.dim.pointer.ws-normal",he(l,t()),r["default"]("i.mr2",{class:ge[l]||o.linkIcn}),t())])}}class ye{view({attrs:{field:e,value:t}}){const{options:a=[]}=e;const l=i["default"].find(a,i["default"].matches({value:t()||false}));return l?r["default"]("span.ml2",l.label):null}}class ve{constructor(){this.onIcon="checkIcn";this.offIcon="uncheckIcn"}view({attrs:{field:e,value:t}}){const{label:a,uiClass:l={},style:n}=e;return r["default"](".pa2.flex.items-center",{class:I(l),style:n},[H(a),r["default"]("i",{class:`${b.displayValue} ${o[t()?this.onIcon:this.offIcon]}`}),r["default"](ye,{field:e,value:t})])}}class xe extends ve{constructor(){super(...arguments);this.onIcon="toggleOnIcn";this.offIcon="toggleOffIcn"}}function we(e,t){if(e.required){return!t}return false}function Ie(e,t){if(e.required){return t.length<1}return false}function ke(e){return t=>{t.preventDefault();if(t.dataTransfer){t.dataTransfer.dropEffect="copy"}if(e()){t.redraw=false}e(true)}}function $e(e){return t=>{t.preventDefault();e(false)}}function Te(e,t){return a=>{a.preventDefault();e(false);if(a.dataTransfer){t(a.dataTransfer.files)}}}function Se(e){return({target:{files:t}})=>e(t)}class Ce{oncreate({dom:e,attrs:{value:t}}){t.map(t=>{if(t.length===0){e.firstChild.value=""}})}view({attrs:{field:e,defaultAccept:t="*",multiple:a=true,dragging:l,onSet:n},children:s}){const{label:c,id:u,name:d=u,title:o=c,required:f,readonly:p,disabled:m,autofocus:h,accept:g=t,uiClass:b={}}=e;return r["default"]("label.db",i["default"].extend({for:u,title:o,class:U(m,p),"data-input-id":u},m||p?{}:{ondragover:ke(l),ondragleave:$e(l),ondrop:Te(l,n)}),[r["default"]("input.clip[type=file].bg-transparent.bn.outline-0",{id:u,name:d,multiple:a,accept:g,required:f,autofocus:h,disabled:m||p,onchange:Se(n)}),c?r["default"]("span.db.mb1",{class:k(b,f)},A(c,f)):null,s])}}function qe(e,t=false){return a=>{const l=t?[]:e();i["default"].each(a,e=>{l.push({guid:F(),name:e.name,path:"not_set",file:e})});e(l)}}function Pe(e,t){return a=>{a.preventDefault();const l=e();i["default"].remove(l,{guid:t});e(l)}}class Ue{constructor(){this.dragging=c["default"](false)}view({attrs:{field:e,value:t}}){const{disabled:a,uiClass:l={}}=e;return r["default"]("fieldset",{class:I(l,a)},[r["default"](Ce,{field:e,dragging:this.dragging,onSet:qe(t),value:t},r["default"]("div",{class:$(l,Ie(e,t()))},r["default"](".pa2",{class:P(this.dragging())},[r["default"]("i.mr2",{class:o.uploadIcn}),r["default"]("span",o.addFilesTxt)]))),r["default"](".flex.flex-column.mt1.nb1",i["default"].map(t(),e=>r["default"]("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer",[r["default"]("i.mr2",{class:o.downloadIcn}),e.name,r["default"]("i.child.fr",{title:`${o.remFileTtl} ${e.name}`,class:o.deleteIcn,onclick:Pe(t,e.guid)})])))])}}class De{view({children:e,attrs:t}){return r["default"](".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child",[t.src&&t.src!=="not_set"?r["default"]("img.contain",{src:t.src}):null,t.data&&t.data.file&&(t.src==="not_set"||!t.src)?r["default"]("div.contain.tc.br5.6rem",{class:`${J(t.data)} fa-2x`,tooltip:t.data.file.type}):null,e])}}class Fe{view({attrs:e}){return r["default"]("i.pa1",{class:J(e),title:o.openFileTxt,onclick:e.path!=="not_set"?()=>window.open(e.path,"_blank"):undefined})}}class Me{view({attrs:{displayType:e="thumbnail",value:t}}){return e==="thumbnail"?r["default"](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",i["default"].map(t(),e=>r["default"](De,{src:L(e.path,e.dataUrl),data:e,style:m()},r["default"](".absolute.top-0.right-0.child",r["default"](ce,{title:`Remove ${e.name}`,icon:o.deleteIcn,onclick:Pe(t,e.guid)}))))):r["default"](".pa2.flex.flex-column",i["default"].map(t(),e=>r["default"](".flex.items-center.pa1.ba.b--black-20",[r["default"]("i.pa1",{class:o.uploadIcn}),r["default"]("span.ma1.flex-auto",{title:e.name},e.name),r["default"](Fe,e),r["default"]("i.pa1.pointer.dim",{title:`Remove ${e.name}`,class:o.cancelIcn,onclick:Pe(t,e.guid)})])))}}class Ae{view({attrs:{field:e,value:t}}){const{label:a,uiClass:l={},style:n}=e;const s=i["default"].find(e.options,{value:t()});const c=s?s.label||s.value:t();return r["default"](".pa2.flex.flex-wrap",{class:I(l),style:n},[H(a),r["default"]("span.ws-normal",{title:c,class:b.displayValue},c)])}}class Le{view({attrs:{field:e,value:t}}){const{label:a,uiClass:l={},style:n}=e;return r["default"](".pa2.flex.flex-column",{class:I(l),style:n},[H(a),r["default"](".flex.flex-column.mt1.nb1",i["default"].map(t(),({name:e,path:t})=>r["default"]("a.pa2.mv1.link.ba.b--black-20.dim.dib.pointer[target=_blank]",{class:b.displayValue,href:t},r["default"]("i.mr2",{class:o.downloadIcn}),e)))])}}class He{view({attrs:{field:e,value:t}}){const{label:a,uiClass:l={},style:n}=e;return r["default"](".pa2.flex.flex-column",{class:I(l),style:n},[H(a),r["default"](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",i["default"].map(t(),({name:e,path:t,dataUrl:a})=>r["default"](De,{title:e,src:L(t,a),style:m()})))])}}class ze{view({attrs:{field:e,value:t}}){const{label:a,uiClass:l={},style:n}=e;const s=i["default"].head(t());return r["default"](".pa2.flex.flex-column",{class:I(l),style:n},[H(a),s?r["default"]("img.img.h-100.mt2.contain.self-center",{title:s.name,src:L(s.path,s.dataUrl),style:p()}):r["default"]("i.mt2",{class:`${b.displayValue} ${o.imageIcn}`})])}}function Be(e,t){return(e.match(t)||[]).length}function Oe(e){let t=0;if(e.length>=8){t=1;if(e.length>=24){t=t+1}if(Be(e,/[A-Z]/g)>1&&Be(e,/[a-z]/g)>2){t=t+1}if(Be(e,/[\d]/g)>1){t=t+1}if(Be(e,/[!"£%^@#$&*]/g)>0){t=t+1}}return t}function Re(e){switch(e){case 0:{return"Invalid"}case 1:{return"Very Weak"}case 2:{return"Weak"}case 3:{return"Average"}case 4:{return"Strong"}case 5:{return"Very Strong"}}return""}const Ne=[{value:1,background:"bg-dark-red"},{value:2,background:"bg-orange"},{value:3,background:"bg-yellow"},{value:4,background:"bg-light-green"},{value:5,background:"bg-green"}];class We{oninit({attrs:{value:e}}){this.passwordScore=e.map(e=>Oe(String(e)))}onremove(){this.passwordScore.end()}view({attrs:{field:e}}){const{label:t,style:a}=e;return r["default"](".flex.flex-column",{style:a},[H(t),r["default"](".flex.mt1",i["default"].map(Ne,e=>r["default"](".h1.w-20",{class:this.passwordScore()>=e.value?e.background:"bg-transparent"}))),r["default"]("span.f5.truncate",Re(this.passwordScore()))])}}class _e{view({attrs:{field:{label:e="",title:t=e,required:a}}}){return r["default"]("label.mb2",{title:t},A(e,a))}}class je{view({attrs:e,children:t}){const{field:a,value:l,xform:n=l}=e;const{label:s,id:i,type:c="text",required:u,disabled:d,uiClass:o={}}=a;return r["default"]("fieldset",{class:c==="hidden"?"clip":I(o,d)},[z(i,o,s,u),r["default"]("div",{class:$(o,we(a,n()))},t)])}}class Ve{constructor(){this.focus=false;this.focusIn=()=>this.focus=true;this.focusOut=()=>this.focus=false;this.wrapperHeight=0}oncreate({dom:e}){this.wrapperHeight=e.clientHeight;r["default"].redraw()}onupdate({dom:e}){if(e.clientHeight!==this.wrapperHeight){this.wrapperHeight=e.clientHeight;r["default"].redraw()}}view({attrs:e,children:t}){const{field:a,value:l,xform:n=l}=e;const{label:s,id:i,type:c="text",required:u,disabled:d,layout:o,uiClass:f={}}=a;const p=o==="floatAlways"||l()||this.focus;return r["default"](".relative",{class:c==="hidden"?"clip":I(f,d),style:{paddingTop:"0.7em"},onfocusin:this.focusIn,onfocusout:this.focusOut},r["default"]("fieldset.pa0.ma0.bn",{class:$(f,we(a,n()))},[s?[r["default"]("legend.db.pa0",{style:{visibility:"hidden",height:"0px",maxWidth:p?"100%":"0.01px",transition:"max-width 0.3s ease-in-out",fontSize:"0.7em"}},r["default"](".ph2",s)),r["default"]("label.db.absolute.top-0",{title:s,for:i,class:k(f,u),style:{left:"0.5em",transform:p?"scale(0.7)":`translateY(calc(${this.wrapperHeight*.5}px - 0.33em))`,transformOrigin:"top left",transition:"transform 0.3s ease-in-out",wordSpacing:"2px"}},A(s,u))]:null,t]))}}class Ee{view({attrs:e}){const{field:t,value:a,xform:l=a}=e;const{label:n,id:s,type:i="text",name:c=s,title:u=n,placeholder:d,max:o,maxlength:f,min:p,minlength:m,step:h,required:g,readonly:b,disabled:y,autofocus:v,autocomplete:x,pattern:w,inputmode:I,spellcheck:k,instant:$,layout:S="default",uiClass:C={}}=t;return r["default"](S==="default"?je:Ve,e,r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:s,type:i,name:c,title:u,placeholder:d,max:o,maxlength:f,min:p,minlength:m,step:h,required:g,readonly:b,disabled:y,autofocus:v,autocomplete:x,pattern:w,inputmode:I,spellcheck:k,class:T(C),value:l(),[$?"oninput":"onchange"]:O(a)}))}}class Ye{view({attrs:e}){const{field:t,value:a,xform:l=a}=e;const{label:n,id:s,name:c=s,title:u=n,placeholder:d,max:o,maxlength:f,min:p,minlength:m,step:h,required:g,readonly:b,disabled:y,autofocus:v,autocomplete:x,pattern:w,inputmode:I,spellcheck:k,instant:$,layout:S="default",uiClass:C={},options:q}=t;const P=q&&q.length?q[0].value:"$";const U=r["default"](".flex.flex-row.w-100",r["default"]("span.mr1.self-center",P),r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:s,type:"text",name:c,title:u,placeholder:d,max:o,maxlength:f,min:p,minlength:m,step:h,required:g,readonly:b,disabled:y,autofocus:v,autocomplete:x,pattern:w,inputmode:I,spellcheck:k,class:T(C),value:i["default"].isUndefined(l())?null:Je(Ge(l())),[$?"oninput":"onchange"]:Qe(a)}));return r["default"](S==="default"?je:Ve,e,U)}}function Ge(e){return i["default"].isString(e)?i["default"].parseInt(e):Number(e)}function Ze(e){const t=e.replace(/[^\d.]/g,"");let a;let l=0;if(t.indexOf(".")>-1){const e=t.indexOf(".");const n=t.substring(0,e);a=i["default"].parseInt(i["default"].padStart(n,1,"0"));const s=t.substring(e+1,Math.min(e+3,t.length));l=i["default"].parseInt(i["default"].padEnd(s,2,"0"))}else{a=i["default"].parseInt(t)||0}return a*100+l}function Je(e){const t=Ke(e);if(t){return`${t[0]}.${t[1]}`}else{return t}}function Ke(e){if(!i["default"].isFinite(e)){return undefined}const t=String(Math.abs(e));let a="0";let l="";if(t.length>2){const e=t.length-2;a=t.substring(0,e);l=t.substring(e)}else{l=i["default"].padStart(t,2,"0")}return[a,l]}function Qe(e){return({target:{value:t}})=>e(Ze(t))}class Xe{constructor(){this.month=c["default"]();this.year=c["default"]();this.valid=c["default"].lift((e,t)=>t.length===2&&e.length===2,this.month,this.year);this.date=c["default"].lift((e,t,a)=>a?`${e}/${t}`:"",this.month,this.year,this.valid)}oninit({attrs:{value:e}}){e.map(e=>{const[t,a=""]=String(e).split("/");t.length===2&&this.month(t);a.length===2&&this.year(a)});_(this.date,e)}oncreate({dom:e}){const t=e.querySelector("input");W(t,this.valid,"Invalid Date");this.dom=e}onremove(){this.date.end(true);this.year.end(true);this.month.end(true)}view({attrs:e}){const{field:t}=e;const{id:a,name:l=a,required:n,readonly:s,disabled:i,layout:c="default",uiClass:u={}}=t;const d=T(u);const o=[r["default"]("div.dib.mr2",[r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:`${a}-mm`,name:`${l}-mm`,type:"text",placeholder:"MM",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:n,readonly:s,disabled:i,value:this.month(),class:d,style:h,oninput:()=>V(this.month,a,"mm",this.dom,"yy")})]),r["default"]("span.mr2","/"),r["default"]("div.dib.mr2",[r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:`${a}-yy`,name:`${l}-yy`,type:"text",placeholder:"YY",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:n,readonly:s,disabled:i,value:this.year(),class:d,style:h,oninput:()=>V(this.year,a,"yy",this.dom)})])];return r["default"](c==="default"?je:Ve,e,o)}}class et{constructor(){this.day=c["default"]();this.month=c["default"]();this.year=c["default"]();this.valid=c["default"].lift((e,t,a)=>{const l=parseInt(a);const n=parseInt(t)-1;const s=parseInt(e);const i=new Date(l,n,s);return i.getFullYear()===l&&a.length===4&&i.getMonth()===n&&i.getDate()===s&&e.length===2&&t.length===2},this.day,this.month,this.year);this.date=c["default"].lift((e,t,a,l)=>l?`${a}-${t}-${e}`:"",this.day,this.month,this.year,this.valid)}oninit({attrs:{value:e}}){e.map(e=>{const t=new Date(String(e));if(i["default"].isDate(t)&&!isNaN(t.getTime())){this.day(i["default"].padStart(String(t.getDate()),2,"0"));this.month(i["default"].padStart(String(1+t.getMonth()),2,"0"));this.year(String(t.getFullYear()))}});_(this.date,e)}oncreate({dom:e}){const t=e.querySelector("input");W(t,this.valid,"Invalid Date");this.dom=e}onremove(){this.date.end(true);this.year.end(true);this.month.end(true);this.day.end(true)}view({attrs:e}){const{id:t,name:a=t,required:l,readonly:n,disabled:s,layout:i="default",uiClass:c={},options:u}=e.field;const d=u&&u.length?u[0].value:"en-GB";const o=d==="en-US";const f=T(c);const p=r["default"](".dib",[r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:`${t}-dd`,name:`${a}-dd`,type:"text",placeholder:"DD",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:l,readonly:n,disabled:s,value:this.day(),oninput:()=>V(this.day,t,"dd",this.dom,o?"yyyy":"mm"),class:f,style:{maxWidth:"3ex",textAlign:this.day()&&this.day().length===2?"center":"left"}})]);const m=r["default"](".dib",[r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:`${t}-mm`,name:`${a}-mm`,type:"text",placeholder:"MM",minlength:"2",maxlength:"2",pattern:"[0-9]*",inputmode:"numeric",required:l,readonly:n,disabled:s,value:this.month(),oninput:()=>V(this.month,t,"mm",this.dom,o?"dd":"yyyy"),class:f,style:{maxWidth:"3.5ex",textAlign:this.month()&&this.month().length===2?"center":"left"}})]);const h=r["default"](".dib",[r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:`${t}-yyyy`,name:`${a}-yyyy`,type:"text",placeholder:"YYYY",minlength:"4",maxlength:"4",pattern:"[0-9]*",inputmode:"numeric",required:l,readonly:n,disabled:s,value:this.year(),oninput:()=>V(this.year,t,"yyyy",this.dom),class:f,style:{maxWidth:"5ch"}})]);const g=r["default"]("span.self-center","/");const b=o?[m,g,p,g,h]:[p,g,m,g,h];return r["default"](i==="default"?je:Ve,e,b)}}class tt{constructor(){this.showPassword=c["default"](false)}view({attrs:{field:e,value:t}}){const{label:a,id:l,name:n=l,title:s=a,placeholder:i,maxlength:c,minlength:u,required:d,readonly:f,disabled:p,autofocus:m,autocomplete:h,pattern:g,inputmode:b,instant:y,uiClass:v={}}=e;return r["default"]("fieldset",{class:I(v,p)},[z(l,v,a,d),r["default"]("div.w-100.flex.items-center",{class:$(v,we(e,t()))},r["default"]("input.w-100.bg-transparent.bn.outline-0",{id:l,name:n,title:s,placeholder:i,type:this.showPassword()?"text":"password",maxlength:c,minlength:u,required:d,readonly:f,disabled:p,autofocus:m,autocomplete:h,pattern:g,inputmode:b,class:T(v),value:t(),autocorrect:"off",[y?"oninput":"onchange"]:O(t)}),r["default"]("i.ml1.pa1.fa-fw.pointer.dim",{title:o.showPassTxt,class:this.showPassword()?o.hidePassIcn:o.showPassIcn,onclick:()=>this.showPassword(!this.showPassword())}))])}}class at{view({attrs:e}){const{label:t,id:a,name:l=a,title:n=t,placeholder:s,required:i,readonly:c,disabled:u,autofocus:d,autocomplete:o,spellcheck:f,instant:p,layout:m="default",uiClass:h={}}=e.field;const{value:g}=e;return r["default"](m==="default"?je:Ve,e,r["default"]("textarea.w-100.bg-transparent.bn.outline-0.h-100",{id:a,name:l,title:n,placeholder:s,required:i,readonly:c,disabled:u,autofocus:d,autocomplete:o,spellcheck:f,class:C(h),value:g(),style:{resize:"none"},[p?"oninput":"onchange"]:O(g)}))}}class lt{constructor(){this.onIcon="checkIcn";this.offIcon="uncheckIcn"}view({attrs:{field:e,value:t}}){const{label:a="",id:l,name:n=l,title:s=a,required:i,readonly:c,disabled:u,autocomplete:d,uiClass:f={}}=e;return r["default"]("fieldset",{class:I(f,u)},r["default"]("div",{class:$(f)},[r["default"]("label.flex.items-center",{title:s,class:S(f,u,c),"data-input-id":l},r["default"]("input.clip[type=checkbox]",{id:l,name:n,checked:t(),required:i,autocomplete:d,disabled:u||c,onchange:R(t)}),r["default"]("i.mr2",{class:o[t()?this.onIcon:this.offIcon]}),A(a,i),r["default"](ye,{field:e,value:t}))]))}}class nt extends lt{constructor(){super(...arguments);this.onIcon="toggleOnIcn";this.offIcon="toggleOffIcn"}}class st{view({attrs:{field:e,value:t}}){const{label:a,id:l,name:n=l,required:s,readonly:c,disabled:u,autocomplete:d,options:o,uiClass:f={}}=e;return r["default"]("fieldset",{class:I(f,u)},[z(l,f,a,s),r["default"]("div",{class:$(f,we(e,t())),onchange:O(t)},i["default"].map(o,({value:e,label:a=e,icon:i})=>{const o=t()===e;return r["default"]("label.dib",{title:a,class:q(f,o,u,c),"data-input-id":l},r["default"]("input.clip[type=radio]",{name:n,value:e,checked:o,required:s,autocomplete:d,disabled:u||c}),i?r["default"]("i.fa-fw",{class:i}):a)}))])}}class it{view({attrs:{field:e,value:t}}){const{label:a,id:l,name:n=l,title:s=a,required:c,readonly:u,disabled:d,autofocus:o,autocomplete:f,uiClass:p={},options:m}=e;return r["default"]("fieldset",{class:I(p,d)},[z(l,p,a,c),r["default"]("div",{class:$(p,we(e,t()))},r["default"]("select.w-100.bg-transparent.bn.outline-0",{id:l,name:n,title:s,required:c,readonly:u,disabled:d,autofocus:o,autocomplete:f,class:T(p),value:t(),onchange:O(t)},i["default"].map(m,({value:e,label:t=e})=>r["default"]("option",{value:e,disabled:d||u},t))))])}}class rt{constructor(){this.dragging=c["default"](false)}view({attrs:{field:e,value:t,displayType:a}}){const l=i["default"].head(t());const{disabled:n,uiClass:s={}}=e;const c=a==="none"||!l?o.addFileTxt:l.name;return r["default"]("fieldset",{class:I(s,n)},r["default"](Ce,{field:e,multiple:false,dragging:this.dragging,onSet:qe(t,true),value:t},r["default"]("div",{class:$(s,Ie(e,t()))},r["default"](".flex.items-center.pa1",{class:P(this.dragging())},[r["default"]("i.pa1",{class:o.uploadIcn}),r["default"]("span.ma1.flex-auto",c),l&&a!=="none"?[r["default"](Fe,l),r["default"]("i.pa1.pointer.dim",{title:`Remove ${l.name}`,class:o.cancelIcn,onclick:Pe(t,l.guid)})]:null]))))}}function ct(e,t,a=false){return l=>{const n=a?[]:e();return Promise.all(i["default"].map(l,e=>le(e,t,e.type).then(t=>{const a=G(Y(t),e.name);n.push({guid:F(),name:a.name,path:"not_set",file:a,dataUrl:t})}))).then(()=>{e(n);r["default"].redraw()})}}class ut{constructor(){this.dragging=c["default"](false)}view({attrs:{field:e,value:t}}){const{disabled:a,uiClass:l={}}=e;return r["default"]("fieldset",{class:I(l,a)},[r["default"](Ce,{field:e,defaultAccept:"image/*",dragging:this.dragging,onSet:ct(t,o.imageMaxSize),value:t},r["default"]("div",{class:$(l,Ie(e,t()))},r["default"](".w-100.pa1.dt.tc",{class:P(this.dragging())},r["default"]("i.fa-2x.dtc.v-mid",{class:o.cameraIcn})))),r["default"](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",i["default"].map(t(),e=>r["default"](De,{src:L(e.path,e.dataUrl),style:m()},r["default"](".absolute.top-0.right-0.child",r["default"](ce,{title:`Remove ${e.name}`,icon:o.deleteIcn,onclick:Pe(t,e.guid)})))))])}}class dt{constructor(){this.dragging=c["default"](false)}view({attrs:{field:e,value:t}}){const a=i["default"].head(t());const{disabled:l,uiClass:n={}}=e;return r["default"]("fieldset",{class:I(n,l)},r["default"](Ce,{field:e,defaultAccept:"image/*",multiple:false,dragging:this.dragging,onSet:ct(t,o.imageMaxSize,true),value:t},r["default"]("div",{class:$(n,Ie(e,t()))},r["default"](".pa1",{class:P(this.dragging())},r["default"](".relative.w-100.dt.tc",a?[r["default"]("img.img.contain",{title:a.name,src:L(a.path,a.dataUrl),style:p()}),r["default"](".absolute.top-0.right-0.pa1.pointer.dim",{title:`Remove ${a.name}`,onclick:Pe(t,a.guid)},r["default"]("i.pa1",{class:o.cancelIcn}))]:r["default"]("i.fa-2x.dtc.v-mid",{class:o.cameraIcn}))))))}}class ot{oncreate({dom:e}){const t=e.children[0];const a=M();this.signaturePad=new u["default"](t,{minWidth:.5*a,maxWidth:1.5*a});const l=()=>{const e=M();t.width=t.offsetWidth*e;t.height=t.offsetHeight*e;const a=t.getContext("2d");a.scale(e,e);this.resetCanvas()};this.resizeHandler=i["default"].debounce(l,250);window.addEventListener("resize",this.resizeHandler);window.addEventListener("orientationchange",this.resizeHandler);l()}onremove(){this.resizeHandler.cancel();window.removeEventListener("resize",this.resizeHandler);window.removeEventListener("orientationchange",this.resizeHandler)}view({attrs:{style:e,onSet:t,onCancel:a}}){return[r["default"](".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30",{style:e},r["default"]("canvas.aspect-ratio--object")),r["default"](".absolute.top-0.right-0.z-999",{style:{transform:"translateY(-100%)"}},[r["default"](ce,{title:o.applyTtl,icon:o.applyIcn,classes:"ma1",onclick:()=>{if(!this.signaturePad.isEmpty()){t(this.signaturePad.toDataURL("image/png"))}}}),r["default"](ce,{title:o.resetTtl,icon:o.resetIcn,classes:"ma1",onclick:()=>this.resetCanvas()}),r["default"](ce,{title:o.cancelTtl,icon:o.cancelIcn,classes:"ma1",onclick:a})])]}resetCanvas(){this.signaturePad.clear()}}function ft(e,t,a){return()=>{if(e()){a(ie(e(),t),{text:e(),heightPct:t})}return false}}class pt{constructor(){this.text=c["default"]("")}oncreate({dom:e}){const t=e.children[0];t.focus({preventScroll:false});this.scaleText(e)}onupdate({dom:e}){this.scaleText(e)}view({attrs:{heightPct:e,style:t,onSet:a,onCancel:l}}){return[r["default"]("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30",{style:t,onsubmit:ft(this.text,e,a)},r["default"]("input.aspect-ratio--object.pa2.ba.bw0[type=text]",{oninput:O(this.text),value:this.text(),style:{"font-family":o.signFont}})),r["default"](".absolute.top-0.right-0.z-999",{style:{transform:"translateY(-100%)"}},[r["default"](ce,{title:o.applyTtl,icon:o.applyIcn,classes:"ma1",onclick:ft(this.text,e,a)}),r["default"](ce,{title:o.resetTtl,icon:o.resetIcn,classes:"ma1",onclick:()=>this.text("")}),r["default"](ce,{title:o.cancelTtl,icon:o.cancelIcn,classes:"ma1",onclick:l})])]}scaleText(e){const t=e.clientHeight;e.style.fontSize=`${.56*t}px`}}function mt(e,t,a){return()=>a(ie(t,e),{text:t,heightPct:e})}class ht{view({attrs:{heightPct:e,stampTxt:t,stampSetTxt:a,onSet:l}}){return[r["default"]("span.clip",{style:{"font-family":o.signFont}},a),r["default"](".flex",r["default"](ce,{label:t,classes:`flex-auto ${o.stampBtnClass}`,context:o.stampBtnContext,onclick:mt(e,a,l)}))]}}const gt={["draw"]:ot,["type"]:pt,["stamp"]:ht};function bt(e,t,a){return(l,n)=>ne(l,a).then(a=>{e([Z(a,`sign-${t}.png`,n)]);r["default"].redraw()})}class yt{oninit({attrs:{value:e}}){this.valUpdate=e.map(()=>this.setSignType())}onremove(){this.valUpdate.end()}view({attrs:{field:e,value:t}}){const{label:a,id:l,readonly:n,disabled:s,uiClass:c={},options:u=o.signOpts,heightPct:d=o.signHeightPct,stampTxt:f=o.stampTxt,stampSetTxt:p=o.stampSetTxt}=e;const m={paddingBottom:`${d}%`};const h=i["default"].head(t());const g=i["default"](u).map(({value:e})=>{if(e==="draw"){return{type:e,icon:o.drawIcn,label:o.signDrawTxt}}else if(e==="type"){return{type:e,icon:o.typeIcn,label:o.signTypeTxt}}else if(e==="stamp"){return{type:e,icon:o.stampIcn,label:o.signStampTxt}}return null}).compact().value();if(g.length===1&&!h){this.setSignType(g[0].type)}return r["default"]("fieldset.relative",{class:I(c,s)},[z(l,c,a),r["default"]("div",{class:this.signType!=="stamp"?$(c,Ie(e,t())):undefined},n||s?r["default"](".aspect-ratio",{id:l,style:m},h?r["default"](".aspect-ratio--object",{style:{"pointer-events":"none"}},r["default"]("img.img.w-100.absolute",{src:L(h.path,h.dataUrl)})):null):this.signType?r["default"](gt[this.signType],{heightPct:d,stampTxt:f,stampSetTxt:p,style:m,onSet:bt(t,l,o.signMaxSize),onCancel:i["default"].bind(this.setSignType,this,undefined)}):r["default"](".aspect-ratio.pointer",{id:l,class:b.fileInput,style:m},h?r["default"](".aspect-ratio--object.hide-child.dim",{onclick:i["default"].bind(t,this,[])},[r["default"]("img.img.w-100.absolute",{src:L(h.path,h.dataUrl)}),r["default"](".pa3.absolute.top-0.right-0.child",r["default"]("i.fa-2x",{class:o.resetIcn}))]):r["default"](".aspect-ratio--object.flex",i["default"].map(g,({type:e,icon:t,label:a})=>r["default"](".flex-auto.flex.items-center.justify-center.dim",{title:a,onclick:i["default"].bind(this.setSignType,this,e)},r["default"]("i.fa-2x.ma1",{class:t}),r["default"]("span.ma1.dn.db-ns.truncate",a))))))])}setSignType(e){this.signType=e}}function vt(e,t){return a=>{const l=t?[]:e();return Promise.all(i["default"].map(a,e=>{if(K(e.type)){return le(e,o.imageMaxSize,e.type).then(t=>{const a=G(Y(t),e.name);l.push({guid:F(),name:a.name,path:"not_set",file:a,dataUrl:t})})}else{l.push({guid:F(),name:e.name,path:"not_set",file:e});return Promise.resolve()}})).then(()=>{e(l);r["default"].redraw()})}}class xt{constructor(){this.dragging=c["default"](false)}view({attrs:{field:e,value:t}}){const a=i["default"].head(t());const{disabled:l,uiClass:n={}}=e;return r["default"]("fieldset",{class:I(n,l)},r["default"](Ce,{field:e,defaultAccept:"*",multiple:false,dragging:this.dragging,onSet:vt(t,true),value:t},r["default"]("div",{class:$(n,Ie(e,t()))},r["default"](".flex.items-center.pa1",{class:P(this.dragging())},a?a.dataUrl?[r["default"](".relative.w-100.dt.tc",r["default"]("img.img.contain",{title:a.name,src:L(a.path,a.dataUrl),style:p()}),r["default"](".absolute.top-0.right-0.pa1.pointer.dim",{title:`Remove ${a.name}`,onclick:Pe(t,a.guid)},r["default"]("i.pa1",{class:o.cancelIcn})))]:[r["default"](Fe,a),r["default"]("span.ma1.flex-auto",{title:a.name},a.name),r["default"]("i.pa1.pointer.dim",{title:`Remove ${a.name}`,class:o.cancelIcn,onclick:Pe(t,a.guid)})]:[r["default"]("i.pa1",{class:o.uploadIcn}),r["default"]("span.ma1.flex-auto",o.addFileTxt)]))))}}class wt{constructor(){this.dragging=c["default"](false)}view({attrs:{field:e,value:t,displayType:a,showDisplay:l=true}}){const{disabled:n,uiClass:s={}}=e;return r["default"]("fieldset",{class:I(s,n)},[r["default"](Ce,{field:e,defaultAccept:"*",dragging:this.dragging,onSet:vt(t,false),value:t},r["default"]("div",{class:$(s,Ie(e,t()))},r["default"](".flex.items-center.pa1.dt",{class:P(this.dragging())},[r["default"]("i.pa1",{class:o.uploadIcn}),r["default"]("span.ma1.flex-auto",o.addFileTxt)]))),l?r["default"](Me,{displayType:a,value:t}):null])}}e.Badge=re;e.BaseInput=Ee;e.BaseText=pe;e.Button=ce;e.ButtonLink=ue;e.CardDateInput=Xe;e.Checkbox=ve;e.CheckboxInput=lt;e.CurrencyInput=Ye;e.DateInput=et;e.DateText=me;e.DisplayTypeComponent=Me;e.FileList=Le;e.FileMulti=Ue;e.FileSelect=rt;e.ImageList=He;e.ImageMulti=ut;e.ImagePreview=ze;e.ImageSelect=dt;e.Label=_e;e.Link=be;e.MultiOmniFileInput=wt;e.NavButton=de;e.NavLink=oe;e.OmniFileInput=xt;e.PasswordInput=tt;e.PasswordStrength=We;e.RadioInput=st;e.SelectInput=it;e.SelectText=Ae;e.SignBuilder=yt;e.TextareaInput=at;e.Toggle=xe;e.ToggleInput=nt;e.Trusted=fe;e.createStamp=ie;e.currencyStrToNumber=Ze;e.dataURItoBlob=Y;e.dataUrlToFile=Z;e.fileConstructor=G;e.fileNameExtSplit=E;e.getOrientation=Q;e.guid=F;e.iconMap=ge;e.linkAttrs=he;e.numberToCurrencyStr=Je;e.numberToCurrencyTuple=Ke;e.pxRatio=M;e.readArrayBuffer=X;e.readOrientation=ee;e.resizeImage=le;e.scaleDataUrl=ne;e.scaleRect=ae;e.textToImage=se;e.updateButtonContext=x;e.updateClasses=y;e.updateConfig=f;Object.defineProperty(e,"__esModule",{value:true})}));
+/* @preserve built on: 2021-10-11T10:34:11.114Z */
+(function (global, factory) {
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.uiWidgets = {}, global._, global.m, global.m.stream, global.SignaturePad));
+}(this, (function (exports, lodash, m, stream, SignaturePad) { 'use strict';
+
+    function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+    var lodash__default = /*#__PURE__*/_interopDefaultLegacy(lodash);
+    var m__default = /*#__PURE__*/_interopDefaultLegacy(m);
+    var stream__default = /*#__PURE__*/_interopDefaultLegacy(stream);
+    var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
+
+    const confMap = {
+        imageMaxSize: 1280,
+        imageDispHeight: "16rem",
+        thumbDispHeight: "6rem",
+        addFileTxt: "Upload...",
+        addFilesTxt: "Add file(s)...",
+        remFileTtl: "Remove",
+        openFileTxt: "Open file",
+        showPassTxt: "Show Password",
+        requiredLblPost: "",
+        signOpts: [{
+                label: "", value: "draw" /* Draw */
+            }, {
+                label: "", value: "type" /* Type */
+            }, {
+                label: "", value: "stamp" /* Stamp */
+            }],
+        signMaxSize: 640,
+        signHeightPct: 25,
+        signFont: "sans-serif",
+        signDrawTxt: "Draw",
+        signTypeTxt: "Type",
+        signStampTxt: "Accept",
+        stampTxt: "Accept",
+        stampBtnClass: "",
+        stampBtnContext: "default",
+        stampSetTxt: "Accepted",
+        applyTtl: "Apply",
+        resetTtl: "Reset",
+        cancelTtl: "Cancel",
+        drawIcn: "fas fa-signature",
+        typeIcn: "fas fa-keyboard",
+        stampIcn: "fas fa-check",
+        applyIcn: "fas fa-check",
+        resetIcn: "fas fa-eraser",
+        cancelIcn: "fas fa-times",
+        checkIcn: "far fa-check-square",
+        uncheckIcn: "far fa-square",
+        toggleOnIcn: "fas fa-toggle-on",
+        toggleOffIcn: "fas fa-toggle-off",
+        showPassIcn: "fas fa-eye",
+        hidePassIcn: "fas fa-eye-slash",
+        uploadIcn: "fas fa-file-upload",
+        downloadIcn: "fas fa-file-download",
+        deleteIcn: "fas fa-trash-alt",
+        cameraIcn: "fas fa-camera",
+        imageIcn: "fas fa-image",
+        emailIcn: "fas fa-envelope",
+        telIcn: "fas fa-phone",
+        linkIcn: "fas fa-link",
+        wordDocIcn: "fas fa-file-word",
+        videoFileIcn: "fas fa-file-video",
+        pdfFileIcn: "fas fa-file-pdf",
+        musicFileIcn: "fas fa-file-audio",
+        excelFileIcn: "fas fa-file-excel",
+        fileIcn: "fas fa-file",
+        codeFileIcn: "fas fa-file-code"
+    };
+    const config = confMap;
+    function updateConfig(newConfig) {
+        lodash__default['default'].assign(confMap, newConfig);
+    }
+
+    // Class/Theme helpers
+    function imgMaxSize() {
+        return { "max-height": config.imageDispHeight };
+    }
+    function thumbMaxSize() {
+        return { "max-height": config.thumbDispHeight };
+    }
+    const styleSm = { "max-width": "5.4ex" };
+    // ui-widgets 1.4 theme map
+    const classMapState = {
+        wrapper: "",
+        label: "silver",
+        inputWrapper: "pa1 ma0 dark-gray",
+        input: "dark-gray fw2",
+        button: "pa2 bn br2",
+        navButton: "dark-gray",
+        textarea: "dark-gray fw2",
+        radio: "dark-gray pa2 br2",
+        radioChecked: "bg-light-blue",
+        radioUnchecked: "o-60",
+        fileInput: "dark-gray ba bw1 br3 b--dashed b--black-30",
+        fileHover: "blue b--blue",
+        displayLabel: "silver",
+        displayValue: "dark-gray",
+        requiredLabel: "",
+        disabledWrapper: "o-40",
+        invalidInputWrapper: ""
+    };
+    const theme = classMapState;
+    function updateClasses(newConfig) {
+        lodash__default['default'].assign(classMapState, newConfig);
+    }
+    // Button context helpers
+    const btnMap = {
+        default: "bg-light-blue dark-gray"
+    };
+    function updateButtonContext(newButtonContext) {
+        lodash__default['default'].assign(btnMap, newButtonContext);
+    }
+    function getButtonContext(key = "default") {
+        if (key && key in btnMap) {
+            return btnMap[key];
+        }
+        else {
+            return "";
+        }
+    }
+    // Class string helpers
+    function wrapperCls({ wrapper = "", merge = true }, disabled) {
+        return `${wrapper} ${merge ? theme.wrapper : ""} ${disabled ? theme.disabledWrapper : ""}`;
+    }
+    function labelCls({ label = "", merge = true }, required) {
+        return `${label} ${merge ? theme.label : ""} ${required ? theme.requiredLabel : ""}`;
+    }
+    function inputWrapperCls({ inputWrapper = "", merge = true }, invalid) {
+        return `${inputWrapper} ${merge ? theme.inputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""}`;
+    }
+    function inputCls({ input = "", merge = true }) {
+        return `${input} ${merge ? theme.input : ""}`;
+    }
+    function checkInputCls(uiClass, disabled, readonly) {
+        return `${inputCls(uiClass)} ${pointerCls(disabled, readonly)}`;
+    }
+    function textareaCls({ input = "", merge = true }) {
+        return `${input} ${merge ? theme.textarea : ""}`;
+    }
+    function radioInputCls({ input = "", merge = true }, checked, disabled, readonly) {
+        return `${input} ${merge ? theme.radio : ""} ${checked ? theme.radioChecked : theme.radioUnchecked} ${pointerCls(disabled, readonly)}`;
+    }
+    function fileInputCls(dragging) {
+        return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
+    }
+    function pointerCls(disabled, readonly) {
+        return disabled || readonly ? "" : "pointer";
+    }
+
+    // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
+    function toHex(inp) {
+        // Add to 0x100 to pad small numbers with leading 0
+        return (inp + 0x100).toString(16).substr(1);
+    }
+    function guid() {
+        const bytes = new Uint8Array(16);
+        const crypto = window.crypto;
+        crypto.getRandomValues(bytes);
+        return ([
+            toHex(bytes[0]), toHex(bytes[1]),
+            toHex(bytes[2]), toHex(bytes[3]), "-",
+            toHex(bytes[4]), toHex(bytes[5]), "-",
+            toHex(bytes[6]), toHex(bytes[7]), "-",
+            toHex(bytes[8]), toHex(bytes[9]), "-",
+            toHex(bytes[10]), toHex(bytes[11]),
+            toHex(bytes[12]), toHex(bytes[13]),
+            toHex(bytes[14]), toHex(bytes[15])
+        ]).join("");
+    }
+    function pxRatio() {
+        return Math.max(window.devicePixelRatio, 1);
+    }
+    function getLabelText(label, required) {
+        return required ? `${label}${config.requiredLblPost}` : label;
+    }
+    function imgSrc(path, dataUrl) {
+        return dataUrl ? dataUrl : path;
+    }
+    // Used by display widgets
+    function getDisplayLabel(label) {
+        return label ? m__default['default']("span.mr2.truncate", {
+            title: label,
+            class: theme.displayLabel
+        }, label) : null;
+    }
+    // Used by input widgets
+    function getLabel(id, uiClass, label, required) {
+        return label ? m__default['default']("label.mb1.db", {
+            title: label,
+            for: id,
+            class: labelCls(uiClass, required),
+        }, getLabelText(label, required)) : null;
+    }
+    function labelIcon(leftIcon, label, rightIcon) {
+        return [
+            leftIcon ? m__default['default']("i.fa-fw", {
+                class: `${label ? "mr2" : ""} ${leftIcon}`
+            }) : null,
+            label,
+            rightIcon ? m__default['default']("i.fa-fw", {
+                class: `${label ? "ml2" : ""} ${rightIcon}`
+            }) : null
+        ];
+    }
+    // Input widget TProp update helpers
+    function setValue(val) {
+        return function ({ target: { value } }) {
+            val(value);
+        };
+    }
+    function setCheck(chk) {
+        return function ({ target: { checked } }) {
+            chk(checked);
+        };
+    }
+    function dateInRange(type, first, second) {
+        switch (type) {
+            case "dd":
+                return (isNaN(first) || first <= 3) && ((isNaN(second) || ((first === 3 && second <= 1))
+                    || first < 3) && !(first === 0 && second === 0));
+            // month from 01 to 12
+            case "mm":
+                return (isNaN(first) || first <= 1) && ((isNaN(second) || ((first === 1 && second <= 2))
+                    || first < 1) && !(first === 0 && second === 0));
+            // year has to start from 1 or above & min 1900
+            case "yyyy":
+                return (isNaN(first) || (first >= 1 && first < 3)) &&
+                    (isNaN(second) || ((first === 1 && second === 9)) || (first === 2));
+            case "yy":
+                return isNaN(first) || first >= 0;
+        }
+    }
+    function setCustomValidityMessage(input, validStream, message) {
+        validStream.map((valid) => {
+            const validityMessage = valid ? "" : `${message}`;
+            input.setCustomValidity(validityMessage);
+        });
+    }
+    function updateNewValue(targetStream, valueStream) {
+        targetStream.map((newValue) => {
+            // Prevent recursive setting between streams
+            if (newValue !== valueStream()) {
+                valueStream(newValue);
+            }
+        });
+    }
+    function autoAdvance(id, self, targetType, streamValue, dom) {
+        const maxLength = parseInt(self.getAttribute("maxlength"));
+        if (streamValue.length === maxLength && targetType) {
+            const next = dom.querySelector(`#${id}-${targetType}`);
+            next.focus();
+        }
+    }
+    function handleDateChange(streamType, id, selfType, dom, targetType) {
+        const self = dom.querySelector(`#${id}-${selfType}`);
+        const prevValue = streamType() ? streamType() : "";
+        const value = self.value;
+        const isNumeric = /^\d*$/.test(value);
+        const firstCharValue = parseInt(value.charAt(0));
+        const secondCharValue = parseInt(value.charAt(1));
+        const validDateRange = dateInRange(selfType, firstCharValue, secondCharValue);
+        if ((isNumeric || value === "") && validDateRange) {
+            streamType(value);
+        }
+        else {
+            streamType(prevValue);
+        }
+        autoAdvance(id, self, targetType, streamType(), dom);
+    }
+    /**
+     * Split given file name from extension
+     */
+    function fileNameExtSplit(fileName) {
+        const extIdx = fileName.lastIndexOf(".");
+        if (extIdx === -1) {
+            return [fileName, ""];
+        }
+        else {
+            return [fileName.substr(0, extIdx), fileName.substr(extIdx)];
+        }
+    }
+    function dataURItoBlob(dataURI) {
+        const dataUriList = dataURI.split(",");
+        const bytes = dataUriList[0].indexOf("base64") >= 0 ?
+            atob(dataUriList[1]) :
+            unescape(dataUriList[1]);
+        const mimeType = dataUriList[0].split(":")[1].split(";")[0];
+        const bytesTotal = bytes.length;
+        const byteArray = new Uint8Array(bytesTotal);
+        for (let idx = 0; idx < bytesTotal; idx++) {
+            byteArray[idx] = bytes.charCodeAt(idx);
+        }
+        return new Blob([byteArray], { type: mimeType });
+    }
+    /**
+     * Convert a Blob into a "File-like" object without using the File constructor
+     * Mutates input blob
+     */
+    function fileConstructor(blob, fileName) {
+        const lastModified = new Date().valueOf();
+        const mutableBlob = blob;
+        mutableBlob.name = fileName;
+        mutableBlob.lastModified = lastModified;
+        return blob;
+    }
+    function dataUrlToFile(dataUrl, name, metadata) {
+        const newFile = fileConstructor(dataURItoBlob(dataUrl), name);
+        return {
+            guid: guid(),
+            name: newFile.name,
+            path: "not_set",
+            file: newFile,
+            dataUrl: dataUrl,
+            metadata
+        };
+    }
+    // // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
+    // // specs compliant (as of March 2018 only Chrome)
+    // export function toFileList(fileList: IFile[]) {
+    // 	const transfer = new ClipboardEvent("").clipboardData || new DataTransfer();
+    // 	lodash.forEach(fileList, ({ file }) => {
+    // 		if (file) {
+    // 			transfer.items.add(file);
+    // 		}
+    // 	});
+    // 	return transfer.files;
+    // }
+    function getFileTypeIcon(file) {
+        const [, extension] = fileNameExtSplit(file.name);
+        switch (extension.toLowerCase()) {
+            case '.doc':
+            case '.docx':
+            case '.dot':
+            case '.wbk':
+            case '.docm':
+            case '.dotx':
+            case '.dotm':
+            case '.docb':
+            case '.txt':
+                return config.wordDocIcn;
+            case '.webm':
+            case '.mkv':
+            case '.flv':
+            case '.vob':
+            case '.ogv':
+            case '.drc':
+            case '.gifv':
+            case '.mng':
+            case '.avi':
+            case '.mts':
+            case '.m2ts':
+            case '.mov':
+            case '.qt':
+            case '.wmv':
+            case '.yuv':
+            case '.rm':
+            case '.rmvb':
+            case '.viv':
+            case '.asf':
+            case '.amv':
+            case '.mp4':
+            case '.m4p':
+            case '.m4v':
+            case '.mpg':
+            case '.mp2':
+            case '.mpeg':
+            case '.mpe':
+            case '.mpv':
+            case '.m2v':
+            case '.svi':
+            case '.3gp':
+            case '.mxf':
+            case '.roq':
+            case '.nsv':
+            case '.f4v':
+            case '.f4p':
+            case '.f4a':
+            case '.f4b':
+                return config.videoFileIcn;
+            case '.pdf':
+                return config.pdfFileIcn;
+            case '.pcm':
+            case '.wav':
+            case '.aiff':
+            case '.mp3':
+            case '.aac':
+            case '.ogg':
+            case '.wma':
+            case '.flac':
+            case '.alac':
+                return config.musicFileIcn;
+            case '.xls':
+            case '.xlt':
+            case '.xlm':
+            case '.xlsx':
+            case '.xlsm':
+            case '.xltx':
+            case '.xltm':
+            case '.xlsb':
+            case '.xla':
+            case '.xlam':
+            case '.xll':
+            case '.xlw':
+                return config.excelFileIcn;
+            case '.html':
+            case '.js':
+            case '.css':
+            case '.scss':
+            case '.java':
+                return config.codeFileIcn;
+            case '.jpg':
+            case '.jpeg':
+            case '.png':
+            case '.tiff':
+            case '.gif':
+            case '.svg':
+            case '.webp':
+                return config.imageIcn;
+            default:
+                return config.fileIcn;
+        }
+    }
+    function isImage(fileType) {
+        // Change to regex starts with "image/"
+        return fileType && fileType.includes('image');
+    }
+
+    function getOrientation(buffer) {
+        // Image exif data in first 64k of file
+        const viewLen = Math.min(buffer.byteLength, 64 * 1024);
+        const view = new DataView(buffer, 0, viewLen);
+        if (view.getUint16(0, false) !== 0xFFD8) {
+            return -2;
+        }
+        const length = view.byteLength;
+        let offset = 2;
+        while (offset < length) {
+            const marker = view.getUint16(offset, false);
+            offset += 2;
+            if (marker === 0xFFE1) {
+                offset += 2;
+                if (view.getUint32(offset, false) !== 0x45786966) {
+                    return -1;
+                }
+                offset += 6;
+                const little = view.getUint16(offset, false) === 0x4949;
+                offset += view.getUint32(offset + 4, little);
+                const tags = view.getUint16(offset, little);
+                offset += 2;
+                for (let i = 0; i < tags; i++) {
+                    if (view.getUint16(offset + (i * 12), little) === 0x0112) {
+                        return view.getUint16(offset + (i * 12) + 8, little);
+                    }
+                }
+            }
+            else if ((marker & 0xFF00) !== 0xFF00) {
+                break;
+            }
+            else {
+                offset += view.getUint16(offset, false);
+            }
+        }
+        return -1;
+    }
+    function readArrayBuffer(file) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve(reader.result);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+    function readOrientation(file) {
+        return readArrayBuffer(file).then(getOrientation);
+    }
+    function rotateContext(ctx, width, height, orientation) {
+        if (!orientation || orientation > 8) {
+            return;
+        }
+        switch (orientation) {
+            case 2:
+                // Horizontal flip
+                ctx.translate(width, 0);
+                ctx.scale(-1, 1);
+                return;
+            case 3:
+                // 180 rotate anticlockwise
+                ctx.translate(width, height);
+                ctx.rotate(Math.PI);
+                return;
+            case 4:
+                // Vertical flip
+                ctx.translate(0, height);
+                ctx.scale(1, -1);
+                return;
+            case 5:
+                // Vertical flip + 90 rotate clockwise
+                ctx.rotate(0.5 * Math.PI);
+                ctx.scale(1, -1);
+                return;
+            case 6:
+                // 90 rotate clockwise
+                ctx.rotate(0.5 * Math.PI);
+                ctx.translate(0, -height);
+                return;
+            case 7:
+                // Horizontal flip + 90 rotate clockwise
+                ctx.rotate(0.5 * Math.PI);
+                ctx.translate(width, -height);
+                ctx.scale(-1, 1);
+                return;
+            case 8:
+                // 90 rotate anticlockwise
+                ctx.rotate(-0.5 * Math.PI);
+                ctx.translate(-width, 0);
+                return;
+        }
+    }
+    /**
+     * Scale given width and height values if either exceed the giving limit
+     * Returns integer values, rounding errors can significantly distort small rectangles
+     */
+    function scaleRect(width, height, limit) {
+        if (width > height) {
+            if (width > limit) {
+                return [limit, Math.round(height * limit / width)];
+            }
+        }
+        else if (height > limit) {
+            return [Math.round(width * limit / height), limit];
+        }
+        return [width, height];
+    }
+    /**
+     * Shrink an image if width/height exceeds a given maximum
+     * @param file Image file to resize
+     * @param maxSize Maximum dimension size in pixels
+     * @param type Image MIME type to return
+     */
+    function resizeImage(file, maxSize, type) {
+        if (!file.type.match(/image.*/)) {
+            return Promise.reject(new Error("File must be an image"));
+        }
+        return readOrientation(file)
+            .then((orientation) => new Promise((resolve) => {
+            const image = new Image();
+            image.onload = () => {
+                const canvas = document.createElement("canvas");
+                const [width, height] = scaleRect(image.width, image.height, maxSize);
+                // Orientations after 4 are rotated 90 degrees
+                if (orientation > 4) {
+                    canvas.width = height;
+                    canvas.height = width;
+                }
+                else {
+                    canvas.width = width;
+                    canvas.height = height;
+                }
+                const context = canvas.getContext("2d");
+                rotateContext(context, width, height, orientation);
+                context.drawImage(image, 0, 0, width, height);
+                resolve(canvas.toDataURL(type));
+            };
+            const reader = new FileReader();
+            reader.onload = () => image.src = reader.result;
+            reader.readAsDataURL(file);
+        }));
+    }
+    function scaleDataUrl(dataUrl, maxSize) {
+        return new Promise((resolve) => {
+            const image = new Image();
+            image.onload = () => {
+                const canvas = document.createElement("canvas");
+                const [width, height] = scaleRect(image.width, image.height, maxSize);
+                canvas.width = width;
+                canvas.height = height;
+                const context = canvas.getContext("2d");
+                context.drawImage(image, 0, 0, width, height);
+                resolve(canvas.toDataURL());
+            };
+            image.src = dataUrl;
+        });
+    }
+    // Create dataURL image from given text
+    function textToImage(text, width, height, font) {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const fontSize = 0.56 * canvas.height;
+        const context = canvas.getContext("2d");
+        context.textBaseline = "middle";
+        context.font = `${fontSize}px ${font}`;
+        context.fillText(text, canvas.height * 0.05, fontSize);
+        return canvas.toDataURL();
+    }
+    function createStamp(sign, heightPct) {
+        const width = config.signMaxSize;
+        // Signatures assumed wider than their height
+        const height = 0.01 * heightPct * width;
+        return textToImage(sign, width, height, config.signFont);
+    }
+
+    class Badge {
+        view({ attrs: { label, classes = "bg-red" }, children }) {
+            return m__default['default'](".relative.dib", [
+                children,
+                label ? m__default['default']("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80", {
+                    class: classes,
+                    style: {
+                        minWidth: "0.65rem"
+                    }
+                }, label) : null
+            ]);
+        }
+    }
+
+    class Button {
+        view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", disabled, style, onclick } }) {
+            return m__default['default']("button.button-reset", {
+                type, title, disabled,
+                class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
+                style,
+                onclick
+            }, labelIcon(icon, label, rightIcon));
+        }
+    }
+
+    class ButtonLink {
+        view({ attrs: { label, title = label, icon, rightIcon, href, rel, target, download, context, classes = "", style } }) {
+            return m__default['default']("a.link.flex.items-center", {
+                href, rel, target, download, title,
+                class: `${classes} ${getButtonContext(context)} ${theme.button}`, style
+            }, labelIcon(icon, label, rightIcon));
+        }
+    }
+
+    class NavButton {
+        view({ attrs: { label, title = label, icon, rightIcon, classes = "", disabled, style, onclick } }) {
+            return m__default['default'](".mh2.pa2.truncate", {
+                title, disabled,
+                class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${theme.navButton}`,
+                style,
+                onclick
+            }, labelIcon(icon, label, rightIcon));
+        }
+    }
+
+    class NavLink {
+        view({ attrs: { label, title = label, icon, rightIcon, href, rel, target, download, classes = "", style } }) {
+            return m__default['default']("a.link.mh2.pa2.truncate", {
+                href, rel, target, download, title,
+                class: `${classes} ${theme.navButton}`, style
+            }, labelIcon(icon, label, rightIcon));
+        }
+    }
+
+    class Trusted {
+        view({ attrs: { field: { style }, value } }) {
+            return m__default['default'](".pa2", {
+                style
+            }, m__default['default'].trust(value()));
+        }
+    }
+
+    class BaseText {
+        view({ attrs: { field, value } }) {
+            const { label, uiClass = {}, style } = field;
+            return m__default['default'](".pa2.flex.flex-wrap", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(label),
+                m__default['default']("span.ws-normal", {
+                    title: value(),
+                    class: theme.displayValue
+                }, value())
+            ]);
+        }
+    }
+
+    class DateText {
+        formatter(val) {
+            return val ? new Date(String(val)).toLocaleDateString() : val;
+        }
+        oninit({ attrs: { value } }) {
+            this.formatted = value.map(this.formatter);
+        }
+        onremove() {
+            this.formatted.end(true);
+        }
+        view({ attrs: { field } }) {
+            return m__default['default'](BaseText, {
+                field,
+                value: this.formatted
+            });
+        }
+    }
+
+    function linkAttrs(fieldType, value) {
+        if (fieldType === "email") {
+            return {
+                href: `mailto:${value}`,
+                class: theme.displayValue
+            };
+        }
+        else if (fieldType === "tel") {
+            return {
+                href: `tel:${value}`,
+                class: theme.displayValue
+            };
+        }
+        else {
+            // Assume standard urls
+            return {
+                href: value,
+                target: "_blank",
+                class: theme.displayValue
+            };
+        }
+    }
+    const iconMap = {
+        email: config.emailIcn,
+        tel: config.telIcn
+    };
+    class Link {
+        view({ attrs: { field, value } }) {
+            const { label, type = "url" /* url */, uiClass = {}, style } = field;
+            return m__default['default'](".pa2.flex.flex-wrap", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(label),
+                m__default['default']("a.link.dim.pointer.ws-normal", linkAttrs(type, value()), m__default['default']("i.mr2", {
+                    class: iconMap[type] || config.linkIcn
+                }), value())
+            ]);
+        }
+    }
+
+    class CheckLabel {
+        view({ attrs: { field, value } }) {
+            const { options = [] } = field;
+            const valLabel = lodash__default['default'].find(options, 
+            // Empty value stream to be handled as false
+            lodash__default['default'].matches({ value: value() || false }));
+            return valLabel ? m__default['default']("span.ml2", valLabel.label) : null;
+        }
+    }
+
+    class Checkbox {
+        constructor() {
+            this.onIcon = "checkIcn";
+            this.offIcon = "uncheckIcn";
+        }
+        view({ attrs: { field, value } }) {
+            const { label, uiClass = {}, style } = field;
+            return m__default['default'](".pa2.flex.items-center", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(label),
+                m__default['default']("i", {
+                    class: `${theme.displayValue} ${config[value() ? this.onIcon : this.offIcon]}`
+                }),
+                m__default['default'](CheckLabel, { field, value })
+            ]);
+        }
+    }
+
+    class Toggle extends Checkbox {
+        constructor() {
+            super(...arguments);
+            this.onIcon = "toggleOnIcn";
+            this.offIcon = "toggleOffIcn";
+        }
+    }
+
+    // TODO Expand validation for field input masks, min/max, minlength/maxlength etc.
+    function propInvalid(field, value) {
+        if (field.required) {
+            return !value;
+        }
+        return false;
+    }
+    function fileInvalid(field, value) {
+        if (field.required) {
+            return value.length < 1;
+        }
+        return false;
+    }
+
+    function dragStart(state) {
+        return (evt) => {
+            evt.preventDefault();
+            if (evt.dataTransfer) {
+                evt.dataTransfer.dropEffect = "copy";
+            }
+            // Prevent excessive redraws if dragging state is already set
+            if (state()) {
+                evt.redraw = false;
+            }
+            state(true);
+        };
+    }
+    function dragStop(state) {
+        return (evt) => {
+            evt.preventDefault();
+            state(false);
+        };
+    }
+    function drop(state, setFiles) {
+        return (evt) => {
+            evt.preventDefault();
+            state(false);
+            if (evt.dataTransfer) {
+                setFiles(evt.dataTransfer.files);
+            }
+        };
+    }
+    function change(setFiles) {
+        return ({ target: { files } }) => setFiles(files);
+    }
+    class FileInput {
+        oncreate({ dom, attrs: { value } }) {
+            value.map((list) => {
+                if (list.length === 0) {
+                    dom.firstChild.value = "";
+                }
+            });
+        }
+        view({ attrs: { field, defaultAccept = "*", multiple = true, dragging, onSet }, children }) {
+            const { label, id, name = id, title = label, required, readonly, disabled, autofocus, accept = defaultAccept, uiClass = {} } = field;
+            return m__default['default']("label.db", lodash__default['default'].extend({
+                "for": id,
+                "title": title,
+                "class": pointerCls(disabled, readonly),
+                "data-input-id": id
+            }, disabled || readonly ? {} : {
+                ondragover: dragStart(dragging),
+                ondragleave: dragStop(dragging),
+                ondrop: drop(dragging, onSet)
+            }), [
+                m__default['default']("input.clip[type=file].bg-transparent.bn.outline-0", {
+                    id, name, multiple, accept,
+                    required, autofocus,
+                    disabled: disabled || readonly,
+                    onchange: change(onSet)
+                }),
+                label ? m__default['default']("span.db.mb1", {
+                    class: labelCls(uiClass, required)
+                }, getLabelText(label, required)) : null,
+                children
+            ]);
+        }
+    }
+
+    function addFiles(fileList, replace = false) {
+        return (addList) => {
+            const newFileList = replace ? [] : fileList();
+            lodash__default['default'].each(addList, (file) => {
+                newFileList.push({
+                    guid: guid(),
+                    name: file.name,
+                    path: "not_set",
+                    file: file
+                });
+            });
+            fileList(newFileList);
+        };
+    }
+    function removeFile(fileList, removeGuid) {
+        return (event) => {
+            event.preventDefault();
+            const newFileList = fileList();
+            lodash__default['default'].remove(newFileList, { guid: removeGuid });
+            fileList(newFileList);
+        };
+    }
+    class FileMulti {
+        constructor() {
+            this.dragging = stream__default['default'](false);
+        }
+        view({ attrs: { field, value } }) {
+            const { disabled, uiClass = {} } = field;
+            return m__default['default']("div", {
+                class: wrapperCls(uiClass, disabled)
+            }, [
+                m__default['default'](FileInput, {
+                    field,
+                    dragging: this.dragging,
+                    onSet: addFiles(value),
+                    value
+                }, m__default['default']("fieldset", {
+                    class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+                }, m__default['default'](".pa2", {
+                    class: fileInputCls(this.dragging())
+                }, [
+                    m__default['default']("i.mr2", {
+                        class: config.uploadIcn
+                    }),
+                    m__default['default']("span", config.addFilesTxt)
+                ]))),
+                m__default['default'](".flex.flex-column.mt1.nb1", lodash__default['default'].map(value(), (file) => m__default['default']("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
+                    m__default['default']("i.mr2", {
+                        class: config.downloadIcn
+                    }),
+                    file.name,
+                    m__default['default']("i.child.fr", {
+                        title: `${config.remFileTtl} ${file.name}`,
+                        class: config.deleteIcn,
+                        onclick: removeFile(value, file.guid)
+                    })
+                ])))
+            ]);
+        }
+    }
+
+    class Thumbnail {
+        view({ children, attrs }) {
+            return m__default['default'](".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child", [
+                attrs.src && attrs.src !== "not_set" ? m__default['default']("img.contain", { src: attrs.src }) : null,
+                attrs.data && attrs.data.file && (attrs.src === "not_set" || !attrs.src) ? (m__default['default']("div.contain.tc.br5.6rem", {
+                    class: `${getFileTypeIcon(attrs.data)} fa-2x`,
+                    tooltip: attrs.data.file.type
+                })) : null,
+                children
+            ]);
+        }
+    }
+
+    class FileOpen {
+        view({ attrs }) {
+            return m__default['default']("i.pa1", {
+                class: getFileTypeIcon(attrs),
+                title: config.openFileTxt,
+                onclick: attrs.path !== "not_set"
+                    ? () => window.open(attrs.path, "_blank")
+                    : undefined
+            });
+        }
+    }
+
+    class DisplayTypeComponent {
+        view({ attrs: { displayType = "thumbnail" /* thumbnail */, value } }) {
+            return displayType === "thumbnail" /* thumbnail */ ? m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
+                src: imgSrc(file.path, file.dataUrl),
+                data: file,
+                style: thumbMaxSize(),
+            }, m__default['default'](".absolute.top-0.right-0.child", m__default['default'](Button, {
+                title: `Remove ${file.name}`,
+                icon: config.deleteIcn,
+                onclick: removeFile(value, file.guid)
+            }))))) : m__default['default'](".pa2.flex.flex-column", lodash__default['default'].map(value(), (file) => m__default['default'](".flex.items-center.pa1.ba.b--black-20", [
+                m__default['default']("i.pa1", {
+                    class: config.uploadIcn
+                }),
+                m__default['default']("span.ma1.flex-auto", {
+                    title: file.name
+                }, file.name),
+                m__default['default'](FileOpen, file),
+                m__default['default']("i.pa1.pointer.dim", {
+                    title: `Remove ${file.name}`,
+                    class: config.cancelIcn,
+                    onclick: removeFile(value, file.guid)
+                })
+            ])));
+        }
+    }
+
+    class SelectText {
+        view({ attrs: { field, value } }) {
+            const { label: lbl, uiClass = {}, style } = field;
+            // Get label for selected options (falling back to the value)
+            const option = lodash__default['default'].find(field.options, { value: value() });
+            const label = option ? option.label || option.value : value();
+            return m__default['default'](".pa2.flex.flex-wrap", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(lbl),
+                m__default['default']("span.ws-normal", {
+                    title: label,
+                    class: theme.displayValue
+                }, label)
+            ]);
+        }
+    }
+
+    class FileList {
+        view({ attrs: { field, value } }) {
+            const { label, uiClass = {}, style } = field;
+            return m__default['default'](".pa2.flex.flex-column", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(label),
+                m__default['default'](".flex.flex-column.mt1.nb1", lodash__default['default'].map(value(), ({ name, path }) => {
+                    return m__default['default']("a.pa2.mv1.link.ba.b--black-20.dim.dib.pointer[target=_blank]", {
+                        class: theme.displayValue,
+                        href: path
+                    }, m__default['default']("i.mr2", {
+                        class: config.downloadIcn
+                    }), name);
+                }))
+            ]);
+        }
+    }
+
+    class ImageList {
+        view({ attrs: { field, value } }) {
+            const { label, uiClass = {}, style } = field;
+            return m__default['default'](".pa2.flex.flex-column", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(label),
+                m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash__default['default'].map(value(), ({ name, path, dataUrl }) => m__default['default'](Thumbnail, {
+                    title: name,
+                    src: imgSrc(path, dataUrl),
+                    style: thumbMaxSize()
+                })))
+            ]);
+        }
+    }
+
+    class ImagePreview {
+        view({ attrs: { field, value } }) {
+            const { label, uiClass = {}, style } = field;
+            const file = lodash__default['default'].head(value());
+            return m__default['default'](".pa2.flex.flex-column", {
+                class: wrapperCls(uiClass),
+                style
+            }, [
+                getDisplayLabel(label),
+                file ? m__default['default']("img.img.h-100.mt2.contain.self-center", {
+                    title: file.name,
+                    src: imgSrc(file.path, file.dataUrl),
+                    style: imgMaxSize()
+                }) : m__default['default']("i.mt2", {
+                    class: `${theme.displayValue} ${config.imageIcn}`
+                })
+            ]);
+        }
+    }
+
+    function countMatches(input, pattern) {
+        return (input.match(pattern) || []).length;
+    }
+    function scorePassword(value) {
+        let totalScore = 0;
+        // Min req for password is 8 characters
+        if (value.length >= 8) {
+            totalScore = 1;
+            // Extra points for longer password
+            if (value.length >= 24) {
+                totalScore = totalScore + 1;
+            }
+            // At least 2 upper and 3 lower case characters
+            if (countMatches(value, /[A-Z]/g) > 1 && countMatches(value, /[a-z]/g) > 2) {
+                totalScore = totalScore + 1;
+            }
+            // At least 2 digits
+            if (countMatches(value, /[\d]/g) > 1) {
+                totalScore = totalScore + 1;
+            }
+            // At least one special character
+            if (countMatches(value, /[!"£%^@#$&*]/g) > 0) {
+                totalScore = totalScore + 1;
+            }
+        }
+        return totalScore;
+    }
+    function passwordStrengthStr(value) {
+        switch (value) {
+            case 0: {
+                return "Invalid";
+            }
+            case 1: {
+                return "Very Weak";
+            }
+            case 2: {
+                return "Weak";
+            }
+            case 3: {
+                return "Average";
+            }
+            case 4: {
+                return "Strong";
+            }
+            case 5: {
+                return "Very Strong";
+            }
+        }
+        return "";
+    }
+    const passwordStrength = [{
+            value: 1,
+            background: "bg-dark-red"
+        }, {
+            value: 2,
+            background: "bg-orange"
+        }, {
+            value: 3,
+            background: "bg-yellow"
+        }, {
+            value: 4,
+            background: "bg-light-green"
+        }, {
+            value: 5,
+            background: "bg-green"
+        }];
+    class PasswordStrength {
+        oninit({ attrs: { value } }) {
+            this.passwordScore = value
+                .map((newPass) => scorePassword(String(newPass)));
+        }
+        onremove() {
+            this.passwordScore.end();
+        }
+        view({ attrs: { field } }) {
+            const { label, style } = field;
+            return m__default['default'](".flex.flex-column", {
+                style
+            }, [
+                getDisplayLabel(label),
+                m__default['default'](".flex.mt1", lodash__default['default'].map(passwordStrength, (val) => m__default['default'](".h1.w-20", {
+                    class: this.passwordScore() >= val.value ? val.background : "bg-transparent"
+                }))),
+                m__default['default']("span.f5.truncate", passwordStrengthStr(this.passwordScore()))
+            ]);
+        }
+    }
+
+    class Label {
+        view({ attrs: { field: { label = "", title = label, required } } }) {
+            return m__default['default']("label.mb2", { title }, getLabelText(label, required));
+        }
+    }
+
+    class Basic {
+        view({ attrs, children }) {
+            const { field, value, xform = value } = attrs;
+            const { label, id, type = "text" /* text */, required, disabled, uiClass = {} } = field;
+            // Wrapper
+            return m__default['default']("div", {
+                class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)
+            }, [
+                // Basic label
+                getLabel(id, uiClass, label, required),
+                // Input wrapper
+                m__default['default']("fieldset", {
+                    class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+                }, 
+                // Input
+                children)
+            ]);
+        }
+    }
+
+    class FloatLabel {
+        constructor() {
+            this.focus = false;
+            this.focusIn = () => this.focus = true;
+            this.focusOut = () => this.focus = false;
+            // Track element height for better positioning floating label
+            this.wrapperHeight = 0;
+        }
+        oncreate({ dom }) {
+            this.wrapperHeight = dom.clientHeight;
+            m__default['default'].redraw();
+        }
+        onupdate({ dom }) {
+            if (dom.clientHeight !== this.wrapperHeight) {
+                this.wrapperHeight = dom.clientHeight;
+                m__default['default'].redraw();
+            }
+        }
+        view({ attrs, children }) {
+            const { field, value, xform = value } = attrs;
+            const { label, id, type = "text" /* text */, required, disabled, layout, uiClass = {} } = field;
+            const staticFieldTypes = type === "dateInput" /* dateInput */ || type === "cardDate" /* cardDate */;
+            // Float label if element has a value set or is in focus
+            const shrink = layout === "floatAlways" /* floatAlways */ || value() || this.focus || staticFieldTypes;
+            const defaultPosition = `translateY(${type !== "textarea" /* textarea */ ? `calc(${this.wrapperHeight * 0.5}px - 0.33em))`
+            : `1em`}`;
+            // Wrapper (padding 0.5 * shrink label size)
+            return m__default['default'](".relative", {
+                class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
+                style: {
+                    paddingTop: "0.7em"
+                },
+                onfocusin: this.focusIn,
+                onfocusout: this.focusOut
+            }, 
+            // Input wrapper
+            m__default['default']("fieldset.pa0.ma0", {
+                class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+            }, [
+                label ? [
+                    // Break fieldset border, make space for label to float into
+                    m__default['default']("legend.db.pa0", {
+                        style: {
+                            visibility: "hidden",
+                            height: "0px",
+                            maxWidth: shrink ? "100%" : "0.01px",
+                            transition: "max-width 0.3s ease-in-out",
+                            fontSize: "0.7em",
+                            marginLeft: shrink ? "0.7em" : '',
+                        }
+                    }, m__default['default']("span", {
+                        style: {
+                            padding: "0 .7em 0 .7em"
+                        }
+                    }, label)),
+                    // Floating label
+                    m__default['default']("label.db.absolute.top-0", {
+                        title: label,
+                        for: id,
+                        class: labelCls(uiClass, required),
+                        style: {
+                            left: "0.7em",
+                            // Translate into center of input wrapper
+                            transform: shrink
+                                ? "scale(0.7) translate(0.5em, 0.25em)"
+                                : defaultPosition,
+                            transformOrigin: "top left",
+                            display: this.wrapperHeight ? "inherit" : "none",
+                            transition: "transform 0.3s ease-in-out",
+                        }
+                    }, getLabelText(label, required))
+                ] : null,
+                // Input
+                children
+            ]));
+        }
+    }
+
+    class BaseInput {
+        view({ attrs }) {
+            const { field, value, xform = value } = attrs;
+            const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, layout = "default" /* default */, uiClass = {} } = field;
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                id, type, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: xform(),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            }));
+        }
+    }
+
+    class CurrencyInput {
+        view({ attrs }) {
+            const { field, value, xform = value } = attrs;
+            const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, layout = "default" /* default */, uiClass = {}, options } = field;
+            const currency = options && options.length ? options[0].value : "$";
+            const internalLabelView = m__default['default']('.flex.flex-row.w-100', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                id, type: "text" /* text */, name, title, placeholder,
+                max, maxlength, min, minlength, step, required,
+                readonly, disabled, autofocus, autocomplete,
+                pattern, inputmode, spellcheck,
+                class: inputCls(uiClass),
+                value: lodash__default['default'].isUndefined(xform())
+                    ? null
+                    : numberToCurrencyStr(propToNumber(xform())),
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+            }));
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, internalLabelView);
+        }
+    }
+    function propToNumber(value) {
+        return lodash__default['default'].isString(value) ? lodash__default['default'].parseInt(value) : Number(value);
+    }
+    /**
+     * Parse a currency string into a number
+     * @param currencyStr Value to convert e.g. "123.45"
+     * @return parsed value as smallest monetary unit e.g. 12345
+     */
+    function currencyStrToNumber(currencyStr) {
+        // Remove everything but digits and the decimal point
+        const inputStr = currencyStr.replace(/[^\d.]/g, "");
+        let left;
+        let right = 0;
+        // split number at decimal point
+        if (inputStr.indexOf(".") > -1) {
+            const decimalPos = inputStr.indexOf(".");
+            const leftStr = inputStr.substring(0, decimalPos);
+            // Ensure left component has at least 1 character
+            left = lodash__default['default'].parseInt(lodash__default['default'].padStart(leftStr, 1, "0"));
+            // Only accept first 2 figures after decimal
+            const rightStr = inputStr.substring(decimalPos + 1, Math.min(decimalPos + 3, inputStr.length));
+            // Ensure right component has 2 characters
+            right = lodash__default['default'].parseInt(lodash__default['default'].padEnd(rightStr, 2, "0"));
+        }
+        else {
+            left = lodash__default['default'].parseInt(inputStr) || 0;
+        }
+        return left * 100 + right;
+    }
+    /**
+     * Convert a number into a currency string
+     * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+     * @return currency string if finite number e.g. "123.45" or undefined
+     */
+    function numberToCurrencyStr(unitTotal) {
+        const numPair = numberToCurrencyTuple(unitTotal);
+        if (numPair) {
+            return `${numPair[0]}.${numPair[1]}`;
+        }
+        else {
+            return numPair;
+        }
+    }
+    /**
+     * Convert a number into a currency string pair
+     * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+     * @return currency string pair if finite number e.g. ["123", "45"] or undefined
+     */
+    function numberToCurrencyTuple(unitTotal) {
+        if (!lodash__default['default'].isFinite(unitTotal)) {
+            return undefined;
+        }
+        const valStr = String(Math.abs(unitTotal));
+        let large = "0";
+        let small = "";
+        if (valStr.length > 2) {
+            const decimalPos = valStr.length - 2;
+            large = valStr.substring(0, decimalPos);
+            small = valStr.substring(decimalPos);
+        }
+        else {
+            small = lodash__default['default'].padStart(valStr, 2, "0");
+        }
+        return [large, small];
+    }
+    // Currency TProp update helper
+    function setCurrencyValue(val) {
+        return ({ target: { value } }) => val(currencyStrToNumber(value));
+    }
+
+    class CardDateInput {
+        constructor() {
+            this.month = stream__default['default']();
+            this.year = stream__default['default']();
+            this.valid = stream__default['default'].lift((month, year) => {
+                // month is set between 1-12 elsewhere
+                return year.length === 2 && month.length === 2;
+            }, this.month, this.year);
+            // Combine date parts
+            this.date = stream__default['default'].lift((month, year, valid) => valid ? `${month}/${year}` : "", this.month, this.year, this.valid);
+        }
+        oninit({ attrs: { value } }) {
+            // Split value into date parts
+            value.map((newVal) => {
+                const [month, year = ""] = String(newVal).split("/");
+                month.length === 2 && this.month(month);
+                year.length === 2 && this.year(year);
+            });
+            // Update value when date changes
+            updateNewValue(this.date, value);
+        }
+        oncreate({ dom }) {
+            const input = dom.querySelector("input");
+            setCustomValidityMessage(input, this.valid, "Invalid Date");
+            this.dom = dom;
+        }
+        onremove() {
+            this.date.end(true);
+            this.year.end(true);
+            this.month.end(true);
+        }
+        view({ attrs }) {
+            const { field } = attrs;
+            const { id, name = id, required, readonly, disabled, layout = "default" /* default */, uiClass = {} } = field;
+            const classStr = inputCls(uiClass);
+            const dateInputs = [
+                m__default['default']("div.dib.mr2", [
+                    m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                        id: `${id}-mm`, name: `${name}-mm`,
+                        type: "text" /* text */, placeholder: "MM",
+                        minlength: "2", maxlength: "2",
+                        pattern: "[0-9]*", inputmode: "numeric",
+                        required, readonly, disabled,
+                        value: this.month(),
+                        class: classStr, style: styleSm,
+                        oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
+                    })
+                ]),
+                m__default['default']("span.mr2", "/"),
+                m__default['default']("div.dib.mr2", [
+                    m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                        id: `${id}-yy`, name: `${name}-yy`,
+                        type: "text" /* text */, placeholder: "YY",
+                        minlength: "2", maxlength: "2",
+                        pattern: "[0-9]*", inputmode: "numeric",
+                        required, readonly, disabled,
+                        value: this.year(),
+                        class: classStr, style: styleSm,
+                        oninput: () => handleDateChange(this.year, id, "yy", this.dom)
+                    })
+                ])
+            ];
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, dateInputs);
+        }
+    }
+
+    class DateInput {
+        constructor() {
+            this.day = stream__default['default']();
+            this.month = stream__default['default']();
+            this.year = stream__default['default']();
+            this.valid = stream__default['default'].lift((day, month, year) => {
+                const newYear = parseInt(year);
+                const newMonth = parseInt(month) - 1;
+                const newDay = parseInt(day);
+                const newDate = new Date(newYear, newMonth, newDay);
+                return newDate.getFullYear() === newYear && year.length === 4
+                    && newDate.getMonth() === newMonth && newDate.getDate() === newDay
+                    && day.length === 2 && month.length === 2;
+            }, this.day, this.month, this.year);
+            // Combine date parts
+            this.date = stream__default['default'].lift((day, month, year, valid) => valid ? `${year}-${month}-${day}` : "", this.day, this.month, this.year, this.valid);
+        }
+        oninit({ attrs: { value } }) {
+            // Split value into date parts
+            value.map((newVal) => {
+                const date = new Date(String(newVal));
+                if (lodash__default['default'].isDate(date) && !isNaN(date.getTime())) {
+                    this.day(lodash__default['default'].padStart(String(date.getDate()), 2, "0"));
+                    this.month(lodash__default['default'].padStart(String(1 + date.getMonth()), 2, "0"));
+                    this.year(String(date.getFullYear()));
+                }
+            });
+            // Update value when date changes
+            updateNewValue(this.date, value);
+        }
+        oncreate({ dom }) {
+            const input = dom.querySelector("input");
+            setCustomValidityMessage(input, this.valid, "Invalid Date");
+            this.dom = dom;
+        }
+        onremove() {
+            this.date.end(true);
+            this.year.end(true);
+            this.month.end(true);
+            this.day.end(true);
+        }
+        view({ attrs }) {
+            const { id, name = id, required, readonly, disabled, layout = "default" /* default */, uiClass = {}, options } = attrs.field;
+            const locale = options && options.length ? options[0].value : "en-GB";
+            const isUsLocale = locale === "en-US";
+            const classStr = inputCls(uiClass);
+            // Create DD-MM-YYYY inputs
+            const dayInput = m__default['default'](".dib", [
+                m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                    id: `${id}-dd`, name: `${name}-dd`,
+                    type: "text" /* text */, placeholder: "DD",
+                    minlength: "2", maxlength: "2",
+                    pattern: "[0-9]*", inputmode: "numeric",
+                    required, readonly, disabled,
+                    value: this.day(),
+                    oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
+                    class: classStr,
+                    style: {
+                        maxWidth: '3ex',
+                        textAlign: this.day() && this.day().length === 2 ? "center" : "left"
+                    }
+                })
+            ]);
+            const monthInput = m__default['default'](".dib", [
+                m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                    id: `${id}-mm`, name: `${name}-mm`,
+                    type: "text" /* text */, placeholder: "MM",
+                    minlength: "2", maxlength: "2",
+                    pattern: "[0-9]*", inputmode: "numeric",
+                    required, readonly, disabled,
+                    value: this.month(),
+                    oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
+                    class: classStr,
+                    style: {
+                        maxWidth: "3.5ex",
+                        textAlign: this.month() && this.month().length === 2 ? "center" : "left"
+                    }
+                })
+            ]);
+            const yearInput = m__default['default'](".dib", [
+                m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                    id: `${id}-yyyy`, name: `${name}-yyyy`,
+                    type: "text" /* text */, placeholder: "YYYY",
+                    minlength: "4", maxlength: "4",
+                    pattern: "[0-9]*", inputmode: "numeric",
+                    required, readonly, disabled,
+                    value: this.year(),
+                    oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
+                    class: classStr,
+                    // style: styleLg,
+                    style: {
+                        maxWidth: '5ch',
+                    }
+                })
+            ]);
+            const slash = m__default['default']('span.self-center', '/');
+            // Assemble date input (en-GB or en-US layouts)
+            const dateInput = isUsLocale ? [monthInput, slash, dayInput, slash, yearInput]
+                : [dayInput, slash, monthInput, slash, yearInput];
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, dateInput);
+        }
+    }
+
+    class PasswordInput {
+        constructor() {
+            this.showPassword = stream__default['default'](false);
+        }
+        view({ attrs }) {
+            const { field, value } = attrs;
+            const { label, id, name = id, title = label, placeholder, maxlength, minlength, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, instant, uiClass = {}, layout } = field;
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']('.flex.flex-row', [
+                m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+                    id, name, title, placeholder,
+                    type: this.showPassword() ? "text" : "password",
+                    maxlength, minlength, required,
+                    readonly, disabled, autofocus, autocomplete,
+                    pattern, inputmode,
+                    class: inputCls(uiClass),
+                    value: value(),
+                    // Safari quirk
+                    autocorrect: "off",
+                    // Update value on change or input ("instant" option)
+                    [instant ? "oninput" : "onchange"]: setValue(value)
+                }),
+                m__default['default']("i.ml1.pa1.fa-fw.pointer.dim", {
+                    title: config.showPassTxt,
+                    class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
+                    onclick: () => this.showPassword(!this.showPassword())
+                })
+            ]));
+        }
+    }
+
+    class TextareaInput {
+        view({ attrs }) {
+            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, layout = "default" /* default */, uiClass = {} } = attrs.field;
+            const { value } = attrs;
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+                id, name, title,
+                placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
+                class: textareaCls(uiClass),
+                value: value(),
+                style: { resize: "none" },
+                // Update value on change or input ("instant" option)
+                [instant ? "oninput" : "onchange"]: setValue(value)
+            }));
+        }
+    }
+
+    class CheckboxInput {
+        constructor() {
+            this.onIcon = "checkIcn";
+            this.offIcon = "uncheckIcn";
+        }
+        view({ attrs: { field, value } }) {
+            const { label = "", id, name = id, title = label, required, readonly, disabled, autocomplete, uiClass = {} } = field;
+            return m__default['default']("fieldset", {
+                class: wrapperCls(uiClass, disabled),
+            }, m__default['default']("div", {
+                class: inputWrapperCls(uiClass)
+            }, [
+                m__default['default']("label.flex.items-center", {
+                    "title": title,
+                    "class": checkInputCls(uiClass, disabled, readonly),
+                    "data-input-id": id
+                }, m__default['default']("input.clip[type=checkbox]", {
+                    id, name,
+                    checked: value(),
+                    required, autocomplete,
+                    disabled: disabled || readonly,
+                    onchange: setCheck(value),
+                }), m__default['default']("i.mr2", {
+                    class: config[value() ? this.onIcon : this.offIcon]
+                }), getLabelText(label, required), m__default['default'](CheckLabel, { field, value }))
+            ]));
+        }
+    }
+
+    class ToggleInput extends CheckboxInput {
+        constructor() {
+            super(...arguments);
+            this.onIcon = "toggleOnIcn";
+            this.offIcon = "toggleOffIcn";
+        }
+    }
+
+    class RadioInput {
+        view({ attrs }) {
+            const { field, value: val } = attrs;
+            const { id, name = id, required, readonly, disabled, autocomplete, options, layout, uiClass = {} } = field;
+            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']("div", {
+                class: inputWrapperCls(uiClass, propInvalid(field, val())),
+                onchange: setValue(val)
+            }, lodash__default['default'].map(options, ({ value, label = value, icon }) => {
+                const checked = val() === value;
+                // No requirement for label "for" attribute
+                return m__default['default']("label.dib", {
+                    "title": label,
+                    "class": radioInputCls(uiClass, checked, disabled, readonly),
+                    "data-input-id": id
+                }, m__default['default']("input.clip[type=radio]", {
+                    name, value, checked,
+                    required, autocomplete,
+                    disabled: disabled || readonly
+                }), icon ? m__default['default']("i.fa-fw", {
+                    class: icon
+                }) : label);
+            })));
+        }
+    }
+
+    class SelectInput {
+        view({ attrs: { field, value: val } }) {
+            const { label: lbl, id, name = id, title = lbl, required, readonly, disabled, autofocus, autocomplete, uiClass = {}, options } = field;
+            return m__default['default']("fieldset", {
+                class: wrapperCls(uiClass, disabled)
+            }, [
+                getLabel(id, uiClass, lbl, required),
+                m__default['default']("div", {
+                    class: inputWrapperCls(uiClass, propInvalid(field, val()))
+                }, m__default['default']("select.w-100.bg-transparent.bn.outline-0", {
+                    id, name, title,
+                    required, readonly, disabled, autofocus, autocomplete,
+                    class: inputCls(uiClass),
+                    value: val(),
+                    onchange: setValue(val)
+                }, lodash__default['default'].map(options, ({ value, label = value }) => m__default['default']("option", {
+                    value,
+                    disabled: disabled || readonly
+                }, label))))
+            ]);
+        }
+    }
+
+    class FileSelect {
+        constructor() {
+            this.dragging = stream__default['default'](false);
+        }
+        view({ attrs: { field, value, displayType } }) {
+            const file = lodash__default['default'].head(value());
+            const { disabled, uiClass = {} } = field;
+            const innerText = displayType === "none" /* none */ || !file
+                ? config.addFileTxt
+                : file.name;
+            return m__default['default']("div", {
+                class: wrapperCls(uiClass, disabled)
+            }, m__default['default'](FileInput, {
+                field,
+                multiple: false,
+                dragging: this.dragging,
+                onSet: addFiles(value, true),
+                value
+            }, m__default['default']("fieldset", {
+                class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+            }, m__default['default'](".flex.items-center.pa1", {
+                class: fileInputCls(this.dragging())
+            }, [
+                m__default['default']("i.pa1", {
+                    class: config.uploadIcn
+                }),
+                m__default['default']("span.ma1.flex-auto", innerText),
+                file && displayType !== "none" /* none */ ? [
+                    m__default['default'](FileOpen, file),
+                    m__default['default']("i.pa1.pointer.dim", {
+                        title: `Remove ${file.name}`,
+                        class: config.cancelIcn,
+                        onclick: removeFile(value, file.guid)
+                    })
+                ] : null
+            ]))));
+        }
+    }
+
+    function addImages(fileList, maxSize, replace = false) {
+        return (addList) => {
+            const newFileList = replace ? [] : fileList();
+            return Promise.all(lodash__default['default'].map(addList, (file) => {
+                // Limit file dimensions
+                return resizeImage(file, maxSize, file.type).then((dataURL) => {
+                    const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
+                    newFileList.push({
+                        guid: guid(),
+                        name: newFile.name,
+                        path: "not_set",
+                        file: newFile,
+                        dataUrl: dataURL
+                    });
+                });
+            })).then(() => {
+                fileList(newFileList);
+                m__default['default'].redraw();
+            });
+        };
+    }
+    class ImageMulti {
+        constructor() {
+            this.dragging = stream__default['default'](false);
+        }
+        view({ attrs: { field, value } }) {
+            const { disabled, uiClass = {} } = field;
+            return m__default['default']("div", {
+                class: wrapperCls(uiClass, disabled)
+            }, [
+                m__default['default'](FileInput, {
+                    field,
+                    defaultAccept: "image/*",
+                    dragging: this.dragging,
+                    onSet: addImages(value, config.imageMaxSize),
+                    value
+                }, m__default['default']("fieldset", {
+                    class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+                }, m__default['default'](".w-100.pa1.dt.tc", {
+                    class: fileInputCls(this.dragging())
+                }, m__default['default']("i.fa-2x.dtc.v-mid", {
+                    class: config.cameraIcn
+                })))),
+                m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
+                    src: imgSrc(file.path, file.dataUrl),
+                    style: thumbMaxSize()
+                }, m__default['default'](".absolute.top-0.right-0.child", m__default['default'](Button, {
+                    title: `Remove ${file.name}`,
+                    icon: config.deleteIcn,
+                    onclick: removeFile(value, file.guid)
+                })))))
+            ]);
+        }
+    }
+
+    class ImageSelect {
+        constructor() {
+            this.dragging = stream__default['default'](false);
+        }
+        view({ attrs: { field, value } }) {
+            const file = lodash__default['default'].head(value());
+            const { disabled, uiClass = {} } = field;
+            return m__default['default']("div", {
+                class: wrapperCls(uiClass, disabled)
+            }, m__default['default'](FileInput, {
+                field,
+                defaultAccept: "image/*",
+                multiple: false,
+                dragging: this.dragging,
+                onSet: addImages(value, config.imageMaxSize, true),
+                value
+            }, m__default['default']("fieldset", {
+                class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+            }, m__default['default'](".pa1", {
+                class: fileInputCls(this.dragging())
+            }, m__default['default'](".relative.w-100.dt.tc", file ? [
+                m__default['default']("img.img.contain", {
+                    title: file.name,
+                    src: imgSrc(file.path, file.dataUrl),
+                    style: imgMaxSize()
+                }),
+                m__default['default'](".absolute.top-0.right-0.pa1.pointer.dim", {
+                    title: `Remove ${file.name}`,
+                    onclick: removeFile(value, file.guid)
+                }, m__default['default']("i.pa1", {
+                    class: config.cancelIcn
+                }))
+            ] : m__default['default']("i.fa-2x.dtc.v-mid", {
+                class: config.cameraIcn
+            }))))));
+        }
+    }
+
+    class SignDraw {
+        oncreate({ dom }) {
+            const canvas = dom.children[0];
+            const initialRatio = pxRatio();
+            this.signaturePad = new SignaturePad__default['default'](canvas, {
+                minWidth: 0.5 * initialRatio,
+                maxWidth: 1.5 * initialRatio
+            });
+            // Create resize handler
+            const resizeCanvas = () => {
+                const resizeRatio = pxRatio();
+                canvas.width = canvas.offsetWidth * resizeRatio;
+                canvas.height = canvas.offsetHeight * resizeRatio;
+                const context = canvas.getContext("2d");
+                context.scale(resizeRatio, resizeRatio);
+                this.resetCanvas();
+            };
+            this.resizeHandler = lodash__default['default'].debounce(resizeCanvas, 250);
+            window.addEventListener("resize", this.resizeHandler);
+            window.addEventListener("orientationchange", this.resizeHandler);
+            resizeCanvas();
+        }
+        onremove() {
+            this.resizeHandler.cancel();
+            window.removeEventListener("resize", this.resizeHandler);
+            window.removeEventListener("orientationchange", this.resizeHandler);
+        }
+        view({ attrs: { style, onSet, onCancel } }) {
+            return [
+                m__default['default'](".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style }, m__default['default']("canvas.aspect-ratio--object")),
+                m__default['default'](".absolute.top-0.right-0.z-999", {
+                    style: { transform: "translateY(-100%)" }
+                }, [
+                    m__default['default'](Button, {
+                        title: config.applyTtl,
+                        icon: config.applyIcn,
+                        classes: "ma1",
+                        onclick: () => {
+                            if (!this.signaturePad.isEmpty()) {
+                                onSet(this.signaturePad.toDataURL("image/png"));
+                            }
+                        }
+                    }),
+                    m__default['default'](Button, {
+                        title: config.resetTtl,
+                        icon: config.resetIcn,
+                        classes: "ma1",
+                        onclick: () => this.resetCanvas()
+                    }),
+                    m__default['default'](Button, {
+                        title: config.cancelTtl,
+                        icon: config.cancelIcn,
+                        classes: "ma1",
+                        onclick: onCancel
+                    })
+                ]),
+            ];
+        }
+        resetCanvas() {
+            this.signaturePad.clear();
+        }
+    }
+
+    function applyText(text, heightPct, callback) {
+        return () => {
+            if (text()) {
+                callback(createStamp(text(), heightPct), { text: text(), heightPct });
+            }
+            return false;
+        };
+    }
+    class SignType {
+        constructor() {
+            this.text = stream__default['default']("");
+        }
+        oncreate({ dom }) {
+            const input = dom.children[0];
+            input.focus({ preventScroll: false });
+            this.scaleText(dom);
+        }
+        onupdate({ dom }) {
+            this.scaleText(dom);
+        }
+        view({ attrs: { heightPct, style, onSet, onCancel } }) {
+            return [
+                m__default['default']("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
+                    style,
+                    onsubmit: applyText(this.text, heightPct, onSet)
+                }, m__default['default']("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
+                    oninput: setValue(this.text),
+                    value: this.text(),
+                    style: {
+                        "font-family": config.signFont
+                    }
+                })),
+                m__default['default'](".absolute.top-0.right-0.z-999", {
+                    style: { transform: "translateY(-100%)" }
+                }, [
+                    m__default['default'](Button, {
+                        title: config.applyTtl,
+                        icon: config.applyIcn,
+                        classes: "ma1",
+                        onclick: applyText(this.text, heightPct, onSet)
+                    }),
+                    m__default['default'](Button, {
+                        title: config.resetTtl,
+                        icon: config.resetIcn,
+                        classes: "ma1",
+                        onclick: () => this.text("")
+                    }),
+                    m__default['default'](Button, {
+                        title: config.cancelTtl,
+                        icon: config.cancelIcn,
+                        classes: "ma1",
+                        onclick: onCancel
+                    })
+                ])
+            ];
+        }
+        // Post render update text input font based on container size
+        scaleText(container) {
+            const height = container.clientHeight;
+            container.style.fontSize = `${0.56 * height}px`;
+        }
+    }
+
+    function applyStamp(heightPct, stampTxt, callback) {
+        return () => callback(createStamp(stampTxt, heightPct), { text: stampTxt, heightPct });
+    }
+    class SignStamp {
+        view({ attrs: { heightPct, stampTxt, stampSetTxt, onSet } }) {
+            return [
+                m__default['default']("span.clip", { style: { "font-family": config.signFont } }, stampSetTxt),
+                m__default['default'](".flex", m__default['default'](Button, {
+                    label: stampTxt,
+                    classes: `flex-auto ${config.stampBtnClass}`,
+                    context: config.stampBtnContext,
+                    onclick: applyStamp(heightPct, stampSetTxt, onSet)
+                }))
+            ];
+        }
+    }
+
+    // Map SignTypes enum values to widgets
+    const componentMap = {
+        ["draw" /* Draw */]: SignDraw,
+        ["type" /* Type */]: SignType,
+        ["stamp" /* Stamp */]: SignStamp
+    };
+    function setFile(fileList, id, maxSize) {
+        return (setDataUrl, metadata) => {
+            return scaleDataUrl(setDataUrl, maxSize).then((scaledDataUrl) => {
+                fileList([dataUrlToFile(scaledDataUrl, `sign-${id}.png`, metadata)]);
+                m__default['default'].redraw();
+            });
+        };
+    }
+    class SignBuilder {
+        oninit({ attrs: { value } }) {
+            // Unset signature component on file change
+            this.valUpdate = value.map(() => this.setSignType());
+        }
+        onremove() {
+            this.valUpdate.end();
+        }
+        view({ attrs: { field, value } }) {
+            const { label: lbl, id, readonly, disabled, uiClass = {}, options = config.signOpts, heightPct = config.signHeightPct, stampTxt = config.stampTxt, stampSetTxt = config.stampSetTxt } = field;
+            const style = {
+                paddingBottom: `${heightPct}%`
+            };
+            const fileObj = lodash__default['default'].head(value());
+            // Convert options into widget descriptions
+            const opts = lodash__default['default'](options).map(({ value: type }) => {
+                if (type === "draw" /* Draw */) {
+                    return {
+                        type,
+                        icon: config.drawIcn,
+                        label: config.signDrawTxt
+                    };
+                }
+                else if (type === "type" /* Type */) {
+                    return {
+                        type,
+                        icon: config.typeIcn,
+                        label: config.signTypeTxt
+                    };
+                }
+                else if (type === "stamp" /* Stamp */) {
+                    return {
+                        type,
+                        icon: config.stampIcn,
+                        label: config.signStampTxt
+                    };
+                }
+                return null;
+            }).compact().value();
+            // Auto-select widget if there is only one option and no file
+            if (opts.length === 1 && !fileObj) {
+                this.setSignType(opts[0].type);
+            }
+            return m__default['default']("div.relative", {
+                class: wrapperCls(uiClass, disabled)
+            }, [
+                getLabel(id, uiClass, lbl),
+                m__default['default']("fieldset", {
+                    class: this.signType !== "stamp" /* Stamp */
+                        ? inputWrapperCls(uiClass, fileInvalid(field, value()))
+                        : undefined
+                }, readonly || disabled
+                    // Display component in "readonly" mode
+                    ? m__default['default'](".aspect-ratio", {
+                        id,
+                        style
+                    }, 
+                    // Current signature
+                    fileObj ? m__default['default'](".aspect-ratio--object", {
+                        style: { "pointer-events": "none" }
+                    }, m__default['default']("img.img.w-100.absolute", {
+                        src: imgSrc(fileObj.path, fileObj.dataUrl)
+                    })) : null)
+                    // Use signature creation component (if set)
+                    : this.signType
+                        ? m__default['default'](componentMap[this.signType], {
+                            heightPct,
+                            stampTxt,
+                            stampSetTxt,
+                            style,
+                            onSet: setFile(value, id, config.signMaxSize),
+                            onCancel: lodash__default['default'].bind(this.setSignType, this, undefined)
+                        })
+                        // Display signature preview/creator
+                        : m__default['default'](".aspect-ratio.pointer", {
+                            id,
+                            class: theme.fileInput,
+                            style
+                        }, fileObj
+                            // Current signature
+                            ? m__default['default'](".aspect-ratio--object.hide-child.dim", {
+                                onclick: lodash__default['default'].bind(value, this, [])
+                            }, [
+                                m__default['default']("img.img.w-100.absolute", {
+                                    src: imgSrc(fileObj.path, fileObj.dataUrl)
+                                }),
+                                // Remove signature button
+                                m__default['default'](".pa3.absolute.top-0.right-0.child", m__default['default']("i.fa-2x", {
+                                    class: config.resetIcn
+                                }))
+                            ])
+                            // Signature creation options
+                            : m__default['default'](".aspect-ratio--object.flex", lodash__default['default'].map(opts, ({ type, icon, label }) => m__default['default'](".flex-auto.flex.items-center.justify-center.dim", {
+                                title: label,
+                                onclick: lodash__default['default'].bind(this.setSignType, this, type)
+                            }, m__default['default']("i.fa-2x.ma1", {
+                                class: icon,
+                            }), m__default['default']("span.ma1.dn.db-ns.truncate", label))))))
+            ]);
+        }
+        // Set/unset signature creation component
+        setSignType(type) {
+            this.signType = type;
+        }
+    }
+
+    function addOmniFiles(fileList, replace) {
+        return (addList) => {
+            const newFileList = replace ? [] : fileList();
+            return Promise.all(lodash__default['default'].map(addList, (file) => {
+                if (isImage(file.type)) {
+                    return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
+                        const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
+                        newFileList.push({
+                            guid: guid(),
+                            name: newFile.name,
+                            path: "not_set",
+                            file: newFile,
+                            dataUrl: dataURL
+                        });
+                    });
+                }
+                else {
+                    newFileList.push({
+                        guid: guid(),
+                        name: file.name,
+                        path: "not_set",
+                        file: file,
+                    });
+                    return Promise.resolve();
+                }
+            })).then(() => {
+                fileList(newFileList);
+                m__default['default'].redraw();
+            });
+        };
+    }
+    class OmniFileInput {
+        constructor() {
+            this.dragging = stream__default['default'](false);
+        }
+        view({ attrs: { field, value } }) {
+            const file = lodash__default['default'].head(value());
+            const { disabled, uiClass = {} } = field;
+            return m__default['default']("div", {
+                class: wrapperCls(uiClass, disabled)
+            }, m__default['default'](FileInput, {
+                field,
+                defaultAccept: "*",
+                multiple: false,
+                dragging: this.dragging,
+                onSet: addOmniFiles(value, true),
+                value
+            }, m__default['default']("fieldset", {
+                class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+            }, m__default['default'](".flex.items-center.pa1", {
+                class: fileInputCls(this.dragging())
+            }, file ? file.dataUrl
+                ? [
+                    // Image preview
+                    m__default['default'](".relative.w-100.dt.tc", m__default['default']("img.img.contain", {
+                        title: file.name,
+                        src: imgSrc(file.path, file.dataUrl),
+                        style: imgMaxSize()
+                    }), m__default['default'](".absolute.top-0.right-0.pa1.pointer.dim", {
+                        title: `Remove ${file.name}`,
+                        onclick: removeFile(value, file.guid)
+                    }, m__default['default']("i.pa1", {
+                        class: config.cancelIcn
+                    })))
+                ] : [
+                // Non-image details
+                m__default['default'](FileOpen, file),
+                m__default['default']("span.ma1.flex-auto", {
+                    title: file.name,
+                }, file.name),
+                m__default['default']("i.pa1.pointer.dim", {
+                    title: `Remove ${file.name}`,
+                    class: config.cancelIcn,
+                    onclick: removeFile(value, file.guid)
+                })
+            ] : [
+                // File upload
+                m__default['default']("i.pa1", {
+                    class: config.uploadIcn
+                }),
+                m__default['default']("span.ma1.flex-auto", config.addFileTxt)
+            ]))));
+        }
+    }
+
+    class MultiOmniFileInput {
+        constructor() {
+            this.dragging = stream__default['default'](false);
+        }
+        view({ attrs: { field, value, displayType, showDisplay = true } }) {
+            const { disabled, uiClass = {} } = field;
+            return m__default['default']("div", {
+                class: wrapperCls(uiClass, disabled)
+            }, [
+                m__default['default'](FileInput, {
+                    field,
+                    defaultAccept: "*",
+                    dragging: this.dragging,
+                    onSet: addOmniFiles(value, false),
+                    value
+                }, m__default['default']("fieldset", {
+                    class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+                }, m__default['default'](".flex.items-center.pa1.dt", {
+                    class: fileInputCls(this.dragging())
+                }, [
+                    m__default['default']("i.pa1", {
+                        class: config.uploadIcn
+                    }),
+                    m__default['default']("span.ma1.flex-auto", config.addFileTxt)
+                ]))),
+                showDisplay ? m__default['default'](DisplayTypeComponent, {
+                    displayType,
+                    value
+                }) : null
+            ]);
+        }
+    }
+
+    exports.Badge = Badge;
+    exports.BaseInput = BaseInput;
+    exports.BaseText = BaseText;
+    exports.Button = Button;
+    exports.ButtonLink = ButtonLink;
+    exports.CardDateInput = CardDateInput;
+    exports.Checkbox = Checkbox;
+    exports.CheckboxInput = CheckboxInput;
+    exports.CurrencyInput = CurrencyInput;
+    exports.DateInput = DateInput;
+    exports.DateText = DateText;
+    exports.DisplayTypeComponent = DisplayTypeComponent;
+    exports.FileList = FileList;
+    exports.FileMulti = FileMulti;
+    exports.FileSelect = FileSelect;
+    exports.ImageList = ImageList;
+    exports.ImageMulti = ImageMulti;
+    exports.ImagePreview = ImagePreview;
+    exports.ImageSelect = ImageSelect;
+    exports.Label = Label;
+    exports.Link = Link;
+    exports.MultiOmniFileInput = MultiOmniFileInput;
+    exports.NavButton = NavButton;
+    exports.NavLink = NavLink;
+    exports.OmniFileInput = OmniFileInput;
+    exports.PasswordInput = PasswordInput;
+    exports.PasswordStrength = PasswordStrength;
+    exports.RadioInput = RadioInput;
+    exports.SelectInput = SelectInput;
+    exports.SelectText = SelectText;
+    exports.SignBuilder = SignBuilder;
+    exports.TextareaInput = TextareaInput;
+    exports.Toggle = Toggle;
+    exports.ToggleInput = ToggleInput;
+    exports.Trusted = Trusted;
+    exports.createStamp = createStamp;
+    exports.currencyStrToNumber = currencyStrToNumber;
+    exports.dataURItoBlob = dataURItoBlob;
+    exports.dataUrlToFile = dataUrlToFile;
+    exports.fileConstructor = fileConstructor;
+    exports.fileNameExtSplit = fileNameExtSplit;
+    exports.getOrientation = getOrientation;
+    exports.guid = guid;
+    exports.iconMap = iconMap;
+    exports.linkAttrs = linkAttrs;
+    exports.numberToCurrencyStr = numberToCurrencyStr;
+    exports.numberToCurrencyTuple = numberToCurrencyTuple;
+    exports.pxRatio = pxRatio;
+    exports.readArrayBuffer = readArrayBuffer;
+    exports.readOrientation = readOrientation;
+    exports.resizeImage = resizeImage;
+    exports.scaleDataUrl = scaleDataUrl;
+    exports.scaleRect = scaleRect;
+    exports.textToImage = textToImage;
+    exports.updateButtonContext = updateButtonContext;
+    exports.updateClasses = updateClasses;
+    exports.updateConfig = updateConfig;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

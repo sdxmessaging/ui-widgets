@@ -20,7 +20,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { disabled, uiClass = {} } = field;
-		return m("fieldset", {
+		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
 			m(FileInput, {
@@ -31,7 +31,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize, true),
 				value
 			},
-				m("div", {
+				m("fieldset", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".pa1", {
