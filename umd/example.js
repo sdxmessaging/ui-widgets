@@ -47,6 +47,14 @@ var signList = stream([]);
 var omniInputList = stream([]);
 var multiOmniInputList = stream([]);
 
+// Layout
+var layoutVal = stream("floatLabel");
+layoutVal.map(function (newVal) {
+	uiWidgets.updateConfig({
+		inputDefault: newVal
+	});
+});
+
 // Theme
 var themeWrapper = stream(uiWidgets.theme.wrapper);
 themeWrapper.map(function (newCls) {
@@ -87,7 +95,7 @@ m.mount(document.getElementById("page"), {
 	view: function () {
 		return m(".mw8.pa3.mb5.center", [
 
-			m(".flex.flex-column.flex-row-l.fixed.top-0.right-0.bg-near-white", [
+			m(".flex.flex-column.flex-row-l.items-center.fixed.top-0.right-0.bg-near-white.z-max", [
 				m(uiWidgets.NavLink, {
 					label: "Basic Usage",
 					icon: "fas fa-home",
@@ -112,7 +120,31 @@ m.mount(document.getElementById("page"), {
 					label: "Theme Support",
 					icon: "fas fa-paint-roller",
 					href: "#theme"
-				})
+				}),
+
+				m(".mh2.flex.items-center", [
+					m("i.fa.fa-tags.mh2"),
+					m("span.mr2", "Type"),
+					m(uiWidgets.SelectInput, {
+						field: {
+							id: "layout-in",
+							options: [{
+								label: "Basic",
+								value: "default"
+							}, {
+								label: "Animated",
+								value: "floatLabel"
+							}, {
+								label: "Fixed",
+								value: "floatAlways"
+							}],
+							uiClass: {
+								inputWrapper: "bn"
+							}
+						},
+						value: layoutVal
+					})
+				])
 			]),
 
 			m("h2", "ui-widgets"),
@@ -130,7 +162,6 @@ m.mount(document.getElementById("page"), {
 							id: "text-in-input",
 							label: "Text Input (updates on input)",
 							required: true,
-							layout: "floatLabel",
 							instant: true
 						},
 						value: textVal,
@@ -139,9 +170,7 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "text-area-input",
 							label: "Text Area (updates on change)",
-							type: "textarea",
-							instant: true,
-							layout: "floatLabel"
+							type: "textarea"
 						},
 						value: textVal,
 					})),
@@ -172,7 +201,6 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "dob-in",
 								label: "Date Input (ui-widgets Bespoke)",
-								layout: "floatAlways",
 								options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
 							},
 							value: dateVal
@@ -337,7 +365,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "currency-in-currency",
 						label: "Currency Input",
-						layout: "floatAlways",
 						options: [{
 							value: "£"
 						}]
@@ -360,8 +387,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CardDateInput, {
 					field: {
 						id: "card-in-date",
-						label: "Card Expiry MM/YY",
-						layout: "floatAlways"
+						label: "Card Expiry MM/YY"
 					},
 					value: cardVal
 				})),
@@ -796,7 +822,6 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "feedback-in",
 					label: "We value your feedback",
-					type: "radio",
 					uiClass: {
 						inputWrapper: "flex bg-near-white br-pill",
 						input: "flex-auto pa2 bg-animate br-pill tc"
@@ -822,6 +847,7 @@ m.mount(document.getElementById("page"), {
 						label: "Very satisfied",
 						icon: "fas fa-grin-beam fa-2x"
 					}],
+					layout: "default"
 				},
 				value: faceVal
 			}),
