@@ -23,12 +23,12 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	// Track element height for better positioning floating label
 	private wrapperHeight = 0;
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		this.wrapperHeight = dom.clientHeight;
+		this.wrapperHeight = (dom.querySelector('fieldset') as HTMLElement).clientHeight;
 		m.redraw();
 	}
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		if (dom.clientHeight !== this.wrapperHeight) {
-			this.wrapperHeight = dom.clientHeight;
+		if ((dom.querySelector('fieldset') as HTMLElement).clientHeight !== this.wrapperHeight) {
+			this.wrapperHeight = (dom.querySelector('fieldset') as HTMLElement).clientHeight;
 			m.redraw();
 		}
 	}
@@ -39,7 +39,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 
 		// Float label if element has a value set or is in focus
 		const floatTop = layout === LabelType.floatAlways || floatAlwaysOverride.has(type) || value() || this.focus;
-		const defaultPosition = `translateY(${type !== FieldType.textarea ? `calc(${this.wrapperHeight * 0.5}px - 0.33em))`
+		const defaultPosition = `translateY(${type !== FieldType.textarea ? `calc(${this.wrapperHeight * 0.5}px))`
 			: `1em`}`;
 		// Wrapper (padding 0.5 * shrink label size)
 		return m(".relative", {
