@@ -35,10 +35,11 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 
 	public view({ attrs, children }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
-		const { label, id, type = FieldType.text, required, disabled, layout, uiClass = {} } = field;
+		const { label, id, type = FieldType.text, placeholder, required, disabled, layout, uiClass = {} } = field;
 
 		// Float label if element has a value set or is in focus
-		const floatTop = layout === LabelType.floatAlways || floatAlwaysOverride.has(type) || value() || this.focus;
+		const floatTop = layout === LabelType.floatAlways
+			|| floatAlwaysOverride.has(type) || placeholder || value() || this.focus;
 		const defaultPosition = `translateY(${type !== FieldType.textarea ? `calc(${this.wrapperHeight * 0.5}px))`
 			: `1em`}`;
 		// Wrapper (padding 0.5 * shrink label size)
