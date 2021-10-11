@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import { IPropWidget, TProp, TPropStream } from "../interface/widget";
 export declare class CurrencyInput implements ClassComponent<IPropWidget> {
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<any, any> | m.Vnode<IPropWidget, unknown>;
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<IPropWidget, unknown>;
 }
 export declare function propToNumber(value: TProp): number;
 /**

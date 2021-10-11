@@ -10,5 +10,5 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<any, any> | m.Vnode<IPropWidget, unknown>;
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<IPropWidget, unknown>;
 }
