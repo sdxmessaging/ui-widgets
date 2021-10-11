@@ -6,7 +6,7 @@ uiWidgets.updateConfig({
 	signFont: "Caveat"
 });
 
-uiWidgets.updateClasses({ invalidInputWrapper: "bg-washed-red" });
+uiWidgets.updateClasses({ invalidInputWrapper: "bg-washed-yellow" });
 
 uiWidgets.updateButtonContext({
 	invert: "bg-dark-gray light-blue b--light-blue",
@@ -14,9 +14,7 @@ uiWidgets.updateButtonContext({
 });
 
 // Simple props
-var textVal1 = stream("")
-var textVal = stream("Text");
-var textareaVal = stream("");
+var textVal = stream("");
 var currencyVal = stream();
 var dateVal = stream();
 var dateUsFormat = stream();
@@ -50,7 +48,7 @@ var omniInputList = stream([]);
 var multiOmniInputList = stream([]);
 
 // Theme
-var themeWrapper = stream("pa0 bn");
+var themeWrapper = stream("");
 themeWrapper.map(function (newCls) {
 	uiWidgets.updateClasses({ wrapper: newCls });
 });
@@ -58,11 +56,11 @@ var themeLabel = stream("silver");
 themeLabel.map(function (newCls) {
 	uiWidgets.updateClasses({ label: newCls });
 });
-var themeInputWrapper = stream("dark-gray");
+var themeInputWrapper = stream("pa1 ma0 dark-gray");
 themeInputWrapper.map(function (newCls) {
 	uiWidgets.updateClasses({ inputWrapper: newCls });
 });
-var themeInput = stream("h2 dark-gray fw2");
+var themeInput = stream("dark-gray fw2");
 themeInput.map(function (newCls) {
 	uiWidgets.updateClasses({ input: newCls });
 });
@@ -121,7 +119,7 @@ m.mount(document.getElementById("page"), {
 
 			m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),
 			m("p", "Display components reflect changes made to the stream by input components. A value stream can be used by multiple input components, values stay in sync with no additional code."),
-			m("p", "Inputs can apply additional classes if they fail validation. Try removing the text from either of the two text inputs."),
+			m("p", "Inputs can apply additional classes if they fail validation."),
 
 			// Text
 			m(".flex.mb2.items-center", [
@@ -131,19 +129,20 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "text-in-input",
 							label: "Text Input (updates on input)",
-							instant: true,
-							layout: "floatLabel"
+							required: true,
+							layout: "floatLabel",
+							instant: true
 						},
-						value: textVal1,
+						value: textVal,
 					})),
 					m('.pa2.ba.b--silver', m(uiWidgets.TextareaInput, {
 						field: {
 							id: "text-area-input",
-							label: "Text Area",
-							instant: true,
-							layout: "floatLabel"
+							label: "Text Area (updates on change)",
+							required: true,
+							layout: "floatLabel",
 						},
-						value: textVal1,
+						value: textVal,
 					})),
 				]),
 
@@ -152,43 +151,9 @@ m.mount(document.getElementById("page"), {
 						id: "text-out",
 						label: "Text Output"
 					},
-					value: textVal1
+					value: textVal
 				}))
 			]),
-
-
-			// m('.mb2', m(uiWidgets.BaseInput, {
-			// 	field: {
-			// 		id: "text-in-input",
-			// 		label: "T",
-			// 		instant: true,
-			// 		floatLabel: true
-			// 	},
-			// 	value: textVal1,
-			// })),
-			// m('.mb2', m(uiWidgets.BaseInput, {
-			// 	field: {
-			// 		id: "text-in-input",
-			// 		label: "Some really really really long label",
-			// 		instant: true,
-			// 		floatLabel: true,
-			// 		animate: false
-			// 	},
-			// 	value: textVal1,
-			// })),
-			// m('.mb2', m(uiWidgets.CurrencyInput, {
-			// 	field: {
-			// 		id: "pound-input",
-			// 		label: "Amount Spent",
-			// 		options: [{
-			// 			value: "£"
-			// 		}],
-			// 		floatLabel: true
-			// 	},
-			// 	value: currencyVal,
-			// })),
-
-
 
 			// Date
 			m(".flex.mb2.items-center", [
@@ -233,22 +198,6 @@ m.mount(document.getElementById("page"), {
 					value: dateVal
 				}))
 			]),
-
-			// m(".w-100.flex",
-			// 	m(uiWidgets.DateInput, {
-			// 		field: {
-			// 			id: "dob-in",
-			// 			// label: "Date of Birth",
-			// 			label: "Date Input (ui-widgets Bespoke)",
-			// 			options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
-			// 			floatLabel: true,
-			// 			uiClass: {
-			// 				wrapper: " w-100"
-			// 			},
-			// 		},
-			// 		value: dateVal
-			// 	}),
-			// ),
 
 			// Colour
 			m(".flex.mb2", [
@@ -423,16 +372,6 @@ m.mount(document.getElementById("page"), {
 					value: cardVal
 				}))
 			]),
-
-			m('.mb2', m(uiWidgets.CardDateInput, {
-				field: {
-					id: "card-date-internal",
-					label: "Card Date Internal",
-					instant: true,
-					floatLabel: true,
-				},
-				value: cardVal,
-			})),
 
 			m("p", "Perform custom transforms by mapping the input stream to a new value"),
 			m("p", "Note that a transform stream value is fed back into the initial value on each update"),
@@ -797,8 +736,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-wrapper",
-						label: "Widget Wrapper",
-						required: true
+						label: "Widget Wrapper"
 					},
 					value: themeWrapper
 				})),

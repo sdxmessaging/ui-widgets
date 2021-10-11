@@ -17,9 +17,9 @@ export const styleLg = { "max-width": "9ex" };
 
 // ui-widgets 1.4 theme map
 const classMapState: Required<IClassMap> = {
-	wrapper: "pa0 bn",
-	label: "f6 silver",
-	inputWrapper: "dark-gray",
+	wrapper: "",
+	label: "silver",
+	inputWrapper: "pa1 ma0 dark-gray",
 	input: "dark-gray fw2",
 	button: "pa2 bn br2",
 	navButton: "dark-gray",

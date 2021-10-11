@@ -43,7 +43,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { disabled, uiClass = {} } = field;
-		return m("fieldset", {
+		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			m(FileInput, {
@@ -53,7 +53,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize),
 				value
 			},
-				m("div", {
+				m("fieldset", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".w-100.pa1.dt.tc", {
