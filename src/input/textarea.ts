@@ -1,4 +1,5 @@
 import m, { ClassComponent, CVnode } from "mithril";
+import { config } from "../config";
 
 import { IPropWidget, LabelType } from "../interface/widget";
 
@@ -14,7 +15,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
-			instant, layout = LabelType.default, uiClass = {}
+			instant, layout = config.inputDefault, uiClass = {}
 		} = attrs.field;
 		const { value } = attrs;
 		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {

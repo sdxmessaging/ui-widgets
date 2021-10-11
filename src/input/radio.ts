@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
+import { config } from "../config";
 
 import { IOptionField, IPropWidget, LabelType } from "../interface/widget";
 
@@ -16,7 +17,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled, autocomplete,
-			options, layout,
+			options, layout = config.inputDefault,
 			uiClass = {}
 		} = field as IOptionField;
 		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,

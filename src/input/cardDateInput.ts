@@ -1,5 +1,6 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
+import { config } from "../config";
 
 import { FieldType, IPropWidget, LabelType, TProp } from "../interface/widget";
 
@@ -56,7 +57,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled,
-			layout = LabelType.default, uiClass = {}
+			layout = config.inputDefault, uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
 		const dateInputs = [
