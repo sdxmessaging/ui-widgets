@@ -20,9 +20,9 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autocomplete,
 			uiClass = {}
 		} = field;
-		return m("fieldset", {
+		return m("div", {
 			class: wrapperCls(uiClass, disabled),
-		}, m("div", {
+		}, m("fieldset", {
 			class: inputWrapperCls(uiClass)
 		}, [
 			m("label.flex.items-center", {
