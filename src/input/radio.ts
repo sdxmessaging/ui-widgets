@@ -1,11 +1,12 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
+import { config } from "../config";
 
 import { IOptionField, IPropWidget, LabelType } from "../interface/widget";
 
-import { inputWrapperCls, radioInputCls } from "../theme";
+import { radioInputCls } from "../theme";
 import { setValue } from "../utils";
-import { propInvalid } from "../validation";
+// import { propInvalid } from "../validation";
 import { Basic } from "./layout/basic";
 import { FloatLabel } from "./layout/floatLabel";
 
@@ -16,12 +17,11 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled, autocomplete,
-			options, layout,
+			options, layout = config.inputDefault,
 			uiClass = {}
 		} = field as IOptionField;
 		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,
-			m("div", {
-				class: inputWrapperCls(uiClass, propInvalid(field, val())),
+			m(".w-100.flex", {
 				onchange: setValue(val)
 			}, lodash.map(options, ({ value, label = value, icon }) => {
 				const checked = val() === value;
@@ -42,7 +42,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				);
 			})
 			)
-		)
+		);
 	}
 
 }

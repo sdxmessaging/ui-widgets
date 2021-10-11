@@ -31,7 +31,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize, true),
 				value
 			},
-				m("fieldset", {
+				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".pa1", {

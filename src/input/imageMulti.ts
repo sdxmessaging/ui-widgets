@@ -53,7 +53,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize),
 				value
 			},
-				m("fieldset", {
+				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".w-100.pa1.dt.tc", {
