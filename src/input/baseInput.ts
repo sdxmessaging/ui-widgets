@@ -1,13 +1,11 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { config } from "../config";
 
-import { FieldType, IPropWidget, LabelType } from "../interface/widget";
+import { FieldType, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
 
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+import { Layout } from "./layout/layout";
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
@@ -18,10 +16,10 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode, spellcheck,
-			instant, layout = config.inputDefault, uiClass = {}
+			instant, uiClass = {}
 		} = field;
 
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, m("input.w-100.bg-transparent.bn.outline-0", {
+		return m(Layout, attrs, m("input.w-100.bg-transparent.bn.outline-0", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
