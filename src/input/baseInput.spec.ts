@@ -1,7 +1,7 @@
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType } from "../interface/widget";
+import { FieldType, LabelType } from "../interface/widget";
 
 import { BaseInput } from "./baseInput";
 
@@ -79,7 +79,7 @@ describe("BaseInput", () => {
 					uiClass: {},
 					disabled: true,
 					instant: true,
-					floatLabel: true
+					layout: LabelType.floatLabel
 				},
 				value,
 				xform
