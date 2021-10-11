@@ -73,11 +73,11 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						style: {
 							// Translate into center of input wrapper
 							transform: shrink
-								? "scale(0.7) translate(2.3ch, calc(10px - 1ch))"
+								? "translate(2.2ch, calc(10px - 1ch))"
 								: defaultPosition,
-							transformOrigin: "top left",
+							fontSize: shrink ? "0.7em" : "1em",
 							display: this.wrapperHeight ? "inherit" : "none",
-							transition: "transform 0.3s ease-in-out",
+							transition: "transform 0.3s ease-in-out, font-size 0.3s ease-in-out",
 						}
 					}, getLabelText(label, required))
 				] : null,
