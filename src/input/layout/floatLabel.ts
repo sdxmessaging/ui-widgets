@@ -39,7 +39,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 		return m(".relative", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
 			style: {
-				paddingTop: "0.7em"
+				paddingTop: "10px"
 			},
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
@@ -51,17 +51,18 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 				label ? [
 					// Break fieldset border, make space for label to float into
 					m("legend.db.pa0", {
+						class: labelCls(uiClass, required),
 						style: {
 							visibility: "hidden",
 							height: "0px",
 							maxWidth: shrink ? "100%" : "0.01px",
 							transition: "max-width 0.3s ease-in-out",
-							fontSize: "0.7em",
 							marginLeft: shrink ? "0.7em" : '',
 						}
 					}, m("span", {
 						style: {
-							padding: "0 .7em 0 .7em"
+							fontSize: "0.7em",
+							padding: "0 .7ex 0 .7ex",
 						}
 					}, label)),
 					// Floating label
@@ -70,10 +71,9 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						for: id,
 						class: labelCls(uiClass, required),
 						style: {
-							left: "0.7em",
 							// Translate into center of input wrapper
 							transform: shrink
-								? "scale(0.7) translate(0.5em, 0.25em)"
+								? "scale(0.7) translate(2.3ch, calc(10px - 1ch))"
 								: defaultPosition,
 							transformOrigin: "top left",
 							display: this.wrapperHeight ? "inherit" : "none",

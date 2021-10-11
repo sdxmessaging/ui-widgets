@@ -52,7 +52,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
 		const { disabled, uiClass = {} } = field;
-		return m("fieldset", {
+		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
 			m(FileInput, {
@@ -63,7 +63,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 				onSet: addOmniFiles(value, true),
 				value
 			},
-				m("div", {
+				m("fieldset", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".flex.items-center.pa1", {

@@ -86,11 +86,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		if (opts.length === 1 && !fileObj) {
 			this.setSignType(opts[0].type);
 		}
-		return m("fieldset.relative", {
+		return m("div.relative", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, lbl),
-			m("div", {
+			m("fieldset", {
 				class: this.signType !== SignTypes.Stamp
 					? inputWrapperCls(uiClass, fileInvalid(field, value()))
 					: undefined
