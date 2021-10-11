@@ -135,12 +135,13 @@ m.mount(document.getElementById("page"), {
 						},
 						value: textVal,
 					})),
-					m('.pa2.ba.b--silver', m(uiWidgets.TextareaInput, {
+					m(".pa2.ba.b--silver", m(uiWidgets.TextareaInput, {
 						field: {
 							id: "text-area-input",
 							label: "Text Area (updates on change)",
-							required: true,
-							layout: "floatLabel",
+							type: "textarea",
+							instant: true,
+							layout: "floatLabel"
 						},
 						value: textVal,
 					})),

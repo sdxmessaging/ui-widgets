@@ -38,7 +38,8 @@ describe("PasswordInput", () => {
 			})
 		});
 		expect(root.childNodes.length).toBe(1);
-		expect(root.childNodes[0].childNodes.length).toBe(2);
+		const input = root.getElementsByTagName('input');
+		expect(input[0].id).toBe('test');
 	});
 
 	test("toggle", () => {
