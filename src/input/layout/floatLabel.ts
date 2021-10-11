@@ -7,6 +7,13 @@ import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
 import { propInvalid } from "../../validation";
 
+const floatAlwaysOverride = new Set<string>([
+	FieldType.dateInput,
+	FieldType.cardDate,
+	FieldType.select,
+	FieldType.radio
+]);
+
 export class FloatLabel implements ClassComponent<IPropWidget> {
 
 	private focus = false;
@@ -30,9 +37,8 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 		const { field, value, xform = value } = attrs;
 		const { label, id, type = FieldType.text, required, disabled, layout, uiClass = {} } = field;
 
-		const staticFieldTypes = type === FieldType.dateInput || type === FieldType.cardDate;
 		// Float label if element has a value set or is in focus
-		const shrink = layout === LabelType.floatAlways || value() || this.focus || staticFieldTypes;
+		const floatTop = layout === LabelType.floatAlways || floatAlwaysOverride.has(type) || value() || this.focus;
 		const defaultPosition = `translateY(${type !== FieldType.textarea ? `calc(${this.wrapperHeight * 0.5}px - 0.33em))`
 			: `1em`}`;
 		// Wrapper (padding 0.5 * shrink label size)
@@ -55,9 +61,9 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						style: {
 							visibility: "hidden",
 							height: "0px",
-							maxWidth: shrink ? "100%" : "0.01px",
+							maxWidth: floatTop ? "100%" : "0.01px",
 							transition: "max-width 0.3s ease-in-out",
-							marginLeft: shrink ? "0.7em" : '',
+							marginLeft: floatTop ? "0.7em" : '',
 						}
 					}, m("span", {
 						style: {
@@ -72,7 +78,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						class: labelCls(uiClass, required),
 						style: {
 							// Translate into center of input wrapper
-							transform: shrink
+							transform: floatTop
 								? "scale(0.7) translate(2.3ch, calc(10px - 1ch))"
 								: defaultPosition,
 							transformOrigin: "top left",
