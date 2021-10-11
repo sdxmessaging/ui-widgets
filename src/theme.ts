@@ -19,7 +19,7 @@ export const styleLg = { "max-width": "9ex" };
 const classMapState: Required<IClassMap> = {
 	wrapper: "",
 	label: "silver",
-	inputWrapper: "pa1 ma0 dark-gray",
+	inputWrapper: "ba br2 b--silver pa1 ma0 dark-gray",
 	input: "dark-gray fw2",
 	button: "pa2 bn br2",
 	navButton: "dark-gray",

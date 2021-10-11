@@ -2,7 +2,7 @@ export * from "./interface/widget";
 export * from "./interface/theme";
 
 export { updateConfig } from "./config";
-export { updateClasses, updateButtonContext } from "./theme";
+export { updateClasses, updateButtonContext, theme } from "./theme";
 export {
 	guid, pxRatio, fileNameExtSplit,
 	dataURItoBlob, fileConstructor, dataUrlToFile
