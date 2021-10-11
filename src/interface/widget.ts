@@ -86,6 +86,12 @@ type TAutocomplete = "off" | "on" |
 	// Contact
 	"tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
 
+export const enum LabelType {
+	default = "default",
+	floatLabel = "floatLabel",
+	floatAlways = "floatAlways"
+}
+
 export interface IField {
 	readonly label?: string;
 	// Standard HTML input attributes
@@ -111,8 +117,7 @@ export interface IField {
 	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
-	readonly floatLabel?: boolean;
-	readonly animate?: boolean;
+	readonly layout?: LabelType;
 	readonly uiClass?: IWidgetClasses;
 	readonly style?: TStyle;
 	// Unsupported legacy field
