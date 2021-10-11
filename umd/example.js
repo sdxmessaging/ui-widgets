@@ -140,6 +140,7 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "text-area-input",
 							label: "Text Area",
+							type: 'textarea',
 							instant: true,
 							layout: "floatLabel"
 						},
