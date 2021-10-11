@@ -33,7 +33,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value, true),
 				value
 			},
-				m("fieldset", {
+				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".flex.items-center.pa1", {

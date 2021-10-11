@@ -28,7 +28,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				onSet: addOmniFiles(value, false),
 				value
 			},
-				m("fieldset", {
+				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".flex.items-center.pa1.dt", {

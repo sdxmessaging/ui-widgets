@@ -63,7 +63,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 				onSet: addOmniFiles(value, true),
 				value
 			},
-				m("fieldset", {
+				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".flex.items-center.pa1", {

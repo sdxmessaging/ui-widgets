@@ -50,7 +50,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value),
 				value
 			},
-				m("fieldset", {
+				m("div", {
 					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
 				},
 					m(".pa2", {
