@@ -48,37 +48,37 @@ var omniInputList = stream([]);
 var multiOmniInputList = stream([]);
 
 // Theme
-var themeWrapper = stream("");
+var themeWrapper = stream(uiWidgets.theme.wrapper);
 themeWrapper.map(function (newCls) {
 	uiWidgets.updateClasses({ wrapper: newCls });
 });
-var themeLabel = stream("silver");
+var themeLabel = stream(uiWidgets.theme.label);
 themeLabel.map(function (newCls) {
 	uiWidgets.updateClasses({ label: newCls });
 });
-var themeInputWrapper = stream("pa1 ma0 dark-gray");
+var themeInputWrapper = stream(uiWidgets.theme.inputWrapper);
 themeInputWrapper.map(function (newCls) {
 	uiWidgets.updateClasses({ inputWrapper: newCls });
 });
-var themeInput = stream("dark-gray fw2");
+var themeInput = stream(uiWidgets.theme.input);
 themeInput.map(function (newCls) {
 	uiWidgets.updateClasses({ input: newCls });
 });
 
-var themeRequired = stream("");
+var themeRequired = stream(uiWidgets.theme.requiredLabel);
 themeRequired.map(function (newCls) {
 	uiWidgets.updateClasses({ requiredLabel: newCls });
 });
-var themeDisabled = stream("o-40");
+var themeDisabled = stream(uiWidgets.theme.disabledWrapper);
 themeDisabled.map(function (newCls) {
 	uiWidgets.updateClasses({ disabledWrapper: newCls });
 });
 
-var themeBtn = stream("pa2 bn br2");
+var themeBtn = stream(uiWidgets.theme.button);
 themeBtn.map(function (newCls) {
 	uiWidgets.updateClasses({ button: newCls });
 });
-var themeNavBtn = stream("dark-gray");
+var themeNavBtn = stream(uiWidgets.theme.navButton);
 themeNavBtn.map(function (newCls) {
 	uiWidgets.updateClasses({ navButton: newCls });
 });
@@ -308,6 +308,7 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "radio-in",
 							label: "Radio Input",
+							type: "radio",
 							options: [{
 								value: "1",
 								label: "Opt 1"
