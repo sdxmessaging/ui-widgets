@@ -29,8 +29,10 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	public view({ attrs, children }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const { label, id, type = FieldType.text, required, disabled, layout, uiClass = {} } = field;
+
+		const staticFieldTypes = type === FieldType.dateInput || type === FieldType.cardDate;
 		// Float label if element has a value set or is in focus
-		const shrink = layout === LabelType.floatAlways || value() || this.focus;
+		const shrink = layout === LabelType.floatAlways || value() || this.focus || staticFieldTypes;
 		// Wrapper (padding 0.5 * shrink label size)
 		return m(".relative", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
