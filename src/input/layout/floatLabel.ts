@@ -65,24 +65,21 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 							height: "0px",
 							maxWidth: floatTop ? "100%" : "0.01px",
 							transition: "max-width 0.3s ease-in-out",
-							marginLeft: floatTop ? "0.7em" : '',
 						}
 					}, m("span", {
-						style: {
-							fontSize: ".7em",
-							padding: "0 .7ex",
-						}
+						style: { fontSize: ".7em" }
 					}, label)),
 					// Floating label
 					m('div',
 						{ class: labelCls(uiClass, required) },
 						m("label.db.absolute.top-0", {
+							class: labelCls(uiClass, required),
 							title: label,
 							for: id,
 							style: {
 								// Translate into center of input wrapper
 								transform: floatTop
-									? "translate(2ch, calc(10px - 1ch))"
+									? "translateY(calc(10px - 1ch))"
 									: defaultPosition,
 								fontSize: floatTop ? "0.7em" : "1em",
 								display: this.wrapperHeight ? "inherit" : "none",
