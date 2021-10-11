@@ -69,7 +69,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 					}, m("span", {
 						style: {
 							fontSize: ".7em",
-							padding: "0 .7ex 0 .7ex",
+							padding: "0 .7ex",
 						}
 					}, label)),
 					// Floating label
