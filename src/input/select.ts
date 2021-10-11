@@ -1,40 +1,37 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
+import { config } from "../config";
 
-import { IOptionField, IPropWidget } from "../interface/widget";
+import { IOptionField, IPropWidget, LabelType } from "../interface/widget";
 
-import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
-import { getLabel, setValue } from "../utils";
-import { propInvalid } from "../validation";
+import { inputCls } from "../theme";
+import { setValue } from "../utils";
+import { Basic } from "./layout/basic";
+import { FloatLabel } from "./layout/floatLabel";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
-	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<IPropWidget>) {
+		const { field, value: val } = attrs;
 		const {
 			label: lbl, id, name = id, title = lbl,
 			required, readonly, disabled, autofocus, autocomplete,
-			uiClass = {},
+			uiClass = {}, layout = config.inputDefault,
 			options
 		} = field as IOptionField;
-		return m("fieldset", {
-			class: wrapperCls(uiClass, disabled)
-		}, [
-			getLabel(id, uiClass, lbl, required),
-			m("div", {
-				class: inputWrapperCls(uiClass, propInvalid(field, val()))
-			},
-				m("select.w-100.bg-transparent.bn.outline-0", {
-					id, name, title,
-					required, readonly, disabled, autofocus, autocomplete,
-					class: inputCls(uiClass),
-					value: val(),
-					onchange: setValue(val)
-				}, lodash.map(options, ({ value, label = value }) => m("option", {
-					value,
-					disabled: disabled || readonly
-				}, label)))
-			)
-		]);
+		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,
+
+			m("select.w-100.bg-transparent.bn.outline-0", {
+				id, name, title,
+				required, readonly, disabled, autofocus, autocomplete,
+				class: inputCls(uiClass),
+				value: val(),
+				onchange: setValue(val)
+			}, lodash.map(options, ({ value, label = value }) => m("option", {
+				value,
+				disabled: disabled || readonly
+			}, label)))
+		)
 	}
 
 }
