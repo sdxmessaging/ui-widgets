@@ -1,5 +1,5 @@
-
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
+import { config } from "../../config";
 
 import { FieldType, IPropWidget, LabelType } from "../../interface/widget";
 
@@ -24,19 +24,22 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	// Track element height for better positioning floating label
 	private wrapperHeight = 0;
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		this.wrapperHeight = (dom.querySelector('fieldset') as HTMLElement).clientHeight;
+		this.wrapperHeight = (dom.firstElementChild as HTMLElement).clientHeight;
 		m.redraw();
 	}
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		if ((dom.querySelector('fieldset') as HTMLElement).clientHeight !== this.wrapperHeight) {
-			this.wrapperHeight = (dom.querySelector('fieldset') as HTMLElement).clientHeight;
+		if ((dom.firstElementChild as HTMLElement).clientHeight !== this.wrapperHeight) {
+			this.wrapperHeight = (dom.firstElementChild as HTMLElement).clientHeight;
 			m.redraw();
 		}
 	}
 
 	public view({ attrs, children }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
-		const { label, id, type = FieldType.text, placeholder, required, disabled, layout, uiClass = {} } = field;
+		const {
+			label, id, type = FieldType.text, placeholder, required, disabled,
+			layout = config.inputDefault, uiClass = {}
+		} = field;
 
 		// Float label if element has a value set or is in focus
 		const floatTop = layout === LabelType.floatAlways
@@ -46,9 +49,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 		// Wrapper (padding 0.5 * shrink label size)
 		return m(".relative", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
-			style: {
-				paddingTop: "10px"
-			},
+			style: label ? { paddingTop: "10px" } : {},
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
 		},
