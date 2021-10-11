@@ -61,8 +61,8 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						}
 					}, m("span", {
 						style: {
-							padding: "0 calc(.7em - 0.5ch) 0 .7em",
 							fontSize: "0.7em",
+							padding: "0 .7ex 0 .7ex",
 						}
 					}, label)),
 					// Floating label
@@ -71,10 +71,9 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						for: id,
 						class: labelCls(uiClass, required),
 						style: {
-							left: "0.7ch",
 							// Translate into center of input wrapper
 							transform: shrink
-								? "scale(0.7) translate(1em, calc(10px - 1ch))"
+								? "scale(0.7) translate(2.3ch, calc(10px - 1ch))"
 								: defaultPosition,
 							transformOrigin: "top left",
 							display: this.wrapperHeight ? "inherit" : "none",
@@ -83,7 +82,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 					}, getLabelText(label, required))
 				] : null,
 				// Input
-				m('div', children)
+				children
 			])
 		);
 	}
