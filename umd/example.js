@@ -125,16 +125,28 @@ m.mount(document.getElementById("page"), {
 
 			// Text
 			m(".flex.mb2.items-center", [
-				m('.w-50', m(uiWidgets.BaseInput, {
-					field: {
-						id: "text-in-input",
-						label: "Text Input (updates on input)",
-						instant: true,
-						floatLabel: true,
-						animate: true
-					},
-					value: textVal1,
-				})),
+
+				m(".flex.flex-column.w-50.mr2", [
+					m(".pa2.ba.b--silver.mb2", m(uiWidgets.BaseInput, {
+						field: {
+							id: "text-in-input",
+							label: "Text Input (updates on input)",
+							instant: true,
+							layout: "floatLabel"
+						},
+						value: textVal1,
+					})),
+					m('.pa2.ba.b--silver', m(uiWidgets.TextareaInput, {
+						field: {
+							id: "text-area-input",
+							label: "Text Area",
+							instant: true,
+							layout: "floatLabel"
+						},
+						value: textVal1,
+					})),
+				]),
+
 				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
 					field: {
 						id: "text-out",
@@ -143,48 +155,41 @@ m.mount(document.getElementById("page"), {
 					value: textVal1
 				}))
 			]),
-			m('.mb2', m(uiWidgets.BaseInput, {
-				field: {
-					id: "text-in-input",
-					label: "T",
-					instant: true,
-					floatLabel: true
-				},
-				value: textVal1,
-			})),
-			m('.mb2', m(uiWidgets.BaseInput, {
-				field: {
-					id: "text-in-input",
-					label: "Some really really really long label",
-					instant: true,
-					floatLabel: true,
-					animate: false
-				},
-				value: textVal1,
-			})),
-			m('.mb2', m(uiWidgets.CurrencyInput, {
-				field: {
-					id: "pound-input",
-					label: "Amount Spent",
-					options: [{
-						value: "£"
-					}],
-					floatLabel: true
-				},
-				value: currencyVal,
-			})),
 
-			m('.mb2', m(uiWidgets.TextareaInput, {
-				field: {
-					id: "text-area-input",
-					label: "Text Area",
-					instant: true,
-					floatLabel: true,
-					animate: true,
-					type: "textarea"
-				},
-				value: textareaVal,
-			})),
+
+			// m('.mb2', m(uiWidgets.BaseInput, {
+			// 	field: {
+			// 		id: "text-in-input",
+			// 		label: "T",
+			// 		instant: true,
+			// 		floatLabel: true
+			// 	},
+			// 	value: textVal1,
+			// })),
+			// m('.mb2', m(uiWidgets.BaseInput, {
+			// 	field: {
+			// 		id: "text-in-input",
+			// 		label: "Some really really really long label",
+			// 		instant: true,
+			// 		floatLabel: true,
+			// 		animate: false
+			// 	},
+			// 	value: textVal1,
+			// })),
+			// m('.mb2', m(uiWidgets.CurrencyInput, {
+			// 	field: {
+			// 		id: "pound-input",
+			// 		label: "Amount Spent",
+			// 		options: [{
+			// 			value: "£"
+			// 		}],
+			// 		floatLabel: true
+			// 	},
+			// 	value: currencyVal,
+			// })),
+
+
+
 			// Date
 			m(".flex.mb2.items-center", [
 				m(".flex.flex-column.w-50.mr2", [
@@ -201,6 +206,7 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "dob-in",
 								label: "Date Input (ui-widgets Bespoke)",
+								layout: "floatAlways",
 								options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
 							},
 							value: dateVal
@@ -227,21 +233,22 @@ m.mount(document.getElementById("page"), {
 					value: dateVal
 				}))
 			]),
-			m(".w-100.flex",
-				m(uiWidgets.DateInput, {
-					field: {
-						id: "dob-in",
-						// label: "Date of Birth",
-						label: "Date Input (ui-widgets Bespoke)",
-						options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
-						floatLabel: true,
-						uiClass: {
-							wrapper: " w-100"
-						},
-					},
-					value: dateVal
-				}),
-			),
+
+			// m(".w-100.flex",
+			// 	m(uiWidgets.DateInput, {
+			// 		field: {
+			// 			id: "dob-in",
+			// 			// label: "Date of Birth",
+			// 			label: "Date Input (ui-widgets Bespoke)",
+			// 			options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
+			// 			floatLabel: true,
+			// 			uiClass: {
+			// 				wrapper: " w-100"
+			// 			},
+			// 		},
+			// 		value: dateVal
+			// 	}),
+			// ),
 
 			// Colour
 			m(".flex.mb2", [
@@ -379,6 +386,7 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "currency-in-currency",
 						label: "Currency Input",
+						layout: "floatAlways",
 						options: [{
 							value: "£"
 						}]
@@ -401,7 +409,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CardDateInput, {
 					field: {
 						id: "card-in-date",
-						label: "Card Expiry MM/YY"
+						label: "Card Expiry MM/YY",
+						layout: "floatAlways"
 					},
 					value: cardVal
 				})),
