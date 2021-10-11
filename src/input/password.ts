@@ -18,7 +18,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			maxlength, minlength, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode,
-			instant, uiClass = {}, layout
+			instant, uiClass = {}, layout = config.inputDefault,
 		} = field;
 
 		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,

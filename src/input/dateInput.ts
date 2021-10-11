@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
+import { config } from "../config";
 
 import { FieldType, IOptionField, IPropWidget, LabelType, TProp } from "../interface/widget";
 
@@ -64,7 +65,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled,
-			layout = LabelType.default, uiClass = {},
+			layout = config.inputDefault, uiClass = {},
 			options
 		} = attrs.field as IOptionField;
 		const locale = options && options.length ? options[0].value : "en-GB";
