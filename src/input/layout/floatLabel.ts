@@ -8,9 +8,10 @@ import { getLabelText } from "../../utils";
 import { propInvalid } from "../../validation";
 
 const floatAlwaysOverride = new Set<string>([
+	FieldType.date,
+	FieldType.dateTimeLocal,
 	FieldType.dateInput,
 	FieldType.cardDate,
-	FieldType.select,
 	FieldType.radio
 ]);
 
