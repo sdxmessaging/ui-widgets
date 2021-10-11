@@ -45,7 +45,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 			onfocusout: this.focusOut
 		},
 			// Input wrapper
-			m("fieldset.pa0.ma0.bn", {
+			m("fieldset.pa0.ma0", {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			}, [
 				label ? [
@@ -56,25 +56,28 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 							height: "0px",
 							maxWidth: shrink ? "100%" : "0.01px",
 							transition: "max-width 0.3s ease-in-out",
-							fontSize: "0.7em"
+							fontSize: "0.7em",
+							marginLeft: shrink ? "0.7em" : '',
 						}
-					}, m(".ph2", label)),
+					}, m("span", {
+						style: {
+							padding: "0 .7em 0 .7em"
+						}
+					}, label)),
 					// Floating label
 					m("label.db.absolute.top-0", {
 						title: label,
 						for: id,
 						class: labelCls(uiClass, required),
 						style: {
-							left: "0.5em",
+							left: "0.7em",
 							// Translate into center of input wrapper
 							transform: shrink
-								? "scale(0.7)"
+								? "scale(0.7) translate(0.5em, 0.25em)"
 								: defaultPosition,
 							transformOrigin: "top left",
 							display: this.wrapperHeight ? "inherit" : "none",
 							transition: "transform 0.3s ease-in-out",
-							// Essential for the legend to fit the correct amount of space
-							wordSpacing: "2px"
 						}
 					}, getLabelText(label, required))
 				] : null,
