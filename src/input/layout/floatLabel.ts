@@ -29,8 +29,12 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	public view({ attrs, children }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const { label, id, type = FieldType.text, required, disabled, layout, uiClass = {} } = field;
+
+		const staticFieldTypes = type === FieldType.dateInput || type === FieldType.cardDate;
 		// Float label if element has a value set or is in focus
-		const shrink = layout === LabelType.floatAlways || value() || this.focus;
+		const shrink = layout === LabelType.floatAlways || value() || this.focus || staticFieldTypes;
+		const defaultPosition = `translateY(${type !== FieldType.textarea ? `calc(${this.wrapperHeight * 0.5}px - 0.33em))`
+			: `1em`}`;
 		// Wrapper (padding 0.5 * shrink label size)
 		return m(".relative", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
@@ -65,8 +69,9 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 							// Translate into center of input wrapper
 							transform: shrink
 								? "scale(0.7)"
-								: `translateY(calc(${this.wrapperHeight * 0.5}px - 0.33em))`,
+								: defaultPosition,
 							transformOrigin: "top left",
+							display: this.wrapperHeight ? "inherit" : "none",
 							transition: "transform 0.3s ease-in-out",
 							// Essential for the legend to fit the correct amount of space
 							wordSpacing: "2px"
