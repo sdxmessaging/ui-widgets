@@ -1,7 +1,7 @@
 import lodash from "lodash";
 
 import { IConfig } from "./interface/config";
-import { SignTypes } from "./interface/widget";
+import { LabelType, SignTypes } from "./interface/widget";
 
 const confMap: IConfig = {
 	imageMaxSize: 1280,
@@ -59,7 +59,8 @@ const confMap: IConfig = {
 	musicFileIcn: "fas fa-file-audio",
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
-	codeFileIcn: "fas fa-file-code"
+	codeFileIcn: "fas fa-file-code",
+	inputDefault: LabelType.floatLabel
 };
 
 export const config: Readonly<IConfig> = confMap;

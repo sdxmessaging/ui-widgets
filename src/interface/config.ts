@@ -1,3 +1,4 @@
+import { LabelType } from "..";
 import { IOption } from "./widget";
 
 export interface IConfig {
@@ -78,6 +79,7 @@ export interface IConfig {
 	excelFileIcn: string;
 	fileIcn: string;
 	codeFileIcn: string;
+	inputDefault: LabelType;
 }
 
 /**
