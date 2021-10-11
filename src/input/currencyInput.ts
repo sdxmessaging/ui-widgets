@@ -1,12 +1,12 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, LabelType, TProp, TPropStream } from "../interface/widget";
 
-import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
-import { getLabel } from "../utils";
-import { propInvalid } from "../validation";
-import { ViewInputOverride } from "./viewInputOverride";
+import { inputCls } from "../theme";
+
+import { Basic } from "./layout/basic";
+import { FloatLabel } from "./layout/floatLabel";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -16,8 +16,8 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			label, id, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
-			pattern, inputmode, spellcheck, floatLabel,
-			instant, uiClass = {},
+			pattern, inputmode, spellcheck,
+			instant, layout = LabelType.default, uiClass = {},
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
@@ -34,17 +34,10 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 					: numberToCurrencyStr(propToNumber(xform())),
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-			}));
+			})
+		);
 
-		return !floatLabel ? m("fieldset.flex-shrink-0", {
-			class: wrapperCls(uiClass, disabled)
-		}, [
-			getLabel(id, uiClass, label, required),
-			m(".flex.items-center", {
-				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
-			}, internalLabelView
-			)
-		]) : m(ViewInputOverride, { ...attrs, children: internalLabelView });
+		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, internalLabelView);
 	}
 
 }
@@ -117,5 +110,5 @@ export function numberToCurrencyTuple(unitTotal: number): [string, string] | und
 
 // Currency TProp update helper
 export function setCurrencyValue(val: TPropStream) {
-	return ({ target: { value } }: { target: HTMLInputElement }) => val(currencyStrToNumber(value));
+	return ({ target: { value } }: { target: HTMLInputElement; }) => val(currencyStrToNumber(value));
 }

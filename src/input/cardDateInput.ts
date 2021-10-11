@@ -1,13 +1,14 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IPropWidget, LabelType, TProp } from "../interface/widget";
 
-import { inputCls, inputWrapperCls, wrapperCls, styleSm } from "../theme";
+import { inputCls, styleSm } from "../theme";
 
-import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
-import { propInvalid } from "../validation";
-import { ViewInputOverride } from "./viewInputOverride";
+import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
+
+import { Basic } from "./layout/basic";
+import { FloatLabel } from "./layout/floatLabel";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
@@ -51,14 +52,13 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public view({ attrs }: CVnode<IPropWidget>) {
-		const { field, value } = attrs;
+		const { field } = attrs;
 		const {
-			label, id, name = id, title = label,
+			id, name = id,
 			required, readonly, disabled,
-			uiClass = {}, floatLabel
+			layout = LabelType.default, uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-
 		const dateInputs = [
 			m("div.dib.mr2", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
@@ -85,17 +85,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					oninput: () => handleDateChange(this.year, id, "yy", this.dom)
 				})
 			])
-		]
-		// Assemble date input (en-GB or en-US layouts)
-		return !floatLabel ? m("fieldset", {
-			class: wrapperCls(uiClass, disabled)
-		}, [
-			getLabel(`${id}-mm`, uiClass, label, required),
-			m("div", {
-				title,
-				class: inputWrapperCls(uiClass, propInvalid(field, value()))
-			}, dateInputs)
-		]) : m(ViewInputOverride, { ...attrs, children: dateInputs });
+		];
+		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, dateInputs);
 	}
 
 }

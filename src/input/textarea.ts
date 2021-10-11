@@ -1,11 +1,12 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IPropWidget } from "../interface/widget";
+import { IPropWidget, LabelType } from "../interface/widget";
 
-import { inputWrapperCls, textareaCls, wrapperCls } from "../theme";
-import { getLabel, setValue } from "../utils";
-import { propInvalid } from "../validation";
-import { ViewInputOverride } from "./viewInputOverride";
+import { textareaCls } from "../theme";
+import { setValue } from "../utils";
+
+import { Basic } from "./layout/basic";
+import { FloatLabel } from "./layout/floatLabel";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
 
@@ -13,10 +14,10 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
-			instant, uiClass = {}, floatLabel
+			instant, layout = LabelType.default, uiClass = {}
 		} = attrs.field;
 		const { value } = attrs;
-		const textarea = m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			class: textareaCls(uiClass),
@@ -24,14 +25,6 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			style: { resize: "none" },
 			// Update value on change or input ("instant" option)
 			[instant ? "oninput" : "onchange"]: setValue(value)
-		});
-		return !floatLabel ? m("fieldset", {
-			class: wrapperCls(uiClass, disabled)
-		}, [
-			getLabel(id, uiClass, label, required),
-			m("div", {
-				class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()))
-			}, textarea)
-		]) : m(ViewInputOverride, { ...attrs, children: textarea });
+		}));
 	}
 }

@@ -2,13 +2,13 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, LabelType, TProp } from "../interface/widget";
 
-import { inputCls, inputWrapperCls, wrapperCls } from "../theme";
-import { getLabel, handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
-import { propInvalid } from "../validation";
+import { inputCls } from "../theme";
+import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 
-import { ViewInputOverride } from "./viewInputOverride";
+import { Basic } from "./layout/basic";
+import { FloatLabel } from "./layout/floatLabel";
 
 export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
@@ -62,12 +62,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const {
-			label, id, name = id, title = label,
+			id, name = id,
 			required, readonly, disabled,
-			uiClass = {}, floatLabel,
+			layout = LabelType.default, uiClass = {},
 			options
 		} = attrs.field as IOptionField;
-		const { value } = attrs;
 		const locale = options && options.length ? options[0].value : "en-GB";
 		const isUsLocale = locale === "en-US";
 		const classStr = inputCls(uiClass);
@@ -125,18 +124,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const dateInput = isUsLocale ? [monthInput, slash, dayInput, slash, yearInput]
 			: [dayInput, slash, monthInput, slash, yearInput];
 
-		return !floatLabel
-			? m("fieldset", {
-				class: wrapperCls(uiClass, disabled)
-			}, [
-				getLabel(id, uiClass, label, required),
-				m("div", {
-					id, title,
-					class: inputWrapperCls(uiClass, propInvalid(attrs.field, value()) || !this.valid()),
-				}, dateInput)
-			])
-			: m(ViewInputOverride, { ...attrs, children: dateInput });
-
+		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, dateInput);
 	}
 
 }
