@@ -1,25 +1,25 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IOptionField, IPropWidget } from "../interface/widget";
+import { IOptionField, IPropWidget, LabelType } from "../interface/widget";
 
-import { inputWrapperCls, radioInputCls, wrapperCls } from "../theme";
-import { getLabel, setValue } from "../utils";
+import { inputWrapperCls, radioInputCls } from "../theme";
+import { setValue } from "../utils";
 import { propInvalid } from "../validation";
+import { Basic } from "./layout/basic";
+import { FloatLabel } from "./layout/floatLabel";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
-	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<IPropWidget>) {
+		const { field, value: val } = attrs;
 		const {
-			label: lbl, id, name = id,
+			id, name = id,
 			required, readonly, disabled, autocomplete,
-			options,
+			options, layout,
 			uiClass = {}
 		} = field as IOptionField;
-		return m("fieldset", {
-			class: wrapperCls(uiClass, disabled)
-		}, [
-			getLabel(id, uiClass, lbl, required),
+		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,
 			m("div", {
 				class: inputWrapperCls(uiClass, propInvalid(field, val())),
 				onchange: setValue(val)
@@ -40,8 +40,9 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 						class: icon
 					}) : label
 				);
-			}))
-		]);
+			})
+			)
+		)
 	}
 
 }
