@@ -182,7 +182,7 @@ m.mount(document.getElementById("page"), {
 								id: "en-us-in",
 								label: "en-US input order",
 								uiClass: {
-									wrapper: "fr",
+									wrapper: "fr mt2",
 									inputWrapper: "f6"
 								}
 							},
@@ -795,6 +795,7 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "feedback-in",
 					label: "We value your feedback",
+					type: "radio",
 					uiClass: {
 						inputWrapper: "flex bg-near-white br-pill",
 						input: "flex-auto pa2 bg-animate br-pill tc"
