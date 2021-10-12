@@ -84,7 +84,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 							transition: `transform ${transitionOpts}`,
 							// Input wrapper legend or center
 							transform: floatTop
-								? `translateY(calc(${shrinkOverflow} - 1ch))`
+								? `translateY(calc(${shrinkOverflow} - 1.2ch))`
 								: `translateY(${this.labelTranslateY()})`
 						}
 					}, m("label", {
