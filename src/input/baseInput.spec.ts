@@ -1,7 +1,7 @@
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, LabelType } from "../interface/widget";
+import { FieldType, LayoutType } from "../interface/widget";
 
 import { BaseInput } from "./baseInput";
 
@@ -35,8 +35,9 @@ describe("BaseInput", () => {
 					name: "Test Name",
 					title: "Test Title",
 					type: FieldType.number,
-					uiClass: {},
 					disabled: true,
+					layout: LayoutType.default,
+					uiClass: {},
 					instant: true
 				},
 				value,
@@ -75,11 +76,11 @@ describe("BaseInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					type: FieldType.number,
-					uiClass: {},
 					disabled: true,
-					instant: true,
-					layout: LabelType.floatLabel
+					type: FieldType.number,
+					layout: LayoutType.floatLabel,
+					uiClass: {},
+					instant: true
 				},
 				value,
 				xform
@@ -88,12 +89,13 @@ describe("BaseInput", () => {
 		expect(root.childNodes.length).toBe(1);
 		const input = root.querySelector('input');
 		expect(input).not.toBeNull();
-		const legend = root.querySelector('legend') as HTMLElement;
-		expect(legend).not.toBeNull();
-		expect(legend.textContent).toBe('Test Label');
-		const label = root.querySelector('label') as HTMLElement;
-		expect(label).not.toBeNull();
-		expect(label.textContent).toBe('Test Label');
+		// Legend not drawn until field size is known
+		// const legend = root.querySelector('legend') as HTMLElement;
+		// expect(legend).not.toBeNull();
+		// expect(legend.textContent).toBe('Test Label');
+		// const label = root.querySelector('label') as HTMLElement;
+		// expect(label).not.toBeNull();
+		// expect(label.textContent).toBe('Test Label');
 	});
 
 });

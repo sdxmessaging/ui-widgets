@@ -3,7 +3,8 @@
 var stream = m.stream;
 
 uiWidgets.updateConfig({
-	signFont: "Caveat"
+	signFont: "Caveat",
+	// requiredLblPost: "*"
 });
 
 uiWidgets.updateClasses({ invalidInputWrapper: "bg-washed-yellow" });
@@ -51,7 +52,7 @@ var multiOmniInputList = stream([]);
 var layoutVal = stream("floatLabel");
 layoutVal.map(function (newVal) {
 	uiWidgets.updateConfig({
-		inputDefault: newVal
+		layoutType: newVal
 	});
 });
 

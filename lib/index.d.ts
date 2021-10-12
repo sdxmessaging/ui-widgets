@@ -1,7 +1,7 @@
 export * from "./interface/widget";
 export * from "./interface/theme";
 export { updateConfig } from "./config";
-export { updateClasses, updateButtonContext } from "./theme";
+export { updateClasses, updateButtonContext, theme } from "./theme";
 export { guid, pxRatio, fileNameExtSplit, dataURItoBlob, fileConstructor, dataUrlToFile } from "./utils";
 export { getOrientation, readArrayBuffer, readOrientation, scaleRect, resizeImage, scaleDataUrl, textToImage, createStamp, } from "./imageUtils";
 export { Badge } from "./badge";

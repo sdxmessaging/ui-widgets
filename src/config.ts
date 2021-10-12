@@ -1,9 +1,10 @@
 import lodash from "lodash";
 
 import { IConfig } from "./interface/config";
-import { LabelType, SignTypes } from "./interface/widget";
+import { LayoutType, SignTypes } from "./interface/widget";
 
 const confMap: IConfig = {
+	layoutType: LayoutType.floatLabel,
 	imageMaxSize: 1280,
 	imageDispHeight: "16rem",
 	thumbDispHeight: "6rem",
@@ -60,7 +61,6 @@ const confMap: IConfig = {
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
 	codeFileIcn: "fas fa-file-code",
-	inputDefault: LabelType.floatLabel
 };
 
 export const config: Readonly<IConfig> = confMap;

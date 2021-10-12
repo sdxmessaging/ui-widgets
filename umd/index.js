@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-10-11T10:34:11.114Z */
+/* @preserve built on: 2021-10-12T07:00:30.386Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :
@@ -13,6 +13,7 @@
     var SignaturePad__default = /*#__PURE__*/_interopDefaultLegacy(SignaturePad);
 
     const confMap = {
+        layoutType: "floatLabel" /* floatLabel */,
         imageMaxSize: 1280,
         imageDispHeight: "16rem",
         thumbDispHeight: "6rem",
@@ -68,7 +69,7 @@
         musicFileIcn: "fas fa-file-audio",
         excelFileIcn: "fas fa-file-excel",
         fileIcn: "fas fa-file",
-        codeFileIcn: "fas fa-file-code"
+        codeFileIcn: "fas fa-file-code",
     };
     const config = confMap;
     function updateConfig(newConfig) {
@@ -87,8 +88,8 @@
     const classMapState = {
         wrapper: "",
         label: "silver",
-        inputWrapper: "pa1 ma0 dark-gray",
-        input: "dark-gray fw2",
+        inputWrapper: "ba br2 b--silver pa2 ma0 dark-gray",
+        input: "dark-gray fw2 mt1",
         button: "pa2 bn br2",
         navButton: "dark-gray",
         textarea: "dark-gray fw2",
@@ -895,7 +896,7 @@
                     dragging: this.dragging,
                     onSet: addFiles(value),
                     value
-                }, m__default['default']("fieldset", {
+                }, m__default['default']("div", {
                     class: inputWrapperCls(uiClass, fileInvalid(field, value()))
                 }, m__default['default'](".pa2", {
                     class: fileInputCls(this.dragging())
@@ -1162,38 +1163,45 @@
         }
     }
 
+    const shrinkFont = "0.7em";
+    const shrinkOverflow = "10px";
+    const transitionOpts = "0.3s ease-in-out";
     class FloatLabel {
         constructor() {
             this.focus = false;
             this.focusIn = () => this.focus = true;
             this.focusOut = () => this.focus = false;
-            // Track element height for better positioning floating label
             this.wrapperHeight = 0;
         }
         oncreate({ dom }) {
-            this.wrapperHeight = dom.clientHeight;
-            m__default['default'].redraw();
+            this.inputWrapper = dom.firstElementChild;
+            this.calcHeight();
         }
-        onupdate({ dom }) {
-            if (dom.clientHeight !== this.wrapperHeight) {
-                this.wrapperHeight = dom.clientHeight;
+        onupdate() {
+            this.calcHeight();
+        }
+        calcHeight() {
+            if (this.inputWrapper.clientHeight !== this.wrapperHeight) {
+                this.wrapperHeight = this.inputWrapper.clientHeight;
                 m__default['default'].redraw();
             }
         }
+        // Float label if element has a value set or is in focus
+        shouldFloat(layout, value) {
+            return layout === "floatAlways" /* floatAlways */ || value || this.focus;
+        }
+        labelTranslateY() {
+            return `calc(${this.wrapperHeight * 0.5}px)`;
+        }
         view({ attrs, children }) {
             const { field, value, xform = value } = attrs;
-            const { label, id, type = "text" /* text */, required, disabled, layout, uiClass = {} } = field;
-            const staticFieldTypes = type === "dateInput" /* dateInput */ || type === "cardDate" /* cardDate */;
-            // Float label if element has a value set or is in focus
-            const shrink = layout === "floatAlways" /* floatAlways */ || value() || this.focus || staticFieldTypes;
-            const defaultPosition = `translateY(${type !== "textarea" /* textarea */ ? `calc(${this.wrapperHeight * 0.5}px - 0.33em))`
-            : `1em`}`;
-            // Wrapper (padding 0.5 * shrink label size)
+            const { label, id, type = "text" /* text */, placeholder, required, disabled, layout = config.layoutType, uiClass = {} } = field;
+            // Placeholder or value count as value content
+            const floatTop = this.shouldFloat(layout, placeholder || value());
+            // Wrapper (padding for shrunk label overflow)
             return m__default['default'](".relative", {
                 class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
-                style: {
-                    paddingTop: "0.7em"
-                },
+                style: label ? { paddingTop: shrinkOverflow } : {},
                 onfocusin: this.focusIn,
                 onfocusout: this.focusOut
             }, 
@@ -1201,38 +1209,38 @@
             m__default['default']("fieldset.pa0.ma0", {
                 class: inputWrapperCls(uiClass, propInvalid(field, xform()))
             }, [
-                label ? [
+                label && this.wrapperHeight ? [
                     // Break fieldset border, make space for label to float into
-                    m__default['default']("legend.db.pa0", {
+                    m__default['default']("legend.db", {
+                        class: labelCls(uiClass, required),
                         style: {
                             visibility: "hidden",
                             height: "0px",
-                            maxWidth: shrink ? "100%" : "0.01px",
-                            transition: "max-width 0.3s ease-in-out",
-                            fontSize: "0.7em",
-                            marginLeft: shrink ? "0.7em" : '',
+                            transition: `max-width ${transitionOpts}`,
+                            maxWidth: floatTop ? "100%" : "0.01px"
                         }
                     }, m__default['default']("span", {
                         style: {
-                            padding: "0 .7em 0 .7em"
+                            fontSize: shrinkFont
                         }
-                    }, label)),
+                    }, getLabelText(label, required))),
                     // Floating label
-                    m__default['default']("label.db.absolute.top-0", {
-                        title: label,
-                        for: id,
+                    m__default['default'](".absolute.top-0", {
                         class: labelCls(uiClass, required),
                         style: {
-                            left: "0.7em",
-                            // Translate into center of input wrapper
-                            transform: shrink
-                                ? "scale(0.7) translate(0.5em, 0.25em)"
-                                : defaultPosition,
-                            transformOrigin: "top left",
-                            display: this.wrapperHeight ? "inherit" : "none",
-                            transition: "transform 0.3s ease-in-out",
+                            transition: `transform ${transitionOpts}`,
+                            // Input wrapper legend or center
+                            transform: floatTop
+                                ? `translateY(calc(${shrinkOverflow} - 1ch))`
+                                : `translateY(${this.labelTranslateY()})`
                         }
-                    }, getLabelText(label, required))
+                    }, m__default['default']("label", {
+                        for: id, title: label,
+                        style: {
+                            transition: `font-size ${transitionOpts}`,
+                            fontSize: floatTop ? shrinkFont : "1em"
+                        }
+                    }, getLabelText(label, required)))
                 ] : null,
                 // Input
                 children
@@ -1240,11 +1248,42 @@
         }
     }
 
+    class Layout {
+        constructor() {
+            this.layout = FloatLabel;
+        }
+        view({ attrs, children }) {
+            const { field: { layout = config.layoutType } } = attrs;
+            return m__default['default'](layout === "default" /* default */ ? Basic : this.layout, attrs, children);
+        }
+    }
+
+    class FixedLabel extends FloatLabel {
+        shouldFloat() {
+            return true;
+        }
+    }
+
+    class layoutFixed extends Layout {
+        constructor() {
+            super(...arguments);
+            this.layout = FixedLabel;
+        }
+    }
+
+    // Types that don't support animated floating labels
+    const fixedLabelTypes = new Set([
+        "date" /* date */,
+        "datetime-local" /* dateTimeLocal */,
+        "color" /* color */,
+        "range" /* range */
+    ]);
     class BaseInput {
         view({ attrs }) {
             const { field, value, xform = value } = attrs;
-            const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, layout = "default" /* default */, uiClass = {} } = field;
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+            const { label, id, type = "text" /* text */, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {} } = field;
+            const layoutComp = fixedLabelTypes.has(type) ? layoutFixed : Layout;
+            return m__default['default'](layoutComp, attrs, m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                 id, type, name, title, placeholder,
                 max, maxlength, min, minlength, step, required,
                 readonly, disabled, autofocus, autocomplete,
@@ -1260,9 +1299,9 @@
     class CurrencyInput {
         view({ attrs }) {
             const { field, value, xform = value } = attrs;
-            const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, layout = "default" /* default */, uiClass = {}, options } = field;
+            const { label, id, name = id, title = label, placeholder, max, maxlength, min, minlength, step, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, spellcheck, instant, uiClass = {}, options } = field;
             const currency = options && options.length ? options[0].value : "$";
-            const internalLabelView = m__default['default']('.flex.flex-row.w-100', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
+            return m__default['default'](layoutFixed, attrs, m__default['default']('.flex.flex-row.w-100', m__default['default']("span.mr1.self-center", currency), m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                 id, type: "text" /* text */, name, title, placeholder,
                 max, maxlength, min, minlength, step, required,
                 readonly, disabled, autofocus, autocomplete,
@@ -1273,8 +1312,7 @@
                     : numberToCurrencyStr(propToNumber(xform())),
                 // Update value on change or input ("instant" option)
                 [instant ? "oninput" : "onchange"]: setCurrencyValue(value)
-            }));
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, internalLabelView);
+            })));
         }
     }
     function propToNumber(value) {
@@ -1380,9 +1418,9 @@
         }
         view({ attrs }) {
             const { field } = attrs;
-            const { id, name = id, required, readonly, disabled, layout = "default" /* default */, uiClass = {} } = field;
+            const { id, name = id, required, readonly, disabled, uiClass = {} } = field;
             const classStr = inputCls(uiClass);
-            const dateInputs = [
+            return m__default['default'](layoutFixed, attrs, [
                 m__default['default']("div.dib.mr2", [
                     m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                         id: `${id}-mm`, name: `${name}-mm`,
@@ -1408,8 +1446,7 @@
                         oninput: () => handleDateChange(this.year, id, "yy", this.dom)
                     })
                 ])
-            ];
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, dateInputs);
+            ]);
         }
     }
 
@@ -1455,7 +1492,7 @@
             this.day.end(true);
         }
         view({ attrs }) {
-            const { id, name = id, required, readonly, disabled, layout = "default" /* default */, uiClass = {}, options } = attrs.field;
+            const { id, name = id, required, readonly, disabled, uiClass = {}, options } = attrs.field;
             const locale = options && options.length ? options[0].value : "en-GB";
             const isUsLocale = locale === "en-US";
             const classStr = inputCls(uiClass);
@@ -1509,10 +1546,10 @@
                 })
             ]);
             const slash = m__default['default']('span.self-center', '/');
-            // Assemble date input (en-GB or en-US layouts)
-            const dateInput = isUsLocale ? [monthInput, slash, dayInput, slash, yearInput]
-                : [dayInput, slash, monthInput, slash, yearInput];
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, dateInput);
+            return m__default['default'](layoutFixed, attrs, isUsLocale
+                // Assemble date input (en-GB or en-US layouts)
+                ? [monthInput, slash, dayInput, slash, yearInput]
+                : [dayInput, slash, monthInput, slash, yearInput]);
         }
     }
 
@@ -1522,8 +1559,8 @@
         }
         view({ attrs }) {
             const { field, value } = attrs;
-            const { label, id, name = id, title = label, placeholder, maxlength, minlength, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, instant, uiClass = {}, layout } = field;
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']('.flex.flex-row', [
+            const { label, id, name = id, title = label, placeholder, maxlength, minlength, required, readonly, disabled, autofocus, autocomplete, pattern, inputmode, instant, uiClass = {} } = field;
+            return m__default['default'](Layout, attrs, m__default['default']('.flex.flex-row', [
                 m__default['default']("input.w-100.bg-transparent.bn.outline-0", {
                     id, name, title, placeholder,
                     type: this.showPassword() ? "text" : "password",
@@ -1546,11 +1583,24 @@
         }
     }
 
+    class TopLabel extends FloatLabel {
+        labelTranslateY() {
+            return "1em";
+        }
+    }
+
+    class layoutTop extends Layout {
+        constructor() {
+            super(...arguments);
+            this.layout = TopLabel;
+        }
+    }
+
     class TextareaInput {
         view({ attrs }) {
-            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, layout = "default" /* default */, uiClass = {} } = attrs.field;
+            const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {} } = attrs.field;
             const { value } = attrs;
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+            return m__default['default'](layoutTop, attrs, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
                 id, name, title,
                 placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
                 class: textareaCls(uiClass),
@@ -1569,9 +1619,9 @@
         }
         view({ attrs: { field, value } }) {
             const { label = "", id, name = id, title = label, required, readonly, disabled, autocomplete, uiClass = {} } = field;
-            return m__default['default']("fieldset", {
+            return m__default['default']("div", {
                 class: wrapperCls(uiClass, disabled),
-            }, m__default['default']("div", {
+            }, m__default['default']("fieldset", {
                 class: inputWrapperCls(uiClass)
             }, [
                 m__default['default']("label.flex.items-center", {
@@ -1602,9 +1652,8 @@
     class RadioInput {
         view({ attrs }) {
             const { field, value: val } = attrs;
-            const { id, name = id, required, readonly, disabled, autocomplete, options, layout, uiClass = {} } = field;
-            return m__default['default'](layout === "default" /* default */ ? Basic : FloatLabel, attrs, m__default['default']("div", {
-                class: inputWrapperCls(uiClass, propInvalid(field, val())),
+            const { id, name = id, required, readonly, disabled, autocomplete, uiClass = {}, options } = field;
+            return m__default['default'](layoutFixed, attrs, m__default['default'](".w-100.flex", {
                 onchange: setValue(val)
             }, lodash__default['default'].map(options, ({ value, label = value, icon }) => {
                 const checked = val() === value;
@@ -1625,25 +1674,19 @@
     }
 
     class SelectInput {
-        view({ attrs: { field, value: val } }) {
+        view({ attrs }) {
+            const { field, value: val } = attrs;
             const { label: lbl, id, name = id, title = lbl, required, readonly, disabled, autofocus, autocomplete, uiClass = {}, options } = field;
-            return m__default['default']("fieldset", {
-                class: wrapperCls(uiClass, disabled)
-            }, [
-                getLabel(id, uiClass, lbl, required),
-                m__default['default']("div", {
-                    class: inputWrapperCls(uiClass, propInvalid(field, val()))
-                }, m__default['default']("select.w-100.bg-transparent.bn.outline-0", {
-                    id, name, title,
-                    required, readonly, disabled, autofocus, autocomplete,
-                    class: inputCls(uiClass),
-                    value: val(),
-                    onchange: setValue(val)
-                }, lodash__default['default'].map(options, ({ value, label = value }) => m__default['default']("option", {
-                    value,
-                    disabled: disabled || readonly
-                }, label))))
-            ]);
+            return m__default['default'](Layout, attrs, m__default['default']("select.w-100.bg-transparent.bn.outline-0", {
+                id, name, title,
+                required, readonly, disabled, autofocus, autocomplete,
+                class: inputCls(uiClass),
+                value: val(),
+                onchange: setValue(val)
+            }, lodash__default['default'].map(options, ({ value, label = value }) => m__default['default']("option", {
+                value,
+                disabled: disabled || readonly
+            }, label))));
         }
     }
 
@@ -1665,7 +1708,7 @@
                 dragging: this.dragging,
                 onSet: addFiles(value, true),
                 value
-            }, m__default['default']("fieldset", {
+            }, m__default['default']("div", {
                 class: inputWrapperCls(uiClass, fileInvalid(field, value()))
             }, m__default['default'](".flex.items-center.pa1", {
                 class: fileInputCls(this.dragging())
@@ -1722,7 +1765,7 @@
                     dragging: this.dragging,
                     onSet: addImages(value, config.imageMaxSize),
                     value
-                }, m__default['default']("fieldset", {
+                }, m__default['default']("div", {
                     class: inputWrapperCls(uiClass, fileInvalid(field, value()))
                 }, m__default['default'](".w-100.pa1.dt.tc", {
                     class: fileInputCls(this.dragging())
@@ -1757,7 +1800,7 @@
                 dragging: this.dragging,
                 onSet: addImages(value, config.imageMaxSize, true),
                 value
-            }, m__default['default']("fieldset", {
+            }, m__default['default']("div", {
                 class: inputWrapperCls(uiClass, fileInvalid(field, value()))
             }, m__default['default'](".pa1", {
                 class: fileInputCls(this.dragging())
@@ -1983,7 +2026,7 @@
                 class: wrapperCls(uiClass, disabled)
             }, [
                 getLabel(id, uiClass, lbl),
-                m__default['default']("fieldset", {
+                m__default['default']("div", {
                     class: this.signType !== "stamp" /* Stamp */
                         ? inputWrapperCls(uiClass, fileInvalid(field, value()))
                         : undefined
@@ -2089,7 +2132,7 @@
                 dragging: this.dragging,
                 onSet: addOmniFiles(value, true),
                 value
-            }, m__default['default']("fieldset", {
+            }, m__default['default']("div", {
                 class: inputWrapperCls(uiClass, fileInvalid(field, value()))
             }, m__default['default'](".flex.items-center.pa1", {
                 class: fileInputCls(this.dragging())
@@ -2142,7 +2185,7 @@
                     dragging: this.dragging,
                     onSet: addOmniFiles(value, false),
                     value
-                }, m__default['default']("fieldset", {
+                }, m__default['default']("div", {
                     class: inputWrapperCls(uiClass, fileInvalid(field, value()))
                 }, m__default['default'](".flex.items-center.pa1.dt", {
                     class: fileInputCls(this.dragging())
@@ -2214,6 +2257,7 @@
     exports.scaleDataUrl = scaleDataUrl;
     exports.scaleRect = scaleRect;
     exports.textToImage = textToImage;
+    exports.theme = theme;
     exports.updateButtonContext = updateButtonContext;
     exports.updateClasses = updateClasses;
     exports.updateConfig = updateConfig;

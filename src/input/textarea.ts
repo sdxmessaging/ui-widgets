@@ -1,13 +1,11 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { config } from "../config";
 
-import { IPropWidget, LabelType } from "../interface/widget";
+import { IPropWidget } from "../interface/widget";
 
 import { textareaCls } from "../theme";
 import { setValue } from "../utils";
 
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+import { layoutTop } from "./layout/layoutTopLabel";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
 
@@ -15,10 +13,10 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,
-			instant, layout = config.inputDefault, uiClass = {}
+			instant, uiClass = {}
 		} = attrs.field;
 		const { value } = attrs;
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+		return m(layoutTop, attrs, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			class: textareaCls(uiClass),

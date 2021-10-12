@@ -1,19 +1,15 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { config } from "../../config";
 
-import { FieldType, IPropWidget, LabelType } from "../../interface/widget";
+import { FieldType, IPropWidget, LayoutType, TProp } from "../../interface/widget";
 
 import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
 import { propInvalid } from "../../validation";
 
-const floatAlwaysOverride = new Set<string>([
-	FieldType.date,
-	FieldType.dateTimeLocal,
-	FieldType.dateInput,
-	FieldType.cardDate,
-	FieldType.radio
-]);
+const shrinkFont = "0.7em";
+const shrinkOverflow = "10px";
+const transitionOpts = "0.3s ease-in-out";
 
 export class FloatLabel implements ClassComponent<IPropWidget> {
 
@@ -21,35 +17,44 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	private focusIn = () => this.focus = true;
 	private focusOut = () => this.focus = false;
 
-	// Track element height for better positioning floating label
+	// Track element height for positioning floating label
+	private inputWrapper!: HTMLElement;
 	private wrapperHeight = 0;
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		this.wrapperHeight = (dom.firstElementChild as HTMLElement).clientHeight;
-		m.redraw();
+		this.inputWrapper = dom.firstElementChild as HTMLElement;
+		this.calcHeight();
 	}
-	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		if ((dom.firstElementChild as HTMLElement).clientHeight !== this.wrapperHeight) {
-			this.wrapperHeight = (dom.firstElementChild as HTMLElement).clientHeight;
+	public onupdate() {
+		this.calcHeight();
+	}
+	private calcHeight() {
+		if (this.inputWrapper.clientHeight !== this.wrapperHeight) {
+			this.wrapperHeight = this.inputWrapper.clientHeight;
 			m.redraw();
 		}
+	}
+
+	// Float label if element has a value set or is in focus
+	protected shouldFloat(layout: LayoutType, value: TProp) {
+		return layout === LayoutType.floatAlways || value || this.focus;
+	}
+
+	protected labelTranslateY() {
+		return `calc(${this.wrapperHeight * 0.5}px)`;
 	}
 
 	public view({ attrs, children }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, type = FieldType.text, placeholder, required, disabled,
-			layout = config.inputDefault, uiClass = {}
+			layout = config.layoutType, uiClass = {}
 		} = field;
-
-		// Float label if element has a value set or is in focus
-		const floatTop = layout === LabelType.floatAlways
-			|| floatAlwaysOverride.has(type) || placeholder || value() || this.focus;
-		const defaultPosition = `translateY(${type !== FieldType.textarea ? `calc(${this.wrapperHeight * 0.5}px))`
-			: `1em`}`;
-		// Wrapper (padding 0.5 * shrink label size)
+		// Placeholder or value count as value content
+		const floatTop = this.shouldFloat(layout, placeholder || value());
+		// Wrapper (padding for shrunk label overflow)
 		return m(".relative", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
-			style: label ? { paddingTop: "10px" } : {},
+			style: label ? { paddingTop: shrinkOverflow } : {},
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
 		},
@@ -57,37 +62,38 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 			m("fieldset.pa0.ma0", {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			}, [
-				label ? [
+				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into
-					m("legend.db.pa0", {
+					m("legend.db", {
 						class: labelCls(uiClass, required),
 						style: {
 							visibility: "hidden",
 							height: "0px",
-							maxWidth: floatTop ? "100%" : "0.01px",
-							transition: "max-width 0.3s ease-in-out",
+							transition: `max-width ${transitionOpts}`,
+							maxWidth: floatTop ? "100%" : "0.01px"
 						}
 					}, m("span", {
-						style: { fontSize: ".7em" }
-					}, label)),
+						style: {
+							fontSize: shrinkFont
+						}
+					}, getLabelText(label, required))),
 					// Floating label
-					m('div',
-						{ class: labelCls(uiClass, required) },
-						m("label.db.absolute.top-0", {
-							class: labelCls(uiClass, required),
-							title: label,
-							for: id,
-							style: {
-								// Translate into center of input wrapper
-								transform: floatTop
-									? "translateY(calc(10px - 1ch))"
-									: defaultPosition,
-								fontSize: floatTop ? "0.7em" : "1em",
-								display: this.wrapperHeight ? "inherit" : "none",
-								transition: "transform 0.3s ease-in-out, font-size 0.3s ease-in-out",
-							}
-						}, getLabelText(label, required))
-					),
+					m(".absolute.top-0", {
+						class: labelCls(uiClass, required),
+						style: {
+							transition: `transform ${transitionOpts}`,
+							// Input wrapper legend or center
+							transform: floatTop
+								? `translateY(calc(${shrinkOverflow} - 1ch))`
+								: `translateY(${this.labelTranslateY()})`
+						}
+					}, m("label", {
+						for: id, title: label,
+						style: {
+							transition: `font-size ${transitionOpts}`,
+							fontSize: floatTop ? shrinkFont : "1em"
+						}
+					}, getLabelText(label, required)))
 				] : null,
 				// Input
 				children

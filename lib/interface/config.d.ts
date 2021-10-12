@@ -1,5 +1,7 @@
-import { IOption } from "./widget";
+import { IOption, LayoutType } from "./widget";
 export interface IConfig {
+    /** Default widget layout */
+    layoutType: LayoutType;
     /** Maximum size for upload image in px */
     imageMaxSize: number;
     /** Display height of pending images as CSS size */

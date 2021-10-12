@@ -1,15 +1,12 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
-import { config } from "../config";
 
-import { FieldType, IPropWidget, LabelType, TProp } from "../interface/widget";
+import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls, styleSm } from "../theme";
-
 import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+import { layoutFixed } from "./layout/layoutFixedLabel";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
@@ -57,10 +54,10 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled,
-			layout = config.inputDefault, uiClass = {}
+			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		const dateInputs = [
+		return m(layoutFixed, attrs, [
 			m("div.dib.mr2", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-mm`, name: `${name}-mm`,
@@ -86,8 +83,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					oninput: () => handleDateChange(this.year, id, "yy", this.dom)
 				})
 			])
-		];
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, dateInputs);
+		]);
 	}
 
 }

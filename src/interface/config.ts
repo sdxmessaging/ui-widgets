@@ -1,7 +1,8 @@
-import { LabelType } from "..";
-import { IOption } from "./widget";
+import { IOption, LayoutType } from "./widget";
 
 export interface IConfig {
+	/** Default widget layout */
+	layoutType: LayoutType;
 	/** Maximum size for upload image in px */
 	imageMaxSize: number;
 	/** Display height of pending images as CSS size */
@@ -79,7 +80,6 @@ export interface IConfig {
 	excelFileIcn: string;
 	fileIcn: string;
 	codeFileIcn: string;
-	inputDefault: LabelType;
 }
 
 /**
@@ -87,4 +87,4 @@ export interface IConfig {
  */
 export type TSubset<T, U> = Pick<T, {
 	[Key in keyof T]: T[Key] extends U ? Key : never
-}[keyof T]>
+}[keyof T]>;

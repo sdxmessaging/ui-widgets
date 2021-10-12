@@ -1,12 +1,11 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { FieldType, IOptionField, IPropWidget, LabelType, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { inputCls } from "../theme";
 
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+import { layoutFixed } from "./layout/layoutFixedLabel";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -17,12 +16,11 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode, spellcheck,
-			instant, layout = LabelType.default, uiClass = {},
+			instant, uiClass = {},
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-
-		const internalLabelView = m('.flex.flex-row.w-100', m("span.mr1.self-center", currency),
+		return m(layoutFixed, attrs, m('.flex.flex-row.w-100', m("span.mr1.self-center", currency),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
@@ -35,9 +33,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
 			})
-		);
-
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, internalLabelView);
+		));
 	}
 
 }

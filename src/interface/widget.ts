@@ -86,7 +86,7 @@ type TAutocomplete = "off" | "on" |
 	// Contact
 	"tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
 
-export const enum LabelType {
+export const enum LayoutType {
 	default = "default",
 	floatLabel = "floatLabel",
 	floatAlways = "floatAlways"
@@ -117,7 +117,7 @@ export interface IField {
 	readonly accept?: string;
 	// Widget attributes
 	readonly instant?: boolean;
-	readonly layout?: LabelType;
+	readonly layout?: LayoutType;
 	readonly uiClass?: IWidgetClasses;
 	readonly style?: TStyle;
 	// Unsupported legacy field

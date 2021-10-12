@@ -1,11 +1,13 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
-import { IPropWidget, LabelType } from "../interface/widget";
+
+import { IPropWidget } from "../interface/widget";
+
 import { config } from "../config";
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+
+import { Layout } from "./layout/layout";
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
@@ -18,31 +20,27 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			maxlength, minlength, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode,
-			instant, uiClass = {}, layout = config.inputDefault,
+			instant, uiClass = {}
 		} = field;
-
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,
-			m('.flex.flex-row', [
-				m("input.w-100.bg-transparent.bn.outline-0", {
-					id, name, title, placeholder,
-					type: this.showPassword() ? "text" : "password",
-					maxlength, minlength, required,
-					readonly, disabled, autofocus, autocomplete,
-					pattern, inputmode,
-					class: inputCls(uiClass),
-					value: value(),
-					// Safari quirk
-					autocorrect: "off",
-					// Update value on change or input ("instant" option)
-					[instant ? "oninput" : "onchange"]: setValue(value)
-				}),
-				m("i.ml1.pa1.fa-fw.pointer.dim", {
-					title: config.showPassTxt,
-					class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
-					onclick: () => this.showPassword(!this.showPassword())
-				})
-			]
-			)
-		);
+		return m(Layout, attrs, m('.flex.flex-row', [
+			m("input.w-100.bg-transparent.bn.outline-0", {
+				id, name, title, placeholder,
+				type: this.showPassword() ? "text" : "password",
+				maxlength, minlength, required,
+				readonly, disabled, autofocus, autocomplete,
+				pattern, inputmode,
+				class: inputCls(uiClass),
+				value: value(),
+				// Safari quirk
+				autocorrect: "off",
+				// Update value on change or input ("instant" option)
+				[instant ? "oninput" : "onchange"]: setValue(value)
+			}),
+			m("i.ml1.pa1.fa-fw.pointer.dim", {
+				title: config.showPassTxt,
+				class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
+				onclick: () => this.showPassword(!this.showPassword())
+			})
+		]));
 	}
 }

@@ -1,13 +1,12 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
-import { config } from "../config";
 
-import { IOptionField, IPropWidget, LabelType } from "../interface/widget";
+import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+
+import { Layout } from "./layout/layout";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
@@ -16,22 +15,19 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 		const {
 			label: lbl, id, name = id, title = lbl,
 			required, readonly, disabled, autofocus, autocomplete,
-			uiClass = {}, layout = config.inputDefault,
+			uiClass = {},
 			options
 		} = field as IOptionField;
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs,
-
-			m("select.w-100.bg-transparent.bn.outline-0", {
-				id, name, title,
-				required, readonly, disabled, autofocus, autocomplete,
-				class: inputCls(uiClass),
-				value: val(),
-				onchange: setValue(val)
-			}, lodash.map(options, ({ value, label = value }) => m("option", {
-				value,
-				disabled: disabled || readonly
-			}, label)))
-		)
+		return m(Layout, attrs, m("select.w-100.bg-transparent.bn.outline-0", {
+			id, name, title,
+			required, readonly, disabled, autofocus, autocomplete,
+			class: inputCls(uiClass),
+			value: val(),
+			onchange: setValue(val)
+		}, lodash.map(options, ({ value, label = value }) => m("option", {
+			value,
+			disabled: disabled || readonly
+		}, label))));
 	}
 
 }

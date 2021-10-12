@@ -6,6 +6,15 @@ import { inputCls } from "../theme";
 import { setValue } from "../utils";
 
 import { Layout } from "./layout/layout";
+import { layoutFixed } from "./layout/layoutFixedLabel";
+
+// Types that don't support animated floating labels
+const fixedLabelTypes = new Set<string>([
+	FieldType.date,
+	FieldType.dateTimeLocal,
+	FieldType.color,
+	FieldType.range
+]);
 
 export class BaseInput implements ClassComponent<IPropWidget> {
 
@@ -18,8 +27,8 @@ export class BaseInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode, spellcheck,
 			instant, uiClass = {}
 		} = field;
-
-		return m(Layout, attrs, m("input.w-100.bg-transparent.bn.outline-0", {
+		const layoutComp = fixedLabelTypes.has(type) ? layoutFixed : Layout;
+		return m(layoutComp, attrs, m("input.w-100.bg-transparent.bn.outline-0", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,

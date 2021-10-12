@@ -1,15 +1,13 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
-import { config } from "../config";
 
-import { FieldType, IOptionField, IPropWidget, LabelType, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 
-import { Basic } from "./layout/basic";
-import { FloatLabel } from "./layout/floatLabel";
+import { layoutFixed } from "./layout/layoutFixedLabel";
 
 export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
@@ -65,7 +63,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const {
 			id, name = id,
 			required, readonly, disabled,
-			layout = config.inputDefault, uiClass = {},
+			uiClass = {},
 			options
 		} = attrs.field as IOptionField;
 		const locale = options && options.length ? options[0].value : "en-GB";
@@ -121,11 +119,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			})
 		]);
 		const slash = m('span.self-center', '/');
-		// Assemble date input (en-GB or en-US layouts)
-		const dateInput = isUsLocale ? [monthInput, slash, dayInput, slash, yearInput]
-			: [dayInput, slash, monthInput, slash, yearInput];
-
-		return m(layout === LabelType.default ? Basic : FloatLabel, attrs, dateInput);
+		return m(layoutFixed, attrs, isUsLocale
+			// Assemble date input (en-GB or en-US layouts)
+			? [monthInput, slash, dayInput, slash, yearInput]
+			: [dayInput, slash, monthInput, slash, yearInput]
+		);
 	}
 
 }
