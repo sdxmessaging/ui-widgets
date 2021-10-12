@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
 import { handleDateChange, setCustomValidityMessage } from "../utils";
@@ -13,23 +13,30 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
 	private month = stream<string>();
 	private year = stream<string>();
-	private valid = stream.lift(
-		(day, month, year) => {
-			const newYear = parseInt(year);
-			const newMonth = parseInt(month) - 1;
-			const newDay = parseInt(day);
-			const newDate = new Date(newYear, newMonth, newDay);
-			return newDate.getFullYear() === newYear && year.length === 4
-				&& newDate.getMonth() === newMonth && newDate.getDate() === newDay
-				&& day.length === 2 && month.length === 2;
-		},
-		this.day, this.month, this.year
-	);
-	// Combine date parts
-	private date = stream.lift(
-		(day, month, year, valid) => valid ? `${year}-${month}-${day}` : "",
-		this.day, this.month, this.year, this.valid
-	);
+	private valid = stream<string>();
+
+	private date = stream<string>();
+	private buildDate() {
+		this.date(`${this.year()}-${this.month()}-${this.day()}`);
+	}
+
+	private updateInputs(valueStream: TPropStream) {
+		const newYear = parseInt(this.year());
+		const newMonth = parseInt(this.month()) - 1;
+		const newDay = parseInt(this.day());
+		const newDate = new Date(newYear, newMonth, newDay);
+		if (newDate.getFullYear() === newYear && this.year().length === 4
+			&& newDate.getMonth() === newMonth && newDate.getDate() === newDay
+			&& this.day().length === 2 && this.month().length === 2) {
+			this.buildDate();
+			valueStream(this.date());
+		}
+		else {
+			this.date('');
+			valueStream('');
+		}
+	}
+
 	private dom!: Element;
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
@@ -37,9 +44,18 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
 			if (lodash.isDate(date) && !isNaN(date.getTime())) {
-				this.day(lodash.padStart(String(date.getDate()), 2, "0"));
-				this.month(lodash.padStart(String(1 + date.getMonth()), 2, "0"));
-				this.year(String(date.getFullYear()));
+				const day = lodash.padStart(String(date.getDate()), 2, "0")
+				const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
+				const year = String(date.getFullYear());
+				this.day(day);
+				this.month(month);
+				this.year(year);
+				this.buildDate();
+			}
+			else if (!newVal && this.date()) {
+				this.day('');
+				this.month('');
+				this.year('');
 			}
 		});
 	}
@@ -76,7 +92,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				oninput: () => handleDateChange(this.date, attrs.value, this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
+				oninput: () => {
+					handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm")
+					this.updateInputs(attrs.value);
+				},
 				class: classStr,
 				style: {
 					maxWidth: DateWidth.dd,
@@ -92,7 +111,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				oninput: () => handleDateChange(this.date, attrs.value, this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
+				oninput: () => {
+					handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy")
+					this.updateInputs(attrs.value);
+				},
 				class: classStr,
 				style: {
 					maxWidth: DateWidth.mm,
@@ -108,7 +130,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				oninput: () => handleDateChange(this.date, attrs.value, this.year, id, "yyyy", this.dom),
+				oninput: () => {
+					handleDateChange(this.year, id, "yyyy", this.dom);
+					this.updateInputs(attrs.value);
+
+				},
 				class: classStr,
 				style: {
 					maxWidth: DateWidth.yyyy

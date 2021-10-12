@@ -127,8 +127,7 @@ function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputT
 	}
 }
 
-export function handleDateChange(mainStream: TPropStream, valueStream: TPropStream,
-	streamType: TPropStream, id: string, selfType: TDateInputType,
+export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
 	dom: Element, targetType?: TDateInputType) {
 
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
@@ -147,12 +146,6 @@ export function handleDateChange(mainStream: TPropStream, valueStream: TPropStre
 		streamType(prevValue);
 	}
 
-	if (mainStream()) {
-		valueStream(mainStream());
-	}
-	else {
-		valueStream("");
-	}
 	autoAdvance(id, self, targetType, streamType() as string, dom);
 }
 
