@@ -94,8 +94,9 @@ themeNavBtn.map(function (newCls) {
 
 m.mount(document.getElementById("page"), {
 	view: function () {
-		return m(".mw8.pa3.mb5.center", [
+		return m(".mw8.ph4.mv5.center", [
 
+			// Navbar
 			m(".flex.flex-column.flex-row-l.items-center.fixed.top-0.right-0.bg-near-white.z-max", [
 				m(uiWidgets.NavLink, {
 					label: "Basic Usage",
@@ -125,7 +126,7 @@ m.mount(document.getElementById("page"), {
 
 				m(".mh2.flex.items-center", [
 					m("i.fa.fa-tags.mh2"),
-					m("span.mr2", "Type"),
+					m("span", "Type"),
 					m(uiWidgets.SelectInput, {
 						field: {
 							id: "layout-in",
@@ -155,10 +156,10 @@ m.mount(document.getElementById("page"), {
 			m("p", "Inputs can apply additional classes if they fail validation."),
 
 			// Text
-			m(".flex.mb2.items-center", [
+			m(".flex.mb2.items-center.ba.b--silver", [
 
-				m(".flex.flex-column.w-50.mr2", [
-					m(".pa2.ba.b--silver.mb2", m(uiWidgets.BaseInput, {
+				m(".flex.flex-column.w-50", [
+					m(".pa2.mb2", m(uiWidgets.BaseInput, {
 						field: {
 							id: "text-in-input",
 							label: "Text Input (updates on input)",
@@ -167,7 +168,7 @@ m.mount(document.getElementById("page"), {
 						},
 						value: textVal,
 					})),
-					m(".pa2.ba.b--silver", m(uiWidgets.TextareaInput, {
+					m(".pa2", m(uiWidgets.TextareaInput, {
 						field: {
 							id: "text-area-input",
 							label: "Text Area (updates on change)",
@@ -177,7 +178,7 @@ m.mount(document.getElementById("page"), {
 					})),
 				]),
 
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
+				m(".w-50.pa2", m(uiWidgets.BaseText, {
 					field: {
 						id: "text-out",
 						label: "Text Output"
@@ -187,9 +188,9 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Date
-			m(".flex.mb2.items-center", [
-				m(".flex.flex-column.w-50.mr2", [
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
+			m(".flex.mb2.items-center.ba.b--silver", [
+				m(".flex.flex-column.w-50", [
+					m(".pa2.mb2", m(uiWidgets.BaseInput, {
 						field: {
 							id: "date-in",
 							label: "Date Input (Browser Default)",
@@ -197,7 +198,7 @@ m.mount(document.getElementById("page"), {
 						},
 						value: dateVal
 					})),
-					m(".pa2.ba.b--silver", [
+					m(".pa2", [
 						m(uiWidgets.DateInput, {
 							field: {
 								id: "dob-in",
@@ -220,7 +221,7 @@ m.mount(document.getElementById("page"), {
 					])
 				]),
 
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.DateText, {
+				m(".w-50.pa2", m(uiWidgets.DateText, {
 					field: {
 						id: "date-out",
 						label: "Date Output",
@@ -230,8 +231,8 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Colour
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "color-in",
 						label: "Colour Input",
@@ -239,7 +240,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: colVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
+				m(".w-50.pa2", m(uiWidgets.BaseText, {
 					field: {
 						id: "color-out",
 						label: "Colour Output",
@@ -249,8 +250,8 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Password
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.PasswordInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.PasswordInput, {
 					field: {
 						id: "password-in",
 						label: "Password Input",
@@ -258,7 +259,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: passVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.PasswordStrength, {
+				m(".w-50.pa2", m(uiWidgets.PasswordStrength, {
 					field: {
 						id: "password-in-strength",
 						label: "Password Strength"
@@ -270,15 +271,15 @@ m.mount(document.getElementById("page"), {
 			m("p", "Checkbox and Toggle inputs support conditional labels based on their value."),
 
 			// Checkbox
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CheckboxInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.CheckboxInput, {
 					field: {
 						id: "check-in",
 						label: "Checkbox Input"
 					},
 					value: checkVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.Checkbox, {
+				m(".w-50.pa2", m(uiWidgets.Checkbox, {
 					field: {
 						id: "check-out",
 						label: "Checkbox Output",
@@ -291,8 +292,8 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Toggle
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ToggleInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.ToggleInput, {
 					field: {
 						id: "toggle-in",
 						label: "Toggle Input",
@@ -304,7 +305,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: toggleVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.Toggle, {
+				m(".w-50.pa2", m(uiWidgets.Toggle, {
 					field: {
 						id: "toggle-out",
 						label: "Toggle Output",
@@ -317,9 +318,9 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			// Select/Radio
-			m(".flex.mb2.items-center", [
-				m(".flex.flex-column.w-50.mr2", [
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.SelectInput, {
+			m(".flex.mb2.items-center.ba.b--silver", [
+				m(".flex.flex-column.w-50", [
+					m(".pa2.mb2", m(uiWidgets.SelectInput, {
 						field: {
 							id: "select-in",
 							label: "Select Input",
@@ -333,7 +334,7 @@ m.mount(document.getElementById("page"), {
 						},
 						value: optVal
 					})),
-					m(".pa2.ba.b--silver", m(uiWidgets.RadioInput, {
+					m(".pa2", m(uiWidgets.RadioInput, {
 						field: {
 							id: "radio-in",
 							label: "Radio Input",
@@ -349,7 +350,7 @@ m.mount(document.getElementById("page"), {
 						value: optVal
 					}))
 				]),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseText, {
+				m(".w-50.pa2", m(uiWidgets.BaseText, {
 					field: {
 						id: "select-radio-out",
 						label: "Select/Radio Output"
@@ -361,8 +362,8 @@ m.mount(document.getElementById("page"), {
 			m("p", "The currency input stores values as the smallest monetary unit"),
 
 			// Currency/Number
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CurrencyInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
 					field: {
 						id: "currency-in-currency",
 						label: "Currency Input",
@@ -372,7 +373,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: currencyVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "currency-in-number",
 						label: "Smallest Monetary Unit",
@@ -384,15 +385,15 @@ m.mount(document.getElementById("page"), {
 			m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
 
 			// Card Date
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.CardDateInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
 					field: {
 						id: "card-in-date",
 						label: "Card Expiry MM/YY"
 					},
 					value: cardVal
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "card-in-text",
 						label: "Card Expiry Plain Text",
@@ -406,8 +407,8 @@ m.mount(document.getElementById("page"), {
 			m("p", "Note that a transform stream value is fed back into the initial value on each update"),
 
 			// xform
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "xform-in-simple",
 						label: "Input Stream",
@@ -415,7 +416,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: xformValIn
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "xform-in-xform",
 						label: "Input Stream + Transform Stream (toUpperCase)",
@@ -495,9 +496,9 @@ m.mount(document.getElementById("page"), {
 			m("p", "Widget options are simple to update"),
 
 			// Custom BaseInput
-			m(".flex.mb2.items-center", [
-				m(".flex.flex-column.w-50.mr2", [
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
+			m(".flex.mb2.items-center.ba.b--silver", [
+				m(".flex.flex-column.w-50", [
+					m(".pa2.mb2", m(uiWidgets.BaseInput, {
 						field: {
 							id: "custom-label",
 							label: "Label",
@@ -505,7 +506,7 @@ m.mount(document.getElementById("page"), {
 						},
 						value: label
 					})),
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.SelectInput, {
+					m(".pa2.mb2", m(uiWidgets.SelectInput, {
 						field: {
 							id: "custom-type",
 							label: "Type",
@@ -543,7 +544,7 @@ m.mount(document.getElementById("page"), {
 						},
 						value: type
 					})),
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.BaseInput, {
+					m(".pa2.mb2", m(uiWidgets.BaseInput, {
 						field: {
 							id: "custom-placeholder",
 							label: "Placeholder",
@@ -551,14 +552,14 @@ m.mount(document.getElementById("page"), {
 						},
 						value: placeholder
 					})),
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
+					m(".pa2.mb2", m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-readonly",
 							label: "Readonly"
 						},
 						value: readonly
 					})),
-					m(".pa2.mb2.ba.b--silver", m(uiWidgets.CheckboxInput, {
+					m(".pa2.mb2", m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-disabled",
 							label: "Disabled"
@@ -566,7 +567,7 @@ m.mount(document.getElementById("page"), {
 						value: disabled
 					}))
 				]),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "custom-out",
 						label: label(),
@@ -583,8 +584,8 @@ m.mount(document.getElementById("page"), {
 			m("p", "These file widgets operate on a single file array stream"),
 
 			// FileSelect/FileList
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.FileSelect, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.FileSelect, {
 					field: {
 						id: "file-in",
 						label: "File Input"
@@ -592,7 +593,7 @@ m.mount(document.getElementById("page"), {
 					value: fileList,
 					displayType: "none"
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+				m(".w-50.pa2", m(uiWidgets.FileList, {
 					field: {
 						id: "image-out",
 						label: "File Output"
@@ -611,15 +612,15 @@ m.mount(document.getElementById("page"), {
 
 			m("p", "The OmniFileInput widget behaves like a file or image input based on the type of file set"),
 
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.OmniFileInput, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.OmniFileInput, {
 					field: {
 						id: "omni-file-in",
 						label: "Omni File Input"
 					},
 					value: omniInputList
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+				m(".w-50.pa2", m(uiWidgets.FileList, {
 					field: {
 						id: "omni-file-out",
 						label: "File List Output"
@@ -629,8 +630,9 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			m("p", "MultiOmniFileInput, widget to accept all types of files and either display the image or list the file name based on the displayType provided. Display portion of widget can also be hidden."),
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.MultiOmniFileInput, {
+
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.MultiOmniFileInput, {
 					field: {
 						id: "multi-omni-file-in",
 						label: "Multiple Omni File Input"
@@ -640,7 +642,7 @@ m.mount(document.getElementById("page"), {
 					value: multiOmniInputList,
 				}),
 				),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+				m(".w-50.pa2", m(uiWidgets.FileList, {
 					field: {
 						id: "multi-omni-file-out",
 						label: "Multiple Omni File Output"
@@ -648,17 +650,19 @@ m.mount(document.getElementById("page"), {
 					value: multiOmniInputList
 				})),
 			]),
+
 			m("p", "Image inputs can enforce a maximum size, scaling down larger images"),
+
 			// ImageSelect/FileList
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageSelect, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.ImageSelect, {
 					field: {
 						id: "image-in",
 						label: "Image Select Input"
 					},
 					value: imgInputList
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.FileList, {
+				m(".w-50.pa2", m(uiWidgets.FileList, {
 					field: {
 						id: "image-out",
 						label: "File List Output"
@@ -677,15 +681,15 @@ m.mount(document.getElementById("page"), {
 			}),
 
 			// ImageMulti/ImageList
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.ImageMulti, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.ImageMulti, {
 					field: {
 						id: "image-multi-in",
 						label: "Image List Input"
 					},
 					value: imgList
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.ImageList, {
+				m(".w-50.pa2", m(uiWidgets.ImageList, {
 					field: {
 						id: "image-multi-out",
 						label: "Image List Output"
@@ -706,8 +710,8 @@ m.mount(document.getElementById("page"), {
 			),
 
 			// SignBuilder/ImagePreview
-			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.SignBuilder, {
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.SignBuilder, {
 					field: {
 						id: "sign-in",
 						label: "Signature Input",
@@ -717,7 +721,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: signList
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.ImagePreview, {
+				m(".w-50.pa2", m(uiWidgets.ImagePreview, {
 					field: {
 						id: "sign-out",
 						label: "Signature File Output"
@@ -725,6 +729,7 @@ m.mount(document.getElementById("page"), {
 					value: signList
 				}))
 			]),
+
 			m(uiWidgets.Button, {
 				label: "Log Signature to Console",
 				icon: "fas fa-print",
@@ -742,7 +747,7 @@ m.mount(document.getElementById("page"), {
 
 			// Buttons
 			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-button",
 						label: "Button",
@@ -750,7 +755,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: themeBtn
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-nav-button",
 						label: "Nav Button",
@@ -762,14 +767,14 @@ m.mount(document.getElementById("page"), {
 
 			// Inputs
 			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-wrapper",
 						label: "Widget Wrapper"
 					},
 					value: themeWrapper
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-label",
 						label: "Widget Label",
@@ -779,7 +784,7 @@ m.mount(document.getElementById("page"), {
 				}))
 			]),
 			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input-wrapper",
 						label: "Input Wrapper",
@@ -787,7 +792,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: themeInputWrapper
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input",
 						label: "Input",
@@ -799,14 +804,14 @@ m.mount(document.getElementById("page"), {
 
 			// Required/disabled
 			m(".flex.mb2", [
-				m(".w-50.pa2.mr2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "required-label",
 						label: "Required Label"
 					},
 					value: themeRequired
 				})),
-				m(".w-50.pa2.ba.b--silver", m(uiWidgets.BaseInput, {
+				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "disabled-wrapper",
 						label: "Disabled Wrapper"
@@ -824,6 +829,7 @@ m.mount(document.getElementById("page"), {
 					id: "feedback-in",
 					label: "We value your feedback",
 					uiClass: {
+						label: "ml5 ph2 bg-near-white ba br-pill",
 						inputWrapper: "flex bg-near-white br-pill",
 						input: "flex-auto pa2 bg-animate br-pill tc"
 					},
@@ -847,8 +853,7 @@ m.mount(document.getElementById("page"), {
 						value: "5",
 						label: "Very satisfied",
 						icon: "fas fa-grin-beam fa-2x"
-					}],
-					layout: "default"
+					}]
 				},
 				value: faceVal
 			}),
