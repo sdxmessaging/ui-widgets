@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
+import { handleDateChange, setCustomValidityMessage } from "../utils";
 
 import { layoutFixed } from "./layout/layoutFixedLabel";
 
@@ -42,8 +42,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.year(String(date.getFullYear()));
 			}
 		});
-		// Update value when date changes
-		updateNewValue(this.date, value);
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
@@ -78,7 +76,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
+				oninput: () => handleDateChange(this.date, attrs.value, this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
 				class: classStr,
 				style: {
 					maxWidth: DateWidth.dd,
@@ -94,7 +92,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
+				oninput: () => handleDateChange(this.date, attrs.value, this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
 				class: classStr,
 				style: {
 					maxWidth: DateWidth.mm,
@@ -110,7 +108,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
+				oninput: () => handleDateChange(this.date, attrs.value, this.year, id, "yyyy", this.dom),
 				class: classStr,
 				style: {
 					maxWidth: DateWidth.yyyy
