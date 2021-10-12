@@ -20,7 +20,9 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-		return m(layoutFixed, attrs, m('.flex.flex-row.w-100', m("span.mr1.self-center", currency),
+		return m(layoutFixed, attrs, m('.flex.flex-row.w-100', m("span.mr1.self-center", {
+			class: inputCls(uiClass)
+		}, currency),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
