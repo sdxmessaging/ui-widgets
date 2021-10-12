@@ -49,7 +49,6 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				this.date('');
 			}
 		});
-		this.valid.map(console.debug)
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
