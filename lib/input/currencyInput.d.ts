@@ -24,4 +24,4 @@ export declare function numberToCurrencyStr(unitTotal: number): string | undefin
 export declare function numberToCurrencyTuple(unitTotal: number): [string, string] | undefined;
 export declare function setCurrencyValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
-}) => import("mithril/stream")<number> | TProp;
+}) => TProp | import("mithril/stream")<number>;
