@@ -64,15 +64,15 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 			}, [
 				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into
-					m("legend.relative.db", {
+					m("legend.db", {
 						class: labelCls(uiClass, required),
 						style: {
 							visibility: "hidden",
-							height: "3px",
+							height: "1ch",
 							transition: `max-width ${transitionOpts}`,
 							maxWidth: floatTop ? "100%" : "0.01px"
 						}
-					}, m("span.relative", {
+					}, m("span", {
 						style: {
 							fontSize: shrinkFont
 						}
@@ -84,7 +84,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 							transition: `transform ${transitionOpts}`,
 							// Input wrapper legend or center
 							transform: floatTop
-								? `translateY(calc(${shrinkOverflow} - 1.2ch))`
+								? `translateY(calc(${shrinkOverflow} - 0.8ch))`
 								: `translateY(${this.labelTranslateY()})`
 						}
 					}, m("label", {

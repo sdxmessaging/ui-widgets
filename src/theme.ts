@@ -20,7 +20,7 @@ const classMapState: Required<IClassMap> = {
 	wrapper: "",
 	label: "silver",
 	inputWrapper: "ba br2 b--silver pa2 ma0 dark-gray",
-	input: "dark-gray fw2 mt1",
+	input: "dark-gray fw2",
 	button: "pa2 bn br2",
 	navButton: "dark-gray",
 	textarea: "dark-gray fw2",
