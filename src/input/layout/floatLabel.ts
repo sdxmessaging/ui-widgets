@@ -8,7 +8,6 @@ import { getLabelText } from "../../utils";
 import { propInvalid } from "../../validation";
 
 const shrinkFont = "0.7em";
-const shrinkOverflow = "10px";
 const transitionOpts = "0.3s ease-in-out";
 
 export class FloatLabel implements ClassComponent<IPropWidget> {
@@ -40,7 +39,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	}
 
 	protected labelTranslateY() {
-		return `calc(${this.wrapperHeight * 0.5}px)`;
+		return `calc(${this.wrapperHeight * 0.5}px - 1.5ex)`;
 	}
 
 	public view({ attrs, children }: CVnode<IPropWidget>) {
@@ -52,14 +51,14 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 		// Placeholder or value count as value content
 		const floatTop = this.shouldFloat(layout, placeholder || value());
 		// Wrapper (padding for shrunk label overflow)
-		return m(".relative", {
+		return m("div", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
-			style: label ? { paddingTop: shrinkOverflow } : {},
+			style: label ? { paddingTop: "0.5rem" } : {},
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
 		},
 			// Input wrapper
-			m("fieldset.pa0.ma0", {
+			m("fieldset.relative.pa0.ma0", {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			}, [
 				label && this.wrapperHeight ? [
@@ -68,7 +67,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						class: labelCls(uiClass, required),
 						style: {
 							visibility: "hidden",
-							height: '.5ch',
+							height: "0.5ch",
 							transition: `max-width ${transitionOpts}`,
 							maxWidth: floatTop ? "100%" : "0.01px"
 						}
@@ -83,11 +82,9 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						style: {
 							transition: `transform ${transitionOpts}`,
 							// Input wrapper legend or center
-							transform: floatTop
-								? `translateY(calc(${shrinkOverflow} - 1ch))`
-								: `translateY(${this.labelTranslateY()})`
+							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
 						}
-					}, m("label", {
+					}, m("label.db", {
 						for: id, title: label,
 						style: {
 							transition: `font-size ${transitionOpts}`,
