@@ -13,9 +13,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
 	private month = stream<string>();
 	private year = stream<string>();
-	private valid = stream<string>();
 
 	private date = stream<string>();
+	private valid = this.date.map(Boolean);
 	private buildDate() {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 	}
@@ -44,7 +44,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
 			if (lodash.isDate(date) && !isNaN(date.getTime())) {
-				const day = lodash.padStart(String(date.getDate()), 2, "0")
+				const day = lodash.padStart(String(date.getDate()), 2, "0");
 				const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
 				const year = String(date.getFullYear());
 				this.day(day);
@@ -56,6 +56,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.day('');
 				this.month('');
 				this.year('');
+				this.date('');
 			}
 		});
 	}
