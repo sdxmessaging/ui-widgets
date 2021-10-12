@@ -94,7 +94,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.day(),
 				oninput: () => {
-					handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm")
+					handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm");
 					this.updateInputs(attrs.value);
 				},
 				class: classStr,
@@ -113,7 +113,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled,
 				value: this.month(),
 				oninput: () => {
-					handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy")
+					handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy");
 					this.updateInputs(attrs.value);
 				},
 				class: classStr,
