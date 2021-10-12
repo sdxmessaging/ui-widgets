@@ -68,7 +68,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						class: labelCls(uiClass, required),
 						style: {
 							visibility: "hidden",
-							height: "1ch",
+							height: '.5ch',
 							transition: `max-width ${transitionOpts}`,
 							maxWidth: floatTop ? "100%" : "0.01px"
 						}
@@ -84,7 +84,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 							transition: `transform ${transitionOpts}`,
 							// Input wrapper legend or center
 							transform: floatTop
-								? `translateY(calc(${shrinkOverflow} - 0.8ch))`
+								? `translateY(calc(${shrinkOverflow} - 1ch))`
 								: `translateY(${this.labelTranslateY()})`
 						}
 					}, m("label", {
