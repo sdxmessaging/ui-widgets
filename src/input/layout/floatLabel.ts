@@ -64,15 +64,15 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 			}, [
 				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into
-					m("legend.db", {
+					m("legend.relative.db", {
 						class: labelCls(uiClass, required),
 						style: {
 							visibility: "hidden",
-							height: "0px",
+							height: "3px",
 							transition: `max-width ${transitionOpts}`,
 							maxWidth: floatTop ? "100%" : "0.01px"
 						}
-					}, m("span", {
+					}, m("span.relative", {
 						style: {
 							fontSize: shrinkFont
 						}
