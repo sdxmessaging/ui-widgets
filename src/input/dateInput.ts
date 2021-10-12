@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget, TProp } from "../interface/widget";
 
-import { inputCls } from "../theme";
+import { DateWidth, inputCls } from "../theme";
 import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 
 import { layoutFixed } from "./layout/layoutFixedLabel";
@@ -81,7 +81,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				oninput: () => handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm"),
 				class: classStr,
 				style: {
-					maxWidth: '3ex',
+					maxWidth: DateWidth.dd,
 					textAlign: this.day() && this.day().length === 2 ? "center" : "left"
 				}
 			})
@@ -97,7 +97,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				oninput: () => handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy"),
 				class: classStr,
 				style: {
-					maxWidth: "3.5ex",
+					maxWidth: DateWidth.mm,
 					textAlign: this.month() && this.month().length === 2 ? "center" : "left"
 				}
 			})
@@ -112,9 +112,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				value: this.year(),
 				oninput: () => handleDateChange(this.year, id, "yyyy", this.dom),
 				class: classStr,
-				// style: styleLg,
 				style: {
-					maxWidth: '5ch',
+					maxWidth: DateWidth.yyyy
 				}
 			})
 		]);

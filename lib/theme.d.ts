@@ -5,12 +5,12 @@ export declare function imgMaxSize(): {
 export declare function thumbMaxSize(): {
     "max-height": string;
 };
-export declare const styleSm: {
-    "max-width": string;
-};
-export declare const styleLg: {
-    "max-width": string;
-};
+export declare const enum DateWidth {
+    dd = "3ex",
+    mm = "3.5ex",
+    yy = "3ex",
+    yyyy = "5ch"
+}
 declare const classMapState: Required<IClassMap>;
 export declare const theme: Readonly<typeof classMapState>;
 export declare function updateClasses(newConfig: Partial<IClassMap>): void;

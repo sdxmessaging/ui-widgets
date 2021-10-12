@@ -12,8 +12,12 @@ export function thumbMaxSize() {
 	return { "max-height": config.thumbDispHeight };
 }
 
-export const styleSm = { "max-width": "5.4ex" };
-export const styleLg = { "max-width": "9ex" };
+export const enum DateWidth {
+	dd = "3ex",
+	mm = "3.5ex",
+	yy = "3ex",
+	yyyy = "5ch"
+}
 
 // ui-widgets 1.4 theme map
 const classMapState: Required<IClassMap> = {

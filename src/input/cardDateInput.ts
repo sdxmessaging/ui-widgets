@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
-import { inputCls, styleSm } from "../theme";
+import { DateWidth, inputCls } from "../theme";
 import { handleDateChange, setCustomValidityMessage, updateNewValue } from "../utils";
 
 import { layoutFixed } from "./layout/layoutFixedLabel";
@@ -66,7 +66,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.month(),
-					class: classStr, style: styleSm,
+					class: classStr, style: { maxWidth: DateWidth.mm },
 					oninput: () => handleDateChange(this.month, id, "mm", this.dom, "yy")
 				})
 			]),
@@ -79,7 +79,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.year(),
-					class: classStr, style: styleSm,
+					class: classStr, style: { maxWidth: DateWidth.yy },
 					oninput: () => handleDateChange(this.year, id, "yy", this.dom)
 				})
 			])
