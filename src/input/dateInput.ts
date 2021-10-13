@@ -67,9 +67,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
 		this.dateParts = dateParts;
-		this.dateInputOrder = this.dateParts.map(({ type }) => {
+		this.dateInputOrder = lodash.map(this.dateParts, (({ type }) => {
 			return type;
-		});
+		}));
 		this.dateInputAdvanceOrder = lodash.filter(this.dateInputOrder, (type) => {
 			return type !== "literal";
 		});
@@ -117,13 +117,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.month.end(true);
 		this.day.end(true);
 	}
+
 	public onbeforeupdate({ attrs }: CVnode<IPropWidget>) {
 		const { options } = attrs.field as IOptionField;
-		if (options && options.length) {
-			this.locale(options[0].value as string);
-		}
-		else {
-			this.locale(undefined);
+		const locale = options && options.length ? options[0].value as string : undefined;
+
+		if (locale !== this.locale()) {
+			this.locale(locale);
 		}
 	}
 
