@@ -5,9 +5,20 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { handleDateChange, setCustomValidityMessage } from "../utils";
+import { handleDateChange, setCustomValidityMessage, TDateInputType } from "../utils";
 
 import { layoutFixed } from "./layout/layoutFixedLabel";
+
+type TDateType = 'day' | 'month' | 'year';
+type TDateValueType = TDateType | "literal";
+function dateInputIds(type: TDateType) {
+	switch (type) {
+		case 'day': return 'dd';
+		case 'month': return 'mm';
+		case 'year': return 'yyyy';
+		default: return undefined;
+	}
+}
 
 export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>();
@@ -19,6 +30,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private buildDate() {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 	}
+
 
 	private updateInputs(valueStream: TPropStream) {
 		const newYear = parseInt(this.year());
@@ -37,11 +49,23 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}
 	}
 
-	private dom!: Element;
+	private dateInputOrder!: Intl.DateTimeFormatPartTypes[];
+	private dateInputAdvanceOrder!: Intl.DateTimeFormatPartTypes[];
 
-	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
+	private dom!: Element;
+	private dateParts!: Intl.DateTimeFormatPart[];
+
+
+
+	private findNextInput(type: TDateType) {
+		const index = this.dateInputAdvanceOrder.indexOf(type);
+		return index !== this.dateInputAdvanceOrder.length ? dateInputIds(this.dateInputAdvanceOrder[
+			this.dateInputAdvanceOrder.indexOf(type) + 1
+		] as TDateType) as TDateInputType : undefined;
+	}
+	public oninit({ attrs }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		(value as stream<TProp>).map((newVal) => {
+		(attrs.value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
 			if (lodash.isDate(date) && !isNaN(date.getTime())) {
 				const day = lodash.padStart(String(date.getDate()), 2, "0");
@@ -59,6 +83,16 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.date('');
 			}
 		});
+
+		const { options } = attrs.field as IOptionField;
+		const locale = options && options.length ? options[0].value as string : undefined;
+		this.dateParts = new Intl.DateTimeFormat(locale).formatToParts();
+		this.dateInputOrder = this.dateParts.map(({ type }) => {
+			return type;
+		});
+		this.dateInputAdvanceOrder = lodash.filter(this.dateInputOrder, (type) => {
+			return type !== "literal";
+		});
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
@@ -73,81 +107,89 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.month.end(true);
 		this.day.end(true);
 	}
+	public onbeforeupdate({ attrs }: CVnode<IPropWidget>) {
+		const { options } = attrs.field as IOptionField;
+		if (options && options.length) {
+			this.dateParts = new Intl.DateTimeFormat(options[0].value as string).formatToParts();
+		}
+	}
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const {
 			id, name = id,
 			required, readonly, disabled,
 			uiClass = {},
-			options
 		} = attrs.field as IOptionField;
-		const locale = options && options.length ? options[0].value : "en-GB";
-		const isUsLocale = locale === "en-US";
+		// const locale = options && options.length ? options[0].value : undefined;
+		// const isUsLocale = locale === "en-US";
+		// console.log(locale)
 		const classStr = inputCls(uiClass);
-		// Create DD-MM-YYYY inputs
-		const dayInput = m(".dib", [
-			m("input.w-100.bg-transparent.bn.outline-0", {
-				id: `${id}-dd`, name: `${name}-dd`,
-				type: FieldType.text, placeholder: "DD",
-				minlength: "2", maxlength: "2",
-				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
-				value: this.day(),
-				oninput: () => {
-					handleDateChange(this.day, id, "dd", this.dom, isUsLocale ? "yyyy" : "mm");
-					this.updateInputs(attrs.value);
-				},
-				class: classStr,
-				style: {
-					maxWidth: DateWidth.dd,
-					textAlign: this.day() && this.day().length === 2 ? "center" : "left"
-				}
-			})
-		]);
-		const monthInput = m(".dib", [
-			m("input.w-100.bg-transparent.bn.outline-0", {
-				id: `${id}-mm`, name: `${name}-mm`,
-				type: FieldType.text, placeholder: "MM",
-				minlength: "2", maxlength: "2",
-				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
-				value: this.month(),
-				oninput: () => {
-					handleDateChange(this.month, id, "mm", this.dom, isUsLocale ? "dd" : "yyyy");
-					this.updateInputs(attrs.value);
-				},
-				class: classStr,
-				style: {
-					maxWidth: DateWidth.mm,
-					textAlign: this.month() && this.month().length === 2 ? "center" : "left"
-				}
-			})
-		]);
-		const yearInput = m(".dib", [
-			m("input.w-100.bg-transparent.bn.outline-0", {
-				id: `${id}-yyyy`, name: `${name}-yyyy`,
-				type: FieldType.text, placeholder: "YYYY",
-				minlength: "4", maxlength: "4",
-				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
-				value: this.year(),
-				oninput: () => {
-					handleDateChange(this.year, id, "yyyy", this.dom);
-					this.updateInputs(attrs.value);
 
-				},
-				class: classStr,
-				style: {
-					maxWidth: DateWidth.yyyy
-				}
-			})
-		]);
-		const slash = m('span.self-center', '/');
-		return m(layoutFixed, attrs, isUsLocale
-			// Assemble date input (en-GB or en-US layouts)
-			? [monthInput, slash, dayInput, slash, yearInput]
-			: [dayInput, slash, monthInput, slash, yearInput]
-		);
+		const dateInputSet: Record<TDateValueType, m.Vnode> = {
+			day: m(".dib", [
+				m("input.w-100.bg-transparent.bn.outline-0", {
+					id: `${id}-dd`, name: `${name}-dd`,
+					type: FieldType.text, placeholder: "DD",
+					minlength: "2", maxlength: "2",
+					pattern: "[0-9]*", inputmode: "numeric",
+					required, readonly, disabled,
+					value: this.day(),
+					oninput: () => {
+						handleDateChange(this.day, id, "dd", this.dom,
+							this.findNextInput('day'));
+						this.updateInputs(attrs.value);
+					},
+					class: classStr,
+					style: {
+						maxWidth: DateWidth.dd,
+						textAlign: this.day() && this.day().length === 2 ? "center" : "left"
+					}
+				})
+			]),
+			literal: m('span.self-center', '/'),
+			month: m(".dib", [
+				m("input.w-100.bg-transparent.bn.outline-0", {
+					id: `${id}-mm`, name: `${name}-mm`,
+					type: FieldType.text, placeholder: "MM",
+					minlength: "2", maxlength: "2",
+					pattern: "[0-9]*", inputmode: "numeric",
+					required, readonly, disabled,
+					value: this.month(),
+					oninput: () => {
+						handleDateChange(this.month, id, "mm", this.dom, this.findNextInput('month'));
+						this.updateInputs(attrs.value);
+					},
+					class: classStr,
+					style: {
+						maxWidth: DateWidth.mm,
+						textAlign: this.month() && this.month().length === 2 ? "center" : "left"
+					}
+				})
+			]),
+			year: m(".dib", [
+				m("input.w-100.bg-transparent.bn.outline-0", {
+					id: `${id}-yyyy`, name: `${name}-yyyy`,
+					type: FieldType.text, placeholder: "YYYY",
+					minlength: "4", maxlength: "4",
+					pattern: "[0-9]*", inputmode: "numeric",
+					required, readonly, disabled,
+					value: this.year(),
+					oninput: () => {
+						handleDateChange(this.year, id, "yyyy", this.dom, this.findNextInput('year'));
+						this.updateInputs(attrs.value);
+
+					},
+					class: classStr,
+					style: {
+						maxWidth: DateWidth.yyyy
+					}
+				})
+			])
+		};
+
+		return m(layoutFixed, attrs, lodash.map(this.dateInputOrder, (type: Intl.DateTimeFormatPartTypes) => {
+			return dateInputSet[type as TDateValueType];
+		}));
 	}
 
 }
