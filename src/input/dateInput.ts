@@ -188,7 +188,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					},
 					class: classStr,
 					style: {
-						maxWidth: DateWidth.yyyy
+						maxWidth: DateWidth.yyyy,
+						textAlign: this.year() && this.year().length === 4 ? "center" : "left"
 					}
 				}));
 			}

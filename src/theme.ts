@@ -16,7 +16,7 @@ export const enum DateWidth {
 	dd = "3ex",
 	mm = "3.5ex",
 	yy = "3ex",
-	yyyy = "5ch"
+	yyyy = "4.5ch"
 }
 
 // ui-widgets 1.4 theme map
