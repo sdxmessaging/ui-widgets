@@ -18,7 +18,7 @@ uiWidgets.updateButtonContext({
 var textVal = stream("");
 var currencyVal = stream();
 var dateVal = stream();
-var dateUsFormat = stream();
+var dateFormat = stream("default");
 var cardVal = stream();
 var colVal = stream("#cc0011");
 var checkVal = stream();
@@ -203,20 +203,29 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "dob-in",
 								label: "Date Input (ui-widgets Bespoke)",
-								options: dateUsFormat() ? [{ value: "en-US" }] : undefined,
+								options: [{ value: dateFormat() }]
 							},
 							value: dateVal
 						}),
-						m(uiWidgets.CheckboxInput, {
+						m(uiWidgets.RadioInput, {
 							field: {
-								id: "en-us-in",
-								label: "en-US input order",
+								id: "date-format-in",
+								label: "Date input format",
 								uiClass: {
 									wrapper: "fr mt2",
 									inputWrapper: "f6"
-								}
+								},
+								options: [
+									{ label: "Default", value: "default" },
+									{ label: "GB", value: "en-GB" },
+									{ label: "US", value: "en-US" },
+									{ label: "Switzerland", value: "fr-CH" },
+									{ label: "Egypt", value: "ar-EG" },
+									{ label: "Korea", value: "ko-KR" },
+									{ label: "Japan", value: "ja-JP" }
+								]
 							},
-							value: dateUsFormat
+							value: dateFormat
 						})
 					])
 				]),
