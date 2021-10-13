@@ -71,8 +71,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, attrs, [
-			m("div.dib", [
+		return m(LayoutFixed, attrs, m('.flex',
+			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.text, placeholder: "MM",
@@ -90,8 +90,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					}
 				})
 			]),
-			m("span", "/"),
-			m("div.dib", [
+			m("span", { style: { padding: '0px' } }, "/"),
+			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-yy`, name: `${name}-yy`,
 					type: FieldType.text, placeholder: "YY",
@@ -109,8 +109,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						this.updateInputs(attrs.value);
 					}
 				})
-			])
-		]);
+			]))
+		);
 	}
 
 }

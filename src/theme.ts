@@ -13,10 +13,10 @@ export function thumbMaxSize() {
 }
 
 export const enum DateWidth {
-	dd = "3ex",
-	mm = "3.5ex",
-	yy = "3ex",
-	yyyy = "4.5ch"
+	dd = "calc(2.7ex + 4px)",
+	mm = "calc(3.25ex + 4px)",
+	yy = "calc(2.7ex + 4px)",
+	yyyy = "calc(4ch + 4px)"
 }
 
 // ui-widgets 1.4 theme map

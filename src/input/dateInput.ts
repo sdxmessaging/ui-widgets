@@ -139,7 +139,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 		return m(LayoutFixed, attrs, m('.flex', this.dateParts.map(({ type, value }) => {
 			if (type === 'literal') {
-				return m('span', { style: { padding: '1px' } }, value);
+				return m('span', { style: { padding: '0px' } }, value);
 			}
 			else if (type === "day") {
 				return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
@@ -182,7 +182,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}));
 			}
 			else if (type === 'year') {
-				return m("span", m("input.dim:focus.w-100.bn.outline-0", {
+				return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-yyyy`, name: `${name}-yyyy`,
 					type: FieldType.text, placeholder: "YYYY",
 					minlength: "4", maxlength: "4",
