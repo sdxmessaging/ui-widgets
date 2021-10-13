@@ -12,6 +12,7 @@ export function thumbMaxSize() {
 	return { "max-height": config.thumbDispHeight };
 }
 
+// +4px for input native horizontal padding
 export const enum DateWidth {
 	dd = "calc(2.7ex + 4px)",
 	mm = "calc(3.25ex + 4px)",
