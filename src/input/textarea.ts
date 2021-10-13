@@ -5,7 +5,7 @@ import { IPropWidget } from "../interface/widget";
 import { textareaCls } from "../theme";
 import { setValue } from "../utils";
 
-import { layoutTop } from "./layout/layoutTopLabel";
+import { LayoutTop } from "./layout/layoutTopLabel";
 
 export class TextareaInput implements ClassComponent<IPropWidget> {
 
@@ -16,7 +16,7 @@ export class TextareaInput implements ClassComponent<IPropWidget> {
 			instant, uiClass = {}
 		} = attrs.field;
 		const { value } = attrs;
-		return m(layoutTop, attrs, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+		return m(LayoutTop, attrs, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
 			class: textareaCls(uiClass),

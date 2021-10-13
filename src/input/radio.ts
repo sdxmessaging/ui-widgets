@@ -6,7 +6,7 @@ import { IOptionField, IPropWidget } from "../interface/widget";
 import { radioInputCls } from "../theme";
 import { setValue } from "../utils";
 
-import { layoutFixed } from "./layout/layoutFixedLabel";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
@@ -18,7 +18,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		return m(layoutFixed, attrs, m(".w-100.flex", {
+		return m(LayoutFixed, attrs, m(".w-100.flex", {
 			onchange: setValue(val)
 		}, lodash.map(options, ({ value, label = value, icon }) => {
 			const checked = val() === value;

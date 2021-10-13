@@ -5,7 +5,7 @@ import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../int
 
 import { inputCls } from "../theme";
 
-import { layoutFixed } from "./layout/layoutFixedLabel";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -20,7 +20,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-		return m(layoutFixed, attrs, m('.flex.flex-row.w-100', m("span.mr1.self-center", {
+		return m(LayoutFixed, attrs, m('.flex.flex-row.w-100', m("span.mr1.self-center", {
 			class: inputCls(uiClass)
 		}, currency),
 			m("input.w-100.bg-transparent.bn.outline-0", {

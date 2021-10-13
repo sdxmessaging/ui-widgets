@@ -6,7 +6,7 @@ import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget"
 import { DateWidth, inputCls } from "../theme";
 import { handleDateChange, setCustomValidityMessage } from "../utils";
 
-import { layoutFixed } from "./layout/layoutFixedLabel";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
@@ -71,7 +71,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(layoutFixed, attrs, [
+		return m(LayoutFixed, attrs, [
 			m("div.dib", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-mm`, name: `${name}-mm`,
