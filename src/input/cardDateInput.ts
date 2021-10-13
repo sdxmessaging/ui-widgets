@@ -84,8 +84,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						maxWidth: DateWidth.mm,
 						textAlign: this.month() && this.month().length === 2 ? "center" : "left"
 					},
-					oninput: () => {
-						handleDateChange(this.month, id, "mm", this.dom, "yy");
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.month, id, "mm", this.dom, e, "yy");
 						this.updateInputs(attrs.value);
 					}
 				})
@@ -103,8 +103,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						maxWidth: DateWidth.yy,
 						textAlign: this.year() && this.year().length === 2 ? "center" : "left"
 					},
-					oninput: () => {
-						handleDateChange(this.year, id, "yy", this.dom);
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.year, id, "yy", this.dom, e);
 						this.updateInputs(attrs.value);
 					}
 				})
