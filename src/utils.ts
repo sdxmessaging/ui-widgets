@@ -5,6 +5,7 @@ import { IFile, TPropMap, TPropStream } from "./interface/widget";
 import { labelCls, theme } from "./theme";
 import { config } from "./config";
 import { IWidgetClasses } from "./interface/theme";
+import stream from "mithril/stream";
 
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
@@ -101,7 +102,13 @@ export function dateInRange(type: TDateInputType, first: number, second: number)
 	}
 }
 
-export function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStream, message: string) {
+export function updateDom(newDom: Element, currentDom: stream<Element>, validity: TPropStream) {
+	const input = newDom.querySelector("input") as HTMLInputElement;
+	setCustomValidityMessage(input, validity, "Invalid Date");
+	currentDom(newDom);
+}
+
+function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStream, message: string) {
 	validStream.map((valid) => {
 		const validityMessage = valid ? "" : `${message}`;
 		input.setCustomValidity(validityMessage);
@@ -146,7 +153,7 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 		return;
 	}
 	// only put value into input when the rules are fulfilled
-	else if ((isNumeric || value === "") && validDateRange) {
+	if ((isNumeric || value === "") && validDateRange) {
 		streamType(value);
 	}
 	// preserve current/previous value when rules are broken

@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, handleDateChange, setCustomValidityMessage } from "../utils";
+import { autoRetreat, handleDateChange, updateDom } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -17,7 +17,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private date = stream<string>();
 	private valid = this.date.map(Boolean);
 
-	private dom!: Element;
+	private dom = stream<Element>();
 
 	private buildDate() {
 		this.date(`${this.month()}/${this.year()}`);
@@ -33,6 +33,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			valueStream('');
 		}
 	}
+
+
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
@@ -52,9 +54,13 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		const input = dom.querySelector("input") as HTMLInputElement;
-		setCustomValidityMessage(input, this.valid, "Invalid Date");
-		this.dom = dom;
+		updateDom(dom, this.dom, this.valid);
+	}
+
+	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
+		if (this.dom() !== dom) {
+			updateDom(dom, this.dom, this.valid);
+		}
 	}
 
 	public onremove() {
@@ -62,6 +68,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		this.year.end(true);
 		this.month.end(true);
 	}
+
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field } = attrs;
@@ -85,7 +92,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						textAlign: this.month() && this.month().length === 2 ? "center" : "left"
 					},
 					oninput: (e: InputEvent) => {
-						handleDateChange(this.month, id, "mm", this.dom, e, "yy");
+						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
 						this.updateInputs(attrs.value);
 					}
 				})
@@ -103,9 +110,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						maxWidth: DateWidth.yy,
 						textAlign: this.year() && this.year().length === 2 ? "center" : "left"
 					},
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom, e),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
-						handleDateChange(this.year, id, "yy", this.dom, e);
+						handleDateChange(this.year, id, "yy", this.dom(), e);
 						this.updateInputs(attrs.value);
 					}
 				})

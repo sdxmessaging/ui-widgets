@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, handleDateChange, setCustomValidityMessage, TDateInputType } from "../utils";
+import { autoRetreat, handleDateChange, TDateInputType, updateDom } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -49,7 +49,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private dateInputAdvanceOrder!: Intl.DateTimeFormatPartTypes[];
 
-	private dom!: Element;
+	private dom = stream<Element>();
 	private dateParts!: Intl.DateTimeFormatPart[];
 	private locale = stream<string | undefined>(undefined);
 
@@ -113,9 +113,18 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		const input = dom.querySelector("input") as HTMLInputElement;
-		setCustomValidityMessage(input, this.valid, "Invalid Date");
-		this.dom = dom;
+		updateDom(dom, this.dom, this.valid);
+	}
+
+
+	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
+		this.setLocale(field);
+	}
+
+	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
+		if (this.dom() !== dom) {
+			updateDom(dom, this.dom, this.valid);
+		}
 	}
 
 	public onremove() {
@@ -123,10 +132,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.year.end(true);
 		this.month.end(true);
 		this.day.end(true);
-	}
-
-	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
-		this.setLocale(field);
 	}
 
 	public view({ attrs }: CVnode<IPropWidget>) {
@@ -149,9 +154,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.day(),
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom, e),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
 					oninput: (e: InputEvent) => {
-						handleDateChange(this.day, id, "dd", this.dom, e, this.findNextInput('day'));
+						handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
 						this.updateInputs(attrs.value);
 					},
 					class: classStr,
@@ -169,9 +174,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.month(),
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom, e),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
 					oninput: (e: InputEvent) => {
-						handleDateChange(this.month, id, "mm", this.dom, e, this.findNextInput('month'));
+						handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
 						this.updateInputs(attrs.value);
 					},
 					class: classStr,
@@ -189,9 +194,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.year(),
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom, e),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
-						handleDateChange(this.year, id, "yyyy", this.dom, e, this.findNextInput('year'));
+						handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
 						this.updateInputs(attrs.value);
 					},
 					class: classStr,
