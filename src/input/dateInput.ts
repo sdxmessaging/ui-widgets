@@ -7,7 +7,7 @@ import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from
 import { DateWidth, inputCls } from "../theme";
 import { handleDateChange, setCustomValidityMessage, TDateInputType } from "../utils";
 
-import { layoutFixed } from "./layout/layoutFixedLabel";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 type TDateType = 'day' | 'month' | 'year';
 
@@ -132,7 +132,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		} = attrs.field as IOptionField;
 		const classStr = inputCls(uiClass);
 
-		return m(layoutFixed, attrs, this.dateParts.map(({ type, value }) => {
+		return m(LayoutFixed, attrs, this.dateParts.map(({ type, value }) => {
 			if (type === 'literal') {
 				return m('span.self-center', value);
 			}
