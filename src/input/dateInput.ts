@@ -132,12 +132,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		} = attrs.field as IOptionField;
 		const classStr = inputCls(uiClass);
 
-		return m(LayoutFixed, attrs, this.dateParts.map(({ type, value }) => {
+		return m(LayoutFixed, attrs, m('.flex', this.dateParts.map(({ type, value }) => {
 			if (type === 'literal') {
-				return m('span.self-center', value);
+				return m('span.', { style: { padding: '1px' } }, value);
 			}
 			else if (type === "day") {
-				return m(".dib", m("input.w-100.bg-transparent.bn.outline-0", {
+				return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-dd`, name: `${name}-dd`,
 					type: FieldType.text, placeholder: "DD",
 					minlength: "2", maxlength: "2",
@@ -156,7 +156,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}));
 			}
 			else if (type === 'month') {
-				return m(".dib", m("input.w-100.bg-transparent.bn.outline-0", {
+				return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.text, placeholder: "MM",
 					minlength: "2", maxlength: "2",
@@ -175,7 +175,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}));
 			}
 			else if (type === 'year') {
-				return m(".dib", m("input.dim:focus.w-100.bn.outline-0", {
+				return m("span", m("input.dim:focus.w-100.bn.outline-0", {
 					id: `${id}-yyyy`, name: `${name}-yyyy`,
 					type: FieldType.text, placeholder: "YYYY",
 					minlength: "4", maxlength: "4",
@@ -194,6 +194,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}));
 			}
 			return null;
-		}));
+		})));
 	}
 }
