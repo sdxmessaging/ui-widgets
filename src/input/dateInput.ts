@@ -144,8 +144,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.day(),
-					oninput: () => {
-						handleDateChange(this.day, id, "dd", this.dom, this.findNextInput('day'));
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.day, id, "dd", this.dom, e, this.findNextInput('day'));
 						this.updateInputs(attrs.value);
 					},
 					class: classStr,
@@ -163,8 +163,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.month(),
-					oninput: () => {
-						handleDateChange(this.month, id, "mm", this.dom, this.findNextInput('month'));
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.month, id, "mm", this.dom, e, this.findNextInput('month'));
 						this.updateInputs(attrs.value);
 					},
 					class: classStr,
@@ -175,15 +175,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}));
 			}
 			else if (type === 'year') {
-				return m(".dib", m("input.w-100.bg-transparent.bn.outline-0", {
+				return m(".dib", m("input.dim:focus.w-100.bn.outline-0", {
 					id: `${id}-yyyy`, name: `${name}-yyyy`,
 					type: FieldType.text, placeholder: "YYYY",
 					minlength: "4", maxlength: "4",
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.year(),
-					oninput: () => {
-						handleDateChange(this.year, id, "yyyy", this.dom, this.findNextInput('year'));
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.year, id, "yyyy", this.dom, e, this.findNextInput('year'));
 						this.updateInputs(attrs.value);
 					},
 					class: classStr,
