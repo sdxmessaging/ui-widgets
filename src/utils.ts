@@ -108,31 +108,23 @@ export function setCustomValidityMessage(input: HTMLInputElement, validStream: T
 	});
 }
 
-export function updateNewValue(targetStream: TPropStream, valueStream: TPropStream) {
-	targetStream.map((newValue) => {
-		// Prevent recursive setting between streams
-		if (newValue !== valueStream()) {
-			valueStream(newValue);
-		}
-	});
-}
-
 function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputType | undefined,
 	streamValue: string, dom: Element) {
 
 	const maxLength = parseInt(self.getAttribute("maxlength") as string);
 	if (streamValue.length === maxLength && targetType) {
-		const next = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
-		next.focus();
+		const nextInput = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
+		nextInput.focus();
 	}
 }
 
 export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	streamValue: string, dom: Element, event: KeyboardEvent) {
 
-	const prev = dom.querySelector(`#${id}-${targetType}`) as HTMLElement;
-	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prev) {
-		prev.focus();
+	const prevInput = dom.querySelector(`#${id}-${targetType}`) as HTMLElement;
+	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevInput) {
+		prevInput.focus();
+		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
 }
@@ -148,13 +140,16 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	const secondCharValue = parseInt(value.charAt(1));
 
 	const validDateRange = dateInRange(selfType, firstCharValue, secondCharValue);
+	// remove whole input value
 	if (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward") {
 		streamType('');
 		return;
 	}
+	// only put value into input when the rules are fulfilled
 	else if ((isNumeric || value === "") && validDateRange) {
 		streamType(value);
 	}
+	// preserve current/previous value when rules are broken
 	else {
 		streamType(prevValue);
 	}

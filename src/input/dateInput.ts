@@ -16,7 +16,6 @@ function dateInputIds(type: TDateType) {
 		case 'day': return 'dd';
 		case 'month': return 'mm';
 		case 'year': return 'yyyy';
-		default: return undefined;
 	}
 }
 
@@ -140,7 +139,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 		return m(LayoutFixed, attrs, m('.flex', this.dateParts.map(({ type, value }) => {
 			if (type === 'literal') {
-				return m('span.', { style: { padding: '1px' } }, value);
+				return m('span', { style: { padding: '1px' } }, value);
 			}
 			else if (type === "day") {
 				return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
