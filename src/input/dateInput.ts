@@ -48,7 +48,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}
 	}
 
-	private dateInputOrder!: Intl.DateTimeFormatPartTypes[];
 	private dateInputAdvanceOrder!: Intl.DateTimeFormatPartTypes[];
 
 	private dom!: Element;
@@ -65,12 +64,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
 		this.dateParts = dateParts;
-		this.dateInputOrder = lodash.map(this.dateParts, (({ type }) => {
+
+		this.dateInputAdvanceOrder = lodash(this.dateParts).map((({ type }) => {
 			return type;
-		}));
-		this.dateInputAdvanceOrder = lodash.filter(this.dateInputOrder, (type) => {
+		})).filter((type) => {
 			return type !== "literal";
-		});
+		}).value();
 	}
 
 	private setLocale(field: TField) {
