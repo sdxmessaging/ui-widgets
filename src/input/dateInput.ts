@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { handleDateChange, setCustomValidityMessage, TDateInputType } from "../utils";
+import { autoRetreat, handleDateChange, setCustomValidityMessage, TDateInputType } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -21,9 +21,9 @@ function dateInputIds(type: TDateType) {
 }
 
 export class DateInput implements ClassComponent<IPropWidget> {
-	private day = stream<string>();
-	private month = stream<string>();
-	private year = stream<string>();
+	private day = stream<string>("");
+	private month = stream<string>("");
+	private year = stream<string>("");
 
 	private date = stream<string>();
 	private valid = this.date.map(Boolean);
@@ -58,6 +58,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const index = this.dateInputAdvanceOrder.indexOf(type);
 		return index !== this.dateInputAdvanceOrder.length ? dateInputIds(this.dateInputAdvanceOrder[
 			this.dateInputAdvanceOrder.indexOf(type) + 1
+		] as TDateType) as TDateInputType : undefined;
+	}
+	private findPrevInput(type: TDateType) {
+		const index = this.dateInputAdvanceOrder.indexOf(type);
+		return index !== 0 ? dateInputIds(this.dateInputAdvanceOrder[
+			this.dateInputAdvanceOrder.indexOf(type) - 1
 		] as TDateType) as TDateInputType : undefined;
 	}
 
@@ -144,6 +150,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.day(),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom, e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.day, id, "dd", this.dom, e, this.findNextInput('day'));
 						this.updateInputs(attrs.value);
@@ -163,6 +170,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.month(),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom, e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.month, id, "mm", this.dom, e, this.findNextInput('month'));
 						this.updateInputs(attrs.value);
@@ -182,6 +190,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					pattern: "[0-9]*", inputmode: "numeric",
 					required, readonly, disabled,
 					value: this.year(),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom, e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.year, id, "yyyy", this.dom, e, this.findNextInput('year'));
 						this.updateInputs(attrs.value);

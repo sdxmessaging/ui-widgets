@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { handleDateChange, setCustomValidityMessage } from "../utils";
+import { autoRetreat, handleDateChange, setCustomValidityMessage } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -103,6 +103,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						maxWidth: DateWidth.yy,
 						textAlign: this.year() && this.year().length === 2 ? "center" : "left"
 					},
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom, e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.year, id, "yy", this.dom, e);
 						this.updateInputs(attrs.value);

@@ -127,6 +127,16 @@ function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputT
 	}
 }
 
+export function autoRetreat(id: string, targetType: TDateInputType | undefined,
+	streamValue: string, dom: Element, event: KeyboardEvent) {
+	// console.log(dom)
+	const prev = dom.querySelector(`#${id}-${targetType}`) as HTMLElement;
+	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prev !== null) {
+		prev.focus();
+		event.preventDefault();
+	}
+}
+
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
 	dom: Element, event: InputEvent, targetType?: TDateInputType) {
 
