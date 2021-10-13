@@ -54,7 +54,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private dom!: Element;
 	private dateParts!: Intl.DateTimeFormatPart[];
-
+	private locale = stream<string | undefined>();
 
 
 	private findNextInput(type: TDateType) {
@@ -63,6 +63,18 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			this.dateInputAdvanceOrder.indexOf(type) + 1
 		] as TDateType) as TDateInputType : undefined;
 	}
+
+	private setDateInputs(locale: string | undefined) {
+		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
+		this.dateParts = dateParts;
+		this.dateInputOrder = this.dateParts.map(({ type }) => {
+			return type;
+		});
+		this.dateInputAdvanceOrder = lodash.filter(this.dateInputOrder, (type) => {
+			return type !== "literal";
+		});
+	}
+
 	public oninit({ attrs }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		(attrs.value as stream<TProp>).map((newVal) => {
@@ -86,12 +98,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 		const { options } = attrs.field as IOptionField;
 		const locale = options && options.length ? options[0].value as string : undefined;
-		this.dateParts = new Intl.DateTimeFormat(locale).formatToParts();
-		this.dateInputOrder = this.dateParts.map(({ type }) => {
-			return type;
-		});
-		this.dateInputAdvanceOrder = lodash.filter(this.dateInputOrder, (type) => {
-			return type !== "literal";
+		this.setDateInputs(locale);
+
+		this.locale.map((newVal) => {
+			this.setDateInputs(newVal);
 		});
 	}
 
@@ -110,7 +120,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	public onbeforeupdate({ attrs }: CVnode<IPropWidget>) {
 		const { options } = attrs.field as IOptionField;
 		if (options && options.length) {
-			this.dateParts = new Intl.DateTimeFormat(options[0].value as string).formatToParts();
+			this.locale(options[0].value as string);
+		}
+		else {
+			this.locale(undefined);
 		}
 	}
 
@@ -120,9 +133,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled,
 			uiClass = {},
 		} = attrs.field as IOptionField;
-		// const locale = options && options.length ? options[0].value : undefined;
-		// const isUsLocale = locale === "en-US";
-		// console.log(locale)
+
 		const classStr = inputCls(uiClass);
 
 		const dateInputSet: Record<TDateValueType, m.Vnode> = {
