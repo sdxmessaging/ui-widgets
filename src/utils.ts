@@ -145,7 +145,6 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	const isNumeric = /^\d*$/.test(value);
 	const firstCharValue = parseInt(value.charAt(0));
 	const secondCharValue = parseInt(value.charAt(1));
-
 	const validDateRange = dateInRange(selfType, firstCharValue, secondCharValue);
 	// remove whole input value
 	if (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward") {
@@ -153,7 +152,7 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 		return;
 	}
 	// only put value into input when the rules are fulfilled
-	if ((isNumeric || value === "") && validDateRange) {
+	if ((isNumeric || value === "") && validDateRange && value.length <= 4) {
 		streamType(value);
 	}
 	// preserve current/previous value when rules are broken
