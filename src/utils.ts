@@ -84,6 +84,11 @@ export function setCheck(chk: TPropStream) {
 
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 
+export function focusLastInput(dom: Element, id: string, focusedId: TDateInputType) {
+	const lastFocused = dom.querySelector(`#${id}-${focusedId}`) as HTMLElement;
+	lastFocused.focus();
+}
+
 export function dateInRange(type: TDateInputType, first: number, second: number) {
 	switch (type) {
 		case "dd":

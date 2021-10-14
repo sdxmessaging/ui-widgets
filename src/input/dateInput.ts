@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, handleDateChange, TDateInputType, updateDom } from "../utils";
+import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -18,12 +18,10 @@ function dateInputIds(type: TDateType) {
 		case 'year': return 'yyyy';
 	}
 }
-
 export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>("");
 	private month = stream<string>("");
 	private year = stream<string>("");
-
 	private date = stream<string>();
 	private valid = this.date.map(Boolean);
 	private buildDate() {
@@ -50,6 +48,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private dateInputAdvanceOrder!: Intl.DateTimeFormatPartTypes[];
 
 	private dom = stream<Element>();
+	private focusedInput = stream<TDateInputType>('dd');
 	private dateParts!: Intl.DateTimeFormatPart[];
 	private locale = stream<string | undefined>(undefined);
 
@@ -142,74 +141,79 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		} = attrs.field as IOptionField;
 		const classStr = inputCls(uiClass);
 
-		return m(LayoutFixed, attrs, m('.flex', this.dateParts.map(({ type, value }) => {
-			if (type === 'literal') {
-				return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
-			}
-			else if (type === "day") {
-				return m("span", m("input.w-100.bg-transparent.bn.outline-0.pa0", {
-					id: `${id}-dd`, name: `${name}-dd`,
-					type: FieldType.text, placeholder: "DD",
-					minlength: "2", maxlength: "2",
-					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
-					value: this.day(),
-					class: classStr,
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
-						this.updateInputs(attrs.value);
-					},
-					style: {
-						maxWidth: DateWidth.dd,
-						textAlign: this.day() && this.day().length === 2 ? "center" : "left",
-						padding: '0px'
+		return m(LayoutFixed, attrs,
+			m('.flex', { onclick: () => focusLastInput(this.dom(), id, this.focusedInput()) },
+				this.dateParts.map(({ type, value }) => {
+					if (type === 'literal') {
+						return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
 					}
-				}));
-			}
-			else if (type === 'month') {
-				return m("span", m("input.w-100.bg-transparent.bn.outline-0.pa0", {
-					id: `${id}-mm`, name: `${name}-mm`,
-					type: FieldType.text, placeholder: "MM",
-					minlength: "2", maxlength: "2",
-					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
-					value: this.month(),
-					class: classStr,
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
-						this.updateInputs(attrs.value);
-					},
-					style: {
-						maxWidth: DateWidth.mm,
-						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
-						padding: '0px'
+					else if (type === "day") {
+						return m("span", m("input.w-100.bg-transparent.bn.outline-0.pa0", {
+							id: `${id}-dd`, name: `${name}-dd`,
+							type: FieldType.text, placeholder: "DD",
+							minlength: "2", maxlength: "2",
+							pattern: "[0-9]*", inputmode: "numeric",
+							required, readonly, disabled,
+							value: this.day(),
+							class: classStr,
+							onfocus: () => this.focusedInput('dd'),
+							onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
+							oninput: (e: InputEvent) => {
+								handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
+								this.updateInputs(attrs.value);
+							},
+							style: {
+								maxWidth: DateWidth.dd,
+								textAlign: this.day() && this.day().length === 2 ? "center" : "left",
+								padding: '0px'
+							}
+						}));
 					}
-				}));
-			}
-			else if (type === 'year') {
-				return m("span", m("input.w-100.bg-transparent.bn.outline-0.pa0", {
-					id: `${id}-yyyy`, name: `${name}-yyyy`,
-					type: FieldType.text, placeholder: "YYYY",
-					minlength: "4", maxlength: "4",
-					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
-					value: this.year(),
-					class: classStr,
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
-						this.updateInputs(attrs.value);
-					},
-					style: {
-						maxWidth: DateWidth.yyyy,
-						textAlign: this.year() && this.year().length === 4 ? "center" : "left",
-						padding: '0px'
+					else if (type === 'month') {
+						return m("span", m("input.w-100.bg-transparent.bn.outline-0.pa0", {
+							id: `${id}-mm`, name: `${name}-mm`,
+							type: FieldType.text, placeholder: "MM",
+							minlength: "2", maxlength: "2",
+							pattern: "[0-9]*", inputmode: "numeric",
+							required, readonly, disabled,
+							value: this.month(),
+							class: classStr,
+							onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
+							oninput: (e: InputEvent) => {
+								handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
+								this.updateInputs(attrs.value);
+							},
+							onfocus: () => this.focusedInput('mm'),
+							style: {
+								maxWidth: DateWidth.mm,
+								textAlign: this.month() && this.month().length === 2 ? "center" : "left",
+								padding: '0px'
+							}
+						}));
 					}
-				}));
-			}
-			return null;
-		})));
+					else if (type === 'year') {
+						return m("span", m("input.w-100.bg-transparent.bn.outline-0.pa0", {
+							id: `${id}-yyyy`, name: `${name}-yyyy`,
+							type: FieldType.text, placeholder: "YYYY",
+							minlength: "4", maxlength: "4",
+							pattern: "[0-9]*", inputmode: "numeric",
+							required, readonly, disabled,
+							value: this.year(),
+							class: classStr,
+							onfocus: () => this.focusedInput('yyyy'),
+							onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
+							oninput: (e: InputEvent) => {
+								handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
+								this.updateInputs(attrs.value);
+							},
+							style: {
+								maxWidth: DateWidth.yyyy,
+								textAlign: this.year() && this.year().length === 4 ? "center" : "left",
+								padding: '0px'
+							}
+						}));
+					}
+					return null;
+				})));
 	}
 }

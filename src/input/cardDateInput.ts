@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, handleDateChange, updateDom } from "../utils";
+import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -18,6 +18,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private valid = this.date.map(Boolean);
 
 	private dom = stream<Element>();
+	private focusedInput = stream<TDateInputType>('mm');
 
 	private buildDate() {
 		this.date(`${this.month()}/${this.year()}`);
@@ -78,7 +79,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, attrs, m('.flex',
+		return m(LayoutFixed, attrs, m('.flex', { onclick: () => focusLastInput(this.dom(), id, this.focusedInput()) },
 			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-mm`, name: `${name}-mm`,
@@ -92,6 +93,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
 						padding: '0px'
 					},
+					onfocus: () => this.focusedInput('mm'),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
 						this.updateInputs(attrs.value);
@@ -112,6 +114,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						textAlign: this.year() && this.year().length === 2 ? "center" : "left",
 						padding: '0px'
 					},
+					onfocus: () => this.focusedInput('yy'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.year, id, "yy", this.dom(), e);
