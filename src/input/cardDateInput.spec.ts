@@ -121,7 +121,32 @@ describe("CardDateInput", () => {
 		yearIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("");
 
+		// Cleanup
+		m.mount(root, null);
+	});
+
+	test('autoRetreat', () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(CardDateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true
+				},
+				value,
+				xform
+			})
+		});
+		const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		const yearInSpy = jest.spyOn(yearIn, 'focus');
 		yearIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
 		expect(value()).not.toBeTruthy();
 		expect(monthInSpy).toBeCalledTimes(0);
@@ -129,8 +154,8 @@ describe("CardDateInput", () => {
 		yearIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Backspace" }));
 		expect(monthInSpy).toBeCalledTimes(1);
 
-		// Cleanup
-		m.mount(root, null);
+		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "BackSpace" }));
+		expect(yearInSpy).toBeCalledTimes(0);
 	});
 
 	test("focusLastInput", () => {
