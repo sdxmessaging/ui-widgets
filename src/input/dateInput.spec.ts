@@ -176,19 +176,34 @@ describe("DateInput", () => {
 		const value = stream<string>();
 		const xform = value.map((val) => val);
 		m.mount(root, {
-			view: () => m(DateInput, {
-				field: {
-					id: "test",
-					label: "Test Label",
-					name: "Test Name",
-					title: "Test Title",
-					uiClass: {},
-					disabled: true,
-					options: [{ value: "en-GB" }]
-				},
-				value,
-				xform
-			})
+			view: () => [
+				m(DateInput, {
+					field: {
+						id: "test",
+						label: "Test Label",
+						name: "Test Name",
+						title: "Test Title",
+						uiClass: {},
+						disabled: true,
+						options: [{ value: "en-GB" }]
+					},
+					value,
+					xform
+				}),
+				m(DateInput, {
+					field: {
+						id: "test2",
+						label: "Test Label",
+						name: "Test Name",
+						title: "Test Title",
+						uiClass: {},
+						disabled: true,
+						options: [{ value: "en-GB" }]
+					},
+					value,
+					xform
+				})
+			]
 		});
 		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
 		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
@@ -196,6 +211,11 @@ describe("DateInput", () => {
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
 		const yearInSpy = jest.spyOn(yearIn, 'focus');
 		const dayInSpy = jest.spyOn(dayIn, "focus");
+
+		const dayIn2 = root.querySelector("#test2-dd") as HTMLInputElement;
+		const monthIn2 = root.querySelector("#test2-mm") as HTMLInputElement;
+		const yearIn2 = root.querySelector("#test2-yyyy") as HTMLInputElement;
+
 
 		dayIn.value = "0";
 		dayIn.dispatchEvent(new Event("input"));
@@ -218,7 +238,25 @@ describe("DateInput", () => {
 		expect(monthInSpy).toBeCalledTimes(1);
 		expect(dayInSpy).toBeCalledTimes(0);
 
+
+		// Test two-way date binding
+		m.redraw.sync();
+		expect(yearIn2.value).toEqual("2020");
+		expect(dayIn2.value).toEqual("01");
+		expect(monthIn2.value).toEqual('02');
+
+		// Test reset date value for other inputs sharing the same value stream
+		yearIn2.value = '';
+		yearIn2.dispatchEvent(new Event("input"));
+
+		m.redraw.sync();
+		expect(yearIn.value).not.toBeTruthy();
+		expect(monthIn.value).not.toBeTruthy();
+		expect(dayIn.value).not.toBeTruthy();
+
 	});
+
+
 
 	test("auto advance - locale US", () => {
 		const root = window.document.createElement("div");
