@@ -6,7 +6,8 @@ import {
 	fileNameExtSplit,
 	setCheck, setValue,
 	dataURItoBlob, fileConstructor,
-	getFileTypeIcon
+	getFileTypeIcon,
+	getLabel
 } from "./utils";
 
 describe("Utils", () => {
@@ -54,6 +55,13 @@ describe("File", () => {
 		expect(file.type).toBe("text/plain");
 	});
 
+});
+
+describe("getLabel", () => {
+	test("getLabel return null", () => {
+		const label = getLabel('testId', {});
+		expect(label).toBeNull();
+	});
 });
 
 describe("File icon", () => {
