@@ -9,6 +9,10 @@ import { autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInput
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
+interface IDateParts {
+	type: TDateType | "literal",
+	value: string
+}
 export class DateInput implements ClassComponent<IPropWidget> {
 	private day = stream<string>("");
 	private month = stream<string>("");
@@ -38,27 +42,30 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private dateInputAdvanceOrder!: Intl.DateTimeFormatPartTypes[];
 
+
 	private dom = stream<Element>();
 	private focusedInput = stream<TDateInputType | undefined>(undefined);
-	private dateParts!: Intl.DateTimeFormatPart[];
+	private dateParts!: IDateParts[];
 	private locale = stream<string | undefined>(undefined);
 
+
+	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
 	private findNextInput(type: TDateType) {
 		const index = this.dateInputAdvanceOrder.indexOf(type);
-		return index !== this.dateInputAdvanceOrder.length ? dateInputIds(this.dateInputAdvanceOrder[
+		return (index !== this.dateInputAdvanceOrder.length && dateInputIds(this.dateInputAdvanceOrder[
 			this.dateInputAdvanceOrder.indexOf(type) + 1
-		] as TDateType) as TDateInputType : undefined;
+		] as TDateType)) as TDateInputType;
 	}
 	private findPrevInput(type: TDateType) {
 		const index = this.dateInputAdvanceOrder.indexOf(type);
-		return index !== 0 ? dateInputIds(this.dateInputAdvanceOrder[
+		return (index !== 0 && dateInputIds(this.dateInputAdvanceOrder[
 			this.dateInputAdvanceOrder.indexOf(type) - 1
-		] as TDateType) as TDateInputType : undefined;
+		] as TDateType)) as TDateInputType;
 	}
 
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
-		this.dateParts = dateParts;
+		this.dateParts = dateParts as IDateParts[];
 		const dateType = dateParts[0].type as TDateType;
 		const firstInputId = dateInputIds(dateType) as TDateInputType;
 		this.focusedInput(firstInputId);
@@ -135,79 +142,78 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		} = attrs.field as IOptionField;
 		const classStr = inputCls(uiClass);
 
+		const createDateInputs = ({ type, value }: IDateParts) => {
+			switch (type) {
+				case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
+				case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+					id: `${id}-dd`, name: `${name}-dd`,
+					type: FieldType.text, placeholder: "DD",
+					minlength: "2", maxlength: "2",
+					pattern: "[0-9]*", inputmode: "numeric",
+					required, readonly, disabled,
+					value: this.day(),
+					class: classStr,
+					onfocus: lodash.partial(this.focusedInput, 'dd'),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
+						this.updateInputs(attrs.value);
+					},
+					style: {
+						maxWidth: DateWidth.dd,
+						textAlign: this.day() && this.day().length === 2 ? "center" : "left",
+						padding: '0px'
+					}
+				}));
+				case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+					id: `${id}-mm`, name: `${name}-mm`,
+					type: FieldType.text, placeholder: "MM",
+					minlength: "2", maxlength: "2",
+					pattern: "[0-9]*", inputmode: "numeric",
+					required, readonly, disabled,
+					value: this.month(),
+					class: classStr,
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
+						this.updateInputs(attrs.value);
+					},
+					onfocus: lodash.partial(this.focusedInput, 'mm'),
+					style: {
+						maxWidth: DateWidth.mm,
+						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
+						padding: '0px'
+					}
+				}));
+				case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+					id: `${id}-yyyy`, name: `${name}-yyyy`,
+					type: FieldType.text, placeholder: "YYYY",
+					minlength: "4", maxlength: "4",
+					pattern: "[0-9]*", inputmode: "numeric",
+					required, readonly, disabled,
+					value: this.year(),
+					class: classStr,
+					onfocus: lodash.partial(this.focusedInput, 'yyyy'),
+					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
+						this.updateInputs(attrs.value);
+					},
+					style: {
+						maxWidth: DateWidth.yyyy,
+						textAlign: this.year() && this.year().length === 4 ? "center" : "left",
+						padding: '0px'
+					}
+				}));
+			}
+		};
+
 		return m(LayoutFixed, attrs,
 			m('.flex', { onclick: () => focusLastInput(this.dom(), id, this.focusedInput()) },
 				this.dateParts.map(({ type, value }) => {
-					if (type === 'literal') {
-						return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
-					}
-					else if (type === "day") {
-						return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
-							id: `${id}-dd`, name: `${name}-dd`,
-							type: FieldType.text, placeholder: "DD",
-							minlength: "2", maxlength: "2",
-							pattern: "[0-9]*", inputmode: "numeric",
-							required, readonly, disabled,
-							value: this.day(),
-							class: classStr,
-							onfocus: lodash.partial(this.focusedInput, 'dd'),
-							onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
-							oninput: (e: InputEvent) => {
-								handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
-								this.updateInputs(attrs.value);
-							},
-							style: {
-								maxWidth: DateWidth.dd,
-								textAlign: this.day() && this.day().length === 2 ? "center" : "left",
-								padding: '0px'
-							}
-						}));
-					}
-					else if (type === 'month') {
-						return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
-							id: `${id}-mm`, name: `${name}-mm`,
-							type: FieldType.text, placeholder: "MM",
-							minlength: "2", maxlength: "2",
-							pattern: "[0-9]*", inputmode: "numeric",
-							required, readonly, disabled,
-							value: this.month(),
-							class: classStr,
-							onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
-							oninput: (e: InputEvent) => {
-								handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
-								this.updateInputs(attrs.value);
-							},
-							onfocus: lodash.partial(this.focusedInput, 'mm'),
-							style: {
-								maxWidth: DateWidth.mm,
-								textAlign: this.month() && this.month().length === 2 ? "center" : "left",
-								padding: '0px'
-							}
-						}));
-					}
-					else if (type === 'year') {
-						return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
-							id: `${id}-yyyy`, name: `${name}-yyyy`,
-							type: FieldType.text, placeholder: "YYYY",
-							minlength: "4", maxlength: "4",
-							pattern: "[0-9]*", inputmode: "numeric",
-							required, readonly, disabled,
-							value: this.year(),
-							class: classStr,
-							onfocus: lodash.partial(this.focusedInput, 'yyyy'),
-							onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
-							oninput: (e: InputEvent) => {
-								handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
-								this.updateInputs(attrs.value);
-							},
-							style: {
-								maxWidth: DateWidth.yyyy,
-								textAlign: this.year() && this.year().length === 4 ? "center" : "left",
-								padding: '0px'
-							}
-						}));
-					}
-					return null;
-				})));
+					return createDateInputs({ type, value });
+				})
+			)
+		);
 	}
 }
