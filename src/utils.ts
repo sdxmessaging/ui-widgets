@@ -116,9 +116,11 @@ export function dateInRange(type: TDateInputType, first: number, second: number)
 }
 
 export function updateDom(newDom: Element, currentDom: stream<Element>, validity: TPropStream) {
-	const input = newDom.querySelector("input") as HTMLInputElement;
-	setCustomValidityMessage(input, validity, "Invalid Date");
-	currentDom(newDom);
+	if (newDom !== currentDom()) {
+		const input = newDom.querySelector("input") as HTMLInputElement;
+		setCustomValidityMessage(input, validity, "Invalid Date");
+		currentDom(newDom);
+	}
 }
 
 function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStream, message: string) {

@@ -58,9 +58,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		if (this.dom() !== dom) {
-			updateDom(dom, this.dom, this.valid);
-		}
+		updateDom(dom, this.dom, this.valid);
 	}
 
 	public onremove() {

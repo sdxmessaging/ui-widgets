@@ -122,9 +122,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		if (this.dom() !== dom) {
-			updateDom(dom, this.dom, this.valid);
-		}
+		updateDom(dom, this.dom, this.valid);
 	}
 
 	public onremove() {
@@ -210,8 +208,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 		return m(LayoutFixed, attrs,
 			m('.flex', { onclick: () => focusLastInput(this.dom(), id, this.focusedInput()) },
-				this.dateParts.map(({ type, value }) => {
-					return createDateInputs({ type, value });
+				this.dateParts.map((datePart) => {
+					return createDateInputs(datePart);
 				})
 			)
 		);
