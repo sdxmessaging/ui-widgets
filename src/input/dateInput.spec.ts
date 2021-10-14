@@ -1,6 +1,5 @@
 import m from "mithril";
 import stream from "mithril/stream";
-
 import { DateInput } from "./dateInput";
 
 describe("DateInput", () => {
@@ -347,7 +346,19 @@ describe("DateInput", () => {
 		expect(yearInSpy).toBeCalledTimes(0);
 		expect(monthInSpy).toBeCalledTimes(1);
 
+		value('2021-02-20');
+		dayIn.dispatchEvent(new Event('input'));
+		monthIn.dispatchEvent(new Event('input'));
+		yearIn.dispatchEvent(new Event('input'));
 
+		dayIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
+		expect(value()).not.toBeTruthy();
+
+		// None of these should be called
+		dayIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Delete" }));
+		expect(dayInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toBeCalledTimes(0);
 
 	});
 
@@ -389,8 +400,6 @@ describe("DateInput", () => {
 		expect(monthInSpy).toBeCalledTimes(0);
 		inputContainer.dispatchEvent(new Event('click'));
 		expect(monthInSpy).toBeCalledTimes(1);
-
-
 
 	});
 
