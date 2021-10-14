@@ -6,7 +6,7 @@ import { CardDateInput } from "./cardDateInput";
 describe("CardDateInput", () => {
 
 	afterEach(() => {
-		jest.restoreAllMocks()
+		jest.restoreAllMocks();
 	});
 
 	test("minimal", () => {
