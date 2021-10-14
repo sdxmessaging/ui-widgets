@@ -28,20 +28,34 @@ describe("CardDateInput", () => {
 		const value = stream<string>();
 		const xform = value.map((val) => val);
 		m.mount(root, {
-			view: () => m(CardDateInput, {
-				field: {
-					id: "test",
-					label: "Test Label",
-					name: "Test Name",
-					title: "Test Title",
-					uiClass: {},
-					disabled: true
-				},
-				value,
-				xform
-			})
+			view: () => [
+				m(CardDateInput, {
+					field: {
+						id: "test",
+						label: "Test Label",
+						name: "Test Name",
+						title: "Test Title",
+						uiClass: {},
+						disabled: true
+					},
+					value,
+					xform
+				}),
+				m(CardDateInput, {
+					field: {
+						id: "test2",
+						label: "Test Label",
+						name: "Test Name",
+						title: "Test Title",
+						uiClass: {},
+						disabled: true
+					},
+					value,
+					xform
+				}),
+			]
 		});
-		expect(root.childNodes.length).toBe(1);
+		expect(root.childNodes.length).toBe(2);
 		// Label + Input
 		// expect(root.childNodes[0].childNodes.length).toBe(2);
 		// Set empty date
@@ -54,6 +68,9 @@ describe("CardDateInput", () => {
 		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
 		const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
 
+		const monthIn2 = root.querySelector("#test2-mm") as HTMLInputElement;
+		const yearIn2 = root.querySelector("#test2-yy") as HTMLInputElement;
+
 		expect(monthIn != null).toBe(true);
 		expect(yearIn != null).toBe(true);
 
@@ -62,7 +79,22 @@ describe("CardDateInput", () => {
 		// Verify change
 		expect(value()).toBe("02/20");
 
+		// Test two-way date binding
+		m.redraw.sync();
+		expect(yearIn2.value).toEqual("20");
+		expect(monthIn2.value).toEqual('02');
+
+		// Test reset date value for other inputs sharing the same value stream
+		yearIn2.value = '';
+		yearIn2.dispatchEvent(new Event("input"));
+
+		m.redraw.sync();
+		expect(yearIn.value).not.toBeTruthy();
+		expect(monthIn.value).not.toBeTruthy();
+
+		monthIn.value = "02";
 		yearIn.value = "99";
+		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("02/99");
 
@@ -84,6 +116,13 @@ describe("CardDateInput", () => {
 		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("");
+
+
+
+
+
+
+
 		// Cleanup
 		m.mount(root, null);
 	});
