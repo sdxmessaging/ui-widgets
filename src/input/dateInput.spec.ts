@@ -4,6 +4,9 @@ import stream from "mithril/stream";
 import { DateInput } from "./dateInput";
 
 describe("DateInput", () => {
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
 
 	test("minimal", () => {
 		const root = window.document.createElement("div");
@@ -121,122 +124,254 @@ describe("DateInput", () => {
 		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("2020-12-31");
+
 		// Cleanup
 		m.mount(root, null);
 	});
 
-});
 
+	test("configured + value change - GB locale", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(DateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+					options: [{ value: "en-GB" }]
+				},
+				value,
+				xform
+			})
+		});
+		expect(root.childNodes.length).toBe(1);
+		// Label + Input
+		// expect(root.childNodes[0].childNodes.length).toBe(2);
+		value("2020-01-01");
+		// Get date inputs and update value
+		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+		dayIn.value = "31";
+		monthIn.value = "12";
+		yearIn.value = "3000";
 
-test("configured + value change - GB locale", () => {
-	const root = window.document.createElement("div");
-	const value = stream<string>();
-	const xform = value.map((val) => val);
-	m.mount(root, {
-		view: () => m(DateInput, {
-			field: {
-				id: "test",
-				label: "Test Label",
-				name: "Test Name",
-				title: "Test Title",
-				uiClass: {},
-				disabled: true,
-				options: [{ value: "en-GB" }]
-			},
-			value,
-			xform
-		})
+		dayIn.dispatchEvent(new Event("input"));
+		monthIn.dispatchEvent(new Event("input"));
+		yearIn.dispatchEvent(new Event("input"));
+		expect(value()).toBe("2020-12-31");
 	});
-	expect(root.childNodes.length).toBe(1);
-	// Label + Input
-	// expect(root.childNodes[0].childNodes.length).toBe(2);
-	value("2020-01-01");
-	// Get date inputs and update value
-	const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
-	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
-	const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
-	dayIn.value = "31";
-	monthIn.value = "12";
-	yearIn.value = "3000";
 
-	dayIn.dispatchEvent(new Event("input"));
-	monthIn.dispatchEvent(new Event("input"));
-	yearIn.dispatchEvent(new Event("input"));
-	expect(value()).toBe("2020-12-31");
-});
+	test("auto advance - locale GB", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(DateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+					options: [{ value: "en-GB" }]
+				},
+				value,
+				xform
+			})
+		});
+		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		const yearInSpy = jest.spyOn(yearIn, 'focus');
 
-test("auto advance - locale GB", () => {
-	const root = window.document.createElement("div");
-	const value = stream<string>();
-	const xform = value.map((val) => val);
-	m.mount(root, {
-		view: () => m(DateInput, {
-			field: {
-				id: "test",
-				label: "Test Label",
-				name: "Test Name",
-				title: "Test Title",
-				uiClass: {},
-				disabled: true,
-				options: [{ value: "en-GB" }]
-			},
-			value,
-			xform
-		})
+		dayIn.value = "0";
+		dayIn.dispatchEvent(new Event("input"));
+		expect(monthInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toBeCalledTimes(0);
+
+		dayIn.value = "01";
+		dayIn.dispatchEvent(new Event("input"));
+		expect(monthInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toBeCalledTimes(0);
+
+		monthIn.value = "02";
+		monthIn.dispatchEvent(new Event("input"));
+		expect(yearInSpy).toBeCalledTimes(1);
+
 	});
-	const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
-	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
-	const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
-	const monthInSpy = jest.spyOn(monthIn, 'focus');
-	const yearInSpy = jest.spyOn(yearIn, 'focus');
 
-	dayIn.value = "0";
-	dayIn.dispatchEvent(new Event("input"));
-	expect(monthInSpy).toBeCalledTimes(0);
-	expect(yearInSpy).toBeCalledTimes(0);
+	test("auto advance - locale US", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(DateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+					options: [{ value: "en-US" }]
+				},
+				value,
+				xform
+			})
+		});
+		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+		const yearInSpy = jest.spyOn(yearIn, 'focus');
+		const dayInSpy = jest.spyOn(dayIn, 'focus');
 
-	dayIn.value = "01";
-	dayIn.dispatchEvent(new Event("input"));
-	expect(monthInSpy).toBeCalledTimes(1);
-	expect(yearInSpy).toBeCalledTimes(0);
+		monthIn.value = "02";
+		monthIn.dispatchEvent(new Event("input"));
+		expect(dayInSpy).toBeCalledTimes(1);
 
-	monthIn.value = "02";
-	monthIn.dispatchEvent(new Event("input"));
-	expect(yearInSpy).toBeCalledTimes(1);
+		dayIn.value = "01";
+		dayIn.dispatchEvent(new Event("input"));
+		expect(yearInSpy).toBeCalledTimes(1);
 
-});
-
-test("auto advance - locale US", () => {
-	const root = window.document.createElement("div");
-	const value = stream<string>();
-	const xform = value.map((val) => val);
-	m.mount(root, {
-		view: () => m(DateInput, {
-			field: {
-				id: "test",
-				label: "Test Label",
-				name: "Test Name",
-				title: "Test Title",
-				uiClass: {},
-				disabled: true,
-				options: [{ value: "en-US" }]
-			},
-			value,
-			xform
-		})
 	});
-	const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
-	const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
-	const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
-	const yearInSpy = jest.spyOn(yearIn, 'focus');
-	const dayInSpy = jest.spyOn(dayIn, 'focus');
 
-	monthIn.value = "02";
-	monthIn.dispatchEvent(new Event("input"));
-	expect(dayInSpy).toBeCalledTimes(1);
 
-	dayIn.value = "01";
-	dayIn.dispatchEvent(new Event("input"));
-	expect(yearInSpy).toBeCalledTimes(1);
+	test("auto retreat", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(DateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+					options: [{ value: "en-GB" }]
+				},
+				value,
+				xform
+			})
+		});
 
+		value("2020-01-01");
+
+		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		const dayInSpy = jest.spyOn(dayIn, 'focus');
+
+		yearIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
+		expect(value()).not.toBeTruthy();
+		expect(monthInSpy).toBeCalledTimes(0);
+
+		yearIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Backspace" }));
+
+		expect(monthInSpy).toBeCalledTimes(1);
+
+		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "test" }));
+
+		expect(dayInSpy).toBeCalledTimes(0);
+
+		monthIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentBackward" }));
+		expect(dayInSpy).toBeCalledTimes(0);
+
+		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Delete" }));
+		expect(dayInSpy).toBeCalledTimes(1);
+
+	});
+
+	test("focusLastInput -- en-GB", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(DateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+					options: [{ value: "en-GB" }]
+				},
+				value,
+				xform
+			})
+		});
+
+		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const dayInSpy = jest.spyOn(dayIn, 'focus');
+		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		const firstInput = root.querySelector('input') as HTMLInputElement;
+		expect(firstInput).not.toBeNull();
+		const inputContainer = firstInput.closest('.flex') as HTMLElement;
+		expect(inputContainer).not.toBeNull();
+
+		inputContainer.dispatchEvent(new Event('click'));
+
+		expect(dayInSpy).toBeCalledTimes(1);
+		monthIn.dispatchEvent(new Event('focus'));
+
+		root.dispatchEvent(new Event('click'));
+		expect(monthInSpy).toBeCalledTimes(0);
+		inputContainer.dispatchEvent(new Event('click'));
+		expect(monthInSpy).toBeCalledTimes(1);
+
+	});
+
+	test("focusLastInput -- ja-JP", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(DateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+					options: [{ value: "ja-JP" }]
+				},
+				value,
+				xform
+			})
+		});
+
+		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearInSpy = jest.spyOn(yearIn, 'focus');
+		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		const firstInput = root.querySelector('input') as HTMLInputElement;
+		expect(firstInput).not.toBeNull();
+		const inputContainer = firstInput.closest('.flex') as HTMLElement;
+		expect(inputContainer).not.toBeNull();
+
+		inputContainer.dispatchEvent(new Event('click'));
+
+		expect(yearInSpy).toBeCalledTimes(1);
+		monthIn.dispatchEvent(new Event('focus'));
+
+		root.dispatchEvent(new Event('click'));
+		expect(monthInSpy).toBeCalledTimes(0);
+		inputContainer.dispatchEvent(new Event('click'));
+		expect(monthInSpy).toBeCalledTimes(1);
+
+	});
 });
+
