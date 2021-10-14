@@ -6,6 +6,7 @@ import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget"
 
 import { DateWidth, inputCls } from "../theme";
 import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom } from "../utils";
+import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -118,11 +119,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						this.updateInputs(attrs.value);
 					}
 				}),
-				m('input', {
-					style: { display: 'none' },
-					id,
-					onfocus: lodash.bind(focusLastInput, this)
-				})
+				m(HiddenDateInput, attrs)
 			])),
 		);
 	}

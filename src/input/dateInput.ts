@@ -6,6 +6,7 @@ import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from
 
 import { DateWidth, inputCls } from "../theme";
 import { autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom } from "../utils";
+import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -211,11 +212,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);
 				}),
-				m('input', {
-					style: { display: 'none' },
-					id,
-					onfocus: lodash.bind(focusLastInput, this)
-				})
+				m(HiddenDateInput, attrs)
 			)
 		);
 	}
