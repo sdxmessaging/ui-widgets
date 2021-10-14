@@ -213,6 +213,7 @@ describe("DateInput", () => {
 
 		yearIn.value = "2020";
 		yearIn.dispatchEvent(new Event("input"));
+		// none of these should be called
 		expect(yearInSpy).toBeCalledTimes(1);
 		expect(monthInSpy).toBeCalledTimes(1);
 		expect(dayInSpy).toBeCalledTimes(0);
