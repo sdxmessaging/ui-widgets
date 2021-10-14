@@ -83,8 +83,16 @@ export function setCheck(chk: TPropStream) {
 }
 
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
+export type TDateType = 'day' | 'month' | 'year';
 
-export function focusLastInput(dom: Element, id: string, focusedId: TDateInputType) {
+export function dateInputIds(type: TDateType) {
+	switch (type) {
+		case 'day': return 'dd';
+		case 'month': return 'mm';
+		case 'year': return 'yyyy';
+	}
+}
+export function focusLastInput(dom: Element, id: string, focusedId: TDateInputType | undefined) {
 	const lastFocused = dom.querySelector(`#${id}-${focusedId}`) as HTMLElement;
 	lastFocused.focus();
 }

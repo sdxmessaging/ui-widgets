@@ -1,3 +1,4 @@
+import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
@@ -34,8 +35,6 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			valueStream('');
 		}
 	}
-
-
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
@@ -93,7 +92,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
 						padding: '0px'
 					},
-					onfocus: () => this.focusedInput('mm'),
+					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
 						this.updateInputs(attrs.value);
@@ -114,7 +113,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						textAlign: this.year() && this.year().length === 2 ? "center" : "left",
 						padding: '0px'
 					},
-					onfocus: () => this.focusedInput('yy'),
+					onfocus: lodash.partial(this.focusedInput, 'yy'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.year, id, "yy", this.dom(), e);
