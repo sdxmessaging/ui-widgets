@@ -70,6 +70,9 @@ describe("CardDateInput", () => {
 		yearIn.value = "00";
 		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
+		m.redraw.sync();
+		expect(yearIn.style.textAlign).toEqual("center");
+		expect(monthIn.style.textAlign).toEqual("center");
 		expect(value()).toBe("02/00");
 
 		monthIn.value = "00";
@@ -83,6 +86,46 @@ describe("CardDateInput", () => {
 		expect(value()).toBe("");
 		// Cleanup
 		m.mount(root, null);
+	});
+
+	test("focusLastInput", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>();
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(CardDateInput, {
+				field: {
+					id: "test",
+					label: "Test Label",
+					name: "Test Name",
+					title: "Test Title",
+					uiClass: {},
+					disabled: true,
+				},
+				value,
+				xform
+			})
+		});
+
+		const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+		const yearInSpy = jest.spyOn(yearIn, 'focus');
+		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		const firstInput = root.querySelector('input') as HTMLInputElement;
+		expect(firstInput).not.toBeNull();
+		const inputContainer = firstInput.closest('.flex') as HTMLElement;
+		expect(inputContainer).not.toBeNull();
+
+		inputContainer.dispatchEvent(new Event('click'));
+
+		expect(monthInSpy).toBeCalledTimes(1);
+		yearIn.dispatchEvent(new Event('focus'));
+
+		root.dispatchEvent(new Event('click'));
+		expect(yearInSpy).toBeCalledTimes(0);
+		inputContainer.dispatchEvent(new Event('click'));
+		expect(yearInSpy).toBeCalledTimes(1);
+
 	});
 
 });

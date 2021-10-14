@@ -88,6 +88,10 @@ describe("DateInput", () => {
 		yearIn.dispatchEvent(new Event("input"));
 
 		expect(value()).toBe("2020-12-31");
+		m.redraw.sync();
+		expect(dayIn.style.textAlign).toEqual("center");
+		expect(monthIn.style.textAlign).toEqual("center");
+		expect(yearIn.style.textAlign).toEqual("center");
 
 		dayIn.value = "31";
 		monthIn.value = "12";
@@ -191,6 +195,7 @@ describe("DateInput", () => {
 		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
 		const yearInSpy = jest.spyOn(yearIn, 'focus');
+		const dayInSpy = jest.spyOn(dayIn, "focus");
 
 		dayIn.value = "0";
 		dayIn.dispatchEvent(new Event("input"));
@@ -205,6 +210,12 @@ describe("DateInput", () => {
 		monthIn.value = "02";
 		monthIn.dispatchEvent(new Event("input"));
 		expect(yearInSpy).toBeCalledTimes(1);
+
+		yearIn.value = "2020";
+		yearIn.dispatchEvent(new Event("input"));
+		expect(yearInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toBeCalledTimes(1);
+		expect(dayInSpy).toBeCalledTimes(0);
 
 	});
 
@@ -271,6 +282,8 @@ describe("DateInput", () => {
 		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
 		const dayInSpy = jest.spyOn(dayIn, 'focus');
+		const yearInSpy = jest.spyOn(yearIn, 'focus');
+
 
 		yearIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
 		expect(value()).not.toBeTruthy();
@@ -289,6 +302,13 @@ describe("DateInput", () => {
 
 		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Delete" }));
 		expect(dayInSpy).toBeCalledTimes(1);
+
+		dayIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
+		expect(dayInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toBeCalledTimes(1);
+
+
 
 	});
 
@@ -330,6 +350,8 @@ describe("DateInput", () => {
 		expect(monthInSpy).toBeCalledTimes(0);
 		inputContainer.dispatchEvent(new Event('click'));
 		expect(monthInSpy).toBeCalledTimes(1);
+
+
 
 	});
 
