@@ -89,7 +89,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					value: this.month(),
 					class: classStr, style: {
 						maxWidth: DateWidth.mm,
-						textAlign: this.month() && this.month().length === 2 ? "center" : "left"
+						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
+						padding: '0px'
 					},
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
@@ -97,7 +98,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					}
 				})
 			]),
-			m("span", { style: { padding: '0px' } }, "/"),
+			m("span", { style: { padding: '0px', marginRight: '2px' } }, "/"),
 			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id: `${id}-yy`, name: `${name}-yy`,
@@ -108,7 +109,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					value: this.year(),
 					class: classStr, style: {
 						maxWidth: DateWidth.yy,
-						textAlign: this.year() && this.year().length === 2 ? "center" : "left"
+						textAlign: this.year() && this.year().length === 2 ? "center" : "left",
+						padding: '0px'
 					},
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
