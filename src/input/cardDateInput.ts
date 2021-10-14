@@ -117,8 +117,13 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						handleDateChange(this.year, id, "yy", this.dom(), e);
 						this.updateInputs(attrs.value);
 					}
+				}),
+				m('input', {
+					style: { display: 'none' },
+					id,
+					onfocus: lodash.bind(focusLastInput, this)
 				})
-			]))
+			])),
 		);
 	}
 

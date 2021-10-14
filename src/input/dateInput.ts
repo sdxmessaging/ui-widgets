@@ -210,6 +210,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			m('.flex', { onclick: () => focusLastInput(this.dom(), id, this.focusedInput()) },
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);
+				}),
+				m('input', {
+					style: { display: 'none' },
+					id,
+					onfocus: lodash.bind(focusLastInput, this)
 				})
 			)
 		);
