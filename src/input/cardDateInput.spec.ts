@@ -5,6 +5,10 @@ import { CardDateInput } from "./cardDateInput";
 
 describe("CardDateInput", () => {
 
+	afterEach(() => {
+		jest.restoreAllMocks()
+	});
+
 	test("minimal", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
@@ -117,11 +121,13 @@ describe("CardDateInput", () => {
 		yearIn.dispatchEvent(new Event("input"));
 		expect(value()).toBe("");
 
+		const monthInSpy = jest.spyOn(monthIn, 'focus');
+		yearIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
+		expect(value()).not.toBeTruthy();
+		expect(monthInSpy).toBeCalledTimes(0);
 
-
-
-
-
+		yearIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Backspace" }));
+		expect(monthInSpy).toBeCalledTimes(1);
 
 		// Cleanup
 		m.mount(root, null);
