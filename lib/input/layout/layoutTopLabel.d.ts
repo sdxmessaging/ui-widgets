@@ -1,5 +1,5 @@
 import { Layout } from "./layout";
 import { TopLabel } from "./topLabel";
-export declare class layoutTop extends Layout {
+export declare class LayoutTop extends Layout {
     protected layout: typeof TopLabel;
 }

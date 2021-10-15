@@ -6,10 +6,10 @@ export declare function thumbMaxSize(): {
     "max-height": string;
 };
 export declare const enum DateWidth {
-    dd = "3ex",
-    mm = "3.5ex",
-    yy = "3ex",
-    yyyy = "5ch"
+    dd = "calc(2.3ex + 4px)",
+    mm = "calc(2.8ex + 4px)",
+    yy = "calc(2.7ex + 4px)",
+    yyyy = "calc(4.2ex + 4px)"
 }
 declare const classMapState: Required<IClassMap>;
 export declare const theme: Readonly<typeof classMapState>;
