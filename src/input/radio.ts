@@ -19,7 +19,10 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		return m(LayoutFixed, attrs, m(".w-100.flex", {
-			onchange: setValue(val)
+			onchange: setValue(val),
+			style: {
+				padding: '1px 2px'
+			}
 		}, lodash.map(options, ({ value, label = value, icon }) => {
 			const checked = val() === value;
 			// No requirement for label "for" attribute

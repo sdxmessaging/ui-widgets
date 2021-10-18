@@ -208,7 +208,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		};
 
 		return m(LayoutFixed, attrs,
-			m('.flex', { onclick: () => focusLastInput(this.dom(), id, this.focusedInput()) },
+			m('.flex', {
+				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
+				// padding to behave similar to HTML native input paddings
+				style: { padding: '1px 2px' }
+			},
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);
 				}),
