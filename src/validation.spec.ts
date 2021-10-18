@@ -1,4 +1,16 @@
-import { propInvalid, fileInvalid } from "./validation";
+import { propInvalid, fileInvalid, rangeInvalid } from "./validation";
+
+describe("rangeInvalid", () => {
+	test("in range", () => {
+		expect(rangeInvalid(1, 3, 2)).toBe(false);
+		expect(rangeInvalid(-1, 1, 0)).toBe(false);
+		expect(rangeInvalid(1, 1, 1)).toBe(false);
+	});
+	test("out of range", () => {
+		expect(rangeInvalid(1, 2, 3)).toBe(true);
+		expect(rangeInvalid(-2, 0, -3)).toBe(true);
+	})
+});
 
 describe("propInvalid", () => {
 	test("required", () => {
@@ -10,6 +22,18 @@ describe("propInvalid", () => {
 			required: true
 		}, "")).toBe(true);
 	});
+	test("range", () => {
+		expect(propInvalid({
+			id: "test",
+			max: 3,
+			min: 1
+		}, 2)).toBe(false);
+		expect(propInvalid({
+			id: "test",
+			max: 2,
+			min: 1
+		}, 3)).toBe(false);
+	})
 });
 
 describe("fileInvalid", () => {
