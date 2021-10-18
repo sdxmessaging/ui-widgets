@@ -1,4 +1,4 @@
-import { propInvalid, fileInvalid, rangeInvalid } from "./validation";
+import { propInvalid, fileInvalid, rangeInvalid , lengthInvalid} from "./validation";
 
 describe("rangeInvalid", () => {
 	test("in range", () => {
@@ -9,7 +9,18 @@ describe("rangeInvalid", () => {
 	test("out of range", () => {
 		expect(rangeInvalid(1, 2, 3)).toBe(true);
 		expect(rangeInvalid(-2, 0, -3)).toBe(true);
-	})
+	});
+});
+
+describe("lengthInvalid", () => {
+	test("in range", () => {
+		expect(lengthInvalid(1, 3, "be")).toBe(false);
+		expect(lengthInvalid(0, 1, "")).toBe(false);
+		expect(lengthInvalid(1, 1, "a")).toBe(false);
+	});
+	test("out of range", () => {
+		expect(rangeInvalid(1, 2, 3)).toBe(true);
+	});
 });
 
 describe("propInvalid", () => {
@@ -32,7 +43,19 @@ describe("propInvalid", () => {
 			id: "test",
 			max: 2,
 			min: 1
-		}, 3)).toBe(false);
+		}, 3)).toBe(true);
+	});
+	test("length", () => {
+		expect(propInvalid({
+			id: "test",
+			maxlength: 3,
+			minlength: 1
+		}, "be")).toBe(false);
+		expect(propInvalid({
+			id: "test",
+			maxlength: 2,
+			minlength: 1
+		}, "ben")).toBe(true);
 	})
 });
 
