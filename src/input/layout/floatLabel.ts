@@ -58,7 +58,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 			onfocusout: this.focusOut
 		},
 			// Input wrapper
-			m("fieldset.relative.pa0.ma0", {
+			m("fieldset.relative.pa0.ma0.flex", {
 				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
 			}, [
 				label && this.wrapperHeight ? [
