@@ -1,6 +1,6 @@
 import { Children } from "mithril";
 import stream from "mithril/stream";
-import { IWidgetClasses, TStyle } from "./theme";
+import { IWidgetClasses } from "./theme";
 export declare type TProp = string | number | boolean;
 export declare type TPropMap = Record<string, TProp>;
 export declare type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
@@ -78,8 +78,6 @@ export interface IField {
     readonly instant?: boolean;
     readonly layout?: LayoutType;
     readonly uiClass?: IWidgetClasses;
-    readonly style?: TStyle;
-    readonly default?: string;
 }
 export interface IOption {
     readonly value: TProp;
@@ -99,7 +97,6 @@ export interface ISignWidget {
     readonly heightPct: number;
     readonly stampTxt: string;
     readonly stampSetTxt: string;
-    readonly style: TStyle;
     onSet(dataUrl: string, metadata?: TPropMap): void;
     onCancel(): void;
 }

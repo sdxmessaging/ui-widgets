@@ -1,5 +1,4 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { TStyle } from "./interface/theme";
 import { IMithrilEvent } from "./interface/widget";
 export interface IButton {
     readonly label?: string;
@@ -10,9 +9,8 @@ export interface IButton {
     readonly context?: string;
     readonly classes?: string;
     readonly disabled?: boolean;
-    readonly style?: TStyle;
     onclick?(evt: IMithrilEvent): void;
 }
 export declare class Button implements ClassComponent<IButton> {
-    view({ attrs: { label, type, title, icon, rightIcon, context, classes, disabled, style, onclick } }: CVnode<IButton>): m.Vnode<any, any>;
+    view({ attrs: { label, type, title, icon, rightIcon, context, classes, disabled, onclick } }: CVnode<IButton>): m.Vnode<any, any>;
 }

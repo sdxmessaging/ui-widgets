@@ -119,9 +119,6 @@ export interface IField {
 	readonly instant?: boolean;
 	readonly layout?: LayoutType;
 	readonly uiClass?: IWidgetClasses;
-	readonly style?: TStyle;
-	// Unsupported legacy field
-	readonly default?: string;
 }
 
 // Select/Radio options, config for other fields
