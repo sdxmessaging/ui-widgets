@@ -1,28 +1,5 @@
 import { propInvalid, fileInvalid } from "./validation";
 
-describe("rangeInvalid", () => {
-	// 	test("in range", () => {
-	// 		expect(rangeInvalid(1, 3, 2)).toBe(false);
-	// 		expect(rangeInvalid(-1, 1, 0)).toBe(false);
-	// 		expect(rangeInvalid(1, 1, 1)).toBe(false);
-	// 	});
-	// 	test("out of range", () => {
-	// 		expect(rangeInvalid(1, 2, 3)).toBe(true);
-	// 		expect(rangeInvalid(-2, 0, -3)).toBe(true);
-	// 	});
-	// });
-
-	// describe("lengthInvalid", () => {
-	// 	test("in range", () => {
-	// 		expect(lengthInvalid(1, 3, "be")).toBe(false);
-	// 		expect(lengthInvalid(0, 1, "")).toBe(false);
-	// 		expect(lengthInvalid(1, 1, "a")).toBe(false);
-	// 	});
-	// 	test("out of range", () => {
-	// 		expect(rangeInvalid(1, 2, 3)).toBe(true);
-	// 	});
-});
-
 describe("propInvalid", () => {
 	test("required", () => {
 		expect(propInvalid({
