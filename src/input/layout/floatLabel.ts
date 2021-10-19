@@ -84,7 +84,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						}
 					}, getLabelText(label, required))),
 					// Floating label
-					m(".floatingLabel.absolute.top-0", {
+					m(".absolute.top-0", {
 						class: labelCls(uiClass, required),
 						style: {
 							transition: `transform ${transitionOpts}`,
