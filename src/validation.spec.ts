@@ -1,4 +1,4 @@
-import { propInvalid, fileInvalid, rangeInvalid , lengthInvalid} from "./validation";
+import { propInvalid, fileInvalid, rangeInvalid , lengthInvalid, patternInvalid} from "./validation";
 
 describe("rangeInvalid", () => {
 	test("in range", () => {
@@ -20,6 +20,19 @@ describe("lengthInvalid", () => {
 	});
 	test("out of range", () => {
 		expect(rangeInvalid(1, 2, 3)).toBe(true);
+	});
+});
+
+describe("patternInvalid", () => {
+	test("pattern match", () => {
+		expect(patternInvalid("abc","i know my abc's")).toBe(false);
+		expect(patternInvalid("abc","slabcraft")).toBe(false);
+		expect(patternInvalid("a(b+)(c|d)[efgh][^i-k]","abbbcfx")).toBe(false);
+	});
+	test("pattern mismatch", () => {
+		expect(patternInvalid("abc","def")).toBe(true);
+		expect(patternInvalid("abc","grab crab")).toBe(true);
+		expect(patternInvalid("a(b+)(c|d)[efgh][^i-k]","abbbcfi")).toBe(true);
 	});
 });
 
@@ -56,7 +69,17 @@ describe("propInvalid", () => {
 			maxlength: 2,
 			minlength: 1
 		}, "ben")).toBe(true);
-	})
+	});
+	test("pattern", () => {
+		expect(propInvalid({
+			id: "test",
+			pattern: "a(b+)(c|d)[efgh][^i-k]"
+		}, "abbbcex")).toBe(false);
+		expect(propInvalid({
+			id: "test",
+			pattern: "a(b+)(c|d)[efgh][^i-k]"
+		}, "abbbcei")).toBe(true);
+	});
 });
 
 describe("fileInvalid", () => {
