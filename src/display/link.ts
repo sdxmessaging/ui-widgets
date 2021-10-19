@@ -35,10 +35,9 @@ export const iconMap: Record<string, string> = {
 export class Link implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, type = FieldType.url, uiClass = {}, style } = field;
+		const { label, type = FieldType.url, uiClass = {} } = field;
 		return m(".pa2.flex.flex-wrap", {
 			class: wrapperCls(uiClass),
-			style
 		}, [
 			getDisplayLabel(label),
 			m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()),

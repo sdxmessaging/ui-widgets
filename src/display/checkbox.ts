@@ -15,10 +15,9 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 	protected offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, uiClass = {}, style } = field;
+		const { label, uiClass = {} } = field;
 		return m(".pa2.flex.items-center", {
 			class: wrapperCls(uiClass),
-			style
 		}, [
 			getDisplayLabel(label),
 			m("i", {

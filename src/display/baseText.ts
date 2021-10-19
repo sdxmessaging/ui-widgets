@@ -8,10 +8,9 @@ import { getDisplayLabel } from "../utils";
 export class BaseText implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, uiClass = {}, style } = field;
+		const { label, uiClass = {}} = field;
 		return m(".pa2.flex.flex-wrap", {
 			class: wrapperCls(uiClass),
-			style
 		}, [
 			getDisplayLabel(label),
 			m("span.ws-normal", {

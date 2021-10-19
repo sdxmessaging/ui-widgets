@@ -11,10 +11,9 @@ import { Thumbnail } from "./thumbnail";
 export class ImageList implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { label, uiClass = {}, style } = field;
+		const { label, uiClass = {} } = field;
 		return m(".pa2.flex.flex-column", {
 			class: wrapperCls(uiClass),
-			style
 		}, [
 			getDisplayLabel(label),
 			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",

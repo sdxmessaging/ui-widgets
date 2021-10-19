@@ -10,10 +10,9 @@ import { getDisplayLabel } from "../utils";
 export class FileList implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { label, uiClass = {}, style } = field;
+		const { label, uiClass = {}} = field;
 		return m(".pa2.flex.flex-column", {
 			class: wrapperCls(uiClass),
-			style
 		}, [
 			getDisplayLabel(label),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(), ({ name, path }) => {

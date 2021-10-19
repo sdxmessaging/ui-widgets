@@ -90,10 +90,8 @@ export class PasswordStrength implements ClassComponent<IPropWidget> {
 	}
 
 	public view({ attrs: { field } }: CVnode<IPropWidget>) {
-		const { label, style } = field;
-		return m(".flex.flex-column", {
-			style
-		}, [
+		const { label } = field;
+		return m(".flex.flex-column", [
 			getDisplayLabel(label),
 			m(".flex.mt1", lodash.map(passwordStrength, (val) => m(".h1.w-20", {
 				class: this.passwordScore() >= val.value ? val.background : "bg-transparent"
