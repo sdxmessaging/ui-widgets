@@ -1,5 +1,6 @@
 export * from "./interface/widget";
 export * from "./interface/theme";
+export { IConfig } from './interface/config';
 
 export { updateConfig } from "./config";
 export { updateClasses, updateButtonContext, theme } from "./theme";
