@@ -84,9 +84,9 @@ describe("floatLabel", () => {
 
 	test('focusIn & focusOut', () => {
 		const floatLabel = new FloatLabel();
-		floatLabel['focusIn'](new Event('click'));
+		floatLabel['focusIn']();
 		expect(floatLabel['focus']).toEqual(true);
-		floatLabel['focusOut'](new Event('click'));
+		floatLabel['focusOut']();
 		expect(floatLabel['focus']).toEqual(false);
 	});
 });
