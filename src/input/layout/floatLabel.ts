@@ -13,12 +13,10 @@ const transitionOpts = "0.3s ease-in-out";
 export class FloatLabel implements ClassComponent<IPropWidget> {
 
 	private focus = false;
-	private focusIn = (e: Event) => {
-		e.preventDefault();
+	private focusIn = () => {
 		this.focus = true;
 	};
-	private focusOut = (e: Event) => {
-		e.preventDefault();
+	private focusOut = () => {
 		this.focus = false;
 	};
 
