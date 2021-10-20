@@ -13,8 +13,12 @@ const transitionOpts = "0.3s ease-in-out";
 export class FloatLabel implements ClassComponent<IPropWidget> {
 
 	private focus = false;
-	private focusIn = () => this.focus = true;
-	private focusOut = () => this.focus = false;
+	private focusIn = () => {
+		this.focus = true;
+	};
+	private focusOut = () => {
+		this.focus = false;
+	};
 
 	// Track element height for positioning floating label
 	private inputWrapper!: HTMLElement;
@@ -22,6 +26,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
 		this.inputWrapper = dom.firstElementChild as HTMLElement;
 		this.calcHeight();
+
 	}
 	public onupdate() {
 		this.calcHeight();
@@ -88,7 +93,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 						for: id, title: label,
 						style: {
 							transition: `font-size ${transitionOpts}`,
-							fontSize: floatTop ? shrinkFont : "1em"
+							fontSize: floatTop ? shrinkFont : "1em",
 						}
 					}, getLabelText(label, required)))
 				] : null,
