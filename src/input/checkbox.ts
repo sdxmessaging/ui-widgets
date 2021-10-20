@@ -22,7 +22,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		} = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
-		}, m("fieldset.w-100", {
+		}, m("fieldset.w-100.bn", {
 			class: inputWrapperCls(uiClass)
 		}, [
 			m("label.flex.items-center", {
