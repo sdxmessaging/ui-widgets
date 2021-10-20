@@ -45,7 +45,6 @@ describe("NavLink", () => {
 				target: "_blank",
 				download: "test",
 				classes: "test",
-				style: { test: "value" }
 			})
 		});
 		expect(root.childNodes.length).toBe(1);
