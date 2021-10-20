@@ -43,8 +43,7 @@ describe("ButtonLink", () => {
 				rel: "test",
 				target: "_blank",
 				download: "test",
-				classes: "test",
-				style: { test: "value" }
+				classes: "test"
 			})
 		});
 		expect(root.childNodes.length).toBe(1);

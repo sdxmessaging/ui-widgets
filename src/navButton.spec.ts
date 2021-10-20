@@ -23,7 +23,6 @@ describe("NavButton", () => {
 				label: "Label",
 				title: "Title",
 				classes: "custom",
-				style: {},
 				onclick: () => null
 			})
 		});

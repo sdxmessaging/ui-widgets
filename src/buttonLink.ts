@@ -14,17 +14,16 @@ export interface IButtonLink {
 	readonly download?: string;
 	readonly classes?: string;
 	readonly context?: string;
-	readonly style?: Record<string, unknown>;
 }
 
 export class ButtonLink implements ClassComponent<IButtonLink> {
 
 	public view({ attrs: {
-		label, title = label, icon, rightIcon, href, rel, target, download, context, classes = "", style
+		label, title = label, icon, rightIcon, href, rel, target, download, context, classes = ""
 	} }: CVnode<IButtonLink>) {
 		return m("a.link.flex.items-center", {
 			href, rel, target, download, title,
-			class: `${classes} ${getButtonContext(context)} ${theme.button}`, style
+			class: `${classes} ${getButtonContext(context)} ${theme.button}`
 		}, labelIcon(icon, label, rightIcon));
 	}
 
