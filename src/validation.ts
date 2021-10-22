@@ -22,6 +22,23 @@ export function propInvalid(field: IField, value: TProp): boolean {
 	return false;
 }
 
+export function inputmodeInvalid(field : IField, value : TProp) : boolean {
+	switch(field.inputmode){
+		case "numeric":
+			return /-?[0-9]*/.test(String(value));
+		case "tel":
+			break;
+		case "decimal":
+			return /-?[0-9]*(.|,)[0-9]*/.test(String(value));
+		case "email":
+			break;
+		case "url":
+			break;
+	}
+	return false;
+
+}
+
 export function patternInvalid(pattern : string, value : string) : boolean {
 	return !(new RegExp(pattern)).test(value);
 }
