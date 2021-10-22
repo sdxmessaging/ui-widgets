@@ -1,4 +1,3 @@
-import lodash from "lodash";
 import { IField, IFile, TProp } from "./interface/widget";
 
 // TODO Expand validation for field input masks, min/max, minlength/maxlength etc
@@ -7,18 +6,29 @@ export function propInvalid(field: IField, value: TProp): boolean {
 	if (field.required && !value) {
 		return true;
 	}
-	if (typeof value === "number" && typeof field.max === "number" && typeof field.min === "number") {
-		return !lodash.inRange(value, field.min, field.max);
-		//TODO: check why max and min can be strings and change as needed
+
+	let overMax = false;
+	let underMin = false;
+
+	if (field.min != null){
+		underMin = Number.parseInt(String(value)) < field.min; 
 	}
-	if (typeof value === "string"){
-		if (field.maxlength && field.minlength){
-			return !lodash.inRange(value.length, field.minlength, field.maxlength);
-		} 
-		if (field.pattern) {
-			return patternInvalid(field.pattern, value);
-		}
+	if (field.max != null){
+		overMax = Number.parseInt(String(value)) > field.max;
 	}
+	if (field.minlength != null){
+		underMin = String(value).length < field.minlength; 
+	}
+	if (field.maxlength != null){
+		overMax = String(value).length > field.maxlength;
+	}
+
+	if (underMin || overMax) return true;
+
+	if (field.pattern != null) {
+		return patternInvalid(field.pattern, String(value));
+	}
+	
 	return false;
 }
 
