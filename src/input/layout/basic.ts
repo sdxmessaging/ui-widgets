@@ -1,16 +1,14 @@
 
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { FieldType, IPropWidget } from "../../interface/widget";
+import { FieldType, IPropLayoutWidget } from "../../interface/widget";
 
 import { inputWrapperCls, wrapperCls } from "../../theme";
 import { getLabel } from "../../utils";
-import { propInvalid } from "../../validation";
+export class Basic implements ClassComponent<IPropLayoutWidget> {
 
-export class Basic implements ClassComponent<IPropWidget> {
-
-	public view({ attrs, children }: CVnode<IPropWidget>) {
-		const { field, value, xform = value } = attrs;
+	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
+		const { field, invalid } = attrs;
 		const { label, id, type = FieldType.text, required, disabled, uiClass = {} } = field;
 		// Wrapper
 		return m("div", {
@@ -20,7 +18,7 @@ export class Basic implements ClassComponent<IPropWidget> {
 			getLabel(id, uiClass, label, required),
 			// Input wrapper
 			m("fieldset.bn", {
-				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+				class: inputWrapperCls(uiClass, invalid)
 			},
 				// Input
 				children

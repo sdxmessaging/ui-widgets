@@ -70,14 +70,14 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 
 	public view({ attrs }: CVnode<IPropWidget>) {
-		const { field } = attrs;
+		const { field, value } = attrs;
 		const {
 			id, name = id,
 			required, readonly, disabled,
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, attrs, m('.flex', {
+		return m(LayoutFixed, {value, field, invalid: !this.valid}, m('.flex', {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 			// padding to behave similar to HTML native input paddings
 			style: { padding: '1px 2px' }

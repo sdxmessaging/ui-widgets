@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { config } from "../../config";
 
-import { FieldType, IPropWidget, LayoutType, TProp } from "../../interface/widget";
+import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface/widget";
 
 import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
@@ -10,7 +10,7 @@ import { propInvalid } from "../../validation";
 const shrinkFont = "0.7em";
 const transitionOpts = "0.3s ease-in-out";
 
-export class FloatLabel implements ClassComponent<IPropWidget> {
+export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
 	private focus = false;
 	private focusIn = () => {
@@ -23,7 +23,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 	// Track element height for positioning floating label
 	private inputWrapper!: HTMLElement;
 	private wrapperHeight = 0;
-	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
+	public oncreate({ dom }: CVnodeDOM<IPropLayoutWidget>) {
 		this.inputWrapper = dom.firstElementChild as HTMLElement;
 		this.calcHeight();
 
@@ -47,7 +47,7 @@ export class FloatLabel implements ClassComponent<IPropWidget> {
 		return `calc(${this.wrapperHeight * 0.5}px - 1.5ex)`;
 	}
 
-	public view({ attrs, children }: CVnode<IPropWidget>) {
+	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, type = FieldType.text, placeholder, required, disabled,

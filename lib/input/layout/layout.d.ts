@@ -1,7 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget } from "../../interface/widget";
+import { IPropLayoutWidget } from "../../interface/widget";
 import { FloatLabel } from "./floatLabel";
-export declare class Layout implements ClassComponent<IPropWidget> {
+export declare class Layout implements ClassComponent<IPropLayoutWidget> {
     protected layout: typeof FloatLabel;
-    view({ attrs, children }: CVnode<IPropWidget>): m.Vnode<IPropWidget, unknown>;
+    view({ attrs, children }: CVnode<IPropLayoutWidget>): m.Vnode<IPropLayoutWidget, unknown>;
 }

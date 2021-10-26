@@ -4,6 +4,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { inputCls } from "../theme";
+import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -20,7 +21,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-		return m(LayoutFixed, attrs, m('.flex.flex-row.w-100', m("span.mr1.self-center", {
+		return m(LayoutFixed, {field, value, invalid: propInvalid(field, value())}, m('.flex.flex-row.w-100', m("span.mr1.self-center", {
 			class: inputCls(uiClass)
 		}, currency),
 			m("input.w-100.bg-transparent.bn.outline-0", {

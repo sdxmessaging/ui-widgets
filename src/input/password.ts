@@ -6,8 +6,11 @@ import { IPropWidget } from "../interface/widget";
 import { config } from "../config";
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
+import { propInvalid } from "../validation";
+
 
 import { Layout } from "./layout/layout";
+
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
@@ -22,7 +25,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode,
 			instant, uiClass = {}
 		} = field;
-		return m(Layout, attrs, m('.flex.flex-row.w-100', [
+		return m(Layout, {field, value, invalid: propInvalid(field, value())}, m('.flex.flex-row.w-100', [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, name, title, placeholder,
 				type: this.showPassword() ? "text" : "password",

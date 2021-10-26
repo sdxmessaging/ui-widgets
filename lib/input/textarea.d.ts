@@ -1,5 +1,6 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 import { IPropWidget } from "../interface/widget";
-export declare class TextareaInput implements ClassComponent<IPropWidget> {
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<IPropWidget, unknown>;
+import { ValidationBase } from "../validationBase";
+export declare class TextareaInput extends ValidationBase {
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;
 }

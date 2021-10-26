@@ -5,6 +5,7 @@ import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 import { Layout } from "./layout/layout";
 
@@ -18,7 +19,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		return m(Layout, attrs, m("select.w-100.bg-transparent.bn.outline-0", {
+		return m(Layout, {field, value: val, invalid: propInvalid(field, val())}, m("select.w-100.bg-transparent.bn.outline-0", {
 			id, name, title,
 			required, readonly, disabled, autofocus, autocomplete,
 			class: inputCls(uiClass),

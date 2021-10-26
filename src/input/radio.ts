@@ -5,6 +5,7 @@ import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { radioInputCls } from "../theme";
 import { setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -18,7 +19,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		return m(LayoutFixed, attrs, m(".w-100.flex.justify-center", {
+		return m(LayoutFixed, {field, value: val, invalid: propInvalid(field, val())}, m(".w-100.flex.justify-center", {
 			onchange: setValue(val),
 			style: {
 				padding: '1px 2px'

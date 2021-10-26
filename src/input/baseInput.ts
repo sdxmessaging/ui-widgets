@@ -33,7 +33,7 @@ export class BaseInput extends ValidationBase {
 			field,
 			value,
 			xform,
-			// invalid: this.invalid
+			invalid: this.invalid
 		}, m("input.w-100.bg-transparent.bn.outline-0", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,

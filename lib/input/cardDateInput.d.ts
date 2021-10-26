@@ -13,5 +13,5 @@ export declare class CardDateInput implements ClassComponent<IPropWidget> {
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
     onupdate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<IPropWidget, unknown>;
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;
 }
