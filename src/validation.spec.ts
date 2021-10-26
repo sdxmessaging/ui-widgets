@@ -1,4 +1,4 @@
-import { propInvalid, fileInvalid, patternInvalid } from "./validation";
+import { propInvalid, fileInvalid, patternInvalid, rangeInvalid } from "./validation";
 
 describe("patternInvalid", () => {
 	test("pattern match", () => {
@@ -10,6 +10,12 @@ describe("patternInvalid", () => {
 		expect(patternInvalid("abc","def")).toBe(true);
 		expect(patternInvalid("abc","grab crab")).toBe(true);
 		expect(patternInvalid("a(b+)(c|d)[efgh][^i-k]","abbbcfi")).toBe(true);
+	});
+});
+
+describe("rangeInvalid", () => {
+	test("min", () => {
+		expect(rangeInvalid({id: "test", min: 0},8)).toBe(false);
 	});
 });
 

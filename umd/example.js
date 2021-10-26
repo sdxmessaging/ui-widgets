@@ -583,7 +583,9 @@ m.mount(document.getElementById("page"), {
 						type: type(),
 						placeholder: placeholder(),
 						readonly: readonly(),
-						disabled: disabled()
+						disabled: disabled(),
+						max: 50,
+						min: 1
 					},
 					value: value
 				}))

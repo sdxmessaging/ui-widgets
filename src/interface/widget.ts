@@ -105,11 +105,11 @@ export interface IField {
 	readonly disabled?: boolean;
 	readonly autofocus?: boolean;
 	readonly autocomplete?: TAutocomplete;
-	readonly max?: number | string;
+	readonly max?: number;
 	readonly maxlength?: number;
-	readonly min?: number | string;
+	readonly min?: number;
 	readonly minlength?: number;
-	readonly step?: number | string;
+	readonly step?: number;
 	readonly pattern?: string;
 	readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
 	readonly spellcheck?: boolean;

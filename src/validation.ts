@@ -7,6 +7,16 @@ export function propInvalid(field: IField, value: TProp): boolean {
 		return true;
 	}
 
+	if (field.pattern != null) {
+		if (patternInvalid(field.pattern, String(value))) return true;
+	}
+
+	if (rangeInvalid(field, value)) return true;
+	
+	return false;
+}
+
+export function rangeInvalid(field: IField, value: TProp) {
 	let overMax = false;
 	let underMin = false;
 
@@ -23,13 +33,7 @@ export function propInvalid(field: IField, value: TProp): boolean {
 		overMax = String(value).length > field.maxlength;
 	}
 
-	if (underMin || overMax) return true;
-
-	if (field.pattern != null) {
-		return patternInvalid(field.pattern, String(value));
-	}
-	
-	return false;
+	return underMin || overMax;
 }
 
 export function inputmodeInvalid(field : IField, value : TProp) : boolean {
