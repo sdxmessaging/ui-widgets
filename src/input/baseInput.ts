@@ -1,9 +1,10 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 
 import { FieldType, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
+import { ValidationBase } from "../validationBase";
 
 import { Layout } from "./layout/layout";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -16,9 +17,9 @@ const fixedLabelTypes = new Set<string>([
 	FieldType.range
 ]);
 
-export class BaseInput implements ClassComponent<IPropWidget> {
+export class BaseInput extends ValidationBase{
 
-	public view({ attrs }: CVnode<IPropWidget>) {
+	public override view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, type = FieldType.text, name = id, title = label, placeholder,

@@ -1,15 +1,16 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, {CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
 
 import { textareaCls } from "../theme";
 import { setValue } from "../utils";
+import { ValidationBase } from "../validationBase";
 
 import { LayoutTop } from "./layout/layoutTopLabel";
 
-export class TextareaInput implements ClassComponent<IPropWidget> {
+export class TextareaInput extends ValidationBase {
 
-	public view({ attrs }: CVnode<IPropWidget>) {
+	public override view({ attrs }: CVnode<IPropWidget>) {
 		const {
 			label, id, name = id, title = label, placeholder,
 			required, readonly, disabled, autofocus, autocomplete, spellcheck,

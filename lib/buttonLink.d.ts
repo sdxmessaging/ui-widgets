@@ -10,8 +10,7 @@ export interface IButtonLink {
     readonly download?: string;
     readonly classes?: string;
     readonly context?: string;
-    readonly style?: Record<string, unknown>;
 }
 export declare class ButtonLink implements ClassComponent<IButtonLink> {
-    view({ attrs: { label, title, icon, rightIcon, href, rel, target, download, context, classes, style } }: CVnode<IButtonLink>): m.Vnode<any, any>;
+    view({ attrs: { label, title, icon, rightIcon, href, rel, target, download, context, classes } }: CVnode<IButtonLink>): m.Vnode<any, any>;
 }
