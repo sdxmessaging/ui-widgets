@@ -177,6 +177,10 @@ export interface IPropWidget extends IBaseWidget {
 	readonly children?: Children;
 }
 
+export interface IPropLayoutWidget extends IPropWidget {
+	readonly invalid: boolean;
+}
+
 export interface IThumbnailArgs {
 	title?: string;
 	src?: string;

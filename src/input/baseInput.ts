@@ -17,7 +17,7 @@ const fixedLabelTypes = new Set<string>([
 	FieldType.range
 ]);
 
-export class BaseInput extends ValidationBase{
+export class BaseInput extends ValidationBase {
 
 	public override view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
@@ -29,7 +29,12 @@ export class BaseInput extends ValidationBase{
 			instant, uiClass = {}
 		} = field;
 		const layoutComp = fixedLabelTypes.has(type) ? LayoutFixed : Layout;
-		return m(layoutComp, attrs, m("input.w-100.bg-transparent.bn.outline-0", {
+		return m(layoutComp, {
+			field,
+			value,
+			xform,
+			// invalid: this.invalid
+		}, m("input.w-100.bg-transparent.bn.outline-0", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete,
