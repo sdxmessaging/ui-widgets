@@ -16,6 +16,31 @@ describe("patternInvalid", () => {
 describe("rangeInvalid", () => {
 	test("min", () => {
 		expect(rangeInvalid({id: "test", min: 0},8)).toBe(false);
+		expect(rangeInvalid({id: "test", min: -5},5)).toBe(false);
+		expect(rangeInvalid({id: "test", min: 0},0)).toBe(false);
+		expect(rangeInvalid({id: "test", min: 1},0)).toBe(true);
+		expect(rangeInvalid({id: "test", min: 10},8)).toBe(true);
+	});
+	test("minlength", () => {
+		expect(rangeInvalid({id: "test", minlength: 0},"aaaaaaaa")).toBe(false);
+		expect(rangeInvalid({id: "test", minlength: -5},"aaaaa")).toBe(false);
+		expect(rangeInvalid({id: "test", minlength: 0},"")).toBe(false);
+		expect(rangeInvalid({id: "test", minlength: 1},"")).toBe(true);
+		expect(rangeInvalid({id: "test", minlength: 10},"aaaaaaaa")).toBe(true);
+	});
+	test("min", () => {
+		expect(rangeInvalid({id: "test", max: 10},8)).toBe(false);
+		expect(rangeInvalid({id: "test", max: -5},-10)).toBe(false);
+		expect(rangeInvalid({id: "test", max: 0},0)).toBe(false);
+		expect(rangeInvalid({id: "test", max: 0},1)).toBe(true);
+		expect(rangeInvalid({id: "test", max: 8},10)).toBe(true);
+	});
+	test("minlength", () => {
+		expect(rangeInvalid({id: "test", maxlength: 10},"aaaaaaaa")).toBe(false);
+		expect(rangeInvalid({id: "test", maxlength: -5},"aaaaa")).toBe(true);
+		expect(rangeInvalid({id: "test", maxlength: 0},"")).toBe(false);
+		expect(rangeInvalid({id: "test", maxlength: 1},"")).toBe(false);
+		expect(rangeInvalid({id: "test", maxlength: 0},"aaaaaaaa")).toBe(true);
 	});
 });
 
