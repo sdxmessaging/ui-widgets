@@ -275,8 +275,8 @@ m.mount(document.getElementById("page"), {
 					value: labVal
 				}))
 			]),
-			
-			
+
+
 
 			// Password
 			m(".flex.mb2.ba.b--silver", [
@@ -603,9 +603,7 @@ m.mount(document.getElementById("page"), {
 						type: type(),
 						placeholder: placeholder(),
 						readonly: readonly(),
-						disabled: disabled(),
-						max: 50,
-						min: 1
+						disabled: disabled()
 					},
 					value: value
 				}))
