@@ -135,4 +135,24 @@ export declare const enum DisplayType {
     thumbnail = "thumbnail",
     list = "list"
 }
+interface IBaseButton {
+    readonly label?: string;
+    readonly title?: string;
+    readonly icon?: string;
+    readonly rightIcon?: string;
+    readonly context?: string;
+    readonly classes?: string;
+    readonly style?: Partial<CSSStyleDeclaration>;
+}
+export interface IButton extends IBaseButton {
+    readonly type?: "submit" | "reset" | "button";
+    readonly disabled?: boolean;
+    onclick?(evt: IMithrilEvent): void;
+}
+export interface IButtonLink extends IBaseButton {
+    readonly href?: string;
+    readonly rel?: string;
+    readonly target?: "_self" | "_blank" | "_parent" | "_top";
+    readonly download?: string;
+}
 export {};
