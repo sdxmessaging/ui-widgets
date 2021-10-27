@@ -24,6 +24,7 @@ describe("floatLabel", () => {
 					instant: true,
 					layout: LayoutType.floatLabel,
 				},
+				invalid: false,
 				value
 			})
 		});
@@ -62,6 +63,7 @@ describe("floatLabel", () => {
 					instant: true,
 					layout: LayoutType.floatAlways,
 				},
+				invalid: false,
 				value
 			})
 
