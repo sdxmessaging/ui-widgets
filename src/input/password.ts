@@ -25,7 +25,11 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			pattern, inputmode,
 			instant, uiClass = {}
 		} = field;
-		return m(Layout, {field, value, invalid: propInvalid(field, value())}, m('.flex.flex-row.w-100', [
+		return m(Layout, {
+			field,
+			value,
+			invalid: propInvalid(field, value())
+		}, m('.flex.flex-row.w-100', [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, name, title, placeholder,
 				type: this.showPassword() ? "text" : "password",

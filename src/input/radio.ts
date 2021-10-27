@@ -19,7 +19,11 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 			options
 		} = field as IOptionField;
-		return m(LayoutFixed, {field, value: val, invalid: propInvalid(field, val())}, m(".w-100.flex.justify-center", {
+		return m(LayoutFixed, {
+			field,
+			value: val,
+			invalid: propInvalid(field, val())
+		}, m(".w-100.flex.justify-center", {
 			onchange: setValue(val),
 			style: {
 				padding: '1px 2px'

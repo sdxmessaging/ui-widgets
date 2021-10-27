@@ -5,7 +5,6 @@ import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface
 
 import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
-import { propInvalid } from "../../validation";
 
 const shrinkFont = "0.7em";
 const transitionOpts = "0.3s ease-in-out";
@@ -48,13 +47,13 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	}
 
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
-		const { field, value, xform = value } = attrs;
+		const { field, invalid, value, xform = value } = attrs;
 		const {
 			label, id, type = FieldType.text, placeholder, required, disabled,
 			layout = config.layoutType, uiClass = {}
 		} = field;
 		// Placeholder or value count as value content
-		const floatTop = this.shouldFloat(layout, placeholder || value());
+		const floatTop = this.shouldFloat(layout, placeholder || xform());
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
 			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
@@ -64,7 +63,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		},
 			// Input wrapper
 			m("fieldset.relative.pa0.ma0.flex.w-100", {
-				class: inputWrapperCls(uiClass, propInvalid(field, xform()))
+				class: inputWrapperCls(uiClass, invalid)
 			}, [
 				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into
