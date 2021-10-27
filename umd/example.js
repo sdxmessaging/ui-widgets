@@ -21,6 +21,7 @@ var dateVal = stream();
 var dateFormat = stream("default");
 var cardVal = stream();
 var colVal = stream("#cc0011");
+var labVal = stream("hello");
 var checkVal = stream();
 var optVal = stream();
 var faceVal = stream();
@@ -257,6 +258,25 @@ m.mount(document.getElementById("page"), {
 					value: colVal
 				}))
 			]),
+
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.Label, {
+					field: {
+						id: "label",
+						label: "Label"
+					},
+					value: labVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.BaseText, {
+					field: {
+						id: "label-out",
+						label: "Label Output",
+					},
+					value: labVal
+				}))
+			]),
+			
+			
 
 			// Password
 			m(".flex.mb2.ba.b--silver", [
