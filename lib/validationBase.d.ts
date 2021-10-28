@@ -1,7 +1,8 @@
-import { ClassComponent, CVnodeDOM, CVnode } from "mithril";
-import { IPropWidget } from ".";
-export declare class ValidationBase implements ClassComponent<IPropWidget> {
+import { ClassComponent, CVnodeDOM, CVnode, Children } from "mithril";
+import { IPropWidget } from "./interface/widget";
+export declare abstract class ValidationBase implements ClassComponent<IPropWidget> {
     protected invalid: boolean;
-    view(vnode: CVnode<IPropWidget>): void;
+    protected readonly selector: keyof Pick<HTMLElementTagNameMap, "input" | "textarea" | "select">;
+    abstract view(vnode: CVnode<IPropWidget>): Children;
     onupdate({ dom, attrs: { field, value } }: CVnodeDOM<IPropWidget>): void;
 }

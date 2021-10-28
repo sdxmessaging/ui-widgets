@@ -10,6 +10,8 @@ import { LayoutTop } from "./layout/layoutTopLabel";
 
 export class TextareaInput extends ValidationBase {
 
+	protected override readonly selector = "textarea";
+
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
