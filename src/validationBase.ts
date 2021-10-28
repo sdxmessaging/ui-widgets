@@ -1,31 +1,21 @@
-import m, { ClassComponent, CVnodeDOM, CVnode } from "mithril";
-import { IPropWidget } from ".";
+import m, { ClassComponent, CVnodeDOM, CVnode, Children } from "mithril";
+import { IPropWidget } from "./interface/widget";
 import { propInvalid } from "./validation";
 
-export class ValidationBase implements ClassComponent<IPropWidget>{
+export abstract class ValidationBase implements ClassComponent<IPropWidget>{
 
-    protected invalid = false;
+	protected invalid = false;
 
-    public view(vnode: CVnode<IPropWidget>) {
-        vnode;
-        throw new Error("Method not implemented.");
-    }
+	abstract view(vnode: CVnode<IPropWidget>): Children;
 
-    public onupdate({ dom , attrs : {field, value}} : CVnodeDOM<IPropWidget>){
-
-        const input = dom.querySelector("input") as HTMLInputElement;
-        const inputInvalid = !input.checkValidity();
-        const valueInvalid = propInvalid(field, value());
-        const invalid = valueInvalid || inputInvalid;
-        if (invalid !== this.invalid) {
-            this.invalid = invalid;
-            m.redraw();
-        }
-
-    }
-
-
-
-
+	public onupdate({ dom, attrs: { field, value } }: CVnodeDOM<IPropWidget>) {
+		const input = dom.querySelector("input") as HTMLInputElement;
+		// Validate from custom implementation or input element
+		const invalid = propInvalid(field, value()) || !input.checkValidity();
+		if (invalid !== this.invalid) {
+			this.invalid = invalid;
+			m.redraw();
+		}
+	}
 
 }

@@ -19,7 +19,7 @@ const fixedLabelTypes = new Set<string>([
 
 export class BaseInput extends ValidationBase {
 
-	public override view({ attrs }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, type = FieldType.text, name = id, title = label, placeholder,
