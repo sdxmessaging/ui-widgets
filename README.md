@@ -1,4 +1,4 @@
-# ui-widgets [![](https://data.jsdelivr.com/v1/package/gh/sdxmessaging/ui-widgets/badge)](https://www.jsdelivr.com/package/gh/sdxmessaging/ui-widgets)
+# ui-widgets [![](https://data.jsdelivr.com/v1/package/gh/sdxmessaging/ui-widgets/badge)](https://www.jsdelivr.com/package/gh/sdxmessaging/ui-widgets) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sdxmessaging_ui-widgets&metric=alert_status&token=316dd863c9185ce988acd14efc1fdb66791b67ba)](https://sonarcloud.io/summary/new_code?id=sdxmessaging_ui-widgets)
 
 Build powerful form inputs/outputs with mithril and streams.
 
