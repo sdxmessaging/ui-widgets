@@ -106,9 +106,6 @@ describe("CardDateInput", () => {
 		yearIn.value = "00";
 		monthIn.dispatchEvent(new Event("input"));
 		yearIn.dispatchEvent(new Event("input"));
-		m.redraw.sync();
-		expect(yearIn.style.textAlign).toEqual("center");
-		expect(monthIn.style.textAlign).toEqual("center");
 		expect(value()).toBe("02/00");
 
 		monthIn.value = "00";
