@@ -51,6 +51,9 @@ export function change(setFiles: (setList: FileList | null) => void) {
 }
 
 export class FileInput implements ClassComponent<IFileInput> {
+
+	protected readonly showLabel : boolean = true;
+
 	public oncreate({ dom, attrs: { value } }: CVnodeDOM<IFileInput>) {
 		value.map((list) => {
 			if (list.length === 0) {
@@ -86,7 +89,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 				disabled: disabled || readonly,
 				onchange: change(onSet)
 			}),
-			label ? m("span.db.mb1", {
+			this.showLabel && label ? m("span.db.mb1", {
 				class: labelCls(uiClass, required)
 			}, getLabelText(label, required)) : null,
 			children

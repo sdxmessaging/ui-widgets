@@ -16,6 +16,7 @@ export declare function change(setFiles: (setList: FileList | null) => void): ({
     target: HTMLInputElement;
 }) => void;
 export declare class FileInput implements ClassComponent<IFileInput> {
+    protected readonly showLabel: boolean;
     oncreate({ dom, attrs: { value } }: CVnodeDOM<IFileInput>): void;
     view({ attrs: { field, defaultAccept, multiple, dragging, onSet }, children }: CVnode<IFileInput>): m.Vnode<any, any>;
 }

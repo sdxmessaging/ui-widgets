@@ -23,6 +23,7 @@ export declare function inputCls({ input, merge }: IWidgetClasses): string;
 export declare function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean): string;
 export declare function textareaCls({ input, merge }: IWidgetClasses): string;
 export declare function radioInputCls({ input, merge }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean): string;
+export declare function fileButtonCls(dragging: boolean): string;
 export declare function fileInputCls(dragging: boolean): string;
 export declare function pointerCls(disabled?: boolean, readonly?: boolean): "" | "pointer";
 export {};

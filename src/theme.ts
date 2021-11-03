@@ -93,6 +93,11 @@ export function radioInputCls({ input = "", merge = true }: IWidgetClasses, chec
 	return `${input} ${merge ? theme.radio : ""} ${checked ? theme.radioChecked : theme.radioUnchecked} ${pointerCls(disabled, readonly)}`;
 }
 
+export function fileButtonCls(dragging: boolean) {
+	return `${dragging ? theme.fileHover : ""}`;
+}
+
+
 export function fileInputCls(dragging: boolean) {
 	return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
 }

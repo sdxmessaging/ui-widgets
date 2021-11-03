@@ -42,6 +42,7 @@ var readonly = stream(false);
 var disabled = stream(false);
 var displayFileList = stream(false);
 // Files
+var fileButtonList = stream([]);
 var fileList = stream([]);
 var imgList = stream([]);
 var imgInputList = stream([]);
@@ -613,6 +614,27 @@ m.mount(document.getElementById("page"), {
 			m("p", "These file widgets operate on a single file array stream"),
 
 			// FileSelect/FileList
+
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.FileButtonSelect, {
+					field: {
+						id: "file-button-in",
+						label: "File Button Input",
+					},
+					value: fileButtonList,
+					//displayType: "none",
+					//icon: "fas fa-print",
+					// onSet: addFiles(value, true)
+				})),
+				m(".w-50.pa2", m(uiWidgets.FileList, {
+					field: {
+						id: "file-button-out",
+						label: "File Button Output"
+					},
+					value: fileButtonList
+				}))
+			]),
+			
 			m(".flex.mb2.ba.b--silver", [
 				m(".w-50.pa2", m(uiWidgets.FileSelect, {
 					field: {
