@@ -140,7 +140,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 		} = attrs.field as IOptionField;
 		const classStr = inputCls(uiClass);
-		const { field, value } = attrs;
+		const { field } = attrs;
 		const createDateInputs = ({ type, value }: IDateParts) => {
 			switch (type) {
 				case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
@@ -204,7 +204,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}
 		};
 
-		return m(LayoutFixed, { value, field, invalid: !this.valid },
+		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid },
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 				// padding to behave similar to HTML native input paddings
