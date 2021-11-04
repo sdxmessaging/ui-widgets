@@ -8,11 +8,10 @@ import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
 import { CheckLabel } from "../display/checkLabel";
-
 export class CheckboxInput implements ClassComponent<IPropWidget> {
 
-	protected onIcon: keyof TSubset<IConfig, string> = "checkIcn";
-	protected offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
+	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
+	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {

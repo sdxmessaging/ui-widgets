@@ -1,18 +1,18 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { IPropWidget } from "../interface/widget";
 export declare class DateInput implements ClassComponent<IPropWidget> {
-    private day;
-    private month;
-    private year;
-    private date;
-    private valid;
+    private readonly day;
+    private readonly month;
+    private readonly year;
+    private readonly date;
+    private readonly valid;
+    private dateInputAdvanceOrder;
+    private readonly dom;
+    private readonly focusedInput;
+    private dateParts;
+    private readonly locale;
     private buildDate;
     private updateInputs;
-    private dateInputAdvanceOrder;
-    private dom;
-    private focusedInput;
-    private dateParts;
-    private locale;
     private findNextInput;
     private findPrevInput;
     private setDateInputs;

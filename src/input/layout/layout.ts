@@ -9,7 +9,7 @@ import { FloatLabel } from "./floatLabel";
 
 export class Layout implements ClassComponent<IPropLayoutWidget> {
 
-	protected layout = FloatLabel;
+	protected readonly layout = FloatLabel;
 
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
 		const { field: { layout = config.layoutType } } = attrs;

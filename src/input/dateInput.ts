@@ -11,15 +11,24 @@ import { HiddenDateInput } from "./hiddenDateInput";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 interface IDateParts {
-	type: TDateType | "literal",
-	value: string
+	readonly type: TDateType | "literal",
+	readonly value: string
 }
 export class DateInput implements ClassComponent<IPropWidget> {
-	private day = stream<string>("");
-	private month = stream<string>("");
-	private year = stream<string>("");
-	private date = stream<string>();
-	private valid = this.date.map(Boolean);
+
+	private readonly day = stream<string>("");
+	private readonly month = stream<string>("");
+	private readonly year = stream<string>("");
+	private readonly date = stream<string>();
+	private readonly valid = this.date.map(Boolean);
+
+	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
+
+	private readonly dom = stream<Element>();
+	private readonly focusedInput = stream<TDateInputType | undefined>(undefined);
+	private dateParts!: ReadonlyArray<IDateParts>;
+	private readonly locale = stream<string | undefined>(undefined);
+
 	private buildDate() {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 	}
@@ -40,15 +49,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			valueStream('');
 		}
 	}
-
-	private dateInputAdvanceOrder!: Intl.DateTimeFormatPartTypes[];
-
-
-	private dom = stream<Element>();
-	private focusedInput = stream<TDateInputType | undefined>(undefined);
-	private dateParts!: IDateParts[];
-	private locale = stream<string | undefined>(undefined);
-
 
 	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
 	private findNextInput(type: TDateType) {

@@ -14,7 +14,7 @@ import { FileButtonInput } from "./fileButtonInput";
 
 export class FileButtonSelect implements ClassComponent<IFileWidget> {
 
-    protected dragging: stream<boolean> = stream<boolean>(false);
+    protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
     public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
         const { label = "Add File", required, uiClass = {} } = field;

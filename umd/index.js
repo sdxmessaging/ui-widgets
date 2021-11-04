@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-11-03T11:40:54.000Z */
+/* @preserve built on: 2021-11-04T15:10:06.349Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'signature_pad'], factory) :

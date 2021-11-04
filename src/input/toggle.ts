@@ -4,7 +4,7 @@ import { CheckboxInput } from "./checkbox";
 
 export class ToggleInput extends CheckboxInput {
 
-	protected override onIcon: keyof TSubset<IConfig, string> = "toggleOnIcn";
-	protected override offIcon: keyof TSubset<IConfig, string> = "toggleOffIcn";
+	protected override readonly onIcon: keyof TSubset<IConfig, string> = "toggleOnIcn";
+	protected override readonly offIcon: keyof TSubset<IConfig, string> = "toggleOffIcn";
 
 }

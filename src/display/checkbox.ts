@@ -11,8 +11,8 @@ import { CheckLabel } from "./checkLabel";
 
 export class Checkbox implements ClassComponent<IPropWidget> {
 
-	protected onIcon: keyof TSubset<IConfig, string> = "checkIcn";
-	protected offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
+	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
+	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, uiClass = {} } = field;

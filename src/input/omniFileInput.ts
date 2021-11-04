@@ -47,7 +47,7 @@ export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
 
 export class OmniFileInput implements ClassComponent<IFileWidget> {
 
-	protected dragging: stream<boolean> = stream<boolean>(false);
+	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());

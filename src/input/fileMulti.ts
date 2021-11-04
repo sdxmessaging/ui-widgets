@@ -37,7 +37,7 @@ export function removeFile(fileList: stream<IFile[]>, removeGuid: string) {
 
 export class FileMulti implements ClassComponent<IFileWidget> {
 
-	protected dragging: stream<boolean> = stream<boolean>(false);
+	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { disabled, uiClass = {} } = field;

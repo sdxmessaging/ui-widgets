@@ -15,7 +15,7 @@ import { addImages } from "./imageMulti";
 
 export class ImageSelect implements ClassComponent<IFileWidget> {
 
-	protected dragging: stream<boolean> = stream<boolean>(false);
+	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());

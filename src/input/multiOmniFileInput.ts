@@ -12,7 +12,7 @@ import { addOmniFiles } from "./omniFileInput";
 import { FileInput } from "./fileInput";
 
 export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
-	protected dragging: stream<boolean> = stream<boolean>(false);
+	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: {
 		field, value, displayType, showDisplay = true

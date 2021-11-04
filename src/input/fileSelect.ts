@@ -15,7 +15,7 @@ import { addFiles, removeFile } from "./fileMulti";
 
 export class FileSelect implements ClassComponent<IFileWidget> {
 
-	protected dragging: stream<boolean> = stream<boolean>(false);
+	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value, displayType } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());

@@ -39,7 +39,7 @@ export function addImages(fileList: stream<IFile[]>, maxSize: number, replace = 
 
 export class ImageMulti implements ClassComponent<IFileWidget> {
 
-	protected dragging: stream<boolean> = stream<boolean>(false);
+	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const { disabled, uiClass = {} } = field;

@@ -3,6 +3,6 @@ import { FixedLabel } from "./fixedLabel";
 
 export class LayoutFixed extends Layout {
 
-	protected override layout = FixedLabel;
+	protected override readonly layout = FixedLabel;
 
 }
