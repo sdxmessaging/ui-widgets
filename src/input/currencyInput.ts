@@ -34,6 +34,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
 				class: inputCls(uiClass),
+				onfocus: ({ target }: { target: HTMLInputElement; }) => target.select(),
 				value: lodash.isUndefined(xform())
 					? null
 					: numberToCurrencyStr(propToNumber(xform())),

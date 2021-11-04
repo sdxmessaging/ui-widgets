@@ -1295,6 +1295,7 @@ class FloatLabel {
                     style: {
                         transition: `font-size ${transitionOpts}`,
                         fontSize: floatTop ? shrinkFont : "1em",
+                        cursor: floatTop ? 'default' : 'text'
                     }
                 }, getLabelText(label, required)))
             ] : null,
@@ -1374,6 +1375,7 @@ class CurrencyInput {
             readonly, disabled, autofocus, autocomplete,
             pattern, inputmode, spellcheck,
             class: inputCls(uiClass),
+            onfocus: ({ target }) => target.select(),
             value: lodash.isUndefined(xform())
                 ? null
                 : numberToCurrencyStr(propToNumber(xform())),
@@ -1521,7 +1523,7 @@ class CardDateInput {
             // padding to behave similar to HTML native input paddings
             style: { padding: '1px 2px' }
         }, m("span", [
-            m("input.w-100.bg-transparent.bn.outline-0", {
+            m("input.w-100.bg-transparent.bn.outline-0.tc", {
                 id: `${id}-mm`, name: `${name}-mm`,
                 type: "text" /* text */, placeholder: "MM",
                 minlength: "2", maxlength: "2",
@@ -1529,8 +1531,7 @@ class CardDateInput {
                 required, readonly, disabled,
                 value: this.month(),
                 class: classStr, style: {
-                    maxWidth: "calc(2.8ex + 4px)" /* mm */,
-                    textAlign: this.month() && this.month().length === 2 ? "center" : "left",
+                    maxWidth: "calc(2.8ch + 4px)" /* mm */,
                     padding: '0px'
                 },
                 onfocus: lodash.partial(this.focusedInput, 'mm'),
@@ -1540,7 +1541,7 @@ class CardDateInput {
                 }
             })
         ]), m("span", { style: { padding: '0px', marginRight: '2px' } }, "/"), m("span", [
-            m("input.w-100.bg-transparent.bn.outline-0", {
+            m("input.w-100.bg-transparent.bn.outline-0.tc", {
                 id: `${id}-yy`, name: `${name}-yy`,
                 type: "text" /* text */, placeholder: "YY",
                 minlength: "2", maxlength: "2",
@@ -1548,8 +1549,7 @@ class CardDateInput {
                 required, readonly, disabled,
                 value: this.year(),
                 class: classStr, style: {
-                    maxWidth: "calc(2.7ex + 4px)" /* yy */,
-                    textAlign: this.year() && this.year().length === 2 ? "center" : "left",
+                    maxWidth: "calc(2.7ch + 4px)" /* yy */,
                     padding: '0px'
                 },
                 onfocus: lodash.partial(this.focusedInput, 'yy'),
@@ -1665,11 +1665,11 @@ class DateInput {
     view({ attrs }) {
         const { id, name = id, required, readonly, disabled, uiClass = {}, } = attrs.field;
         const classStr = inputCls(uiClass);
-        const { field, value } = attrs;
+        const { field } = attrs;
         const createDateInputs = ({ type, value }) => {
             switch (type) {
                 case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
-                case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+                case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-dd`, name: `${name}-dd`,
                     type: "text" /* text */, placeholder: "DD",
                     minlength: "2", maxlength: "2",
@@ -1684,12 +1684,11 @@ class DateInput {
                         this.updateInputs(attrs.value);
                     },
                     style: {
-                        maxWidth: "calc(2.3ex + 4px)" /* dd */,
-                        textAlign: this.day() && this.day().length === 2 ? "center" : "left",
+                        maxWidth: "calc(2.3ch + 4px)" /* dd */,
                         padding: '0px'
                     }
                 }));
-                case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+                case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-mm`, name: `${name}-mm`,
                     type: "text" /* text */, placeholder: "MM",
                     minlength: "2", maxlength: "2",
@@ -1704,12 +1703,11 @@ class DateInput {
                     },
                     onfocus: lodash.partial(this.focusedInput, 'mm'),
                     style: {
-                        maxWidth: "calc(2.8ex + 4px)" /* mm */,
-                        textAlign: this.month() && this.month().length === 2 ? "center" : "left",
+                        maxWidth: "calc(2.8ch + 4px)" /* mm */,
                         padding: '0px'
                     }
                 }));
-                case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+                case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-yyyy`, name: `${name}-yyyy`,
                     type: "text" /* text */, placeholder: "YYYY",
                     minlength: "4", maxlength: "4",
@@ -1724,14 +1722,13 @@ class DateInput {
                         this.updateInputs(attrs.value);
                     },
                     style: {
-                        maxWidth: "calc(4.2ex + 4px)" /* yyyy */,
-                        textAlign: this.year() && this.year().length === 4 ? "center" : "left",
+                        maxWidth: "calc(4.2ch + 4px)" /* yyyy */,
                         padding: '0px'
                     }
                 }));
             }
         };
-        return m(LayoutFixed, { value, field, invalid: !this.valid }, m('.flex', {
+        return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid }, m('.flex', {
             onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
             // padding to behave similar to HTML native input paddings
             style: { padding: '1px 2px' }
