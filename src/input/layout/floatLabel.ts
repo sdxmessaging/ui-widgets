@@ -93,6 +93,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 						style: {
 							transition: `font-size ${transitionOpts}`,
 							fontSize: floatTop ? shrinkFont : "1em",
+							cursor: floatTop ? 'default' : 'text'
 						}
 					}, getLabelText(label, required)))
 				] : null,
