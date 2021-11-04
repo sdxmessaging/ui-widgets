@@ -140,11 +140,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			uiClass = {},
 		} = attrs.field as IOptionField;
 		const classStr = inputCls(uiClass);
-		const { field, value } = attrs;
+		const { field } = attrs;
 		const createDateInputs = ({ type, value }: IDateParts) => {
 			switch (type) {
 				case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
-				case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+				case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-dd`, name: `${name}-dd`,
 					type: FieldType.text, placeholder: "DD",
 					minlength: "2", maxlength: "2",
@@ -160,11 +160,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					},
 					style: {
 						maxWidth: DateWidth.dd,
-						textAlign: this.day() && this.day().length === 2 ? "center" : "left",
 						padding: '0px'
 					}
 				}));
-				case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+				case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.text, placeholder: "MM",
 					minlength: "2", maxlength: "2",
@@ -180,11 +179,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					style: {
 						maxWidth: DateWidth.mm,
-						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
 						padding: '0px'
 					}
 				}));
-				case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0", {
+				case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-yyyy`, name: `${name}-yyyy`,
 					type: FieldType.text, placeholder: "YYYY",
 					minlength: "4", maxlength: "4",
@@ -200,14 +198,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					},
 					style: {
 						maxWidth: DateWidth.yyyy,
-						textAlign: this.year() && this.year().length === 4 ? "center" : "left",
 						padding: '0px'
 					}
 				}));
 			}
 		};
 
-		return m(LayoutFixed, { value, field, invalid: !this.valid },
+		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid },
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 				// padding to behave similar to HTML native input paddings

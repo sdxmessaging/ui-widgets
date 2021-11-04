@@ -14,10 +14,10 @@ export function thumbMaxSize() {
 
 // +4px for input native horizontal padding
 export const enum DateWidth {
-	dd = "calc(2.3ex + 4px)",
-	mm = "calc(2.8ex + 4px)",
-	yy = "calc(2.7ex + 4px)",
-	yyyy = "calc(4.2ex + 4px)"
+	dd = "calc(2.3ch + 4px)",
+	mm = "calc(2.8ch + 4px)",
+	yy = "calc(2.7ch + 4px)",
+	yyyy = "calc(4.2ch + 4px)"
 }
 
 // ui-widgets 1.4 theme map

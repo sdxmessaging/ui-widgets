@@ -83,7 +83,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			style: { padding: '1px 2px' }
 		},
 			m("span", [
-				m("input.w-100.bg-transparent.bn.outline-0", {
+				m("input.w-100.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.text, placeholder: "MM",
 					minlength: "2", maxlength: "2",
@@ -92,7 +92,6 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					value: this.month(),
 					class: classStr, style: {
 						maxWidth: DateWidth.mm,
-						textAlign: this.month() && this.month().length === 2 ? "center" : "left",
 						padding: '0px'
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
@@ -104,7 +103,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			]),
 			m("span", { style: { padding: '0px', marginRight: '2px' } }, "/"),
 			m("span", [
-				m("input.w-100.bg-transparent.bn.outline-0", {
+				m("input.w-100.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-yy`, name: `${name}-yy`,
 					type: FieldType.text, placeholder: "YY",
 					minlength: "2", maxlength: "2",
@@ -113,7 +112,6 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					value: this.year(),
 					class: classStr, style: {
 						maxWidth: DateWidth.yy,
-						textAlign: this.year() && this.year().length === 2 ? "center" : "left",
 						padding: '0px'
 					},
 					onfocus: lodash.partial(this.focusedInput, 'yy'),

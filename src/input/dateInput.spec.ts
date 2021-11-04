@@ -87,10 +87,6 @@ describe("DateInput", () => {
 		yearIn.dispatchEvent(new Event("input"));
 
 		expect(value()).toBe("2020-12-31");
-		m.redraw.sync();
-		expect(dayIn.style.textAlign).toEqual("center");
-		expect(monthIn.style.textAlign).toEqual("center");
-		expect(yearIn.style.textAlign).toEqual("center");
 
 		dayIn.value = "31";
 		monthIn.value = "12";
