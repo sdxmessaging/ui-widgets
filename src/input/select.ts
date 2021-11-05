@@ -7,19 +7,20 @@ import { inputCls } from "../theme";
 import { setValue } from "../utils";
 import { propInvalid } from "../validation";
 
-import { Layout } from "./layout/layout";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class SelectInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
+
 		const { field, value: val } = attrs;
 		const {
 			label: lbl, id, name = id, title = lbl,
 			required, readonly, disabled, autofocus, autocomplete,
-			uiClass = {},
+			uiClass = {}, placeholder = "--- Select one ---",
 			options
 		} = field as IOptionField;
-		return m(Layout, {
+		return m(LayoutFixed, {
 			field,
 			value: val,
 			invalid: propInvalid(field, val())
@@ -27,12 +28,16 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			id, name, title,
 			required, readonly, disabled, autofocus, autocomplete,
 			class: inputCls(uiClass),
-			value: val(),
+			value: val() ? val() : "",
 			onchange: setValue(val)
-		}, lodash.map(options, ({ value, label = value }) => m("option", {
-			value,
-			disabled: disabled || readonly
-		}, label))));
+		}, m('option', {
+			disabled: true,
+			value: ""
+		}, placeholder),
+			lodash.map(options, ({ value, label = value }) => m("option", {
+				value,
+				disabled: disabled || readonly
+			}, label))));
 	}
 
 }
