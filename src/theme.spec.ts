@@ -2,7 +2,7 @@ import { theme, updateClasses } from "./theme";
 import { getButtonContext, updateButtonContext } from "./theme";
 import {
 	labelCls,
-	inputCls, fileInputCls, textareaCls, radioInputCls,
+	inputCls, fileInputWrapperCls, textareaCls, radioInputCls,
 	inputWrapperCls, wrapperCls
 } from "./theme";
 
@@ -59,8 +59,8 @@ describe("Theme Classes", () => {
 	});
 
 	test("fileInputCls", () => {
-		expect(fileInputCls(false)).toBe(`${theme.fileInput} `);
-		expect(fileInputCls(true)).toBe(`${theme.fileInput} ${theme.fileHover}`);
+		expect(fileInputWrapperCls({ label: "test", merge: true }, false, false)).toBe(` ${theme.fileInput}  `);
+		expect(fileInputWrapperCls({ label: "test", merge: true }, true, false)).toBe(` ${theme.fileInput}  ${theme.fileHover}`);
 	});
 
 	test("textareaCls", () => {
