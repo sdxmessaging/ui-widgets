@@ -97,9 +97,12 @@ export function fileButtonCls(dragging: boolean) {
 	return `${dragging ? theme.fileHover : ""}`;
 }
 
+// export function fileInputWrapperCls(dragging: boolean) {
+// 	return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
+// }
 
-export function fileInputCls(dragging: boolean) {
-	return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
+export function fileInputWrapperCls({inputWrapper = "", merge = true} : IWidgetClasses, dragging: boolean, invalid: boolean) {
+	return `${inputWrapper} ${merge ? theme.fileInput : ""} ${invalid ? theme.invalidInputWrapper : ""} ${dragging ? theme.fileHover : ""}`;
 }
 
 export function pointerCls(disabled?: boolean, readonly?: boolean) {

@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputCls, inputWrapperCls, wrapperCls, thumbMaxSize } from "../theme";
+import { fileInputWrapperCls, wrapperCls, thumbMaxSize } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
 import { resizeImage } from "../imageUtils";
 import { fileInvalid } from "../validation";
@@ -53,16 +53,12 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				onSet: addImages(value, config.imageMaxSize),
 				value
 			},
-				m("div", {
-					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
+				m(".w-100.pa1.dt.tc", {
+					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				},
-					m(".w-100.pa1.dt.tc", {
-						class: fileInputCls(this.dragging())
-					},
-						m("i.fa-2x.dtc.v-mid", {
-							class: config.cameraIcn
-						})
-					)
+					m("i.fa-2x.dtc.v-mid", {
+						class: config.cameraIcn
+					})
 				)
 			),
 			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",

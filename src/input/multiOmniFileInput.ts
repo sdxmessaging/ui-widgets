@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { fileInvalid } from "../validation";
 
 import { DisplayTypeComponent } from "../display/displayTypeComponent";
@@ -28,18 +28,14 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				onSet: addOmniFiles(value, false),
 				value
 			},
-				m("div", {
-					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
-				},
-					m(".flex.items-center.pa1.dt", {
-						class: fileInputCls(this.dragging())
-					}, [
-						m("i.pa1", {
-							class: config.uploadIcn
-						}),
-						m("span.ma1.flex-auto", config.addFileTxt)
-					])
-				)
+				m(".flex.items-center.pa1.dt", {
+					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
+				}, [
+					m("i.pa1", {
+						class: config.uploadIcn
+					}),
+					m("span.ma1.flex-auto", config.addFileTxt)
+				])
 			),
 			showDisplay ? m(DisplayTypeComponent, {
 				displayType,

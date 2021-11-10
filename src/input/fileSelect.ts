@@ -5,13 +5,14 @@ import stream from "mithril/stream";
 import { DisplayType, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputCls, inputWrapperCls, wrapperCls } from "../theme";
+import { fileInputWrapperCls, wrapperCls } from "../theme";
 
-import { fileInvalid } from "../validation";
+// import { fileInvalid } from "../validation";
 
 import { FileOpen } from "../display/fileOpen";
 import { FileInput } from "./fileInput";
 import { addFiles, removeFile } from "./fileMulti";
+import { fileInvalid } from "../validation";
 
 export class FileSelect implements ClassComponent<IFileWidget> {
 
@@ -33,11 +34,8 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value, true),
 				value
 			},
-				m("div", {
-					class: inputWrapperCls(uiClass, fileInvalid(field, value()))
-				},
 					m(".flex.items-center.pa1", {
-						class: fileInputCls(this.dragging())
+						class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 					}, [
 						m("i.pa1", {
 							class: config.uploadIcn
@@ -52,7 +50,6 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 							})
 						] : null
 					])
-				)
 			)
 		);
 	}

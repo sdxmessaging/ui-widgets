@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileButtonCls, getButtonContext, inputWrapperCls, labelCls, theme } from "../theme";
+import { fileButtonCls, getButtonContext, fileInputWrapperCls, labelCls, theme } from "../theme";
 
 import { fileInvalid } from "../validation";
 
@@ -22,21 +22,21 @@ export class FileButtonSelect implements ClassComponent<IFileWidget> {
             class: labelCls(uiClass, required)
         }, getLabelText(label, required)) : null,
             m("div", {
-            class: `${inputWrapperCls(uiClass, fileInvalid(field, value()))} ${getButtonContext()} ${theme.button}`,
-        },
-            m(FileButtonInput, {
-                field,
-                multiple: false,
-                dragging: this.dragging,
-                onSet: addFiles(value, true),
-                value
+                class: `${fileInputWrapperCls(uiClass, this.dragging(),fileInvalid(field, value()))} ${getButtonContext()} ${theme.button}`,
             },
-                m(".flex.items-center", {
-                    class: fileButtonCls(this.dragging())
-                }, [
-                    labelIcon(config.uploadIcn, label, undefined)
-                ])
-            )
-        );
+                m(FileButtonInput, {
+                    field,
+                    multiple: false,
+                    dragging: this.dragging,
+                    onSet: addFiles(value, true),
+                    value
+                },
+                    m(".flex.items-center", {
+                        class: fileButtonCls(this.dragging())
+                    }, [
+                        labelIcon(config.uploadIcn, label, undefined)
+                    ])
+                )
+            );
     }
 }
