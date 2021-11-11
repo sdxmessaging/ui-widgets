@@ -42,17 +42,10 @@ export function inputmodeInvalid(field: IField, value: TProp): boolean {
 			const matches = String(value).match(/^(-?)\d+((\.|,)(\d+))?/);
 			return matches ? !matches.includes(String(value)) : true;
 		}
-		case "tel":
-			break;
 		case "decimal": {
 			const matches = String(value).match(/^(-?)(\d+)((\.|,){1})(\d+)/);
-			console.log(matches);
 			return matches ? !matches.includes(String(value)) : true;
 		}
-		case "email":
-			break;
-		case "url":
-			break;
 	}
 	return false;
 
