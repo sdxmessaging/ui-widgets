@@ -32,7 +32,7 @@ const classMapState: Required<IClassMap> = {
 	radio: "dark-gray pa2 br2",
 	radioChecked: "bg-light-blue",
 	radioUnchecked: "o-60",
-	fileInput: "dark-gray ba bw1 br3 b--dashed b--black-30",
+	fileInputWrapper: "ba bw1 br3 b--black-30 b--dashed dark-gray",
 	fileHover: "blue b--blue",
 	displayLabel: "silver",
 	displayValue: "dark-gray",
@@ -93,16 +93,12 @@ export function radioInputCls({ input = "", merge = true }: IWidgetClasses, chec
 	return `${input} ${merge ? theme.radio : ""} ${checked ? theme.radioChecked : theme.radioUnchecked} ${pointerCls(disabled, readonly)}`;
 }
 
-export function fileButtonCls(dragging: boolean) {
+export function fileHoverCls(dragging: boolean) {
 	return `${dragging ? theme.fileHover : ""}`;
 }
 
-// export function fileInputWrapperCls(dragging: boolean) {
-// 	return `${theme.fileInput} ${dragging ? theme.fileHover : ""}`;
-// }
-
-export function fileInputWrapperCls({inputWrapper = "", merge = true} : IWidgetClasses, dragging: boolean, invalid: boolean) {
-	return `${inputWrapper} ${merge ? theme.fileInput : ""} ${invalid ? theme.invalidInputWrapper : ""} ${dragging ? theme.fileHover : ""}`;
+export function fileInputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean) {
+	return `${inputWrapper} ${merge ? theme.fileInputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""} ${fileHoverCls(dragging)}`;
 }
 
 export function pointerCls(disabled?: boolean, readonly?: boolean) {

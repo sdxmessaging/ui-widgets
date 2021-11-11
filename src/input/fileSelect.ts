@@ -34,22 +34,22 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				onSet: addFiles(value, true),
 				value
 			},
-					m(".flex.items-center.pa1", {
-						class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
-					}, [
-						m("i.pa1", {
-							class: config.uploadIcn
-						}),
-						m("span.ma1.flex-auto", innerText),
-						file && displayType !== DisplayType.none ? [
-							m(FileOpen, file),
-							m("i.pa1.pointer.dim", {
-								title: `Remove ${file.name}`,
-								class: config.cancelIcn,
-								onclick: removeFile(value, file.guid)
-							})
-						] : null
-					])
+				m(".flex.items-center.pa1", {
+					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
+				}, [
+					m("i.pa1", {
+						class: config.uploadIcn
+					}),
+					m("span.ma1.flex-auto", innerText),
+					file && displayType !== DisplayType.none ? [
+						m(FileOpen, file),
+						m("i.pa1.pointer.dim", {
+							title: `Remove ${file.name}`,
+							class: config.cancelIcn,
+							onclick: removeFile(value, file.guid)
+						})
+					] : null
+				])
 			)
 		);
 	}

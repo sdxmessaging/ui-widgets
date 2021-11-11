@@ -6,10 +6,9 @@ import { TStyle } from "../interface/theme";
 import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes, TPropMap } from "../interface/widget";
 
 import { config } from "../config";
-import { theme, inputWrapperCls, wrapperCls } from "../theme";
+import { theme, wrapperCls } from "../theme";
 import { getLabel, imgSrc, dataUrlToFile } from "../utils";
 import { scaleDataUrl } from "../imageUtils";
-import { fileInvalid } from "../validation";
 
 import { SignDraw } from "./signDraw";
 import { SignType } from "./signType";
@@ -90,11 +89,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			class: wrapperCls(uiClass, disabled)
 		}, [
 			getLabel(id, uiClass, lbl),
-			m("div", {
-				class: this.signType !== SignTypes.Stamp
-					? inputWrapperCls(uiClass, fileInvalid(field, value()))
-					: undefined
-			}, readonly || disabled
+			readonly || disabled
 				// Display component in "readonly" mode
 				? m(".aspect-ratio", {
 					id,
@@ -123,7 +118,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 					// Display signature preview/creator
 					: m(".aspect-ratio.pointer", {
 						id,
-						class: theme.fileInput,
+						class: theme.fileInputWrapper,
 						style
 					}, fileObj
 						// Current signature
@@ -153,7 +148,6 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							))
 						)
 					)
-			)
 		]);
 	}
 
