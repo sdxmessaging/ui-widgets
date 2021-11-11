@@ -12,7 +12,7 @@ export function propInvalid(field: IField, value: TProp): boolean {
 	}
 
 	if (rangeInvalid(field, value)) return true;
-	
+
 	return false;
 }
 
@@ -20,30 +20,35 @@ export function rangeInvalid(field: IField, value: TProp) {
 	let overMax = false;
 	let underMin = false;
 
-	if (field.min != null){
-		underMin = Number.parseInt(String(value)) < field.min; 
+	if (field.min != null) {
+		underMin = Number.parseInt(String(value)) < field.min;
 	}
-	if (field.max != null){
+	if (field.max != null) {
 		overMax = Number.parseInt(String(value)) > field.max;
 	}
-	if (field.minlength != null){
-		underMin = String(value).length < field.minlength; 
+	if (field.minlength != null) {
+		underMin = String(value).length < field.minlength;
 	}
-	if (field.maxlength != null){
+	if (field.maxlength != null) {
 		overMax = String(value).length > field.maxlength;
 	}
 
 	return underMin || overMax;
 }
 
-export function inputmodeInvalid(field : IField, value : TProp) : boolean {
-	switch(field.inputmode){
-		case "numeric":
-			return /-?[0-9]*/.test(String(value));
+export function inputmodeInvalid(field: IField, value: TProp): boolean {
+	switch (field.inputmode) {
+		case "numeric": {
+			const matches = String(value).match(/^(-?)\d+((\.|,)(\d+))?/);
+			return matches ? !matches.includes(String(value)) : true;
+		}
 		case "tel":
 			break;
-		case "decimal":
-			return /-?[0-9]*(.|,)[0-9]*/.test(String(value));
+		case "decimal": {
+			const matches = String(value).match(/^(-?)(\d+)((\.|,){1})(\d+)/);
+			console.log(matches);
+			return matches ? !matches.includes(String(value)) : true;
+		}
 		case "email":
 			break;
 		case "url":
@@ -53,7 +58,7 @@ export function inputmodeInvalid(field : IField, value : TProp) : boolean {
 
 }
 
-export function patternInvalid(pattern : string, value : string) : boolean {
+export function patternInvalid(pattern: string, value: string): boolean {
 	return !(new RegExp(pattern)).test(value);
 }
 
