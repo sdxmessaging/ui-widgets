@@ -1,4 +1,4 @@
-import { theme, updateClasses } from "./theme";
+import { fileButtonCls, theme, updateClasses } from "./theme";
 import { getButtonContext, updateButtonContext } from "./theme";
 import {
 	labelCls,
@@ -58,9 +58,15 @@ describe("Theme Classes", () => {
 		expect(inputCls({ input: "test", merge: false })).toBe("test ");
 	});
 
-	test("fileInputCls", () => {
+	test("fileInputWrapperCls", () => {
 		expect(fileInputWrapperCls({ label: "test", merge: true }, false, false)).toBe(` ${theme.fileInput}  `);
 		expect(fileInputWrapperCls({ label: "test", merge: true }, true, false)).toBe(` ${theme.fileInput}  ${theme.fileHover}`);
+		expect(fileInputWrapperCls({ label: "test", merge: true }, false, true)).toBe(` ${theme.fileInput} ${theme.invalidInputWrapper} `);
+		expect(fileInputWrapperCls({ label: "test", merge: true }, true, true)).toBe(` ${theme.fileInput} ${theme.invalidInputWrapper} ${theme.fileHover}`);
+		expect(fileInputWrapperCls({ label: "test", merge: false }, false, false)).toBe(`   `);
+		expect(fileInputWrapperCls({ label: "test", merge: false }, true, false)).toBe(`   ${theme.fileHover}`);
+		expect(fileInputWrapperCls({ label: "test", merge: false }, false, true)).toBe(`  ${theme.invalidInputWrapper} `);
+		expect(fileInputWrapperCls({ label: "test", merge: false }, true, true)).toBe(`  ${theme.invalidInputWrapper} ${theme.fileHover}`);
 	});
 
 	test("textareaCls", () => {
@@ -82,6 +88,11 @@ describe("Theme Classes", () => {
 	test("wrapperCls", () => {
 		expect(wrapperCls({})).toBe(` ${theme.wrapper} `);
 		expect(wrapperCls({ wrapper: "test", merge: false })).toBe("test  ");
+	});
+
+	test("fileButtonCls", () => {
+		expect(fileButtonCls(false)).toBe("");
+		expect(fileButtonCls(true)).toBe(`${theme.fileHover}`);
 	});
 
 });
