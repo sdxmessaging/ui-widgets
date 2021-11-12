@@ -22,19 +22,20 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private readonly dom = stream<Element>();
 	private readonly focusedInput = stream<TDateInputType>('mm');
 
-	private buildDate() {
+	private buildDate(required: boolean) {
 		this.date(`${this.month()}/${this.year()}`);
-		this.valid(validateCardDate(this.year(), this.month()));
+		this.valid(validateCardDate(this.year(), this.month(), required));
 	}
 
-	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
+	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
 		// Split value into date parts
+
 		(value as stream<TProp>).map((newVal) => {
 			const [month, year = ""] = String(newVal).split("/");
 			if (month.length === 2 && year.length === 2) {
 				this.month(month);
 				this.year(year);
-				this.buildDate();
+				this.buildDate(Boolean(field.required));
 			}
 			else if (!newVal && this.date()) {
 				this.month('');
@@ -67,7 +68,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, { value, field, invalid: !this.valid() }, m('.flex', {
+		return m(LayoutFixed, { value, field, invalid: (!this.valid() && Boolean(required)) || (!this.valid()) }, m('.flex', {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 			// padding to behave similar to HTML native input paddings
 			style: { padding: '1px 2px' },
@@ -87,7 +88,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					oninput: () => {
 						handleDateChange(this.month, id, "mm", this.dom(), "yy");
-						this.buildDate();
+						this.buildDate(Boolean(required));
 					},
 					onblur: lodash.partial(appendZeroToDayMonth, this.month)
 				})
@@ -109,7 +110,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.year, id, "yy", this.dom());
-						this.buildDate();
+						this.buildDate(Boolean(required));
 					},
 				}),
 				m(HiddenDateInput, attrs)

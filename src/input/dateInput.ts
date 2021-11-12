@@ -30,9 +30,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private dateParts!: ReadonlyArray<IDateParts>;
 	private readonly locale = stream<string | undefined>(undefined);
 
-	private buildDate() {
+	private buildDate(required: boolean) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
-		this.valid(validateDate(this.year(), this.month(), this.day()));
+		this.valid(validateDate(this.year(), this.month(), this.day(), required));
 	}
 
 	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
@@ -71,9 +71,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}
 	}
 
-	public oninit({ attrs }: CVnode<IPropWidget>) {
+	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-		(attrs.value as stream<TProp>).map((newVal) => {
+		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
 			if (lodash.isDate(date) && !isNaN(date.getTime())) {
 				const day = lodash.padStart(String(date.getDate()), 2, "0");
@@ -82,7 +82,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.day(day);
 				this.month(month);
 				this.year(year);
-				this.buildDate();
+				this.buildDate(Boolean(field.required));
 			}
 			else if (!newVal && this.date()) {
 				this.day('');
@@ -95,8 +95,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.locale.map((newVal) => {
 			this.setDateInputs(newVal);
 		});
-		this.valid(!attrs.field.required);
-		this.setLocale(attrs.field);
+		this.valid(!field.required);
+		this.setLocale(field);
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
@@ -142,7 +142,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
-						this.buildDate();
+						this.buildDate(Boolean(required));
 					},
 					onblur: lodash.partial(appendZeroToDayMonth, this.day),
 					style: {
@@ -161,7 +161,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
-						this.buildDate();
+						this.buildDate(Boolean(required));
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					onblur: lodash.partial(appendZeroToDayMonth, this.month),
@@ -182,7 +182,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
-						this.buildDate();
+						this.buildDate(Boolean(required));
 					},
 					style: {
 						maxWidth: DateWidth.yyyy,

@@ -159,28 +159,32 @@ export function appendZeroToDayMonth(valueStream: TPropStream) {
 	if (value.length === 1) valueStream(`0${value}`);
 }
 
-export function validateDate(year: string, month: string, day: string) {
+export function validateDate(year: string, month: string, day: string, required: boolean) {
 	const validation = DateTime.fromObject({
 		year: Number(year),
 		month: Number(month),
 		day: Number(day)
 	});
-	return validation.isValid && Number(year) >= 1900;
+	const dateEmpty = !year && !month && !day;
+	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
-export function validateCardDate(year: string, month: string) {
+export function validateCardDate(year: string, month: string, required: boolean) {
 	// TODO validate year in the future if it is a valid_to input
-	return month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2;
+	const dateEmpty = !year && !month;
+	return (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
+		|| (dateEmpty && !required);
 }
 
-export function validateStyle(year: string, month: string, day = "") {
+export function validateStyle(year: string, month: string, day = "", required: boolean) {
 	// date input
 	if (day) {
-		return (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day));
+		return (day.length === 2 && month.length === 2
+			&& year.length === 4 && !validateDate(year, month, day, required));
 	}
 	// card date input
 	else {
-		return (month.length === 2 && year.length === 2 && !validateCardDate(year, month));
+		return (month.length === 2 && year.length === 2 && !validateCardDate(year, month, required));
 	}
 }
 
