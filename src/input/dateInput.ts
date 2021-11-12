@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TField, TProp } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
 import { autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
@@ -20,7 +20,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly month = stream<string>("");
 	private readonly year = stream<string>("");
 	private readonly date = stream<string>();
-	private readonly valid = this.date.map(Boolean);
+	// private readonly valid = this.date.map(Boolean);
+	private readonly valid = stream(true);
 
 	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
 
@@ -30,27 +31,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly locale = stream<string | undefined>(undefined);
 
 	private buildDate() {
-		const date = `${this.year()}-${this.month()}-${this.day()}`;
-		if (validateDate(this.year(), this.month(), this.day())) {
-			this.date(date);
-		}
-	}
-
-	private updateInputs(valueStream: TPropStream) {
-		const newYear = parseInt(this.year());
-		const newMonth = parseInt(this.month()) - 1;
-		const newDay = parseInt(this.day());
-		const newDate = new Date(newYear, newMonth, newDay);
-		if (newDate.getFullYear() === newYear && this.year().length === 4
-			&& newDate.getMonth() === newMonth && newDate.getDate() === newDay
-			&& this.day().length === 2 && this.month().length === 2) {
-			this.buildDate();
-			valueStream(this.date());
-		}
-		else {
-			this.date('');
-			valueStream('');
-		}
+		this.date(`${this.year()}-${this.month()}-${this.day()}`);
+		this.valid(validateDate(this.year(), this.month(), this.day()));
 	}
 
 	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
@@ -113,6 +95,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.locale.map((newVal) => {
 			this.setDateInputs(newVal);
 		});
+		this.valid(!attrs.field.required);
 		this.setLocale(attrs.field);
 	}
 
@@ -159,7 +142,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
-						this.updateInputs(attrs.value);
+						this.buildDate();
 					},
 					style: {
 						maxWidth: DateWidth.dd,
@@ -177,7 +160,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
-						this.updateInputs(attrs.value);
+						this.buildDate();
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					style: {
@@ -197,7 +180,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
-						this.updateInputs(attrs.value);
+						this.buildDate();
 					},
 					style: {
 						maxWidth: DateWidth.yyyy,
@@ -207,14 +190,16 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}
 		};
 
-		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid() && Boolean(required) },
+		return m(LayoutFixed, {
+			value: attrs.value, field,
+			invalid: (!this.valid() && Boolean(required)) || (!this.valid())
+		},
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 				// padding to behave similar to HTML native input paddings
 				style: {
 					padding: '1px 2px',
-				},
-				// class: validateStyle(this.year(), this.month(), this.day()) ? theme.invalidInputWrapper : ""
+				}
 			},
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);

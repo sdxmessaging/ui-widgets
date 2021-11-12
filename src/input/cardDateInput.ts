@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
 import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
@@ -17,26 +17,14 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 	// Combine date parts
 	private readonly date = stream<string>("");
-	private readonly valid = this.date.map(Boolean);
+	private readonly valid = stream(true);
 
 	private readonly dom = stream<Element>();
 	private readonly focusedInput = stream<TDateInputType>('mm');
 
 	private buildDate() {
-		if (validateCardDate(this.year(), this.month())) {
-			this.date(`${this.month()}/${this.year()}`);
-		}
-	}
-
-	private updateInputs(valueStream: TPropStream) {
-		if (this.month() && this.month().length === 2 && this.year() && this.year().length === 2) {
-			this.buildDate();
-			valueStream(this.date());
-		}
-		else {
-			this.date('');
-			valueStream('');
-		}
+		this.date(`${this.month()}/${this.year()}`);
+		this.valid(validateCardDate(this.year(), this.month()));
 	}
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
@@ -79,11 +67,10 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, { value, field, invalid: !this.valid() && Boolean(required) }, m('.flex', {
+		return m(LayoutFixed, { value, field, invalid: !this.valid() }, m('.flex', {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 			// padding to behave similar to HTML native input paddings
 			style: { padding: '1px 2px' },
-			// class: validateStyle(this.year(), this.month(), undefined) ? theme.invalidInputWrapper : ""
 		},
 			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0.tc", {
@@ -100,7 +87,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
-						this.updateInputs(attrs.value);
+						this.buildDate();
 					}
 				})
 			]),
@@ -121,7 +108,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: (e: InputEvent) => {
 						handleDateChange(this.year, id, "yy", this.dom(), e);
-						this.updateInputs(attrs.value);
+						this.buildDate();
 					}
 				}),
 				m(HiddenDateInput, attrs)

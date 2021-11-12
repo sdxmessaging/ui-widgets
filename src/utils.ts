@@ -169,7 +169,6 @@ export function validateDate(year: string, month: string, day: string) {
 		month: Number(month),
 		day: Number(day)
 	});
-
 	return validation.isValid && Number(year) >= 1900;
 }
 
