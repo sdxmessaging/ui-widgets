@@ -4,19 +4,19 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
+import { DateWidth, inputCls, theme } from "../theme";
+import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate, validateStyle } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
-	private readonly month = stream<string>();
-	private readonly year = stream<string>();
+	private readonly month = stream<string>("");
+	private readonly year = stream<string>("");
 
 	// Combine date parts
-	private readonly date = stream<string>();
+	private readonly date = stream<string>("");
 	private readonly valid = this.date.map(Boolean);
 
 	private readonly dom = stream<Element>();
@@ -82,7 +82,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		return m(LayoutFixed, { value, field, invalid: !this.valid() && Boolean(required) }, m('.flex', {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 			// padding to behave similar to HTML native input paddings
-			style: { padding: '1px 2px' }
+			style: { padding: '1px 2px' },
+			class: validateStyle(this.year(), this.month(), undefined) ? theme.invalidInputWrapper : ""
 		},
 			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0.tc", {

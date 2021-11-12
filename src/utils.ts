@@ -178,8 +178,15 @@ export function validateCardDate(year: string, month: string) {
 	return month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2;
 }
 
-export function validateStyle(year: string, month: string, day: string) {
-	return (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day));
+export function validateStyle(year: string, month: string, day = "") {
+	// date input
+	if (day) {
+		return (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day));
+	}
+	// card date input
+	else {
+		return (month.length === 2 && year.length === 2 && !validateCardDate(year, month));
+	}
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
