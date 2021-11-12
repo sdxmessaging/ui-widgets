@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
+import { theme } from "../theme";
 
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
@@ -215,9 +216,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					padding: '1px 2px',
 					border: 'solid 1px',
 					borderRadius: "4px",
-					borderColor: "transparent",
-					...validateStyle(this.year(), this.month(), this.day())
-				}
+					borderColor: validateStyle(this.year(), this.month(), this.day()) ? "" : "transparent"
+				},
+				class: validateStyle(this.year(), this.month(), this.day()) ? theme.invalidInputWrapper : ""
 			},
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);
