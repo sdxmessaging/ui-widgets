@@ -6,6 +6,7 @@ import { labelCls, theme } from "./theme";
 import { config } from "./config";
 import { IWidgetClasses } from "./interface/theme";
 import stream from "mithril/stream";
+import { DateTime } from "luxon";
 
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
@@ -158,6 +159,25 @@ function shouldAppendZero(type: TDateInputType, value: string) {
 		case ('mm'): return Number(value) >= 2 && value.length === 1;
 		default: return false;
 	}
+}
+
+export function validateDate(year: string, month: string, day: string) {
+	const validation = DateTime.fromObject({
+		year: Number(year),
+		month: Number(month),
+		day: Number(day)
+	});
+
+	return validation.isValid && Number(year) >= 1900;
+}
+
+export function validateStyle(year: string, month: string, day: string) {
+	if (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day)) {
+		return {
+			borderColor: 'red'
+		};
+	}
+	return {};
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,

@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom } from "../utils";
+import { autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom, validateDate, validateStyle } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -30,7 +30,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly locale = stream<string | undefined>(undefined);
 
 	private buildDate() {
-		this.date(`${this.year()}-${this.month()}-${this.day()}`);
+		const date = `${this.year()}-${this.month()}-${this.day()}`;
+		if (validateDate(this.year(), this.month(), this.day())) {
+			this.date(date);
+		}
 	}
 
 	private updateInputs(valueStream: TPropStream) {
@@ -208,7 +211,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 				// padding to behave similar to HTML native input paddings
-				style: { padding: '1px 2px' }
+				style: {
+					padding: '1px 2px',
+					border: 'solid 1px',
+					borderRadius: "4px",
+					borderColor: "transparent",
+					...validateStyle(this.year(), this.month(), this.day())
+				}
 			},
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);
