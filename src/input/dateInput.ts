@@ -214,9 +214,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				// padding to behave similar to HTML native input paddings
 				style: {
 					padding: '1px 2px',
-					border: 'solid 1px',
-					borderRadius: "4px",
-					borderColor: validateStyle(this.year(), this.month(), this.day()) ? "" : "transparent"
 				},
 				class: validateStyle(this.year(), this.month(), this.day()) ? theme.invalidInputWrapper : ""
 			},
