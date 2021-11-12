@@ -7,7 +7,7 @@ uiWidgets.updateConfig({
 	// requiredLblPost: "*"
 });
 
-uiWidgets.updateClasses({ invalidInputWrapper: "b--red" });
+uiWidgets.updateClasses({ invalidInputWrapper: "b--red ba" });
 
 uiWidgets.updateButtonContext({
 	invert: "bg-dark-gray light-blue b--light-blue",
