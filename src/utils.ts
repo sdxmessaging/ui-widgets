@@ -181,7 +181,7 @@ export function validateStyle(year: string, month: string, day: string) {
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
-	dom: Element, targetType?: TDateInputType) {
+	dom: Element, event: InputEvent, targetType?: TDateInputType) {
 
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const prevValue = streamType() ? streamType() : "";
@@ -190,7 +190,12 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 
 	if ((isNumeric || value === "") && value.length <= 4) {
 		if (shouldAppendZero(selfType, value) && (selfType === "dd" || selfType === "mm")) {
-			streamType(`0${value}`);
+			if (!(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")) {
+				streamType(`0${value}`);
+			}
+			else {
+				streamType('');
+			}
 		}
 		else {
 			streamType(value);
