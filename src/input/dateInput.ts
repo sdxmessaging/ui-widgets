@@ -215,7 +215,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				style: {
 					padding: '1px 2px',
 				},
-				class: validateStyle(this.year(), this.month(), this.day()) ? theme.invalidInputWrapper : ""
+				class: validateStyle(this.year(), this.month(), this.day()) || (required && !this.date()) ? theme.invalidInputWrapper : ""
 			},
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);

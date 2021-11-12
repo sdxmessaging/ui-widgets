@@ -38,7 +38,7 @@ const classMapState: Required<IClassMap> = {
 	displayValue: "dark-gray",
 	requiredLabel: "",
 	disabledWrapper: "o-40",
-	invalidInputWrapper: "b--red"
+	invalidInputWrapper: "ba b--red"
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
