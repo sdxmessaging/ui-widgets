@@ -12,10 +12,11 @@ export abstract class ValidationBase implements ClassComponent<IPropWidget>{
 	public onupdate({ dom, attrs: { field, value } }: CVnodeDOM<IPropWidget>) {
 		const input = dom.querySelector(this.selector);
 		// Validate from custom implementation or input element
+		console.log(input);
 		const invalid = propInvalid(field, value()) || (input ? !input.checkValidity() : false);
 		if (invalid !== this.invalid) {
 			this.invalid = invalid;
-			m.redraw();
+			m.redraw.sync();
 		}
 	}
 
