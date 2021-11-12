@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom } from "../utils";
+import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -23,7 +23,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private readonly focusedInput = stream<TDateInputType>('mm');
 
 	private buildDate() {
-		this.date(`${this.month()}/${this.year()}`);
+		if (validateCardDate(this.year(), this.month())) {
+			this.date(`${this.month()}/${this.year()}`);
+		}
 	}
 
 	private updateInputs(valueStream: TPropStream) {

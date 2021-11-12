@@ -173,6 +173,11 @@ export function validateDate(year: string, month: string, day: string) {
 	return validation.isValid && Number(year) >= 1900;
 }
 
+export function validateCardDate(year: string, month: string) {
+	// TODO validate year in the future if it is a valid_to input
+	return month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2;
+}
+
 export function validateStyle(year: string, month: string, day: string) {
 	return (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day));
 }
