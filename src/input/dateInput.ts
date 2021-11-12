@@ -208,7 +208,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}
 		};
 
-		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid() },
+		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid() && Boolean(required) },
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 				// padding to behave similar to HTML native input paddings
