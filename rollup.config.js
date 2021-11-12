@@ -4,7 +4,8 @@ const globals = {
 	"lodash": "_",
 	"mithril": "m",
 	"mithril/stream": "m.stream",
-	"signature_pad": "SignaturePad"
+	"signature_pad": "SignaturePad",
+	"luxon": "luxon"
 };
 
 const external = Object.keys(globals);
