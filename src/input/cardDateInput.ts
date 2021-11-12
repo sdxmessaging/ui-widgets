@@ -4,8 +4,8 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { DateWidth, inputCls, theme } from "../theme";
-import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate, validateStyle } from "../utils";
+import { DateWidth, inputCls } from "../theme";
+import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -83,7 +83,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 			// padding to behave similar to HTML native input paddings
 			style: { padding: '1px 2px' },
-			class: validateStyle(this.year(), this.month(), undefined) ? theme.invalidInputWrapper : ""
+			// class: validateStyle(this.year(), this.month(), undefined) ? theme.invalidInputWrapper : ""
 		},
 			m("span", [
 				m("input.w-100.bg-transparent.bn.outline-0.tc", {
