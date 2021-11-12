@@ -95,8 +95,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						padding: '0px'
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
-					oninput: () => {
-						handleDateChange(this.month, id, "mm", this.dom(), "yy");
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
 						this.updateInputs(attrs.value);
 					}
 				})
@@ -116,8 +116,8 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					},
 					onfocus: lodash.partial(this.focusedInput, 'yy'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
-					oninput: () => {
-						handleDateChange(this.year, id, "yy", this.dom());
+					oninput: (e: InputEvent) => {
+						handleDateChange(this.year, id, "yy", this.dom(), e);
 						this.updateInputs(attrs.value);
 					}
 				}),
