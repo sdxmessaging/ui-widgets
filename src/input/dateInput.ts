@@ -154,8 +154,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					class: classStr,
 					onfocus: lodash.partial(this.focusedInput, 'dd'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
+					oninput: () => {
+						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
 						this.updateInputs(attrs.value);
 					},
 					style: {
@@ -172,8 +172,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					value: this.month(),
 					class: classStr,
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
+					oninput: () => {
+						handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
 						this.updateInputs(attrs.value);
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
@@ -192,8 +192,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					class: classStr,
 					onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
+					oninput: () => {
+						handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
 						this.updateInputs(attrs.value);
 					},
 					style: {
