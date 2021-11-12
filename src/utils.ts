@@ -97,23 +97,23 @@ export function focusLastInput(dom: Element, id: string, focusedId: TDateInputTy
 	lastFocused.focus();
 }
 
-export function dateInRange(type: TDateInputType, first: number, second: number) {
-	switch (type) {
-		case "dd":
-			return (isNaN(first) || first <= 3) && ((isNaN(second) || ((first === 3 && second <= 1))
-				|| first < 3) && !(first === 0 && second === 0));
-		// month from 01 to 12
-		case "mm":
-			return (isNaN(first) || first <= 1) && ((isNaN(second) || ((first === 1 && second <= 2))
-				|| first < 1) && !(first === 0 && second === 0));
-		// year has to start from 1 or above & min 1900
-		case "yyyy":
-			return (isNaN(first) || (first >= 1 && first < 3)) &&
-				(isNaN(second) || ((first === 1 && second === 9)) || (first === 2));
-		case "yy":
-			return isNaN(first) || first >= 0;
-	}
-}
+// export function dateInRange(type: TDateInputType, first: number, second: number) {
+// 	switch (type) {
+// 		case "dd":
+// 			return (isNaN(first) || first <= 3) && ((isNaN(second) || ((first === 3 && second <= 1))
+// 				|| first < 3) && !(first === 0 && second === 0));
+// 		// month from 01 to 12
+// 		case "mm":
+// 			return (isNaN(first) || first <= 1) && ((isNaN(second) || ((first === 1 && second <= 2))
+// 				|| first < 1) && !(first === 0 && second === 0));
+// 		// year has to start from 1 or above & min 1900
+// 		case "yyyy":
+// 			return (isNaN(first) || (first >= 1 && first < 3)) &&
+// 				(isNaN(second) || ((first === 1 && second === 9)) || (first === 2));
+// 		case "yy":
+// 			return isNaN(first) || first >= 0;
+// 	}
+// }
 
 export function updateDom(newDom: Element, currentDom: stream<Element>, validity: TPropStream) {
 	if (newDom !== currentDom()) {
@@ -151,24 +151,30 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
+
+function shouldAppendZero(type: TDateInputType, value: string) {
+	switch (type) {
+		case ('dd'): return Number(value) > 3 && value.length === 1;
+		case ('mm'): return Number(value) >= 2 && value.length === 1;
+		default: return false;
+	}
+}
+
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
-	dom: Element, event: InputEvent, targetType?: TDateInputType) {
+	dom: Element, targetType?: TDateInputType) {
 
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const prevValue = streamType() ? streamType() : "";
 	const value = self.value;
 	const isNumeric = /^\d*$/.test(value);
-	const firstCharValue = parseInt(value.charAt(0));
-	const secondCharValue = parseInt(value.charAt(1));
-	const validDateRange = dateInRange(selfType, firstCharValue, secondCharValue);
-	// remove whole input value
-	if (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward") {
-		streamType('');
-		return;
-	}
-	// only put value into input when the rules are fulfilled
-	if ((isNumeric || value === "") && validDateRange && value.length <= 4) {
-		streamType(value);
+
+	if ((isNumeric || value === "") && value.length <= 4) {
+		if (shouldAppendZero(selfType, value) && (selfType === "dd" || selfType === "mm")) {
+			streamType(`0${value}`);
+		}
+		else {
+			streamType(value);
+		}
 	}
 	// preserve current/previous value when rules are broken
 	else {
