@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -140,10 +140,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					class: classStr,
 					onfocus: lodash.partial(this.focusedInput, 'dd'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.day, id, "dd", this.dom(), e, this.findNextInput('day'));
+					oninput: () => {
+						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
 						this.buildDate();
 					},
+					onblur: lodash.partial(appendZeroToDayMonth, this.day),
 					style: {
 						maxWidth: DateWidth.dd,
 						padding: '0px'
@@ -158,11 +159,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					value: this.month(),
 					class: classStr,
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.month, id, "mm", this.dom(), e, this.findNextInput('month'));
+					oninput: () => {
+						handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
 						this.buildDate();
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
+					onblur: lodash.partial(appendZeroToDayMonth, this.month),
 					style: {
 						maxWidth: DateWidth.mm,
 						padding: '0px'
@@ -178,8 +180,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					class: classStr,
 					onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.year, id, "yyyy", this.dom(), e, this.findNextInput('year'));
+					oninput: () => {
+						handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
 						this.buildDate();
 					},
 					style: {

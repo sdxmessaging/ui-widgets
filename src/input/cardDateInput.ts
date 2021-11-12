@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -85,10 +85,11 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						padding: '0px'
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.month, id, "mm", this.dom(), e, "yy");
+					oninput: () => {
+						handleDateChange(this.month, id, "mm", this.dom(), "yy");
 						this.buildDate();
-					}
+					},
+					onblur: lodash.partial(appendZeroToDayMonth, this.month)
 				})
 			]),
 			m("span", { style: { padding: '0px', marginRight: '2px' } }, "/"),
@@ -106,10 +107,10 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					},
 					onfocus: lodash.partial(this.focusedInput, 'yy'),
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
-					oninput: (e: InputEvent) => {
-						handleDateChange(this.year, id, "yy", this.dom(), e);
+					oninput: () => {
+						handleDateChange(this.year, id, "yy", this.dom());
 						this.buildDate();
-					}
+					},
 				}),
 				m(HiddenDateInput, attrs)
 			])),

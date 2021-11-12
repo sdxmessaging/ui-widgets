@@ -154,13 +154,9 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
-
-function shouldAppendZero(type: TDateInputType, value: string) {
-	switch (type) {
-		case ('dd'): return Number(value) > 3 && value.length === 1;
-		case ('mm'): return Number(value) >= 2 && value.length === 1;
-		default: return false;
-	}
+export function appendZeroToDayMonth(valueStream: TPropStream) {
+	const value = valueStream() as string;
+	if (value.length === 1) valueStream(`0${value}`);
 }
 
 export function validateDate(year: string, month: string, day: string) {
@@ -189,7 +185,7 @@ export function validateStyle(year: string, month: string, day = "") {
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
-	dom: Element, event: InputEvent, targetType?: TDateInputType) {
+	dom: Element, targetType?: TDateInputType) {
 
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const prevValue = streamType() ? streamType() : "";
@@ -197,17 +193,7 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 	const isNumeric = /^\d*$/.test(value);
 
 	if ((isNumeric || value === "") && value.length <= 4) {
-		if (shouldAppendZero(selfType, value) && (selfType === "dd" || selfType === "mm")) {
-			if (!(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")) {
-				streamType(`0${value}`);
-			}
-			else {
-				streamType('');
-			}
-		}
-		else {
-			streamType(value);
-		}
+		streamType(value);
 	}
 	// preserve current/previous value when rules are broken
 	else {
