@@ -173,12 +173,9 @@ export function validateDate(year: string, month: string, day: string) {
 	return validation.isValid && Number(year) >= 1900;
 }
 
-export function validateStyle(year: string, month: string, day: string) {
-	// if (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day)) {
-	// 	return theme.invalidInputWrapper;
-	// }
-	// return "";
-	return day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day);
+export function validateStyle(year: string, month: string, day: string, date: string, required = false) {
+	return (day.length === 2 && month.length === 2 && year.length === 4 && !validateDate(year, month, day))
+		|| (required && !date);
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
