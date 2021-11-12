@@ -620,11 +620,11 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "file-button-in",
 						label: "File Button Input",
+						// uiClass: {
+						// 	inputWrapper: "dib"
+						// }
 					},
-					value: fileButtonList,
-					//displayType: "none",
-					//icon: "fas fa-print",
-					// onSet: addFiles(value, true)
+					value: fileButtonList
 				})),
 				m(".w-50.pa2", m(uiWidgets.FileList, {
 					field: {
@@ -634,7 +634,7 @@ m.mount(document.getElementById("page"), {
 					value: fileButtonList
 				}))
 			]),
-			
+
 			m(".flex.mb2.ba.b--silver", [
 				m(".w-50.pa2", m(uiWidgets.FileSelect, {
 					field: {
