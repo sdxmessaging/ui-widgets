@@ -77,7 +77,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, { value, field, invalid: !this.valid }, m('.flex', {
+		return m(LayoutFixed, { value, field, invalid: !this.valid() }, m('.flex', {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 			// padding to behave similar to HTML native input paddings
 			style: { padding: '1px 2px' }

@@ -208,14 +208,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}
 		};
 
-		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid },
+		return m(LayoutFixed, { value: attrs.value, field, invalid: !this.valid() },
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
 				// padding to behave similar to HTML native input paddings
 				style: {
 					padding: '1px 2px',
 				},
-				class: validateStyle(this.year(), this.month(), this.day(), this.date(), required) ? theme.invalidInputWrapper : ""
+				class: validateStyle(this.year(), this.month(), this.day()) ? theme.invalidInputWrapper : ""
 			},
 				this.dateParts.map((datePart) => {
 					return createDateInputs(datePart);
