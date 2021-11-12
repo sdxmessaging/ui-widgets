@@ -15,7 +15,7 @@ export abstract class ValidationBase implements ClassComponent<IPropWidget>{
 		const invalid = propInvalid(field, value()) || (input ? !input.checkValidity() : false);
 		if (invalid !== this.invalid) {
 			this.invalid = invalid;
-			m.redraw.sync();
+			m.redraw();
 		}
 	}
 
