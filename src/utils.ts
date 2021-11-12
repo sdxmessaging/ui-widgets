@@ -138,15 +138,17 @@ function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputT
 	if (streamValue.length === maxLength && targetType) {
 		const nextInput = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
 		nextInput.focus();
+		nextInput.select();
 	}
 }
 
 export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	streamValue: string, dom: Element, event: KeyboardEvent) {
 
-	const prevInput = dom.querySelector(`#${id}-${targetType}`) as HTMLElement;
+	const prevInput = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
 	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevInput) {
 		prevInput.focus();
+		prevInput.select();
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
