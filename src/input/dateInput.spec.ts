@@ -160,7 +160,6 @@ describe("DateInput", () => {
         const monthIn2 = root.querySelector("#test2-mm") as HTMLInputElement;
         const yearIn2 = root.querySelector("#test2-yyyy") as HTMLInputElement;
 
-
         dayIn.value = "0";
         dayIn.dispatchEvent(new Event("input"));
         expect(monthInSpy).toBeCalledTimes(0);
@@ -197,6 +196,32 @@ describe("DateInput", () => {
         expect(yearIn.value).not.toBeTruthy();
         expect(monthIn.value).not.toBeTruthy();
         expect(dayIn.value).not.toBeTruthy();
+
+        expect(dayIn2.value).toBe('01');
+        expect(monthIn2.value).toBe('02');
+
+        yearIn.value = '2021';
+        monthIn.value = '11';
+        dayIn.value = '15';
+        yearIn.dispatchEvent(new Event("input"));
+        monthIn.dispatchEvent(new Event("input"));
+        dayIn.dispatchEvent(new Event("input"));
+
+        expect(value()).toEqual('2021-11-15');
+        m.redraw.sync();
+        expect(yearIn2.value).toBe('2021');
+        expect(monthIn2.value).toBe('11');
+        expect(dayIn2.value).toBe('15');
+
+        // edit the other set of date field
+        dayIn2.value = '';
+        dayIn2.dispatchEvent(new Event("input"));
+        m.redraw.sync();
+        expect(yearIn.value).toBe('');
+        expect(monthIn.value).toBe('');
+        expect(dayIn.value).toBe('');
+        expect(monthIn2.value).toBe('11');
+        expect(yearIn2.value).toBe('2021');
 
     });
 
@@ -387,5 +412,5 @@ describe("DateInput", () => {
 
     });
 
-    test("")
+    // test("")
 });

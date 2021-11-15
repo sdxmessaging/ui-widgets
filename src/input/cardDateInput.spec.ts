@@ -92,6 +92,26 @@ describe("CardDateInput", () => {
         expect(yearIn.value).not.toBeTruthy();
         expect(monthIn.value).not.toBeTruthy();
 
+        expect(monthIn2.value).toBe('02');
+
+        yearIn2.value = '21';
+        monthIn2.value = '11';
+        yearIn2.dispatchEvent(new Event('input'));
+        monthIn2.dispatchEvent(new Event('input'));
+        m.redraw.sync();
+        expect(yearIn.value).toBe('21');
+        expect(monthIn.value).toBe('11');
+        expect(yearIn2.value).toBe('21');
+        expect(monthIn.value).toBe('11');
+
+        // edit the other set of date field
+        yearIn.value = '';
+        yearIn.dispatchEvent(new Event('input'));
+        m.redraw.sync();
+        expect(yearIn2.value).toBe('');
+        expect(monthIn2.value).toBe('');
+        expect(monthIn.value).toBe('11');
+
         monthIn.value = "02";
         yearIn.value = "99";
         monthIn.dispatchEvent(new Event("input"));
