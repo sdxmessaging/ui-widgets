@@ -29,19 +29,20 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), "", valueStream);
 	}
 
-	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
+	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
-			const [month, year = ""] = String(newVal).split("/");
-			if (month.length === 2 && year.length === 2) {
-				this.month(month);
-				this.year(year);
-				this.buildDate(Boolean(field.required));
+			if (newVal) {
+				this.date('');
+				const [month, year = ""] = String(newVal).split("/");
+				if (month.length === 2 && year.length === 2) {
+					this.month(month);
+					this.year(year);
+				}
 			}
-			else if (!newVal && validateCardDate(this.year(), this.month(), Boolean(field.required))) {
+			else if (!this.date()) {
 				this.month('');
 				this.year('');
-				this.date('');
 			}
 		});
 	}
