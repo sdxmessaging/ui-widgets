@@ -38,9 +38,11 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				this.year(year);
 				this.buildDate(Boolean(field.required));
 			}
-			// else if (!newVal && this.date()) {
-			// 	this.date('');
-			// }
+			else if (!newVal && validateCardDate(this.year(), this.month(), Boolean(field.required))) {
+				this.month('');
+				this.year('');
+				this.date('');
+			}
 		});
 	}
 

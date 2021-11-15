@@ -87,9 +87,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				// do not pass value to buildDate to avoid infinite loop
 				this.buildDate(Boolean(field.required));
 			}
-			// else if (!newVal) {
-			// 	this.date('');
-			// }
+			else if (!newVal && validateDate(this.year(), this.month(), this.day(), Boolean(field.required))) {
+				this.day("");
+				this.month("");
+				this.year("");
+				this.date('');
+			}
 		});
 
 		this.locale.map((newVal) => {
