@@ -1,170 +1,120 @@
-// import m from "mithril";
-// import stream from "mithril/stream";
-// import { DateInput } from "./dateInput";
-test.todo("date input");
-// describe("DateInput", () => {
-// 	afterEach(() => {
-// 		jest.restoreAllMocks();
-// 	});
+import m from "mithril";
+import stream from "mithril/stream";
+import { DateInput } from "./dateInput";
 
-// 	test("minimal", () => {
-// 		const root = window.document.createElement("div");
-// 		const value = stream<string>();
-// 		m.mount(root, {
-// 			view: () => m(DateInput, {
-// 				field: {
-// 					id: "test"
-// 				},
-// 				value
-// 			})
-// 		});
-// 		expect(root.childNodes.length).toBe(1);
-// 		// Input only
-// 		expect(root.childNodes[0].childNodes.length).toBe(1);
-// 		// Cleanup
-// 		m.mount(root, null);
-// 	});
+describe("DateInput", () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
 
-// 	test("configured + value change", () => {
-// 		const root = window.document.createElement("div");
-// 		const value = stream<string>();
-// 		const xform = value.map((val) => val);
-// 		m.mount(root, {
-// 			view: () => m(DateInput, {
-// 				field: {
-// 					id: "test",
-// 					label: "Test Label",
-// 					name: "Test Name",
-// 					title: "Test Title",
-// 					uiClass: {},
-// 					disabled: true,
-// 					options: [{ value: "en-US" }]
-// 				},
-// 				value,
-// 				xform
-// 			})
-// 		});
-// 		expect(root.childNodes.length).toBe(1);
-// 		// Label + Input
-// 		// expect(root.childNodes[0].childNodes.length).toBe(2);
-// 		// Set valid date
-// 		value("2020-01-01");
-// 		// Set invalid date
-// 		value("2020-01-32");
-// 		// Get day input and update value
-// 		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
-// 		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
-// 		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+    test("minimal", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        m.mount(root, {
+            view: () => m(DateInput, {
+                field: {
+                    id: "test"
+                },
+                value
+            })
+        });
+        expect(root.childNodes.length).toBe(1);
+        // Input only
+        expect(root.childNodes[0].childNodes.length).toBe(1);
+        // Cleanup
+        m.mount(root, null);
+    });
 
-// 		expect(dayIn != null).toBe(true);
-// 		expect(monthIn).not.toBeNull();
+    test("configured + value change", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(DateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    disabled: true,
+                },
+                value,
+                xform
+            })
+        });
+        expect(root.childNodes.length).toBe(1);
+        // Label + Input
+        expect(root.childNodes[0].childNodes.length).toBe(2);
+        const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+        expect(dayIn).toBeTruthy();
+        expect(monthIn).toBeTruthy();
+        expect(yearIn).toBeTruthy();
 
-// 		dayIn.value = "aa";
-// 		monthIn.value = "aa";
-// 		yearIn.value = "1899";
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
+        dayIn.value = "aa";
+        monthIn.value = "aa";
+        yearIn.value = "1899";
 
-// 		expect(value()).toBe("2020-01-01");
-// 		// Set invalid value
-// 		dayIn.value = "00";
-// 		monthIn.value = "00";
-// 		yearIn.value = "1900";
+        dayIn.dispatchEvent(new Event("input"));
+        monthIn.dispatchEvent(new Event("input"));
+        yearIn.dispatchEvent(new Event("input"));
 
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
+        expect(value()).toEqual("");
 
-// 		expect(value()).toBe("1900-01-01");
+        dayIn.value = "00";
+        monthIn.value = "00";
+        yearIn.value = "1900";
 
-// 		dayIn.value = "31";
-// 		monthIn.value = "12";
-// 		yearIn.value = "2020";
+        dayIn.dispatchEvent(new Event("input"));
+        monthIn.dispatchEvent(new Event("input"));
+        yearIn.dispatchEvent(new Event("input"));
 
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
+        expect(value()).toEqual("");
 
-// 		expect(value()).toBe("2020-12-31");
+        dayIn.value = "31";
+        monthIn.value = "12";
+        yearIn.value = "2020";
 
-// 		dayIn.value = "31";
-// 		monthIn.value = "12";
-// 		yearIn.value = "3000";
+        dayIn.dispatchEvent(new Event("input"));
+        monthIn.dispatchEvent(new Event("input"));
+        yearIn.dispatchEvent(new Event("input"));
 
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
-// 		expect(value()).toBe("2020-12-31");
+        expect(value()).toBe("2020-12-31");
 
-// 		dayIn.value = "";
-// 		monthIn.value = "12";
-// 		yearIn.value = "3000";
+        dayIn.value = "";
+        monthIn.value = "12";
 
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
-// 		expect(value()).toBe("");
+        dayIn.dispatchEvent(new Event("input"));
+        monthIn.dispatchEvent(new Event("input"));
 
-// 		dayIn.value = "31";
-// 		monthIn.value = "12";
-// 		yearIn.value = "3000";
+        expect(value()).toEqual("");
 
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
-// 		expect(value()).toBe("2020-12-31");
+        dayIn.value = "-1";
+        monthIn.value = "-1";
 
-// 		dayIn.value = "-1";
-// 		monthIn.value = "-1";
-// 		yearIn.value = "3000";
+        dayIn.dispatchEvent(new Event("input"));
+        monthIn.dispatchEvent(new Event("input"));
 
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
-// 		expect(value()).toBe("2020-12-31");
+        expect(value()).toEqual("");
 
-// 		// Cleanup
-// 		m.mount(root, null);
-// 	});
+        // Cleanup
+        m.mount(root, null);
+    });
+});
 
-
-// 	test("configured + value change - GB locale", () => {
-// 		const root = window.document.createElement("div");
-// 		const value = stream<string>();
-// 		const xform = value.map((val) => val);
-// 		m.mount(root, {
-// 			view: () => m(DateInput, {
-// 				field: {
-// 					id: "test",
-// 					label: "Test Label",
-// 					name: "Test Name",
-// 					title: "Test Title",
-// 					uiClass: {},
-// 					disabled: true,
-// 					options: [{ value: "en-GB" }]
-// 				},
-// 				value,
-// 				xform
-// 			})
-// 		});
-// 		expect(root.childNodes.length).toBe(1);
-// 		// Label + Input
-// 		// expect(root.childNodes[0].childNodes.length).toBe(2);
-// 		value("2020-01-01");
-// 		// Get date inputs and update value
-// 		const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
-// 		const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
-// 		const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
-// 		dayIn.value = "31";
-// 		monthIn.value = "12";
-// 		yearIn.value = "3000";
-
-// 		dayIn.dispatchEvent(new Event("input"));
-// 		monthIn.dispatchEvent(new Event("input"));
-// 		yearIn.dispatchEvent(new Event("input"));
-// 		expect(value()).toBe("2020-12-31");
-// 	});
+test("setLocale", () => {
+    const dateInput = new DateInput();
+    dateInput["locale"]("en-GB");
+    dateInput['setLocale']({
+        id: "Test field id",
+        options: [{
+            value: "zh-HK"
+        }]
+    });
+    expect(dateInput["locale"]()).toEqual('zh-HK');
+});
 
 // 	test("auto advance - locale GB", () => {
 // 		const root = window.document.createElement("div");
