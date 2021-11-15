@@ -22,7 +22,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private readonly dom = stream<Element>();
 	private readonly focusedInput = stream<TDateInputType>('mm');
 
-	private buildDate(required: boolean, valueStream?: TPropStream) {
+	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.month()}/${this.year()}`);
 		const valid = validateCardDate(this.year(), this.month(), required);
 		this.valid(valid);

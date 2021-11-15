@@ -30,7 +30,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private dateParts!: ReadonlyArray<IDateParts>;
 	private readonly locale = stream<string | undefined>(undefined);
 
-	private buildDate(required: boolean, valueStream?: TPropStream) {
+	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required);
 		this.valid(valid);
