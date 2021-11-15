@@ -32,14 +32,17 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
+			// only handle value when the main value stream is changed
 			if (newVal) {
 				this.date('');
 				const [month, year = ""] = String(newVal).split("/");
+				// set individual date inputs based on value stream (not date stream)
 				if (month.length === 2 && year.length === 2) {
 					this.month(month);
 					this.year(year);
 				}
 			}
+			// only reset the non-edited date fields
 			else if (!this.date()) {
 				this.month('');
 				this.year('');

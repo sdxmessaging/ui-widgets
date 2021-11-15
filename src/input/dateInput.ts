@@ -76,9 +76,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
-			const date = new Date(String(newVal));
+			// only handle value when the main value stream is changed
 			if (newVal) {
+				const date = new Date(String(newVal));
+				// multiple data-binding reset date stream
 				this.date('');
+				// set individual date inputs based on value stream (not date stream)
 				if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.date()) {
 					const day = lodash.padStart(String(date.getDate()), 2, "0");
 					const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
@@ -88,6 +91,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					this.year(year);
 				}
 			}
+			// only reset the non-edited date fields
 			else if (!this.date()) {
 				this.day("");
 				this.month("");
