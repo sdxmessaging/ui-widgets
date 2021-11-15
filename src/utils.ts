@@ -154,9 +154,18 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
-export function appendZeroToDayMonth(valueStream: TPropStream) {
+export function appendZeroToDayMonth(valueStream: TPropStream, callback: () => void) {
 	const value = valueStream() as string;
-	if (value.length === 1) valueStream(`0${value}`);
+	if (value.length === 1) {
+		valueStream(`0${value}`);
+		callback();
+	}
+}
+
+export function validDateInputLengths(year: string, month: string, day = "") {
+	const isCardDateInput = !day;
+	const yearLength = isCardDateInput ? 2 : 4;
+	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
 export function validateDate(year: string, month: string, day: string, required: boolean) {

@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom, validateDate, validDateInputLengths } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -34,8 +34,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required);
 		this.valid(valid);
-		if (valid && valueStream) {
-			valueStream(this.date());
+		if (valueStream) {
+			if (validDateInputLengths(this.year(), this.month(), this.day())) {
+				valueStream(this.date());
+			}
+			else {
+				valueStream("");
+			}
 		}
 	}
 
@@ -88,12 +93,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.year(year);
 				this.buildDate(Boolean(field.required));
 			}
-			else if (!newVal && this.date()) {
-				this.day('');
-				this.month('');
-				this.year('');
-				this.date('');
-			}
+			// else if (!newVal) {
+			// 	this.date('');
+			// }
 		});
 
 		this.locale.map((newVal) => {
@@ -148,7 +150,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
 						this.buildDate(Boolean(required), attrs.value);
 					},
-					onblur: lodash.partial(appendZeroToDayMonth, this.day),
+					onblur: lodash.partial(appendZeroToDayMonth, this.day, this.date),
 					style: {
 						maxWidth: DateWidth.dd,
 						padding: '0px'
@@ -168,7 +170,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 						this.buildDate(Boolean(required), attrs.value);
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
-					onblur: lodash.partial(appendZeroToDayMonth, this.month),
+					onblur: () => {
+						appendZeroToDayMonth(this.month, this.date);
+						this.buildDate(Boolean(required), attrs.value)
+					},
 					style: {
 						maxWidth: DateWidth.mm,
 						padding: '0px'

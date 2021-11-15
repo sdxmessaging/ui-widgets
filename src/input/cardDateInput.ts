@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate, validDateInputLengths } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -26,8 +26,13 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		this.date(`${this.month()}/${this.year()}`);
 		const valid = validateCardDate(this.year(), this.month(), required);
 		this.valid(valid);
-		if (valid && valueStream) {
-			valueStream(this.date());
+		if (valueStream) {
+			if (validDateInputLengths(this.year(), this.month())) {
+				valueStream(this.date());
+			}
+			else {
+				valueStream("");
+			}
 		}
 	}
 
@@ -40,11 +45,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				this.year(year);
 				this.buildDate(Boolean(field.required));
 			}
-			else if (!newVal && this.date()) {
-				this.month('');
-				this.year('');
-				this.date('');
-			}
+			// else if (!newVal && this.date()) {
+			// 	this.date('');
+			// }
 		});
 	}
 
