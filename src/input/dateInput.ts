@@ -77,21 +77,21 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
 			const date = new Date(String(newVal));
-			if (lodash.isDate(date) && !isNaN(date.getTime())) {
-				const day = lodash.padStart(String(date.getDate()), 2, "0");
-				const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
-				const year = String(date.getFullYear());
-				this.day(day);
-				this.month(month);
-				this.year(year);
-				// do not pass value to buildDate to avoid infinite loop
-				this.buildDate(Boolean(field.required));
+			if (newVal) {
+				this.date('');
+				if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.date()) {
+					const day = lodash.padStart(String(date.getDate()), 2, "0");
+					const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
+					const year = String(date.getFullYear());
+					this.day(day);
+					this.month(month);
+					this.year(year);
+				}
 			}
-			else if (!newVal && validateDate(this.year(), this.month(), this.day(), Boolean(field.required))) {
+			else if (!this.date()) {
 				this.day("");
 				this.month("");
 				this.year("");
-				this.date('');
 			}
 		});
 
