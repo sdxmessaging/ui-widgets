@@ -35,12 +35,10 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			// only handle value when the main value stream is changed
 			if (newVal) {
 				this.date('');
-				const [month, year = ""] = String(newVal).split("/");
+				const [month, year] = String(newVal).split("/");
 				// set individual date inputs based on value stream (not date stream)
-				if (month.length === 2 && year.length === 2) {
-					this.month(month);
-					this.year(year);
-				}
+				this.month(month);
+				this.year(year);
 			}
 			// only reset the non-edited date fields
 			else if (!this.date()) {

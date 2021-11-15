@@ -53,6 +53,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
+		// TODO map literals to ascii code for keyboard event
 		this.dateParts = dateParts as IDateParts[];
 		const dateType = dateParts[0].type as TDateType;
 		const firstInputId = dateInputIds(dateType) as TDateInputType;
@@ -82,14 +83,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				// multiple data-binding reset date stream
 				this.date('');
 				// set individual date inputs based on value stream (not date stream)
-				if (lodash.isDate(date) && !isNaN(date.getTime()) && !this.date()) {
-					const day = lodash.padStart(String(date.getDate()), 2, "0");
-					const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
-					const year = String(date.getFullYear());
-					this.day(day);
-					this.month(month);
-					this.year(year);
-				}
+				const day = lodash.padStart(String(date.getDate()), 2, "0");
+				const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
+				const year = String(date.getFullYear());
+				this.day(day);
+				this.month(month);
+				this.year(year);
 			}
 			// only reset the non-edited date fields
 			else if (!this.date()) {
