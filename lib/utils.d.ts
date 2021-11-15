@@ -19,10 +19,13 @@ export declare type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export declare type TDateType = 'day' | 'month' | 'year';
 export declare function dateInputIds(type: TDateType): "dd" | "mm" | "yyyy";
 export declare function focusLastInput(dom: Element, id: string, focusedId: TDateInputType | undefined): void;
-export declare function dateInRange(type: TDateInputType, first: number, second: number): boolean;
 export declare function updateDom(newDom: Element, currentDom: stream<Element>, validity: TPropStream): void;
 export declare function autoRetreat(id: string, targetType: TDateInputType | undefined, streamValue: string, dom: Element, event: KeyboardEvent): void;
-export declare function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType, dom: Element, event: InputEvent, targetType?: TDateInputType): void;
+export declare function appendZeroToDayMonth(valueStream: TPropStream): void;
+export declare function validateDate(year: string, month: string, day: string, required: boolean): boolean;
+export declare function validateCardDate(year: string, month: string, required: boolean): boolean;
+export declare function validateStyle(year: string, month: string, day: string | undefined, required: boolean): boolean;
+export declare function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType, dom: Element, targetType?: TDateInputType): void;
 /**
  * Split given file name from extension
  */

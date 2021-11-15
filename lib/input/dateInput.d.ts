@@ -12,12 +12,11 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     private dateParts;
     private readonly locale;
     private buildDate;
-    private updateInputs;
     private findNextInput;
     private findPrevInput;
     private setDateInputs;
     private setLocale;
-    oninit({ attrs }: CVnode<IPropWidget>): void;
+    oninit({ attrs: { value, field } }: CVnode<IPropWidget>): void;
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
     onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>): void;
     onupdate({ dom }: CVnodeDOM<IPropWidget>): void;
