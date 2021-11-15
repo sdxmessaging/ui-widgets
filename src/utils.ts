@@ -154,7 +154,8 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
-export function resetInvalidValueStream(valid: boolean, date: string, year: string, month: string, day = "", valueStream?: TPropStream) {
+export function resetInvalidValueStream(valid: boolean, date: string,
+	year: string, month: string, day: string, valueStream?: TPropStream) {
 	if (valueStream) {
 		if (validDateInputLengths(year, month, day) && valid) {
 			valueStream(date);
@@ -170,7 +171,7 @@ export function appendZeroToDayMonth(valueStream: TPropStream) {
 	if (value.length === 1 && value !== '0') valueStream(`0${value}`);
 }
 
-export function validDateInputLengths(year: string, month: string, day = "") {
+export function validDateInputLengths(year: string, month: string, day: string) {
 	const isCardDateInput = !day;
 	const yearLength = isCardDateInput ? 2 : 4;
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
@@ -193,7 +194,7 @@ export function validateCardDate(year: string, month: string, required: boolean)
 		|| (dateEmpty && !required);
 }
 
-export function validateStyle(year: string, month: string, day = "", required: boolean) {
+export function validateStyle(year: string, month: string, day: string, required: boolean) {
 	// date input
 	if (day) {
 		return (day.length === 2 && month.length === 2
