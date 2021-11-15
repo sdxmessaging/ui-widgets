@@ -154,18 +154,10 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
-export function buildDate(
-	required: boolean, validStream: TPropStream,
-	dateStream: TPropStream, year: string,
-	month: string, day = "", valueStream?: TPropStream
-) {
-	const date = day ? `${year}-${month}-${day}` : `${month}/${year}`;
-	dateStream(date);
-	const valid = day ? validateDate(year, month, day, required) : validateCardDate(year, month, required);
-	validStream(valid);
+export function resetValueStream(date: string, year: string, month: string, day = "", valueStream?: TPropStream) {
 	if (valueStream) {
 		if (validDateInputLengths(year, month, day)) {
-			valueStream(dateStream());
+			valueStream(date);
 		}
 		else {
 			valueStream("");
@@ -173,12 +165,9 @@ export function buildDate(
 	}
 }
 
-export function appendZeroToDayMonth(valueStream: TPropStream, callback: () => void) {
+export function appendZeroToDayMonth(valueStream: TPropStream) {
 	const value = valueStream() as string;
-	if (value.length === 1) {
-		valueStream(`0${value}`);
-		callback();
-	}
+	if (value.length === 1) valueStream(`0${value}`);
 }
 
 export function validDateInputLengths(year: string, month: string, day = "") {

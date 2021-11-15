@@ -2,10 +2,10 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TField, TProp } from "../interface/widget";
+import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, buildDate, dateInputIds, focusLastInput, handleDateChange, TDateInputType, TDateType, updateDom } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, resetValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -29,6 +29,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly focusedInput = stream<TDateInputType | undefined>(undefined);
 	private dateParts!: ReadonlyArray<IDateParts>;
 	private readonly locale = stream<string | undefined>(undefined);
+
+	private buildDate(required: boolean, valueStream?: TPropStream) {
+		this.date(`${this.year()}-${this.month()}-${this.day()}`);
+		const valid = validateDate(this.year(), this.month(), this.day(), required);
+		this.valid(valid);
+		resetValueStream(this.date(), this.year(), this.month(), this.day(), valueStream);
+	}
 
 	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
 	private findNextInput(type: TDateType) {
@@ -78,7 +85,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.month(month);
 				this.year(year);
 				// do not pass value to buildDate to avoid infinite loop
-				buildDate(Boolean(field.required), this.valid, this.date, this.year(), this.month(), this.day());
+				this.buildDate(Boolean(field.required));
 			}
 			// else if (!newVal) {
 			// 	this.date('');
@@ -135,10 +142,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
-						buildDate(Boolean(required), this.valid, this.date,
-							this.year(), this.month(), this.day(), attrs.value);
+						this.buildDate(Boolean(required), attrs.value);
 					},
-					onblur: lodash.partial(appendZeroToDayMonth, this.day, this.date),
+					onblur: () => {
+						appendZeroToDayMonth(this.day);
+						this.buildDate(Boolean(required), attrs.value);
+					},
 					style: {
 						maxWidth: DateWidth.dd,
 						padding: '0px'
@@ -155,14 +164,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
-						buildDate(Boolean(required), this.valid, this.date,
-							this.year(), this.month(), this.day(), attrs.value);
+						this.buildDate(Boolean(required), attrs.value);
 					},
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					onblur: () => {
-						appendZeroToDayMonth(this.month, this.date);
-						buildDate(Boolean(required), this.valid, this.date,
-							this.year(), this.month(), this.day(), attrs.value);
+						appendZeroToDayMonth(this.month);
+						this.buildDate(Boolean(required), attrs.value);
 					},
 					style: {
 						maxWidth: DateWidth.mm,
@@ -181,8 +188,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
-						buildDate(Boolean(required), this.valid, this.date,
-							this.year(), this.month(), this.day(), attrs.value);
+						this.buildDate(Boolean(required), attrs.value);
 					},
 					style: {
 						maxWidth: DateWidth.yyyy,
