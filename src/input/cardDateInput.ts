@@ -26,7 +26,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		this.date(`${this.month()}/${this.year()}`);
 		const valid = validateCardDate(this.year(), this.month(), required);
 		this.valid(valid);
-		resetInvalidValueStream(this.date(), this.year(), this.month(), "", required, valueStream);
+		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), "", valueStream);
 	}
 
 	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {

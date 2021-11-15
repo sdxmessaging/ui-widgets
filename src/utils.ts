@@ -154,8 +154,7 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
-export function resetInvalidValueStream(date: string, year: string, month: string, day = "", required: boolean, valueStream?: TPropStream) {
-	const valid = day ? validateDate(year, month, day, required) : validateCardDate(year, month, required);
+export function resetInvalidValueStream(valid: boolean, date: string, year: string, month: string, day = "", valueStream?: TPropStream) {
 	if (valueStream) {
 		if (validDateInputLengths(year, month, day) && valid) {
 			valueStream(date);
