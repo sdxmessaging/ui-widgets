@@ -192,17 +192,17 @@ export function validateCardDate(year: string, month: string, required: boolean)
 		|| (dateEmpty && !required);
 }
 
-export function validateStyle(year: string, month: string, day: string, required: boolean) {
-	// date input
-	if (day) {
-		return (day.length === 2 && month.length === 2
-			&& year.length === 4 && !validateDate(year, month, day, required));
-	}
-	// card date input
-	else {
-		return (month.length === 2 && year.length === 2 && !validateCardDate(year, month, required));
-	}
-}
+// export function validateStyle(year: string, month: string, day: string, required: boolean) {
+// 	// date input
+// 	if (day) {
+// 		return (day.length === 2 && month.length === 2
+// 			&& year.length === 4 && !validateDate(year, month, day, required));
+// 	}
+// 	// card date input
+// 	else {
+// 		return (month.length === 2 && year.length === 2 && !validateCardDate(year, month, required));
+// 	}
+// }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
 	dom: Element, targetType?: TDateInputType) {
