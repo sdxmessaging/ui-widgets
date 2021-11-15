@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, resetValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, resetInvalidValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -34,7 +34,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required);
 		this.valid(valid);
-		resetValueStream(this.date(), this.year(), this.month(), this.day(), valueStream);
+		resetInvalidValueStream(this.date(), this.year(), this.month(), this.day(), valueStream);
 	}
 
 	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full

@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, resetValueStream, TDateInputType, updateDom, validateCardDate } from "../utils";
+import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, resetInvalidValueStream, TDateInputType, updateDom, validateCardDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -26,7 +26,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		this.date(`${this.month()}/${this.year()}`);
 		const valid = validateCardDate(this.year(), this.month(), required);
 		this.valid(valid);
-		resetValueStream(this.date(), this.year(), this.month(), "", valueStream);
+		resetInvalidValueStream(this.date(), this.year(), this.month(), "", valueStream);
 	}
 
 	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {

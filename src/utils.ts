@@ -154,7 +154,7 @@ export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	}
 }
 
-export function resetValueStream(date: string, year: string, month: string, day = "", valueStream?: TPropStream) {
+export function resetInvalidValueStream(date: string, year: string, month: string, day = "", valueStream?: TPropStream) {
 	if (valueStream) {
 		if (validDateInputLengths(year, month, day)) {
 			valueStream(date);
