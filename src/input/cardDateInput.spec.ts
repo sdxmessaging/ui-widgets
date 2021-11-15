@@ -242,4 +242,44 @@ describe("CardDateInput", () => {
         expect(yearInSpy).toBeCalledTimes(1);
     });
 
+    test("appendZeroToDayMonth", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(CardDateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    disabled: true
+                },
+                value,
+                xform
+            })
+        });
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+
+        monthIn.value = '1';
+        monthIn.dispatchEvent(new Event('input'));
+        monthIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(monthIn.value).toEqual("01");
+
+        monthIn.value = '0';
+        monthIn.dispatchEvent(new Event('input'));
+        monthIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(monthIn.value).toEqual("0");
+
+        const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+        yearIn.value = '2';
+        yearIn.dispatchEvent(new Event('input'));
+        yearIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(yearIn.value).toEqual('2');
+    });
+
 });

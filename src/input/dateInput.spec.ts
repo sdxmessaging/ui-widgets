@@ -412,5 +412,52 @@ describe("DateInput", () => {
 
     });
 
-    // test("")
+    test("appendZeroToDayMonth", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(DateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    disabled: true,
+                    options: [{ value: "ja-JP" }]
+                },
+                value,
+                xform
+            })
+        });
+        const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+
+        dayIn.value = '1';
+        dayIn.dispatchEvent(new Event('input'));
+        dayIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(dayIn.value).toEqual("01");
+
+        dayIn.value = '0';
+        dayIn.dispatchEvent(new Event('input'));
+        dayIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(dayIn.value).toEqual("0");
+
+        monthIn.value = '1';
+        monthIn.dispatchEvent(new Event('input'));
+        monthIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(monthIn.value).toEqual("01");
+
+        const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+        yearIn.value = '1';
+        yearIn.dispatchEvent(new Event('input'));
+        yearIn.dispatchEvent(new Event('blur'));
+        m.redraw.sync();
+        expect(yearIn.value).toEqual('1');
+
+    });
 });
