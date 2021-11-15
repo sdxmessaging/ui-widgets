@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IPropWidget, TProp } from "../interface/widget";
+import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
 import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, TDateInputType, updateDom, validateCardDate } from "../utils";
@@ -22,14 +22,17 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private readonly dom = stream<Element>();
 	private readonly focusedInput = stream<TDateInputType>('mm');
 
-	private buildDate(required: boolean) {
+	private buildDate(required: boolean, valueStream?: TPropStream) {
 		this.date(`${this.month()}/${this.year()}`);
-		this.valid(validateCardDate(this.year(), this.month(), required));
+		const valid = validateCardDate(this.year(), this.month(), required);
+		this.valid(valid);
+		if (valid && valueStream) {
+			valueStream(this.date());
+		}
 	}
 
 	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
 		// Split value into date parts
-
 		(value as stream<TProp>).map((newVal) => {
 			const [month, year = ""] = String(newVal).split("/");
 			if (month.length === 2 && year.length === 2) {
@@ -88,7 +91,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'mm'),
 					oninput: () => {
 						handleDateChange(this.month, id, "mm", this.dom(), "yy");
-						this.buildDate(Boolean(required));
+						this.buildDate(Boolean(required), attrs.value);
 					},
 					onblur: lodash.partial(appendZeroToDayMonth, this.month)
 				})
@@ -110,7 +113,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
 					oninput: () => {
 						handleDateChange(this.year, id, "yy", this.dom());
-						this.buildDate(Boolean(required));
+						this.buildDate(Boolean(required), attrs.value);
 					},
 				}),
 				m(HiddenDateInput, attrs)
