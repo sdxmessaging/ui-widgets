@@ -168,7 +168,7 @@ export function resetInvalidValueStream(date: string, year: string, month: strin
 
 export function appendZeroToDayMonth(valueStream: TPropStream) {
 	const value = valueStream() as string;
-	if (value.length === 1) valueStream(`0${value}`);
+	if (value.length === 1 && value !== '0') valueStream(`0${value}`);
 }
 
 export function validDateInputLengths(year: string, month: string, day = "") {
