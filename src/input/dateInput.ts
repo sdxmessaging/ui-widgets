@@ -34,7 +34,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required);
 		this.valid(valid);
-		resetInvalidValueStream(this.date(), this.year(), this.month(), this.day(), valueStream);
+		resetInvalidValueStream(this.date(), this.year(), this.month(), this.day(), required, valueStream);
 	}
 
 	// Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
