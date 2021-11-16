@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, dateInputIds, focusLastInput, handleDateChange, resetInvalidValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
+import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -22,6 +22,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly date = stream<string>();
 	// private readonly valid = this.date.map(Boolean);
 	private readonly valid = stream(true);
+	private readonly literalKey = stream<string>('/');
 
 	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
 
@@ -53,9 +54,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
+		console.log(dateParts);
 		// TODO map literals to ascii code for keyboard event
 		this.dateParts = dateParts as IDateParts[];
 		const dateType = dateParts[0].type as TDateType;
+		this.literalKey(dateParts[1].value);
 		const firstInputId = dateInputIds(dateType) as TDateInputType;
 		this.focusedInput(firstInputId);
 
@@ -145,7 +148,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					value: this.day(),
 					class: classStr,
 					onfocus: lodash.partial(this.focusedInput, 'dd'),
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('day'), this.day(), this.dom(), e),
+					onkeydown: (e: KeyboardEvent) => {
+						handleRetreatOrLiteralAdvance(
+							id, this.day(), this.dom(),
+							e, this.literalKey(), this.findNextInput('day'), this.findPrevInput('day')
+						);
+					},
 					oninput: () => {
 						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
 						this.buildDate(Boolean(required), attrs.value);
@@ -167,7 +175,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					required, readonly, disabled,
 					value: this.month(),
 					class: classStr,
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('month'), this.month(), this.dom(), e),
+					onkeydown: (e: KeyboardEvent) => {
+						handleRetreatOrLiteralAdvance(
+							id, this.month(), this.dom(),
+							e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month')
+						);
+					},
 					oninput: () => {
 						handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
 						this.buildDate(Boolean(required), attrs.value);
@@ -191,7 +204,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					value: this.year(),
 					class: classStr,
 					onfocus: lodash.partial(this.focusedInput, 'yyyy'),
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, this.findPrevInput('year'), this.year(), this.dom(), e),
+					onkeydown: (e: KeyboardEvent) => {
+						handleRetreatOrLiteralAdvance(
+							id, this.year(), this.dom(),
+							e, this.literalKey(), this.findNextInput('year'), this.findPrevInput('year')
+						);
+					},
 					oninput: () => {
 						handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
 						this.buildDate(Boolean(required), attrs.value);

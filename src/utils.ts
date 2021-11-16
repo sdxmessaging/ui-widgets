@@ -131,24 +131,42 @@ function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStr
 	});
 }
 
+function focusAndSelectNextInput(dom: Element, id: string, targetType: TDateInputType) {
+	const nextInput = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
+	nextInput.focus();
+	nextInput.select();
+}
+
 function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputType | undefined,
 	streamValue: string, dom: Element) {
 
 	const maxLength = parseInt(self.getAttribute("maxlength") as string);
 	if (streamValue.length === maxLength && targetType) {
-		const nextInput = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
-		nextInput.focus();
-		nextInput.select();
+		focusAndSelectNextInput(dom, id, targetType);
+	}
+}
+
+export function handleRetreatOrLiteralAdvance(
+	id: string, streamValue: string, dom: Element, event: KeyboardEvent, literalKey: string,
+	nextTargetType: TDateInputType | undefined, prevTargetTyype: TDateInputType | undefined
+) {
+	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevTargetTyype) {
+		focusAndSelectNextInput(dom, id, prevTargetTyype);
+		// prevent event from passing to the previous field & deleting characters right away
+		event.preventDefault();
+	}
+	else if (event.key === literalKey && nextTargetType && streamValue.length >= 1) {
+		focusAndSelectNextInput(dom, id, nextTargetType);
+		// prevent event from passing to the next field & advancing right away
+		event.preventDefault();
 	}
 }
 
 export function autoRetreat(id: string, targetType: TDateInputType | undefined,
 	streamValue: string, dom: Element, event: KeyboardEvent) {
 
-	const prevInput = dom.querySelector(`#${id}-${targetType}`) as HTMLInputElement;
-	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevInput) {
-		prevInput.focus();
-		prevInput.select();
+	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && targetType) {
+		focusAndSelectNextInput(dom, id, targetType);
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
@@ -191,18 +209,6 @@ export function validateCardDate(year: string, month: string, required: boolean)
 	return (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
 		|| (dateEmpty && !required);
 }
-
-// export function validateStyle(year: string, month: string, day: string, required: boolean) {
-// 	// date input
-// 	if (day) {
-// 		return (day.length === 2 && month.length === 2
-// 			&& year.length === 4 && !validateDate(year, month, day, required));
-// 	}
-// 	// card date input
-// 	else {
-// 		return (month.length === 2 && year.length === 2 && !validateCardDate(year, month, required));
-// 	}
-// }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
 	dom: Element, targetType?: TDateInputType) {

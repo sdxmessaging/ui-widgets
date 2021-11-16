@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, autoRetreat, focusLastInput, handleDateChange, resetInvalidValueStream, TDateInputType, updateDom, validateCardDate } from "../utils";
+import { appendZeroToDayMonth, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, updateDom, validateCardDate } from "../utils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -93,6 +93,12 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						handleDateChange(this.month, id, "mm", this.dom(), "yy");
 						this.buildDate(Boolean(field.required), attrs.value);
 					},
+					onkeydown: (e: KeyboardEvent) => {
+						handleRetreatOrLiteralAdvance(
+							id, this.month(), this.dom(),
+							e, '/', 'yy', undefined
+						);
+					},
 					onblur: () => {
 						appendZeroToDayMonth(this.month);
 						this.buildDate(Boolean(field.required), attrs.value);
@@ -113,7 +119,12 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						padding: '0px'
 					},
 					onfocus: lodash.partial(this.focusedInput, 'yy'),
-					onkeydown: (e: KeyboardEvent) => autoRetreat(id, 'mm', this.year(), this.dom(), e),
+					onkeydown: (e: KeyboardEvent) => {
+						handleRetreatOrLiteralAdvance(
+							id, this.year(), this.dom(),
+							e, '/', undefined, 'mm'
+						);
+					},
 					oninput: () => {
 						handleDateChange(this.year, id, "yy", this.dom());
 						this.buildDate(Boolean(field.required), attrs.value);
