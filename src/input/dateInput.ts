@@ -20,7 +20,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly month = stream<string>("");
 	private readonly year = stream<string>("");
 	private readonly date = stream<string>();
-	// private readonly valid = this.date.map(Boolean);
 	private readonly valid = stream(true);
 	private readonly literalKey = stream<string>('/');
 
@@ -34,7 +33,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required);
-		this.valid(valid);
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
 	}
 
@@ -98,12 +96,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.month("");
 				this.year("");
 			}
+			this.valid(validateDate(this.year(), this.month(), this.day(), Boolean(field.required)));
 		});
 
 		this.locale.map((newVal) => {
 			this.setDateInputs(newVal);
 		});
-		this.valid(!field.required);
 		this.setLocale(field);
 	}
 
