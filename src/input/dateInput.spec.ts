@@ -460,4 +460,103 @@ describe("DateInput", () => {
         expect(yearIn.value).toEqual('1');
 
     });
+
+    test("literal advance - en-GB", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(DateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    options: [{ value: "en-GB" }]
+                },
+                value,
+                xform
+            })
+        });
+        const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+
+        const dayInSpy = jest.spyOn(dayIn, 'focus');
+        const monthInSpy = jest.spyOn(monthIn, 'focus');
+        const yearInSpy = jest.spyOn(yearIn, 'focus');
+
+        dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(monthInSpy).toBeCalledTimes(0);
+        expect(yearInSpy).toBeCalledTimes(0);
+
+        dayIn.value = '1';
+        dayIn.dispatchEvent(new Event('input'));
+        expect(monthInSpy).toBeCalledTimes(0);
+        expect(yearInSpy).toBeCalledTimes(0);
+
+        dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
+        expect(monthInSpy).toBeCalledTimes(0);
+        expect(yearInSpy).toBeCalledTimes(0);
+
+        dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(monthInSpy).toBeCalledTimes(1);
+        expect(yearInSpy).toBeCalledTimes(0);
+
+        monthIn.value = '2';
+        monthIn.dispatchEvent(new Event('input'));
+        expect(yearInSpy).toBeCalledTimes(0);
+        expect(dayInSpy).toBeCalledTimes(0);
+        monthIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(yearInSpy).toBeCalledTimes(1);
+        expect(dayInSpy).toBeCalledTimes(0);
+
+        yearIn.value = '2';
+        yearIn.dispatchEvent(new Event('input'));
+        expect(dayInSpy).toBeCalledTimes(0);
+        expect(monthInSpy).toBeCalledTimes(1);
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(monthInSpy).toBeCalledTimes(1);
+        expect(dayInSpy).toBeCalledTimes(0);
+
+    });
+
+    test("literal advance - ko-KR", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(DateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    disabled: true,
+                    options: [{ value: "ko-KR" }]
+                },
+                value,
+                xform
+            })
+        });
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+
+        const monthInSpy = jest.spyOn(monthIn, 'focus');
+
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        yearIn.value = '1';
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
+        expect(monthInSpy).toBeCalledTimes(1);
+    });
 });

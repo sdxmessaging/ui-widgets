@@ -254,7 +254,6 @@ describe("CardDateInput", () => {
                     name: "Test Name",
                     title: "Test Title",
                     uiClass: {},
-                    disabled: true
                 },
                 value,
                 xform
@@ -282,4 +281,47 @@ describe("CardDateInput", () => {
         expect(yearIn.value).toEqual('2');
     });
 
+    test("literal advance", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(CardDateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                },
+                value,
+                xform
+            })
+        });
+        const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const monthInSpy = jest.spyOn(monthIn, 'focus');
+        const yearInSpy = jest.spyOn(yearIn, 'focus');
+
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        yearIn.value = '1';
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(monthInSpy).toBeCalledTimes(0);
+
+        monthIn.value = '2';
+        monthIn.dispatchEvent(new Event('input'));
+        expect(yearInSpy).toBeCalledTimes(0);
+
+        monthIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
+        expect(yearInSpy).toBeCalledTimes(1);
+
+    });
 });
