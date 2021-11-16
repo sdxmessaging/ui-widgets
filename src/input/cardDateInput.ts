@@ -95,7 +95,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					},
 					onkeydown: (e: KeyboardEvent) => {
 						handleRetreatOrLiteralAdvance(
-							id, this.month(), this.dom(),
+							id, 'mm', this.month(), this.dom(),
 							e, '/', 'yy', undefined
 						);
 					},
@@ -121,7 +121,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'yy'),
 					onkeydown: (e: KeyboardEvent) => {
 						handleRetreatOrLiteralAdvance(
-							id, this.year(), this.dom(),
+							id, 'yy', this.year(), this.dom(),
 							e, '/', undefined, 'mm'
 						);
 					},

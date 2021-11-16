@@ -149,7 +149,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'dd'),
 					onkeydown: (e: KeyboardEvent) => {
 						handleRetreatOrLiteralAdvance(
-							id, this.day(), this.dom(),
+							id, 'dd', this.day(), this.dom(),
 							e, this.literalKey(), this.findNextInput('day'), this.findPrevInput('day')
 						);
 					},
@@ -176,7 +176,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					class: classStr,
 					onkeydown: (e: KeyboardEvent) => {
 						handleRetreatOrLiteralAdvance(
-							id, this.month(), this.dom(),
+							id, 'mm', this.month(), this.dom(),
 							e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month')
 						);
 					},
@@ -205,7 +205,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 					onkeydown: (e: KeyboardEvent) => {
 						handleRetreatOrLiteralAdvance(
-							id, this.year(), this.dom(),
+							id, 'yyyy', this.year(), this.dom(),
 							e, this.literalKey(), this.findNextInput('year'), this.findPrevInput('year')
 						);
 					},

@@ -137,25 +137,24 @@ function focusAndSelectNextInput(dom: Element, id: string, targetType: TDateInpu
 	nextInput.select();
 }
 
-function autoAdvance(id: string, self: HTMLInputElement, targetType: TDateInputType | undefined,
-	streamValue: string, dom: Element) {
-
-	const maxLength = parseInt(self.getAttribute("maxlength") as string);
-	if (streamValue.length === maxLength && targetType) {
-		focusAndSelectNextInput(dom, id, targetType);
-	}
+function getSelfMaxLength(self: HTMLInputElement) {
+	return parseInt(self.getAttribute("maxlength") as string);
 }
 
 export function handleRetreatOrLiteralAdvance(
-	id: string, streamValue: string, dom: Element, event: KeyboardEvent, literalKey: string,
+	id: string, selfType: TDateInputType, streamValue: string, dom: Element, event: KeyboardEvent, literalKey: string,
 	nextTargetType: TDateInputType | undefined, prevTargetTyype: TDateInputType | undefined
 ) {
+	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
+	const maxLength = getSelfMaxLength(self);
+
 	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevTargetTyype) {
 		focusAndSelectNextInput(dom, id, prevTargetTyype);
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
-	else if (literalKey.charCodeAt(0) === event.key.charCodeAt(0) && nextTargetType && streamValue.length >= 1) {
+	else if (literalKey.charCodeAt(0) === event.key.charCodeAt(0)
+		&& nextTargetType && streamValue.length !== 0 && streamValue.length < maxLength) {
 		focusAndSelectNextInput(dom, id, nextTargetType);
 		// prevent event from passing to the next field & advancing right away
 		event.preventDefault();
@@ -216,7 +215,10 @@ export function handleDateChange(streamType: TPropStream, id: string, selfType: 
 		streamType(prevValue);
 	}
 
-	autoAdvance(id, self, targetType, streamType() as string, dom);
+	const maxLength = getSelfMaxLength(self);
+	if (value.length === maxLength && targetType) {
+		focusAndSelectNextInput(dom, id, targetType);
+	}
 }
 
 /**
