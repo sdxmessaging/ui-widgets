@@ -25,11 +25,11 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.month()}/${this.year()}`);
 		const valid = validateCardDate(this.year(), this.month(), required);
-		this.valid(valid);
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), "", valueStream);
 	}
 
-	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
+	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
+		this.valid(!field.required);
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
 			// only handle value when the main value stream is changed
@@ -45,6 +45,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				this.month('');
 				this.year('');
 			}
+			this.valid(validateCardDate(this.year(), this.month(), Boolean(field.required)));
 		});
 	}
 
