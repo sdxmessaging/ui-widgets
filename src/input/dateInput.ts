@@ -75,6 +75,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
+		this.valid(!field.required);
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
 			// only handle value when the main value stream is changed
