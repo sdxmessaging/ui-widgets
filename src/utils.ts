@@ -116,19 +116,28 @@ export function focusLastInput(dom: Element, id: string, focusedId: TDateInputTy
 // 	}
 // }
 
-export function updateDom(newDom: Element, currentDom: stream<Element>, validity: TPropStream) {
-	if (newDom !== currentDom()) {
-		const input = newDom.querySelector("input") as HTMLInputElement;
-		setCustomValidityMessage(input, validity, "Invalid Date");
-		currentDom(newDom);
-	}
+function getInvalidInput(message: string): TDateInputType | undefined {
+	const formattedMessage = message.toLocaleLowerCase();
+	if (formattedMessage.includes('month')) return 'mm';
+	else if (formattedMessage.includes('day')) return "dd";
+	else if (formattedMessage.includes('year')) return 'yy';
+	return undefined;
 }
 
-function setCustomValidityMessage(input: HTMLInputElement, validStream: TPropStream, message: string) {
-	validStream.map((valid) => {
-		const validityMessage = valid ? "" : `${message}`;
-		input.setCustomValidity(validityMessage);
-	});
+export function updateDom(newDom: Element, currentDom: stream<Element>, message: string) {
+	if (newDom !== currentDom()) {
+		currentDom(newDom);
+	}
+	const inputId = getInvalidInput(message);
+
+	const inputs = newDom.querySelectorAll('input');
+	inputs.forEach((item => {
+		if (item.id.substr(-2) === inputId && inputId) {
+			item.setCustomValidity(message);
+		} else {
+			item.setCustomValidity("");
+		}
+	}));
 }
 
 function focusAndSelectNextInput(dom: Element, id: string, targetType: TDateInputType) {
@@ -182,19 +191,33 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
-export function validateDate(year: string, month: string, day: string, required: boolean) {
+export function validateDate(year: string, month: string, day: string, required: boolean, messageStream: TPropStream) {
 	const validation = DateTime.fromObject({
 		year: Number(year),
 		month: Number(month),
 		day: Number(day)
 	});
 	const dateEmpty = !year && !month && !day;
+	setValidityMessage(messageStream, validation);
 	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
-export function validateCardDate(year: string, month: string, required: boolean) {
+function setValidityMessage(messageStream: TPropStream, validation: DateTime) {
+	if (validation.invalidExplanation) {
+		const messageParts = validation.invalidExplanation.split(' (of type number)');
+		messageStream(messageParts[0] + messageParts[1]);
+	} else if (!validation.year || validation.year < 1900) {
+		messageStream("Year must be great than 1900");
+	}
+	else {
+		messageStream("");
+	}
+}
+
+export function validateCardDate(year: string, month: string, required: boolean, messageStream: TPropStream) {
 	// TODO validate year in the future if it is a valid_to input
 	const dateEmpty = !year && !month;
+	messageStream("Invalid Date");
 	return (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
 		|| (dateEmpty && !required);
 }

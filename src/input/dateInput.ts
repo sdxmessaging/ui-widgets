@@ -22,7 +22,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly date = stream<string>();
 	private readonly valid = stream(true);
 	private readonly literalKey = stream<string>('/');
-
+	private readonly validationMessage = stream<string>("Invalid Date");
 	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
 
 	private readonly dom = stream<Element>();
@@ -32,7 +32,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
-		const valid = validateDate(this.year(), this.month(), this.day(), required);
+		const valid = validateDate(this.year(), this.month(), this.day(), required, this.validationMessage);
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
 	}
 
@@ -97,7 +97,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.month("");
 				this.year("");
 			}
-			this.valid(validateDate(this.year(), this.month(), this.day(), Boolean(field.required)));
+			this.valid(
+				validateDate(
+					this.year(), this.month(), this.day(),
+					Boolean(field.required), this.validationMessage
+				)
+			);
 		});
 
 		this.locale.map((newVal) => {
@@ -107,7 +112,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom, this.valid);
+		updateDom(dom, this.dom, this.validationMessage());
 	}
 
 
@@ -116,7 +121,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom, this.valid);
+		updateDom(dom, this.dom, this.validationMessage());
 	}
 
 	public onremove() {

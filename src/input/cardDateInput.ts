@@ -14,17 +14,16 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 
 	private readonly month = stream<string>("");
 	private readonly year = stream<string>("");
-
 	// Combine date parts
 	private readonly date = stream<string>("");
 	private readonly valid = stream(true);
-
 	private readonly dom = stream<Element>();
 	private readonly focusedInput = stream<TDateInputType>('mm');
+	private readonly validityMessage = stream<string>('Invalid Date');
 
 	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.month()}/${this.year()}`);
-		const valid = validateCardDate(this.year(), this.month(), required);
+		const valid = validateCardDate(this.year(), this.month(), required, this.validityMessage);
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), "", valueStream);
 	}
 
@@ -45,16 +44,16 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				this.month('');
 				this.year('');
 			}
-			this.valid(validateCardDate(this.year(), this.month(), Boolean(field.required)));
+			this.valid(validateCardDate(this.year(), this.month(), Boolean(field.required), this.validityMessage));
 		});
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom, this.valid);
+		updateDom(dom, this.dom, this.validityMessage());
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom, this.valid);
+		updateDom(dom, this.dom, this.validityMessage());
 	}
 
 	public onremove() {
