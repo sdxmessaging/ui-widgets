@@ -155,19 +155,9 @@ export function handleRetreatOrLiteralAdvance(
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
-	else if (event.key === literalKey && nextTargetType && streamValue.length >= 1) {
+	else if (literalKey.charCodeAt(0) === event.key.charCodeAt(0) && nextTargetType && streamValue.length >= 1) {
 		focusAndSelectNextInput(dom, id, nextTargetType);
 		// prevent event from passing to the next field & advancing right away
-		event.preventDefault();
-	}
-}
-
-export function autoRetreat(id: string, targetType: TDateInputType | undefined,
-	streamValue: string, dom: Element, event: KeyboardEvent) {
-
-	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && targetType) {
-		focusAndSelectNextInput(dom, id, targetType);
-		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
 }
