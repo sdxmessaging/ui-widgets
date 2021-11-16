@@ -54,7 +54,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
-		console.log(dateParts);
 		// TODO map literals to ascii code for keyboard event
 		this.dateParts = dateParts as IDateParts[];
 		const dateType = dateParts[0].type as TDateType;
