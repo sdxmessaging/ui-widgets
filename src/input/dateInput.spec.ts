@@ -156,6 +156,9 @@ describe("DateInput", () => {
         const yearInSpy = jest.spyOn(yearIn, 'focus');
         const dayInSpy = jest.spyOn(dayIn, "focus");
 
+        const monthInSelectSpy = jest.spyOn(monthIn, 'select');
+        const yearInSelectSpy = jest.spyOn(yearIn, 'select');
+
         const dayIn2 = root.querySelector("#test2-dd") as HTMLInputElement;
         const monthIn2 = root.querySelector("#test2-mm") as HTMLInputElement;
         const yearIn2 = root.querySelector("#test2-yyyy") as HTMLInputElement;
@@ -163,16 +166,20 @@ describe("DateInput", () => {
         dayIn.value = "0";
         dayIn.dispatchEvent(new Event("input"));
         expect(monthInSpy).toBeCalledTimes(0);
+        expect(monthInSelectSpy).toBeCalledTimes(0);
         expect(yearInSpy).toBeCalledTimes(0);
+        expect(yearInSelectSpy).toBeCalledTimes(0);
 
         dayIn.value = "01";
         dayIn.dispatchEvent(new Event("input"));
         expect(monthInSpy).toBeCalledTimes(1);
+        expect(monthInSelectSpy).toBeCalledTimes(1);
         expect(yearInSpy).toBeCalledTimes(0);
 
         monthIn.value = "02";
         monthIn.dispatchEvent(new Event("input"));
         expect(yearInSpy).toBeCalledTimes(1);
+        expect(yearInSelectSpy).toBeCalledTimes(1);
 
         yearIn.value = "2020";
         yearIn.dispatchEvent(new Event("input"));
