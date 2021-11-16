@@ -209,7 +209,7 @@ function setValidityMessage(messageStream: TPropStream, validation: DateTime) {
 		const messageParts = validation.invalidExplanation.split(' (of type number)');
 		messageStream(messageParts[0] + messageParts[1]);
 	} else if (!validation.year || validation.year < 1900) {
-		messageStream("Year must be great than 1900");
+		messageStream("Year must be greater than 1900");
 	}
 	else {
 		messageStream("");
