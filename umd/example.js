@@ -209,6 +209,22 @@ m.mount(document.getElementById("page"), {
 							},
 							value: dateVal
 						}),
+						m(uiWidgets.DateInput, {
+							field: {
+								id: "dob-in2",
+								label: "Date Input (ui-widgets Bespoke)",
+								options: [{ value: dateFormat() }]
+							},
+							value: dateVal
+						}),
+						m(uiWidgets.DateInput, {
+							field: {
+								id: "dob-in3",
+								label: "Date Input (ui-widgets Bespoke)",
+								options: [{ value: dateFormat() }]
+							},
+							value: dateVal
+						}),
 						m(uiWidgets.RadioInput, {
 							field: {
 								id: "date-format-in",
@@ -416,6 +432,20 @@ m.mount(document.getElementById("page"), {
 
 			// Card Date
 			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
+					field: {
+						id: "card-in-date",
+						label: "Card Expiry MM/YY"
+					},
+					value: cardVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
+					field: {
+						id: "card-in-date",
+						label: "Card Expiry MM/YY"
+					},
+					value: cardVal
+				})),
 				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
 					field: {
 						id: "card-in-date",

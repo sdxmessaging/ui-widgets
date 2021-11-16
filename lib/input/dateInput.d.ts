@@ -6,6 +6,7 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     private readonly year;
     private readonly date;
     private readonly valid;
+    private readonly literalKey;
     private dateInputAdvanceOrder;
     private readonly dom;
     private readonly focusedInput;
