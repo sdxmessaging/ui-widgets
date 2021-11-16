@@ -19,7 +19,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	private readonly valid = stream(true);
 	private readonly dom = stream<Element>();
 	private readonly focusedInput = stream<TDateInputType>('mm');
-	private readonly validityMessage = stream<string>('Invalid Date');
+	private readonly validityMessage = stream<string>('');
 
 	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.month()}/${this.year()}`);

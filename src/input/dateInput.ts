@@ -22,7 +22,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly date = stream<string>();
 	private readonly valid = stream(true);
 	private readonly literalKey = stream<string>('/');
-	private readonly validationMessage = stream<string>("Invalid Date");
+	private readonly validationMessage = stream<string>("");
 	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
 
 	private readonly dom = stream<Element>();

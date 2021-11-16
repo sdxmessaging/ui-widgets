@@ -121,6 +121,8 @@ function getInvalidInput(message: string): TDateInputType | undefined {
 	if (formattedMessage.includes('month')) return 'mm';
 	else if (formattedMessage.includes('day')) return "dd";
 	else if (formattedMessage.includes('year')) return 'yy';
+	// This is temporary for card date as there is no validation -- TODO validate card date
+	else if (formattedMessage.includes('date')) return "mm";
 	return undefined;
 }
 
@@ -132,7 +134,7 @@ export function updateDom(newDom: Element, currentDom: stream<Element>, message:
 
 	const inputs = newDom.querySelectorAll('input');
 	inputs.forEach((item => {
-		if (item.id.substr(-2) === inputId && inputId) {
+		if (item.id.substr(-2) === inputId && inputId && message) {
 			item.setCustomValidity(message);
 		} else {
 			item.setCustomValidity("");
@@ -217,9 +219,16 @@ function setValidityMessage(messageStream: TPropStream, validation: DateTime) {
 export function validateCardDate(year: string, month: string, required: boolean, messageStream: TPropStream) {
 	// TODO validate year in the future if it is a valid_to input
 	const dateEmpty = !year && !month;
-	messageStream("Invalid Date");
-	return (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
+	const valid = (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
 		|| (dateEmpty && !required);
+	if (valid) {
+		messageStream("");
+	}
+	// TODO unset validity message to default browser's when field is empty
+	else {
+		messageStream("Invalid Card Date");
+	}
+	return valid;
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
