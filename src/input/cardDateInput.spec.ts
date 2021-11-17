@@ -441,4 +441,28 @@ describe("CardDateInput", () => {
         expect(monthIn.validationMessage).toEqual("Please check the month.");
         expect(yearIn.validationMessage).toEqual("");
     });
+
+    test("setAllValidationMessage - edge case: no dom/preload values", () => {
+        const root = window.document.createElement("div");
+        // Preload value means dom is not present when validation happens
+        const value = stream<string>("09/21");
+        const xform = value.map((val) => val);
+        const cardDateInputClass = new CardDateInput();
+        m.mount(root, {
+            view: () => m(cardDateInputClass, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    required: true
+                },
+                value,
+                xform
+            })
+        });
+
+        expect(cardDateInputClass['valid']()).toEqual(true);
+    });
 });

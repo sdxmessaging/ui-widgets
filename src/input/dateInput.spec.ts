@@ -713,4 +713,29 @@ describe("DateInput", () => {
         expect(dayIn.validationMessage).toEqual("");
 
     });
+
+    test("setAllValidationMessage - edge case: no dom/preload values", () => {
+        const root = window.document.createElement("div");
+        // Preload value means dom is not present when validation happens
+        const value = stream<string>("2021-12-01");
+        const xform = value.map((val) => val);
+        const dateInputClass = new DateInput();
+        m.mount(root, {
+            view: () => m(dateInputClass, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    options: [{ value: "en-GB" }],
+                    required: true
+                },
+                value,
+                xform
+            })
+        });
+
+        expect(dateInputClass['valid']()).toEqual(true);
+    });
 });
