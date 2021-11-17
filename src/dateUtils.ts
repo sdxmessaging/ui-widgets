@@ -102,13 +102,18 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
-function getDateValidityMessage(validation: DateTime) {
+function getDateValidityMessage(validation: DateTime, year: string, required: boolean, dateEmpty: boolean) {
 	if (validation.invalidExplanation) {
-		// Get the wrong input type from the luxon invalidation explanation
-		const inputType = validation.invalidExplanation.split(' ')[8].replace(',', "");
-		return `Please check the ${inputType}`;
-	} else if (!validation.year || validation.year < 1900) {
-		return "Year must be greater than 1900";
+		if (dateEmpty && !required) {
+			return "";
+		}
+		else {
+			// Get the wrong input type from the luxon invalidation explanation
+			const inputType = validation.invalidExplanation.split(' ')[8].replace(',', "");
+			return `Please check the ${inputType}.`;
+		}
+	} else if (!validation.year || Number(year) < 1900) {
+		return "Year must be greater than 1900.";
 	}
 	else {
 		return "";
@@ -119,13 +124,13 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 	if (!valid) {
 		if (!month && !year) {
 			// Default broswer validation message
-			return "";
+			return "Please fill in this field";
 		}
 		else if (month.length !== 2 || Number(month) > 12) {
-			return `Please check the month`;
+			return `Please check the month.`;
 		}
 		else if (year.length !== 2) {
-			return `Please check the year`;
+			return `Please check the year.`;
 		}
 	}
 	// unset validation message
@@ -165,10 +170,10 @@ export function validateDate(year: string, month: string, day: string, required:
 		day: Number(day)
 	});
 
-	const message = getDateValidityMessage(validation);
+	const dateEmpty = !year && !month && !day;
+	const message = getDateValidityMessage(validation, year, required, dateEmpty);
 	setAllValidityMessage(dom, message);
 
-	const dateEmpty = !year && !month && !day;
 	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
