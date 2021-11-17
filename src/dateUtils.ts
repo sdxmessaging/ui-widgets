@@ -169,7 +169,7 @@ export function validateDate(year: string, month: string, day: string, required:
 		month: Number(month),
 		day: Number(day)
 	});
-	console.log(validation.invalidExplanation)
+
 	const dateEmpty = !year && !month && !day;
 	const message = getDateValidityMessage(validation, year, required, dateEmpty);
 	setAllValidityMessage(dom, message);
