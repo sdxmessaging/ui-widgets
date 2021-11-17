@@ -583,75 +583,64 @@ describe("DateInput", () => {
         /* 
             Rules: 
                 - Month takes precedence, then Day, then Year
-                - Every time validation happens, setCustomValidity happens twice individually
-                due to value stream updating validity (for multi-date-binding)
                 - Every time validation happens, the other 2 inputs call setCustomValidity to reset value,
                 only the invalid one will have a message
+                - Reset to broswer's default validity message when field is required and fields are empty
             Scenario:
         */
 
         const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
         const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
         const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
-        const dayInSetValiditySpy = dayIn.setCustomValidity = jest.fn();
-        const monthInSetValiditySpy = monthIn.setCustomValidity = jest.fn();
-        const yearInSetValiditySpy = yearIn.setCustomValidity = jest.fn();
 
         monthIn.value = "0";
         monthIn.dispatchEvent(new Event('input'));
-        expect(monthInSetValiditySpy).toBeCalledTimes(2);
-        expect(dayInSetValiditySpy).toBeCalledTimes(2);
-        expect(yearInSetValiditySpy).toBeCalledTimes(2);
-        expect(monthInSetValiditySpy.mock.calls[0][0]).toEqual("Please check the month.");
-        expect(dayInSetValiditySpy.mock.calls[0][0]).toEqual("");
-        expect(yearInSetValiditySpy.mock.calls[0][0]).toEqual("");
+        expect(monthIn.validationMessage).toEqual("Please check the month.");
+        expect(yearIn.validationMessage).toEqual("Constraints not satisfied");
+        expect(dayIn.validationMessage).toEqual("Constraints not satisfied");
+
 
         monthIn.value = "01";
         monthIn.dispatchEvent(new Event('input'));
-        expect(monthInSetValiditySpy).toBeCalledTimes(4);
-        expect(dayInSetValiditySpy).toBeCalledTimes(4);
-        expect(yearInSetValiditySpy).toBeCalledTimes(4);
-        expect(monthInSetValiditySpy.mock.calls[2][0]).toEqual("");
-        expect(dayInSetValiditySpy.mock.calls[2][0]).toEqual("Please check the day.");
-        expect(yearInSetValiditySpy.mock.calls[2][0]).toEqual("");
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Constraints not satisfied");
+        expect(dayIn.validationMessage).toEqual("Please check the day.");
 
         dayIn.value = '00';
         dayIn.dispatchEvent(new Event('input'));
-        expect(dayInSetValiditySpy).toBeCalledTimes(6);
-        expect(monthInSetValiditySpy).toBeCalledTimes(6);
-        expect(yearInSetValiditySpy).toBeCalledTimes(6);
-        expect(dayInSetValiditySpy.mock.calls[4][0]).toEqual("Please check the day.");
-        expect(monthInSetValiditySpy.mock.calls[4][0]).toEqual("");
-        expect(yearInSetValiditySpy.mock.calls[4][0]).toEqual("");
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Constraints not satisfied");
+        expect(dayIn.validationMessage).toEqual("Please check the day.");
 
         dayIn.value = '28';
         dayIn.dispatchEvent(new Event('input'));
-        expect(dayInSetValiditySpy).toBeCalledTimes(8);
-        expect(monthInSetValiditySpy).toBeCalledTimes(8);
-        expect(yearInSetValiditySpy).toBeCalledTimes(8);
-        expect(dayInSetValiditySpy.mock.calls[6][0]).toEqual("");
-        expect(monthInSetValiditySpy.mock.calls[6][0]).toEqual("");
-        // Default browser's message which means custom message is an empty string
-        expect(yearInSetValiditySpy.mock.calls[6][0]).toEqual("Year must be greater than 1900.");
-        expect(yearIn.checkValidity()).toEqual(false);
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Year must be greater than 1900.");
+        expect(dayIn.validationMessage).toEqual("");
 
         yearIn.value = '199';
         yearIn.dispatchEvent(new Event('input'));
-        expect(dayInSetValiditySpy).toBeCalledTimes(10);
-        expect(monthInSetValiditySpy).toBeCalledTimes(10);
-        expect(yearInSetValiditySpy).toBeCalledTimes(10);
-        expect(dayInSetValiditySpy.mock.calls[8][0]).toEqual("");
-        expect(monthInSetValiditySpy.mock.calls[8][0]).toEqual("");
-        expect(yearInSetValiditySpy.mock.calls[8][0]).toEqual("Year must be greater than 1900.");
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Year must be greater than 1900.");
+        expect(dayIn.validationMessage).toEqual("");
 
         yearIn.value = '1997';
         yearIn.dispatchEvent(new Event('input'));
-        expect(dayInSetValiditySpy).toBeCalledTimes(12);
-        expect(monthInSetValiditySpy).toBeCalledTimes(12);
-        expect(yearInSetValiditySpy).toBeCalledTimes(12);
-        expect(dayInSetValiditySpy.mock.calls[10][0]).toEqual("");
-        expect(monthInSetValiditySpy.mock.calls[10][0]).toEqual("");
-        expect(yearInSetValiditySpy.mock.calls[10][0]).toEqual("");
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+        expect(dayIn.validationMessage).toEqual("");
+
+        monthIn.value = "";
+        yearIn.value = "";
+        dayIn.value = "";
+
+        dayIn.dispatchEvent(new Event('input'));
+        monthIn.dispatchEvent(new Event('input'));
+        yearIn.dispatchEvent(new Event('input'));
+        // Default broswer validity message
+        expect(monthIn.validationMessage).toEqual("Constraints not satisfied");
+        expect(yearIn.validationMessage).toEqual("Constraints not satisfied");
+        expect(dayIn.validationMessage).toEqual("Constraints not satisfied");
 
     });
 
@@ -677,10 +666,9 @@ describe("DateInput", () => {
         /* 
             Rules: 
                 - Month takes precedence, then Day, then Year
-                - Every time validation happens, setCustomValidity happens twice individually
-                due to value stream updating validity (for multi-date-binding)
                 - Every time validation happens, the other 2 inputs call setCustomValidity to reset value,
                 only the invalid one will have a message
+                - All inputs should be valid if they are all empty and not required
             Scenario:
         */
 
