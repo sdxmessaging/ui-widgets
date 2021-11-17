@@ -104,7 +104,7 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 
 function getDateValidityMessage(validation: DateTime, year: string, required: boolean, dateEmpty: boolean) {
 	if (validation.invalidExplanation) {
-		if (dateEmpty && !required) {
+		if ((dateEmpty && !required) || (dateEmpty)) {
 			return "";
 		}
 		else {
@@ -142,7 +142,7 @@ function setAllValidityMessage(dom: Element, message: string) {
 		const inputId = getInvalidInput(message);
 		const inputs = dom.querySelectorAll('input');
 		inputs.forEach((item => {
-			if (item.id.substr(-2) === inputId && inputId && message) {
+			if (inputId && item.id.substr(-2) === inputId && message) {
 				item.setCustomValidity(message);
 			} else {
 				item.setCustomValidity("");
@@ -169,7 +169,7 @@ export function validateDate(year: string, month: string, day: string, required:
 		month: Number(month),
 		day: Number(day)
 	});
-
+	console.log(validation.invalidExplanation)
 	const dateEmpty = !year && !month && !day;
 	const message = getDateValidityMessage(validation, year, required, dateEmpty);
 	setAllValidityMessage(dom, message);
