@@ -3,7 +3,8 @@ import stream from "mithril/stream";
 
 import { LayoutType } from '../../interface/widget';
 import { FloatLabel } from "./floatLabel";
-
+import { FixedLabel } from "./fixedLabel";
+import { TopLabel } from "./topLabel";
 
 describe("floatLabel", () => {
 	test('calcHeight', () => {
@@ -91,4 +92,15 @@ describe("floatLabel", () => {
 		floatLabel['focusOut']();
 		expect(floatLabel['focus']).toEqual(false);
 	});
+
+	
+test("fixedLabel", () => {
+	const fixedLabel = new FixedLabel();
+	expect(fixedLabel['shouldFloat']()).toBe(true);
+});
+
+test("topLabel", () => {
+	const topLabel = new TopLabel();
+	expect(topLabel['labelTranslateY']()).toBe("0.5ex");
+});
 });
