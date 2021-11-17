@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, updateDom, validateCardDate } from "../utils";
+import { appendZeroToDayMonth, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, updateDom, validateCardDate } from "../dateUtils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
