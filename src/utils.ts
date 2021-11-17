@@ -181,20 +181,6 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
-export function validateDate(year: string, month: string, day: string, required: boolean, dom: Element) {
-	const validation = DateTime.fromObject({
-		year: Number(year),
-		month: Number(month),
-		day: Number(day)
-	});
-
-	const message = getDateValidityMessage(validation);
-	setAllValidityMessage(dom, message);
-
-	const dateEmpty = !year && !month && !day;
-	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
-}
-
 function getDateValidityMessage(validation: DateTime) {
 	if (validation.invalidExplanation) {
 		// Get the wrong input type from the luxon invalidation explanation
@@ -249,6 +235,20 @@ export function validateCardDate(year: string, month: string, required: boolean,
 	setAllValidityMessage(dom, message);
 
 	return valid;
+}
+
+export function validateDate(year: string, month: string, day: string, required: boolean, dom: Element) {
+	const validation = DateTime.fromObject({
+		year: Number(year),
+		month: Number(month),
+		day: Number(day)
+	});
+
+	const message = getDateValidityMessage(validation);
+	setAllValidityMessage(dom, message);
+
+	const dateEmpty = !year && !month && !day;
+	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
 export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,

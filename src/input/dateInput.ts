@@ -29,7 +29,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private dateParts!: ReadonlyArray<IDateParts>;
 	private readonly locale = stream<string | undefined>(undefined);
 
-	private buildDate(required: boolean, valueStream: TPropStream) {
+	private buildDate(valueStream: TPropStream, required = false) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required, this.dom());
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
@@ -70,6 +70,103 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const locale = options && options.length ? options[0].value as string : undefined;
 		if (locale !== this.locale()) {
 			this.locale(locale);
+		}
+	}
+
+	private createDateInputs({ type, value }: IDateParts, {
+		attrs: {
+			field: {
+				id, name = id,
+				required, readonly, disabled,
+				uiClass = {},
+			},
+			value: streamValue
+		} }: CVnode<IPropWidget>) {
+
+		const classStr = inputCls(uiClass);
+
+		switch (type) {
+			case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
+			case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+				id: `${id}-dd`, name: `${name}-dd`,
+				type: FieldType.text, placeholder: "DD",
+				minlength: "2", maxlength: "2",
+				pattern: "[0-9]*", inputmode: "numeric",
+				required, readonly, disabled,
+				value: this.day(),
+				class: classStr,
+				onfocus: lodash.partial(this.focusedInput, 'dd'),
+				onkeydown: (e: KeyboardEvent) => {
+					handleRetreatOrLiteralAdvance(
+						id, 'dd', this.day(), this.dom(),
+						e, this.literalKey(), this.findNextInput('day'), this.findPrevInput('day')
+					);
+				},
+				oninput: () => {
+					handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
+					this.buildDate(streamValue, required);
+				},
+				onblur: () => {
+					appendZeroToDayMonth(this.day);
+					this.buildDate(streamValue, required);
+				},
+				style: {
+					maxWidth: DateWidth.dd,
+					padding: '0px'
+				}
+			}));
+			case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+				id: `${id}-mm`, name: `${name}-mm`,
+				type: FieldType.text, placeholder: "MM",
+				minlength: "2", maxlength: "2",
+				pattern: "[0-9]*", inputmode: "numeric",
+				required, readonly, disabled,
+				value: this.month(),
+				class: classStr,
+				onkeydown: (e: KeyboardEvent) => {
+					handleRetreatOrLiteralAdvance(
+						id, 'mm', this.month(), this.dom(),
+						e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month')
+					);
+				},
+				oninput: () => {
+					handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
+					this.buildDate(streamValue, required);
+				},
+				onfocus: lodash.partial(this.focusedInput, 'mm'),
+				onblur: () => {
+					appendZeroToDayMonth(this.month);
+					this.buildDate(streamValue, required);
+				},
+				style: {
+					maxWidth: DateWidth.mm,
+					padding: '0px'
+				}
+			}));
+			case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+				id: `${id}-yyyy`, name: `${name}-yyyy`,
+				type: FieldType.text, placeholder: "YYYY",
+				minlength: "4", maxlength: "4",
+				pattern: "[0-9]*", inputmode: "numeric",
+				required, readonly, disabled,
+				value: this.year(),
+				class: classStr,
+				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
+				onkeydown: (e: KeyboardEvent) => {
+					handleRetreatOrLiteralAdvance(
+						id, 'yyyy', this.year(), this.dom(),
+						e, this.literalKey(), this.findNextInput('year'), this.findPrevInput('year')
+					);
+				},
+				oninput: () => {
+					handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
+					this.buildDate(streamValue, required);
+				},
+				style: {
+					maxWidth: DateWidth.yyyy,
+					padding: '0px'
+				}
+			}));
 		}
 	}
 
@@ -127,103 +224,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.day.end(true);
 	}
 
-	public view({ attrs }: CVnode<IPropWidget>) {
-		const {
-			id, name = id,
-			required, readonly, disabled,
-			uiClass = {},
-		} = attrs.field as IOptionField;
-		const classStr = inputCls(uiClass);
-		const { field } = attrs;
-		const createDateInputs = ({ type, value }: IDateParts) => {
-			switch (type) {
-				case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
-				case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
-					id: `${id}-dd`, name: `${name}-dd`,
-					type: FieldType.text, placeholder: "DD",
-					minlength: "2", maxlength: "2",
-					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
-					value: this.day(),
-					class: classStr,
-					onfocus: lodash.partial(this.focusedInput, 'dd'),
-					onkeydown: (e: KeyboardEvent) => {
-						handleRetreatOrLiteralAdvance(
-							id, 'dd', this.day(), this.dom(),
-							e, this.literalKey(), this.findNextInput('day'), this.findPrevInput('day')
-						);
-					},
-					oninput: () => {
-						handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
-						this.buildDate(Boolean(required), attrs.value);
-					},
-					onblur: () => {
-						appendZeroToDayMonth(this.day);
-						this.buildDate(Boolean(required), attrs.value);
-					},
-					style: {
-						maxWidth: DateWidth.dd,
-						padding: '0px'
-					}
-				}));
-				case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
-					id: `${id}-mm`, name: `${name}-mm`,
-					type: FieldType.text, placeholder: "MM",
-					minlength: "2", maxlength: "2",
-					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
-					value: this.month(),
-					class: classStr,
-					onkeydown: (e: KeyboardEvent) => {
-						handleRetreatOrLiteralAdvance(
-							id, 'mm', this.month(), this.dom(),
-							e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month')
-						);
-					},
-					oninput: () => {
-						handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
-						this.buildDate(Boolean(required), attrs.value);
-					},
-					onfocus: lodash.partial(this.focusedInput, 'mm'),
-					onblur: () => {
-						appendZeroToDayMonth(this.month);
-						this.buildDate(Boolean(required), attrs.value);
-					},
-					style: {
-						maxWidth: DateWidth.mm,
-						padding: '0px'
-					}
-				}));
-				case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
-					id: `${id}-yyyy`, name: `${name}-yyyy`,
-					type: FieldType.text, placeholder: "YYYY",
-					minlength: "4", maxlength: "4",
-					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
-					value: this.year(),
-					class: classStr,
-					onfocus: lodash.partial(this.focusedInput, 'yyyy'),
-					onkeydown: (e: KeyboardEvent) => {
-						handleRetreatOrLiteralAdvance(
-							id, 'yyyy', this.year(), this.dom(),
-							e, this.literalKey(), this.findNextInput('year'), this.findPrevInput('year')
-						);
-					},
-					oninput: () => {
-						handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
-						this.buildDate(Boolean(required), attrs.value);
-					},
-					style: {
-						maxWidth: DateWidth.yyyy,
-						padding: '0px'
-					}
-				}));
-			}
-		};
+	public view(vnode: CVnode<IPropWidget>) {
+		const { attrs: { field, value } } = vnode;
+		const { id } = field;
 
 		return m(LayoutFixed, {
-			value: attrs.value, field,
-			invalid: (!this.valid() && Boolean(required)) || (!this.valid())
+			value: value, field,
+			invalid: !this.valid()
 		},
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
@@ -233,9 +240,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}
 			},
 				this.dateParts.map((datePart) => {
-					return createDateInputs(datePart);
+					return this.createDateInputs(datePart, vnode);
 				}),
-				m(HiddenDateInput, attrs)
+				m(HiddenDateInput, vnode.attrs)
 			)
 		);
 	}
