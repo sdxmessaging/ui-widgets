@@ -560,7 +560,7 @@ describe("DateInput", () => {
         expect(monthInSpy).toBeCalledTimes(1);
     });
 
-    test("Validate Date - Set Custom Validity Message", () => {
+    test("Validate Date - Set Custom Validity Message for required date input", () => {
         const root = window.document.createElement("div");
         const value = stream<string>();
         const xform = value.map((val) => val);
@@ -596,13 +596,13 @@ describe("DateInput", () => {
         const dayInSetValiditySpy = dayIn.setCustomValidity = jest.fn();
         const monthInSetValiditySpy = monthIn.setCustomValidity = jest.fn();
         const yearInSetValiditySpy = yearIn.setCustomValidity = jest.fn();
-        // expect(dayInSetValiditySpy).toBeCalledWith("Please check the day")
+
         monthIn.value = "0";
         monthIn.dispatchEvent(new Event('input'));
         expect(monthInSetValiditySpy).toBeCalledTimes(2);
         expect(dayInSetValiditySpy).toBeCalledTimes(2);
         expect(yearInSetValiditySpy).toBeCalledTimes(2);
-        expect(monthInSetValiditySpy.mock.calls[0][0]).toEqual("Please check the month");
+        expect(monthInSetValiditySpy.mock.calls[0][0]).toEqual("Please check the month.");
         expect(dayInSetValiditySpy.mock.calls[0][0]).toEqual("");
         expect(yearInSetValiditySpy.mock.calls[0][0]).toEqual("");
 
@@ -612,16 +612,15 @@ describe("DateInput", () => {
         expect(dayInSetValiditySpy).toBeCalledTimes(4);
         expect(yearInSetValiditySpy).toBeCalledTimes(4);
         expect(monthInSetValiditySpy.mock.calls[2][0]).toEqual("");
+        expect(dayInSetValiditySpy.mock.calls[2][0]).toEqual("Please check the day.");
         expect(yearInSetValiditySpy.mock.calls[2][0]).toEqual("");
-        expect(dayInSetValiditySpy.mock.calls[2][0]).toEqual("Please check the day");
-
 
         dayIn.value = '00';
         dayIn.dispatchEvent(new Event('input'));
         expect(dayInSetValiditySpy).toBeCalledTimes(6);
         expect(monthInSetValiditySpy).toBeCalledTimes(6);
         expect(yearInSetValiditySpy).toBeCalledTimes(6);
-        expect(dayInSetValiditySpy.mock.calls[4][0]).toEqual("Please check the day");
+        expect(dayInSetValiditySpy.mock.calls[4][0]).toEqual("Please check the day.");
         expect(monthInSetValiditySpy.mock.calls[4][0]).toEqual("");
         expect(yearInSetValiditySpy.mock.calls[4][0]).toEqual("");
 
@@ -632,17 +631,98 @@ describe("DateInput", () => {
         expect(yearInSetValiditySpy).toBeCalledTimes(8);
         expect(dayInSetValiditySpy.mock.calls[6][0]).toEqual("");
         expect(monthInSetValiditySpy.mock.calls[6][0]).toEqual("");
-        expect(yearInSetValiditySpy.mock.calls[6][0]).toEqual("Year must be greater than 1900");
+        // Default browser's message which means custom message is an empty string
+        expect(yearInSetValiditySpy.mock.calls[6][0]).toEqual("Year must be greater than 1900.");
+        expect(yearIn.checkValidity()).toEqual(false);
 
-        yearIn.value = '1997';
+        yearIn.value = '199';
         yearIn.dispatchEvent(new Event('input'));
         expect(dayInSetValiditySpy).toBeCalledTimes(10);
         expect(monthInSetValiditySpy).toBeCalledTimes(10);
         expect(yearInSetValiditySpy).toBeCalledTimes(10);
         expect(dayInSetValiditySpy.mock.calls[8][0]).toEqual("");
         expect(monthInSetValiditySpy.mock.calls[8][0]).toEqual("");
-        expect(yearInSetValiditySpy.mock.calls[8][0]).toEqual("");
+        expect(yearInSetValiditySpy.mock.calls[8][0]).toEqual("Year must be greater than 1900.");
 
+        yearIn.value = '1997';
+        yearIn.dispatchEvent(new Event('input'));
+        expect(dayInSetValiditySpy).toBeCalledTimes(12);
+        expect(monthInSetValiditySpy).toBeCalledTimes(12);
+        expect(yearInSetValiditySpy).toBeCalledTimes(12);
+        expect(dayInSetValiditySpy.mock.calls[10][0]).toEqual("");
+        expect(monthInSetValiditySpy.mock.calls[10][0]).toEqual("");
+        expect(yearInSetValiditySpy.mock.calls[10][0]).toEqual("");
+
+    });
+
+    test("Validate Date - Set Custom Validity Message for non-required date input", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(DateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    options: [{ value: "en-GB" }],
+                },
+                value,
+                xform
+            })
+        });
+
+        /* 
+            Rules: 
+                - Month takes precedence, then Day, then Year
+                - Every time validation happens, setCustomValidity happens twice individually
+                due to value stream updating validity (for multi-date-binding)
+                - Every time validation happens, the other 2 inputs call setCustomValidity to reset value,
+                only the invalid one will have a message
+            Scenario:
+        */
+
+        const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
+
+        monthIn.value = "0";
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("Please check the month.");
+        expect(yearIn.validationMessage).toEqual("");
+        expect(dayIn.validationMessage).toEqual("");
+
+        monthIn.value = "01";
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+        expect(dayIn.validationMessage).toEqual("Please check the day.");
+
+        dayIn.value = "28";
+        dayIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Year must be greater than 1900.");
+        expect(dayIn.validationMessage).toEqual("");
+
+        yearIn.value = "1997";
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+        expect(dayIn.validationMessage).toEqual("");
+
+        monthIn.value = "";
+        yearIn.value = "";
+        dayIn.value = "";
+
+        // empty and not required = valid date input
+        dayIn.dispatchEvent(new Event('input'));
+        monthIn.dispatchEvent(new Event('input'));
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+        expect(dayIn.validationMessage).toEqual("");
 
     });
 });
