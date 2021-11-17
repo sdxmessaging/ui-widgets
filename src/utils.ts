@@ -189,8 +189,11 @@ export function validateDate(year: string, month: string, day: string, required:
 		month: Number(month),
 		day: Number(day)
 	});
+
+	const message = getDateValidityMessage(validation);
+	setAllValidityMessage(dom, message);
+
 	const dateEmpty = !year && !month && !day;
-	setDateValidityMessage(validation, dom);
 	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
@@ -206,25 +209,26 @@ function getDateValidityMessage(validation: DateTime) {
 	}
 }
 
-function getCardDateValidityMessage(year: string, month: string, required: boolean) {
-
-	if (month.length !== 2 || Number(month) > 12) {
-		return `Please check the month ${month}`;
+function getCardDateValidityMessage(year: string, month: string, valid: boolean) {
+	if (!valid) {
+		if (!month && !year) {
+			// Default broswer validation message
+			return "";
+		}
+		else if (month.length !== 2 || Number(month) > 12) {
+			return `Please check the month ${month}`;
+		}
+		else if (year.length !== 2) {
+			return `Please check the year ${year}`;
+		}
 	}
-	else if (year.length !== 2) {
-		return `Please check the year ${year}`
-	}
-	else if (!year && !month && !required) {
-		return "";
-	}
+	// unset validation message
 	return "";
 }
 
-function setDateValidityMessage(validation: DateTime, dom: Element) {
-	// TODO put setting custom validity message here
-	const message = getDateValidityMessage(validation);
-	const inputId = getInvalidInput(message);
+function setAllValidityMessage(dom: Element, message: string) {
 	if (dom) {
+		const inputId = getInvalidInput(message);
 		const inputs = dom.querySelectorAll('input');
 		inputs.forEach((item => {
 			if (item.id.substr(-2) === inputId && inputId && message) {
@@ -236,28 +240,15 @@ function setDateValidityMessage(validation: DateTime, dom: Element) {
 	}
 }
 
-function setCardDateValidityMessage(dom: Element, year: string, month: string, required: boolean) {
-	const message = getCardDateValidityMessage(year, month, required);
-	const inputId = getInvalidInput(message);
-	if (dom) {
-		const inputs = dom.querySelectorAll('input');
-		inputs.forEach((item => {
-			if (item.id.substr(-2) === inputId && inputId && message) {
-				item.setCustomValidity(message);
-			}
-			else {
-				item.setCustomValidity("");
-			}
-		}));
-	}
-}
-
 export function validateCardDate(year: string, month: string, required: boolean, dom: Element) {
 	// TODO validate year in the future if it is a valid_to input
 	const dateEmpty = !year && !month;
 	const valid = (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
 		|| (dateEmpty && !required);
-	setCardDateValidityMessage(dom, year, month, required);
+	const message = getCardDateValidityMessage(year, month, valid);
+
+	setAllValidityMessage(dom, message);
+
 	return valid;
 }
 
