@@ -12,14 +12,13 @@ import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
-	private readonly month = stream<string>("");
-	private readonly year = stream<string>("");
-	// Combine date parts
-	private readonly date = stream<string>("");
-	private readonly valid = stream(true);
 	private readonly dom = stream<Element>();
+	private readonly valid = stream();
 	private readonly focusedInput = stream<TDateInputType>('mm');
 
+	private readonly month = stream<string>("");
+	private readonly year = stream<string>("");
+	private readonly date = stream<string>("");
 
 	private buildDate(required: boolean, valueStream: TPropStream) {
 		this.date(`${this.month()}/${this.year()}`);

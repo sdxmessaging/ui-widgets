@@ -16,18 +16,20 @@ interface IDateParts {
 }
 export class DateInput implements ClassComponent<IPropWidget> {
 
+	private readonly dom = stream<Element>();
+	private readonly valid = stream();
+	private readonly focusedInput = stream<TDateInputType | undefined>(undefined);
+
+	private dateParts!: ReadonlyArray<IDateParts>;
+	private readonly locale = stream<string | undefined>(undefined);
+	private readonly literalKey = stream<string>('/');
+	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
+
 	private readonly day = stream<string>("");
 	private readonly month = stream<string>("");
 	private readonly year = stream<string>("");
 	private readonly date = stream<string>();
-	private readonly valid = stream(true);
-	private readonly literalKey = stream<string>('/');
-	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
 
-	private readonly dom = stream<Element>();
-	private readonly focusedInput = stream<TDateInputType | undefined>(undefined);
-	private dateParts!: ReadonlyArray<IDateParts>;
-	private readonly locale = stream<string | undefined>(undefined);
 
 	private buildDate(valueStream: TPropStream, required = false) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
