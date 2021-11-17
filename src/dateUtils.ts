@@ -137,7 +137,7 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 	return "";
 }
 
-function setAllValidityMessage(dom: Element, message: string) {
+function setAllValidityMessage(dom: Element | undefined, message: string) {
 	if (dom) {
 		const inputId = getInvalidInput(message);
 		const inputs = dom.querySelectorAll('input');
@@ -151,7 +151,7 @@ function setAllValidityMessage(dom: Element, message: string) {
 	}
 }
 
-export function validateCardDate(year: string, month: string, required: boolean, dom: Element) {
+export function validateCardDate(year: string, month: string, required: boolean, dom: Element | undefined) {
 	// TODO validate year in the future if it is a valid_to input
 	const dateEmpty = !year && !month;
 	const valid = (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
@@ -163,7 +163,7 @@ export function validateCardDate(year: string, month: string, required: boolean,
 	return valid;
 }
 
-export function validateDate(year: string, month: string, day: string, required: boolean, dom: Element) {
+export function validateDate(year: string, month: string, day: string, required: boolean, dom: Element | undefined) {
 	const validation = DateTime.fromObject({
 		year: Number(year),
 		month: Number(month),
