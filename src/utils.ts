@@ -121,8 +121,6 @@ function getInvalidInput(message: string): TDateInputType | undefined {
 	if (formattedMessage.includes('month')) return 'mm';
 	else if (formattedMessage.includes('day')) return "dd";
 	else if (formattedMessage.includes('year')) return 'yy';
-	// This is temporary for card date as there is no validation -- TODO validate card date
-	else if (formattedMessage.includes('date')) return "mm";
 	return undefined;
 }
 
@@ -199,8 +197,9 @@ export function validateDate(year: string, month: string, day: string, required:
 
 function getDateValidityMessage(validation: DateTime) {
 	if (validation.invalidExplanation) {
-		const messageParts = validation.invalidExplanation.split(' (of type number)');
-		return messageParts[0] + messageParts[1];
+		// Get the wrong input type from the luxon invalidation explanation
+		const inputType = validation.invalidExplanation.split(' ')[8].replace(',', "");
+		return `Please check the ${inputType}`;
 	} else if (!validation.year || validation.year < 1900) {
 		return "Year must be greater than 1900";
 	}
@@ -216,10 +215,10 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 			return "";
 		}
 		else if (month.length !== 2 || Number(month) > 12) {
-			return `Please check the month ${month}`;
+			return `Please check the month`;
 		}
 		else if (year.length !== 2) {
-			return `Please check the year ${year}`;
+			return `Please check the year`;
 		}
 	}
 	// unset validation message
