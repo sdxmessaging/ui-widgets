@@ -324,4 +324,121 @@ describe("CardDateInput", () => {
         expect(yearInSpy).toBeCalledTimes(1);
 
     });
+
+    test("Validate Date - Set Custom Validity Message for required card date input", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(CardDateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                    required: true
+                },
+                value,
+                xform
+            })
+        });
+
+        /* 
+            Rules: 
+                - Month takes precedence, then Year
+                - Every time validation happens, the other input call setCustomValidity to reset value,
+                only the invalid one will have a message
+                - Reset to broswer's default validity message when field is required and fields are empty
+            Scenario:
+        */
+
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+
+
+        monthIn.value = "0";
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("Please check the month.");
+        expect(yearIn.validationMessage).toEqual("Constraints not satisfied");
+
+        monthIn.value = "01";
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Please check the year.");
+
+        monthIn.value = '';
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("Constraints not satisfied");
+        expect(yearIn.validationMessage).toEqual("Constraints not satisfied");
+
+        monthIn.value = '12';
+        monthIn.dispatchEvent(new Event('input'));
+        yearIn.value = '21';
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+
+    });
+
+    test("Validate Date - Set Custom Validity Message for non-required card date input", () => {
+        const root = window.document.createElement("div");
+        const value = stream<string>();
+        const xform = value.map((val) => val);
+        m.mount(root, {
+            view: () => m(CardDateInput, {
+                field: {
+                    id: "test",
+                    label: "Test Label",
+                    name: "Test Name",
+                    title: "Test Title",
+                    uiClass: {},
+                },
+                value,
+                xform
+            })
+        });
+
+        /* 
+            Rules: 
+                - Month takes precedence, then Year
+                - Every time validation happens, the other input call setCustomValidity to reset value,
+                only the invalid one will have a message
+                - All inputs should be valid if they are all empty and not required
+            Scenario:
+        */
+
+        const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
+        const yearIn = root.querySelector("#test-yy") as HTMLInputElement;
+
+
+        monthIn.value = "0";
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("Please check the month.");
+        expect(yearIn.validationMessage).toEqual("");
+
+        monthIn.value = "01";
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("Please check the year.");
+
+        monthIn.value = "";
+        yearIn.value = "";
+        monthIn.dispatchEvent(new Event('input'));
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+
+        monthIn.value = '12';
+        monthIn.dispatchEvent(new Event('input'));
+        yearIn.value = '21';
+        yearIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("");
+        expect(yearIn.validationMessage).toEqual("");
+
+        monthIn.value = '';
+        monthIn.dispatchEvent(new Event('input'));
+        expect(monthIn.validationMessage).toEqual("Please check the month.");
+        expect(yearIn.validationMessage).toEqual("");
+    });
 });
