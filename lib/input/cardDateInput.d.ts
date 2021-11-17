@@ -7,8 +7,9 @@ export declare class CardDateInput implements ClassComponent<IPropWidget> {
     private readonly valid;
     private readonly dom;
     private readonly focusedInput;
+    private readonly validityMessage;
     private buildDate;
-    oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
+    oninit({ attrs: { value, field } }: CVnode<IPropWidget>): void;
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
     onupdate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
