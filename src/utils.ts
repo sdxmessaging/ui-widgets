@@ -117,7 +117,7 @@ export function focusLastInput(dom: Element, id: string, focusedId: TDateInputTy
 // }
 
 function getInvalidInput(message: string): TDateInputType | undefined {
-	const formattedMessage = message.toLocaleLowerCase();
+	const formattedMessage = message ? message.toLocaleLowerCase() : "";
 	if (formattedMessage.includes('month')) return 'mm';
 	else if (formattedMessage.includes('day')) return "dd";
 	else if (formattedMessage.includes('year')) return 'yy';
@@ -126,20 +126,10 @@ function getInvalidInput(message: string): TDateInputType | undefined {
 	return undefined;
 }
 
-export function updateDom(newDom: Element, currentDom: stream<Element>, message: string) {
+export function updateDom(newDom: Element, currentDom: stream<Element>) {
 	if (newDom !== currentDom()) {
 		currentDom(newDom);
 	}
-	const inputId = getInvalidInput(message);
-
-	const inputs = newDom.querySelectorAll('input');
-	inputs.forEach((item => {
-		if (item.id.substr(-2) === inputId && inputId && message) {
-			item.setCustomValidity(message);
-		} else {
-			item.setCustomValidity("");
-		}
-	}));
 }
 
 function focusAndSelectNextInput(dom: Element, id: string, targetType: TDateInputType) {
@@ -193,26 +183,43 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
-export function validateDate(year: string, month: string, day: string, required: boolean, messageStream: TPropStream) {
+export function validateDate(year: string, month: string, day: string, required: boolean, dom: Element) {
 	const validation = DateTime.fromObject({
 		year: Number(year),
 		month: Number(month),
 		day: Number(day)
 	});
 	const dateEmpty = !year && !month && !day;
-	setValidityMessage(messageStream, validation);
+	setValidityMessage(validation, dom);
 	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
-function setValidityMessage(messageStream: TPropStream, validation: DateTime) {
+function getValidityMessage(validation: DateTime) {
 	if (validation.invalidExplanation) {
 		const messageParts = validation.invalidExplanation.split(' (of type number)');
-		messageStream(messageParts[0] + messageParts[1]);
+		return messageParts[0] + messageParts[1];
 	} else if (!validation.year || validation.year < 1900) {
-		messageStream("Year must be greater than 1900");
+		return "Year must be greater than 1900";
 	}
 	else {
-		messageStream("");
+		return "";
+	}
+}
+
+function setValidityMessage(validation: DateTime, dom: Element) {
+	// TODO put setting custom validity message here
+	const message = getValidityMessage(validation);
+	const inputId = getInvalidInput(message);
+	if (dom) {
+		const inputs = dom.querySelectorAll('input');
+		inputs.forEach((item => {
+			if (item.id.substr(-2) === inputId && inputId && message) {
+				if (item.id.includes('dob')) { console.log('validate message') }
+				item.setCustomValidity(message);
+			} else {
+				item.setCustomValidity("");
+			}
+		}));
 	}
 }
 
