@@ -124,7 +124,7 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 	if (!valid) {
 		if (!month && !year) {
 			// Default broswer validation message
-			return "Please fill in this field";
+			return "";
 		}
 		else if (month.length !== 2 || Number(month) > 12) {
 			return `Please check the month.`;
