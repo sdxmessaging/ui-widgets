@@ -205,7 +205,8 @@ m.mount(document.getElementById("page"), {
 							field: {
 								id: "dob-in",
 								label: "Date Input (ui-widgets Bespoke)",
-								options: [{ value: dateFormat() }]
+								options: [{ value: dateFormat() }],
+								required: true
 							},
 							value: dateVal
 						}),
@@ -435,24 +436,25 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
 					field: {
 						id: "card-in-date",
-						label: "Card Expiry MM/YY"
+						label: "Card Expiry MM/YY",
+						required: true
 					},
 					value: cardVal
 				})),
-				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
-					field: {
-						id: "card-in-date",
-						label: "Card Expiry MM/YY"
-					},
-					value: cardVal
-				})),
-				m(".w-50.pa2", m(uiWidgets.CardDateInput, {
-					field: {
-						id: "card-in-date",
-						label: "Card Expiry MM/YY"
-					},
-					value: cardVal
-				})),
+				// m(".w-50.pa2", m(uiWidgets.CardDateInput, {
+				// 	field: {
+				// 		id: "card-in-date",
+				// 		label: "Card Expiry MM/YY"
+				// 	},
+				// 	value: cardVal
+				// })),
+				// m(".w-50.pa2", m(uiWidgets.CardDateInput, {
+				// 	field: {
+				// 		id: "card-in-date",
+				// 		label: "Card Expiry MM/YY"
+				// 	},
+				// 	value: cardVal
+				// })),
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "card-in-text",

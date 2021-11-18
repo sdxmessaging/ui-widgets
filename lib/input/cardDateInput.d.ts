@@ -1,13 +1,12 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { IPropWidget } from "../interface/widget";
 export declare class CardDateInput implements ClassComponent<IPropWidget> {
+    private readonly dom;
+    private readonly valid;
+    private readonly focusedInput;
     private readonly month;
     private readonly year;
     private readonly date;
-    private readonly valid;
-    private readonly dom;
-    private readonly focusedInput;
-    private readonly validityMessage;
     private buildDate;
     oninit({ attrs: { value, field } }: CVnode<IPropWidget>): void;
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
