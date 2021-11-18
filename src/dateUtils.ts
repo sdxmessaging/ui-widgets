@@ -102,22 +102,30 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
-function getDateValidityMessage(validation: DateTime, year: string, required: boolean, dateEmpty: boolean) {
+function getDateValidityMessage(validation: DateTime, year: string, dateEmpty: boolean) {
+	function getInputType(message: string) {
+		if (message.includes('month')) {
+			return 'month';
+		} else if (message.includes('day')) {
+			return 'day';
+		}
+		// edge case
+		return "date";
+	}
 	if (validation.invalidExplanation) {
-		if ((dateEmpty && !required) || (dateEmpty)) {
+		if (dateEmpty) {
 			return "";
 		}
 		else {
 			// Get the wrong input type from the luxon invalidation explanation
-			const inputType = validation.invalidExplanation.split(' ')[8].replace(',', "");
+			const inputType = getInputType(validation.invalidExplanation);
 			return `Please check the ${inputType}.`;
 		}
 	} else if (!validation.year || Number(year) < 1900) {
 		return "Year must be greater than 1900.";
 	}
-	else {
-		return "";
-	}
+	// If valid
+	return "";
 }
 
 function getCardDateValidityMessage(year: string, month: string, valid: boolean) {
@@ -133,7 +141,7 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 			return `Please check the year.`;
 		}
 	}
-	// unset validation message
+	// unset validation message if valid
 	return "";
 }
 
@@ -171,7 +179,7 @@ export function validateDate(year: string, month: string, day: string, required:
 	});
 
 	const dateEmpty = !year && !month && !day;
-	const message = getDateValidityMessage(validation, year, required, dateEmpty);
+	const message = getDateValidityMessage(validation, year, dateEmpty);
 	setAllValidityMessage(dom, message);
 
 	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
