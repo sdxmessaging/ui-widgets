@@ -89,15 +89,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const classStr = inputCls(uiClass);
 
 		switch (type) {
-			case ('literal'): return m('span', { class: "p-0px mr-2px" }, value);
-			case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+			case ('literal'): return m('span.pa0.mr-2px', value);
+			case ('day'): return m("span", m("input.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				class: `${classStr} maxw-dd p-0px`,
+				class: classStr,
 				onfocus: lodash.partial(this.focusedInput, 'dd'),
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -114,14 +114,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					this.buildDate(streamValue, required);
 				}
 			}));
-			case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+			case ('month'): return m("span", m("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				class: `${classStr} maxw-mm p-0px`,
+				class: classStr,
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
 						id, 'mm', this.month(), this.dom(),
@@ -138,14 +138,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					this.buildDate(streamValue, required);
 				}
 			}));
-			case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+			case ('year'): return m("span", m("input.w-100.mw-yyyy.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
 				minlength: "4", maxlength: "4",
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				class: `${classStr} maxw-yyyy p-0px`,
+				class: classStr,
 				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -222,10 +222,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			value: value, field,
 			invalid: !this.valid()
 		},
-			m('.flex', {
-				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
-				class: "p-1px-2px"
-				// padding to behave similar to HTML native input paddings
+			m('.flex.ph-2px.pv-1px', {
+				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			},
 				this.dateParts.map((datePart) => {
 					return this.createDateInputs(datePart, vnode);

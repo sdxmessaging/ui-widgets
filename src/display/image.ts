@@ -16,7 +16,7 @@ export class ImageList implements ClassComponent<IFileWidget> {
 			class: wrapperCls(uiClass),
 		}, [
 			getDisplayLabel(label),
-			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size",
+			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb",
 				lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
 					title: name,
 					src: imgSrc(path, dataUrl)

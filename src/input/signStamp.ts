@@ -15,7 +15,7 @@ export class SignStamp implements ClassComponent<ISignWidget> {
 
 	public view({ attrs: { heightPct, stampTxt, stampSetTxt, onSet } }: CVnode<ISignWidget>): Children {
 		return [
-			m("span.clip", { class: "sign-font" }, stampSetTxt),
+			m("span.clip", { style: { fontFamily: config.signFont } }, stampSetTxt),
 			m(".flex",
 				m(Button, {
 					label: stampTxt,

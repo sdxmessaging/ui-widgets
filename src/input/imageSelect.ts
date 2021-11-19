@@ -35,7 +35,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				},
 					m(".relative.w-100.dt.tc", file ? [
-						m("img.img.contain.img-max-size", {
+						m("img.img.contain.max-h-img", {
 							title: file.name,
 							src: imgSrc(file.path, file.dataUrl)
 						}),

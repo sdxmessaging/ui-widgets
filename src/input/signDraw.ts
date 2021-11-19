@@ -48,9 +48,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 			m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style },
 				m("canvas.aspect-ratio--object")
 			),
-			m(".absolute.top-0.right-0.z-999", {
-				class: "tr-y--100"
-			}, [
+			m(".absolute.top-0.right-0.z-999.translate-up-100", [
 				m(Button, {
 					title: config.applyTtl,
 					icon: config.applyIcn,

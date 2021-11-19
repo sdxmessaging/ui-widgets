@@ -82,7 +82,7 @@ describe("floatLabel", () => {
 		const legend = inputWrapper.firstElementChild as HTMLElement;
 		expect(legend).not.toBeNull();
 
-		expect(legend.className).toContain("maxw-100");
+		expect(legend.className).toContain("mw-100");
 	});
 
 	test('focusIn & focusOut', () => {
@@ -93,14 +93,14 @@ describe("floatLabel", () => {
 		expect(floatLabel['focus']).toEqual(false);
 	});
 
-	
-test("fixedLabel", () => {
-	const fixedLabel = new FixedLabel();
-	expect(fixedLabel['shouldFloat']()).toBe(true);
-});
 
-test("topLabel", () => {
-	const topLabel = new TopLabel();
-	expect(topLabel['labelTranslateY']()).toBe("0.5ex");
-});
+	test("fixedLabel", () => {
+		const fixedLabel = new FixedLabel();
+		expect(fixedLabel['shouldFloat']()).toBe(true);
+	});
+
+	test("topLabel", () => {
+		const topLabel = new TopLabel();
+		expect(topLabel['labelTranslateY']()).toBe("0.5ex");
+	});
 });

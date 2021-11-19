@@ -61,7 +61,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					})
 				)
 			),
-			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size",
+			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb",
 				lodash.map(value(), (file) => m(Thumbnail, {
 					src: imgSrc(file.path, file.dataUrl)
 				},

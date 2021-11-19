@@ -10,13 +10,13 @@ import { getDisplayLabel, imgSrc } from "../utils";
 export class ImagePreview implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { label, uiClass = {}} = field;
+		const { label, uiClass = {} } = field;
 		const file = lodash.head(value());
 		return m(".pa2.flex.flex-column", {
 			class: wrapperCls(uiClass)
 		}, [
 			getDisplayLabel(label),
-			file ? m(`img.img.h-100.mt2.contain.self-center.img-max-size`, {
+			file ? m("img.img.h-100.max-h-img.mt2.contain.self-center", {
 				title: file.name,
 				src: imgSrc(file.path, file.dataUrl)
 			}) : m("i.mt2", {
