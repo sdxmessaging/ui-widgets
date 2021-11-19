@@ -1,8 +1,6 @@
-import { TPropStream } from "./interface/widget";
-
-import stream from "mithril/stream";
 import { DateTime } from "luxon";
 
+import { TPropStream } from "./interface/widget";
 
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export type TDateType = 'day' | 'month' | 'year';
@@ -14,7 +12,8 @@ export function dateInputIds(type: TDateType) {
 		case 'year': return 'yyyy';
 	}
 }
-export function focusLastInput(dom: Element, id: string, focusedId: TDateInputType | undefined) {
+
+export function focusLastInput(dom: Element, id: string, focusedId?: TDateInputType) {
 	const lastFocused = dom.querySelector(`#${id}-${focusedId}`) as HTMLElement;
 	lastFocused.focus();
 }
@@ -37,17 +36,16 @@ export function focusLastInput(dom: Element, id: string, focusedId: TDateInputTy
 // 	}
 // }
 
-function getInvalidInput(message: string): TDateInputType | undefined {
+function getInvalidInput(message: string): TDateInputType | null {
 	const formattedMessage = message ? message.toLocaleLowerCase() : "";
-	if (formattedMessage.includes('month')) return 'mm';
-	else if (formattedMessage.includes('day')) return "dd";
-	else if (formattedMessage.includes('year')) return 'yy';
-	return undefined;
-}
-
-export function updateDom(newDom: Element, currentDom: stream<Element>) {
-	if (newDom !== currentDom()) {
-		currentDom(newDom);
+	if (formattedMessage.includes('month')) {
+		return 'mm';
+	} else if (formattedMessage.includes('day')) {
+		return "dd";
+	} else if (formattedMessage.includes('year')) {
+		return 'yy';
+	} else {
+		return null;
 	}
 }
 
@@ -57,16 +55,16 @@ function focusAndSelectNextInput(dom: Element, id: string, targetType: TDateInpu
 	nextInput.select();
 }
 
-function getSelfMaxLength(self: HTMLInputElement) {
-	return parseInt(self.getAttribute("maxlength") as string);
+function getElementMaxLength(element: HTMLInputElement) {
+	return parseInt(element.getAttribute("maxlength") as string);
 }
 
 export function handleRetreatOrLiteralAdvance(
 	id: string, selfType: TDateInputType, streamValue: string, dom: Element, event: KeyboardEvent, literalKey: string,
-	nextTargetType: TDateInputType | undefined, prevTargetTyype: TDateInputType | undefined
+	nextTargetType?: TDateInputType, prevTargetTyype?: TDateInputType
 ) {
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
-	const maxLength = getSelfMaxLength(self);
+	const maxLength = getElementMaxLength(self);
 
 	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevTargetTyype) {
 		focusAndSelectNextInput(dom, id, prevTargetTyype);
@@ -85,41 +83,41 @@ export function resetInvalidValueStream(valid: boolean, date: string,
 	year: string, month: string, day: string, valueStream: TPropStream) {
 	if (validDateInputLengths(year, month, day) && valid) {
 		valueStream(date);
-	}
-	else {
+	} else {
 		valueStream("");
 	}
 }
 
 export function appendZeroToDayMonth(valueStream: TPropStream) {
-	const value = valueStream() as string;
-	if (value.length === 1 && value !== '0') valueStream(`0${value}`);
+	const value = String(valueStream());
+	if (value.length === 1 && value !== '0') {
+		valueStream(`0${value}`);
+	}
 }
 
 export function validDateInputLengths(year: string, month: string, day: string) {
-	const isCardDateInput = !day;
-	const yearLength = isCardDateInput ? 2 : 4;
+	// Expect 4 digit year for full date, 2 digit for "card date" (no day component)
+	const yearLength = !day ? 2 : 4;
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
-function getDateValidityMessage(validation: DateTime, year: string, dateEmpty: boolean) {
-	function getInputType(message: string) {
-		if (message.includes('month')) {
-			return 'month';
-		} else if (message.includes('day')) {
-			return 'day';
-		}
-		// edge case
-		return "date";
+function getDateFromExplanation(errMsg: string) {
+	if (errMsg.includes('month')) {
+		return 'month';
+	} else if (errMsg.includes('day')) {
+		return 'day';
 	}
+	// edge case
+	return "date";
+}
+
+function getDateValidityMessage(validation: DateTime, year: string, dateEmpty: boolean) {
 	if (validation.invalidExplanation) {
 		if (dateEmpty) {
 			return "";
-		}
-		else {
+		} else {
 			// Get the wrong input type from the luxon invalidation explanation
-			const inputType = getInputType(validation.invalidExplanation);
-			return `Please check the ${inputType}.`;
+			return `Please check the ${getDateFromExplanation(validation.invalidExplanation)}.`;
 		}
 	} else if (!validation.year || Number(year) < 1900) {
 		return "Year must be greater than 1900.";
@@ -133,11 +131,9 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 		if (!month && !year) {
 			// Default broswer validation message
 			return "";
-		}
-		else if (month.length !== 2 || Number(month) > 12) {
+		} else if (month.length !== 2 || Number(month) > 12) {
 			return `Please check the month.`;
-		}
-		else if (year.length !== 2) {
+		} else if (year.length !== 2) {
 			return `Please check the year.`;
 		}
 	}
@@ -145,64 +141,56 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 	return "";
 }
 
-function setAllValidityMessage(dom: Element | undefined, message: string) {
+function setAllValidityMessage(message: string, dom?: Element) {
 	if (dom) {
 		const inputId = getInvalidInput(message);
-		const inputs = dom.querySelectorAll('input');
-		inputs.forEach((item => {
+		dom.querySelectorAll('input').forEach((item) => {
 			if (inputId && item.id.substr(-2) === inputId && message) {
 				item.setCustomValidity(message);
 			} else {
 				item.setCustomValidity("");
 			}
-		}));
+		});
 	}
 }
 
-export function validateCardDate(year: string, month: string, required: boolean, dom: Element | undefined) {
-	// TODO validate year in the future if it is a valid_to input
-	const dateEmpty = !year && !month;
-	const valid = (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
-		|| (dateEmpty && !required);
-	const message = getCardDateValidityMessage(year, month, valid);
-
-	setAllValidityMessage(dom, message);
-
+export function validateCardDate(year: string, month: string, required: boolean, dom?: Element) {
+	const valid = (
+		month.length === 2 && year.length === 2
+		&& Number(month) <= 12 && Number(month) > 0
+	) || (!year && !month && !required);
+	setAllValidityMessage(getCardDateValidityMessage(year, month, valid), dom);
 	return valid;
 }
 
-export function validateDate(year: string, month: string, day: string, required: boolean, dom: Element | undefined) {
+export function validateDate(year: string, month: string, day: string, required: boolean, dom?: Element) {
 	const validation = DateTime.fromObject({
 		year: Number(year),
 		month: Number(month),
 		day: Number(day)
 	});
-
 	const dateEmpty = !year && !month && !day;
-	const message = getDateValidityMessage(validation, year, dateEmpty);
-	setAllValidityMessage(dom, message);
-
+	setAllValidityMessage(getDateValidityMessage(validation, year, dateEmpty), dom);
 	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
 }
 
-export function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType,
-	dom: Element, targetType?: TDateInputType) {
+export function handleDateChange(
+	streamType: TPropStream, id: string, selfType: TDateInputType,
+	dom: Element, targetType?: TDateInputType
+) {
 
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
-	const prevValue = streamType() ? streamType() : "";
+	const prevValue = streamType() || "";
 	const value = self.value;
 	const isNumeric = /^\d*$/.test(value);
 
 	if ((isNumeric || value === "") && value.length <= 4) {
 		streamType(value);
-	}
-	// preserve current/previous value when rules are broken
-	else {
+	} else {
+		// preserve current/previous value when rules are broken
 		streamType(prevValue);
 	}
-
-	const maxLength = getSelfMaxLength(self);
-	if (value.length === maxLength && targetType) {
+	if (value.length === getElementMaxLength(self) && targetType) {
 		focusAndSelectNextInput(dom, id, targetType);
 	}
 }

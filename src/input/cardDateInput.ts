@@ -5,10 +5,12 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, updateDom, validateCardDate } from "../dateUtils";
-import { HiddenDateInput } from "./hiddenDateInput";
+
+import { appendZeroToDayMonth, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, validateCardDate } from "../dateUtils";
+import { setIfDifferent } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
+import { HiddenDateInput } from "./hiddenDateInput";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
@@ -48,11 +50,11 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom);
+		setIfDifferent(this.dom, dom);
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom);
+		setIfDifferent(this.dom, dom);
 	}
 
 	public onremove() {

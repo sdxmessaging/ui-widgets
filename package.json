@@ -18,7 +18,7 @@
   "types": "./lib/index.d.ts",
   "dependencies": {
     "lodash": "4.17.21",
-    "luxon": "^2.1.1",
+    "luxon": "2.1.1",
     "mithril": "2.0.4",
     "signature_pad": "3.0.0-beta.4"
   },

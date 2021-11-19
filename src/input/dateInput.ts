@@ -5,14 +5,15 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { DateWidth, inputCls } from "../theme";
-import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../dateUtils";
-import { HiddenDateInput } from "./hiddenDateInput";
+import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, validateDate } from "../dateUtils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
+import { HiddenDateInput } from "./hiddenDateInput";
+import { setIfDifferent } from "../utils";
 
 interface IDateParts {
 	readonly type: TDateType | "literal",
-	readonly value: string
+	readonly value: string;
 }
 export class DateInput implements ClassComponent<IPropWidget> {
 
@@ -207,16 +208,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom);
+		setIfDifferent(this.dom, dom);
 	}
-
 
 	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
 		this.setLocale(field);
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom);
+		setIfDifferent(this.dom, dom);
 	}
 
 	public onremove() {
