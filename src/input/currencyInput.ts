@@ -5,6 +5,7 @@ import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../int
 
 import { inputCls } from "../theme";
 import { propInvalid } from "../validation";
+import { selectTarget } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -34,7 +35,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				readonly, disabled, autofocus, autocomplete,
 				pattern, inputmode, spellcheck,
 				class: inputCls(uiClass),
-				onfocus: ({ target }: { target: HTMLInputElement; }) => target.select(),
+				onfocus: selectTarget,
 				value: lodash.isUndefined(xform())
 					? null
 					: numberToCurrencyStr(propToNumber(xform())),

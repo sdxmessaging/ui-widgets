@@ -16,6 +16,9 @@ export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
     target: HTMLInputElement;
 }) => void;
 export declare function setIfDifferent<T>(inStream: stream<T>, val: T): void;
+export declare function selectTarget({ target }: {
+    target: HTMLInputElement;
+}): void;
 /**
  * Split given file name from extension
  */

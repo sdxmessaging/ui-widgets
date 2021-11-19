@@ -89,6 +89,11 @@ export function setIfDifferent<T>(inStream: stream<T>, val: T) {
 	}
 }
 
+/* Event handler helper, select all text in a given input target */
+export function selectTarget({ target }: { target: HTMLInputElement; }) {
+	target.select();
+}
+
 /**
  * Split given file name from extension
  */

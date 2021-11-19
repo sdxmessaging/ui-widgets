@@ -37,7 +37,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
 	// Float label if element has a value set or is in focus
 	protected shouldFloat(layout: LayoutType, value: TProp) {
-		return layout === LayoutType.floatAlways || value || this.focus;
+		return layout === LayoutType.floatAlways || this.focus || value;
 	}
 
 	protected labelTranslateY() {

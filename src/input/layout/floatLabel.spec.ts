@@ -7,10 +7,10 @@ import { FixedLabel } from "./fixedLabel";
 import { TopLabel } from "./topLabel";
 
 describe("floatLabel", () => {
+
 	test('calcHeight', () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
-		// const xform = value.map((val) => val);
 		const floatLabel = new FloatLabel();
 		floatLabel['wrapperHeight'] = 12;
 		m.mount(root, {
@@ -49,7 +49,7 @@ describe("floatLabel", () => {
 	test('mount', () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
-		// const xform = value.map((val) => val);
+		const xform = value.map((val) => val);
 		const floatLabel = new FloatLabel();
 		floatLabel['wrapperHeight'] = 12;
 		m.mount(root, {
@@ -65,7 +65,8 @@ describe("floatLabel", () => {
 					layout: LayoutType.floatAlways,
 				},
 				invalid: false,
-				value
+				value,
+				xform
 			})
 
 		});
@@ -92,7 +93,6 @@ describe("floatLabel", () => {
 		floatLabel['focusOut']();
 		expect(floatLabel['focus']).toEqual(false);
 	});
-
 
 	test("fixedLabel", () => {
 		const fixedLabel = new FixedLabel();
