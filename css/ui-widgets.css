@@ -1,3 +1,7 @@
+:root {
+  --ui-widgets-transition: 0.2s ease;
+}
+
 /* Remove input number type arrows */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -44,6 +48,6 @@ input[type=number] { -moz-appearance: textfield; }
 
 .translate-up-100 { transform: translateY(-100%); }
 
-.transition-mw { transition: max-width 0.3s ease-in-out; }
-.transition-transform { transition: transform 0.3s ease-in-out; }
-.transition-f { transition: font-size 0.3s ease-in-out; }
+.transition-mw { transition: max-width var(--ui-widgets-transition); }
+.transition-transform { transition: transform var(--ui-widgets-transition); }
+.transition-f { transition: font-size var(--ui-widgets-transition); }
