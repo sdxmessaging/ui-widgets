@@ -4,7 +4,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { imgMaxSize, theme, wrapperCls } from "../theme";
+import { theme, wrapperCls } from "../theme";
 import { getDisplayLabel, imgSrc } from "../utils";
 
 export class ImagePreview implements ClassComponent<IFileWidget> {
@@ -16,10 +16,9 @@ export class ImagePreview implements ClassComponent<IFileWidget> {
 			class: wrapperCls(uiClass)
 		}, [
 			getDisplayLabel(label),
-			file ? m("img.img.h-100.mt2.contain.self-center", {
+			file ? m(`img.img.h-100.mt2.contain.self-center.img-max-size`, {
 				title: file.name,
-				src: imgSrc(file.path, file.dataUrl),
-				style: imgMaxSize()
+				src: imgSrc(file.path, file.dataUrl)
 			}) : m("i.mt2", {
 				class: `${theme.displayValue} ${config.imageIcn}`
 			})

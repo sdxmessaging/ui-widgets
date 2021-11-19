@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
-import { DateWidth, inputCls } from "../theme";
+import { inputCls } from "../theme";
 import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../dateUtils";
 import { HiddenDateInput } from "./hiddenDateInput";
 
@@ -88,7 +88,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const classStr = inputCls(uiClass);
 
 		switch (type) {
-			case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
+			case ('literal'): return m('span', { class: "p-0px mr-2px" }, value);
 			case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
@@ -96,7 +96,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				class: classStr,
+				class: `${classStr} maxw-dd p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'dd'),
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -111,10 +111,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				onblur: () => {
 					appendZeroToDayMonth(this.day);
 					this.buildDate(streamValue, required);
-				},
-				style: {
-					maxWidth: DateWidth.dd,
-					padding: '0px'
 				}
 			}));
 			case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
@@ -124,7 +120,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				class: classStr,
+				class: `${classStr} maxw-mm p-0px`,
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
 						id, 'mm', this.month(), this.dom(),
@@ -139,10 +135,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				onblur: () => {
 					appendZeroToDayMonth(this.month);
 					this.buildDate(streamValue, required);
-				},
-				style: {
-					maxWidth: DateWidth.mm,
-					padding: '0px'
 				}
 			}));
 			case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
@@ -152,7 +144,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				class: classStr,
+				class: `${classStr} maxw-yyyy p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -163,10 +155,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				oninput: () => {
 					handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
 					this.buildDate(streamValue, required);
-				},
-				style: {
-					maxWidth: DateWidth.yyyy,
-					padding: '0px'
 				}
 			}));
 		}
@@ -236,10 +224,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		},
 			m('.flex', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
+				class: "p-1px-2px"
 				// padding to behave similar to HTML native input paddings
-				style: {
-					padding: '1px 2px',
-				}
 			},
 				this.dateParts.map((datePart) => {
 					return this.createDateInputs(datePart, vnode);

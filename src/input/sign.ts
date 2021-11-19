@@ -97,7 +97,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 				},
 					// Current signature
 					fileObj ? m(".aspect-ratio--object", {
-						style: { "pointer-events": "none" }
+						class: "pe-none"
 					},
 						m("img.img.w-100.absolute", {
 							src: imgSrc(fileObj.path, fileObj.dataUrl)

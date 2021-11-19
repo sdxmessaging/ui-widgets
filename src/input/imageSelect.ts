@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputWrapperCls, imgMaxSize, wrapperCls } from "../theme";
+import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { imgSrc } from "../utils";
 import { fileInvalid } from "../validation";
 
@@ -35,10 +35,9 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				},
 					m(".relative.w-100.dt.tc", file ? [
-						m("img.img.contain", {
+						m("img.img.contain.img-max-size", {
 							title: file.name,
-							src: imgSrc(file.path, file.dataUrl),
-							style: imgMaxSize()
+							src: imgSrc(file.path, file.dataUrl)
 						}),
 						m(".absolute.top-0.right-0.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,

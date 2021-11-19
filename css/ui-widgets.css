@@ -6,6 +6,101 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.sign-font {
+  font-family: sans-serif;
+}
+
+.maxw-yyyy {
+  max-width: calc(4.2ch + 4px);
+}
+
+.maxw-yy {
+  max-width: calc(2.7ch + 4px);
+}
+
+.maxw-mm {
+  max-width: calc(2.8ch + 4px);
+}
+
+.maxw-dd {
+  max-width: calc(2.3ch + 4px);
+}
+
+.thumb-max-size {
+  max-height: 6rem;
+}
+
+.img-max-size {
+  max-height: 16rem;
+}
+
+.maxw-100{
+  max-width: 100%;
+}
+
+.maxw-001px{
+  max-width: 0.01px
+}
+
+.minw-65rem {
+  min-width: 0.65rem;
+}
+
+.h-05ch{
+  height: 0.5ch;
+}
+
+.p-1px-2px {
+  padding: 1px 2px;
+}
+
+.p-0px{
+  padding: 0px;
+}
+
+.pt-05rem{
+  padding-top: 0.5rem
+}
+.mr-2px{
+  margin-right: 2px;
+}
+
+.pe-none{
+  pointer-events: none;
+}
+
+.tr-y--100{
+  transform: translateY(-100%);
+}
+
+.resize-none{
+  resize: none;
+}
+
+.font-07em{
+  font-size: 0.7em;
+}
+
+.font-1em{
+  font-size: 1em;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+.transition-opts{
+  transition: max-width 0.3s ease-in-out;
+}
+
+.cursor-default{
+  cursor: default;
+}
+
+.cursor-text{
+  cursor: text;
+}
+
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;

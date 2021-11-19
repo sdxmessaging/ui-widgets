@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputWrapperCls, wrapperCls, thumbMaxSize } from "../theme";
+import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
 import { resizeImage } from "../imageUtils";
 import { fileInvalid } from "../validation";
@@ -61,10 +61,9 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					})
 				)
 			),
-			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
+			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size",
 				lodash.map(value(), (file) => m(Thumbnail, {
-					src: imgSrc(file.path, file.dataUrl),
-					style: thumbMaxSize()
+					src: imgSrc(file.path, file.dataUrl)
 				},
 					m(".absolute.top-0.right-0.child",
 						m(Button, {

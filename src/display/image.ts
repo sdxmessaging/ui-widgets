@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { thumbMaxSize, wrapperCls } from "../theme";
+import { wrapperCls } from "../theme";
 
 import { getDisplayLabel, imgSrc } from "../utils";
 import { Thumbnail } from "./thumbnail";
@@ -16,11 +16,10 @@ export class ImageList implements ClassComponent<IFileWidget> {
 			class: wrapperCls(uiClass),
 		}, [
 			getDisplayLabel(label),
-			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
+			m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size",
 				lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
 					title: name,
-					src: imgSrc(path, dataUrl),
-					style: thumbMaxSize()
+					src: imgSrc(path, dataUrl)
 				}))
 			)
 		]);

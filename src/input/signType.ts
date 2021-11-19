@@ -41,13 +41,11 @@ export class SignType implements ClassComponent<ISignWidget> {
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
 					oninput: setValue(this.text),
 					value: this.text(),
-					style: {
-						"font-family": config.signFont
-					}
+					class: "sign-font"
 				})
 			),
 			m(".absolute.top-0.right-0.z-999", {
-				style: { transform: "translateY(-100%)" }
+				class: "tr-y--100"
 			}, [
 				m(Button, {
 					title: config.applyTtl,

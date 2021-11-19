@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-11-17T08:16:54.048Z */
+/* @preserve built on: 2021-11-19T08:27:56.384Z */
 import lodash from 'lodash';
 import m from 'mithril';
 import stream from 'mithril/stream';
@@ -69,13 +69,6 @@ function updateConfig(newConfig) {
     lodash.assign(confMap, newConfig);
 }
 
-// Class/Theme helpers
-function imgMaxSize() {
-    return { "max-height": config.imageDispHeight };
-}
-function thumbMaxSize() {
-    return { "max-height": config.thumbDispHeight };
-}
 // ui-widgets 1.4 theme map
 const classMapState = {
     wrapper: "",
@@ -552,10 +545,7 @@ class Badge {
         return m(".relative.dib", [
             children,
             label ? m("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80", {
-                class: classes,
-                style: {
-                    minWidth: "0.65rem"
-                }
+                class: `${classes} minw-65rem`
             }, label) : null
         ]);
     }
@@ -913,10 +903,9 @@ class FileOpen {
 
 class DisplayTypeComponent {
     view({ attrs: { displayType = "thumbnail" /* thumbnail */, value } }) {
-        return displayType === "thumbnail" /* thumbnail */ ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash.map(value(), (file) => m(Thumbnail, {
+        return displayType === "thumbnail" /* thumbnail */ ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size", lodash.map(value(), (file) => m(Thumbnail, {
             src: imgSrc(file.path, file.dataUrl),
             data: file,
-            style: thumbMaxSize(),
         }, m(".absolute.top-0.right-0.child", m(Button, {
             title: `Remove ${file.name}`,
             icon: config.deleteIcn,
@@ -982,10 +971,9 @@ class ImageList {
             class: wrapperCls(uiClass),
         }, [
             getDisplayLabel(label),
-            m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
+            m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size", lodash.map(value(), ({ name, path, dataUrl }) => m(Thumbnail, {
                 title: name,
-                src: imgSrc(path, dataUrl),
-                style: thumbMaxSize()
+                src: imgSrc(path, dataUrl)
             })))
         ]);
     }
@@ -999,10 +987,9 @@ class ImagePreview {
             class: wrapperCls(uiClass)
         }, [
             getDisplayLabel(label),
-            file ? m("img.img.h-100.mt2.contain.self-center", {
+            file ? m(`img.img.h-100.mt2.contain.self-center.img-max-size`, {
                 title: file.name,
-                src: imgSrc(file.path, file.dataUrl),
-                style: imgMaxSize()
+                src: imgSrc(file.path, file.dataUrl)
             }) : m("i.mt2", {
                 class: `${theme.displayValue} ${config.imageIcn}`
             })
@@ -1138,8 +1125,6 @@ class Basic {
     }
 }
 
-const shrinkFont = "0.7em";
-const transitionOpts = "0.3s ease-in-out";
 class FloatLabel {
     constructor() {
         this.focus = false;
@@ -1178,8 +1163,7 @@ class FloatLabel {
         const floatTop = this.shouldFloat(layout, placeholder || xform());
         // Wrapper (padding for shrunk label overflow)
         return m("div", {
-            class: type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled),
-            style: label ? { paddingTop: "0.5rem" } : {},
+            class: `${type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt-05rem" : ""}`,
             onfocusin: this.focusIn,
             onfocusout: this.focusOut
         }, 
@@ -1190,33 +1174,20 @@ class FloatLabel {
             label && this.wrapperHeight ? [
                 // Break fieldset border, make space for label to float into
                 m("legend.db", {
-                    class: labelCls(uiClass, required),
-                    style: {
-                        visibility: "hidden",
-                        height: "0.5ch",
-                        transition: `max-width ${transitionOpts}`,
-                        maxWidth: floatTop ? "100%" : "0.01px"
-                    }
+                    class: `${labelCls(uiClass, required)} hidden h-05ch transition-opts ${floatTop ? "maxw-100" : "maxw-001px"}`,
                 }, m("span", {
-                    style: {
-                        fontSize: shrinkFont
-                    }
+                    class: "font-07em"
                 }, getLabelText(label, required))),
                 // Floating label
                 m(".absolute.top-0", {
-                    class: labelCls(uiClass, required),
+                    class: `${labelCls(uiClass, required)} transition-opts`,
                     style: {
-                        transition: `transform ${transitionOpts}`,
                         // Input wrapper legend or center
                         transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
                     }
                 }, m("label.db", {
                     for: id, title: label,
-                    style: {
-                        transition: `font-size ${transitionOpts}`,
-                        fontSize: floatTop ? shrinkFont : "1em",
-                        cursor: floatTop ? 'default' : 'text'
-                    }
+                    class: `transition-opts ${floatTop ? "font-07em cursor-default" : "font-1em cursor-text"}`
                 }, getLabelText(label, required)))
             ] : null,
             // Input
@@ -1612,7 +1583,7 @@ class CardDateInput {
         return m(LayoutFixed, { value, field, invalid: !this.valid() }, m('.flex', {
             onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
             // padding to behave similar to HTML native input paddings
-            style: { padding: '1px 2px' },
+            class: "p-1px-2px",
         }, m("span", [
             m("input.w-100.bg-transparent.bn.outline-0.tc", {
                 id: `${id}-mm`, name: `${name}-mm`,
@@ -1621,10 +1592,7 @@ class CardDateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
-                class: classStr, style: {
-                    maxWidth: "calc(2.8ch + 4px)" /* mm */,
-                    padding: '0px'
-                },
+                class: `${classStr} maxw-mm p-0px`,
                 onfocus: lodash.partial(this.focusedInput, 'mm'),
                 oninput: () => {
                     handleDateChange(this.month, id, "mm", this.dom(), "yy");
@@ -1638,7 +1606,7 @@ class CardDateInput {
                     this.buildDate(Boolean(field.required), attrs.value);
                 }
             })
-        ]), m("span", { style: { padding: '0px', marginRight: '2px' } }, "/"), m("span", [
+        ]), m("span", { class: "p-0px mr-2px" }, "/"), m("span", [
             m("input.w-100.bg-transparent.bn.outline-0.tc", {
                 id: `${id}-yy`, name: `${name}-yy`,
                 type: "text" /* text */, placeholder: "YY",
@@ -1646,10 +1614,7 @@ class CardDateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.year(),
-                class: classStr, style: {
-                    maxWidth: "calc(2.7ch + 4px)" /* yy */,
-                    padding: '0px'
-                },
+                class: `${classStr} maxw-yy p-0px`,
                 onfocus: lodash.partial(this.focusedInput, 'yy'),
                 onkeydown: (e) => {
                     handleRetreatOrLiteralAdvance(id, 'yy', this.year(), this.dom(), e, '/', undefined, 'mm');
@@ -1714,7 +1679,7 @@ class DateInput {
     createDateInputs({ type, value }, { attrs: { field: { id, name = id, required, readonly, disabled, uiClass = {}, }, value: streamValue } }) {
         const classStr = inputCls(uiClass);
         switch (type) {
-            case ('literal'): return m('span', { style: { padding: '0px', marginRight: '2px' } }, value);
+            case ('literal'): return m('span', { class: "p-0px mr-2px" }, value);
             case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
                 id: `${id}-dd`, name: `${name}-dd`,
                 type: "text" /* text */, placeholder: "DD",
@@ -1722,7 +1687,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.day(),
-                class: classStr,
+                class: `${classStr} maxw-dd p-0px`,
                 onfocus: lodash.partial(this.focusedInput, 'dd'),
                 onkeydown: (e) => {
                     handleRetreatOrLiteralAdvance(id, 'dd', this.day(), this.dom(), e, this.literalKey(), this.findNextInput('day'), this.findPrevInput('day'));
@@ -1734,10 +1699,6 @@ class DateInput {
                 onblur: () => {
                     appendZeroToDayMonth(this.day);
                     this.buildDate(streamValue, required);
-                },
-                style: {
-                    maxWidth: "calc(2.3ch + 4px)" /* dd */,
-                    padding: '0px'
                 }
             }));
             case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
@@ -1747,7 +1708,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.month(),
-                class: classStr,
+                class: `${classStr} maxw-mm p-0px`,
                 onkeydown: (e) => {
                     handleRetreatOrLiteralAdvance(id, 'mm', this.month(), this.dom(), e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month'));
                 },
@@ -1759,10 +1720,6 @@ class DateInput {
                 onblur: () => {
                     appendZeroToDayMonth(this.month);
                     this.buildDate(streamValue, required);
-                },
-                style: {
-                    maxWidth: "calc(2.8ch + 4px)" /* mm */,
-                    padding: '0px'
                 }
             }));
             case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
@@ -1772,7 +1729,7 @@ class DateInput {
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
                 value: this.year(),
-                class: classStr,
+                class: `${classStr} maxw-yyyy p-0px`,
                 onfocus: lodash.partial(this.focusedInput, 'yyyy'),
                 onkeydown: (e) => {
                     handleRetreatOrLiteralAdvance(id, 'yyyy', this.year(), this.dom(), e, this.literalKey(), this.findNextInput('year'), this.findPrevInput('year'));
@@ -1780,10 +1737,6 @@ class DateInput {
                 oninput: () => {
                     handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
                     this.buildDate(streamValue, required);
-                },
-                style: {
-                    maxWidth: "calc(4.2ch + 4px)" /* yyyy */,
-                    padding: '0px'
                 }
             }));
         }
@@ -1841,10 +1794,8 @@ class DateInput {
             invalid: !this.valid()
         }, m('.flex', {
             onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
+            class: "p-1px-2px"
             // padding to behave similar to HTML native input paddings
-            style: {
-                padding: '1px 2px',
-            }
         }, this.dateParts.map((datePart) => {
             return this.createDateInputs(datePart, vnode);
         }), m(HiddenDateInput, vnode.attrs)));
@@ -1909,9 +1860,8 @@ class TextareaInput extends ValidationBase {
         return m(LayoutTop, { field, value, xform, invalid: this.invalid }, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
             id, name, title,
             placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-            class: textareaCls(uiClass),
+            class: `${textareaCls(uiClass)} resize-none`,
             value: value(),
-            style: { resize: "none" },
             // Update value on change or input ("instant" option)
             [instant ? "oninput" : "onchange"]: setValue(value)
         }));
@@ -1965,9 +1915,7 @@ class RadioInput {
             invalid: propInvalid(field, val())
         }, m(".w-100.flex.justify-center", {
             onchange: setValue(val),
-            style: {
-                padding: '1px 2px'
-            }
+            class: "p-1px-2px"
         }, lodash.map(options, ({ value, label = value, icon }) => {
             const checked = val() === value;
             // No requirement for label "for" attribute
@@ -2088,9 +2036,8 @@ class ImageMulti {
             }, m("i.fa-2x.dtc.v-mid", {
                 class: config.cameraIcn
             }))),
-            m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1", lodash.map(value(), (file) => m(Thumbnail, {
-                src: imgSrc(file.path, file.dataUrl),
-                style: thumbMaxSize()
+            m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size", lodash.map(value(), (file) => m(Thumbnail, {
+                src: imgSrc(file.path, file.dataUrl)
             }, m(".absolute.top-0.right-0.child", m(Button, {
                 title: `Remove ${file.name}`,
                 icon: config.deleteIcn,
@@ -2119,10 +2066,9 @@ class ImageSelect {
         }, m(".pa1", {
             class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
         }, m(".relative.w-100.dt.tc", file ? [
-            m("img.img.contain", {
+            m("img.img.contain.img-max-size", {
                 title: file.name,
-                src: imgSrc(file.path, file.dataUrl),
-                style: imgMaxSize()
+                src: imgSrc(file.path, file.dataUrl)
             }),
             m(".absolute.top-0.right-0.pa1.pointer.dim", {
                 title: `Remove ${file.name}`,
@@ -2167,7 +2113,7 @@ class SignDraw {
         return [
             m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style }, m("canvas.aspect-ratio--object")),
             m(".absolute.top-0.right-0.z-999", {
-                style: { transform: "translateY(-100%)" }
+                class: "tr-y--100"
             }, [
                 m(Button, {
                     title: config.applyTtl,
@@ -2227,12 +2173,10 @@ class SignType {
             }, m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
                 oninput: setValue(this.text),
                 value: this.text(),
-                style: {
-                    "font-family": config.signFont
-                }
+                class: "sign-font"
             })),
             m(".absolute.top-0.right-0.z-999", {
-                style: { transform: "translateY(-100%)" }
+                class: "tr-y--100"
             }, [
                 m(Button, {
                     title: config.applyTtl,
@@ -2268,7 +2212,7 @@ function applyStamp(heightPct, stampTxt, callback) {
 class SignStamp {
     view({ attrs: { heightPct, stampTxt, stampSetTxt, onSet } }) {
         return [
-            m("span.clip", { style: { "font-family": config.signFont } }, stampSetTxt),
+            m("span.clip", { class: "sign-font" }, stampSetTxt),
             m(".flex", m(Button, {
                 label: stampTxt,
                 classes: `flex-auto ${config.stampBtnClass}`,
@@ -2348,7 +2292,7 @@ class SignBuilder {
                 }, 
                 // Current signature
                 fileObj ? m(".aspect-ratio--object", {
-                    style: { "pointer-events": "none" }
+                    class: "pe-none"
                 }, m("img.img.w-100.absolute", {
                     src: imgSrc(fileObj.path, fileObj.dataUrl)
                 })) : null)
@@ -2447,10 +2391,9 @@ class OmniFileInput {
         }, file ? file.dataUrl
             ? [
                 // Image preview
-                m(".relative.w-100.dt.tc", m("img.img.contain", {
+                m(".relative.w-100.dt.tc", m("img.img.contain.img-max-size", {
                     title: file.name,
-                    src: imgSrc(file.path, file.dataUrl),
-                    style: imgMaxSize()
+                    src: imgSrc(file.path, file.dataUrl)
                 }), m(".absolute.top-0.right-0.pa1.pointer.dim", {
                     title: `Remove ${file.name}`,
                     onclick: removeFile(value, file.guid)
