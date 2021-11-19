@@ -191,62 +191,54 @@ m.mount(document.getElementById("page"), {
 
 			// Date
 			m(".flex.mb2.items-center.ba.b--silver", [
-				m(".flex.flex-column.w-50", [
-					m(".pa2.mb2", m(uiWidgets.BaseInput, {
+				m(".flex.flex-column.w-50.pa2", [
+					m(uiWidgets.BaseInput, {
 						field: {
 							id: "date-in",
 							label: "Date Input (Browser Default)",
-							type: "date"
+							type: "date",
+							uiClass: { wrapper: "mb2" }
 						},
 						value: dateVal
-					})),
-					m(".pa2", [
-						m(uiWidgets.DateInput, {
-							field: {
-								id: "dob-in",
-								label: "Date Input (ui-widgets Bespoke)",
-								options: [{ value: dateFormat() }],
-								required: true
+					}),
+					m(uiWidgets.DateInput, {
+						field: {
+							id: "date-in-widget",
+							label: "Date Input (ui-widgets Bespoke)",
+							options: [{ value: dateFormat() }],
+							required: true,
+							uiClass: { wrapper: "mb2" }
+						},
+						value: dateVal
+					}),
+					m(uiWidgets.RadioInput, {
+						field: {
+							id: "date-format-in",
+							label: "Date input format",
+							uiClass: {
+								wrapper: "mb2",
+								input: "f6"
 							},
-							value: dateVal
-						}),
-						m(uiWidgets.DateInput, {
-							field: {
-								id: "dob-in2",
-								label: "Date Input (ui-widgets Bespoke)",
-								options: [{ value: dateFormat() }]
-							},
-							value: dateVal
-						}),
-						m(uiWidgets.DateInput, {
-							field: {
-								id: "dob-in3",
-								label: "Date Input (ui-widgets Bespoke)",
-								options: [{ value: dateFormat() }]
-							},
-							value: dateVal
-						}),
-						m(uiWidgets.RadioInput, {
-							field: {
-								id: "date-format-in",
-								label: "Date input format",
-								uiClass: {
-									wrapper: "fr mt2",
-									inputWrapper: "f6"
-								},
-								options: [
-									{ label: "Default", value: "default" },
-									{ label: "GB", value: "en-GB" },
-									{ label: "US", value: "en-US" },
-									{ label: "Switzerland", value: "fr-CH" },
-									{ label: "Egypt", value: "ar-EG" },
-									{ label: "Korea", value: "ko-KR" },
-									{ label: "Japan", value: "ja-JP" }
-								]
-							},
-							value: dateFormat
-						})
-					])
+							options: [
+								{ label: "Default", value: "default" },
+								{ label: "GB", value: "en-GB" },
+								{ label: "US", value: "en-US" },
+								{ label: "Switzerland", value: "fr-CH" },
+								{ label: "Egypt", value: "ar-EG" },
+								{ label: "Korea", value: "ko-KR" },
+								{ label: "Japan", value: "ja-JP" }
+							]
+						},
+						value: dateFormat
+					}),
+					m(uiWidgets.BaseInput, {
+						field: {
+							id: "date-in-text",
+							label: "Date Input (text input)",
+							options: [{ value: dateFormat() }]
+						},
+						value: dateVal
+					})
 				]),
 
 				m(".w-50.pa2", m(uiWidgets.DateText, {
@@ -293,8 +285,6 @@ m.mount(document.getElementById("page"), {
 					value: labVal
 				}))
 			]),
-
-
 
 			// Password
 			m(".flex.mb2.ba.b--silver", [
@@ -366,8 +356,8 @@ m.mount(document.getElementById("page"), {
 
 			// Select/Radio
 			m(".flex.mb2.items-center.ba.b--silver", [
-				m(".flex.flex-column.w-50", [
-					m(".pa2.mb2", m(uiWidgets.SelectInput, {
+				m(".flex.flex-column.w-50.pa2", [
+					m(uiWidgets.SelectInput, {
 						field: {
 							id: "select-in",
 							label: "Select Input",
@@ -377,11 +367,12 @@ m.mount(document.getElementById("page"), {
 							}, {
 								label: "Opt 2",
 								value: "2"
-							}]
+							}],
+							uiClass: { wrapper: "mb2" }
 						},
 						value: optVal
-					})),
-					m(".pa2", m(uiWidgets.RadioInput, {
+					}),
+					m(uiWidgets.RadioInput, {
 						field: {
 							id: "radio-in",
 							label: "Radio Input",
@@ -395,7 +386,7 @@ m.mount(document.getElementById("page"), {
 							}]
 						},
 						value: optVal
-					}))
+					})
 				]),
 				m(".w-50.pa2", m(uiWidgets.BaseText, {
 					field: {
@@ -429,6 +420,7 @@ m.mount(document.getElementById("page"), {
 					value: currencyVal
 				}))
 			]),
+
 			m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
 
 			// Card Date
@@ -441,20 +433,6 @@ m.mount(document.getElementById("page"), {
 					},
 					value: cardVal
 				})),
-				// m(".w-50.pa2", m(uiWidgets.CardDateInput, {
-				// 	field: {
-				// 		id: "card-in-date",
-				// 		label: "Card Expiry MM/YY"
-				// 	},
-				// 	value: cardVal
-				// })),
-				// m(".w-50.pa2", m(uiWidgets.CardDateInput, {
-				// 	field: {
-				// 		id: "card-in-date",
-				// 		label: "Card Expiry MM/YY"
-				// 	},
-				// 	value: cardVal
-				// })),
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "card-in-text",
@@ -559,16 +537,17 @@ m.mount(document.getElementById("page"), {
 
 			// Custom BaseInput
 			m(".flex.mb2.items-center.ba.b--silver", [
-				m(".flex.flex-column.w-50", [
-					m(".pa2.mb2", m(uiWidgets.BaseInput, {
+				m(".flex.flex-column.w-50.pa2", [
+					m(uiWidgets.BaseInput, {
 						field: {
 							id: "custom-label",
 							label: "Label",
-							instant: true
+							instant: true,
+							uiClass: { wrapper: "mb2" }
 						},
 						value: label
-					})),
-					m(".pa2.mb2", m(uiWidgets.SelectInput, {
+					}),
+					m(uiWidgets.SelectInput, {
 						field: {
 							id: "custom-type",
 							label: "Type",
@@ -602,32 +581,35 @@ m.mount(document.getElementById("page"), {
 							}, {
 								label: "Hidden",
 								value: "hidden"
-							}]
+							}],
+							uiClass: { wrapper: "mb2" }
 						},
 						value: type
-					})),
-					m(".pa2.mb2", m(uiWidgets.BaseInput, {
+					}),
+					m(uiWidgets.BaseInput, {
 						field: {
 							id: "custom-placeholder",
 							label: "Placeholder",
-							instant: true
+							instant: true,
+							uiClass: { wrapper: "mb2" }
 						},
 						value: placeholder
-					})),
-					m(".pa2.mb2", m(uiWidgets.CheckboxInput, {
+					}),
+					m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-readonly",
-							label: "Readonly"
+							label: "Readonly",
+							uiClass: { wrapper: "mb2" }
 						},
 						value: readonly
-					})),
-					m(".pa2.mb2", m(uiWidgets.CheckboxInput, {
+					}),
+					m(uiWidgets.CheckboxInput, {
 						field: {
 							id: "custom-disabled",
 							label: "Disabled"
 						},
 						value: disabled
-					}))
+					})
 				]),
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
@@ -828,8 +810,9 @@ m.mount(document.getElementById("page"), {
 				m("a[href=https://tachyons.io/][target=_blank]", "Tachyons css")
 			),
 
-			// Buttons
-			m(".flex.mb2", [
+			m(".flex.flex-wrap.mb2", [
+
+				// Buttons
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-button",
@@ -845,11 +828,8 @@ m.mount(document.getElementById("page"), {
 						required: true
 					},
 					value: themeNavBtn
-				}))
-			]),
-
-			// Inputs
-			m(".flex.mb2", [
+				})),
+				// Inputs
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-wrapper",
@@ -864,9 +844,7 @@ m.mount(document.getElementById("page"), {
 						required: true
 					},
 					value: themeLabel
-				}))
-			]),
-			m(".flex.mb2", [
+				})),
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "theme-input-wrapper",
@@ -882,11 +860,8 @@ m.mount(document.getElementById("page"), {
 						required: true
 					},
 					value: themeInput
-				}))
-			]),
-
-			// Required/disabled
-			m(".flex.mb2", [
+				})),
+				// Required/disabled
 				m(".w-50.pa2", m(uiWidgets.BaseInput, {
 					field: {
 						id: "required-label",
