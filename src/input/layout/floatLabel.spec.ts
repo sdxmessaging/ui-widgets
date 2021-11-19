@@ -82,7 +82,7 @@ describe("floatLabel", () => {
 		const legend = inputWrapper.firstElementChild as HTMLElement;
 		expect(legend).not.toBeNull();
 
-		expect(legend.style.maxWidth).toEqual('100%');
+		expect(legend.className).toContain("maxw-100");
 	});
 
 	test('focusIn & focusOut', () => {

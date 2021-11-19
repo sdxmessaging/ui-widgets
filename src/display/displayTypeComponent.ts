@@ -4,7 +4,6 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { DisplayType, IDisplayWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { thumbMaxSize } from "../theme";
 import { imgSrc } from "../utils";
 
 import { removeFile } from "../input/fileMulti";
@@ -15,11 +14,10 @@ import { FileOpen } from "./fileOpen";
 export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 
 	public view({ attrs: { displayType = DisplayType.thumbnail, value } }: CVnode<IDisplayWidget>) {
-		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1",
+		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size",
 			lodash.map(value(), (file) => m(Thumbnail, {
 				src: imgSrc(file.path, file.dataUrl),
 				data: file,
-				style: thumbMaxSize(),
 			},
 				m(".absolute.top-0.right-0.child",
 					m(Button, {

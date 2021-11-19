@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { IFile, IFileWidget } from "../interface/widget";
 
 import { config } from "../config";
-import { fileInputWrapperCls, imgMaxSize, wrapperCls } from "../theme";
+import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
 import { resizeImage } from "../imageUtils";
 import { fileInvalid } from "../validation";
@@ -69,10 +69,9 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 					? [
 						// Image preview
 						m(".relative.w-100.dt.tc",
-							m("img.img.contain", {
+							m("img.img.contain.img-max-size", {
 								title: file.name,
-								src: imgSrc(file.path, file.dataUrl),
-								style: imgMaxSize()
+								src: imgSrc(file.path, file.dataUrl)
 							}),
 							m(".absolute.top-0.right-0.pa1.pointer.dim", {
 								title: `Remove ${file.name}`,

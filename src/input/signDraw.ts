@@ -49,7 +49,7 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 				m("canvas.aspect-ratio--object")
 			),
 			m(".absolute.top-0.right-0.z-999", {
-				style: { transform: "translateY(-100%)" }
+				class: "tr-y--100"
 			}, [
 				m(Button, {
 					title: config.applyTtl,

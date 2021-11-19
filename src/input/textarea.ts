@@ -22,9 +22,8 @@ export class TextareaInput extends ValidationBase {
 		return m(LayoutTop, { field, value, xform, invalid: this.invalid }, m("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-			class: textareaCls(uiClass),
+			class: `${textareaCls(uiClass)} resize-none`,
 			value: value(),
-			style: { resize: "none" },
 			// Update value on change or input ("instant" option)
 			[instant ? "oninput" : "onchange"]: setValue(value)
 		}));

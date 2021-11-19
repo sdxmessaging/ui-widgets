@@ -6,9 +6,6 @@ import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface
 import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
 
-const shrinkFont = "0.7em";
-const transitionOpts = "0.3s ease-in-out";
-
 export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
 	private focus = false;
@@ -56,8 +53,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		const floatTop = this.shouldFloat(layout, placeholder || xform());
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
-			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
-			style: label ? { paddingTop: "0.5rem" } : {},
+			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt-05rem" : ""}`,
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
 		},
@@ -68,33 +64,20 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into
 					m("legend.db", {
-						class: labelCls(uiClass, required),
-						style: {
-							visibility: "hidden",
-							height: "0.5ch",
-							transition: `max-width ${transitionOpts}`,
-							maxWidth: floatTop ? "100%" : "0.01px"
-						}
+						class: `${labelCls(uiClass, required)} hidden h-05ch transition-opts ${floatTop ? "maxw-100" : "maxw-001px"}`,
 					}, m("span", {
-						style: {
-							fontSize: shrinkFont
-						}
+						class: "font-07em"
 					}, getLabelText(label, required))),
 					// Floating label
 					m(".absolute.top-0", {
-						class: labelCls(uiClass, required),
+						class: `${labelCls(uiClass, required)} transition-opts`,
 						style: {
-							transition: `transform ${transitionOpts}`,
 							// Input wrapper legend or center
 							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
 						}
 					}, m("label.db", {
-						for: id, title: label,
-						style: {
-							transition: `font-size ${transitionOpts}`,
-							fontSize: floatTop ? shrinkFont : "1em",
-							cursor: floatTop ? 'default' : 'text'
-						}
+						for: id, title: label, 
+						class: `transition-opts ${floatTop ? "font-07em cursor-default" : "font-1em cursor-text"}`
 					}, getLabelText(label, required)))
 				] : null,
 				// Input

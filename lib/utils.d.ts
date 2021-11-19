@@ -1,4 +1,5 @@
 import m from "mithril";
+import stream from "mithril/stream";
 import { IFile, TPropMap, TPropStream } from "./interface/widget";
 import { IWidgetClasses } from "./interface/theme";
 export declare function guid(): string;
@@ -14,6 +15,7 @@ export declare function setValue(val: TPropStream): ({ target: { value } }: {
 export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
     target: HTMLInputElement;
 }) => void;
+export declare function setIfDifferent<T>(inStream: stream<T>, val: T): void;
 /**
  * Split given file name from extension
  */
