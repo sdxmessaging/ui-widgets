@@ -35,6 +35,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private buildDate(valueStream: TPropStream, required = false) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required, this.dom());
+		// important! reset value when value stream is invalid
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
 	}
 
@@ -54,7 +55,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
-		// TODO map literals to ascii code for keyboard event
 		this.dateParts = dateParts as IDateParts[];
 		const dateType = dateParts[0].type as TDateType;
 		this.literalKey(dateParts[1].value);
@@ -97,7 +97,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
-				class: classStr,
+				'aria-label': `${name}: Day`,
+				class: `${classStr} maxw-dd p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'dd'),
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -121,7 +122,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
-				class: classStr,
+				'aria-label': `${name}: Month`,
+				class: `${classStr} maxw-mm p-0px`,
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
 						id, 'mm', this.month(), this.dom(),
@@ -145,7 +147,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
-				class: classStr,
+				'aria-label': `${name}: Year`,
+				class: `${classStr} maxw-yyyy p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -168,7 +171,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			// only handle value when the main value stream is changed
 			if (newVal) {
 				const date = new Date(String(newVal));
-				// multiple data-binding reset date stream
+				// multiple data-binding reset date stream (important, reset local date stream when value is present)
 				this.date('');
 				// set individual date inputs based on value stream (not date stream)
 				const day = lodash.padStart(String(date.getDate()), 2, "0");
@@ -178,12 +181,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.month(month);
 				this.year(year);
 			}
-			// only reset the non-edited date fields
+			// only reset the non-edited date fields (important for resetting field display value)
 			else if (!this.date()) {
 				this.day("");
 				this.month("");
 				this.year("");
 			}
+			// validate when value comes in from other date inputs
 			this.valid(
 				validateDate(this.year(), this.month(), this.day(), Boolean(field.required), this.dom())
 			);

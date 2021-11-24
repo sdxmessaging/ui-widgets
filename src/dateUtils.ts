@@ -5,6 +5,7 @@ import { TPropStream } from "./interface/widget";
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export type TDateType = 'day' | 'month' | 'year';
 
+// All individual inputs have a fixed suffix for date types
 export function dateInputIds(type: TDateType) {
 	switch (type) {
 		case 'day': return 'dd';
@@ -13,6 +14,7 @@ export function dateInputIds(type: TDateType) {
 	}
 }
 
+// Clicking on the label calls this function to "remember" the last focused input
 export function focusLastInput(dom: Element, id: string, focusedId?: TDateInputType) {
 	const lastFocused = dom.querySelector(`#${id}-${focusedId}`) as HTMLElement;
 	lastFocused.focus();
@@ -36,6 +38,8 @@ export function focusLastInput(dom: Element, id: string, focusedId?: TDateInputT
 // 	}
 // }
 
+
+// For showing custom validity message at the right place/input
 function getInvalidInput(message: string): TDateInputType | null {
 	const formattedMessage = message ? message.toLocaleLowerCase() : "";
 	if (formattedMessage.includes('month')) {
@@ -79,6 +83,8 @@ export function handleRetreatOrLiteralAdvance(
 	}
 }
 
+
+// for multi date binding purpose, to reset value stream when date stream is invalid
 export function resetInvalidValueStream(valid: boolean, date: string,
 	year: string, month: string, day: string, valueStream: TPropStream) {
 	if (validDateInputLengths(year, month, day) && valid) {
@@ -101,6 +107,7 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 	return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
 }
 
+// get input type for the message from Luxon error explanation
 function getDateFromExplanation(errMsg: string) {
 	if (errMsg.includes('month')) {
 		return 'month';
@@ -141,6 +148,7 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 	return "";
 }
 
+// Loop through all 2-3 date inputs and only set custom validity for the wrong one
 function setAllValidityMessage(message: string, dom?: Element) {
 	if (dom) {
 		const inputId = getInvalidInput(message);
@@ -190,7 +198,7 @@ export function handleDateChange(
 		// preserve current/previous value when rules are broken
 		streamType(prevValue);
 	}
-	if (value.length === getElementMaxLength(self) && targetType) {
+	if (String(streamType()).length === getElementMaxLength(self) && targetType) {
 		focusAndSelectNextInput(dom, id, targetType);
 	}
 }
