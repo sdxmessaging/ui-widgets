@@ -22,11 +22,12 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	public oncreate({ dom }: CVnodeDOM<IPropLayoutWidget>) {
 		this.inputWrapper = dom.firstElementChild as HTMLElement;
 		this.calcHeight();
-
 	}
+
 	public onupdate() {
 		this.calcHeight();
 	}
+
 	private calcHeight() {
 		if (this.inputWrapper.clientHeight !== this.wrapperHeight) {
 			this.wrapperHeight = this.inputWrapper.clientHeight;
@@ -36,7 +37,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
 	// Float label if element has a value set or is in focus
 	protected shouldFloat(layout: LayoutType, value: TProp) {
-		return layout === LayoutType.floatAlways || value || this.focus;
+		return layout === LayoutType.floatAlways || this.focus || value;
 	}
 
 	protected labelTranslateY() {
@@ -53,7 +54,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		const floatTop = this.shouldFloat(layout, placeholder || xform());
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
-			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt-05rem" : ""}`,
+			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
 		},
@@ -63,21 +64,19 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 			}, [
 				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into
-					m("legend.db", {
-						class: `${labelCls(uiClass, required)} hidden h-05ch transition-opts ${floatTop ? "maxw-100" : "maxw-001px"}`,
-					}, m("span", {
-						class: "font-07em"
-					}, getLabelText(label, required))),
+					m("legend.db.hidden.h-05ch.transition-mw", {
+						class: `${labelCls(uiClass, required)} ${floatTop ? "mw-100" : "mw-001px"}`,
+					}, m("span.f-07em", getLabelText(label, required))),
 					// Floating label
-					m(".absolute.top-0", {
-						class: `${labelCls(uiClass, required)} transition-opts`,
+					m(".absolute.top-0.transition-transform", {
+						class: labelCls(uiClass, required),
 						style: {
 							// Input wrapper legend or center
 							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
 						}
-					}, m("label.db", {
-						for: id, title: label, 
-						class: `transition-opts ${floatTop ? "font-07em cursor-default" : "font-1em cursor-text"}`
+					}, m("label.db.transition-f", {
+						for: id, title: label,
+						class: floatTop ? "f-07em cursor-default" : "cursor-text"
 					}, getLabelText(label, required)))
 				] : null,
 				// Input

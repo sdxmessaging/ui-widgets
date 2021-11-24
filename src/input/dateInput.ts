@@ -5,14 +5,15 @@ import stream from "mithril/stream";
 import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
 
 import { inputCls } from "../theme";
-import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, updateDom, validateDate } from "../dateUtils";
-import { HiddenDateInput } from "./hiddenDateInput";
+import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, validateDate } from "../dateUtils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
+import { HiddenDateInput } from "./hiddenDateInput";
+import { setIfDifferent } from "../utils";
 
 interface IDateParts {
 	readonly type: TDateType | "literal",
-	readonly value: string
+	readonly value: string;
 }
 export class DateInput implements ClassComponent<IPropWidget> {
 
@@ -34,6 +35,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private buildDate(valueStream: TPropStream, required = false) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
 		const valid = validateDate(this.year(), this.month(), this.day(), required, this.dom());
+		// important! reset value when value stream is invalid
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
 	}
 
@@ -53,7 +55,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private setDateInputs(locale: string | undefined) {
 		const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
-		// TODO map literals to ascii code for keyboard event
 		this.dateParts = dateParts as IDateParts[];
 		const dateType = dateParts[0].type as TDateType;
 		this.literalKey(dateParts[1].value);
@@ -88,8 +89,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const classStr = inputCls(uiClass);
 
 		switch (type) {
-			case ('literal'): return m('span', { class: "p-0px mr-2px" }, value);
-			case ('day'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+			case ('literal'): return m('span.pa0.mr-2px', value);
+			case ('day'): return m("span", m("input.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
 				minlength: "2", maxlength: "2",
@@ -114,7 +115,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					this.buildDate(streamValue, required);
 				}
 			}));
-			case ('month'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+			case ('month'): return m("span", m("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
 				minlength: "2", maxlength: "2",
@@ -139,7 +140,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					this.buildDate(streamValue, required);
 				}
 			}));
-			case ('year'): return m("span", m("input.w-100.bg-transparent.bn.outline-0.tc", {
+			case ('year'): return m("span", m("input.w-100.mw-yyyy.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
 				minlength: "4", maxlength: "4",
@@ -170,7 +171,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			// only handle value when the main value stream is changed
 			if (newVal) {
 				const date = new Date(String(newVal));
-				// multiple data-binding reset date stream
+				// multiple data-binding reset date stream (important, reset local date stream when value is present)
 				this.date('');
 				// set individual date inputs based on value stream (not date stream)
 				const day = lodash.padStart(String(date.getDate()), 2, "0");
@@ -180,12 +181,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.month(month);
 				this.year(year);
 			}
-			// only reset the non-edited date fields
+			// only reset the non-edited date fields (important for resetting field display value)
 			else if (!this.date()) {
 				this.day("");
 				this.month("");
 				this.year("");
 			}
+			// validate when value comes in from other date inputs
 			this.valid(
 				validateDate(this.year(), this.month(), this.day(), Boolean(field.required), this.dom())
 			);
@@ -198,16 +200,15 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom);
+		setIfDifferent(this.dom, dom);
 	}
-
 
 	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
 		this.setLocale(field);
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
-		updateDom(dom, this.dom);
+		setIfDifferent(this.dom, dom);
 	}
 
 	public onremove() {
@@ -225,10 +226,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			value: value, field,
 			invalid: !this.valid()
 		},
-			m('.flex', {
-				onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
-				class: "p-1px-2px"
-				// padding to behave similar to HTML native input paddings
+			m('.flex.ph-2px.pv-1px', {
+				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			},
 				this.dateParts.map((datePart) => {
 					return this.createDateInputs(datePart, vnode);

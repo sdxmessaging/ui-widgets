@@ -14,7 +14,7 @@ import { FileOpen } from "./fileOpen";
 export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 
 	public view({ attrs: { displayType = DisplayType.thumbnail, value } }: CVnode<IDisplayWidget>) {
-		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size",
+		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb",
 			lodash.map(value(), (file) => m(Thumbnail, {
 				src: imgSrc(file.path, file.dataUrl),
 				data: file,

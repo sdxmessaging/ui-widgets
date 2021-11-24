@@ -160,24 +160,25 @@ m.mount(document.getElementById("page"), {
 			// Text
 			m(".flex.mb2.items-center.ba.b--silver", [
 
-				m(".flex.flex-column.w-50", [
-					m(".pa2.mb2", m(uiWidgets.BaseInput, {
+				m(".flex.flex-column.w-50.pa2", [
+					m(uiWidgets.BaseInput, {
 						field: {
 							id: "text-in-input",
 							label: "Text Input (updates on input)",
 							required: true,
-							instant: true
+							instant: true,
+							uiClass: { wrapper: "mb2" }
 						},
 						value: textVal,
-					})),
-					m(".pa2", m(uiWidgets.TextareaInput, {
+					}),
+					m(uiWidgets.TextareaInput, {
 						field: {
 							id: "text-area-input",
 							label: "Text Area (updates on change)",
 							type: "textarea"
 						},
 						value: textVal,
-					})),
+					}),
 				]),
 
 				m(".w-50.pa2", m(uiWidgets.BaseText, {

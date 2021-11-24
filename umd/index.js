@@ -213,6 +213,15 @@
             chk(checked);
         };
     }
+    function setIfDifferent(inStream, val) {
+        if (inStream() !== val) {
+            inStream(val);
+        }
+    }
+    /* Event handler helper, select all text in a given input target */
+    function selectTarget({ target }) {
+        target.select();
+    }
     /**
      * Split given file name from extension
      */
@@ -551,8 +560,8 @@
         view({ attrs: { label, classes = "bg-red" }, children }) {
             return m__default['default'](".relative.dib", [
                 children,
-                label ? m__default['default']("span.absolute.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80", {
-                    class: `${classes} minw-65rem`
+                label ? m__default['default']("span.absolute.minw-65rem.ph1.nt1.nr1.top-0.right-0.br-pill.tc.f5.white.o-80", {
+                    class: classes
                 }, label) : null
             ]);
         }
@@ -910,7 +919,7 @@
 
     class DisplayTypeComponent {
         view({ attrs: { displayType = "thumbnail" /* thumbnail */, value } }) {
-            return displayType === "thumbnail" /* thumbnail */ ? m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
+            return displayType === "thumbnail" /* thumbnail */ ? m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
                 src: imgSrc(file.path, file.dataUrl),
                 data: file,
             }, m__default['default'](".absolute.top-0.right-0.child", m__default['default'](Button, {
@@ -978,7 +987,7 @@
                 class: wrapperCls(uiClass),
             }, [
                 getDisplayLabel(label),
-                m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size", lodash__default['default'].map(value(), ({ name, path, dataUrl }) => m__default['default'](Thumbnail, {
+                m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb", lodash__default['default'].map(value(), ({ name, path, dataUrl }) => m__default['default'](Thumbnail, {
                     title: name,
                     src: imgSrc(path, dataUrl)
                 })))
@@ -994,7 +1003,7 @@
                 class: wrapperCls(uiClass)
             }, [
                 getDisplayLabel(label),
-                file ? m__default['default'](`img.img.h-100.mt2.contain.self-center.img-max-size`, {
+                file ? m__default['default']("img.img.h-100.max-h-img.mt2.contain.self-center", {
                     title: file.name,
                     src: imgSrc(file.path, file.dataUrl)
                 }) : m__default['default']("i.mt2", {
@@ -1158,7 +1167,7 @@
         }
         // Float label if element has a value set or is in focus
         shouldFloat(layout, value) {
-            return layout === "floatAlways" /* floatAlways */ || value || this.focus;
+            return layout === "floatAlways" /* floatAlways */ || this.focus || value;
         }
         labelTranslateY() {
             return `calc(${this.wrapperHeight * 0.5}px - 1.5ex)`;
@@ -1170,7 +1179,7 @@
             const floatTop = this.shouldFloat(layout, placeholder || xform());
             // Wrapper (padding for shrunk label overflow)
             return m__default['default']("div", {
-                class: `${type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt-05rem" : ""}`,
+                class: `${type === "hidden" /* hidden */ ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
                 onfocusin: this.focusIn,
                 onfocusout: this.focusOut
             }, 
@@ -1180,21 +1189,19 @@
             }, [
                 label && this.wrapperHeight ? [
                     // Break fieldset border, make space for label to float into
-                    m__default['default']("legend.db", {
-                        class: `${labelCls(uiClass, required)} hidden h-05ch transition-opts ${floatTop ? "maxw-100" : "maxw-001px"}`,
-                    }, m__default['default']("span", {
-                        class: "font-07em"
-                    }, getLabelText(label, required))),
+                    m__default['default']("legend.db.hidden.h-05ch.transition-mw", {
+                        class: `${labelCls(uiClass, required)} ${floatTop ? "mw-100" : "mw-001px"}`,
+                    }, m__default['default']("span.f-07em", getLabelText(label, required))),
                     // Floating label
-                    m__default['default'](".absolute.top-0", {
-                        class: `${labelCls(uiClass, required)} transition-opts`,
+                    m__default['default'](".absolute.top-0.transition-transform", {
+                        class: labelCls(uiClass, required),
                         style: {
                             // Input wrapper legend or center
                             transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
                         }
-                    }, m__default['default']("label.db", {
+                    }, m__default['default']("label.db.transition-f", {
                         for: id, title: label,
-                        class: `transition-opts ${floatTop ? "font-07em cursor-default" : "font-1em cursor-text"}`
+                        class: floatTop ? "f-07em cursor-default" : "cursor-text"
                     }, getLabelText(label, required)))
                 ] : null,
                 // Input
@@ -1273,7 +1280,7 @@
                 readonly, disabled, autofocus, autocomplete,
                 pattern, inputmode, spellcheck,
                 class: inputCls(uiClass),
-                onfocus: ({ target }) => target.select(),
+                onfocus: selectTarget,
                 value: lodash__default['default'].isUndefined(xform())
                     ? null
                     : numberToCurrencyStr(propToNumber(xform())),
@@ -1352,6 +1359,7 @@
         return ({ target: { value } }) => val(currencyStrToNumber(value));
     }
 
+    // All individual inputs have a fixed suffix for date types
     function dateInputIds(type) {
         switch (type) {
             case 'day': return 'dd';
@@ -1359,6 +1367,7 @@
             case 'year': return 'yyyy';
         }
     }
+    // Clicking on the label calls this function to "remember" the last focused input
     function focusLastInput(dom, id, focusedId) {
         const lastFocused = dom.querySelector(`#${id}-${focusedId}`);
         lastFocused.focus();
@@ -1380,19 +1389,20 @@
     // 			return isNaN(first) || first >= 0;
     // 	}
     // }
+    // For showing custom validity message at the right place/input
     function getInvalidInput(message) {
         const formattedMessage = message ? message.toLocaleLowerCase() : "";
-        if (formattedMessage.includes('month'))
+        if (formattedMessage.includes('month')) {
             return 'mm';
-        else if (formattedMessage.includes('day'))
+        }
+        else if (formattedMessage.includes('day')) {
             return "dd";
-        else if (formattedMessage.includes('year'))
+        }
+        else if (formattedMessage.includes('year')) {
             return 'yy';
-        return undefined;
-    }
-    function updateDom(newDom, currentDom) {
-        if (newDom !== currentDom()) {
-            currentDom(newDom);
+        }
+        else {
+            return null;
         }
     }
     function focusAndSelectNextInput(dom, id, targetType) {
@@ -1400,12 +1410,12 @@
         nextInput.focus();
         nextInput.select();
     }
-    function getSelfMaxLength(self) {
-        return parseInt(self.getAttribute("maxlength"));
+    function getElementMaxLength(element) {
+        return parseInt(element.getAttribute("maxlength"));
     }
     function handleRetreatOrLiteralAdvance(id, selfType, streamValue, dom, event, literalKey, nextTargetType, prevTargetTyype) {
         const self = dom.querySelector(`#${id}-${selfType}`);
-        const maxLength = getSelfMaxLength(self);
+        const maxLength = getElementMaxLength(self);
         if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevTargetTyype) {
             focusAndSelectNextInput(dom, id, prevTargetTyype);
             // prevent event from passing to the previous field & deleting characters right away
@@ -1418,6 +1428,7 @@
             event.preventDefault();
         }
     }
+    // for multi date binding purpose, to reset value stream when date stream is invalid
     function resetInvalidValueStream(valid, date, year, month, day, valueStream) {
         if (validDateInputLengths(year, month, day) && valid) {
             valueStream(date);
@@ -1427,34 +1438,35 @@
         }
     }
     function appendZeroToDayMonth(valueStream) {
-        const value = valueStream();
-        if (value.length === 1 && value !== '0')
+        const value = String(valueStream());
+        if (value.length === 1 && value !== '0') {
             valueStream(`0${value}`);
+        }
     }
     function validDateInputLengths(year, month, day) {
-        const isCardDateInput = !day;
-        const yearLength = isCardDateInput ? 2 : 4;
+        // Expect 4 digit year for full date, 2 digit for "card date" (no day component)
+        const yearLength = !day ? 2 : 4;
         return year.length === yearLength && month.length === 2 && (!day || day.length === 2);
     }
-    function getDateValidityMessage(validation, year, dateEmpty) {
-        function getInputType(message) {
-            if (message.includes('month')) {
-                return 'month';
-            }
-            else if (message.includes('day')) {
-                return 'day';
-            }
-            // edge case
-            return "date";
+    // get input type for the message from Luxon error explanation
+    function getDateFromExplanation(errMsg) {
+        if (errMsg.includes('month')) {
+            return 'month';
         }
+        else if (errMsg.includes('day')) {
+            return 'day';
+        }
+        // edge case
+        return "date";
+    }
+    function getDateValidityMessage(validation, year, dateEmpty) {
         if (validation.invalidExplanation) {
             if (dateEmpty) {
                 return "";
             }
             else {
                 // Get the wrong input type from the luxon invalidation explanation
-                const inputType = getInputType(validation.invalidExplanation);
-                return `Please check the ${inputType}.`;
+                return `Please check the ${getDateFromExplanation(validation.invalidExplanation)}.`;
             }
         }
         else if (!validation.year || Number(year) < 1900) {
@@ -1479,27 +1491,24 @@
         // unset validation message if valid
         return "";
     }
-    function setAllValidityMessage(dom, message) {
+    // Loop through all 2-3 date inputs and only set custom validity for the wrong one
+    function setAllValidityMessage(message, dom) {
         if (dom) {
             const inputId = getInvalidInput(message);
-            const inputs = dom.querySelectorAll('input');
-            inputs.forEach((item => {
+            dom.querySelectorAll('input').forEach((item) => {
                 if (inputId && item.id.substr(-2) === inputId && message) {
                     item.setCustomValidity(message);
                 }
                 else {
                     item.setCustomValidity("");
                 }
-            }));
+            });
         }
     }
     function validateCardDate(year, month, required, dom) {
-        // TODO validate year in the future if it is a valid_to input
-        const dateEmpty = !year && !month;
-        const valid = (month.length === 2 && Number(month) <= 12 && Number(month) > 0 && year.length === 2)
-            || (dateEmpty && !required);
-        const message = getCardDateValidityMessage(year, month, valid);
-        setAllValidityMessage(dom, message);
+        const valid = (month.length === 2 && year.length === 2
+            && Number(month) <= 12 && Number(month) > 0) || (!year && !month && !required);
+        setAllValidityMessage(getCardDateValidityMessage(year, month, valid), dom);
         return valid;
     }
     function validateDate(year, month, day, required, dom) {
@@ -1509,24 +1518,22 @@
             day: Number(day)
         });
         const dateEmpty = !year && !month && !day;
-        const message = getDateValidityMessage(validation, year, dateEmpty);
-        setAllValidityMessage(dom, message);
+        setAllValidityMessage(getDateValidityMessage(validation, year, dateEmpty), dom);
         return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
     }
     function handleDateChange(streamType, id, selfType, dom, targetType) {
         const self = dom.querySelector(`#${id}-${selfType}`);
-        const prevValue = streamType() ? streamType() : "";
+        const prevValue = streamType() || "";
         const value = self.value;
         const isNumeric = /^\d*$/.test(value);
         if ((isNumeric || value === "") && value.length <= 4) {
             streamType(value);
         }
-        // preserve current/previous value when rules are broken
         else {
+            // preserve current/previous value when rules are broken
             streamType(prevValue);
         }
-        const maxLength = getSelfMaxLength(self);
-        if (value.length === maxLength && targetType) {
+        if (String(streamType()).length === getElementMaxLength(self) && targetType) {
             focusAndSelectNextInput(dom, id, targetType);
         }
     }
@@ -1573,10 +1580,10 @@
             });
         }
         oncreate({ dom }) {
-            updateDom(dom, this.dom);
+            setIfDifferent(this.dom, dom);
         }
         onupdate({ dom }) {
-            updateDom(dom, this.dom);
+            setIfDifferent(this.dom, dom);
         }
         onremove() {
             this.date.end(true);
@@ -1587,19 +1594,17 @@
             const { field, value } = attrs;
             const { id, name = id, required, readonly, disabled, uiClass = {} } = field;
             const classStr = inputCls(uiClass);
-            return m__default['default'](LayoutFixed, { value, field, invalid: !this.valid() }, m__default['default']('.flex', {
-                onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
-                // padding to behave similar to HTML native input paddings
-                class: "p-1px-2px",
+            return m__default['default'](LayoutFixed, { value, field, invalid: !this.valid() }, m__default['default']('.flex.ph-2px.pv-1px', {
+                onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
             }, m__default['default']("span", [
-                m__default['default']("input.w-100.bg-transparent.bn.outline-0.tc", {
+                m__default['default']("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-mm`, name: `${name}-mm`,
                     type: "text" /* text */, placeholder: "MM",
                     minlength: "2", maxlength: "2",
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.month(),
-                    class: `${classStr} maxw-mm p-0px`,
+                    class: classStr,
                     onfocus: lodash__default['default'].partial(this.focusedInput, 'mm'),
                     oninput: () => {
                         handleDateChange(this.month, id, "mm", this.dom(), "yy");
@@ -1613,15 +1618,15 @@
                         this.buildDate(Boolean(field.required), attrs.value);
                     }
                 })
-            ]), m__default['default']("span", { class: "p-0px mr-2px" }, "/"), m__default['default']("span", [
-                m__default['default']("input.w-100.bg-transparent.bn.outline-0.tc", {
+            ]), m__default['default']("span.pa0.mr-2px", "/"), m__default['default']("span", [
+                m__default['default']("input.w-100.mw-yy.pa0.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-yy`, name: `${name}-yy`,
                     type: "text" /* text */, placeholder: "YY",
                     minlength: "2", maxlength: "2",
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.year(),
-                    class: `${classStr} maxw-yy p-0px`,
+                    class: classStr,
                     onfocus: lodash__default['default'].partial(this.focusedInput, 'yy'),
                     onkeydown: (e) => {
                         handleRetreatOrLiteralAdvance(id, 'yy', this.year(), this.dom(), e, '/', undefined, 'mm');
@@ -1651,6 +1656,7 @@
         buildDate(valueStream, required = false) {
             this.date(`${this.year()}-${this.month()}-${this.day()}`);
             const valid = validateDate(this.year(), this.month(), this.day(), required, this.dom());
+            // important! reset value when value stream is invalid
             resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
         }
         // Casting as TDateInputType because undefined will not ever be returned due to oninput not firing if input's full
@@ -1664,7 +1670,6 @@
         }
         setDateInputs(locale) {
             const dateParts = new Intl.DateTimeFormat(locale).formatToParts();
-            // TODO map literals to ascii code for keyboard event
             this.dateParts = dateParts;
             const dateType = dateParts[0].type;
             this.literalKey(dateParts[1].value);
@@ -1686,8 +1691,8 @@
         createDateInputs({ type, value }, { attrs: { field: { id, name = id, required, readonly, disabled, uiClass = {}, }, value: streamValue } }) {
             const classStr = inputCls(uiClass);
             switch (type) {
-                case ('literal'): return m__default['default']('span', { class: "p-0px mr-2px" }, value);
-                case ('day'): return m__default['default']("span", m__default['default']("input.w-100.bg-transparent.bn.outline-0.tc", {
+                case ('literal'): return m__default['default']('span.pa0.mr-2px', value);
+                case ('day'): return m__default['default']("span", m__default['default']("input.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-dd`, name: `${name}-dd`,
                     type: "text" /* text */, placeholder: "DD",
                     minlength: "2", maxlength: "2",
@@ -1709,7 +1714,7 @@
                         this.buildDate(streamValue, required);
                     }
                 }));
-                case ('month'): return m__default['default']("span", m__default['default']("input.w-100.bg-transparent.bn.outline-0.tc", {
+                case ('month'): return m__default['default']("span", m__default['default']("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-mm`, name: `${name}-mm`,
                     type: "text" /* text */, placeholder: "MM",
                     minlength: "2", maxlength: "2",
@@ -1731,7 +1736,7 @@
                         this.buildDate(streamValue, required);
                     }
                 }));
-                case ('year'): return m__default['default']("span", m__default['default']("input.w-100.bg-transparent.bn.outline-0.tc", {
+                case ('year'): return m__default['default']("span", m__default['default']("input.w-100.mw-yyyy.pa0.bg-transparent.bn.outline-0.tc", {
                     id: `${id}-yyyy`, name: `${name}-yyyy`,
                     type: "text" /* text */, placeholder: "YYYY",
                     minlength: "4", maxlength: "4",
@@ -1758,7 +1763,7 @@
                 // only handle value when the main value stream is changed
                 if (newVal) {
                     const date = new Date(String(newVal));
-                    // multiple data-binding reset date stream
+                    // multiple data-binding reset date stream (important, reset local date stream when value is present)
                     this.date('');
                     // set individual date inputs based on value stream (not date stream)
                     const day = lodash__default['default'].padStart(String(date.getDate()), 2, "0");
@@ -1768,12 +1773,13 @@
                     this.month(month);
                     this.year(year);
                 }
-                // only reset the non-edited date fields
+                // only reset the non-edited date fields (important for resetting field display value)
                 else if (!this.date()) {
                     this.day("");
                     this.month("");
                     this.year("");
                 }
+                // validate when value comes in from other date inputs
                 this.valid(validateDate(this.year(), this.month(), this.day(), Boolean(field.required), this.dom()));
             });
             this.locale.map((newVal) => {
@@ -1782,13 +1788,13 @@
             this.setLocale(field);
         }
         oncreate({ dom }) {
-            updateDom(dom, this.dom);
+            setIfDifferent(this.dom, dom);
         }
         onbeforeupdate({ attrs: { field } }) {
             this.setLocale(field);
         }
         onupdate({ dom }) {
-            updateDom(dom, this.dom);
+            setIfDifferent(this.dom, dom);
         }
         onremove() {
             this.date.end(true);
@@ -1802,10 +1808,8 @@
             return m__default['default'](LayoutFixed, {
                 value: value, field,
                 invalid: !this.valid()
-            }, m__default['default']('.flex', {
-                onclick: () => focusLastInput(this.dom(), id, this.focusedInput()),
-                class: "p-1px-2px"
-                // padding to behave similar to HTML native input paddings
+            }, m__default['default']('.flex.ph-2px.pv-1px', {
+                onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
             }, this.dateParts.map((datePart) => {
                 return this.createDateInputs(datePart, vnode);
             }), m__default['default'](HiddenDateInput, vnode.attrs)));
@@ -1867,10 +1871,10 @@
         view({ attrs }) {
             const { field, value, xform = value } = attrs;
             const { label, id, name = id, title = label, placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck, instant, uiClass = {} } = attrs.field;
-            return m__default['default'](LayoutTop, { field, value, xform, invalid: this.invalid }, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100", {
+            return m__default['default'](LayoutTop, { field, value, xform, invalid: this.invalid }, m__default['default']("textarea.w-100.bg-transparent.bn.outline-0.h-100.resize-none", {
                 id, name, title,
                 placeholder, required, readonly, disabled, autofocus, autocomplete, spellcheck,
-                class: `${textareaCls(uiClass)} resize-none`,
+                class: textareaCls(uiClass),
                 value: value(),
                 // Update value on change or input ("instant" option)
                 [instant ? "oninput" : "onchange"]: setValue(value)
@@ -1933,9 +1937,8 @@
                 field,
                 value: val,
                 invalid: propInvalid(field, val())
-            }, m__default['default'](".w-100.flex.justify-center", {
-                onchange: setValue(val),
-                class: "p-1px-2px"
+            }, m__default['default'](".flex.justify-center.w-100.ph-2px.pv-1px", {
+                onchange: setValue(val)
             }, lodash__default['default'].map(options, ({ value, label = value, icon }) => {
                 const checked = val() === value;
                 // No requirement for label "for" attribute
@@ -2057,7 +2060,7 @@
                 }, m__default['default']("i.fa-2x.dtc.v-mid", {
                     class: config.cameraIcn
                 }))),
-                m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.thumb-max-size", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
+                m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
                     src: imgSrc(file.path, file.dataUrl)
                 }, m__default['default'](".absolute.top-0.right-0.child", m__default['default'](Button, {
                     title: `Remove ${file.name}`,
@@ -2087,7 +2090,7 @@
             }, m__default['default'](".pa1", {
                 class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
             }, m__default['default'](".relative.w-100.dt.tc", file ? [
-                m__default['default']("img.img.contain.img-max-size", {
+                m__default['default']("img.img.contain.max-h-img", {
                     title: file.name,
                     src: imgSrc(file.path, file.dataUrl)
                 }),
@@ -2133,9 +2136,7 @@
         view({ attrs: { style, onSet, onCancel } }) {
             return [
                 m__default['default'](".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style }, m__default['default']("canvas.aspect-ratio--object")),
-                m__default['default'](".absolute.top-0.right-0.z-999", {
-                    class: "tr-y--100"
-                }, [
+                m__default['default'](".absolute.top-0.right-0.z-999.translate-up-100", [
                     m__default['default'](Button, {
                         title: config.applyTtl,
                         icon: config.applyIcn,
@@ -2193,12 +2194,10 @@
                     onsubmit: applyText(this.text, heightPct, onSet)
                 }, m__default['default']("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
                     oninput: setValue(this.text),
-                    value: this.text(),
-                    class: "sign-font"
+                    style: { fontFamily: config.signFont },
+                    value: this.text()
                 })),
-                m__default['default'](".absolute.top-0.right-0.z-999", {
-                    class: "tr-y--100"
-                }, [
+                m__default['default'](".absolute.top-0.right-0.z-999.translate-up-100", [
                     m__default['default'](Button, {
                         title: config.applyTtl,
                         icon: config.applyIcn,
@@ -2233,7 +2232,7 @@
     class SignStamp {
         view({ attrs: { heightPct, stampTxt, stampSetTxt, onSet } }) {
             return [
-                m__default['default']("span.clip", { class: "sign-font" }, stampSetTxt),
+                m__default['default']("span.clip", { style: { fontFamily: config.signFont } }, stampSetTxt),
                 m__default['default'](".flex", m__default['default'](Button, {
                     label: stampTxt,
                     classes: `flex-auto ${config.stampBtnClass}`,
@@ -2412,7 +2411,7 @@
             }, file ? file.dataUrl
                 ? [
                     // Image preview
-                    m__default['default'](".relative.w-100.dt.tc", m__default['default']("img.img.contain.img-max-size", {
+                    m__default['default'](".relative.w-100.dt.tc", m__default['default']("img.img.contain.max-h-img", {
                         title: file.name,
                         src: imgSrc(file.path, file.dataUrl)
                     }), m__default['default'](".absolute.top-0.right-0.pa1.pointer.dim", {

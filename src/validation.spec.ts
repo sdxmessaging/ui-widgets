@@ -88,10 +88,9 @@ describe("inputmodeInvalid", () => {
 		expect(inputmodeInvalid({ id: "test", inputmode: "decimal" }, "--123")).toBe(true);
 		expect(inputmodeInvalid({ id: "test", inputmode: "decimal" }, "-123.443.11")).toBe(true);
 	});
-	test("other",() => {
-		expect(inputmodeInvalid({ id: "test", inputmode: "tel"}, "afafdsasf")).toBe(false);
-	})
-
+	test("other", () => {
+		expect(inputmodeInvalid({ id: "test", inputmode: "tel" }, "afafdsasf")).toBe(false);
+	});
 });
 
 describe("propInvalid", () => {

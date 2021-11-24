@@ -54,6 +54,7 @@ describe("DateInput", () => {
         expect(monthIn).toBeTruthy();
         expect(yearIn).toBeTruthy();
 
+        // regex rule test
         dayIn.value = "aa";
         monthIn.value = "aa";
         yearIn.value = "1899";
@@ -62,6 +63,7 @@ describe("DateInput", () => {
         monthIn.dispatchEvent(new Event("input"));
         yearIn.dispatchEvent(new Event("input"));
 
+        // value stream is empty when it's invalid
         expect(value()).toEqual("");
 
         dayIn.value = "00";
@@ -74,6 +76,7 @@ describe("DateInput", () => {
 
         expect(value()).toEqual("");
 
+        // valid date
         dayIn.value = "31";
         monthIn.value = "12";
         yearIn.value = "2020";
@@ -84,6 +87,7 @@ describe("DateInput", () => {
 
         expect(value()).toBe("2020-12-31");
 
+        // emptying a single input
         dayIn.value = "";
         monthIn.value = "12";
 
@@ -92,6 +96,7 @@ describe("DateInput", () => {
 
         expect(value()).toEqual("");
 
+        // value must be positive
         dayIn.value = "-1";
         monthIn.value = "-1";
 
@@ -155,6 +160,7 @@ describe("DateInput", () => {
         const yearInSpy = jest.spyOn(yearIn, 'focus');
         const dayInSpy = jest.spyOn(dayIn, "focus");
 
+        // auto advance should select all characters (like the native tabbing behaviour)
         const monthInSelectSpy = jest.spyOn(monthIn, 'select');
         const yearInSelectSpy = jest.spyOn(yearIn, 'select');
 
@@ -162,6 +168,7 @@ describe("DateInput", () => {
         const monthIn2 = root.querySelector("#test2-mm") as HTMLInputElement;
         const yearIn2 = root.querySelector("#test2-yyyy") as HTMLInputElement;
 
+        // only auto advance when reaching max length
         dayIn.value = "0";
         dayIn.dispatchEvent(new Event("input"));
         expect(monthInSpy).toBeCalledTimes(0);
@@ -169,6 +176,7 @@ describe("DateInput", () => {
         expect(yearInSpy).toBeCalledTimes(0);
         expect(yearInSelectSpy).toBeCalledTimes(0);
 
+        // should auto advance
         dayIn.value = "01";
         dayIn.dispatchEvent(new Event("input"));
         expect(monthInSpy).toBeCalledTimes(1);
@@ -180,6 +188,7 @@ describe("DateInput", () => {
         expect(yearInSpy).toBeCalledTimes(1);
         expect(yearInSelectSpy).toBeCalledTimes(1);
 
+        // in this current locale, year shouldn't auto advance
         yearIn.value = "2020";
         yearIn.dispatchEvent(new Event("input"));
         // none of these should be called
@@ -187,14 +196,13 @@ describe("DateInput", () => {
         expect(monthInSpy).toBeCalledTimes(1);
         expect(dayInSpy).toBeCalledTimes(0);
 
-
         // Test two-way date binding
         m.redraw.sync();
         expect(yearIn2.value).toEqual("2020");
         expect(dayIn2.value).toEqual("01");
         expect(monthIn2.value).toEqual('02');
 
-        // Test reset date value for other inputs sharing the same value stream
+        // Test reset date value for other inputs sharing the same value stream when invalid
         yearIn2.value = '';
         yearIn2.dispatchEvent(new Event("input"));
 
@@ -255,6 +263,7 @@ describe("DateInput", () => {
         const yearInSpy = jest.spyOn(yearIn, 'focus');
         const dayInSpy = jest.spyOn(dayIn, 'focus');
 
+        // checking the order of auto advance for a different locale
         monthIn.value = "02";
         monthIn.dispatchEvent(new Event("input"));
         expect(dayInSpy).toBeCalledTimes(1);
@@ -285,6 +294,7 @@ describe("DateInput", () => {
             })
         });
 
+        // same principle as auto advance but reverse
         value("2020-01-01");
 
         const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
@@ -362,6 +372,7 @@ describe("DateInput", () => {
         const inputContainer = firstInput.closest('.flex') as HTMLElement;
         expect(inputContainer).not.toBeNull();
 
+        // clicking on parent container/label should focus on the last focused input
         inputContainer.dispatchEvent(new Event('click'));
 
         expect(dayInSpy).toBeCalledTimes(1);
@@ -435,12 +446,14 @@ describe("DateInput", () => {
         const dayIn = root.querySelector("#test-dd") as HTMLInputElement;
         const monthIn = root.querySelector("#test-mm") as HTMLInputElement;
 
+        // append 0 when field value is bigger than 0
         dayIn.value = '1';
         dayIn.dispatchEvent(new Event('input'));
         dayIn.dispatchEvent(new Event('blur'));
         m.redraw.sync();
         expect(dayIn.value).toEqual("01");
 
+        // should not append 0 for 0s
         dayIn.value = '0';
         dayIn.dispatchEvent(new Event('input'));
         dayIn.dispatchEvent(new Event('blur'));
@@ -453,6 +466,7 @@ describe("DateInput", () => {
         m.redraw.sync();
         expect(monthIn.value).toEqual("01");
 
+        // year inputs should not have the appending behaviour
         const yearIn = root.querySelector("#test-yyyy") as HTMLInputElement;
         yearIn.value = '1';
         yearIn.dispatchEvent(new Event('input'));
@@ -488,6 +502,7 @@ describe("DateInput", () => {
         const monthInSpy = jest.spyOn(monthIn, 'focus');
         const yearInSpy = jest.spyOn(yearIn, 'focus');
 
+        // for the current locale, pressing '/' when there's value should auto advance
         dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
         expect(monthInSpy).toBeCalledTimes(0);
         expect(yearInSpy).toBeCalledTimes(0);
@@ -497,6 +512,7 @@ describe("DateInput", () => {
         expect(monthInSpy).toBeCalledTimes(0);
         expect(yearInSpy).toBeCalledTimes(0);
 
+        // wrong key
         dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
         expect(monthInSpy).toBeCalledTimes(0);
         expect(yearInSpy).toBeCalledTimes(0);
@@ -517,6 +533,7 @@ describe("DateInput", () => {
         yearIn.dispatchEvent(new Event('input'));
         expect(dayInSpy).toBeCalledTimes(0);
         expect(monthInSpy).toBeCalledTimes(1);
+        // for this current locale, year should not advance
         yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
         expect(monthInSpy).toBeCalledTimes(1);
         expect(dayInSpy).toBeCalledTimes(0);
@@ -546,6 +563,7 @@ describe("DateInput", () => {
 
         const monthInSpy = jest.spyOn(monthIn, 'focus');
 
+        // for this current locale, '.' is the advance key/literal
         yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
         expect(monthInSpy).toBeCalledTimes(0);
 
@@ -553,9 +571,11 @@ describe("DateInput", () => {
         yearIn.dispatchEvent(new Event('input'));
         expect(monthInSpy).toBeCalledTimes(0);
 
+        // wrong key
         yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
         expect(monthInSpy).toBeCalledTimes(0);
 
+        // for this locale, year should advance
         yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
         expect(monthInSpy).toBeCalledTimes(1);
     });

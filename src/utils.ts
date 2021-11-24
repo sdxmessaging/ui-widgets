@@ -1,4 +1,5 @@
 import m from "mithril";
+import stream from "mithril/stream";
 
 import { IFile, TPropMap, TPropStream } from "./interface/widget";
 
@@ -71,15 +72,26 @@ export function labelIcon(leftIcon?: string, label?: string, rightIcon?: string)
 
 // Input widget TProp update helpers
 export function setValue(val: TPropStream) {
-	return function ({ target: { value } }: { target: HTMLInputElement }) {
+	return function ({ target: { value } }: { target: HTMLInputElement; }) {
 		val(value);
 	};
 }
 
 export function setCheck(chk: TPropStream) {
-	return function ({ target: { checked } }: { target: HTMLInputElement }) {
+	return function ({ target: { checked } }: { target: HTMLInputElement; }) {
 		chk(checked);
 	};
+}
+
+export function setIfDifferent<T>(inStream: stream<T>, val: T) {
+	if (inStream() !== val) {
+		inStream(val);
+	}
+}
+
+/* Event handler helper, select all text in a given input target */
+export function selectTarget({ target }: { target: HTMLInputElement; }) {
+	target.select();
 }
 
 /**

@@ -69,7 +69,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 					? [
 						// Image preview
 						m(".relative.w-100.dt.tc",
-							m("img.img.contain.img-max-size", {
+							m("img.img.contain.max-h-img", {
 								title: file.name,
 								src: imgSrc(file.path, file.dataUrl)
 							}),
