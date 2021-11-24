@@ -198,7 +198,7 @@ export function handleDateChange(
 		// preserve current/previous value when rules are broken
 		streamType(prevValue);
 	}
-	if (value.length === getElementMaxLength(self) && targetType) {
+	if (String(streamType()).length === getElementMaxLength(self) && targetType) {
 		focusAndSelectNextInput(dom, id, targetType);
 	}
 }
