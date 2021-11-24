@@ -31,11 +31,18 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			return m("label.dib", {
 				"title": label,
 				"class": radioInputCls(uiClass, checked, disabled, readonly),
-				"data-input-id": id
+				"data-input-id": id,
+				tabindex: 0,
+				onkeydown: (e : KeyboardEvent) => {
+					if(e.key === " "){
+						(document.activeElement?.firstElementChild as HTMLElement).click();
+					}
+				}
 			},
 				m("input.clip[type=radio]", {
 					name, value, checked,
 					required, autocomplete,
+					tabindex: -1,
 					disabled: disabled || readonly
 				}),
 				icon ? m("i.fa-fw", {

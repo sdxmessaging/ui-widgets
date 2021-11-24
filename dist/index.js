@@ -806,7 +806,14 @@ class FileInput {
             "for": id,
             "title": title,
             "class": pointerCls(disabled, readonly),
-            "data-input-id": id
+            "data-input-id": id,
+            tabindex: 0,
+            onkeydown: (e) => {
+                var _a;
+                if (e.key === " ") {
+                    ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.firstElementChild).click();
+                }
+            }
         }, disabled || readonly ? {} : {
             ondragover: dragStart(dragging),
             ondragleave: dragStop(dragging),
@@ -816,6 +823,7 @@ class FileInput {
                 id, name, multiple, accept,
                 required, autofocus,
                 disabled: disabled || readonly,
+                tabindex: -1,
                 onchange: change(onSet)
             }),
             this.showLabel && label ? m("span.db.mb1", {
@@ -1596,6 +1604,7 @@ class CardDateInput {
                 minlength: "2", maxlength: "2",
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
+                'aria-label': `${name}: Month`,
                 value: this.month(),
                 class: classStr,
                 onfocus: lodash.partial(this.focusedInput, 'mm'),
@@ -1618,6 +1627,7 @@ class CardDateInput {
                 minlength: "2", maxlength: "2",
                 pattern: "[0-9]*", inputmode: "numeric",
                 required, readonly, disabled,
+                'aria-label': `${name}: Year`,
                 value: this.year(),
                 class: classStr,
                 onfocus: lodash.partial(this.focusedInput, 'yy'),
@@ -1938,10 +1948,18 @@ class RadioInput {
             return m("label.dib", {
                 "title": label,
                 "class": radioInputCls(uiClass, checked, disabled, readonly),
-                "data-input-id": id
+                "data-input-id": id,
+                tabindex: 0,
+                onkeydown: (e) => {
+                    var _a;
+                    if (e.key === " ") {
+                        ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.firstElementChild).click();
+                    }
+                }
             }, m("input.clip[type=radio]", {
                 name, value, checked,
                 required, autocomplete,
+                tabindex: -1,
                 disabled: disabled || readonly
             }), icon ? m("i.fa-fw", {
                 class: icon

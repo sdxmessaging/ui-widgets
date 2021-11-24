@@ -52,7 +52,7 @@ export function change(setFiles: (setList: FileList | null) => void) {
 
 export class FileInput implements ClassComponent<IFileInput> {
 
-	protected readonly showLabel : boolean = true;
+	protected readonly showLabel: boolean = true;
 
 	public oncreate({ dom, attrs: { value } }: CVnodeDOM<IFileInput>) {
 		value.map((list) => {
@@ -77,7 +77,13 @@ export class FileInput implements ClassComponent<IFileInput> {
 			"for": id,
 			"title": title,
 			"class": pointerCls(disabled, readonly),
-			"data-input-id": id
+			"data-input-id": id,
+			tabindex: 0,
+			onkeydown: (e: KeyboardEvent) => {
+				if (e.key === " ") {
+					(document.activeElement?.firstElementChild as HTMLElement).click();
+				}
+			}
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),
@@ -87,6 +93,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 				id, name, multiple, accept,
 				required, autofocus,
 				disabled: disabled || readonly,
+				tabindex: -1,
 				onchange: change(onSet)
 			}),
 			this.showLabel && label ? m("span.db.mb1", {

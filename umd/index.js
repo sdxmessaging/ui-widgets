@@ -813,7 +813,14 @@
                 "for": id,
                 "title": title,
                 "class": pointerCls(disabled, readonly),
-                "data-input-id": id
+                "data-input-id": id,
+                tabindex: 0,
+                onkeydown: (e) => {
+                    var _a;
+                    if (e.key === " ") {
+                        ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.firstElementChild).click();
+                    }
+                }
             }, disabled || readonly ? {} : {
                 ondragover: dragStart(dragging),
                 ondragleave: dragStop(dragging),
@@ -823,6 +830,7 @@
                     id, name, multiple, accept,
                     required, autofocus,
                     disabled: disabled || readonly,
+                    tabindex: -1,
                     onchange: change(onSet)
                 }),
                 this.showLabel && label ? m__default['default']("span.db.mb1", {
@@ -1603,6 +1611,7 @@
                     minlength: "2", maxlength: "2",
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
+                    'aria-label': `${name}: Month`,
                     value: this.month(),
                     class: classStr,
                     onfocus: lodash__default['default'].partial(this.focusedInput, 'mm'),
@@ -1625,6 +1634,7 @@
                     minlength: "2", maxlength: "2",
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
+                    'aria-label': `${name}: Year`,
                     value: this.year(),
                     class: classStr,
                     onfocus: lodash__default['default'].partial(this.focusedInput, 'yy'),
@@ -1945,10 +1955,18 @@
                 return m__default['default']("label.dib", {
                     "title": label,
                     "class": radioInputCls(uiClass, checked, disabled, readonly),
-                    "data-input-id": id
+                    "data-input-id": id,
+                    tabindex: 0,
+                    onkeydown: (e) => {
+                        var _a;
+                        if (e.key === " ") {
+                            ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.firstElementChild).click();
+                        }
+                    }
                 }, m__default['default']("input.clip[type=radio]", {
                     name, value, checked,
                     required, autocomplete,
+                    tabindex: -1,
                     disabled: disabled || readonly
                 }), icon ? m__default['default']("i.fa-fw", {
                     class: icon
