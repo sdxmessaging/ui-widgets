@@ -96,6 +96,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.day(),
+				'aria-label': `${name}: Day`,
 				class: `${classStr} maxw-dd p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'dd'),
 				onkeydown: (e: KeyboardEvent) => {
@@ -120,6 +121,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.month(),
+				'aria-label': `${name}: Month`,
 				class: `${classStr} maxw-mm p-0px`,
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(
@@ -144,6 +146,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled,
 				value: this.year(),
+				'aria-label': `${name}: Year`,
 				class: `${classStr} maxw-yyyy p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 				onkeydown: (e: KeyboardEvent) => {

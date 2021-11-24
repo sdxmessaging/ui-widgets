@@ -1694,6 +1694,7 @@
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.day(),
+                    'aria-label': `${name}: Day`,
                     class: `${classStr} maxw-dd p-0px`,
                     onfocus: lodash__default['default'].partial(this.focusedInput, 'dd'),
                     onkeydown: (e) => {
@@ -1715,6 +1716,7 @@
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.month(),
+                    'aria-label': `${name}: Month`,
                     class: `${classStr} maxw-mm p-0px`,
                     onkeydown: (e) => {
                         handleRetreatOrLiteralAdvance(id, 'mm', this.month(), this.dom(), e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month'));
@@ -1736,6 +1738,7 @@
                     pattern: "[0-9]*", inputmode: "numeric",
                     required, readonly, disabled,
                     value: this.year(),
+                    'aria-label': `${name}: Year`,
                     class: `${classStr} maxw-yyyy p-0px`,
                     onfocus: lodash__default['default'].partial(this.focusedInput, 'yyyy'),
                     onkeydown: (e) => {
@@ -1890,12 +1893,22 @@
                 m__default['default']("label.flex.items-center", {
                     "title": title,
                     "class": checkInputCls(uiClass, disabled, readonly),
-                    "data-input-id": id
+                    tabindex: 0,
+                    for: id,
+                    "data-input-id": id,
+                    'aria-label': label,
+                    onkeydown: (e) => {
+                        if (e.key === " ") {
+                            value(!value());
+                        }
+                    }
                 }, m__default['default']("input.clip[type=checkbox]", {
                     id, name,
                     checked: value(),
                     required, autocomplete,
                     disabled: disabled || readonly,
+                    tabindex: -1,
+                    'aria-hidden': "true",
                     onchange: setCheck(value),
                 }), m__default['default']("i.mr2", {
                     class: config[value() ? this.onIcon : this.offIcon]
@@ -1949,18 +1962,19 @@
                 field,
                 value: val,
                 invalid: propInvalid(field, val())
-            }, m__default['default']("select.w-100.bg-transparent.bn.outline-0", {
+            }, lbl ? null : m__default['default']("legend.screenreader", { id: `${id}-legend` }, "Select one"), m__default['default']("select.w-100.bg-transparent.bn.outline-0", {
                 id, name, title,
                 required, readonly, disabled, autofocus, autocomplete,
                 class: inputCls(uiClass),
                 value: val() ? val() : "",
-                onchange: setValue(val)
+                onchange: setValue(val),
+                'aria-labelledby': `${id}-legend`
             }, m__default['default']('option', {
                 disabled: true,
                 value: ""
             }, placeholder), lodash__default['default'].map(options, ({ value, label = value }) => m__default['default']("option", {
                 value,
-                disabled: disabled || readonly
+                disabled: disabled || readonly,
             }, label))));
         }
     }

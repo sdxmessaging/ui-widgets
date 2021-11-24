@@ -27,13 +27,23 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			m("label.flex.items-center", {
 				"title": title,
 				"class": checkInputCls(uiClass, disabled, readonly),
-				"data-input-id": id
+				tabindex: 0,
+				for: id,
+				"data-input-id": id,
+				'aria-label': label,
+				onkeydown: (e : KeyboardEvent) => {
+					if (e.key === " "){
+						value(!value());
+					}
+				}
 			},
 				m("input.clip[type=checkbox]", {
 					id, name,
 					checked: value(),
 					required, autocomplete,
 					disabled: disabled || readonly,
+					tabindex: -1,
+					'aria-hidden': "true",
 					onchange: setCheck(value),
 				}),
 				m("i.mr2", {
