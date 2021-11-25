@@ -76,6 +76,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 		return m("label.db", lodash.extend({
 			"for": id,
 			"title": title,
+			"aria-labelled-by": id,
 			"class": pointerCls(disabled, readonly),
 			"data-input-id": id,
 			tabindex: 0,
@@ -94,8 +95,8 @@ export class FileInput implements ClassComponent<IFileInput> {
 				required, autofocus,
 				disabled: disabled || readonly,
 				tabindex: -1,
-				onchange: change(onSet)
-			}),
+				onchange: change(onSet),
+		}),
 			this.showLabel && label ? m("span.db.mb1", {
 				class: labelCls(uiClass, required)
 			}, getLabelText(label, required)) : null,

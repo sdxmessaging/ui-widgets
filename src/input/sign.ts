@@ -122,7 +122,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						style
 					}, fileObj
 						// Current signature
-						? m(".aspect-ratio--object.hide-child.dim", {
+						? m(".aspect-ratio--object.dim", {
 							onclick: lodash.bind(value, this, [])
 						}, [
 							m("img.img.w-100.absolute", {
@@ -131,7 +131,13 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							// Remove signature button
 							m(".pa3.absolute.top-0.right-0.child",
 								m("i.fa-2x", {
-									class: config.resetIcn
+									class: config.resetIcn,
+									tabindex: 0,
+									onkeydown: (e : KeyboardEvent) => {
+										if (e.key === "Enter"){
+											(document.activeElement as HTMLElement).click();
+										}
+									}
 								})
 							)
 						])
@@ -139,6 +145,12 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						: m(".aspect-ratio--object.flex",
 							lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
 								title: label,
+								tabindex: 0,
+								onkeydown: (e : KeyboardEvent) => {
+									if (e.key === "Enter"){
+										(document.activeElement as HTMLElement).click();
+									}
+								},
 								onclick: lodash.bind(this.setSignType, this, type)
 							},
 								m("i.fa-2x.ma1", {

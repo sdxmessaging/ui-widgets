@@ -561,11 +561,11 @@ class Badge {
 }
 
 class Button {
-    view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", style, disabled, onclick } }) {
+    view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", style, disabled, onclick, tabindex } }) {
         return m("button.button-reset", {
             type, title, disabled,
             class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
-            style,
+            style, tabindex,
             onclick
         }, labelIcon(icon, label, rightIcon));
     }
@@ -805,6 +805,7 @@ class FileInput {
         return m("label.db", lodash.extend({
             "for": id,
             "title": title,
+            "aria-labelled-by": id,
             "class": pointerCls(disabled, readonly),
             "data-input-id": id,
             tabindex: 0,
@@ -824,7 +825,7 @@ class FileInput {
                 required, autofocus,
                 disabled: disabled || readonly,
                 tabindex: -1,
-                onchange: change(onSet)
+                onchange: change(onSet),
             }),
             this.showLabel && label ? m("span.db.mb1", {
                 class: labelCls(uiClass, required)
@@ -895,7 +896,15 @@ class FileMulti {
 
 class Thumbnail {
     view({ children, attrs }) {
-        return m(".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child", [
+        return m(".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child", {
+            tabindex: 0,
+            onkeydown: (e) => {
+                var _a;
+                if (e.key === "Enter") {
+                    ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.children[1].firstElementChild).click();
+                }
+            }
+        }, [
             attrs.src && attrs.src !== "not_set" ? m("img.contain", { src: attrs.src }) : null,
             attrs.data && attrs.data.file && (attrs.src === "not_set" || !attrs.src) ? (m("div.contain.tc.br5.6rem", {
                 class: `${getFileTypeIcon(attrs.data)} fa-2x`,
@@ -922,11 +931,12 @@ class DisplayTypeComponent {
     view({ attrs: { displayType = "thumbnail" /* thumbnail */, value } }) {
         return displayType === "thumbnail" /* thumbnail */ ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb", lodash.map(value(), (file) => m(Thumbnail, {
             src: imgSrc(file.path, file.dataUrl),
-            data: file,
+            data: file
         }, m(".absolute.top-0.right-0.child", m(Button, {
             title: `Remove ${file.name}`,
             icon: config.deleteIcn,
-            onclick: removeFile(value, file.guid)
+            onclick: removeFile(value, file.guid),
+            tabindex: -1
         }))))) : m(".pa2.flex.flex-column", lodash.map(value(), (file) => m(".flex.items-center.pa1.ba.b--black-20", [
             m("i.pa1", {
                 class: config.uploadIcn
@@ -2344,7 +2354,7 @@ class SignBuilder {
                         style
                     }, fileObj
                         // Current signature
-                        ? m(".aspect-ratio--object.hide-child.dim", {
+                        ? m(".aspect-ratio--object.dim", {
                             onclick: lodash.bind(value, this, [])
                         }, [
                             m("img.img.w-100.absolute", {
@@ -2352,12 +2362,24 @@ class SignBuilder {
                             }),
                             // Remove signature button
                             m(".pa3.absolute.top-0.right-0.child", m("i.fa-2x", {
-                                class: config.resetIcn
+                                class: config.resetIcn,
+                                tabindex: 0,
+                                onkeydown: (e) => {
+                                    if (e.key === "Enter") {
+                                        document.activeElement.click();
+                                    }
+                                }
                             }))
                         ])
                         // Signature creation options
                         : m(".aspect-ratio--object.flex", lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
                             title: label,
+                            tabindex: 0,
+                            onkeydown: (e) => {
+                                if (e.key === "Enter") {
+                                    document.activeElement.click();
+                                }
+                            },
                             onclick: lodash.bind(this.setSignType, this, type)
                         }, m("i.fa-2x.ma1", {
                             class: icon,
@@ -2440,7 +2462,13 @@ class OmniFileInput {
             m("i.pa1.pointer.dim", {
                 title: `Remove ${file.name}`,
                 class: config.cancelIcn,
-                onclick: removeFile(value, file.guid)
+                onclick: removeFile(value, file.guid),
+                onkeydown: (e) => {
+                    if (e.key === "Enter") {
+                        document.activeElement.click();
+                    }
+                },
+                tabindex: 0
             })
         ] : [
             // File upload

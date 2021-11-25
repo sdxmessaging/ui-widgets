@@ -207,6 +207,7 @@ interface IBaseButton {
 
 export interface IButton extends IBaseButton {
 	readonly type?: "submit" | "reset" | "button";
+	readonly tabindex? : number;
 	readonly disabled?: boolean;
 	onclick?(evt: IMithrilEvent): void;
 }

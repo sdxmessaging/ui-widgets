@@ -568,11 +568,11 @@
     }
 
     class Button {
-        view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", style, disabled, onclick } }) {
+        view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", style, disabled, onclick, tabindex } }) {
             return m__default['default']("button.button-reset", {
                 type, title, disabled,
                 class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
-                style,
+                style, tabindex,
                 onclick
             }, labelIcon(icon, label, rightIcon));
         }
@@ -812,6 +812,7 @@
             return m__default['default']("label.db", lodash__default['default'].extend({
                 "for": id,
                 "title": title,
+                "aria-labelled-by": id,
                 "class": pointerCls(disabled, readonly),
                 "data-input-id": id,
                 tabindex: 0,
@@ -831,7 +832,7 @@
                     required, autofocus,
                     disabled: disabled || readonly,
                     tabindex: -1,
-                    onchange: change(onSet)
+                    onchange: change(onSet),
                 }),
                 this.showLabel && label ? m__default['default']("span.db.mb1", {
                     class: labelCls(uiClass, required)
@@ -902,7 +903,15 @@
 
     class Thumbnail {
         view({ children, attrs }) {
-            return m__default['default'](".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child", [
+            return m__default['default'](".relative.w-third.w-25-m.w-20-l.pa1.tc.hide-child", {
+                tabindex: 0,
+                onkeydown: (e) => {
+                    var _a;
+                    if (e.key === "Enter") {
+                        ((_a = document.activeElement) === null || _a === void 0 ? void 0 : _a.children[1].firstElementChild).click();
+                    }
+                }
+            }, [
                 attrs.src && attrs.src !== "not_set" ? m__default['default']("img.contain", { src: attrs.src }) : null,
                 attrs.data && attrs.data.file && (attrs.src === "not_set" || !attrs.src) ? (m__default['default']("div.contain.tc.br5.6rem", {
                     class: `${getFileTypeIcon(attrs.data)} fa-2x`,
@@ -929,11 +938,12 @@
         view({ attrs: { displayType = "thumbnail" /* thumbnail */, value } }) {
             return displayType === "thumbnail" /* thumbnail */ ? m__default['default'](".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb", lodash__default['default'].map(value(), (file) => m__default['default'](Thumbnail, {
                 src: imgSrc(file.path, file.dataUrl),
-                data: file,
+                data: file
             }, m__default['default'](".absolute.top-0.right-0.child", m__default['default'](Button, {
                 title: `Remove ${file.name}`,
                 icon: config.deleteIcn,
-                onclick: removeFile(value, file.guid)
+                onclick: removeFile(value, file.guid),
+                tabindex: -1
             }))))) : m__default['default'](".pa2.flex.flex-column", lodash__default['default'].map(value(), (file) => m__default['default'](".flex.items-center.pa1.ba.b--black-20", [
                 m__default['default']("i.pa1", {
                     class: config.uploadIcn
@@ -2351,7 +2361,7 @@
                             style
                         }, fileObj
                             // Current signature
-                            ? m__default['default'](".aspect-ratio--object.hide-child.dim", {
+                            ? m__default['default'](".aspect-ratio--object.dim", {
                                 onclick: lodash__default['default'].bind(value, this, [])
                             }, [
                                 m__default['default']("img.img.w-100.absolute", {
@@ -2359,12 +2369,24 @@
                                 }),
                                 // Remove signature button
                                 m__default['default'](".pa3.absolute.top-0.right-0.child", m__default['default']("i.fa-2x", {
-                                    class: config.resetIcn
+                                    class: config.resetIcn,
+                                    tabindex: 0,
+                                    onkeydown: (e) => {
+                                        if (e.key === "Enter") {
+                                            document.activeElement.click();
+                                        }
+                                    }
                                 }))
                             ])
                             // Signature creation options
                             : m__default['default'](".aspect-ratio--object.flex", lodash__default['default'].map(opts, ({ type, icon, label }) => m__default['default'](".flex-auto.flex.items-center.justify-center.dim", {
                                 title: label,
+                                tabindex: 0,
+                                onkeydown: (e) => {
+                                    if (e.key === "Enter") {
+                                        document.activeElement.click();
+                                    }
+                                },
                                 onclick: lodash__default['default'].bind(this.setSignType, this, type)
                             }, m__default['default']("i.fa-2x.ma1", {
                                 class: icon,
@@ -2447,7 +2469,13 @@
                 m__default['default']("i.pa1.pointer.dim", {
                     title: `Remove ${file.name}`,
                     class: config.cancelIcn,
-                    onclick: removeFile(value, file.guid)
+                    onclick: removeFile(value, file.guid),
+                    onkeydown: (e) => {
+                        if (e.key === "Enter") {
+                            document.activeElement.click();
+                        }
+                    },
+                    tabindex: 0
                 })
             ] : [
                 // File upload
