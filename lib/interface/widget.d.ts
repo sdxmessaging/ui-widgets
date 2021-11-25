@@ -54,8 +54,15 @@ export declare const enum LayoutType {
     floatLabel = "floatLabel",
     floatAlways = "floatAlways"
 }
+export interface IWidgetLabel {
+    readonly text: string;
+    readonly icon?: string;
+    readonly rightIcon?: string;
+    readonly href?: string;
+    onclick?(): void;
+}
 export interface IField {
-    readonly label?: string;
+    readonly label?: string | IWidgetLabel;
     readonly id: string;
     readonly type?: FieldType | string;
     readonly name?: string;

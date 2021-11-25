@@ -1,7 +1,7 @@
 import m from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, TPropMap, TPropStream } from "./interface/widget";
+import { IFile, IWidgetLabel, TPropMap, TPropStream } from "./interface/widget";
 
 import { labelCls, theme } from "./theme";
 import { config } from "./config";
@@ -33,8 +33,13 @@ export function pxRatio() {
 	return Math.max(window.devicePixelRatio, 1);
 }
 
-export function getLabelText(label: string, required?: boolean): string {
-	return required ? `${label}${config.requiredLblPost}` : label;
+export function getLabelText(label: string | IWidgetLabel, required?: boolean): string {
+	if (typeof label === 'string') {
+		return required ? `${label}${config.requiredLblPost}` : label;
+	}
+	else {
+		return required ? `${label.text}${config.requiredLblPost}` : label.text;
+	}
 }
 
 export function imgSrc(path: string, dataUrl?: string): string {
@@ -42,28 +47,55 @@ export function imgSrc(path: string, dataUrl?: string): string {
 }
 
 // Used by display widgets
-export function getDisplayLabel(label?: string) {
-	return label ? m("span.mr2.truncate", {
-		title: label,
-		class: theme.displayLabel
-	}, label) : null;
+export function getDisplayLabel(label?: string | IWidgetLabel) {
+	if (label) {
+		if (typeof label === 'string') {
+			return m("span.mr2.truncate", {
+				title: label,
+				class: theme.displayLabel
+			}, label);
+		}
+		else {
+			return m("span.mr2.truncate", {
+				title: label.text,
+				class: theme.displayLabel
+			}, label.text);
+		}
+	}
+
+	return null;
+
+
+
 }
 
 // Used by input widgets
-export function getLabel(id: string, uiClass: IWidgetClasses, label?: string, required?: boolean) {
-	return label ? m("label.mb1.db", {
-		title: label,
-		for: id,
-		class: labelCls(uiClass, required),
-	}, getLabelText(label, required)) : null;
+export function getLabel(id: string, uiClass: IWidgetClasses, label?: string | IWidgetLabel, required?: boolean) {
+	if (label) {
+		if (typeof label === 'string') {
+			return m("label.mb1.db", {
+				title: label,
+				for: id,
+				class: labelCls(uiClass, required),
+			}, getLabelText(label, required));
+		}
+		else {
+			return m("label.mb1.db", {
+				title: label.text,
+				for: id,
+				class: labelCls(uiClass, required),
+			}, getLabelText(label, required));
+		}
+	}
+	return null;
 }
 
-export function labelIcon(leftIcon?: string, label?: string, rightIcon?: string) {
+export function labelIcon(label: IWidgetLabel, rightIcon?: string) {
 	return [
-		leftIcon ? m("i.fa-fw", {
-			class: `${label ? "mr2" : ""} ${leftIcon}`
+		label.icon ? m("i.fa-fw", {
+			class: `${label ? "mr2" : ""} ${label.icon}`
 		}) : null,
-		label,
+		label.text,
 		rightIcon ? m("i.fa-fw", {
 			class: `${label ? "ml2" : ""} ${rightIcon}`
 		}) : null

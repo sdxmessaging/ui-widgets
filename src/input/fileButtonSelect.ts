@@ -16,11 +16,11 @@ export class FileButtonSelect implements ClassComponent<IFileWidget> {
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { label = "Add File", required, uiClass = {} } = field;
+		const { label = {text: "Add File", icon: config.uploadIcn}, required, uiClass = {} } = field;
 		return [
-			label ? m("span.db.mb1", {
+			m("span.db.mb1", {
 				class: labelCls(uiClass, required)
-			}, getLabelText(label, required)) : null,
+			}, getLabelText(label, required)),
 			m("div", {
 				class: `${fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))} ${getButtonContext()} ${theme.button}`,
 			},
@@ -32,7 +32,7 @@ export class FileButtonSelect implements ClassComponent<IFileWidget> {
 					value
 				},
 					m(".flex.items-center",
-						labelIcon(config.uploadIcn, label)
+						(typeof label === 'string') ? labelIcon({text: label, icon: config.uploadIcn}) : labelIcon(label)
 					)
 				)
 			)

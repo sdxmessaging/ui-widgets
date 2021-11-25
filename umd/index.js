@@ -1,4 +1,4 @@
-/* @preserve built on: 2021-11-19T08:27:56.384Z */
+/* @preserve built on: 2021-11-25T10:56:29.878Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('luxon'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'luxon', 'signature_pad'], factory) :
@@ -171,32 +171,60 @@
         return Math.max(window.devicePixelRatio, 1);
     }
     function getLabelText(label, required) {
-        return required ? `${label}${config.requiredLblPost}` : label;
+        if (typeof label === 'string') {
+            return required ? `${label}${config.requiredLblPost}` : label;
+        }
+        else {
+            return required ? `${label.text}${config.requiredLblPost}` : label.text;
+        }
     }
     function imgSrc(path, dataUrl) {
         return dataUrl ? dataUrl : path;
     }
     // Used by display widgets
     function getDisplayLabel(label) {
-        return label ? m__default['default']("span.mr2.truncate", {
-            title: label,
-            class: theme.displayLabel
-        }, label) : null;
+        if (label) {
+            if (typeof label === 'string') {
+                return m__default['default']("span.mr2.truncate", {
+                    title: label,
+                    class: theme.displayLabel
+                }, label);
+            }
+            else {
+                return m__default['default']("span.mr2.truncate", {
+                    title: label.text,
+                    class: theme.displayLabel
+                }, label.text);
+            }
+        }
+        return null;
     }
     // Used by input widgets
     function getLabel(id, uiClass, label, required) {
-        return label ? m__default['default']("label.mb1.db", {
-            title: label,
-            for: id,
-            class: labelCls(uiClass, required),
-        }, getLabelText(label, required)) : null;
+        if (label) {
+            if (typeof label === 'string') {
+                return m__default['default']("label.mb1.db", {
+                    title: label,
+                    for: id,
+                    class: labelCls(uiClass, required),
+                }, getLabelText(label, required));
+            }
+            else {
+                return m__default['default']("label.mb1.db", {
+                    title: label.text,
+                    for: id,
+                    class: labelCls(uiClass, required),
+                }, getLabelText(label, required));
+            }
+        }
+        return null;
     }
-    function labelIcon(leftIcon, label, rightIcon) {
+    function labelIcon(label, rightIcon) {
         return [
-            leftIcon ? m__default['default']("i.fa-fw", {
-                class: `${label ? "mr2" : ""} ${leftIcon}`
+            label.icon ? m__default['default']("i.fa-fw", {
+                class: `${label ? "mr2" : ""} ${label.icon}`
             }) : null,
-            label,
+            label.text,
             rightIcon ? m__default['default']("i.fa-fw", {
                 class: `${label ? "ml2" : ""} ${rightIcon}`
             }) : null
@@ -568,44 +596,44 @@
     }
 
     class Button {
-        view({ attrs: { label, type = "button", title = label, icon, rightIcon, context, classes = "", style, disabled, onclick, tabindex } }) {
+        view({ attrs: { label = "", type = "button", title = label, icon, rightIcon, context, classes = "", style, disabled, onclick, tabindex } }) {
             return m__default['default']("button.button-reset", {
                 type, title, disabled,
                 class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
                 style, tabindex,
                 onclick
-            }, labelIcon(icon, label, rightIcon));
+            }, labelIcon({ text: label, icon, rightIcon }));
         }
     }
 
     class ButtonLink {
-        view({ attrs: { label, title = label, icon, rightIcon, href, rel, target, download, context, classes = "", style } }) {
+        view({ attrs: { label = "", title = label, icon, rightIcon, href, rel, target, download, context, classes = "", style } }) {
             return m__default['default']("a.link.flex.items-center", {
                 href, rel, target, download, title,
                 class: `${classes} ${getButtonContext(context)} ${theme.button}`,
                 style
-            }, labelIcon(icon, label, rightIcon));
+            }, labelIcon({ text: label, icon, rightIcon }));
         }
     }
 
     class NavButton {
-        view({ attrs: { label, title = label, icon, rightIcon, classes = "", style, disabled, onclick } }) {
+        view({ attrs: { label = "", title = label, icon, rightIcon, classes = "", style, disabled, onclick } }) {
             return m__default['default'](".mh2.pa2.truncate", {
                 title, disabled,
                 class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${theme.navButton}`,
                 style,
                 onclick
-            }, labelIcon(icon, label, rightIcon));
+            }, labelIcon({ text: label, icon }, rightIcon));
         }
     }
 
     class NavLink {
-        view({ attrs: { label, title = label, icon, rightIcon, href, rel, target, download, classes = "", style } }) {
+        view({ attrs: { label = "", title = label, icon, rightIcon, href, rel, target, download, classes = "", style } }) {
             return m__default['default']("a.link.mh2.pa2.truncate", {
                 href, rel, target, download, title,
                 class: `${classes} ${theme.navButton}`,
                 style
-            }, labelIcon(icon, label, rightIcon));
+            }, labelIcon({ text: label, icon, rightIcon }));
         }
     }
 
@@ -1118,7 +1146,7 @@
     }
 
     class Label {
-        view({ attrs: { field: { label = "", title = label, required, uiClass = {} } } }) {
+        view({ attrs: { field: { label = "", title = (typeof label === 'string') ? label : label.text, required, uiClass = {} } } }) {
             return m__default['default']("div", { class: wrapperCls(uiClass) }, m__default['default']("label", { title, class: labelCls(uiClass) }, getLabelText(label, required)));
         }
     }
@@ -1864,7 +1892,13 @@
                 m__default['default']("i.ml1.pa1.fa-fw.pointer.dim", {
                     title: config.showPassTxt,
                     class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
-                    onclick: () => this.showPassword(!this.showPassword())
+                    onclick: () => this.showPassword(!this.showPassword()),
+                    tabindex: 0,
+                    onkeydown: (e) => {
+                        if (e.key === "Enter") {
+                            document.activeElement.click();
+                        }
+                    }
                 })
             ]));
         }
@@ -2530,11 +2564,11 @@
             this.dragging = stream__default['default'](false);
         }
         view({ attrs: { field, value } }) {
-            const { label = "Add File", required, uiClass = {} } = field;
+            const { label = { text: "Add File", icon: config.uploadIcn }, required, uiClass = {} } = field;
             return [
-                label ? m__default['default']("span.db.mb1", {
+                m__default['default']("span.db.mb1", {
                     class: labelCls(uiClass, required)
-                }, getLabelText(label, required)) : null,
+                }, getLabelText(label, required)),
                 m__default['default']("div", {
                     class: `${fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))} ${getButtonContext()} ${theme.button}`,
                 }, m__default['default'](FileButtonInput, {
@@ -2543,7 +2577,7 @@
                     dragging: this.dragging,
                     onSet: addFiles(value, true),
                     value
-                }, m__default['default'](".flex.items-center", labelIcon(config.uploadIcn, label))))
+                }, m__default['default'](".flex.items-center", (typeof label === 'string') ? labelIcon({ text: label, icon: config.uploadIcn }) : labelIcon(label))))
             ];
         }
     }

@@ -8,7 +8,7 @@ import { labelIcon } from "./utils";
 export class Button implements ClassComponent<IButton> {
 
 	public view({ attrs: {
-		label, type = "button", title = label, icon, rightIcon,
+		label = "", type = "button", title = label, icon, rightIcon,
 		context, classes = "", style,
 		disabled, onclick, tabindex
 	} }: CVnode<IButton>) {
@@ -17,7 +17,7 @@ export class Button implements ClassComponent<IButton> {
 			class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
 			style, tabindex,
 			onclick
-		}, labelIcon(icon, label, rightIcon));
+		}, labelIcon({text: label, icon, rightIcon}));
 	}
 
 }
