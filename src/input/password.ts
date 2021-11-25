@@ -46,7 +46,13 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			m("i.ml1.pa1.fa-fw.pointer.dim", {
 				title: config.showPassTxt,
 				class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
-				onclick: () => this.showPassword(!this.showPassword())
+				onclick: () => this.showPassword(!this.showPassword()),
+				tabindex: 0,
+				onkeydown: (e : KeyboardEvent) => {
+					if (e.key === "Enter"){
+						(document.activeElement as HTMLElement).click();
+					}
+				}
 			})
 		]));
 	}
