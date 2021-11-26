@@ -56,17 +56,13 @@ export function getDisplayLabel(label?: string | IWidgetLabel) {
 			}, label);
 		}
 		else {
-			return m("span.mr2.truncate", {
+			return enrichLabel(label, "span.mr2.truncate", {
 				title: label.text,
 				class: theme.displayLabel
-			}, label.text);
+			});
 		}
 	}
-
 	return null;
-
-
-
 }
 
 // Used by input widgets
@@ -80,24 +76,40 @@ export function getLabel(id: string, uiClass: IWidgetClasses, label?: string | I
 			}, getLabelText(label, required));
 		}
 		else {
-			return m("label.mb1.db", {
+			return enrichLabel(label, "label.mb1.db", {
 				title: label.text,
 				for: id,
 				class: labelCls(uiClass, required),
-			}, getLabelText(label, required));
+			}, required);
 		}
 	}
 	return null;
 }
 
-export function labelIcon(label: IWidgetLabel, rightIcon?: string) {
+function enrichLabel(label: IWidgetLabel, selector: string,
+	attrs: { title: string, for?: string, class: string }, required?: boolean) {
+	return [label.icon ? m("i.fa-fw", {
+		class: `${label ? "mr2" : ""} ${label.icon}`
+	}) : null,
+	m(selector, attrs, getLabelText(label, required)),
+	label.rightIcon ? m("i.fa-fw", {
+		class: `${label ? "ml2" : ""} ${label.rightIcon}`
+	}) : null,
+	label.href ? m("a.link.dim.pointer.ws-normal", { onclick: label.onclick },
+		m("i.mr2", {
+			class: config.linkIcn
+		}),
+		label.href) : null];
+}
+
+export function labelIcon(label: IWidgetLabel) {
 	return [
 		label.icon ? m("i.fa-fw", {
 			class: `${label ? "mr2" : ""} ${label.icon}`
 		}) : null,
 		label.text,
-		rightIcon ? m("i.fa-fw", {
-			class: `${label ? "ml2" : ""} ${rightIcon}`
+		label.rightIcon ? m("i.fa-fw", {
+			class: `${label ? "ml2" : ""} ${label.rightIcon}`
 		}) : null
 	];
 }
