@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
 import { IFile, IMithrilEvent, TField } from "../interface/widget";
-import { labelCls, pointerCls } from "../theme";
-import { getLabelText } from "../utils";
+import { pointerCls } from "../theme";
+import { getLabel } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -97,9 +97,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 				tabindex: -1,
 				onchange: change(onSet),
 		}),
-			this.showLabel && label ? m("span.db.mb1", {
-				class: labelCls(uiClass, required)
-			}, getLabelText(label, required)) : null,
+			this.showLabel && label ? getLabel(id, uiClass, label, required) : null,
 			children
 		]);
 	}
