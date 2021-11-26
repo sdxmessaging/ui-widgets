@@ -17,7 +17,7 @@ export class NavButton implements ClassComponent<IButton> {
 			class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${theme.navButton}`,
 			style,
 			onclick
-		}, labelIcon({text: label, icon}, rightIcon));
+		}, labelIcon({text: label, icon, rightIcon}));
 	}
 
 }
