@@ -34,12 +34,18 @@ export const iconMap: Record<string, string> = {
 
 export class Link implements ClassComponent<IPropWidget> {
 
-	public view({ attrs: { field } }: CVnode<IPropWidget>) {
+	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, type = FieldType.url, uiClass = {} } = field;
 		return m(".pa2.flex.flex-wrap", {
 			class: wrapperCls(uiClass),
 		}, [
-			getDisplayLabel(label, type)
+			getDisplayLabel(label),
+			m("a.link.dim.pointer.ws-normal", linkAttrs(type, value()),
+				m("i.mr2", {
+					class: iconMap[type] || config.linkIcn
+				}),
+				value()
+			)
 		]);
 	}
 
