@@ -29,7 +29,7 @@ describe("NavLink", () => {
 		const link = root.childNodes[0] as HTMLLinkElement;
 		expect(link.nodeName).toBe("A");
 		// Icon only
-		expect(link.childNodes.length).toBe(1);
+		expect(link.childNodes.length).toBe(2);
 	});
 
 	test("configured", () => {
