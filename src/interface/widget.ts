@@ -94,6 +94,7 @@ export const enum LayoutType {
 
 export interface IWidgetLabel {
 	readonly text: string
+	readonly alt?: string
 	readonly icon?: string
 	readonly rightIcon? : string
 	readonly href?: string

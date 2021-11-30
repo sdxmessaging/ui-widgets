@@ -60,6 +60,11 @@ input[type=number] { -moz-appearance: textfield; }
   cursor: text;
 }
 
+.alt-label{
+  color: slategray !important;
+  display: inline-block;
+}
+
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;

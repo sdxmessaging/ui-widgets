@@ -42,6 +42,10 @@ export function getLabelText(label: string | IWidgetLabel, required?: boolean): 
 	}
 }
 
+function getAltLabel(label: IWidgetLabel) {
+	return m( "div", {class: theme.altLabel}, label.alt ? label.alt : "");
+}
+
 export function imgSrc(path: string, dataUrl?: string): string {
 	return dataUrl ? dataUrl : path;
 }
@@ -91,7 +95,7 @@ function enrichLabel(label: IWidgetLabel, selector: string,
 	return [label.icon ? m("i.fa-fw", {
 		class: `${label ? "mr2" : ""} ${label.icon}`
 	}) : null,
-	m(selector, attrs, getLabelText(label, required)),
+	m(selector, attrs, [getLabelText(label, required), " ", getAltLabel(label)]),
 	label.rightIcon ? m("i.fa-fw", {
 		class: `${label ? "ml2" : ""} ${label.rightIcon}`
 	}) : null,
