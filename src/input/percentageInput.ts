@@ -24,20 +24,21 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 			value,
 			invalid: propInvalid(field, value())
 		},
-			m("input.w-100.bg-transparent.bn.outline-0", {
-				id, type: FieldType.text, name, title, placeholder,
-				max, maxlength, min, minlength, step, required,
-				readonly, disabled, autofocus, autocomplete,
-				pattern, inputmode, spellcheck,
-				class: inputCls(uiClass),
-				onfocus: selectTarget,
-				value: xform(),
-				// Update value on change or input ("instant" option)
-				[instant ? "oninput" : "onchange"]: setValue(value)
-			}),
-			m('.flex.flex-row.w-100', m("span.mr1.self-center", {
-				class: inputCls(uiClass)
-			}, "%"),
+			m('.flex.flex-row.w-100',
+				m("input.w-100.bg-transparent.bn.outline-0", {
+					id, type: FieldType.text, name, title, placeholder,
+					max, maxlength, min, minlength, step, required,
+					readonly, disabled, autofocus, autocomplete,
+					pattern, inputmode, spellcheck,
+					class: inputCls(uiClass),
+					onfocus: selectTarget,
+					value: xform(),
+					// Update value on change or input ("instant" option)
+					[instant ? "oninput" : "onchange"]: setValue(value)
+				}),
+				m("span.mr1.self-center", {
+					class: inputCls(uiClass)
+				}, "%")
 			));
 	}
 }
