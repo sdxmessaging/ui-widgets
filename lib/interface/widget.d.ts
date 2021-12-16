@@ -29,6 +29,7 @@ export declare const enum FieldType {
     tel = "tel",
     color = "color",
     currency = "currency",
+    percentage = "percentage",
     dateInput = "dateInput",
     cardDate = "cardDate",
     textarea = "textarea",
