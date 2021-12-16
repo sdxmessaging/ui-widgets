@@ -1,6 +1,6 @@
 {
   "name": "@sdxmessaging/ui-widgets",
-  "version": "1.5.17",
+  "version": "1.5.18",
   "description": "Build form inputs and display values with mithril components and streams",
   "repository": {
     "type": "git",
