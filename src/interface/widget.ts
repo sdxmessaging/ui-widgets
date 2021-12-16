@@ -42,6 +42,7 @@ export const enum FieldType {
 	color = "color",
 	// Dedicated widget
 	currency = "currency",
+	percentage = "percentage",
 	dateInput = "dateInput",
 	cardDate = "cardDate",
 	textarea = "textarea",
@@ -93,11 +94,11 @@ export const enum LayoutType {
 }
 
 export interface IWidgetLabel {
-	readonly text: string
-	readonly icon?: string
-	readonly rightIcon? : string
-	readonly href?: string
-	onclick?(): void
+	readonly text: string;
+	readonly icon?: string;
+	readonly rightIcon?: string;
+	readonly href?: string;
+	onclick?(): void;
 }
 
 export interface IField {
