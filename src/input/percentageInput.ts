@@ -24,7 +24,7 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 			value,
 			invalid: propInvalid(field, value())
 		},
-			m('.flex.flex-row.w-100',
+			m('.flex.flex-row.w-100', [
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, type: FieldType.text, name, title, placeholder,
 					max, maxlength, min, minlength, step, required,
@@ -39,6 +39,6 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 				m("span.mr1.self-center", {
 					class: inputCls(uiClass)
 				}, "%")
-			));
+			]));
 	}
 }
