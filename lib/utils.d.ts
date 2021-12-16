@@ -6,9 +6,9 @@ export declare function guid(): string;
 export declare function pxRatio(): number;
 export declare function getLabelText(label: string | IWidgetLabel, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
-export declare function getDisplayLabel(label?: string | IWidgetLabel): m.Vnode<any, any> | null;
-export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string | IWidgetLabel, required?: boolean): m.Vnode<any, any> | null;
-export declare function labelIcon(label: IWidgetLabel, rightIcon?: string): (string | m.Vnode<any, any> | null)[];
+export declare function getDisplayLabel(label?: string | IWidgetLabel): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
+export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string | IWidgetLabel, required?: boolean): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
+export declare function labelIcon(label: IWidgetLabel): (string | m.Vnode<any, any> | null)[];
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
 }) => void;
