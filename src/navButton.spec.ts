@@ -13,7 +13,7 @@ describe("NavButton", () => {
 		});
 		expect(root.childNodes.length).toBe(1);
 		const btn = root.childNodes[0] as HTMLDivElement;
-		expect(btn.childNodes.length).toBe(1);
+		expect(btn.childNodes.length).toBe(2);
 	});
 
 	test("label only", () => {

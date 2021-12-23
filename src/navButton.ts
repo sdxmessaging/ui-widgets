@@ -8,7 +8,7 @@ import { labelIcon } from "./utils";
 export class NavButton implements ClassComponent<IButton> {
 
 	public view({ attrs: {
-		label, title = label, icon, rightIcon,
+		label = "", title = label, icon, rightIcon,
 		classes = "", style,
 		disabled, onclick
 	} }: CVnode<IButton>) {
@@ -17,7 +17,7 @@ export class NavButton implements ClassComponent<IButton> {
 			class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${theme.navButton}`,
 			style,
 			onclick
-		}, labelIcon(icon, label, rightIcon));
+		}, labelIcon({text: label, icon, rightIcon}));
 	}
 
 }

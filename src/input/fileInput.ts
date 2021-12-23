@@ -3,8 +3,8 @@ import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
 import { IFile, IMithrilEvent, TField } from "../interface/widget";
-import { labelCls, pointerCls } from "../theme";
-import { getLabelText } from "../utils";
+import { pointerCls } from "../theme";
+import { getLabel } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -52,7 +52,7 @@ export function change(setFiles: (setList: FileList | null) => void) {
 
 export class FileInput implements ClassComponent<IFileInput> {
 
-	protected readonly showLabel : boolean = true;
+	protected readonly showLabel: boolean = true;
 
 	public oncreate({ dom, attrs: { value } }: CVnodeDOM<IFileInput>) {
 		value.map((list) => {
@@ -76,8 +76,15 @@ export class FileInput implements ClassComponent<IFileInput> {
 		return m("label.db", lodash.extend({
 			"for": id,
 			"title": title,
+			"aria-labelled-by": id,
 			"class": pointerCls(disabled, readonly),
-			"data-input-id": id
+			"data-input-id": id,
+			tabindex: 0,
+			onkeydown: (e: KeyboardEvent) => {
+				if (e.key === " ") {
+					(document.activeElement?.firstElementChild as HTMLElement).click();
+				}
+			}
 		}, disabled || readonly ? {} : {
 			ondragover: dragStart(dragging),
 			ondragleave: dragStop(dragging),
@@ -87,11 +94,10 @@ export class FileInput implements ClassComponent<IFileInput> {
 				id, name, multiple, accept,
 				required, autofocus,
 				disabled: disabled || readonly,
-				onchange: change(onSet)
-			}),
-			this.showLabel && label ? m("span.db.mb1", {
-				class: labelCls(uiClass, required)
-			}, getLabelText(label, required)) : null,
+				tabindex: -1,
+				onchange: change(onSet),
+		}),
+			this.showLabel && label ? getLabel(id, uiClass, label, required) : null,
 			children
 		]);
 	}

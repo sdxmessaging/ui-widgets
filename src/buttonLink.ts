@@ -8,7 +8,7 @@ import { labelIcon } from "./utils";
 export class ButtonLink implements ClassComponent<IButtonLink> {
 
 	public view({ attrs: {
-		label, title = label, icon, rightIcon,
+		label = "", title = label, icon, rightIcon,
 		href, rel, target, download,
 		context, classes = "", style
 	} }: CVnode<IButtonLink>) {
@@ -16,7 +16,7 @@ export class ButtonLink implements ClassComponent<IButtonLink> {
 			href, rel, target, download, title,
 			class: `${classes} ${getButtonContext(context)} ${theme.button}`,
 			style
-		}, labelIcon(icon, label, rightIcon));
+		}, labelIcon({text: label, icon, rightIcon}));
 	}
 
 }

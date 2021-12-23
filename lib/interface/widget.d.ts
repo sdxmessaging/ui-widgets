@@ -29,6 +29,7 @@ export declare const enum FieldType {
     tel = "tel",
     color = "color",
     currency = "currency",
+    percentage = "percentage",
     dateInput = "dateInput",
     cardDate = "cardDate",
     textarea = "textarea",
@@ -54,8 +55,15 @@ export declare const enum LayoutType {
     floatLabel = "floatLabel",
     floatAlways = "floatAlways"
 }
+export interface IWidgetLabel {
+    readonly text: string;
+    readonly icon?: string;
+    readonly rightIcon?: string;
+    readonly href?: string;
+    onclick?(): void;
+}
 export interface IField {
-    readonly label?: string;
+    readonly label?: string | IWidgetLabel;
     readonly id: string;
     readonly type?: FieldType | string;
     readonly name?: string;
@@ -146,6 +154,7 @@ interface IBaseButton {
 }
 export interface IButton extends IBaseButton {
     readonly type?: "submit" | "reset" | "button";
+    readonly tabindex?: number;
     readonly disabled?: boolean;
     onclick?(evt: IMithrilEvent): void;
 }

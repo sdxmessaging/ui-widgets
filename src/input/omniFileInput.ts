@@ -89,7 +89,13 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 						m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
 							class: config.cancelIcn,
-							onclick: removeFile(value, file.guid)
+							onclick: removeFile(value, file.guid),
+							onkeydown: (e : KeyboardEvent) => {
+								if (e.key === "Enter"){
+									(document.activeElement as HTMLElement).click();
+								}
+							},
+							tabindex: 0
 						})
 					] : [
 					// File upload

@@ -1,17 +1,17 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget } from "../interface/widget";
-import { labelCls, wrapperCls } from "../theme";
+import { wrapperCls } from "../theme";
 
-import { getLabelText } from "../utils";
+import { getLabel } from "../utils";
 
 export class Label implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field: {
-		label = "", title = label, required, uiClass = {}
+		label = "", id, required, uiClass = {}
 	} } }: CVnode<IPropWidget>) {
 		return m("div", { class: wrapperCls(uiClass) },
-			m("label", { title, class: labelCls(uiClass) }, getLabelText(label, required))
+			getLabel(id, uiClass, label, required)
 		);
 	}
 }

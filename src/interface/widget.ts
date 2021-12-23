@@ -42,6 +42,7 @@ export const enum FieldType {
 	color = "color",
 	// Dedicated widget
 	currency = "currency",
+	percentage = "percentage",
 	dateInput = "dateInput",
 	cardDate = "cardDate",
 	textarea = "textarea",
@@ -92,8 +93,16 @@ export const enum LayoutType {
 	floatAlways = "floatAlways"
 }
 
+export interface IWidgetLabel {
+	readonly text: string;
+	readonly icon?: string;
+	readonly rightIcon?: string;
+	readonly href?: string;
+	onclick?(): void;
+}
+
 export interface IField {
-	readonly label?: string;
+	readonly label?: string | IWidgetLabel;
 	// Standard HTML input attributes
 	readonly id: string;
 	readonly type?: FieldType | string;
@@ -207,6 +216,7 @@ interface IBaseButton {
 
 export interface IButton extends IBaseButton {
 	readonly type?: "submit" | "reset" | "button";
+	readonly tabindex?: number;
 	readonly disabled?: boolean;
 	onclick?(evt: IMithrilEvent): void;
 }

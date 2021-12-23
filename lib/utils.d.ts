@@ -1,14 +1,14 @@
 import m from "mithril";
 import stream from "mithril/stream";
-import { IFile, TPropMap, TPropStream } from "./interface/widget";
+import { IFile, IWidgetLabel, TPropMap, TPropStream } from "./interface/widget";
 import { IWidgetClasses } from "./interface/theme";
 export declare function guid(): string;
 export declare function pxRatio(): number;
-export declare function getLabelText(label: string, required?: boolean): string;
+export declare function getLabelText(label: string | IWidgetLabel, required?: boolean): string;
 export declare function imgSrc(path: string, dataUrl?: string): string;
-export declare function getDisplayLabel(label?: string): m.Vnode<any, any> | null;
-export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string, required?: boolean): m.Vnode<any, any> | null;
-export declare function labelIcon(leftIcon?: string, label?: string, rightIcon?: string): (string | m.Vnode<any, any> | null | undefined)[];
+export declare function getDisplayLabel(label?: string | IWidgetLabel): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
+export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string | IWidgetLabel, required?: boolean): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
+export declare function labelIcon(label: IWidgetLabel): (string | m.Vnode<any, any> | null)[];
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
 }) => void;
