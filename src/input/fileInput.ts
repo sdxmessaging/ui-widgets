@@ -47,7 +47,7 @@ export function drop(state: stream<boolean>, setFiles: (setList: FileList | null
 }
 
 export function change(setFiles: (setList: FileList | null) => void) {
-	return ({ target: { files } }: { target: HTMLInputElement }) => setFiles(files);
+	return ({ target: { files } }: { target: HTMLInputElement; }) => setFiles(files);
 }
 
 export class FileInput implements ClassComponent<IFileInput> {
@@ -73,6 +73,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 			accept = defaultAccept,
 			uiClass = {}
 		} = field;
+		const labelInner = this.showLabel && label ? getLabel(id, uiClass, label, required) : null;
 		return m("label.db", lodash.extend({
 			"for": id,
 			"title": title,
@@ -96,8 +97,8 @@ export class FileInput implements ClassComponent<IFileInput> {
 				disabled: disabled || readonly,
 				tabindex: -1,
 				onchange: change(onSet),
-		}),
-			this.showLabel && label ? getLabel(id, uiClass, label, required) : null,
+			}),
+			labelInner,
 			children
 		]);
 	}

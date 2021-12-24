@@ -7,8 +7,6 @@ import { DisplayType, IFileWidget } from "../interface/widget";
 import { config } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 
-// import { fileInvalid } from "../validation";
-
 import { FileOpen } from "../display/fileOpen";
 import { FileInput } from "./fileInput";
 import { addFiles, removeFile } from "./fileMulti";
