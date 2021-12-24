@@ -20,25 +20,6 @@ export function focusLastInput(dom: Element, id: string, focusedId?: TDateInputT
 	lastFocused.focus();
 }
 
-// export function dateInRange(type: TDateInputType, first: number, second: number) {
-// 	switch (type) {
-// 		case "dd":
-// 			return (isNaN(first) || first <= 3) && ((isNaN(second) || ((first === 3 && second <= 1))
-// 				|| first < 3) && !(first === 0 && second === 0));
-// 		// month from 01 to 12
-// 		case "mm":
-// 			return (isNaN(first) || first <= 1) && ((isNaN(second) || ((first === 1 && second <= 2))
-// 				|| first < 1) && !(first === 0 && second === 0));
-// 		// year has to start from 1 or above & min 1900
-// 		case "yyyy":
-// 			return (isNaN(first) || (first >= 1 && first < 3)) &&
-// 				(isNaN(second) || ((first === 1 && second === 9)) || (first === 2));
-// 		case "yy":
-// 			return isNaN(first) || first >= 0;
-// 	}
-// }
-
-
 // For showing custom validity message at the right place/input
 function getInvalidInput(message: string): TDateInputType | null {
 	const formattedMessage = message ? message.toLocaleLowerCase() : "";
@@ -63,21 +44,25 @@ function getElementMaxLength(element: HTMLInputElement) {
 	return parseInt(element.getAttribute("maxlength") as string);
 }
 
+interface IAdvanceTarget {
+	readonly next?: TDateInputType;
+	readonly prev?: TDateInputType;
+}
 export function handleRetreatOrLiteralAdvance(
 	id: string, selfType: TDateInputType, streamValue: string, dom: Element, event: KeyboardEvent, literalKey: string,
-	nextTargetType?: TDateInputType, prevTargetTyype?: TDateInputType
+	{ next, prev }: IAdvanceTarget
 ) {
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const maxLength = getElementMaxLength(self);
 
-	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prevTargetTyype) {
-		focusAndSelectNextInput(dom, id, prevTargetTyype);
+	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prev) {
+		focusAndSelectNextInput(dom, id, prev);
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
 	}
 	else if (literalKey.charCodeAt(0) === event.key.charCodeAt(0)
-		&& nextTargetType && streamValue.length !== 0 && streamValue.length < maxLength) {
-		focusAndSelectNextInput(dom, id, nextTargetType);
+		&& next && streamValue.length !== 0 && streamValue.length < maxLength) {
+		focusAndSelectNextInput(dom, id, next);
 		// prevent event from passing to the next field & advancing right away
 		event.preventDefault();
 	}
