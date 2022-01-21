@@ -5,7 +5,7 @@ import { IPropWidget } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { inputCls } from "../theme";
-import { setValue } from "../utils";
+import { clickOnEnter, setValue } from "../utils";
 import { propInvalid } from "../validation";
 
 import { Layout } from "./layout/layout";
@@ -46,11 +46,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				class: getConfig(this.showPassword() ? "hidePassIcn" : "showPassIcn", config),
 				onclick: () => this.showPassword(!this.showPassword()),
 				tabindex: 0,
-				onkeydown: ({ key }: KeyboardEvent) => {
-					if (key === "Enter") {
-						(document.activeElement as HTMLElement).click();
-					}
-				}
+				onkeydown: clickOnEnter
 			})
 		]));
 	}

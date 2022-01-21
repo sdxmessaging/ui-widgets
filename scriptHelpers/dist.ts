@@ -30,7 +30,7 @@ const bumpVersion = ((bumpType: versionBump) => {
 
 interface IProcess {
 	execute(version: string): { readonly code: number; };
-	rollback(version: string);
+	rollback(version: string): void;
 	errMsg: string;
 	executeMsg: string;
 }

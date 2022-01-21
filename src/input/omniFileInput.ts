@@ -6,7 +6,7 @@ import { IFile, IFileWidget } from "../interface/widget";
 
 import { config as configMap, getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
-import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
+import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, clickOnEnter } from "../utils";
 import { resizeImage } from "../imageUtils";
 import { fileInvalid } from "../validation";
 
@@ -90,11 +90,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 							title: `Remove ${file.name}`,
 							class: getConfig("cancelIcn", config),
 							onclick: removeFile(value, file.guid),
-							onkeydown: ({ key }: KeyboardEvent) => {
-								if (key === "Enter") {
-									(document.activeElement as HTMLElement).click();
-								}
-							},
+							onkeydown: clickOnEnter,
 							tabindex: 0
 						})
 					]

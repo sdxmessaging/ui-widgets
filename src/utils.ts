@@ -46,6 +46,29 @@ export function imgSrc(path: string, dataUrl?: string): string {
 	return dataUrl ? dataUrl : path;
 }
 
+function enrichLabel(label: IWidgetLabel, selector: string, attrs: {
+	readonly for?: string;
+	readonly title: string;
+	readonly class: string;
+}, required?: boolean) {
+	return [
+		label.icon ? m("i.fa-fw", {
+			class: `${label ? "mr2" : ""} ${label.icon}`
+		}) : null,
+		m(selector, attrs, getLabelText(label, required)),
+		label.rightIcon ? m("i.fa-fw", {
+			class: `${label ? "ml2" : ""} ${label.rightIcon}`
+		}) : null,
+		label.href
+			? m("a.link.dim.pointer.ws-normal", {
+				onclick: label.onclick
+			}, m("i.mr2", {
+				class: config.linkIcn
+			}), label.href)
+			: null
+	];
+}
+
 // Used by display widgets
 export function getDisplayLabel(label?: string | IWidgetLabel) {
 	if (label) {
@@ -86,22 +109,6 @@ export function getLabel(id: string, uiClass: IWidgetClasses, label?: string | I
 	return null;
 }
 
-function enrichLabel(label: IWidgetLabel, selector: string,
-	attrs: { title: string, for?: string, class: string }, required?: boolean) {
-	return [label.icon ? m("i.fa-fw", {
-		class: `${label ? "mr2" : ""} ${label.icon}`
-	}) : null,
-	m(selector, attrs, getLabelText(label, required)),
-	label.rightIcon ? m("i.fa-fw", {
-		class: `${label ? "ml2" : ""} ${label.rightIcon}`
-	}) : null,
-	label.href ? m("a.link.dim.pointer.ws-normal", { onclick: label.onclick },
-		m("i.mr2", {
-			class: config.linkIcn
-		}),
-		label.href) : null];
-}
-
 export function labelIcon(label: IWidgetLabel) {
 	return [
 		label.icon ? m("i.fa-fw", {
@@ -136,6 +143,12 @@ export function setIfDifferent<T>(inStream: stream<T>, val: T) {
 /* Event handler helper, select all text in a given input target */
 export function selectTarget({ target }: { target: HTMLInputElement; }) {
 	target.select();
+}
+
+export function clickOnEnter({ key }: KeyboardEvent) {
+	if (key === "Enter" && document.activeElement) {
+		(document.activeElement as HTMLElement).click();
+	}
 }
 
 /**

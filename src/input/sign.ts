@@ -7,7 +7,7 @@ import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes, TPropMap } from
 
 import { getConfig } from "../config";
 import { theme, wrapperCls } from "../theme";
-import { getLabel, imgSrc, dataUrlToFile } from "../utils";
+import { getLabel, imgSrc, dataUrlToFile, clickOnEnter } from "../utils";
 import { scaleDataUrl } from "../imageUtils";
 
 import { SignDraw } from "./signDraw";
@@ -133,11 +133,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 								m("i.fa-2x", {
 									class: getConfig("resetIcn", config),
 									tabindex: 0,
-									onkeydown: (e: KeyboardEvent) => {
-										if (e.key === "Enter") {
-											(document.activeElement as HTMLElement).click();
-										}
-									}
+									onkeydown: clickOnEnter
 								})
 							)
 						])
@@ -146,11 +142,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
 								title: label,
 								tabindex: 0,
-								onkeydown: (e: KeyboardEvent) => {
-									if (e.key === "Enter") {
-										(document.activeElement as HTMLElement).click();
-									}
-								},
+								onkeydown: clickOnEnter,
 								onclick: lodash.bind(this.setSignType, this, type)
 							},
 								m("i.fa-2x.ma1", {
