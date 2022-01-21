@@ -19,6 +19,7 @@ export declare function setIfDifferent<T>(inStream: stream<T>, val: T): void;
 export declare function selectTarget({ target }: {
     target: HTMLInputElement;
 }): void;
+export declare function clickOnEnter({ key }: KeyboardEvent): void;
 /**
  * Split given file name from extension
  */
