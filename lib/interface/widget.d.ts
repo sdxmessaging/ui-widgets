@@ -1,5 +1,6 @@
 import { Children } from "mithril";
 import stream from "mithril/stream";
+import { IConfig } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
 export declare type TProp = string | number | boolean;
 export declare type TPropMap = Record<string, TProp>;
@@ -86,6 +87,7 @@ export interface IField {
     readonly instant?: boolean;
     readonly layout?: LayoutType;
     readonly uiClass?: IWidgetClasses;
+    readonly config?: Partial<IConfig>;
 }
 export interface IOption {
     readonly value: TProp;

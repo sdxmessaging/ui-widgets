@@ -13,7 +13,7 @@ export { NavLink } from "./navLink";
 export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";
 export { DateText } from "./display/dateText";
-export { iconMap, linkAttrs, Link } from "./display/link";
+export { iconMap, linkIcon, linkAttrs, Link } from "./display/link";
 export { Checkbox } from "./display/checkbox";
 export { Toggle } from "./display/toggle";
 export { DisplayTypeComponent } from "./display/displayTypeComponent";
