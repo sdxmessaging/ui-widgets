@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
 import { resizeImage } from "../imageUtils";
@@ -42,7 +42,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { disabled, uiClass = {} } = field;
+		const { disabled, uiClass = {}, config } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
@@ -50,14 +50,14 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				field,
 				defaultAccept: "image/*",
 				dragging: this.dragging,
-				onSet: addImages(value, config.imageMaxSize),
+				onSet: addImages(value, getConfig("imageMaxSize", config)),
 				value
 			},
 				m(".w-100.pa1.dt.tc", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				},
 					m("i.fa-2x.dtc.v-mid", {
-						class: config.cameraIcn
+						class: getConfig("cameraIcn", config)
 					})
 				)
 			),
@@ -68,7 +68,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 					m(".absolute.top-0.right-0.child",
 						m(Button, {
 							title: `Remove ${file.name}`,
-							icon: config.deleteIcn,
+							icon: getConfig("deleteIcn", config),
 							onclick: removeFile(value, file.guid)
 						})
 					)

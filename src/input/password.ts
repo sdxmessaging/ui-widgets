@@ -3,14 +3,12 @@ import stream from "mithril/stream";
 
 import { IPropWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
 import { propInvalid } from "../validation";
 
-
 import { Layout } from "./layout/layout";
-
 
 export class PasswordInput implements ClassComponent<IPropWidget> {
 
@@ -23,7 +21,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 			maxlength, minlength, required,
 			readonly, disabled, autofocus, autocomplete,
 			pattern, inputmode,
-			instant, uiClass = {}
+			instant, uiClass = {}, config
 		} = field;
 		return m(Layout, {
 			field,
@@ -44,12 +42,12 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}),
 			m("i.ml1.pa1.fa-fw.pointer.dim", {
-				title: config.showPassTxt,
-				class: this.showPassword() ? config.hidePassIcn : config.showPassIcn,
+				title: getConfig("showPassTxt", config),
+				class: getConfig(this.showPassword() ? "hidePassIcn" : "showPassIcn", config),
 				onclick: () => this.showPassword(!this.showPassword()),
 				tabindex: 0,
-				onkeydown: (e : KeyboardEvent) => {
-					if (e.key === "Enter"){
+				onkeydown: ({ key }: KeyboardEvent) => {
+					if (key === "Enter") {
 						(document.activeElement as HTMLElement).click();
 					}
 				}

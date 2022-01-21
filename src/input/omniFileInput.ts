@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { config as configMap, getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc } from "../utils";
 import { resizeImage } from "../imageUtils";
@@ -19,7 +19,7 @@ export function addOmniFiles(fileList: stream<IFile[]>, replace: boolean) {
 		const newFileList = replace ? [] : fileList();
 		return Promise.all(lodash.map(addList, (file) => {
 			if (isImage(file.type)) {
-				return resizeImage(file, config.imageMaxSize, file.type).then((dataURL) => {
+				return resizeImage(file, configMap.imageMaxSize, file.type).then((dataURL) => {
 					const newFile = fileConstructor(dataURItoBlob(dataURL), file.name);
 					newFileList.push({
 						guid: guid(),
@@ -51,7 +51,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
-		const { disabled, uiClass = {} } = field;
+		const { disabled, uiClass = {}, config } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
@@ -77,7 +77,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 								title: `Remove ${file.name}`,
 								onclick: removeFile(value, file.guid)
 							}, m("i.pa1", {
-								class: config.cancelIcn
+								class: getConfig("cancelIcn", config)
 							}))
 						)
 					] : [
@@ -88,22 +88,23 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 						}, file.name),
 						m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
-							class: config.cancelIcn,
+							class: getConfig("cancelIcn", config),
 							onclick: removeFile(value, file.guid),
-							onkeydown: (e : KeyboardEvent) => {
-								if (e.key === "Enter"){
+							onkeydown: ({ key }: KeyboardEvent) => {
+								if (key === "Enter") {
 									(document.activeElement as HTMLElement).click();
 								}
 							},
 							tabindex: 0
 						})
-					] : [
-					// File upload
-					m("i.pa1", {
-						class: config.uploadIcn
-					}),
-					m("span.ma1.flex-auto", config.addFileTxt)
-				]
+					]
+					: [
+						// File upload
+						m("i.pa1", {
+							class: getConfig("uploadIcn", config)
+						}),
+						m("span.ma1", getConfig("addFileTxt", config))
+					]
 				)
 			)
 		);

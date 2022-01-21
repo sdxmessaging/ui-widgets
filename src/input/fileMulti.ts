@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { guid } from "../utils";
 import { fileInvalid } from "../validation";
@@ -40,7 +40,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { disabled, uiClass = {} } = field;
+		const { disabled, uiClass = {}, config } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
@@ -54,20 +54,20 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
 					m("i.mr2", {
-						class: config.uploadIcn
+						class: getConfig("uploadIcn", config)
 					}),
-					m("span", config.addFilesTxt)
+					m("span", getConfig("addFilesTxt", config))
 				])
 			),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(),
 				(file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
 					m("i.mr2", {
-						class: config.downloadIcn
+						class: getConfig("downloadIcn", config)
 					}),
 					file.name,
 					m("i.child.fr", {
-						title: `${config.remFileTtl} ${file.name}`,
-						class: config.deleteIcn,
+						title: `${getConfig("remFileTtl", config)} ${file.name}`,
+						class: getConfig("deleteIcn", config),
 						onclick: removeFile(value, file.guid)
 					})
 				]))

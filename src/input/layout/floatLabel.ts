@@ -1,8 +1,7 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
-import { config } from "../../config";
-
 import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface/widget";
 
+import { getConfig } from "../../config";
 import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
 
@@ -47,8 +46,10 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
 		const { field, invalid, value, xform = value } = attrs;
 		const {
-			label, id, type = FieldType.text, placeholder, required, disabled,
-			layout = config.layoutType, uiClass = {}
+			label, id, type = FieldType.text, placeholder,
+			required, disabled,
+			uiClass = {}, config,
+			layout = getConfig("layoutType", config)
 		} = field;
 		// Placeholder or value count as value content
 		const floatTop = this.shouldFloat(layout, placeholder || xform());

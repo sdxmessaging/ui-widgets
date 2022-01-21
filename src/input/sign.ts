@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { TStyle } from "../interface/theme";
 import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes, TPropMap } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { theme, wrapperCls } from "../theme";
 import { getLabel, imgSrc, dataUrlToFile } from "../utils";
 import { scaleDataUrl } from "../imageUtils";
@@ -48,11 +48,11 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		const {
 			label: lbl, id,
 			readonly, disabled,
-			uiClass = {},
-			options = config.signOpts,
-			heightPct = config.signHeightPct,
-			stampTxt = config.stampTxt,
-			stampSetTxt = config.stampSetTxt
+			uiClass = {}, config,
+			options = getConfig("signOpts", config),
+			heightPct = getConfig("signHeightPct", config),
+			stampTxt = getConfig("stampTxt", config),
+			stampSetTxt = getConfig("stampSetTxt", config)
 		} = field as ISignField;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
@@ -63,20 +63,20 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			if (type === SignTypes.Draw) {
 				return {
 					type,
-					icon: config.drawIcn,
-					label: config.signDrawTxt
+					icon: getConfig("drawIcn", config),
+					label: getConfig("signDrawTxt", config)
 				};
 			} else if (type === SignTypes.Type) {
 				return {
 					type,
-					icon: config.typeIcn,
-					label: config.signTypeTxt
+					icon: getConfig("typeIcn", config),
+					label: getConfig("signTypeTxt", config)
 				};
 			} else if (type === SignTypes.Stamp) {
 				return {
 					type,
-					icon: config.stampIcn,
-					label: config.signStampTxt
+					icon: getConfig("stampIcn", config),
+					label: getConfig("signStampTxt", config)
 				};
 			}
 			return null;
@@ -111,7 +111,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						stampTxt,
 						stampSetTxt,
 						style,
-						onSet: setFile(value, id, config.signMaxSize),
+						onSet: setFile(value, id, getConfig("signMaxSize", config)),
 						onCancel: lodash.bind(this.setSignType, this, undefined)
 					})
 
@@ -131,10 +131,10 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							// Remove signature button
 							m(".pa3.absolute.top-0.right-0.child",
 								m("i.fa-2x", {
-									class: config.resetIcn,
+									class: getConfig("resetIcn", config),
 									tabindex: 0,
-									onkeydown: (e : KeyboardEvent) => {
-										if (e.key === "Enter"){
+									onkeydown: (e: KeyboardEvent) => {
+										if (e.key === "Enter") {
 											(document.activeElement as HTMLElement).click();
 										}
 									}
@@ -146,8 +146,8 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 							lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
 								title: label,
 								tabindex: 0,
-								onkeydown: (e : KeyboardEvent) => {
-									if (e.key === "Enter"){
+								onkeydown: (e: KeyboardEvent) => {
+									if (e.key === "Enter") {
 										(document.activeElement as HTMLElement).click();
 									}
 								},

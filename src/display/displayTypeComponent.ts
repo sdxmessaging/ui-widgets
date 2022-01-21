@@ -17,7 +17,7 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb",
 			lodash.map(value(), (file) => m(Thumbnail, {
 				src: imgSrc(file.path, file.dataUrl),
-				data: file				
+				data: file
 			},
 				m(".absolute.top-0.right-0.child",
 					m(Button, {

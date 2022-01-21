@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { DisplayType, IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 
 import { FileOpen } from "../display/fileOpen";
@@ -18,9 +18,9 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value, displayType } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
-		const { disabled, uiClass = {} } = field;
+		const { disabled, uiClass = {}, config } = field;
 		const innerText = displayType === DisplayType.none || !file
-			? config.addFileTxt
+			? getConfig("addFileTxt", config)
 			: file.name;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
@@ -36,14 +36,14 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
 					m("i.pa1", {
-						class: config.uploadIcn
+						class: getConfig("uploadIcn", config)
 					}),
 					m("span.ma1.flex-auto", innerText),
 					file && displayType !== DisplayType.none ? [
 						m(FileOpen, file),
 						m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
-							class: config.cancelIcn,
+							class: getConfig("cancelIcn", config),
 							onclick: removeFile(value, file.guid)
 						})
 					] : null
