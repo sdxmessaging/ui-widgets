@@ -1,6 +1,7 @@
 import { Children } from "mithril";
 import stream from "mithril/stream";
 
+import { IConfig } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
 
 export type TProp = string | number | boolean;
@@ -128,6 +129,7 @@ export interface IField {
 	readonly instant?: boolean;
 	readonly layout?: LayoutType;
 	readonly uiClass?: IWidgetClasses;
+	readonly config?: Partial<IConfig>;
 }
 
 // Select/Radio options, config for other fields
