@@ -1,3 +1,11 @@
+export declare const enum img {
+    unknown = 65280,
+    jpeg = 65496,
+    tiff = 18761,
+    app1 = 65505,
+    exif = 1165519206,
+    orientation = 274
+}
 export declare function getOrientation(buffer: ArrayBuffer): number;
 export declare function readArrayBuffer(file: File): Promise<ArrayBuffer>;
 export declare function readOrientation(file: File): Promise<number>;

@@ -1,10 +1,20 @@
 import { config } from "./config";
 
+export const enum img {
+	unknown = 0xFF00,
+	jpeg = 0xFFD8,
+	tiff = 0x4949,
+	app1 = 0xFFE1,
+	exif = 0x45786966,
+	orientation = 0x0112
+}
+
 export function getOrientation(buffer: ArrayBuffer) {
 	// Image exif data in first 64k of file
 	const viewLen = Math.min(buffer.byteLength, 64 * 1024);
 	const view = new DataView(buffer, 0, viewLen);
-	if (view.getUint16(0, false) !== 0xFFD8) {
+	// Ensure file starts with jpeg marker
+	if (view.getUint16(0, false) !== img.jpeg) {
 		return -2;
 	}
 	const length = view.byteLength;
@@ -13,23 +23,31 @@ export function getOrientation(buffer: ArrayBuffer) {
 		const marker = view.getUint16(offset, false);
 		offset += 2;
 
-		if (marker === 0xFFE1) {
+		// Exif and orientation data found in APP1 section
+		if (marker === img.app1) {
 			offset += 2;
-			if (view.getUint32(offset, false) !== 0x45786966) {
+
+			// Ensure APP1 section contains EXIF info
+			if (view.getUint32(offset, false) !== img.exif) {
 				return -1;
 			}
+
+			// Get TIFF header from exif info
 			offset += 6;
-			const little = view.getUint16(offset, false) === 0x4949;
+			// TIFF header endianness
+			const little = view.getUint16(offset, false) === img.tiff;
+			// Get number of tags
 			offset += view.getUint32(offset + 4, little);
 			const tags = view.getUint16(offset, little);
 			offset += 2;
 
+			// Traverse tags until orientation tag is found
 			for (let i = 0; i < tags; i++) {
-				if (view.getUint16(offset + (i * 12), little) === 0x0112) {
+				if (view.getUint16(offset + (i * 12), little) === img.orientation) {
 					return view.getUint16(offset + (i * 12) + 8, little);
 				}
 			}
-		} else if ((marker & 0xFF00) !== 0xFF00) {
+		} else if ((marker & img.unknown) !== img.unknown) {
 			break;
 		} else {
 			offset += view.getUint16(offset, false);
