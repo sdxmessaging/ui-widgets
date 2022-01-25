@@ -1,5 +1,6 @@
 import { dataURItoBlob, fileConstructor } from "./utils";
 import {
+	img,
 	getOrientation,
 	resizeImage,
 	rotateContext,
@@ -60,28 +61,38 @@ describe("File", () => {
 
 describe("Image orientation", () => {
 
+
 	test("no jpeg marker", () => {
 		const buffer = new ArrayBuffer(8);
 		const orientation = getOrientation(buffer);
 		expect(orientation).toBe(-2);
 	});
 
-	test("no exif", () => {
+	test("unknown image format", () => {
 		const buffer = new ArrayBuffer(8);
 		const view = new DataView(buffer, 0, buffer.byteLength);
-		// Mark first byte
-		view.setUint16(0, 0xFFD8, false);
+		// Mark first byte with JPEG header
+		view.setUint16(0, img.jpeg, false);
+		view.setUint16(2, img.unknown, false);
 		const orientation = getOrientation(buffer);
 		expect(orientation).toBe(-1);
 	});
 
-	// TODO Work out what the other bytes mean
-	test("no orientation", () => {
+	test("no APP1", () => {
+		const buffer = new ArrayBuffer(8);
+		const view = new DataView(buffer, 0, buffer.byteLength);
+		// Mark first byte with JPEG header
+		view.setUint16(0, img.jpeg, false);
+		const orientation = getOrientation(buffer);
+		expect(orientation).toBe(-1);
+	});
+
+	test("no exit in APP1 section", () => {
 		const buffer = new ArrayBuffer(128);
 		const view = new DataView(buffer);
-		// Mark first byte
-		view.setUint16(0, 0xFFD8, false);
-		view.setUint16(2, 0xFFE1, false);
+		view.setUint16(0, img.jpeg, false);
+		// Mark APP1 section
+		view.setUint16(2, img.app1, false);
 		view.setUint32(6, 0x00000000, false);
 		const orientation = getOrientation(buffer);
 		expect(orientation).toBe(-1);
@@ -90,11 +101,10 @@ describe("Image orientation", () => {
 	test("orientation", () => {
 		const buffer = new ArrayBuffer(128);
 		const view = new DataView(buffer);
-		// Mark first bytes
-		view.setUint16(0, 0xFFD8, false);
-		view.setUint16(2, 0xFFE1, false);
-		// "Magic" number
-		view.setUint32(6, 0x45786966, false);
+		view.setUint16(0, img.jpeg, false);
+		view.setUint16(2, img.app1, false);
+		// Mark exif data
+		view.setUint32(6, img.exif, false);
 		// Big endian
 		view.setUint16(12, 0x0000, false);
 		// Offset
@@ -102,7 +112,7 @@ describe("Image orientation", () => {
 		// Tags
 		view.setUint16(32, 0x0001);
 		// Orientation key/value
-		view.setUint16(34, 0x0112, false);
+		view.setUint16(34, img.orientation, false);
 		view.setUint16(42, 0x0004, false);
 		const orientation = getOrientation(buffer);
 		expect(orientation).toBe(4);
