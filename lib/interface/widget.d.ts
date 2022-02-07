@@ -63,6 +63,7 @@ export interface IWidgetLabel {
     readonly href?: string;
     onclick?(): void;
 }
+declare type TTabIndex = "-1" | "0" | -1 | 0;
 export interface IField {
     readonly label?: string | IWidgetLabel;
     readonly id: string;
@@ -75,6 +76,7 @@ export interface IField {
     readonly disabled?: boolean;
     readonly autofocus?: boolean;
     readonly autocomplete?: TAutocomplete;
+    readonly tabindex?: "-1" | "0" | -1 | 0;
     readonly max?: number;
     readonly maxlength?: number;
     readonly min?: number;
@@ -156,7 +158,7 @@ interface IBaseButton {
 }
 export interface IButton extends IBaseButton {
     readonly type?: "submit" | "reset" | "button";
-    readonly tabindex?: number;
+    readonly tabindex?: TTabIndex;
     readonly disabled?: boolean;
     onclick?(evt: IMithrilEvent): void;
 }

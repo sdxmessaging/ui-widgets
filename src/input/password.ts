@@ -19,7 +19,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			maxlength, minlength, required,
-			readonly, disabled, autofocus, autocomplete,
+			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode,
 			instant, uiClass = {}, config
 		} = field;
@@ -32,7 +32,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 				id, name, title, placeholder,
 				type: this.showPassword() ? "text" : "password",
 				maxlength, minlength, required,
-				readonly, disabled, autofocus, autocomplete,
+				readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode,
 				class: inputCls(uiClass),
 				value: value(),

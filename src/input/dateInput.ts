@@ -80,7 +80,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		attrs: {
 			field: {
 				id, name = id,
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				uiClass = {},
 			},
 			value: streamValue
@@ -95,7 +95,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				type: FieldType.text, placeholder: "DD",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				value: this.day(),
 				'aria-label': `${name}: Day`,
 				class: `${classStr} maxw-dd p-0px`,
@@ -122,7 +122,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				type: FieldType.text, placeholder: "MM",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				value: this.month(),
 				'aria-label': `${name}: Month`,
 				class: `${classStr} maxw-mm p-0px`,
@@ -149,7 +149,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				type: FieldType.text, placeholder: "YYYY",
 				minlength: "4", maxlength: "4",
 				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				value: this.year(),
 				'aria-label': `${name}: Year`,
 				class: `${classStr} maxw-yyyy p-0px`,

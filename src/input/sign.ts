@@ -47,7 +47,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
 		const {
 			label: lbl, id,
-			readonly, disabled,
+			readonly, disabled, tabindex = "0",
 			uiClass = {}, config,
 			options = getConfig("signOpts", config),
 			heightPct = getConfig("signHeightPct", config),
@@ -141,7 +141,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						: m(".aspect-ratio--object.flex",
 							lodash.map(opts, ({ type, icon, label }) => m(".flex-auto.flex.items-center.justify-center.dim", {
 								title: label,
-								tabindex: 0,
+								tabindex,
 								onkeydown: clickOnEnter,
 								onclick: lodash.bind(this.setSignType, this, type)
 							},

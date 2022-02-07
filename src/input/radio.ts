@@ -15,7 +15,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		const { field, value: val } = attrs;
 		const {
 			id, name = id,
-			required, readonly, disabled, autocomplete,
+			required, readonly, disabled, autocomplete, tabindex = "0",
 			uiClass = {},
 			options
 		} = field as IOptionField;
@@ -32,9 +32,9 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				"title": label,
 				"class": radioInputCls(uiClass, checked, disabled, readonly),
 				"data-input-id": id,
-				tabindex: 0,
-				onkeydown: (e : KeyboardEvent) => {
-					if(e.key === " "){
+				tabindex,
+				onkeydown: (e: KeyboardEvent) => {
+					if (e.key === " ") {
 						(document.activeElement?.firstElementChild as HTMLElement).click();
 					}
 				}

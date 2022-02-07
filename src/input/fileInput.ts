@@ -69,7 +69,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 	}, children }: CVnode<IFileInput>) {
 		const {
 			label, id, name = id, title = label,
-			required, readonly, disabled, autofocus,
+			required, readonly, disabled, autofocus, tabindex = "0",
 			accept = defaultAccept,
 			uiClass = {}
 		} = field;
@@ -80,7 +80,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 			"aria-labelled-by": id,
 			"class": pointerCls(disabled, readonly),
 			"data-input-id": id,
-			tabindex: 0,
+			tabindex,
 			onkeydown: (e: KeyboardEvent) => {
 				if (e.key === " ") {
 					(document.activeElement?.firstElementChild as HTMLElement).click();

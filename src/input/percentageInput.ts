@@ -15,7 +15,7 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
-			readonly, disabled, autofocus, autocomplete,
+			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
 			instant, uiClass = {},
 		} = field as IOptionField;
@@ -28,7 +28,7 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, type: FieldType.text, name, title, placeholder,
 					max, maxlength, min, minlength, step, required,
-					readonly, disabled, autofocus, autocomplete,
+					readonly, disabled, autofocus, autocomplete, tabindex,
 					pattern, inputmode, spellcheck,
 					class: inputCls(uiClass),
 					onfocus: selectTarget,

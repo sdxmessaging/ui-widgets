@@ -16,7 +16,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const {
 			label = "", id, name = id, title = label,
-			required, readonly, disabled, autocomplete,
+			required, readonly, disabled, autocomplete, tabindex = "0",
 			uiClass = {}
 		} = field;
 		return m("div", {
@@ -27,12 +27,12 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			m("label.flex.items-center", {
 				"title": title,
 				"class": checkInputCls(uiClass, disabled, readonly),
-				tabindex: 0,
+				tabindex,
 				for: id,
 				"data-input-id": id,
 				'aria-label': label,
-				onkeydown: (e : KeyboardEvent) => {
-					if (e.key === " "){
+				onkeydown: (e: KeyboardEvent) => {
+					if (e.key === " ") {
 						value(!value());
 					}
 				}

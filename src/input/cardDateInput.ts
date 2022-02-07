@@ -67,7 +67,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		const { field, value } = attrs;
 		const {
 			id, name = id,
-			required, readonly, disabled,
+			required, readonly, disabled, tabindex,
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
@@ -80,7 +80,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					type: FieldType.text, placeholder: "MM",
 					minlength: "2", maxlength: "2",
 					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
+					required, readonly, disabled, tabindex,
 					'aria-label': `${name}: Month`,
 					value: this.month(),
 					class: classStr,
@@ -108,7 +108,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 					type: FieldType.text, placeholder: "YY",
 					minlength: "2", maxlength: "2",
 					pattern: "[0-9]*", inputmode: "numeric",
-					required, readonly, disabled,
+					required, readonly, disabled, tabindex,
 					'aria-label': `${name}: Year`,
 					value: this.year(),
 					class: classStr,
