@@ -79,6 +79,7 @@ export interface IConfig {
     excelFileIcn: string;
     fileIcn: string;
     codeFileIcn: string;
+    currencyFormat: "default" | "accounting";
 }
 /**
  * Pick keys from T where their respective value extends U
