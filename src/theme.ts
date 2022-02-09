@@ -38,7 +38,8 @@ const classMapState: Required<IClassMap> = {
 	displayValue: "dark-gray",
 	requiredLabel: "",
 	disabledWrapper: "o-40",
-	invalidInputWrapper: "ba b--red"
+	invalidInputWrapper: "ba b--red",
+	floatLabelPlaceholder: ""
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
@@ -71,6 +72,10 @@ export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disab
 
 export function labelCls({ label = "", merge = true }: IWidgetClasses, required?: boolean) {
 	return `${label} ${merge ? theme.label : ""} ${required ? theme.requiredLabel : ""}`;
+}
+
+export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: boolean, required?: boolean) {
+	return `${labelCls(uiClass, required)} ${floatTop ? "f-07em cursor-default" : `${theme.floatLabelPlaceholder} cursor-text`}`;
 }
 
 export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
