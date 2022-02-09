@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType } from "../interface/widget";
 
-import { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, setCurrencyValue } from "./currencyInput";
+import { CurrencyInput, currencyStrToNumber, formatCurrency, numberToCurrencyStr, setCurrencyValue } from "./currencyInput";
 
 describe("CurrencyInput", () => {
 
@@ -64,6 +64,33 @@ describe("CurrencyInput", () => {
 		expect(root.childNodes.length).toBe(1);
 	});
 
+});
+
+describe("formatCurrecny", () => {
+	describe("accounting", () => {
+		test("positive", () => {
+			expect(formatCurrency(1, "accounting")).toBe("0.01");
+		});
+		test("negative", () => {
+			expect(formatCurrency(-1, "accounting")).toBe("(0.01)");
+		});
+		test("zero", () => {
+			expect(formatCurrency(0, "accounting")).toBe("0.00");
+			expect(formatCurrency(-0, "accounting")).toBe("0.00");
+		});
+	});
+	describe("default", () => {
+		test("positive", () => {
+			expect(formatCurrency(1, "default")).toBe("0.01");
+		});
+		test("negative", () => {
+			expect(formatCurrency(-1, "default")).toBe("0.01");
+		});
+		test("zero", () => {
+			expect(formatCurrency(0, "accounting")).toBe("0.00");
+			expect(formatCurrency(-0, "accounting")).toBe("0.00");
+		});
+	});
 });
 
 describe("currencyStrToNumber", () => {
