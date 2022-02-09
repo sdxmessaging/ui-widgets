@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface/widget";
 
 import { getConfig } from "../../config";
-import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
+import { floatLabelPlaceholderCls, inputWrapperCls, labelCls, wrapperCls } from "../../theme";
 import { getLabelText } from "../../utils";
 
 export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
@@ -36,7 +36,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
 	// Float label if element has a value set or is in focus
 	protected shouldFloat(layout: LayoutType, value: TProp) {
-		return layout === LayoutType.floatAlways || this.focus || value;
+		return layout === LayoutType.floatAlways || this.focus || Boolean(value);
 	}
 
 	protected labelTranslateY() {
@@ -77,7 +77,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 						}
 					}, m("label.db.transition-f", {
 						for: id, title: label,
-						class: floatTop ? "f-07em cursor-default" : "cursor-text"
+						class: floatLabelPlaceholderCls(uiClass, floatTop, required)
 					}, getLabelText(label, required)))
 				] : null,
 				// Input
