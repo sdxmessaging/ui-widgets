@@ -42,7 +42,7 @@ export function getLabelText(label: string | IWidgetLabel, required?: boolean): 
 	}
 }
 
-function getAltLabel(label: IWidgetLabel) {
+export function getAltLabel(label: IWidgetLabel) {
 	return m( "div", {class: theme.altLabel}, label.alt ? label.alt : "");
 }
 

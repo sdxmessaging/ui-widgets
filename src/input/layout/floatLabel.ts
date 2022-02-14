@@ -4,7 +4,7 @@ import { config } from "../../config";
 import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface/widget";
 
 import { inputWrapperCls, labelCls, wrapperCls } from "../../theme";
-import { getLabelText } from "../../utils";
+import { getLabelText, getAltLabel } from "../../utils";
 
 export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
@@ -52,6 +52,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		} = field;
 		// Placeholder or value count as value content
 		const floatTop = this.shouldFloat(layout, placeholder || xform());
+		const labelIsString = typeof label === 'string';
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
 			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
@@ -66,7 +67,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 					// Break fieldset border, make space for label to float into
 					m("legend.db.hidden.h-05ch.transition-mw", {
 						class: `${labelCls(uiClass, required)} ${floatTop ? "mw-100" : "mw-001px"}`,
-					}, m("span.f-07em", getLabelText(label, required))),
+					}, m("span.f-07em", labelIsString ? getLabelText(label, required) : [getLabelText(label, required), " ", getAltLabel(label)])),
 					// Floating label
 					m(".absolute.top-0.transition-transform", {
 						class: labelCls(uiClass, required),
@@ -75,9 +76,9 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
 						}
 					}, m("label.db.transition-f", {
-						for: id, title: label,
+						for: id, title: labelIsString ? label : label.text,
 						class: floatTop ? "f-07em cursor-default" : "cursor-text"
-					}, getLabelText(label, required)))
+					}, labelIsString ? getLabelText(label, required) : [getLabelText(label, required), " ", getAltLabel(label)]))
 				] : null,
 				// Input
 				children
@@ -86,3 +87,4 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	}
 
 }
+
