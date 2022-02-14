@@ -7,7 +7,7 @@ uiWidgets.updateConfig({
 	// requiredLblPost: "*"
 });
 
-uiWidgets.updateClasses({ invalidInputWrapper: "b--red ba" });
+uiWidgets.updateClasses({ invalidInputWrapper: "b--red ba", floatLabelPlaceholder: "o-40", requiredLabel: "bb" });
 
 uiWidgets.updateButtonContext({
 	invert: "bg-dark-gray light-blue b--light-blue",
@@ -143,7 +143,7 @@ m.mount(document.getElementById("page"), {
 								value: "floatAlways"
 							}],
 							uiClass: {
-								inputWrapper: "bn"
+								inputWrapper: "bn",
 							}
 						},
 						value: layoutVal
@@ -175,7 +175,8 @@ m.mount(document.getElementById("page"), {
 						field: {
 							id: "text-area-input",
 							label: "Text Area (updates on change)",
-							type: "textarea"
+							type: "textarea",
+							uiClass: { floatLabelPlaceholder: "red o-40 " }
 						},
 						value: textVal,
 					}),
@@ -339,7 +340,8 @@ m.mount(document.getElementById("page"), {
 							label: "On", value: true
 						}, {
 							label: "Off", value: false
-						}]
+						}],
+						doubleLabel: true
 					},
 					value: toggleVal
 				})),

@@ -5,6 +5,7 @@ import { IWidgetClasses } from "./interface/theme";
 export declare function guid(): string;
 export declare function pxRatio(): number;
 export declare function getLabelText(label: string | IWidgetLabel, required?: boolean): string;
+export declare function getAltLabel(label: IWidgetLabel): m.Vnode<any, any>;
 export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function getDisplayLabel(label?: string | IWidgetLabel): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
 export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string | IWidgetLabel, required?: boolean): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
