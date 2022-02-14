@@ -57,9 +57,8 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 							transform: !value() && doubleLabel ? "scaleX(-1)" : ""
 						}
 					}),
-					label && m("span.ml2", getLabelText(label, required)),
+					label && !doubleLabel && m("span.ml2", getLabelText(label, required)),
 					m(CheckLabel, { field, value, left: false })
-
 				])
 			)
 		]));
