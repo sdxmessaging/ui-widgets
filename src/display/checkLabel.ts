@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
+import { getConfig } from "../config";
 
 import { IOption, IOptionField, IPropWidget } from "../interface/widget";
 
@@ -10,11 +11,13 @@ interface ICheckLabel {
 export class CheckLabel implements ClassComponent<IPropWidget & ICheckLabel> {
 
 	public view({ attrs: { field, value, left = false } }: CVnode<IPropWidget & ICheckLabel>) {
-		const { options = [], doubleLabel } = field as IOptionField;
+		const { options = [], config } = field as IOptionField;
+		const doubleLabel = getConfig("toggleFormat", config) === "double";
+
 		const valLabel = lodash.find(options,
 			// Empty value stream to be handled as false
 			lodash.matches<IOption>({ value: (!doubleLabel ? value() : !left) || false })
 		);
-		return valLabel ? m(`span.${left ? "mr3" : "ml2"}`, valLabel.label) : null;
+		return valLabel ? m(`span.${left ? "mr2" : "ml2"}`, valLabel.label) : null;
 	}
 }

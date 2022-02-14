@@ -1,9 +1,9 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IOptionField, IPropWidget } from "../interface/widget";
+import { IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
-import { config } from "../config";
+import { config, getConfig } from "../config";
 import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
@@ -17,27 +17,17 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		const {
 			label = "", id, name = id, title = label,
 			required, readonly, disabled, autocomplete, tabindex = "0",
-			uiClass = {}, doubleLabel = false
-		} = field as IOptionField;
+			uiClass = {}, config: fieldConfig
+		} = field;
+
+		const doubleLabel = getConfig("toggleFormat", fieldConfig) === "double";
 
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
 			class: inputWrapperCls(uiClass)
 		}, [
-			m("label.flex.items-center", {
-				"title": title,
-				"class": checkInputCls(uiClass, disabled, readonly),
-				tabindex,
-				for: id,
-				"data-input-id": id,
-				'aria-label': label,
-				onkeydown: (e: KeyboardEvent) => {
-					if (e.key === " ") {
-						value(!value());
-					}
-				}
-			},
+			m(".flex",
 				m("input.clip[type=checkbox]", {
 					id, name,
 					checked: value(),
@@ -47,12 +37,27 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					'aria-hidden': "true",
 					onchange: setCheck(value),
 				}),
-				doubleLabel && m(CheckLabel, { field, value, left: true }),
-				m("i.mr2", {
-					class: config[value() ? this.onIcon : this.offIcon]
-				}),
-				getLabelText(label, required),
-				m(CheckLabel, { field, value, left: false })
+				m("label.flex.flex-start.items-center", {
+					tabindex,
+					"class": checkInputCls(uiClass, disabled, readonly),
+					for: id,
+					title,
+					"data-input-id": id,
+					'aria-label': label,
+					onkeydown: (e: KeyboardEvent) => {
+						if (e.key === " ") {
+							value(!value());
+						}
+					}
+				}, [
+					doubleLabel && m(CheckLabel, { field, value, left: true }),
+					m("i", {
+						class: config[value() ? this.onIcon : this.offIcon]
+					}),
+					label && m("span.ml2", getLabelText(label, required)),
+					m(CheckLabel, { field, value, left: false })
+
+				])
 			)
 		]));
 	}

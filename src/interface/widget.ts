@@ -145,7 +145,6 @@ export interface IOption {
 
 export interface IOptionField extends IField {
 	readonly options?: IOption[];
-	readonly doubleLabel?: boolean;
 }
 
 export interface ISignField extends IOptionField {
