@@ -81,6 +81,7 @@ export interface IConfig {
 	fileIcn: string;
 	codeFileIcn: string;
 	currencyFormat: "default" | "accounting";
+	toggleFormat: "double" | "default";
 }
 
 /**

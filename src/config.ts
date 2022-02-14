@@ -61,7 +61,8 @@ const confMap: IConfig = {
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
 	codeFileIcn: "fas fa-file-code",
-	currencyFormat: "default"
+	currencyFormat: "default",
+	toggleFormat: "default"
 };
 
 export const config: Readonly<IConfig> = confMap;
