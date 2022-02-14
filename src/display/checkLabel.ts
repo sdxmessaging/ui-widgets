@@ -3,14 +3,18 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IOption, IOptionField, IPropWidget } from "../interface/widget";
 
-export class CheckLabel implements ClassComponent<IPropWidget> {
+interface ICheckLabel {
+	left?: boolean
+}
 
-	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { options = [] } = field as IOptionField;
+export class CheckLabel implements ClassComponent<IPropWidget & ICheckLabel> {
+
+	public view({ attrs: { field, value, left = false } }: CVnode<IPropWidget & ICheckLabel>) {
+		const { options = [], doubleLabel } = field as IOptionField;
 		const valLabel = lodash.find(options,
 			// Empty value stream to be handled as false
-			lodash.matches<IOption>({ value: value() || false })
+			lodash.matches<IOption>({ value: (!doubleLabel ? value() : left) || false })
 		);
-		return valLabel ? m("span.ml2", valLabel.label) : null;
+		return valLabel ? m(`span.${left ? "mr2" : ""}`, valLabel.label) : null;
 	}
 }

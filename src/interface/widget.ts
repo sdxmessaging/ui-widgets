@@ -98,7 +98,7 @@ export interface IWidgetLabel {
 	readonly text: string
 	readonly alt?: string
 	readonly icon?: string
-	readonly rightIcon? : string
+	readonly rightIcon?: string
 	readonly href?: string
 	onclick?(): void
 }
@@ -145,6 +145,7 @@ export interface IOption {
 
 export interface IOptionField extends IField {
 	readonly options?: IOption[];
+	readonly doubleLabel?: boolean;
 }
 
 export interface ISignField extends IOptionField {

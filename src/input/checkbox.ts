@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IPropWidget } from "../interface/widget";
+import { IOptionField, IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { config } from "../config";
@@ -17,8 +17,9 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		const {
 			label = "", id, name = id, title = label,
 			required, readonly, disabled, autocomplete, tabindex = "0",
-			uiClass = {}
-		} = field;
+			uiClass = {}, doubleLabel = false
+		} = field as IOptionField;
+
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
@@ -46,11 +47,12 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					'aria-hidden': "true",
 					onchange: setCheck(value),
 				}),
+				doubleLabel && m(CheckLabel, { field, value, left: true }),
 				m("i.mr2", {
 					class: config[value() ? this.onIcon : this.offIcon]
 				}),
 				getLabelText(label, required),
-				m(CheckLabel, { field, value })
+				m(CheckLabel, { field, value, left: false })
 			)
 		]));
 	}
