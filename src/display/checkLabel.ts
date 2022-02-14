@@ -18,6 +18,7 @@ export class CheckLabel implements ClassComponent<IPropWidget & ICheckLabel> {
 			// Empty value stream to be handled as false
 			lodash.matches<IOption>({ value: (!doubleLabel ? value() : !left) || false })
 		);
-		return valLabel ? m(`span.${left ? "mr2" : "ml2"}`, valLabel.label) : null;
+		const truthy = doubleLabel && (Boolean(value()) && !left) || (!value() && left);
+		return valLabel ? m(`span${left ? ".mr2" : ".ml2"}${truthy ? "" : ".o-40"}`, valLabel.label) : null;
 	}
 }
