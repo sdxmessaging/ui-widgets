@@ -40,4 +40,6 @@ export interface IClassMap extends IClasses {
     readonly disabledWrapper?: string;
     /** Classes applied to widget wrapper when validation fails */
     readonly invalidInputWrapper?: string;
+    /** Float Label Placeholder if it is not floating yet */
+    readonly floatLabelPlaceholder?: string;
 }

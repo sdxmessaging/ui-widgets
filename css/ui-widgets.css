@@ -80,6 +80,7 @@ input[type=number] {
 .transition-mw { transition: max-width var(--ui-widgets-transition); }
 .transition-transform { transition: transform var(--ui-widgets-transition); }
 .transition-f { transition: font-size var(--ui-widgets-transition); }
+.transition-o { transition: opacity var(--ui-widgets-transition); }
 
 .hide-child:focus  .child{
   opacity: 1;

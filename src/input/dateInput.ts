@@ -80,7 +80,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		attrs: {
 			field: {
 				id, name = id,
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				uiClass = {},
 			},
 			value: streamValue
@@ -95,16 +95,18 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				type: FieldType.text, placeholder: "DD",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				value: this.day(),
 				'aria-label': `${name}: Day`,
 				class: `${classStr} maxw-dd p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'dd'),
 				onkeydown: (e: KeyboardEvent) => {
-					handleRetreatOrLiteralAdvance(
-						id, 'dd', this.day(), this.dom(),
-						e, this.literalKey(), this.findNextInput('day'), this.findPrevInput('day')
-					);
+					handleRetreatOrLiteralAdvance(id, 'dd',
+						this.day(), this.dom(),
+						e, this.literalKey(), {
+						next: this.findNextInput('day'),
+						prev: this.findPrevInput('day')
+					});
 				},
 				oninput: () => {
 					handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
@@ -120,15 +122,17 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				type: FieldType.text, placeholder: "MM",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				value: this.month(),
 				'aria-label': `${name}: Month`,
 				class: `${classStr} maxw-mm p-0px`,
 				onkeydown: (e: KeyboardEvent) => {
-					handleRetreatOrLiteralAdvance(
-						id, 'mm', this.month(), this.dom(),
-						e, this.literalKey(), this.findNextInput('month'), this.findPrevInput('month')
-					);
+					handleRetreatOrLiteralAdvance(id, 'mm',
+						this.month(), this.dom(),
+						e, this.literalKey(), {
+						next: this.findNextInput('month'),
+						prev: this.findPrevInput('month')
+					});
 				},
 				oninput: () => {
 					handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
@@ -145,16 +149,18 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				type: FieldType.text, placeholder: "YYYY",
 				minlength: "4", maxlength: "4",
 				pattern: "[0-9]*", inputmode: "numeric",
-				required, readonly, disabled,
+				required, readonly, disabled, tabindex,
 				value: this.year(),
 				'aria-label': `${name}: Year`,
 				class: `${classStr} maxw-yyyy p-0px`,
 				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
 				onkeydown: (e: KeyboardEvent) => {
-					handleRetreatOrLiteralAdvance(
-						id, 'yyyy', this.year(), this.dom(),
-						e, this.literalKey(), this.findNextInput('year'), this.findPrevInput('year')
-					);
+					handleRetreatOrLiteralAdvance(id, 'yyyy',
+						this.year(), this.dom(),
+						e, this.literalKey(), {
+						next: this.findNextInput('year'),
+						prev: this.findPrevInput('year')
+					});
 				},
 				oninput: () => {
 					handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));

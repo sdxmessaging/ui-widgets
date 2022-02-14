@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { imgSrc } from "../utils";
 import { fileInvalid } from "../validation";
@@ -19,7 +19,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
-		const { disabled, uiClass = {} } = field;
+		const { disabled, uiClass = {}, config } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
@@ -28,7 +28,7 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 				defaultAccept: "image/*",
 				multiple: false,
 				dragging: this.dragging,
-				onSet: addImages(value, config.imageMaxSize, true),
+				onSet: addImages(value, getConfig("imageMaxSize", config), true),
 				value
 			},
 				m(".pa1", {
@@ -43,10 +43,10 @@ export class ImageSelect implements ClassComponent<IFileWidget> {
 							title: `Remove ${file.name}`,
 							onclick: removeFile(value, file.guid)
 						}, m("i.pa1", {
-							class: config.cancelIcn
+							class: getConfig("cancelIcn", config)
 						}))
 					] : m("i.fa-2x.dtc.v-mid", {
-						class: config.cameraIcn
+						class: getConfig("cameraIcn", config)
 					}))
 				)
 			)

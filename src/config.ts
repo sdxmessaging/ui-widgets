@@ -61,10 +61,17 @@ const confMap: IConfig = {
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
 	codeFileIcn: "fas fa-file-code",
+	currencyFormat: "default"
 };
 
 export const config: Readonly<IConfig> = confMap;
 
 export function updateConfig(newConfig: Partial<IConfig>) {
 	lodash.assign(confMap, newConfig);
+}
+
+export function getConfig<T extends keyof IConfig>(key: T, override?: Partial<IConfig>) {
+	return override && key in override
+		? override[key] as IConfig[T]
+		: config[key];
 }

@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { fileInvalid } from "../validation";
 
@@ -17,7 +17,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 	public view({ attrs: {
 		field, value, displayType, showDisplay = true
 	} }: CVnode<IFileWidget>): Children {
-		const { disabled, uiClass = {} } = field;
+		const { disabled, uiClass = {}, config } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
@@ -32,9 +32,9 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
 					m("i.pa1", {
-						class: config.uploadIcn
+						class: getConfig("uploadIcn", config)
 					}),
-					m("span.ma1.flex-auto", config.addFileTxt)
+					m("span.ma1.flex-auto", getConfig("addFileTxt", config))
 				])
 			),
 			showDisplay ? m(DisplayTypeComponent, {

@@ -635,9 +635,9 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "file-button-in",
 						label: "File Button Input",
-						// uiClass: {
-						// 	inputWrapper: "dib"
-						// }
+						uiClass: {
+							inputWrapper: "dib"
+						}
 					},
 					value: fileButtonList
 				})),
@@ -701,7 +701,11 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.MultiOmniFileInput, {
 					field: {
 						id: "multi-omni-file-in",
-						label: "Multiple Omni File Input"
+						label: "Multiple Omni File Input",
+						config: {
+							uploadIcn: "fas fa-file-import",
+							addFileTxt: "Custom Upload Text"
+						}
 					},
 					showDisplay: true,
 					displayType: "thumbnail",
@@ -751,7 +755,10 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.ImageMulti, {
 					field: {
 						id: "image-multi-in",
-						label: "Image List Input"
+						label: "Image List Input",
+						config: {
+							imageIcn: "fas fa-images"
+						}
 					},
 					value: imgList
 				})),

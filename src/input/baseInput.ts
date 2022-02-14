@@ -24,7 +24,7 @@ export class BaseInput extends ValidationBase {
 		const {
 			label, id, type = FieldType.text, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
-			readonly, disabled, autofocus, autocomplete,
+			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
 			instant, uiClass = {}
 		} = field;
@@ -37,7 +37,7 @@ export class BaseInput extends ValidationBase {
 		}, m("input.w-100.bg-transparent.bn.outline-0", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,
-			readonly, disabled, autofocus, autocomplete,
+			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
 			class: inputCls(uiClass),
 			value: xform(),

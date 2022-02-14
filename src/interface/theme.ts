@@ -47,4 +47,6 @@ export interface IClassMap extends IClasses {
 	readonly invalidInputWrapper?: string;
 	/** Classes for alt label text */
 	readonly altLabel?: string;
+	/** Float Label Placeholder if it is not floating yet */
+	readonly floatLabelPlaceholder?: string;
 }

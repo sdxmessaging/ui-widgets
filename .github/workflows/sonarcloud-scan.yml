@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v2
       - run: rm .npmrc
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc 
-      - run: echo "registry=https://npm.pkg.github.com/sdxmessaging" >> ~/.npmrc 
+      - run: echo "@sdxmessaging:registry=https://npm.pkg.github.com" >> ~/.npmrc 
       - run: npm ci
       - run: npm run coverage
       - name: SonarCloud Scan

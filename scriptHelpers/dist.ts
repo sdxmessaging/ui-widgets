@@ -20,19 +20,19 @@ const bumpVersion = ((bumpType: versionBump) => {
 	const [major, minor, patch] = currentVersion.split(".").map(Number);
 	switch (bumpType) {
 		case versionBump.MAJOR:
-			return `${major + 1}.0.0`
+			return `${major + 1}.0.0`;
 		case versionBump.MINOR:
-			return `${major}.${minor + 1}.0`
+			return `${major}.${minor + 1}.0`;
 		default:
-			return `${major}.${minor}.${patch + 1}`
+			return `${major}.${minor}.${patch + 1}`;
 	}
 })(bumpType);
 
 interface IProcess {
-	execute: (version: string) => { code: number },
-	rollback: (version: string) => void,
-	errMsg: string,
-	executeMsg: string
+	execute(version: string): { readonly code: number; };
+	rollback(version: string): void;
+	errMsg: string;
+	executeMsg: string;
 }
 
 class ProcessStack {
@@ -57,12 +57,12 @@ class ProcessStack {
 				}
 			}
 			catch (err) {
-				console.log(err)
+				console.log(err);
 				console.warn(process.errMsg);
 				return process.rollback(this.version);
 			}
 			if (i === this.processArray.length - 1) {
-				console.log('\x1b[32m', `Hoorah!! You published a new ${bumpType} version - ${this.version}`);
+				console.log('\x1b[32m', `Hoorah!! You published a new ui-widgets ${bumpType} version - ${this.version}`);
 			}
 		}
 	}

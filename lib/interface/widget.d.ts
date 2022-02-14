@@ -1,5 +1,6 @@
 import { Children } from "mithril";
 import stream from "mithril/stream";
+import { IConfig } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
 export declare type TProp = string | number | boolean;
 export declare type TPropMap = Record<string, TProp>;
@@ -29,6 +30,7 @@ export declare const enum FieldType {
     tel = "tel",
     color = "color",
     currency = "currency",
+    percentage = "percentage",
     dateInput = "dateInput",
     cardDate = "cardDate",
     textarea = "textarea",
@@ -61,6 +63,7 @@ export interface IWidgetLabel {
     readonly href?: string;
     onclick?(): void;
 }
+declare type TTabIndex = "-1" | "0" | -1 | 0;
 export interface IField {
     readonly label?: string | IWidgetLabel;
     readonly id: string;
@@ -73,6 +76,7 @@ export interface IField {
     readonly disabled?: boolean;
     readonly autofocus?: boolean;
     readonly autocomplete?: TAutocomplete;
+    readonly tabindex?: "-1" | "0" | -1 | 0;
     readonly max?: number;
     readonly maxlength?: number;
     readonly min?: number;
@@ -85,6 +89,7 @@ export interface IField {
     readonly instant?: boolean;
     readonly layout?: LayoutType;
     readonly uiClass?: IWidgetClasses;
+    readonly config?: Partial<IConfig>;
 }
 export interface IOption {
     readonly value: TProp;
@@ -153,7 +158,7 @@ interface IBaseButton {
 }
 export interface IButton extends IBaseButton {
     readonly type?: "submit" | "reset" | "button";
-    readonly tabindex?: number;
+    readonly tabindex?: TTabIndex;
     readonly disabled?: boolean;
     onclick?(evt: IMithrilEvent): void;
 }

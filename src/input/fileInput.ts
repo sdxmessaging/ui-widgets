@@ -47,7 +47,7 @@ export function drop(state: stream<boolean>, setFiles: (setList: FileList | null
 }
 
 export function change(setFiles: (setList: FileList | null) => void) {
-	return ({ target: { files } }: { target: HTMLInputElement }) => setFiles(files);
+	return ({ target: { files } }: { target: HTMLInputElement; }) => setFiles(files);
 }
 
 export class FileInput implements ClassComponent<IFileInput> {
@@ -69,17 +69,18 @@ export class FileInput implements ClassComponent<IFileInput> {
 	}, children }: CVnode<IFileInput>) {
 		const {
 			label, id, name = id, title = label,
-			required, readonly, disabled, autofocus,
+			required, readonly, disabled, autofocus, tabindex = "0",
 			accept = defaultAccept,
 			uiClass = {}
 		} = field;
+		const labelInner = this.showLabel && label ? getLabel(id, uiClass, label, required) : null;
 		return m("label.db", lodash.extend({
 			"for": id,
 			"title": title,
 			"aria-labelled-by": id,
 			"class": pointerCls(disabled, readonly),
 			"data-input-id": id,
-			tabindex: 0,
+			tabindex,
 			onkeydown: (e: KeyboardEvent) => {
 				if (e.key === " ") {
 					(document.activeElement?.firstElementChild as HTMLElement).click();
@@ -96,8 +97,8 @@ export class FileInput implements ClassComponent<IFileInput> {
 				disabled: disabled || readonly,
 				tabindex: -1,
 				onchange: change(onSet),
-		}),
-			this.showLabel && label ? getLabel(id, uiClass, label, required) : null,
+			}),
+			labelInner,
 			children
 		]);
 	}

@@ -8,6 +8,7 @@ import { propInvalid } from "../validation";
 import { selectTarget } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
+import { getConfig } from "../config";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -16,12 +17,14 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
-			readonly, disabled, autofocus, autocomplete,
+			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
-			instant, uiClass = {},
+			instant, uiClass = {}, config,
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
+		const currencyFormat = getConfig("currencyFormat", config);
+
 		return m(LayoutFixed, {
 			field,
 			value,
@@ -32,19 +35,28 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
-				readonly, disabled, autofocus, autocomplete,
+				readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
 				class: inputCls(uiClass),
 				onfocus: selectTarget,
 				value: lodash.isUndefined(xform())
 					? null
-					: numberToCurrencyStr(propToNumber(xform())),
+					: formatCurrency(propToNumber(xform()), currencyFormat),
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
 			})
 		));
 	}
 
+}
+
+export function formatCurrency(unitTotal: number, currencyFormat: "default" | "accounting") {
+	const currencyStr = numberToCurrencyStr(unitTotal);
+	if (currencyFormat === "accounting" && unitTotal < 0) {
+		return `(${currencyStr})`;
+	} else {
+		return currencyStr;
+	}
 }
 
 export function propToNumber(value: TProp): number {

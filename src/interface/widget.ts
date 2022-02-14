@@ -1,6 +1,7 @@
 import { Children } from "mithril";
 import stream from "mithril/stream";
 
+import { IConfig } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
 
 export type TProp = string | number | boolean;
@@ -42,6 +43,7 @@ export const enum FieldType {
 	color = "color",
 	// Dedicated widget
 	currency = "currency",
+	percentage = "percentage",
 	dateInput = "dateInput",
 	cardDate = "cardDate",
 	textarea = "textarea",
@@ -101,6 +103,8 @@ export interface IWidgetLabel {
 	onclick?(): void
 }
 
+type TTabIndex = "-1" | "0" | -1 | 0;
+
 export interface IField {
 	readonly label?: string | IWidgetLabel;
 	// Standard HTML input attributes
@@ -114,6 +118,7 @@ export interface IField {
 	readonly disabled?: boolean;
 	readonly autofocus?: boolean;
 	readonly autocomplete?: TAutocomplete;
+	readonly tabindex?: "-1" | "0" | -1 | 0;
 	readonly max?: number;
 	readonly maxlength?: number;
 	readonly min?: number;
@@ -128,6 +133,7 @@ export interface IField {
 	readonly instant?: boolean;
 	readonly layout?: LayoutType;
 	readonly uiClass?: IWidgetClasses;
+	readonly config?: Partial<IConfig>;
 }
 
 // Select/Radio options, config for other fields
@@ -216,7 +222,7 @@ interface IBaseButton {
 
 export interface IButton extends IBaseButton {
 	readonly type?: "submit" | "reset" | "button";
-	readonly tabindex?: number;
+	readonly tabindex?: TTabIndex;
 	readonly disabled?: boolean;
 	onclick?(evt: IMithrilEvent): void;
 }

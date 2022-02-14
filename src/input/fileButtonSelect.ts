@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { getButtonContext, fileInputWrapperCls, theme } from "../theme";
 import { fileInvalid } from "../validation";
 
@@ -16,7 +16,10 @@ export class FileButtonSelect implements ClassComponent<IFileWidget> {
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { id, label = {text: "Add File", icon: config.uploadIcn}, required, uiClass = {} } = field;
+		const {
+			id, required, uiClass = {}, config,
+			label = { text: "Add File", icon: getConfig("uploadIcn", config) },
+		} = field;
 		return [
 			getLabel(id, uiClass, label, required),
 			m("div", {
@@ -30,7 +33,12 @@ export class FileButtonSelect implements ClassComponent<IFileWidget> {
 					value
 				},
 					m(".flex.items-center",
-						(typeof label === 'string') ? labelIcon({text: label, icon: config.uploadIcn}) : labelIcon(label)
+						(typeof label === 'string')
+							? labelIcon({
+								text: label,
+								icon: getConfig("uploadIcn", config)
+							})
+							: labelIcon(label)
 					)
 				)
 			)

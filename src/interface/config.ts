@@ -80,6 +80,7 @@ export interface IConfig {
 	excelFileIcn: string;
 	fileIcn: string;
 	codeFileIcn: string;
+	currencyFormat: "default" | "accounting";
 }
 
 /**

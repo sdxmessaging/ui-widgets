@@ -3,14 +3,14 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { theme, wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
 export class FileList implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
-		const { label, uiClass = {}} = field;
+		const { label, uiClass = {}, config } = field;
 		return m(".pa2.flex.flex-column", {
 			class: wrapperCls(uiClass),
 		}, [
@@ -21,7 +21,7 @@ export class FileList implements ClassComponent<IFileWidget> {
 					href: path
 				},
 					m("i.mr2", {
-						class: config.downloadIcn
+						class: getConfig("downloadIcn", config)
 					}),
 					name
 				);
