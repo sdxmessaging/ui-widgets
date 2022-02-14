@@ -52,7 +52,10 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				}, [
 					doubleLabel && m(CheckLabel, { field, value, left: true }),
 					m("i", {
-						class: config[value() ? this.onIcon : this.offIcon]
+						class: config[value() ? this.onIcon : doubleLabel ? this.onIcon : this.offIcon],
+						style: {
+							transform: !value() && doubleLabel ? "scaleX(-1)" : ""
+						}
 					}),
 					label && m("span.ml2", getLabelText(label, required)),
 					m(CheckLabel, { field, value, left: false })
