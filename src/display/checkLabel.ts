@@ -13,7 +13,7 @@ export class CheckLabel implements ClassComponent<IPropWidget & ICheckLabel> {
 		const { options = [], doubleLabel } = field as IOptionField;
 		const valLabel = lodash.find(options,
 			// Empty value stream to be handled as false
-			lodash.matches<IOption>({ value: (!doubleLabel ? value() : left) || false })
+			lodash.matches<IOption>({ value: (!doubleLabel ? value() : !left) || false })
 		);
 		return valLabel ? m(`span.${left ? "mr3" : "ml2"}`, valLabel.label) : null;
 	}
