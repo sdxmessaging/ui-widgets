@@ -3,6 +3,9 @@ import { IField, IFile, TProp } from "./interface/widget";
 // TODO Expand validation for field input masks, min/max, minlength/maxlength etc
 
 export function propInvalid(field: IField, value: TProp): boolean {
+	if (!field.required && !value) {
+		return false;
+	}
 	if (field.required && !value) {
 		return true;
 	}
