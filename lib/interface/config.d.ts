@@ -80,6 +80,7 @@ export interface IConfig {
     fileIcn: string;
     codeFileIcn: string;
     currencyFormat: "default" | "accounting";
+    toggleFormat: "double" | "default";
 }
 /**
  * Pick keys from T where their respective value extends U

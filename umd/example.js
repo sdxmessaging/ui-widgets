@@ -341,7 +341,9 @@ m.mount(document.getElementById("page"), {
 						}, {
 							label: "Off", value: false
 						}],
-						doubleLabel: true
+						config: {
+							"toggleFormat": "double"
+						}
 					},
 					value: toggleVal
 				})),
@@ -352,6 +354,38 @@ m.mount(document.getElementById("page"), {
 						options: [{
 							label: "On", value: true
 						}]
+					},
+					value: toggleVal
+				}))
+			]),
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.ToggleInput, {
+					field: {
+						id: "toggle-in",
+						label: "Toggle Input",
+						options: [{
+							label: "On", value: true
+						}, {
+							label: "Off", value: false
+						}],
+						// config: {
+						// 	"toggleFormat": "double"
+						// }
+					},
+					value: toggleVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.Toggle, {
+					field: {
+						id: "toggle-out",
+						label: "Toggle Output",
+						options: [
+							{
+								label: "On", value: true
+							},
+							{
+								label: "Off", value: false
+							},
+						]
 					},
 					value: toggleVal
 				}))
