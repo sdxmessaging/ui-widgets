@@ -43,7 +43,7 @@ export function getLabelText(label: string | IWidgetLabel, required?: boolean): 
 }
 
 export function getAltLabel(label: IWidgetLabel) {
-	return m( "div", {class: theme.altLabel}, label.alt ? label.alt : "");
+	return m("div", { class: theme.altLabel }, label.alt ? label.alt : "");
 }
 
 export function imgSrc(path: string, dataUrl?: string): string {
@@ -109,13 +109,13 @@ export function getLabel(id: string, uiClass: IWidgetClasses, label?: string | I
 
 export function labelIcon(label: IWidgetLabel) {
 	return [
-		label.icon ? m("i.fa-fw", {
-			class: `${label ? "mr2" : ""} ${label.icon}`
-		}) : null,
-		label.text,
-		label.rightIcon ? m("i.fa-fw", {
-			class: `${label ? "ml2" : ""} ${label.rightIcon}`
-		}) : null
+		label.icon && m("i.fa-fw", {
+			class: label.icon
+		}),
+		label.text && m("span.ph2", label.text),
+		label.rightIcon && m("i.fa-fw", {
+			class: label.rightIcon
+		})
 	];
 }
 
