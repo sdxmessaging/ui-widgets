@@ -9,7 +9,7 @@ export declare function getAltLabel(label: IWidgetLabel): m.Vnode<any, any>;
 export declare function imgSrc(path: string, dataUrl?: string): string;
 export declare function getDisplayLabel(label?: string | IWidgetLabel): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
 export declare function getLabel(id: string, uiClass: IWidgetClasses, label?: string | IWidgetLabel, required?: boolean): m.Vnode<any, any> | (m.Vnode<any, any> | null)[] | null;
-export declare function labelIcon(label: IWidgetLabel): (string | m.Vnode<any, any> | null)[];
+export declare function labelIcon(label: IWidgetLabel): ("" | m.Vnode<any, any> | undefined)[];
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
 }) => void;

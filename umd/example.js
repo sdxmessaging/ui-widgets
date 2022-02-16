@@ -7,7 +7,11 @@ uiWidgets.updateConfig({
 	// requiredLblPost: "*"
 });
 
-uiWidgets.updateClasses({ invalidInputWrapper: "b--red ba", floatLabelPlaceholder: "o-40", requiredLabel: "bb" });
+uiWidgets.updateClasses({
+	invalidInputWrapper: "b--red ba",
+	floatLabelPlaceholder: "o-40",
+	requiredLabel: "bb b--red"
+});
 
 uiWidgets.updateButtonContext({
 	invert: "bg-dark-gray light-blue b--light-blue",

@@ -71,7 +71,6 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 					}, m("span.f-07em", labelIsString ? getLabelText(label, required) : [getLabelText(label, required), " ", getAltLabel(label)])),
 					// Floating label
 					m(".absolute.top-0.transition-transform", {
-						class: labelCls(uiClass, required),
 						style: {
 							// Input wrapper legend or center
 							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
