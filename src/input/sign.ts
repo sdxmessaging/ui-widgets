@@ -129,7 +129,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 								src: imgSrc(fileObj.path, fileObj.dataUrl)
 							}),
 							// Remove signature button
-							m(".pa3.absolute.top-0.right-0.child",
+							m(".absolute.top-1.right-1",
 								m("i.fa-2x", {
 									class: getConfig("resetIcn", config),
 									tabindex: 0,
