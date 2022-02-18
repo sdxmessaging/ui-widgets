@@ -35,8 +35,8 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	}
 
 	// Float label if element has a value set or is in focus
-	protected shouldFloat(layout: LayoutType, value: TProp) {
-		return layout === LayoutType.floatAlways || this.focus || Boolean(value);
+	protected shouldFloat(layout: LayoutType, value: TProp, readonly = false) {
+		return layout === LayoutType.floatAlways || this.focus || Boolean(value) || readonly;
 	}
 
 	protected labelTranslateY() {
@@ -47,12 +47,12 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		const { field, invalid, value, xform = value } = attrs;
 		const {
 			label, id, type = FieldType.text, placeholder,
-			required, disabled,
+			required, disabled, readonly,
 			uiClass = {}, config,
 			layout = getConfig("layoutType", config)
 		} = field;
 		// Placeholder or value count as value content
-		const floatTop = this.shouldFloat(layout, placeholder || xform());
+		const floatTop = this.shouldFloat(layout, placeholder || xform(), readonly);
 		const labelIsString = typeof label === 'string';
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
