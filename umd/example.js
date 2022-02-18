@@ -514,8 +514,8 @@ m.mount(document.getElementById("page"), {
 			m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
 				m(uiWidgets.Button, {
 					label: "Simple Button",
-					icon: "fas fa-arrow-circle-down",
-					rightIcon: "fas fa-arrow-circle-down",
+					icon: "fas fa-arrow-circle-down mr1",
+					rightIcon: "fas fa-arrow-circle-down ml1",
 					classes: "ma1",
 					onclick: function () {
 						console.log("Button Click");
@@ -529,13 +529,13 @@ m.mount(document.getElementById("page"), {
 				}),
 				m(uiWidgets.ButtonLink, {
 					label: "Link Button",
-					icon: "fas fa-link",
+					icon: "fas fa-link mr1",
 					classes: "ma1",
 					href: "#button"
 				}),
 				m(uiWidgets.NavButton, {
 					label: "Nav Button",
-					icon: "fas fa-arrow-circle-up",
+					icon: "fas fa-arrow-circle-up mr1",
 					classes: "ma1",
 					onclick: function () {
 						console.log("Nav Button Click");
@@ -543,7 +543,7 @@ m.mount(document.getElementById("page"), {
 				}),
 				m(uiWidgets.NavLink, {
 					label: "Nav Link",
-					rightIcon: "fas fa-link",
+					rightIcon: "fas fa-link ml1",
 					classes: "ma1",
 					href: "#button"
 				})
@@ -554,19 +554,19 @@ m.mount(document.getElementById("page"), {
 			m(".flex.flex-wrap.mb1.nl1.nt1.nr1", [
 				m(uiWidgets.Button, {
 					label: "Inverted",
-					rightIcon: "fas fa-recycle",
+					rightIcon: "fas fa-recycle ml1",
 					context: "invert",
 					classes: "ma1"
 				}),
 				m(uiWidgets.Button, {
 					label: "Warning",
-					icon: "fas fa-exclamation-triangle",
+					icon: "fas fa-exclamation-triangle mr1",
 					context: "warn",
 					classes: "ma1"
 				}),
 				m(uiWidgets.ButtonLink, {
 					label: "Link Inverted",
-					icon: "fas fa-link",
+					icon: "fas fa-link mr1",
 					classes: "ma1",
 					context: "invert",
 					href: "#button"
