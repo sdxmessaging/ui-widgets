@@ -9,7 +9,7 @@ export declare class FloatLabel implements ClassComponent<IPropLayoutWidget> {
     oncreate({ dom }: CVnodeDOM<IPropLayoutWidget>): void;
     onupdate(): void;
     private calcHeight;
-    protected shouldFloat(layout: LayoutType, value: TProp): boolean;
+    protected shouldFloat(layout: LayoutType, value: TProp, readonly?: boolean): boolean;
     protected labelTranslateY(): string;
     view({ attrs, children }: CVnode<IPropLayoutWidget>): m.Vnode<any, any>;
 }
