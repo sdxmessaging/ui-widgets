@@ -112,7 +112,7 @@ export function labelIcon(label: IWidgetLabel) {
 		label.icon && m("i.fa-fw", {
 			class: label.icon
 		}),
-		label.text && m("span.ph2", label.text),
+		label.text && m("span", label.text),
 		label.rightIcon && m("i.fa-fw", {
 			class: label.rightIcon
 		})
