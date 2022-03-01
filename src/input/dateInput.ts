@@ -211,6 +211,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
 		this.setLocale(field);
+		this.valid(
+			validateDate(this.year(), this.month(), this.day(), Boolean(field.required), this.dom())
+		);
 	}
 
 	public onupdate({ dom }: CVnodeDOM<IPropWidget>) {
