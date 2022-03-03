@@ -14,6 +14,7 @@ const confMap: IConfig = {
 	openFileTxt: "Open file",
 	showPassTxt: "Show Password",
 	requiredLblPost: "",
+	dateOpts: [],
 	signOpts: [{
 		label: "", value: SignTypes.Draw
 	}, {

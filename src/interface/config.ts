@@ -21,8 +21,10 @@ export interface IConfig {
 	showPassTxt: string;
 	/** Text to append to widget labels when field is required */
 	requiredLblPost: string;
+	/** Default date options */
+	dateOpts: ReadonlyArray<IOption>;
 	/** Default options for signature creator */
-	signOpts: IOption[];
+	signOpts: ReadonlyArray<IOption>;
 	/** Maximum size for signature image in px */
 	signMaxSize: number;
 	/** Height of signature widget as percentage of width */

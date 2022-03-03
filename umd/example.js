@@ -240,8 +240,7 @@ m.mount(document.getElementById("page"), {
 					m(uiWidgets.BaseInput, {
 						field: {
 							id: "date-in-text",
-							label: "Date Input (text input)",
-							options: [{ value: dateFormat() }]
+							label: "Date Input (text input)"
 						},
 						value: dateVal
 					})
