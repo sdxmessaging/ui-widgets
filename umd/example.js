@@ -10,7 +10,7 @@ uiWidgets.updateConfig({
 uiWidgets.updateClasses({
 	invalidInputWrapper: "b--red ba",
 	floatLabelPlaceholder: "o-40",
-	requiredLabel: "bb b--red"
+	requiredLabel: "bb b--red",
 });
 
 uiWidgets.updateButtonContext({
@@ -53,6 +53,8 @@ var imgInputList = stream([]);
 var signList = stream([]);
 var omniInputList = stream([]);
 var multiOmniInputList = stream([]);
+
+var readonlyOrDisabled = stream(false);
 
 // Layout
 var layoutVal = stream("floatLabel");
@@ -340,14 +342,15 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "toggle-in",
 						label: "Toggle Input",
-						options: [{
-							label: "On", value: true
-						}, {
-							label: "Off", value: false
-						}],
-						config: {
-							"toggleFormat": "double"
-						}
+						// options: [{
+						// 	label: "On", value: true
+						// }, {
+						// 	label: "Off", value: false
+						// }],
+						// config: {
+						// 	"toggleFormat": "double"
+						// },
+						required: true
 					},
 					value: toggleVal
 				})),
@@ -668,8 +671,16 @@ m.mount(document.getElementById("page"), {
 			m("h3", m("a#files.link[href=#files]", "File Support")),
 			m("p", "These file widgets operate on a single file array stream"),
 
-			// FileSelect/FileList
+			// Disable file inputs
+			m("h5", m(uiWidgets.CheckboxInput, {
+				field: {
+					label: "Disable File Inputs",
+					id: "readonly-or-disabled",
+				},
+				value: readonlyOrDisabled
+			})),
 
+			// FileSelect/FileList
 			m(".flex.mb2.ba.b--silver", [
 				m(".w-50.pa2", m(uiWidgets.FileButtonSelect, {
 					field: {
@@ -677,7 +688,8 @@ m.mount(document.getElementById("page"), {
 						label: "File Button Input",
 						uiClass: {
 							inputWrapper: "dib"
-						}
+						},
+						readonly: readonlyOrDisabled()
 					},
 					value: fileButtonList
 				})),
@@ -694,7 +706,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.FileSelect, {
 					field: {
 						id: "file-in",
-						label: "File Input"
+						label: "File Input",
+						readonly: readonlyOrDisabled()
 					},
 					value: fileList,
 					displayType: "none"
@@ -722,7 +735,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.OmniFileInput, {
 					field: {
 						id: "omni-file-in",
-						label: "Omni File Input"
+						label: "Omni File Input",
+						readonly: readonlyOrDisabled()
 					},
 					value: omniInputList
 				})),
@@ -745,7 +759,8 @@ m.mount(document.getElementById("page"), {
 						config: {
 							uploadIcn: "fas fa-file-import",
 							addFileTxt: "Custom Upload Text"
-						}
+						},
+						readonly: readonlyOrDisabled()
 					},
 					showDisplay: true,
 					displayType: "thumbnail",
@@ -768,7 +783,8 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.ImageSelect, {
 					field: {
 						id: "image-in",
-						label: "Image Select Input"
+						label: "Image Select Input",
+						readonly: readonlyOrDisabled()
 					},
 					value: imgInputList
 				})),
@@ -798,7 +814,8 @@ m.mount(document.getElementById("page"), {
 						label: "Image List Input",
 						config: {
 							imageIcn: "fas fa-images"
-						}
+						},
+						readonly: readonlyOrDisabled()
 					},
 					value: imgList
 				})),
