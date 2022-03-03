@@ -13,13 +13,13 @@ import { FileOpen } from "./fileOpen";
 
 export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 
-	public view({ attrs: { displayType = DisplayType.thumbnail, value } }: CVnode<IDisplayWidget>) {
+	public view({ attrs: { displayType = DisplayType.thumbnail, value, readonlyOrDisabled } }: CVnode<IDisplayWidget>) {
 		return displayType === DisplayType.thumbnail ? m(".flex.flex-row.flex-wrap.mt1.nr1.nb1.nl1.max-h-thumb",
 			lodash.map(value(), (file) => m(Thumbnail, {
 				src: imgSrc(file.path, file.dataUrl),
 				data: file
 			},
-				m(".absolute.top-0.right-0.child",
+				!readonlyOrDisabled && m(".absolute.top-0.right-0.child",
 					m(Button, {
 						title: `Remove ${file.name}`,
 						icon: config.deleteIcn,
@@ -37,7 +37,7 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 					title: file.name
 				}, file.name),
 				m(FileOpen, file),
-				m("i.pa1.pointer.dim", {
+				!readonlyOrDisabled && m("i.pa1.pointer.dim", {
 					title: `Remove ${file.name}`,
 					class: config.cancelIcn,
 					onclick: removeFile(value, file.guid)

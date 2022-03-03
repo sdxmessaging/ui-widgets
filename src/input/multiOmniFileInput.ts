@@ -17,7 +17,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 	public view({ attrs: {
 		field, value, displayType, showDisplay = true
 	} }: CVnode<IFileWidget>): Children {
-		const { disabled, uiClass = {}, config } = field;
+		const { disabled, uiClass = {}, config, readonly } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
@@ -39,7 +39,8 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 			),
 			showDisplay ? m(DisplayTypeComponent, {
 				displayType,
-				value
+				value,
+				readonlyOrDisabled: disabled || readonly
 			}) : null
 		]);
 	}
