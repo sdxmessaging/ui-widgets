@@ -40,7 +40,8 @@ const classMapState: Required<IClassMap> = {
 	disabledWrapper: "o-40",
 	invalidInputWrapper: "ba b--red",
 	altLabel: "alt-label",
-	floatLabelPlaceholder: ""
+	floatLabelPlaceholder: "",
+	invalidCheckboxWrapper: ""
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;

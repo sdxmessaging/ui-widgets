@@ -8,6 +8,7 @@ import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
 import { CheckLabel } from "../display/checkLabel";
+import { theme } from "../theme";
 export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
@@ -21,6 +22,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		} = field;
 
 		const doubleLabel = getConfig("toggleFormat", fieldConfig) === "double";
+		const invalidCheckboxWrapper = theme.invalidCheckboxWrapper;
 
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
@@ -39,7 +41,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				}),
 				m("label.flex.flex-start.items-center", {
 					tabindex,
-					"class": checkInputCls(uiClass, disabled, readonly),
+					"class": `${checkInputCls(uiClass, disabled, readonly)} ${required && !value() ? invalidCheckboxWrapper : ""}`,
 					for: id,
 					title,
 					"data-input-id": id,

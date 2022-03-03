@@ -49,4 +49,5 @@ export interface IClassMap extends IClasses {
 	readonly altLabel?: string;
 	/** Float Label Placeholder if it is not floating yet */
 	readonly floatLabelPlaceholder?: string;
+	readonly invalidCheckboxWrapper?: string;
 }
