@@ -123,6 +123,7 @@ interface IBaseWidget {
 export interface IDisplayWidget {
     readonly value: stream<IFile[]>;
     readonly displayType?: DisplayType;
+    readonly readonlyOrDisabled?: boolean;
 }
 export interface IFileWidget extends IBaseWidget {
     readonly value: stream<IFile[]>;
