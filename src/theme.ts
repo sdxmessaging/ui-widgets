@@ -41,7 +41,7 @@ const classMapState: Required<IClassMap> = {
 	invalidInputWrapper: "ba b--red",
 	altLabel: "alt-label",
 	floatLabelPlaceholder: "",
-	invalidCheckboxWrapper: ""
+	invalidCheckboxWrapper: "red"
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
