@@ -18,7 +18,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value, displayType } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
-		const { disabled, uiClass = {}, config } = field;
+		const { disabled, uiClass = {}, config, readonly } = field;
 		const innerText = displayType === DisplayType.none || !file
 			? getConfig("addFileTxt", config)
 			: file.name;
@@ -41,7 +41,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 					m("span.ma1.flex-auto", innerText),
 					file && displayType !== DisplayType.none ? [
 						m(FileOpen, file),
-						m("i.pa1.pointer.dim", {
+						!(readonly || disabled) && m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
 							class: getConfig("cancelIcn", config),
 							onclick: removeFile(value, file.guid)

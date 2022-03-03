@@ -40,7 +40,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { disabled, uiClass = {}, config } = field;
+		const { disabled, uiClass = {}, config, readonly } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
@@ -65,7 +65,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 						class: getConfig("downloadIcn", config)
 					}),
 					file.name,
-					m("i.child.fr", {
+					!(readonly || disabled) && m("i.child.fr", {
 						title: `${getConfig("remFileTtl", config)} ${file.name}`,
 						class: getConfig("deleteIcn", config),
 						onclick: removeFile(value, file.guid)

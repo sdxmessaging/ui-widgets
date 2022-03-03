@@ -51,7 +51,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
 		const file = lodash.head(value());
-		const { disabled, uiClass = {}, config } = field;
+		const { disabled, uiClass = {}, config, readonly } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
@@ -73,7 +73,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 								title: file.name,
 								src: imgSrc(file.path, file.dataUrl)
 							}),
-							m(".absolute.top-0.right-0.pa1.pointer.dim", {
+							!(readonly || disabled) && m(".absolute.top-0.right-0.pa1.pointer.dim", {
 								title: `Remove ${file.name}`,
 								onclick: removeFile(value, file.guid)
 							}, m("i.pa1", {
@@ -86,7 +86,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 						m("span.ma1.flex-auto", {
 							title: file.name,
 						}, file.name),
-						m("i.pa1.pointer.dim", {
+						!(readonly || disabled) && m("i.pa1.pointer.dim", {
 							title: `Remove ${file.name}`,
 							class: getConfig("cancelIcn", config),
 							onclick: removeFile(value, file.guid),

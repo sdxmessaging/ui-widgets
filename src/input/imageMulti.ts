@@ -42,7 +42,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
 	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const { disabled, uiClass = {}, config } = field;
+		const { disabled, uiClass = {}, config, readonly } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		}, [
@@ -65,7 +65,7 @@ export class ImageMulti implements ClassComponent<IFileWidget> {
 				lodash.map(value(), (file) => m(Thumbnail, {
 					src: imgSrc(file.path, file.dataUrl)
 				},
-					m(".absolute.top-0.right-0.child",
+					!(readonly || disabled) && m(".absolute.top-0.right-0.child",
 						m(Button, {
 							title: `Remove ${file.name}`,
 							icon: getConfig("deleteIcn", config),
