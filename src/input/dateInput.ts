@@ -10,6 +10,7 @@ import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, h
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 import { HiddenDateInput } from "./hiddenDateInput";
 import { setIfDifferent } from "../utils";
+import { getConfig } from "../config";
 
 interface IDateParts {
 	readonly type: TDateType | "literal",
@@ -69,8 +70,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	private setLocale(field: TField) {
-		const { options } = field as IOptionField;
-		const locale = options && options.length ? options[0].value as string : undefined;
+		const {
+			config,
+			options = getConfig("dateOpts", config)
+		} = field as IOptionField;
+		const locale = options.length ? options[0].value as string : undefined;
 		if (locale !== this.locale()) {
 			this.locale(locale);
 		}
