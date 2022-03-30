@@ -78,9 +78,9 @@ export interface IField {
     readonly autofocus?: boolean;
     readonly autocomplete?: TAutocomplete;
     readonly tabindex?: "-1" | "0" | -1 | 0;
-    readonly max?: number;
+    readonly max?: number | string;
     readonly maxlength?: number;
-    readonly min?: number;
+    readonly min?: number | string;
     readonly minlength?: number;
     readonly step?: number;
     readonly pattern?: string;
