@@ -39,7 +39,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 					'aria-hidden': "true",
 					onchange: setCheck(value),
 				}),
-				m("label.flex.flex-start.items-center", {
+				m("label.flex.flex-start.items-start", {
 					tabindex,
 					"class": `${checkInputCls(uiClass, disabled, readonly)} ${required && !value() ? invalidCheckboxWrapper : ""}`,
 					for: id,
