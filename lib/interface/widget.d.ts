@@ -111,6 +111,7 @@ export interface ISignWidget {
     readonly stampTxt: string;
     readonly stampSetTxt: string;
     readonly style: TStyle;
+    readonly config?: Partial<IConfig>;
     onSet(dataUrl: string, metadata?: TPropMap): void;
     onCancel(): void;
 }
@@ -124,6 +125,7 @@ export interface IDisplayWidget {
     readonly value: stream<IFile[]>;
     readonly displayType?: DisplayType;
     readonly readonlyOrDisabled?: boolean;
+    readonly config?: Partial<IConfig>;
 }
 export interface IFileWidget extends IBaseWidget {
     readonly value: stream<IFile[]>;

@@ -1,3 +1,4 @@
+import { IConfig } from "./interface/config";
 export declare const enum img {
     unknown = 65280,
     jpeg = 65496,
@@ -24,4 +25,4 @@ export declare function scaleRect(width: number, height: number, limit: number):
 export declare function resizeImage(file: File, maxSize: number, type?: string): Promise<string>;
 export declare function scaleDataUrl(dataUrl: string, maxSize: number): Promise<string>;
 export declare function textToImage(text: string, width: number, height: number, font: string): string;
-export declare function createStamp(sign: string, heightPct: number): string;
+export declare function createStamp(sign: string, heightPct: number, config?: Partial<IConfig>): string;
