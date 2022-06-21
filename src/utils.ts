@@ -50,8 +50,11 @@ export function imgSrc(path: string, dataUrl?: string): string {
 	return dataUrl ? dataUrl : path;
 }
 
-function enrichLabel(label: IWidgetLabel, selector: string,
-	attrs: { title: string, for?: string, class: string }, required?: boolean) {
+function enrichLabel(
+	label: IWidgetLabel, selector: string,
+	attrs: { title: string, for?: string, class: string },
+	required?: boolean
+) {
 	return [label.icon ? m("i.fa-fw", {
 		class: `${label ? "mr2" : ""} ${label.icon}`
 	}) : null,

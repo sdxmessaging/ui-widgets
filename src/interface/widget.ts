@@ -180,6 +180,7 @@ export interface IDisplayWidget {
 	readonly value: stream<IFile[]>;
 	readonly displayType?: DisplayType;
 	readonly readonlyOrDisabled?: boolean;
+	readonly config?: Partial<IConfig>;
 }
 
 export interface IFileWidget extends IBaseWidget {

@@ -1,5 +1,6 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
+import lodash from "lodash";
 
 import { ISignWidget } from "../interface/widget";
 
@@ -8,15 +9,6 @@ import { setValue } from "../utils";
 import { createStamp } from "../imageUtils";
 
 import { Button } from "../button";
-
-export function applyText(text: stream<string>, heightPct: number, callback: ISignWidget["onSet"]) {
-	return () => {
-		if (text()) {
-			callback(createStamp(text(), heightPct), { text: text(), heightPct });
-		}
-		return false;
-	};
-}
 
 export class SignType implements ClassComponent<ISignWidget> {
 
@@ -33,10 +25,18 @@ export class SignType implements ClassComponent<ISignWidget> {
 	}
 
 	public view({ attrs: { heightPct, style, config, onSet, onCancel } }: CVnode<ISignWidget>) {
+		const setText = lodash.flow([
+			// Create stamp base64 string
+			lodash.partial(createStamp, this.text(), heightPct, config),
+			// Submit stamp and metadata to onSet
+			lodash.partialRight(onSet, { text: this.text(), heightPct }),
+			// Prevent form submit page navigating page
+			lodash.stubFalse
+		]);
 		return [
 			m("form.aspect-ratio.ba.bw1.br3.b--dashed.b--black-30", {
 				style,
-				onsubmit: applyText(this.text, heightPct, onSet)
+				onsubmit: setText
 			},
 				m("input.aspect-ratio--object.pa2.ba.bw0[type=text]", {
 					oninput: setValue(this.text),
@@ -51,7 +51,7 @@ export class SignType implements ClassComponent<ISignWidget> {
 					title: getConfig("applyTtl", config),
 					icon: getConfig("applyIcn", config),
 					classes: "ma1",
-					onclick: applyText(this.text, heightPct, onSet)
+					onclick: setText
 				}),
 				m(Button, {
 					title: getConfig("resetTtl", config),
