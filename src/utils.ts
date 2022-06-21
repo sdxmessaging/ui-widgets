@@ -165,11 +165,14 @@ export function fileNameExtSplit(fileName: string): [string, string] {
 }
 
 export function dataURItoBlob(dataURI: string): Blob {
-	const dataUriList = dataURI.split(",");
-	const bytes = dataUriList[0].indexOf("base64") >= 0 ?
-		atob(dataUriList[1]) :
-		unescape(dataUriList[1]);
-	const mimeType = dataUriList[0].split(":")[1].split(";")[0];
+	const [header, content] = dataURI.split(",");
+	const bytes = header.indexOf("base64") >= 0 ?
+		atob(content) :
+		unescape(content);
+	const attributes = header
+		.substring(header.indexOf("data:") + 5)
+		.split(";");
+	const mimeType = attributes[0];
 	const bytesTotal = bytes.length;
 	const byteArray = new Uint8Array(bytesTotal);
 	for (let idx = 0; idx < bytesTotal; idx++) {
@@ -183,11 +186,7 @@ export function dataURItoBlob(dataURI: string): Blob {
  * Mutates input blob
  */
 export function fileConstructor(blob: Blob, fileName: string) {
-	const lastModified = new Date().valueOf();
-	const mutableBlob = (blob as unknown) as TPropMap;
-	mutableBlob.name = fileName;
-	mutableBlob.lastModified = lastModified;
-	return blob as File;
+	return new File([blob], fileName, { type: blob.type });
 }
 
 export function dataUrlToFile(dataUrl: string, name: string, metadata?: TPropMap): IFile {
@@ -201,19 +200,6 @@ export function dataUrlToFile(dataUrl: string, name: string, metadata?: TPropMap
 		metadata
 	};
 }
-
-
-// // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
-// // specs compliant (as of March 2018 only Chrome)
-// export function toFileList(fileList: IFile[]) {
-// 	const transfer = new ClipboardEvent("").clipboardData || new DataTransfer();
-// 	lodash.forEach(fileList, ({ file }) => {
-// 		if (file) {
-// 			transfer.items.add(file);
-// 		}
-// 	});
-// 	return transfer.files;
-// }
 
 export function getFileTypeIcon(file: IFile) {
 	const [, extension] = fileNameExtSplit(file.name);

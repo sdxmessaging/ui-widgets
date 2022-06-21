@@ -1,4 +1,4 @@
-import { dataURItoBlob, fileConstructor } from "./utils";
+import { dataURItoBlob } from "./utils";
 import {
 	img,
 	getOrientation,
@@ -28,14 +28,6 @@ describe("Scale rectangle", () => {
 });
 
 describe("File", () => {
-
-	test("create", () => {
-		const blob = dataURItoBlob("data:text/plain;charset=UTF-8;page=21,hello%20world");
-		expect(blob.type).toBe("text/plain");
-		const file = fileConstructor(blob, "testFile.txt");
-		expect(file.name).toBe("testFile.txt");
-		expect(file.type).toBe("text/plain");
-	});
 
 	test("resize", (done) => {
 		const file = new File([
