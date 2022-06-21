@@ -1,6 +1,6 @@
+import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
-import lodash from "lodash";
 
 import { ISignWidget } from "../interface/widget";
 

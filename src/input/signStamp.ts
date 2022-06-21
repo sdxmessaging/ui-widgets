@@ -1,5 +1,5 @@
-import m, { ClassComponent, CVnode, Children } from "mithril";
 import lodash from "lodash";
+import m, { ClassComponent, CVnode, Children } from "mithril";
 
 import { ISignWidget } from "../interface/widget";
 
