@@ -173,7 +173,7 @@ m.mount(document.getElementById("page"), {
 							label: "Text Input (updates on input)",
 							required: true,
 							instant: true,
-							uiClass: { wrapper: "mb2" }
+							uiClass: { wrapper: "mb2", invalidInputWrapper: "ba b--green" }
 						},
 						value: textVal,
 					}),
