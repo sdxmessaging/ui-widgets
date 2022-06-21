@@ -161,6 +161,7 @@ export interface ISignWidget {
 	readonly stampTxt: string;
 	readonly stampSetTxt: string;
 	readonly style: TStyle;
+	readonly config?: Partial<IConfig>;
 	onSet(dataUrl: string, metadata?: TPropMap): void;
 	onCancel(): void;
 }

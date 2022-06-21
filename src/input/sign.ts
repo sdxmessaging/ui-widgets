@@ -111,6 +111,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 						stampTxt,
 						stampSetTxt,
 						style,
+						config,
 						onSet: setFile(value, id, getConfig("signMaxSize", config)),
 						onCancel: lodash.bind(this.setSignType, this, undefined)
 					})
