@@ -82,6 +82,7 @@ describe("Theme Classes", () => {
 	test("inputWrapper", () => {
 		expect(inputWrapperCls({})).toBe(` ${theme.inputWrapper} `);
 		expect(inputWrapperCls({}, true)).toBe(` ${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		expect(inputWrapperCls({ inputWrapper: "test", invalidInputWrapper: "customInvalid", merge: false }, true)).toBe("test  customInvalid");
 		expect(inputWrapperCls({ inputWrapper: "test", merge: false })).toBe("test  ");
 	});
 
