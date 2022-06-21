@@ -80,8 +80,8 @@ export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: bool
 	return `${labelCls(uiClass, required)} ${floatTop ? "f-07em cursor-default" : `${theme.floatLabelPlaceholder} cursor-text`}`;
 }
 
-export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
-	return `${inputWrapper} ${merge ? theme.inputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""}`;
+export function inputWrapperCls({ inputWrapper = "", merge = true, invalidInputWrapper = theme.invalidInputWrapper }: IWidgetClasses, invalid?: boolean) {
+	return `${inputWrapper} ${merge ? theme.inputWrapper : ""} ${invalid ? invalidInputWrapper : ""}`;
 }
 
 export function inputCls({ input = "", merge = true }: IWidgetClasses) {
