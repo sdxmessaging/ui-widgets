@@ -1,4 +1,4 @@
-import m from "mithril";
+import m, { Attributes } from "mithril";
 import stream from "mithril/stream";
 
 import { IFile, IWidgetLabel, TPropMap, TPropStream } from "./interface/widget";
@@ -34,16 +34,12 @@ export function pxRatio() {
 }
 
 export function getLabelText(label: string | IWidgetLabel, required?: boolean): string {
-	if (typeof label === 'string') {
-		return required ? `${label}${config.requiredLblPost}` : label;
-	}
-	else {
-		return required ? `${label.text}${config.requiredLblPost}` : label.text;
-	}
+	const text = typeof label === "string" ? label : label.text;
+	return required ? `${text}${config.requiredLblPost}` : text;
 }
 
-export function getAltLabel(label: IWidgetLabel) {
-	return m("div", { class: theme.altLabel }, label.alt ? label.alt : "");
+export function getAltLabel({ alt }: IWidgetLabel) {
+	return alt ? m("span", { class: theme.altLabel }, alt) : null;
 }
 
 export function imgSrc(path: string, dataUrl?: string): string {
@@ -51,24 +47,19 @@ export function imgSrc(path: string, dataUrl?: string): string {
 }
 
 function enrichLabel(
-	label: IWidgetLabel, selector: string,
-	attrs: { title: string, for?: string, class: string },
-	required?: boolean
+	label: IWidgetLabel, selector: string, attributes: Attributes, required?: boolean
 ) {
-	return [label.icon ? m("i.fa-fw", {
-		class: `${label ? "mr2" : ""} ${label.icon}`
-	}) : null,
-	m(selector, attrs, [getLabelText(label, required), " ", getAltLabel(label)]),
-	label.rightIcon ? m("i.fa-fw", {
-		class: `${label ? "ml2" : ""} ${label.rightIcon}`
-	}) : null,
-	label.href ? m("a.link.dim.pointer.ws-normal", { onclick: label.onclick },
-		m("i.mr2", {
-			class: config.linkIcn
-		}),
-		label.href) : null];
+	return m(selector, attributes, [
+		label.icon ? m("i", { class: label.icon }) : null,
+		m("span", getLabelText(label, required)),
+		getAltLabel(label),
+		label.rightIcon ? m("i", { class: label.rightIcon }) : null,
+		label.href ? m("a.link.dim.pointer.ws-normal.mh1", { onclick: label.onclick }, [
+			m("i", { class: config.linkIcn }),
+			label.href
+		]) : null
+	]);
 }
-
 
 // Used by display widgets
 export function getDisplayLabel(label?: string | IWidgetLabel) {
