@@ -6,8 +6,6 @@ import { LayoutType, SignTypes } from "./interface/widget";
 const confMap: IConfig = {
 	layoutType: LayoutType.default,
 	imageMaxSize: 1280,
-	imageDispHeight: "16rem",
-	thumbDispHeight: "6rem",
 	addFileTxt: "Upload...",
 	addFilesTxt: "Add file(s)...",
 	remFileTtl: "Remove",

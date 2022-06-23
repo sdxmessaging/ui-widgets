@@ -2,24 +2,6 @@ import lodash from "lodash";
 
 import { IClassMap, IWidgetClasses } from "./interface/theme";
 
-import { config } from "./config";
-
-// Class/Theme helpers
-export function imgMaxSize() {
-	return { "max-height": config.imageDispHeight };
-}
-export function thumbMaxSize() {
-	return { "max-height": config.thumbDispHeight };
-}
-
-// +4px for input native horizontal padding
-export const enum DateWidth {
-	dd = "calc(2.3ch + 4px)",
-	mm = "calc(2.8ch + 4px)",
-	yy = "calc(2.7ch + 4px)",
-	yyyy = "calc(4.2ch + 4px)"
-}
-
 // ui-widgets 1.4 theme map
 const classMapState: Required<IClassMap> = {
 	wrapper: "",
@@ -39,7 +21,7 @@ const classMapState: Required<IClassMap> = {
 	requiredLabel: "",
 	disabledWrapper: "o-40",
 	invalidInputWrapper: "ba b--red",
-	altLabel: "alt-label",
+	altLabel: "ml1 o-70",
 	floatLabelPlaceholder: "",
 	invalidCheckboxWrapper: "red"
 };

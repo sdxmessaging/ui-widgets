@@ -16,7 +16,7 @@ export class ButtonLink implements ClassComponent<IButtonLink> {
 			href, rel, target, download, title,
 			class: `${classes} ${getButtonContext(context)} ${theme.button}`,
 			style
-		}, labelIcon({text: label, icon, rightIcon}));
+		}, labelIcon({ text: label, icon, rightIcon }));
 	}
 
 }

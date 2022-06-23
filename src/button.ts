@@ -17,7 +17,7 @@ export class Button implements ClassComponent<IButton> {
 			class: `${classes} ${disabled ? theme.disabledWrapper : "pointer"} ${getButtonContext(context)} ${theme.button}`,
 			style, tabindex,
 			onclick
-		}, labelIcon({text: label, icon, rightIcon}));
+		}, labelIcon({ text: label, icon, rightIcon }));
 	}
 
 }
