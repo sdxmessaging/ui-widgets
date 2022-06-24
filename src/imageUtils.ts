@@ -1,4 +1,5 @@
-import { config } from "./config";
+import { getConfig } from "./config";
+import { IConfig } from "./interface/config";
 
 export const enum img {
 	unknown = 0xFF00,
@@ -193,9 +194,9 @@ export function textToImage(text: string, width: number, height: number, font: s
 	return canvas.toDataURL();
 }
 
-export function createStamp(sign: string, heightPct: number): string {
-	const width = config.signMaxSize;
+export function createStamp(sign: string, heightPct: number, config?: Partial<IConfig>): string {
+	const width = getConfig("signMaxSize", config);
 	// Signatures assumed wider than their height
 	const height = 0.01 * heightPct * width;
-	return textToImage(sign, width, height, config.signFont);
+	return textToImage(sign, width, height, getConfig("signFont", config));
 }

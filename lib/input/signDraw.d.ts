@@ -5,6 +5,6 @@ export declare class SignDraw implements ClassComponent<ISignWidget> {
     private resizeHandler;
     oncreate({ dom }: CVnodeDOM<ISignWidget>): void;
     onremove(): void;
-    view({ attrs: { style, onSet, onCancel } }: CVnode<ISignWidget>): m.Vnode<any, any>[];
+    view({ attrs: { style, config, onSet, onCancel } }: CVnode<ISignWidget>): m.Vnode<any, any>[];
     private resetCanvas;
 }

@@ -40,7 +40,8 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 			showDisplay ? m(DisplayTypeComponent, {
 				displayType,
 				value,
-				readonlyOrDisabled: disabled || readonly
+				readonlyOrDisabled: disabled || readonly,
+				config
 			}) : null
 		]);
 	}

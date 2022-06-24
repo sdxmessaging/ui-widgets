@@ -2,24 +2,6 @@ import lodash from "lodash";
 
 import { IClassMap, IWidgetClasses } from "./interface/theme";
 
-import { config } from "./config";
-
-// Class/Theme helpers
-export function imgMaxSize() {
-	return { "max-height": config.imageDispHeight };
-}
-export function thumbMaxSize() {
-	return { "max-height": config.thumbDispHeight };
-}
-
-// +4px for input native horizontal padding
-export const enum DateWidth {
-	dd = "calc(2.3ch + 4px)",
-	mm = "calc(2.8ch + 4px)",
-	yy = "calc(2.7ch + 4px)",
-	yyyy = "calc(4.2ch + 4px)"
-}
-
 // ui-widgets 1.4 theme map
 const classMapState: Required<IClassMap> = {
 	wrapper: "",
@@ -39,7 +21,7 @@ const classMapState: Required<IClassMap> = {
 	requiredLabel: "",
 	disabledWrapper: "o-40",
 	invalidInputWrapper: "ba b--red",
-	altLabel: "alt-label",
+	altLabel: "ml1 o-70",
 	floatLabelPlaceholder: "",
 	invalidCheckboxWrapper: "red"
 };
@@ -67,45 +49,81 @@ export function getButtonContext(key = "default"): string {
 	}
 }
 
+function joinClasses(list: ReadonlyArray<string>) {
+	return lodash.compact(list).join(" ");
+}
+
 // Class string helpers
 export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disabled?: boolean) {
-	return `${wrapper} ${merge ? theme.wrapper : ""} ${disabled ? theme.disabledWrapper : ""}`;
+	return joinClasses([
+		wrapper,
+		merge ? theme.wrapper : "",
+		disabled ? theme.disabledWrapper : ""
+	]);
 }
 
 export function labelCls({ label = "", merge = true }: IWidgetClasses, required?: boolean) {
-	return `${label} ${merge ? theme.label : ""} ${required ? theme.requiredLabel : ""}`;
+	return joinClasses([
+		label,
+		merge ? theme.label : "",
+		required ? theme.requiredLabel : ""
+	]);
 }
 
 export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: boolean, required?: boolean) {
-	return `${labelCls(uiClass, required)} ${floatTop ? "f-07em cursor-default" : `${theme.floatLabelPlaceholder} cursor-text`}`;
+	return joinClasses([
+		labelCls(uiClass, required),
+		floatTop ? "f-07em cursor-default" : `${theme.floatLabelPlaceholder} cursor-text`
+	]);
 }
 
-export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
-	return `${inputWrapper} ${merge ? theme.inputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""}`;
+export function inputWrapperCls({ inputWrapper = "", invalidInputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
+	return joinClasses([
+		inputWrapper,
+		merge ? theme.inputWrapper : "",
+		invalid ? invalidInputWrapper : "",
+		invalid && merge ? theme.invalidInputWrapper : "",
+	]);
 }
 
 export function inputCls({ input = "", merge = true }: IWidgetClasses) {
-	return `${input} ${merge ? theme.input : ""}`;
+	return joinClasses([
+		input, merge ? theme.input : ""
+	]);
 }
 
 export function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
-	return `${inputCls(uiClass)} ${pointerCls(disabled, readonly)}`;
+	return joinClasses([
+		inputCls(uiClass), pointerCls(disabled, readonly)
+	]);
 }
 
 export function textareaCls({ input = "", merge = true }: IWidgetClasses) {
-	return `${input} ${merge ? theme.textarea : ""}`;
+	return joinClasses([
+		input, merge ? theme.textarea : ""
+	]);
 }
 
 export function radioInputCls({ input = "", merge = true }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean) {
-	return `${input} ${merge ? theme.radio : ""} ${checked ? theme.radioChecked : theme.radioUnchecked} ${pointerCls(disabled, readonly)}`;
+	return joinClasses([
+		input,
+		merge ? theme.radio : "",
+		checked ? theme.radioChecked : theme.radioUnchecked,
+		pointerCls(disabled, readonly)
+	]);
 }
 
 export function fileHoverCls(dragging: boolean) {
-	return `${dragging ? theme.fileHover : ""}`;
+	return dragging ? theme.fileHover : "";
 }
 
 export function fileInputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean) {
-	return `${inputWrapper} ${merge ? theme.fileInputWrapper : ""} ${invalid ? theme.invalidInputWrapper : ""} ${fileHoverCls(dragging)}`;
+	return joinClasses([
+		inputWrapper,
+		merge ? theme.fileInputWrapper : "",
+		invalid ? theme.invalidInputWrapper : "",
+		fileHoverCls(dragging)
+	]);
 }
 
 export function pointerCls(disabled?: boolean, readonly?: boolean) {

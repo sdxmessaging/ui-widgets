@@ -4,10 +4,6 @@ export interface IConfig {
     layoutType: LayoutType;
     /** Maximum size for upload image in px */
     imageMaxSize: number;
-    /** Display height of pending images as CSS size */
-    imageDispHeight: string;
-    /** Display height of thumbnail images as CSS size */
-    thumbDispHeight: string;
     /** Single file input label */
     addFileTxt: string;
     /** Multiple file input label */

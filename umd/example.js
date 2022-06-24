@@ -170,19 +170,24 @@ m.mount(document.getElementById("page"), {
 					m(uiWidgets.BaseInput, {
 						field: {
 							id: "text-in-input",
-							label: "Text Input (updates on input)",
+							label: {
+								text: "Text Input",
+								alt: "(updates on input)"
+							},
 							required: true,
 							instant: true,
-							uiClass: { wrapper: "mb2" }
+							uiClass: { invalidInputWrapper: "b--dashed" }
 						},
 						value: textVal,
 					}),
 					m(uiWidgets.TextareaInput, {
 						field: {
 							id: "text-area-input",
-							label: "Text Area (updates on change)",
-							type: "textarea",
-							uiClass: { floatLabelPlaceholder: "red o-40 " }
+							label: {
+								text: "Text Area",
+								alt: "(updates on change)"
+							},
+							type: "textarea"
 						},
 						value: textVal,
 					}),
@@ -203,7 +208,10 @@ m.mount(document.getElementById("page"), {
 					m(uiWidgets.BaseInput, {
 						field: {
 							id: "date-in",
-							label: "Date Input (Browser Default)",
+							label: {
+								text: "Date Input",
+								alt: "(Browser Default)"
+							},
 							type: "date",
 							uiClass: { wrapper: "mb2" }
 						},
@@ -212,7 +220,10 @@ m.mount(document.getElementById("page"), {
 					m(uiWidgets.DateInput, {
 						field: {
 							id: "date-in-widget",
-							label: "Date Input (ui-widgets Bespoke)",
+							label: {
+								text: "Date Input",
+								alt: "(ui-widgets Bespoke)"
+							},
 							options: [{ value: dateFormat() }],
 							required: true,
 							uiClass: { wrapper: "mb2" }
@@ -242,7 +253,10 @@ m.mount(document.getElementById("page"), {
 					m(uiWidgets.BaseInput, {
 						field: {
 							id: "date-in-text",
-							label: "Date Input (text input)"
+							label: {
+								text: "Date Input",
+								alt: "(text input)"
+							}
 						},
 						value: dateVal
 					})

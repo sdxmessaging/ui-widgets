@@ -4,7 +4,7 @@ import SignaturePad from "signature_pad";
 
 import { ISignWidget } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { pxRatio } from "../utils";
 
 import { Button } from "../button";
@@ -43,15 +43,15 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 		window.removeEventListener("orientationchange", this.resizeHandler);
 	}
 
-	public view({ attrs: { style, onSet, onCancel } }: CVnode<ISignWidget>) {
+	public view({ attrs: { style, config, onSet, onCancel } }: CVnode<ISignWidget>) {
 		return [
 			m(".aspect-ratio.bg-white.ba.bw1.br3.b--dashed.b--black-30", { style },
 				m("canvas.aspect-ratio--object")
 			),
 			m(".absolute.top-0.right-0.z-999.translate-up-100", [
 				m(Button, {
-					title: config.applyTtl,
-					icon: config.applyIcn,
+					title: getConfig("applyTtl", config),
+					icon: getConfig("applyIcn", config),
 					classes: "ma1",
 					onclick: () => {
 						if (!this.signaturePad.isEmpty()) {
@@ -60,14 +60,14 @@ export class SignDraw implements ClassComponent<ISignWidget> {
 					}
 				}),
 				m(Button, {
-					title: config.resetTtl,
-					icon: config.resetIcn,
+					title: getConfig("resetTtl", config),
+					icon: getConfig("resetIcn", config),
 					classes: "ma1",
 					onclick: () => this.resetCanvas()
 				}),
 				m(Button, {
-					title: config.cancelTtl,
-					icon: config.cancelIcn,
+					title: getConfig("cancelTtl", config),
+					icon: getConfig("cancelIcn", config),
 					classes: "ma1",
 					onclick: onCancel
 				})

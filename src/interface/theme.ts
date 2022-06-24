@@ -10,6 +10,8 @@ export interface IClasses {
 	readonly inputWrapper?: string;
 	/** Input element if visible */
 	readonly input?: string;
+	/** Override theme default invalidInputWrapper */
+	readonly invalidInputWrapper?: string;
 }
 
 export interface IWidgetClasses extends IClasses {

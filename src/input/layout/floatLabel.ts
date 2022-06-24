@@ -1,5 +1,5 @@
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
-import { FieldType, IPropLayoutWidget, LayoutType, TProp } from "../../interface/widget";
+import { FieldType, IPropLayoutWidget, IWidgetLabel, LayoutType, TProp } from "../../interface/widget";
 
 import { getConfig } from "../../config";
 import { floatLabelPlaceholderCls, inputWrapperCls, labelCls, wrapperCls } from "../../theme";
@@ -43,6 +43,12 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		return `calc(${this.wrapperHeight * 0.5}px - 1.5ex)`;
 	}
 
+	private labelContent(label: string | IWidgetLabel, required?: boolean) {
+		return typeof label === "string"
+			? getLabelText(label, required)
+			: [getLabelText(label, required), getAltLabel(label)];
+	}
+
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
 		const { field, invalid, value, xform = value } = attrs;
 		const {
@@ -53,7 +59,6 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		} = field;
 		// Placeholder or value count as value content
 		const floatTop = this.shouldFloat(layout, placeholder || xform(), readonly);
-		const labelIsString = typeof label === 'string';
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
 			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
@@ -68,7 +73,9 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 					// Break fieldset border, make space for label to float into
 					m("legend.db.hidden.h-05ch.transition-mw", {
 						class: `${labelCls(uiClass, required)} ${floatTop ? "mw-100" : "mw-001px"}`,
-					}, m("span.f-07em", labelIsString ? getLabelText(label, required) : [getLabelText(label, required), " ", getAltLabel(label)])),
+					}, m("span.f-07em",
+						this.labelContent(label, required)
+					)),
 					// Floating label
 					m(".absolute.top-0.transition-transform", {
 						style: {
@@ -76,9 +83,9 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
 						}
 					}, m("label.db.transition-f", {
-						for: id, title: labelIsString ? label : label.text,
+						for: id, title: typeof label === "string" ? label : label.text,
 						class: floatLabelPlaceholderCls(uiClass, floatTop, required)
-					}, labelIsString ? getLabelText(label, required) : [getLabelText(label, required), " ", getAltLabel(label)]))
+					}, this.labelContent(label, required)))
 				] : null,
 				// Input
 				children

@@ -1,4 +1,4 @@
-import m from "mithril";
+import m, { Attributes } from "mithril";
 import stream from "mithril/stream";
 
 import { IFile, IWidgetLabel, TPropMap, TPropStream } from "./interface/widget";
@@ -34,38 +34,32 @@ export function pxRatio() {
 }
 
 export function getLabelText(label: string | IWidgetLabel, required?: boolean): string {
-	if (typeof label === 'string') {
-		return required ? `${label}${config.requiredLblPost}` : label;
-	}
-	else {
-		return required ? `${label.text}${config.requiredLblPost}` : label.text;
-	}
+	const text = typeof label === "string" ? label : label.text;
+	return required ? `${text}${config.requiredLblPost}` : text;
 }
 
-export function getAltLabel(label: IWidgetLabel) {
-	return m("div", { class: theme.altLabel }, label.alt ? label.alt : "");
+export function getAltLabel({ alt }: IWidgetLabel) {
+	return alt ? m("span", { class: theme.altLabel }, alt) : null;
 }
 
 export function imgSrc(path: string, dataUrl?: string): string {
 	return dataUrl ? dataUrl : path;
 }
 
-function enrichLabel(label: IWidgetLabel, selector: string,
-	attrs: { title: string, for?: string, class: string }, required?: boolean) {
-	return [label.icon ? m("i.fa-fw", {
-		class: `${label ? "mr2" : ""} ${label.icon}`
-	}) : null,
-	m(selector, attrs, [getLabelText(label, required), " ", getAltLabel(label)]),
-	label.rightIcon ? m("i.fa-fw", {
-		class: `${label ? "ml2" : ""} ${label.rightIcon}`
-	}) : null,
-	label.href ? m("a.link.dim.pointer.ws-normal", { onclick: label.onclick },
-		m("i.mr2", {
-			class: config.linkIcn
-		}),
-		label.href) : null];
+function enrichLabel(
+	label: IWidgetLabel, selector: string, attributes: Attributes, required?: boolean
+) {
+	return m(selector, attributes, [
+		label.icon ? m("i", { class: label.icon }) : null,
+		m("span", getLabelText(label, required)),
+		getAltLabel(label),
+		label.rightIcon ? m("i", { class: label.rightIcon }) : null,
+		label.href ? m("a.link.dim.pointer.ws-normal.mh1", { onclick: label.onclick }, [
+			m("i", { class: config.linkIcn }),
+			label.href
+		]) : null
+	]);
 }
-
 
 // Used by display widgets
 export function getDisplayLabel(label?: string | IWidgetLabel) {
@@ -162,11 +156,14 @@ export function fileNameExtSplit(fileName: string): [string, string] {
 }
 
 export function dataURItoBlob(dataURI: string): Blob {
-	const dataUriList = dataURI.split(",");
-	const bytes = dataUriList[0].indexOf("base64") >= 0 ?
-		atob(dataUriList[1]) :
-		unescape(dataUriList[1]);
-	const mimeType = dataUriList[0].split(":")[1].split(";")[0];
+	const [header, content] = dataURI.split(",");
+	const bytes = header.indexOf("base64") >= 0 ?
+		atob(content) :
+		unescape(content);
+	const attributes = header
+		.substring(header.indexOf("data:") + 5)
+		.split(";");
+	const mimeType = attributes[0];
 	const bytesTotal = bytes.length;
 	const byteArray = new Uint8Array(bytesTotal);
 	for (let idx = 0; idx < bytesTotal; idx++) {
@@ -180,11 +177,7 @@ export function dataURItoBlob(dataURI: string): Blob {
  * Mutates input blob
  */
 export function fileConstructor(blob: Blob, fileName: string) {
-	const lastModified = new Date().valueOf();
-	const mutableBlob = (blob as unknown) as TPropMap;
-	mutableBlob.name = fileName;
-	mutableBlob.lastModified = lastModified;
-	return blob as File;
+	return new File([blob], fileName, { type: blob.type });
 }
 
 export function dataUrlToFile(dataUrl: string, name: string, metadata?: TPropMap): IFile {
@@ -198,19 +191,6 @@ export function dataUrlToFile(dataUrl: string, name: string, metadata?: TPropMap
 		metadata
 	};
 }
-
-
-// // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
-// // specs compliant (as of March 2018 only Chrome)
-// export function toFileList(fileList: IFile[]) {
-// 	const transfer = new ClipboardEvent("").clipboardData || new DataTransfer();
-// 	lodash.forEach(fileList, ({ file }) => {
-// 		if (file) {
-// 			transfer.items.add(file);
-// 		}
-// 	});
-// 	return transfer.files;
-// }
 
 export function getFileTypeIcon(file: IFile) {
 	const [, extension] = fileNameExtSplit(file.name);

@@ -1,7 +1,6 @@
 import m from "mithril";
 
 import { SignStamp } from "./signStamp";
-import { applyStamp } from "./signStamp";
 
 describe("SignStamp", () => {
 
@@ -22,13 +21,6 @@ describe("SignStamp", () => {
 		m.redraw.sync();
 		m.mount(root, null);
 		expect(root.childNodes.length).toBe(0);
-	});
-
-	test("apply", () => {
-		const mockCallback = jest.fn();
-		const apply = applyStamp(25, "", mockCallback);
-		apply();
-		expect(mockCallback.mock.calls.length).toBe(1);
 	});
 
 });

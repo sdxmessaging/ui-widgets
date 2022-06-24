@@ -16,7 +16,7 @@ export class NavLink implements ClassComponent<IButtonLink> {
 			href, rel, target, download, title,
 			class: `${classes} ${theme.navButton}`,
 			style
-		}, labelIcon({text: label, icon, rightIcon}));
+		}, labelIcon({ text: label, icon, rightIcon }));
 	}
 
 }

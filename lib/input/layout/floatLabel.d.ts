@@ -11,5 +11,6 @@ export declare class FloatLabel implements ClassComponent<IPropLayoutWidget> {
     private calcHeight;
     protected shouldFloat(layout: LayoutType, value: TProp, readonly?: boolean): boolean;
     protected labelTranslateY(): string;
+    private labelContent;
     view({ attrs, children }: CVnode<IPropLayoutWidget>): m.Vnode<any, any>;
 }
