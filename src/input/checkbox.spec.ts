@@ -17,6 +17,16 @@ describe("CheckboxInput", () => {
 			})
 		});
 		expect(root.childNodes.length).toBe(1);
+		// Issue key press to toggle checkbox (label click does not appear to work)
+		const checkLabel = root.querySelector("label") as HTMLLabelElement;
+		expect(checkLabel).not.toBeNull();
+		checkLabel.dispatchEvent(new KeyboardEvent("keydown", { key: " " }));
+		expect(value()).toBe(true);
+		// Redraw and verify checkbox input
+		m.redraw.sync();
+		const checkBox = root.querySelector("input") as HTMLInputElement;
+		expect(checkBox).not.toBeNull();
+		expect(checkBox.checked).toBe(true);
 	});
 
 	test("configured", () => {
