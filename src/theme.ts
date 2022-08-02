@@ -23,7 +23,11 @@ const classMapState: Required<IClassMap> = {
 	invalidInputWrapper: "ba b--red",
 	altLabel: "ml1 o-70",
 	floatLabelPlaceholder: "",
-	invalidCheckboxWrapper: "red"
+	invalidCheckboxWrapper: "red",
+	toolTipWrapper: "db relative ma2",
+	toolTipIconBackground: "bg-black h2 w2 relative br-100 ",
+	toolTipIcon: "white f6",
+	toolTipMessage: "white bg-black w4 f6 pa2 absolute br2 z-max",
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
@@ -49,7 +53,7 @@ export function getButtonContext(key = "default"): string {
 	}
 }
 
-function joinClasses(list: ReadonlyArray<string>) {
+export function joinClasses(list: ReadonlyArray<string>) {
 	return lodash.compact(list).join(" ");
 }
 
