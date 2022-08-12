@@ -5,46 +5,74 @@ import { RadioInput } from "./radio";
 
 describe("RadioInput", () => {
 
-	test("minimal", () => {
+	test("render", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>("");
 		m.mount(root, {
-			view: () => m(RadioInput, {
-				field: {
-					id: "test"
-				},
-				value
-			})
+			view: () => m("div",
+				m(RadioInput, {
+					field: {
+						id: "radio-in",
+						label: "Yes",
+						type: "radio",
+						name: "radio-group-1",
+						value: "yes",
+						required: true
+					},
+					value
+				}),
+				m(RadioInput, {
+					field: {
+						id: "radio-in2",
+						label: "No",
+						type: "radio",
+						name: "radio-group-1",
+						value: "no",
+						required: true
+					},
+					value
+				})
+			)
 		});
 		expect(root.childNodes.length).toBe(1);
-		expect(root.childNodes[0].childNodes.length).toBe(1);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
 	});
 
-	test("configured", () => {
+	test("checked", () => {
 		const root = window.document.createElement("div");
-		const value = stream<string>("val");
+		const value = stream<string>();
 		m.mount(root, {
-			view: () => m(RadioInput, {
-				field: {
-					id: "test",
-					label: "Test Label",
-					name: "Test Name",
-					title: "Test Title",
-					uiClass: {},
-					options: [{
-						value: "val"
-					}, {
-						value: "val2",
-						label: "val2",
-						icon: "test"
-					}]
-				},
-				value
-			})
+			view: () => m("div", [
+				m(RadioInput, {
+					field: {
+						id: "radio-in",
+						label: "Yes",
+						type: "radio",
+						name: "radio-group-1",
+						value: "yes",
+						required: true
+					},
+					value
+				}),
+				m(RadioInput, {
+					field: {
+						id: "radio-in2",
+						label: "No",
+						type: "radio",
+						name: "radio-group-1",
+						value: "no",
+						required: true
+					},
+					value
+				})
+			])
 		});
-		expect(root.childNodes.length).toBe(1);
-		const input = root.getElementsByTagName('input');
-		expect(input.length).toBe(2);
+		const radio2 = root.querySelector("#radio-in2") as HTMLInputElement;
+		expect(radio2).toBeTruthy();
+		expect(radio2.checked).not.toBeTruthy();
+		value("no");
+		m.redraw.sync();
+		expect(radio2.checked).toBeTruthy();
 	});
 
 });
