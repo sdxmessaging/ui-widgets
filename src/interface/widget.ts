@@ -147,18 +147,20 @@ export interface IOptionField extends IField {
 	readonly options?: IOption[];
 }
 
-export interface ICheckboxField extends IField {
-	readonly value: TProp;
+export interface ICheckboxField extends ICheckField {
 	readonly type: FieldType.checkbox;
-	readonly defaultChecked?: boolean;
 }
 
-export interface IRadioField extends IField {
+export interface IRadioField extends ICheckField {
 	readonly name: string;
-	readonly value: TProp;
 	readonly type: FieldType.radio;
 	readonly label?: string;
 	readonly labelSide?: "left" | "right";
+}
+
+interface ICheckField extends IField {
+	readonly defaultChecked?: boolean;
+	readonly value: TProp;
 }
 
 export interface ISignField extends IOptionField {
