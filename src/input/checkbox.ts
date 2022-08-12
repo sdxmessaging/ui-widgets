@@ -14,6 +14,12 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
+
+	public oninit({ attrs: { field, value }}: CVnode<IPropWidget>) {
+		const { defaultChecked = false } = field as ICheckboxField;
+		value(defaultChecked);
+	}
+
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
 			label = "", id, name = id, title = label,

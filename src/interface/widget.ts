@@ -150,6 +150,7 @@ export interface IOptionField extends IField {
 export interface ICheckboxField extends IField {
 	readonly value: TProp;
 	readonly type: FieldType.checkbox;
+	readonly defaultChecked?: boolean;
 }
 
 export interface IRadioField extends IField {
