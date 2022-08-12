@@ -147,6 +147,11 @@ export interface IOptionField extends IField {
 	readonly options?: IOption[];
 }
 
+export interface ICheckboxField extends IField {
+	readonly value: TProp;
+	readonly type: FieldType.checkbox;
+}
+
 export interface IRadioField extends IField {
 	readonly name: string;
 	readonly value: TProp;
@@ -161,7 +166,7 @@ export interface ISignField extends IOptionField {
 	readonly stampSetTxt?: string;
 }
 
-export type TField = IField | IOptionField | ISignField | IRadioField;
+export type TField = IField | IOptionField | ISignField | IRadioField | ICheckboxField;
 
 // Editor signature inner widgets
 export interface ISignWidget {
