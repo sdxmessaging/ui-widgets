@@ -4,6 +4,7 @@ export declare const theme: Readonly<typeof classMapState>;
 export declare function updateClasses(newConfig: Partial<IClassMap>): void;
 export declare function updateButtonContext(newButtonContext: Record<string, string>): void;
 export declare function getButtonContext(key?: string): string;
+export declare function joinClasses(list: ReadonlyArray<string>): string;
 export declare function wrapperCls({ wrapper, merge }: IWidgetClasses, disabled?: boolean): string;
 export declare function labelCls({ label, merge }: IWidgetClasses, required?: boolean): string;
 export declare function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: boolean, required?: boolean): string;

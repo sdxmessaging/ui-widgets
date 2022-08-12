@@ -63,3 +63,5 @@ export { SignBuilder } from "./input/sign";
 export { OmniFileInput } from "./input/omniFileInput";
 export { MultiOmniFileInput } from "./input/multiOmniFileInput";
 export { FileButtonSelect } from "./input/fileButtonSelect";
+// Tool Tip
+export { ToolTip } from "./display/toolTip";

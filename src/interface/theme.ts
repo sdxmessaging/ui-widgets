@@ -52,4 +52,9 @@ export interface IClassMap extends IClasses {
 	/** Float Label Placeholder if it is not floating yet */
 	readonly floatLabelPlaceholder?: string;
 	readonly invalidCheckboxWrapper?: string;
+	/** classes common to all tooltips */
+	readonly toolTipWrapper?: string
+	readonly toolTipIconBackground?: string
+	readonly toolTipIcon?: string
+	readonly toolTipMessage?: string
 }

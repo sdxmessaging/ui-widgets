@@ -172,4 +172,19 @@ export interface IButtonLink extends IBaseButton {
     readonly target?: "_self" | "_blank" | "_parent" | "_top";
     readonly download?: string;
 }
+export interface IToolTip {
+    readonly message: string;
+    readonly direction?: MessageDirection;
+    readonly icon?: string;
+}
+export declare const enum MessageDirection {
+    top = "top",
+    topLeft = "topLeft",
+    topRight = "topRight",
+    bottom = "bottom",
+    bottomLeft = "bottomLeft",
+    bottomRight = "bottomRight",
+    left = "left",
+    right = "right"
+}
 export {};
