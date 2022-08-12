@@ -1,55 +1,44 @@
-import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IOptionField, IPropWidget } from "../interface/widget";
-
-import { radioInputCls } from "../theme";
+import { IPropWidget, IRadioField } from "../interface/widget";
+import { labelCls, pointerCls, radioInputCls } from "../theme";
 import { setValue } from "../utils";
-import { propInvalid } from "../validation";
-
-import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value: val } = attrs;
 		const {
-			id, name = id,
-			required, readonly, disabled, autocomplete, tabindex = "0",
+			id, name,
+			disabled, tabindex = "0",
 			uiClass = {},
-			options
-		} = field as IOptionField;
-		return m(LayoutFixed, {
-			field,
-			value: val,
-			invalid: propInvalid(field, val())
-		}, m(".flex.justify-center.w-100.ph-2px.pv-1px", {
-			onchange: setValue(val)
-		}, lodash.map(options, ({ value, label = value, icon }) => {
-			const checked = val() === value;
-			// No requirement for label "for" attribute
-			return m("label.dib", {
-				"title": label,
-				"class": radioInputCls(uiClass, checked, disabled, readonly),
-				"data-input-id": id,
-				tabindex,
-				onkeydown: (e: KeyboardEvent) => {
-					if (e.key === " ") {
-						(document.activeElement?.firstElementChild as HTMLElement).click();
-					}
-				}
-			},
-				m("input.clip[type=radio]", {
-					name, value, checked,
-					required, autocomplete,
-					tabindex: -1,
-					disabled: disabled || readonly
-				}),
-				icon ? m("i.fa-fw", {
-					class: icon
-				}) : label
-			);
-		})));
+			value, label,
+			labelSide = "right",
+			// autocomplete,
+			required
+		} = field as IRadioField;
+		const checked = val() === value;
+		const pointerClass = pointerCls(disabled);
+		const inputLabel = label && m("span.mh1", {
+			class: `${pointerClass} ${labelCls(uiClass)}`
+		}, label);
+		return m("label", {
+			class: radioInputCls(uiClass, checked, disabled),
+			for: id
+		}, [
+			labelSide === "left" && inputLabel,
+			m("input", {
+				type: "radio",
+				value,
+				required,
+				name, id, disabled, tabindex,
+				label,
+				checked,
+				onchange: setValue(val),
+				class: pointerClass
+			}),
+			labelSide === "right" && inputLabel
+		]);
 	}
 
 }
