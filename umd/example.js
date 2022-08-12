@@ -419,11 +419,14 @@ m.mount(document.getElementById("page"), {
 							id: "select-in",
 							label: "Select Input",
 							options: [{
-								label: "Opt 1",
-								value: "1"
+								label: "Yes",
+								value: "yes"
 							}, {
-								label: "Opt 2",
-								value: "2"
+								label: "No",
+								value: "no"
+							},{
+								label: "Maybe",
+								value: "maybe"
 							}],
 							uiClass: { wrapper: "mb2" }
 						},
@@ -432,15 +435,33 @@ m.mount(document.getElementById("page"), {
 					m(uiWidgets.RadioInput, {
 						field: {
 							id: "radio-in",
-							label: "Radio Input",
+							label: "Yes",
 							type: "radio",
-							options: [{
-								value: "1",
-								label: "Opt 1"
-							}, {
-								value: "2",
-								label: "Opt 2"
-							}]
+							name: "radio-group-1",
+							value: "yes",
+							required: true
+						},
+						value: optVal
+					}),
+					m(uiWidgets.RadioInput, {
+						field: {
+							id: "radio-in2",
+							label: "No",
+							type: "radio",
+							name: "radio-group-1",
+							value: "no",
+							required: true
+						},
+						value: optVal
+					}),
+					m(uiWidgets.RadioInput, {
+						field: {
+							id: "radio-in3",
+							label: "Maybe",
+							type: "radio",
+							name: "radio-group-1",
+							value: "maybe",
+							required: true
 						},
 						value: optVal
 					})
