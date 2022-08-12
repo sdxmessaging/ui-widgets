@@ -8,7 +8,9 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 
 	public oninit({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const { defaultChecked, value } = field as IRadioField;
-		val(defaultChecked ? value : "");
+		if (defaultChecked) {
+			val(value);
+		}
 	}
 
 	public view({ attrs }: CVnode<IPropWidget>) {
