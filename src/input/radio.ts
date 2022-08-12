@@ -24,7 +24,14 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		}, label);
 		return m("label", {
 			class: radioInputCls(uiClass, checked, disabled),
-			for: id
+			for: id,
+			"data-input-id": id,
+			tabindex,
+			onkeydown: (e: KeyboardEvent) => {
+				if (e.key === " ") {
+					(document.activeElement?.firstElementChild as HTMLElement).click();
+				}
+			}
 		}, [
 			labelSide === "left" && inputLabel,
 			m("input", {
