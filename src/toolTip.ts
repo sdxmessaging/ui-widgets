@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { joinClasses, theme } from "../theme";
-import { IToolTip, MessageDirection } from "../interface/widget";
+import { joinClasses, theme } from "./theme";
+import { IToolTip, MessageDirection } from "./interface/widget";
 
 function selectDirection(direction: MessageDirection) {
 	switch (direction) {
