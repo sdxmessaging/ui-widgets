@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { FieldType, IOptionField, IPropWidget, } from "../interface/widget";
+import { FieldType, IPropWidget, } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { propInvalid } from "../validation";
@@ -18,7 +18,7 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
 			instant, uiClass = {},
-		} = field as IOptionField;
+		} = field;
 		return m(LayoutFixed, {
 			field,
 			value,
