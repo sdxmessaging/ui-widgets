@@ -53,7 +53,7 @@ export function getButtonContext(key = "default"): string {
 	}
 }
 
-export function joinClasses(list: ReadonlyArray<string>) {
+export function joinClasses(list: ReadonlyArray<string | false | 0 | null | undefined>) {
 	return lodash.compact(list).join(" ");
 }
 
