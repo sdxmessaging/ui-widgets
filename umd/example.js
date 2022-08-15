@@ -355,14 +355,6 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "toggle-in",
 						label: "Toggle Input",
-						// options: [{
-						// 	label: "On", value: true
-						// }, {
-						// 	label: "Off", value: false
-						// }],
-						// config: {
-						// 	"toggleFormat": "double"
-						// },
 						required: true
 					},
 					value: toggleVal
@@ -388,9 +380,9 @@ m.mount(document.getElementById("page"), {
 						}, {
 							label: "Off", value: false
 						}],
-						// config: {
-						// 	"toggleFormat": "double"
-						// }
+						config: {
+							"toggleFormat": "double"
+						}
 					},
 					value: toggleVal
 				})),
@@ -398,14 +390,11 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "toggle-out",
 						label: "Toggle Output",
-						options: [
-							{
-								label: "On", value: true
-							},
-							{
-								label: "Off", value: false
-							},
-						]
+						options: [{
+							label: "On", value: true
+						}, {
+							label: "Off", value: false
+						}]
 					},
 					value: toggleVal
 				}))
@@ -424,7 +413,7 @@ m.mount(document.getElementById("page"), {
 							}, {
 								label: "No",
 								value: "no"
-							},{
+							}, {
 								label: "Maybe",
 								value: "maybe"
 							}],
