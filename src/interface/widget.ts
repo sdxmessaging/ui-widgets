@@ -143,25 +143,27 @@ export interface IOption {
 	readonly icon?: string;
 }
 
-export interface IOptionField extends Omit<IField, "type"> {
-	readonly type: FieldType.select;
+// We should ideally explicitly type these IField variants:
+// extends Omit<IField, "type">
+export interface IOptionField extends IField {
+	// readonly type: FieldType.select | FieldType.currency | FieldType.date | FieldType.checkbox | FieldType.toggle | FieldType.sign;
 	readonly options?: IOption[];
 }
 
-export interface ISignField extends Omit<IOptionField, "type"> {
-	readonly type: FieldType.sign;
+export interface ISignField extends IOptionField {
+	// readonly type: FieldType.sign;
 	readonly heightPct?: number;
 	readonly stampTxt?: string;
 	readonly stampSetTxt?: string;
 }
 
-export interface ICheckboxField extends Omit<IOptionField, "type"> {
-	readonly type: FieldType.checkbox | FieldType.toggle;
+export interface ICheckboxField extends IOptionField {
+	// readonly type: FieldType.checkbox | FieldType.toggle;
 	readonly value?: TProp;
 }
 
-export interface IRadioField extends Omit<IField, "type"> {
-	readonly type: FieldType.radio;
+export interface IRadioField extends IField {
+	// readonly type: FieldType.radio;
 	readonly name: string;
 	readonly value: TProp;
 	readonly labelSide?: "left" | "right";
