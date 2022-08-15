@@ -5,6 +5,7 @@ import { FieldType, IPropLayoutWidget } from "../../interface/widget";
 
 import { inputWrapperCls, wrapperCls } from "../../theme";
 import { getLabel } from "../../utils";
+
 export class Basic implements ClassComponent<IPropLayoutWidget> {
 
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
@@ -24,7 +25,6 @@ export class Basic implements ClassComponent<IPropLayoutWidget> {
 				children
 			)
 		]);
-
 	}
 
 }

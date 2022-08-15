@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IPropWidget } from "../interface/widget";
+import { ICheckboxField, IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { getConfig } from "../config";
@@ -15,7 +15,7 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, uiClass = {}, config } = field;
+		const { label, options, uiClass = {}, config } = field as ICheckboxField;
 		return m(".pa2.flex.items-center", {
 			class: wrapperCls(uiClass),
 		}, [
@@ -23,7 +23,7 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 			m("i", {
 				class: `${theme.displayValue} ${getConfig(value() ? this.onIcon : this.offIcon, config)}`
 			}),
-			m(CheckLabel, { field, value })
+			m(CheckLabel, { value: value(), doubleLabel: false, options, left: false })
 		]);
 	}
 

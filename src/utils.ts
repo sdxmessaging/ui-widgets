@@ -1,7 +1,7 @@
 import m, { Attributes } from "mithril";
 import stream from "mithril/stream";
 
-import { IFile, IWidgetLabel, TPropMap, TPropStream } from "./interface/widget";
+import { IFile, IWidgetLabel, TProp, TPropMap, TPropStream } from "./interface/widget";
 
 import { labelCls, theme } from "./theme";
 import { config } from "./config";
@@ -120,10 +120,14 @@ export function setValue(val: TPropStream) {
 	};
 }
 
-export function setCheck(chk: TPropStream) {
-	return function ({ target: { checked } }: { target: HTMLInputElement; }) {
-		chk(checked);
-	};
+export function setCheck(val: TPropStream, checkValue?: TProp) {
+	return checkValue != null
+		? function ({ target: { checked } }: { target: HTMLInputElement; }) {
+			val(checked ? checkValue : false);
+		}
+		: function ({ target: { checked } }: { target: HTMLInputElement; }) {
+			val(checked);
+		};
 }
 
 export function setIfDifferent<T>(inStream: stream<T>, val: T) {

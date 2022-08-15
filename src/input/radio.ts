@@ -2,33 +2,24 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, IRadioField } from "../interface/widget";
 import { labelCls, pointerCls, radioInputCls } from "../theme";
-import { setValue } from "../utils";
+import { getLabelText, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
-
-	public oninit({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
-		const { defaultChecked, value } = field as IRadioField;
-		if (defaultChecked) {
-			val(value);
-		}
-	}
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value: val } = attrs;
 		const {
-			id, name,
+			id, name, value,
 			disabled, tabindex = "0",
-			uiClass = {},
-			value, label,
-			labelSide = "right",
-			// autocomplete,
-			required
+			label, labelSide = "right",
+			required,
+			uiClass = {}
 		} = field as IRadioField;
 		const checked = val() === value;
 		const pointerClass = pointerCls(disabled);
 		const inputLabel = label && m("span.mh1", {
 			class: `${pointerClass} ${labelCls(uiClass)}`
-		}, label);
+		}, getLabelText(label));
 		return m("label", {
 			class: radioInputCls(uiClass, checked, disabled),
 			for: id,
