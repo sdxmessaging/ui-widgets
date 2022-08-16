@@ -23,12 +23,17 @@ var textVal = stream("");
 var currencyVal = stream();
 var dateVal = stream();
 var dateFormat = stream("default");
+var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false }
 var cardVal = stream();
 var colVal = stream("#cc0011");
 var labVal = stream("hello");
 var checkVal = stream();
 var optVal = stream();
 var faceVal = stream();
+var faceValUiClass = {
+	wrapper: "flex-auto bg-near-white br-pill ma1",
+	input: "justify-center"
+};
 var toggleVal = stream();
 var passVal = stream();
 // Transform
@@ -230,26 +235,66 @@ m.mount(document.getElementById("page"), {
 						},
 						value: dateVal
 					}),
-					m(uiWidgets.RadioInput, {
-						field: {
-							id: "date-format-in",
-							label: "Date input format",
-							uiClass: {
-								wrapper: "mb2",
-								input: "f6"
+					// Date locale
+					m(".flex.flex-wrap.mb2", [
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-default",
+								label: "Default", value: "default",
+								uiClass: dateFormatUiClass
 							},
-							options: [
-								{ label: "Default", value: "default" },
-								{ label: "GB", value: "en-GB" },
-								{ label: "US", value: "en-US" },
-								{ label: "Switzerland", value: "fr-CH" },
-								{ label: "Egypt", value: "ar-EG" },
-								{ label: "Korea", value: "ko-KR" },
-								{ label: "Japan", value: "ja-JP" }
-							]
-						},
-						value: dateFormat
-					}),
+							value: dateFormat
+						}),
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-gb",
+								label: "GB", value: "en-GB",
+								uiClass: dateFormatUiClass
+							},
+							value: dateFormat
+						}),
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-us",
+								label: "US", value: "en-US",
+								uiClass: dateFormatUiClass
+							},
+							value: dateFormat
+						}),
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-ch",
+								label: "Switzerland", value: "fr-CH",
+								uiClass: dateFormatUiClass
+							},
+							value: dateFormat
+						}),
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-eg",
+								label: "Egypt", value: "ar-EG",
+								uiClass: dateFormatUiClass
+							},
+							value: dateFormat
+						}),
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-kr",
+								label: "Korea", value: "ko-KR",
+								uiClass: dateFormatUiClass
+							},
+							value: dateFormat
+						}),
+						m(uiWidgets.RadioInput, {
+							field: {
+								id: "date-format-jp",
+								label: "Japan", value: "ja-JP",
+								uiClass: dateFormatUiClass
+							},
+							value: dateFormat
+						})
+					]),
+
 					m(uiWidgets.BaseInput, {
 						field: {
 							id: "date-in-text",
@@ -967,42 +1012,71 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			m("h3", m("a#closing.link[href=#closing]", "Thanks")),
-			m("p", "We hope you like these widgets"),
+			m("p", "We hope you like these widgets and we value your feedback"),
 
 			// Feedback
-			m(uiWidgets.RadioInput, {
-				field: {
-					id: "feedback-in",
-					label: "We value your feedback",
-					uiClass: {
-						label: "ml5 ph2 bg-near-white ba br-pill",
-						inputWrapper: "flex bg-near-white br-pill",
-						input: "flex-auto pa2 bg-animate br-pill tc"
-					},
-					options: [{
+			m(".flex", [
+				m(uiWidgets.RadioInput, {
+					field: {
+						id: "feedback-1",
 						value: "1",
-						label: "Very unsatisfied",
-						icon: "fas fa-angry fa-2x"
-					}, {
+						uiClass: faceValUiClass,
+						config: {
+							radioOnIcn: "fas fa-angry fa-2x",
+							radioOffIcn: "fas fa-angry fa-2x o-40"
+						}
+					},
+					value: faceVal
+				}),
+				m(uiWidgets.RadioInput, {
+					field: {
+						id: "feedback-2",
 						value: "2",
-						label: "Unsatisfied",
-						icon: "fas fa-frown fa-2x"
-					}, {
+						uiClass: faceValUiClass,
+						config: {
+							radioOnIcn: "fas fa-frown fa-2x",
+							radioOffIcn: "fas fa-frown fa-2x o-40"
+						}
+					},
+					value: faceVal
+				}),
+				m(uiWidgets.RadioInput, {
+					field: {
+						id: "feedback-3",
 						value: "3",
-						label: "Neutral",
-						icon: "fas fa-meh fa-2x"
-					}, {
+						uiClass: faceValUiClass,
+						config: {
+							radioOnIcn: "fas fa-meh fa-2x",
+							radioOffIcn: "fas fa-meh fa-2x o-40"
+						}
+					},
+					value: faceVal
+				}),
+				m(uiWidgets.RadioInput, {
+					field: {
+						id: "feedback-4",
 						value: "4",
-						label: "Satisfied",
-						icon: "fas fa-smile fa-2x"
-					}, {
+						uiClass: faceValUiClass,
+						config: {
+							radioOnIcn: "fas fa-smile fa-2x",
+							radioOffIcn: "fas fa-smile fa-2x o-40"
+						}
+					},
+					value: faceVal
+				}),
+				m(uiWidgets.RadioInput, {
+					field: {
+						id: "feedback-5",
 						value: "5",
-						label: "Very satisfied",
-						icon: "fas fa-grin-beam fa-2x"
-					}]
-				},
-				value: faceVal
-			}),
+						uiClass: faceValUiClass,
+						config: {
+							radioOnIcn: "fas fa-grin-beam fa-2x",
+							radioOffIcn: "fas fa-grin-beam fa-2x o-40"
+						}
+					},
+					value: faceVal
+				})
+			]),
 
 			faceVal() ? m("p", Number.parseInt(faceVal()) < 4
 				? [
