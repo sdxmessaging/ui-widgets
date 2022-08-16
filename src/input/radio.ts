@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, IRadioField } from "../interface/widget";
 
-import { config } from "../config";
+import { getConfig } from "../config";
 import { labelCls, pointerCls, checkInputCls, wrapperCls, inputWrapperCls } from "../theme";
 import { getLabelText, setValue } from "../utils";
 
@@ -14,7 +14,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			label, id, name, value, title = label,
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			labelSide = "right",
-			uiClass = {}
+			uiClass = {}, config
 		} = field as IRadioField;
 		const checked = val() === value;
 		const pointerClass = pointerCls(disabled);
@@ -51,7 +51,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 			}, [
 				labelSide === "left" && m("span.mr2", inputLabel),
 				m("i", {
-					class: config[checked ? "radioOnIcn" : "radioOffIcn"]
+					class: getConfig(checked ? "radioOnIcn" : "radioOffIcn", config)
 				}),
 				labelSide === "right" && m("span.ml2", inputLabel)
 			])

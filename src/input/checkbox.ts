@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IConfig, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget } from "../interface/widget";
 
-import { config, getConfig } from "../config";
+import { getConfig } from "../config";
 import { checkInputCls, inputWrapperCls, joinClasses, wrapperCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
@@ -20,10 +20,10 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 			label = "", id, name = id, value, title = label,
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			options,
-			uiClass = {}, config: fieldConfig
+			uiClass = {}, config
 		} = field as ICheckboxField;
 
-		const doubleLabel = getConfig("toggleFormat", fieldConfig) === "double";
+		const doubleLabel = getConfig("toggleFormat", config) === "double";
 		const invalidCheckboxWrapper = theme.invalidCheckboxWrapper;
 
 		return m("div", {
@@ -60,7 +60,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				m("i", {
 					class: joinClasses([
 						// doubleLabel will always set the "on" icon
-						config[val() || doubleLabel ? this.onIcon : this.offIcon],
+						getConfig(val() || doubleLabel ? this.onIcon : this.offIcon, config),
 						// doubleLabel will mirror the icon if value is falsy
 						// TODO Rename to "flip-h" with Font Awesome 6
 						!val() && doubleLabel ? "fa-flip-horizontal" : ""
