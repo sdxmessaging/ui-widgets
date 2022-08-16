@@ -1,6 +1,6 @@
 import m from "mithril";
 import stream from "mithril/stream";
-import { IFile, IWidgetLabel, TPropMap, TPropStream } from "./interface/widget";
+import { IFile, IWidgetLabel, TProp, TPropMap, TPropStream } from "./interface/widget";
 import { IWidgetClasses } from "./interface/theme";
 export declare function guid(): string;
 export declare function pxRatio(): number;
@@ -13,7 +13,7 @@ export declare function labelIcon(label: IWidgetLabel): ("" | m.Vnode<any, any> 
 export declare function setValue(val: TPropStream): ({ target: { value } }: {
     target: HTMLInputElement;
 }) => void;
-export declare function setCheck(chk: TPropStream): ({ target: { checked } }: {
+export declare function setCheck(val: TPropStream, checkValue?: TProp): ({ target: { checked } }: {
     target: HTMLInputElement;
 }) => void;
 export declare function setIfDifferent<T>(inStream: stream<T>, val: T): void;

@@ -100,19 +100,20 @@ export interface IOption {
 export interface IOptionField extends IField {
     readonly options?: IOption[];
 }
-export interface IRadioField extends IField {
-    readonly name: string;
-    readonly value: TProp;
-    readonly type: FieldType.radio;
-    readonly label?: string;
-    readonly labelSide?: "left" | "right";
-}
 export interface ISignField extends IOptionField {
     readonly heightPct?: number;
     readonly stampTxt?: string;
     readonly stampSetTxt?: string;
 }
-export declare type TField = IField | IOptionField | ISignField | IRadioField;
+export interface ICheckboxField extends IOptionField {
+    readonly value?: TProp;
+}
+export interface IRadioField extends IField {
+    readonly name: string;
+    readonly value: TProp;
+    readonly labelSide?: "left" | "right";
+}
+export declare type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
 export interface ISignWidget {
     readonly heightPct: number;
     readonly stampTxt: string;
