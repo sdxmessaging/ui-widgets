@@ -31,43 +31,44 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		}, m("fieldset.w-100.bn", {
 			class: inputWrapperCls(uiClass)
 		}, [
-			m(".flex",
-				m("input.clip[type=checkbox]", {
-					id, name, value,
-					checked: val(),
-					required, autocomplete,
-					disabled: disabled || readonly,
-					tabindex: -1,
-					'aria-hidden': "true",
-					onchange: setCheck(val, value)
-				}),
-				m("label.flex.flex-start.items-start", {
-					tabindex,
-					"class": `${checkInputCls(uiClass, disabled, readonly)} ${required && !val() ? invalidCheckboxWrapper : ""}`,
-					for: id,
-					title,
-					"data-input-id": id,
-					'aria-label': label,
-					onkeydown: (e: KeyboardEvent) => {
-						if (e.key === " ") {
-							val(!val());
-						}
+			m("input.clip[type=checkbox]", {
+				id, name, value,
+				checked: val(),
+				required, autocomplete,
+				disabled: disabled || readonly,
+				tabindex: -1,
+				'aria-hidden': "true",
+				onchange: setCheck(val, value)
+			}),
+			m("label.flex.items-center", {
+				class: joinClasses([
+					checkInputCls(uiClass, disabled, readonly),
+					required && !val() ? invalidCheckboxWrapper : ""
+				]),
+				for: id,
+				title,
+				"data-input-id": id,
+				"aria-label": label,
+				tabindex,
+				onkeydown: (e: KeyboardEvent) => {
+					if (e.key === " ") {
+						val(!val());
 					}
-				}, [
-					doubleLabel && m(CheckLabel, { value: val(), doubleLabel, options, left: true }),
-					m("i", {
-						class: joinClasses([
-							// doubleLabel will always set the "on" icon
-							config[val() || doubleLabel ? this.onIcon : this.offIcon],
-							// doubleLabel will mirror the icon if value is falsy
-							// TODO Rename to "flip-h" with Font Awesome 6
-							!val() && doubleLabel ? "fa-flip-horizontal" : ""
-						])
-					}),
-					label && !doubleLabel && m("span.ml2", getLabelText(label, required)),
-					m(CheckLabel, { value: val(), doubleLabel, options, left: false })
-				])
-			)
+				}
+			}, [
+				doubleLabel && m(CheckLabel, { value: val(), doubleLabel, options, left: true }),
+				m("i", {
+					class: joinClasses([
+						// doubleLabel will always set the "on" icon
+						config[val() || doubleLabel ? this.onIcon : this.offIcon],
+						// doubleLabel will mirror the icon if value is falsy
+						// TODO Rename to "flip-h" with Font Awesome 6
+						!val() && doubleLabel ? "fa-flip-horizontal" : ""
+					])
+				}),
+				label && !doubleLabel && m("span.ml2", getLabelText(label, required)),
+				m(CheckLabel, { value: val(), doubleLabel, options, left: false })
+			])
 		]));
 	}
 

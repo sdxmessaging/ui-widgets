@@ -1,7 +1,9 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { IPropWidget, IRadioField } from "../interface/widget";
-import { labelCls, pointerCls, radioInputCls } from "../theme";
+
+import { config } from "../config";
+import { labelCls, pointerCls, checkInputCls, wrapperCls, inputWrapperCls } from "../theme";
 import { getLabelText, setValue } from "../utils";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
@@ -9,41 +11,51 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value: val } = attrs;
 		const {
-			id, name, value,
-			disabled, tabindex = "0",
-			label, labelSide = "right",
-			required,
+			label, id, name, value, title = label,
+			required, readonly, disabled, autocomplete, tabindex = "0",
+			labelSide = "right",
 			uiClass = {}
 		} = field as IRadioField;
 		const checked = val() === value;
 		const pointerClass = pointerCls(disabled);
+
 		const inputLabel = label && m("span.mh1", {
 			class: `${pointerClass} ${labelCls(uiClass)}`
 		}, getLabelText(label));
-		return m("label", {
-			class: radioInputCls(uiClass, checked, disabled),
-			for: id,
-			"data-input-id": id,
-			tabindex,
-			onkeydown: (e: KeyboardEvent) => {
-				if (e.key === " ") {
-					(document.activeElement?.firstElementChild as HTMLElement).click();
-				}
-			}
+
+		return m("div", {
+			class: wrapperCls(uiClass, disabled),
+		}, m("fieldset.w-100.bn", {
+			class: inputWrapperCls(uiClass)
 		}, [
-			labelSide === "left" && inputLabel,
-			m("input", {
-				type: "radio",
-				value,
-				required,
-				name, id, disabled, tabindex,
-				label,
-				checked,
-				onchange: setValue(val),
-				class: pointerClass
+			m("input.clip[type=radio]", {
+				id, name, value,
+				checked, required, autocomplete,
+				disabled,
+				tabindex: -1,
+				'aria-hidden': "true",
+				onchange: setValue(val)
 			}),
-			labelSide === "right" && inputLabel
-		]);
+			m("label.flex.items-center", {
+				class: checkInputCls(uiClass, disabled, readonly),
+				for: id,
+				title,
+				"data-input-id": id,
+				"aria-label": label,
+				tabindex,
+				onkeydown: (e: KeyboardEvent) => {
+					if (e.key === " ") {
+						(document.activeElement?.firstElementChild as HTMLElement).click();
+					}
+				}
+			}, [
+				labelSide === "left" && m("span.mr2", inputLabel),
+				m("i", {
+					class: config[checked ? "radioOnIcn" : "radioOffIcn"]
+				}),
+				labelSide === "right" && m("span.ml2", inputLabel)
+			])
+		]));
 	}
 
 }

@@ -11,9 +11,6 @@ const classMapState: Required<IClassMap> = {
 	button: "pa2 bn br2",
 	navButton: "dark-gray",
 	textarea: "dark-gray fw2",
-	radio: "dark-gray pa2 br2",
-	radioChecked: "bg-light-blue",
-	radioUnchecked: "o-60",
 	fileInputWrapper: "ba bw1 br3 b--black-30 b--dashed dark-gray",
 	fileHover: "blue b--blue",
 	displayLabel: "silver",
@@ -105,15 +102,6 @@ export function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, reado
 export function textareaCls({ input = "", merge = true }: IWidgetClasses) {
 	return joinClasses([
 		input, merge ? theme.textarea : ""
-	]);
-}
-
-export function radioInputCls({ input = "", merge = true }: IWidgetClasses, checked: boolean, disabled?: boolean, readonly?: boolean) {
-	return joinClasses([
-		input,
-		merge ? theme.radio : "",
-		checked ? theme.radioChecked : theme.radioUnchecked,
-		pointerCls(disabled, readonly)
 	]);
 }
 

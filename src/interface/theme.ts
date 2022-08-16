@@ -27,12 +27,6 @@ export interface IClassMap extends IClasses {
 	readonly navButton?: string;
 	/** Classes for textarea */
 	readonly textarea?: string;
-	/** Classes for radio "buttons" */
-	readonly radio?: string;
-	/** Classes for selected radio option */
-	readonly radioChecked?: string;
-	/** Classes for deselected radio option */
-	readonly radioUnchecked?: string;
 	/** Classes for file "drop zone" */
 	readonly fileInputWrapper?: string;
 	/** Classes for file "drop zone" when dragging a file over it */

@@ -43,6 +43,10 @@ const confMap: IConfig = {
 	uncheckIcn: "far fa-square",
 	toggleOnIcn: "fas fa-toggle-on",
 	toggleOffIcn: "fas fa-toggle-off",
+	radioOnIcn: "fas fa-dot-circle",
+	// Font awesome 6
+	// radioOnIcn: "fas fa-circle-dot",
+	radioOffIcn: "fas fa-circle",
 	showPassIcn: "fas fa-eye",
 	hidePassIcn: "fas fa-eye-slash",
 	uploadIcn: "fas fa-file-upload",
