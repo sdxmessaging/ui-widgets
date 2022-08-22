@@ -16,13 +16,15 @@ export class TextareaInput extends ValidationBase {
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, name = id, title = label, placeholder,
-			required, readonly, disabled, autofocus, autocomplete, tabindex, spellcheck,
+			required, readonly, disabled, autofocus, autocomplete,
+			minlength, maxlength, tabindex, spellcheck,
 			instant, uiClass = {}
 		} = attrs.field;
 		return m(LayoutTop, { field, value, xform, invalid: this.invalid },
 			m("textarea.w-100.bg-transparent.bn.outline-0.h-100.resize-none", {
 				id, name, title,
-				placeholder, required, readonly, disabled, autofocus, autocomplete, tabindex, spellcheck,
+				placeholder, required, readonly, disabled, autofocus, autocomplete,
+				minlength, maxlength, tabindex, spellcheck,
 				class: textareaCls(uiClass),
 				value: value(),
 				// Update value on change or input ("instant" option)
