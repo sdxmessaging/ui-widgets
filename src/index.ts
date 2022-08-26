@@ -3,7 +3,7 @@ export * from "./interface/theme";
 export { IConfig } from './interface/config';
 
 export { updateConfig } from "./config";
-export { updateClasses, updateButtonContext, theme } from "./theme";
+export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
 export {
 	guid, pxRatio, fileNameExtSplit,
 	dataURItoBlob, fileConstructor, dataUrlToFile
@@ -19,6 +19,7 @@ export { Button } from "./button";
 export { ButtonLink } from "./buttonLink";
 export { NavButton } from "./navButton";
 export { NavLink } from "./navLink";
+export { ToolTip } from "./toolTip";
 
 // Display widgets
 // Prop
@@ -63,5 +64,3 @@ export { SignBuilder } from "./input/sign";
 export { OmniFileInput } from "./input/omniFileInput";
 export { MultiOmniFileInput } from "./input/multiOmniFileInput";
 export { FileButtonSelect } from "./input/fileButtonSelect";
-// Tool Tip
-export { ToolTip } from "./display/toolTip";

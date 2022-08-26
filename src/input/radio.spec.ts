@@ -14,7 +14,6 @@ describe("RadioInput", () => {
 					field: {
 						id: "radio-in",
 						label: "Yes",
-						type: "radio",
 						name: "radio-group-1",
 						value: "yes",
 						required: true
@@ -25,7 +24,6 @@ describe("RadioInput", () => {
 					field: {
 						id: "radio-in2",
 						label: "No",
-						type: "radio",
 						name: "radio-group-1",
 						value: "no",
 						required: true
@@ -47,7 +45,6 @@ describe("RadioInput", () => {
 					field: {
 						id: "radio-in",
 						label: "Yes",
-						type: "radio",
 						name: "radio-group-1",
 						value: "yes",
 						required: true
@@ -58,7 +55,6 @@ describe("RadioInput", () => {
 					field: {
 						id: "radio-in2",
 						label: "No",
-						type: "radio",
 						name: "radio-group-1",
 						value: "no",
 						required: true

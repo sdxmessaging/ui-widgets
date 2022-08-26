@@ -2,8 +2,7 @@ import { fileHoverCls, theme, updateClasses } from "./theme";
 import { getButtonContext, updateButtonContext } from "./theme";
 import {
 	labelCls,
-	inputCls, fileInputWrapperCls, textareaCls, radioInputCls,
-	inputWrapperCls, wrapperCls
+	inputCls, fileInputWrapperCls, textareaCls, inputWrapperCls, wrapperCls
 } from "./theme";
 
 describe("Theme", () => {
@@ -73,11 +72,6 @@ describe("Theme Classes", () => {
 	test("textareaCls", () => {
 		expect(textareaCls({})).toBe(theme.textarea);
 		expect(textareaCls({ input: "test", merge: false })).toBe("test");
-	});
-
-	test("radioInputCls", () => {
-		expect(radioInputCls({}, false)).toBe(`${theme.radio} ${theme.radioUnchecked} pointer`);
-		expect(radioInputCls({ input: "test", merge: false }, true)).toBe(`test ${theme.radioChecked} pointer`);
 	});
 
 	test("inputWrapper", () => {

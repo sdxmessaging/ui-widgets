@@ -143,33 +143,33 @@ export interface IOption {
 	readonly icon?: string;
 }
 
+// We should ideally explicitly type these IField variants:
+// extends Omit<IField, "type">
 export interface IOptionField extends IField {
+	// readonly type: FieldType.select | FieldType.currency | FieldType.date | FieldType.checkbox | FieldType.toggle | FieldType.sign;
 	readonly options?: IOption[];
 }
 
-export interface ICheckboxField extends ICheckField {
-	readonly type: FieldType.checkbox;
-}
-
-export interface IRadioField extends ICheckField {
-	readonly name: string;
-	readonly type: FieldType.radio;
-	readonly label?: string;
-	readonly labelSide?: "left" | "right";
-}
-
-interface ICheckField extends IField {
-	readonly defaultChecked?: boolean;
-	readonly value: TProp;
-}
-
 export interface ISignField extends IOptionField {
+	// readonly type: FieldType.sign;
 	readonly heightPct?: number;
 	readonly stampTxt?: string;
 	readonly stampSetTxt?: string;
 }
 
-export type TField = IField | IOptionField | ISignField | IRadioField | ICheckboxField;
+export interface ICheckboxField extends IOptionField {
+	// readonly type: FieldType.checkbox | FieldType.toggle;
+	readonly value?: TProp;
+}
+
+export interface IRadioField extends IField {
+	// readonly type: FieldType.radio;
+	readonly name: string;
+	readonly value: TProp;
+	readonly labelSide?: "left" | "right";
+}
+
+export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
 
 // Editor signature inner widgets
 export interface ISignWidget {
