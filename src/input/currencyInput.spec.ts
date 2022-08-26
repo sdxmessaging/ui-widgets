@@ -67,16 +67,16 @@ describe("CurrencyInput", () => {
 });
 
 describe("formatCurrecny", () => {
-	describe("accounting", () => {
+	describe("parentheses", () => {
 		test("positive", () => {
-			expect(formatCurrency(1, "accounting")).toBe("0.01");
+			expect(formatCurrency(1, "parentheses")).toBe("0.01");
 		});
 		test("negative", () => {
-			expect(formatCurrency(-1, "accounting")).toBe("(0.01)");
+			expect(formatCurrency(-1, "parentheses")).toBe("(0.01)");
 		});
 		test("zero", () => {
-			expect(formatCurrency(0, "accounting")).toBe("0.00");
-			expect(formatCurrency(-0, "accounting")).toBe("0.00");
+			expect(formatCurrency(0, "parentheses")).toBe("0.00");
+			expect(formatCurrency(-0, "parentheses")).toBe("0.00");
 		});
 	});
 	describe("default", () => {
@@ -87,8 +87,8 @@ describe("formatCurrecny", () => {
 			expect(formatCurrency(-1, "default")).toBe("0.01");
 		});
 		test("zero", () => {
-			expect(formatCurrency(0, "accounting")).toBe("0.00");
-			expect(formatCurrency(-0, "accounting")).toBe("0.00");
+			expect(formatCurrency(0, "parentheses")).toBe("0.00");
+			expect(formatCurrency(-0, "parentheses")).toBe("0.00");
 		});
 	});
 });
