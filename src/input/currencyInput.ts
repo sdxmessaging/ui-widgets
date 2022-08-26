@@ -10,6 +10,9 @@ import { selectTarget } from "../utils";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 import { getConfig } from "../config";
 
+
+export type TCurrencyFormat = "default" | "parentheses" | "redParentheses" | "red";
+
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
@@ -50,9 +53,9 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 }
 
-export function formatCurrency(unitTotal: number, currencyFormat: "default" | "accounting") {
+export function formatCurrency(unitTotal: number, currencyFormat: TCurrencyFormat) {
 	const currencyStr = numberToCurrencyStr(unitTotal);
-	if (currencyFormat === "accounting" && unitTotal < 0) {
+	if (currencyFormat === "parentheses" && unitTotal < 0) {
 		return `(${currencyStr})`;
 	} else {
 		return currencyStr;

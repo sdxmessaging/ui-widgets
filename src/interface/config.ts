@@ -1,3 +1,4 @@
+import { TCurrencyFormat } from "../input/currencyInput";
 import { IOption, LayoutType } from "./widget";
 
 export interface IConfig {
@@ -78,7 +79,7 @@ export interface IConfig {
 	excelFileIcn: string;
 	fileIcn: string;
 	codeFileIcn: string;
-	currencyFormat: "default" | "accounting";
+	currencyFormat: TCurrencyFormat;
 	toggleFormat: "double" | "default";
 }
 
