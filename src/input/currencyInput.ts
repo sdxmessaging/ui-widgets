@@ -9,9 +9,8 @@ import { selectTarget } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 import { getConfig } from "../config";
+import { IConfig } from "../interface/config";
 
-
-export type TCurrencyFormat = "default" | "parentheses" | "redParentheses" | "red";
 
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
@@ -56,7 +55,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 }
 
-export function formatCurrency(unitTotal: number, currencyFormat: TCurrencyFormat) {
+export function formatCurrency(unitTotal: number, currencyFormat: IConfig["currencyFormat"]) {
 	const currencyStr = numberToCurrencyStr(unitTotal);
 	if (unitTotal < 0) {
 		if (currencyFormat.toLowerCase().includes("parentheses")) {
