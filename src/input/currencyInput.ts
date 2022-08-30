@@ -27,7 +27,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
 		const currencyFormat = getConfig("currencyFormat", config);
-
+		const unitTotal = propToNumber(xform());
 		return m(LayoutFixed, {
 			field,
 			value,
@@ -42,9 +42,12 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				pattern, inputmode, spellcheck,
 				class: inputCls(uiClass),
 				onfocus: selectTarget,
+				style: currencyFormat.includes("red") && unitTotal < 0 && {
+					color: "red"
+				},
 				value: lodash.isUndefined(xform())
 					? null
-					: formatCurrency(propToNumber(xform()), currencyFormat),
+					: formatCurrency(unitTotal, currencyFormat),
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
 			})
@@ -55,11 +58,14 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 export function formatCurrency(unitTotal: number, currencyFormat: TCurrencyFormat) {
 	const currencyStr = numberToCurrencyStr(unitTotal);
-	if (currencyFormat === "parentheses" && unitTotal < 0) {
-		return `(${currencyStr})`;
-	} else {
-		return currencyStr;
+	if (unitTotal < 0) {
+		if (currencyFormat.toLowerCase().includes("parentheses")) {
+			return `(${currencyStr})`;
+		} else if (currencyFormat !== "red") {
+			return `-${currencyStr}`;
+		}
 	}
+	return currencyStr;
 }
 
 export function propToNumber(value: TProp): number {
@@ -72,8 +78,13 @@ export function propToNumber(value: TProp): number {
  * @return parsed value as smallest monetary unit e.g. 12345
  */
 export function currencyStrToNumber(currencyStr: string) {
-	// Remove everything but digits and the decimal point
-	const inputStr = currencyStr.replace(/[^\d.]/g, "");
+	// TODO review chain replace
+	// Remove everything but digits and the decimal point, and keep minus sign
+	const inputStr = currencyStr
+		.replace("(-", "-")
+		.replace("(", "-")
+		.replace(")", "")
+		.replace(/[^\d.-]/g, "");
 	let left;
 	let right = 0;
 	// split number at decimal point
