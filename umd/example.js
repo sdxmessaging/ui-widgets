@@ -239,7 +239,7 @@ m.mount(document.getElementById("page"), {
 					m(".flex.flex-wrap.mb2", [
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-default",
+								id: "date-format-default", name: "date-format",
 								label: "Default", value: "default",
 								uiClass: dateFormatUiClass
 							},
@@ -247,7 +247,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-gb",
+								id: "date-format-gb", name: "date-format",
 								label: "GB", value: "en-GB",
 								uiClass: dateFormatUiClass
 							},
@@ -255,7 +255,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-us",
+								id: "date-format-us", name: "date-format",
 								label: "US", value: "en-US",
 								uiClass: dateFormatUiClass
 							},
@@ -263,7 +263,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-ch",
+								id: "date-format-ch", name: "date-format",
 								label: "Switzerland", value: "fr-CH",
 								uiClass: dateFormatUiClass
 							},
@@ -271,7 +271,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-eg",
+								id: "date-format-eg", name: "date-format",
 								label: "Egypt", value: "ar-EG",
 								uiClass: dateFormatUiClass
 							},
@@ -279,7 +279,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-kr",
+								id: "date-format-kr", name: "date-format",
 								label: "Korea", value: "ko-KR",
 								uiClass: dateFormatUiClass
 							},
@@ -287,7 +287,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-jp",
+								id: "date-format-jp", name: "date-format",
 								label: "Japan", value: "ja-JP",
 								uiClass: dateFormatUiClass
 							},
@@ -427,6 +427,8 @@ m.mount(document.getElementById("page"), {
 						}],
 						config: {
 							"toggleFormat": "double"
+							// toggleOnIcn: "fas fa-toggle-on",
+							// toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
 						}
 					},
 					value: toggleVal

@@ -43,6 +43,8 @@ const confMap: IConfig = {
 	uncheckIcn: "far fa-square",
 	toggleOnIcn: "fas fa-toggle-on",
 	toggleOffIcn: "fas fa-toggle-off",
+	// Recreate doubleLabel parameter
+	// toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal",
 	radioOnIcn: "fas fa-dot-circle",
 	// Font awesome 6
 	// radioOnIcn: "fas fa-circle-dot",
