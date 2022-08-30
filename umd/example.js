@@ -20,7 +20,7 @@ uiWidgets.updateButtonContext({
 
 // Simple props
 var textVal = stream("");
-var currencyVal = stream();
+var currencyVal = stream(-500);
 var dateVal = stream();
 var dateFormat = stream("default");
 var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false }
@@ -239,7 +239,7 @@ m.mount(document.getElementById("page"), {
 					m(".flex.flex-wrap.mb2", [
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-default", name: "date-format",
+								id: "date-format-default",
 								label: "Default", value: "default",
 								uiClass: dateFormatUiClass
 							},
@@ -247,7 +247,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-gb", name: "date-format",
+								id: "date-format-gb",
 								label: "GB", value: "en-GB",
 								uiClass: dateFormatUiClass
 							},
@@ -255,7 +255,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-us", name: "date-format",
+								id: "date-format-us",
 								label: "US", value: "en-US",
 								uiClass: dateFormatUiClass
 							},
@@ -263,7 +263,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-ch", name: "date-format",
+								id: "date-format-ch",
 								label: "Switzerland", value: "fr-CH",
 								uiClass: dateFormatUiClass
 							},
@@ -271,7 +271,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-eg", name: "date-format",
+								id: "date-format-eg",
 								label: "Egypt", value: "ar-EG",
 								uiClass: dateFormatUiClass
 							},
@@ -279,7 +279,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-kr", name: "date-format",
+								id: "date-format-kr",
 								label: "Korea", value: "ko-KR",
 								uiClass: dateFormatUiClass
 							},
@@ -287,7 +287,7 @@ m.mount(document.getElementById("page"), {
 						}),
 						m(uiWidgets.RadioInput, {
 							field: {
-								id: "date-format-jp", name: "date-format",
+								id: "date-format-jp",
 								label: "Japan", value: "ja-JP",
 								uiClass: dateFormatUiClass
 							},
@@ -427,8 +427,6 @@ m.mount(document.getElementById("page"), {
 						}],
 						config: {
 							"toggleFormat": "double"
-							// toggleOnIcn: "fas fa-toggle-on",
-							// toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
 						}
 					},
 					value: toggleVal
@@ -514,7 +512,40 @@ m.mount(document.getElementById("page"), {
 			m("p", "The currency input stores values as the smallest monetary unit"),
 
 			// Currency/Number
-			m(".flex.mb2.ba.b--silver", [
+			m(".flex.mb2.ba.b--silver.flex-wrap", [
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+					field: {
+						id: "currency-in-currency-red-parentheses",
+						label: "Red Parentheses Currency Input",
+						options: [{
+							value: "£"
+						}],
+						config: { currencyFormat: "redParentheses" }
+					},
+					value: currencyVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+					field: {
+						id: "currency-in-currency-parentheses",
+						label: "Parentheses Currency Input",
+						options: [{
+							value: "£"
+						}],
+						config: { currencyFormat: "parentheses" }
+					},
+					value: currencyVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+					field: {
+						id: "currency-in-currency-parentheses",
+						label: "Red Currency Input",
+						options: [{
+							value: "£"
+						}],
+						config: { currencyFormat: "red" }
+					},
+					value: currencyVal
+				})),
 				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
 					field: {
 						id: "currency-in-currency",
