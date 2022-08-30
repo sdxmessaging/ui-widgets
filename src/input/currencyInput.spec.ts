@@ -84,7 +84,7 @@ describe("formatCurrecny", () => {
 			expect(formatCurrency(1, "default")).toBe("0.01");
 		});
 		test("negative", () => {
-			expect(formatCurrency(-1, "default")).toBe("0.01");
+			expect(formatCurrency(-1, "default")).toBe("-0.01");
 		});
 		test("zero", () => {
 			expect(formatCurrency(0, "parentheses")).toBe("0.00");
