@@ -58,7 +58,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 			layout = getConfig("layoutType", config)
 		} = field;
 		// Placeholder or value count as value content
-		const floatTop = this.shouldFloat(layout, placeholder || xform(), readonly);
+		const floatTop = this.shouldFloat(layout, placeholder || String(xform()), readonly);
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
 			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
