@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { inputCls } from "../theme";
+import { inputCls, theme } from "../theme";
 import { propInvalid } from "../validation";
 import { selectTarget } from "../utils";
 
@@ -39,11 +39,8 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
-				class: inputCls(uiClass),
+				class: currencyFormat.includes("red") && unitTotal < 0 ? theme.redNumber : inputCls(uiClass),
 				onfocus: selectTarget,
-				style: currencyFormat.includes("red") && unitTotal < 0 && {
-					color: "red"
-				},
 				value: lodash.isUndefined(xform())
 					? null
 					: formatCurrency(unitTotal, currencyFormat),

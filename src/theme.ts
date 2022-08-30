@@ -25,6 +25,7 @@ const classMapState: Required<IClassMap> = {
 	toolTipIconBackground: "bg-black h2 w2 relative br-100 ",
 	toolTipIcon: "white f6",
 	toolTipMessage: "white bg-black w4 f6 pa2 absolute br2 z-max",
+	redNumber: "red fw2"
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
