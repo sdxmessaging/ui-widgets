@@ -1,6 +1,7 @@
 const shell = require('shelljs');
 const currentVersion = require('../package.json').version;
 const path = require('path');
+const fs = require("fs");
 
 const enum versionBump {
 	MAJOR = "major",
@@ -69,6 +70,18 @@ class ProcessStack {
 }
 
 const processArray: ReadonlyArray<IProcess> = [
+	// Release notes
+	{
+		execute: (version: string) => {
+			const releaseNotes = fs.readFileSync(path.join(__dirname, "../release-notes.md"));
+			if (releaseNotes.includes(version)) return { code: 0 };
+			console.error("\x1b[41m\x1b[30m", `Did you forget something‽ You need to add release-notes for version: ${version}...and no you can't do it later!`, "\x1b[40m\x1b[37m",);
+			return { code: 1 };
+		},
+		rollback: () => null,
+		errMsg: 'Publish failed, could not find release notes. See logs for more details',
+		executeMsg: 'Checking for release notes...'
+	},
 	// Pull
 	{
 		execute: () => shell.exec("git pull -q"),
