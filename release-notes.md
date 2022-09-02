@@ -1,5 +1,6 @@
 # Release Notes
 
 ## 1.5.XX
-- BREAKING CHANGE: currencyFormat changed from "accounting" to "parentheses"
-- Added different currency formats for ingestion ("default" | "parentheses" | "redParentheses" | "red")
+- BREAKING CHANGE: currencyFormat renamed to negativeStyle
+- BREAKING CHANGE: negativeStyle type "accounting" changed to "parentheses"
+- Added different negative styles for ingestion ("default" | "parentheses" | "redParentheses" | "red")
