@@ -80,7 +80,7 @@ export interface IConfig {
 	excelFileIcn: string;
 	fileIcn: string;
 	codeFileIcn: string;
-	currencyFormat: "default" | "parentheses" | "redParentheses" | "red";
+	negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
 	toggleFormat: "double" | "default";
 }
 

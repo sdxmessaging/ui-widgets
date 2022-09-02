@@ -66,7 +66,7 @@ const confMap: IConfig = {
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
 	codeFileIcn: "fas fa-file-code",
-	currencyFormat: "default",
+	negativeStyle: "default",
 	toggleFormat: "default"
 };
 

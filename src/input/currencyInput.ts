@@ -25,7 +25,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
-		const currencyFormat = getConfig("currencyFormat", config);
+		const negativeStyle = getConfig("negativeStyle", config);
 		const unitTotal = propToNumber(xform());
 		return m(LayoutFixed, {
 			field,
@@ -39,11 +39,11 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
-				class: currencyFormat.includes("red") && unitTotal < 0 ? theme.redNumber : inputCls(uiClass),
+				class: negativeStyle.includes("red") && unitTotal < 0 ? theme.redNumber : inputCls(uiClass),
 				onfocus: selectTarget,
 				value: lodash.isUndefined(xform())
 					? null
-					: formatCurrency(unitTotal, currencyFormat),
+					: formatCurrency(unitTotal, negativeStyle),
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
 			})
@@ -52,12 +52,12 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 }
 
-export function formatCurrency(unitTotal: number, currencyFormat: IConfig["currencyFormat"]) {
+export function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"]) {
 	const currencyStr = numberToCurrencyStr(unitTotal);
 	if (unitTotal < 0) {
-		if (currencyFormat.toLowerCase().includes("parentheses")) {
+		if (negativeStyle.toLowerCase().includes("parentheses")) {
 			return `(${currencyStr})`;
-		} else if (currencyFormat !== "red") {
+		} else if (negativeStyle !== "red") {
 			return `-${currencyStr}`;
 		}
 	}
