@@ -15,13 +15,14 @@ import { IConfig } from "../interface/config";
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
+		console.log("im new")
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, name = id, title = label, placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
-			instant, uiClass = {}, config,
+			uiClass = {}, config,
 			options
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
@@ -44,8 +45,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				value: lodash.isUndefined(xform())
 					? null
 					: formatCurrency(unitTotal, negativeStyle),
-				// Update value on change or input ("instant" option)
-				[instant ? "oninput" : "onchange"]: setCurrencyValue(value)
+				onchange: setCurrencyValue(value)
 			})
 		));
 	}
