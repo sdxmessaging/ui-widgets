@@ -146,7 +146,7 @@ export interface IOption {
 // We should ideally explicitly type these IField variants:
 // extends Omit<IField, "type">
 export interface IOptionField extends IField {
-	// readonly type: FieldType.select | FieldType.currency | FieldType.date | FieldType.checkbox | FieldType.toggle | FieldType.sign;
+	// readonly type: FieldType.select | FieldType.date | FieldType.sign;
 	readonly options?: IOption[];
 }
 

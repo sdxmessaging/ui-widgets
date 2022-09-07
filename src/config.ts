@@ -36,10 +36,13 @@ const confMap: IConfig = {
 	drawIcn: "fas fa-signature",
 	typeIcn: "fas fa-keyboard",
 	stampIcn: "fas fa-check",
-	badgePosition: "left",
 	applyIcn: "fas fa-check",
 	resetIcn: "fas fa-eraser",
 	cancelIcn: "fas fa-times",
+	// Currency, Percentage
+	badgePosition: "left",
+	currencySymbol: "$",
+	negativeStyle: "default",
 	// Check, toggle, radio all use common "selection" config options
 	selectionLayout: ["icon", "label"],
 	selectionOnLabel: "",
@@ -74,8 +77,7 @@ const confMap: IConfig = {
 	musicFileIcn: "fas fa-file-audio",
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
-	codeFileIcn: "fas fa-file-code",
-	negativeStyle: "default"
+	codeFileIcn: "fas fa-file-code"
 };
 
 export const config: Readonly<IConfig> = confMap;

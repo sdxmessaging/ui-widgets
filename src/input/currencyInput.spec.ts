@@ -18,7 +18,6 @@ describe("CurrencyInput", () => {
 				value
 			})
 		});
-		// Input only
 		expect(root.childNodes.length).toBe(1);
 	});
 
@@ -33,7 +32,6 @@ describe("CurrencyInput", () => {
 				value
 			})
 		});
-		// Input only
 		expect(root.childNodes.length).toBe(1);
 	});
 
@@ -52,15 +50,14 @@ describe("CurrencyInput", () => {
 					uiClass: {},
 					disabled: true,
 					instant: true,
-					options: [{
-						value: "£"
-					}]
+					config: {
+						currencySymbol: "£"
+					}
 				},
 				value,
 				xform
 			})
 		});
-		// Label + Input
 		expect(root.childNodes.length).toBe(1);
 	});
 

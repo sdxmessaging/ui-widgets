@@ -12,9 +12,11 @@
   - `...OnInactive` - Class applied to "on" part when "unchecked"
   - `...OffActive`
   - `...OffInactive`
+- Added `currencySymbol` config option
 - BREAKING: Check/Toggle `options` support removed, use config `selectionLayout`
 - BREAKING: Config `toggleFormat` support removed, use config `selectionLayout` and appropriate on/off icons
 - BREAKING: Radio `labelSide` support removed, use config `selectionLayout`
+- BREAKING: Currency input no longer supports symbol in `options` list, use `currencySymbol` config
 
 ## 1.6.1
 

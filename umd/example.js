@@ -4,6 +4,7 @@ var stream = m.stream;
 
 uiWidgets.updateConfig({
 	signFont: "Caveat",
+	// currencySymbol: "£"
 	// requiredLblPost: "*"
 });
 
@@ -539,9 +540,6 @@ m.mount(document.getElementById("page"), {
 							text: "Currency Input",
 							alt: "(Symbol on Right)"
 						},
-						options: [{
-							value: "£"
-						}],
 						config: { badgePosition: "right" }
 					},
 					value: currencyVal
@@ -553,9 +551,6 @@ m.mount(document.getElementById("page"), {
 							text: "Currency Input",
 							alt: "(Red negative)"
 						},
-						options: [{
-							value: "£"
-						}],
 						config: { negativeStyle: "red" }
 					},
 					value: currencyVal
@@ -567,9 +562,6 @@ m.mount(document.getElementById("page"), {
 							text: "Currency Input",
 							alt: "(Parentheses negative)"
 						},
-						options: [{
-							value: "£"
-						}],
 						config: { negativeStyle: "parentheses" }
 					},
 					value: currencyVal
@@ -581,9 +573,6 @@ m.mount(document.getElementById("page"), {
 							text: "Currency Input",
 							alt: "(Red Parentheses negative)"
 						},
-						options: [{
-							value: "£"
-						}],
 						config: { negativeStyle: "redParentheses" }
 					},
 					value: currencyVal

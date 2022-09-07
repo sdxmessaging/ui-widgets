@@ -53,11 +53,15 @@ export interface IConfig {
     typeIcn: string;
     /** Signature "Stamp" button icon */
     stampIcn: string;
-    /** Location for wiget "badge" (Currency/Percentage symbol) */
-    badgePosition: "left" | "right";
     applyIcn: string;
     resetIcn: string;
     cancelIcn: string;
+    /** Location for widget "badge" (Currency/Percentage symbol) */
+    badgePosition: "left" | "right";
+    /** CurrencyInput symbol */
+    currencySymbol: string;
+    /** Negative currency format */
+    negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
     selectionLayout: ReadonlyArray<TCheckSlot>;
     selectionOnLabel: string;
     selectionOffLabel: string;
@@ -89,7 +93,6 @@ export interface IConfig {
     excelFileIcn: string;
     fileIcn: string;
     codeFileIcn: string;
-    negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
 }
 /**
  * Pick keys from T where their respective value extends U

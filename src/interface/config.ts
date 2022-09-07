@@ -55,11 +55,15 @@ export interface IConfig {
 	typeIcn: string;
 	/** Signature "Stamp" button icon */
 	stampIcn: string;
-	/** Location for wiget "badge" (Currency/Percentage symbol) */
-	badgePosition: "left" | "right"
 	applyIcn: string;
 	resetIcn: string;
 	cancelIcn: string;
+	/** Location for widget "badge" (Currency/Percentage symbol) */
+	badgePosition: "left" | "right"
+	/** CurrencyInput symbol */
+	currencySymbol: string;
+	/** Negative currency format */
+	negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
 	// Checkbox, Toggle, Radio
 	selectionLayout: ReadonlyArray<TCheckSlot>;
 	selectionOnLabel: string;
@@ -93,7 +97,6 @@ export interface IConfig {
 	excelFileIcn: string;
 	fileIcn: string;
 	codeFileIcn: string;
-	negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
 }
 
 /**

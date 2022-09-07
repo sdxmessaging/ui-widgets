@@ -2,7 +2,7 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 
 import { IConfig } from "../interface/config";
-import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
@@ -19,10 +19,9 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
-			uiClass = {}, config,
-			options
-		} = field as IOptionField;
-		const currency = options && options.length ? options[0].value : "$";
+			uiClass = {}, config
+		} = field;
+		const symbol = getConfig("currencySymbol", config);
 		const negativeStyle = getConfig("negativeStyle", config);
 		const badgePosition = getConfig("badgePosition", config);
 		const unitTotal = propToNumber(xform());
@@ -36,7 +35,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 					badgePosition === "left" ? "order-0 mr1" : "order-last ml1",
 					inputCls(uiClass)
 				])
-			}, currency),
+			}, symbol),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
