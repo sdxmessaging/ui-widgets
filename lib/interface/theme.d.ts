@@ -46,4 +46,5 @@ export interface IClassMap extends IClasses {
     readonly toolTipIconBackground?: string;
     readonly toolTipIcon?: string;
     readonly toolTipMessage?: string;
+    readonly redNumber?: string;
 }

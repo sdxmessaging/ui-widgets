@@ -1,9 +1,10 @@
 import m, { ClassComponent, CVnode } from "mithril";
 import { IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { IConfig } from "../interface/config";
 export declare class CurrencyInput implements ClassComponent<IPropWidget> {
     view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;
 }
-export declare function formatCurrency(unitTotal: number, currencyFormat: "default" | "accounting"): string | undefined;
+export declare function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"]): string | undefined;
 export declare function propToNumber(value: TProp): number;
 /**
  * Parse a currency string into a number
