@@ -1,4 +1,5 @@
 import { IOption, LayoutType } from "./widget";
+declare type TCheckSlot = "label" | "icon" | "on" | "off";
 export interface IConfig {
     /** Default widget layout */
     layoutType: LayoutType;
@@ -57,6 +58,13 @@ export interface IConfig {
     applyIcn: string;
     resetIcn: string;
     cancelIcn: string;
+    selectionLayout: ReadonlyArray<TCheckSlot>;
+    selectionOnLabel: string;
+    selectionOffLabel: string;
+    selectionOnActive: string;
+    selectionOnInactive: string;
+    selectionOffActive: string;
+    selectionOffInactive: string;
     checkIcn: string;
     uncheckIcn: string;
     toggleOnIcn: string;
@@ -82,7 +90,6 @@ export interface IConfig {
     fileIcn: string;
     codeFileIcn: string;
     negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
-    toggleFormat: "double" | "default";
 }
 /**
  * Pick keys from T where their respective value extends U
@@ -90,3 +97,4 @@ export interface IConfig {
 export declare type TSubset<T, U> = Pick<T, {
     [Key in keyof T]: T[Key] extends U ? Key : never;
 }[keyof T]>;
+export {};

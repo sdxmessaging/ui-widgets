@@ -111,7 +111,6 @@ export interface ICheckboxField extends IOptionField {
 export interface IRadioField extends IField {
     readonly name: string;
     readonly value: TProp;
-    readonly labelSide?: "left" | "right";
 }
 export declare type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
 export interface ISignWidget {

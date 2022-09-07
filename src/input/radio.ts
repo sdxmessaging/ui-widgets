@@ -3,8 +3,10 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { IPropWidget, IRadioField } from "../interface/widget";
 
 import { getConfig } from "../config";
-import { labelCls, pointerCls, checkInputCls, wrapperCls, inputWrapperCls } from "../theme";
+import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabelText, setValue } from "../utils";
+
+import { SelectionInner } from "./layout/SelectionInner";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
@@ -13,16 +15,9 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name, value, title = label,
 			required, readonly, disabled, autocomplete, tabindex = "0",
-			labelSide = "right",
 			uiClass = {}, config
 		} = field as IRadioField;
 		const checked = val() === value;
-		const pointerClass = pointerCls(disabled);
-
-		const inputLabel = label && m("span.mh1", {
-			class: `${pointerClass} ${labelCls(uiClass)}`
-		}, getLabelText(label));
-
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
@@ -48,13 +43,13 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 						(document.activeElement?.firstElementChild as HTMLElement).click();
 					}
 				}
-			}, [
-				labelSide === "left" && m("span.mr2", inputLabel),
-				m("i", {
-					class: getConfig(checked ? "radioOnIcn" : "radioOffIcn", config)
-				}),
-				labelSide === "right" && m("span.ml2", inputLabel)
-			])
+			}, m(SelectionInner, {
+				selected: checked,
+				label: label ? m("span.mh1", getLabelText(label, required)) : null,
+				onIcon: getConfig("radioOnIcn", config),
+				offIcon: getConfig("radioOffIcn", config),
+				config
+			}))
 		]));
 	}
 

@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IFile, IWidgetLabel, TProp, TPropMap, TPropStream } from "./interface/widget";
 
-import { labelCls, theme } from "./theme";
+import { joinClasses, labelCls, theme } from "./theme";
 import { config } from "./config";
 import { IWidgetClasses } from "./interface/theme";
 
@@ -62,18 +62,18 @@ function enrichLabel(
 }
 
 // Used by display widgets
-export function getDisplayLabel(label?: string | IWidgetLabel) {
+export function getDisplayLabel(label?: string | IWidgetLabel, labelCls = "mr2 truncate") {
 	if (label) {
-		if (typeof label === 'string') {
-			return m("span.mr2.truncate", {
+		if (typeof label === "string") {
+			return m("span", {
 				title: label,
-				class: theme.displayLabel
+				class: joinClasses([labelCls, theme.displayLabel])
 			}, label);
 		}
 		else {
-			return enrichLabel(label, "span.mr2.truncate", {
+			return enrichLabel(label, "span", {
 				title: label.text,
-				class: theme.displayLabel
+				class: joinClasses([labelCls, theme.displayLabel])
 			});
 		}
 	}

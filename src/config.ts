@@ -40,6 +40,14 @@ const confMap: IConfig = {
 	applyIcn: "fas fa-check",
 	resetIcn: "fas fa-eraser",
 	cancelIcn: "fas fa-times",
+	// Check, toggle, radio all use common "selection" config options
+	selectionLayout: ["icon", "label"],
+	selectionOnLabel: "",
+	selectionOffLabel: "",
+	selectionOnActive: "",
+	selectionOffActive: "",
+	selectionOnInactive: "dn",
+	selectionOffInactive: "dn",
 	checkIcn: "far fa-check-square",
 	uncheckIcn: "far fa-square",
 	toggleOnIcn: "fas fa-toggle-on",
@@ -67,8 +75,7 @@ const confMap: IConfig = {
 	excelFileIcn: "fas fa-file-excel",
 	fileIcn: "fas fa-file",
 	codeFileIcn: "fas fa-file-code",
-	negativeStyle: "default",
-	toggleFormat: "default"
+	negativeStyle: "default"
 };
 
 export const config: Readonly<IConfig> = confMap;

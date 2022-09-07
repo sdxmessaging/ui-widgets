@@ -4,10 +4,10 @@ import { ICheckboxField, IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
 
 import { getConfig } from "../config";
-import { theme, wrapperCls } from "../theme";
+import { wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
-import { CheckLabel } from "./checkLabel";
+import { SelectionInner } from "../input/layout/SelectionInner";
 
 export class Checkbox implements ClassComponent<IPropWidget> {
 
@@ -15,16 +15,16 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, options, uiClass = {}, config } = field as ICheckboxField;
+		const { label, uiClass = {}, config } = field as ICheckboxField;
 		return m(".pa2.flex.items-center", {
 			class: wrapperCls(uiClass),
-		}, [
-			getDisplayLabel(label),
-			m("i", {
-				class: `${theme.displayValue} ${getConfig(value() ? this.onIcon : this.offIcon, config)}`
-			}),
-			m(CheckLabel, { value: value(), doubleLabel: false, options, left: false })
-		]);
+		}, m(SelectionInner, {
+			selected: Boolean(value()),
+			label: getDisplayLabel(label, "mh1 truncate"),
+			onIcon: getConfig(this.onIcon, config),
+			offIcon: getConfig(this.offIcon, config),
+			config
+		}));
 	}
 
 }

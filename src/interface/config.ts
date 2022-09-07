@@ -1,5 +1,7 @@
 import { IOption, LayoutType } from "./widget";
 
+type TCheckSlot = "label" | "icon" | "on" | "off";
+
 export interface IConfig {
 	/** Default widget layout */
 	layoutType: LayoutType;
@@ -58,12 +60,21 @@ export interface IConfig {
 	applyIcn: string;
 	resetIcn: string;
 	cancelIcn: string;
+	// Checkbox, Toggle, Radio
+	selectionLayout: ReadonlyArray<TCheckSlot>;
+	selectionOnLabel: string;
+	selectionOffLabel: string;
+	selectionOnActive: string;
+	selectionOnInactive: string;
+	selectionOffActive: string;
+	selectionOffInactive: string;
 	checkIcn: string;
 	uncheckIcn: string;
 	toggleOnIcn: string;
 	toggleOffIcn: string;
 	radioOnIcn: string;
 	radioOffIcn: string;
+	// Password
 	showPassIcn: string;
 	hidePassIcn: string;
 	uploadIcn: string;
@@ -83,7 +94,6 @@ export interface IConfig {
 	fileIcn: string;
 	codeFileIcn: string;
 	negativeStyle: "default" | "parentheses" | "redParentheses" | "red";
-	toggleFormat: "double" | "default";
 }
 
 /**

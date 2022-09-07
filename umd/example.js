@@ -371,14 +371,18 @@ m.mount(document.getElementById("page"), {
 				}))
 			]),
 
-			m("p", "Checkbox and Toggle inputs support conditional labels based on their value."),
+			m("p", "Checkbox, Toggle, and Radio inputs support conditional labels and classes based on their state."),
 
 			// Checkbox
 			m(".flex.mb2.ba.b--silver", [
 				m(".w-50.pa2", m(uiWidgets.CheckboxInput, {
 					field: {
 						id: "check-in",
-						label: "Checkbox Input"
+						label: "Checkbox Input",
+						config: {
+							selectionLayout: ["label", "icon", "on"],
+							selectionOnLabel: "Checked",
+						}
 					},
 					value: checkVal
 				})),
@@ -386,9 +390,10 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "check-out",
 						label: "Checkbox Output",
-						options: [{
-							label: "Unset", value: false
-						}]
+						config: {
+							selectionLayout: ["label", "icon", "off"],
+							selectionOffLabel: "Unchecked"
+						}
 					},
 					value: checkVal
 				}))
@@ -400,33 +405,11 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "toggle-in",
 						label: "Toggle Input",
-						required: true
-					},
-					value: toggleVal
-				})),
-				m(".w-50.pa2", m(uiWidgets.Toggle, {
-					field: {
-						id: "toggle-out",
-						label: "Toggle Output",
-						options: [{
-							label: "On", value: true
-						}]
-					},
-					value: toggleVal
-				}))
-			]),
-			m(".flex.mb2.ba.b--silver", [
-				m(".w-50.pa2", m(uiWidgets.ToggleInput, {
-					field: {
-						id: "toggle-in",
-						label: "Toggle Input",
-						options: [{
-							label: "On", value: true
-						}, {
-							label: "Off", value: false
-						}],
+						required: true,
 						config: {
-							"toggleFormat": "double"
+							selectionLayout: ["icon", "on", "off"],
+							selectionOnLabel: "Toggle Input On",
+							selectionOffLabel: "Toggle Input Off"
 						}
 					},
 					value: toggleVal
@@ -435,11 +418,43 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "toggle-out",
 						label: "Toggle Output",
-						options: [{
-							label: "On", value: true
-						}, {
-							label: "Off", value: false
-						}]
+						config: {
+							selectionLayout: ["icon", "on", "off"],
+							selectionOnLabel: "Toggle Input On",
+							selectionOffLabel: "Toggle Input Off"
+						},
+					},
+					value: toggleVal
+				}))
+			]),
+			m(".flex.mb2.ba.b--silver", [
+				m(".w-50.pa2", m(uiWidgets.ToggleInput, {
+					field: {
+						id: "toggle-in",
+						label: "Toggle Input This one",
+						config: {
+							selectionLayout: ["label", "off", "icon", "on"],
+							selectionOnLabel: "On",
+							selectionOffLabel: "Off",
+							selectionOnInactive: "o-40",
+							selectionOffInactive: "o-40",
+							toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
+						}
+					},
+					value: toggleVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.Toggle, {
+					field: {
+						id: "toggle-out",
+						label: "Toggle Output",
+						config: {
+							selectionLayout: ["off", "icon", "on", "label"],
+							selectionOnLabel: "On",
+							selectionOffLabel: "Off",
+							selectionOnInactive: "o-40",
+							selectionOffInactive: "o-40",
+							toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
+						}
 					},
 					value: toggleVal
 				}))
@@ -495,7 +510,11 @@ m.mount(document.getElementById("page"), {
 							type: "radio",
 							name: "radio-group-1",
 							value: "maybe",
-							required: true
+							required: true,
+							config: {
+								selectionLayout: ["icon", "label", "on"],
+								selectionOnActive: "fas fa-question"
+							}
 						},
 						value: optVal
 					})
@@ -1069,7 +1088,7 @@ m.mount(document.getElementById("page"), {
 						value: "1",
 						uiClass: faceValUiClass,
 						config: {
-							radioOnIcn: "fas fa-angry fa-2x",
+							radioOnIcn: "fas fa-angry fa-2x fa-spin",
 							radioOffIcn: "fas fa-angry fa-2x o-40"
 						}
 					},
@@ -1081,7 +1100,7 @@ m.mount(document.getElementById("page"), {
 						value: "2",
 						uiClass: faceValUiClass,
 						config: {
-							radioOnIcn: "fas fa-frown fa-2x",
+							radioOnIcn: "fas fa-frown fa-2x fa-spin",
 							radioOffIcn: "fas fa-frown fa-2x o-40"
 						}
 					},
@@ -1093,7 +1112,7 @@ m.mount(document.getElementById("page"), {
 						value: "3",
 						uiClass: faceValUiClass,
 						config: {
-							radioOnIcn: "fas fa-meh fa-2x",
+							radioOnIcn: "fas fa-meh fa-2x fa-spin",
 							radioOffIcn: "fas fa-meh fa-2x o-40"
 						}
 					},
@@ -1105,7 +1124,7 @@ m.mount(document.getElementById("page"), {
 						value: "4",
 						uiClass: faceValUiClass,
 						config: {
-							radioOnIcn: "fas fa-smile fa-2x",
+							radioOnIcn: "fas fa-smile fa-2x fa-spin",
 							radioOffIcn: "fas fa-smile fa-2x o-40"
 						}
 					},
@@ -1117,7 +1136,7 @@ m.mount(document.getElementById("page"), {
 						value: "5",
 						uiClass: faceValUiClass,
 						config: {
-							radioOnIcn: "fas fa-grin-beam fa-2x",
+							radioOnIcn: "fas fa-grin-beam fa-2x fa-spin",
 							radioOffIcn: "fas fa-grin-beam fa-2x o-40"
 						}
 					},

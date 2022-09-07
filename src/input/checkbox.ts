@@ -4,11 +4,10 @@ import { IConfig, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget } from "../interface/widget";
 
 import { getConfig } from "../config";
-import { checkInputCls, inputWrapperCls, joinClasses, wrapperCls } from "../theme";
+import { checkInputCls, inputWrapperCls, joinClasses, theme, wrapperCls } from "../theme";
 import { getLabelText, setCheck } from "../utils";
 
-import { CheckLabel } from "../display/checkLabel";
-import { theme } from "../theme";
+import { SelectionInner } from "./layout/SelectionInner";
 
 export class CheckboxInput implements ClassComponent<IPropWidget> {
 
@@ -17,15 +16,11 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
-			label = "", id, name = id, value, title = label,
+			label, id, name = id, value, title = label,
 			required, readonly, disabled, autocomplete, tabindex = "0",
-			options,
+			// options,
 			uiClass = {}, config
 		} = field as ICheckboxField;
-
-		const doubleLabel = getConfig("toggleFormat", config) === "double";
-		const invalidCheckboxWrapper = theme.invalidCheckboxWrapper;
-
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
@@ -40,10 +35,10 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				'aria-hidden': "true",
 				onchange: setCheck(val, value)
 			}),
-			m("label.flex.items-center", {
+			m("label", {
 				class: joinClasses([
 					checkInputCls(uiClass, disabled, readonly),
-					required && !val() ? invalidCheckboxWrapper : ""
+					required && !val() ? theme.invalidCheckboxWrapper : ""
 				]),
 				for: id,
 				title,
@@ -55,20 +50,13 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 						val(!val());
 					}
 				}
-			}, [
-				doubleLabel && m(CheckLabel, { value: val(), doubleLabel, options, left: true }),
-				m("i", {
-					class: joinClasses([
-						// doubleLabel will always set the "on" icon
-						getConfig(val() || doubleLabel ? this.onIcon : this.offIcon, config),
-						// doubleLabel will mirror the icon if value is falsy
-						// TODO Rename to "flip-h" with Font Awesome 6
-						!val() && doubleLabel ? "fa-flip-horizontal" : ""
-					])
-				}),
-				label && !doubleLabel && m("span.ml2", getLabelText(label, required)),
-				m(CheckLabel, { value: val(), doubleLabel, options, left: false })
-			])
+			}, m(SelectionInner, {
+				selected: Boolean(val()),
+				label: label ? m("span.mh1", getLabelText(label, required)) : null,
+				onIcon: getConfig(this.onIcon, config),
+				offIcon: getConfig(this.offIcon, config),
+				config
+			}))
 		]));
 	}
 

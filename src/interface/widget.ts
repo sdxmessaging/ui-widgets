@@ -166,7 +166,6 @@ export interface IRadioField extends IField {
 	// readonly type: FieldType.radio;
 	readonly name: string;
 	readonly value: TProp;
-	readonly labelSide?: "left" | "right";
 }
 
 export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
@@ -259,12 +258,12 @@ export interface IToolTip {
 }
 
 export const enum MessageDirection {
-	top = 'top',
-	topLeft = 'topLeft',
-	topRight = 'topRight',
-	bottom = 'bottom',
-	bottomLeft = 'bottomLeft',
-	bottomRight = 'bottomRight',
-	left = 'left',
-	right = 'right'
+	top = "top",
+	topLeft = "topLeft",
+	topRight = "topRight",
+	bottom = "bottom",
+	bottomLeft = "bottomLeft",
+	bottomRight = "bottomRight",
+	left = "left",
+	right = "right"
 }

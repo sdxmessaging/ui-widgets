@@ -26,7 +26,6 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		const negativeStyle = getConfig("negativeStyle", config);
 		const badgePosition = getConfig("badgePosition", config);
 		const unitTotal = propToNumber(xform());
-		console.debug(unitTotal);
 		return m(LayoutFixed, {
 			field,
 			value,
