@@ -2,6 +2,7 @@
 
 ## 1.7.0
 
+- Fixed `[object Object]` title attribute on widgets with object label config
 - Checkbox, Toggle, Radio widgets have unified implementation for label/icon "inner" parts
 - Added `selection...` config options for Checkbox, Toggle, and Radio widgets
   - `...Layout` - list of parts for "inner part" of widget - `label`, `icon`, `on`, `off`

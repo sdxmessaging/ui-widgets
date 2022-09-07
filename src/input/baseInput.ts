@@ -3,7 +3,7 @@ import m, { CVnode } from "mithril";
 import { FieldType, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
-import { setValue } from "../utils";
+import { setValue, titleFromLabel } from "../utils";
 import { ValidationBase } from "../validationBase";
 
 import { Layout } from "./layout/layout";
@@ -22,7 +22,7 @@ export class BaseInput extends ValidationBase {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
-			label, id, type = FieldType.text, name = id, title = label, placeholder,
+			label, id, type = FieldType.text, name = id, title = titleFromLabel(label), placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,

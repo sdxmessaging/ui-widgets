@@ -5,7 +5,7 @@ import { IPropWidget } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { inputCls } from "../theme";
-import { clickOnEnter, setValue } from "../utils";
+import { clickOnEnter, setValue, titleFromLabel } from "../utils";
 import { propInvalid } from "../validation";
 
 import { Layout } from "./layout/layout";
@@ -17,7 +17,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value } = attrs;
 		const {
-			label, id, name = id, title = label, placeholder,
+			label, id, name = id, title = titleFromLabel(label), placeholder,
 			maxlength, minlength, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode,

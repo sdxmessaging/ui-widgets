@@ -4,6 +4,7 @@ import { IFile, IWidgetLabel, TProp, TPropMap, TPropStream } from "./interface/w
 import { IWidgetClasses } from "./interface/theme";
 export declare function guid(): string;
 export declare function pxRatio(): number;
+export declare function titleFromLabel(label?: string | IWidgetLabel): string | undefined;
 export declare function getLabelText(label: string | IWidgetLabel, required?: boolean): string;
 export declare function getAltLabel({ alt }: IWidgetLabel): m.Vnode<any, any> | null;
 export declare function imgSrc(path: string, dataUrl?: string): string;

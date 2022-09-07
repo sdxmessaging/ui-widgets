@@ -3,7 +3,7 @@ import m, { CVnode } from "mithril";
 import { IPropWidget } from "../interface/widget";
 
 import { textareaCls } from "../theme";
-import { setValue } from "../utils";
+import { setValue, titleFromLabel } from "../utils";
 import { ValidationBase } from "../validationBase";
 
 import { LayoutTop } from "./layout/layoutTopLabel";
@@ -15,7 +15,7 @@ export class TextareaInput extends ValidationBase {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
-			label, id, name = id, title = label, placeholder,
+			label, id, name = id, title = titleFromLabel(label), placeholder,
 			required, readonly, disabled, autofocus, autocomplete,
 			minlength, maxlength, tabindex, spellcheck,
 			instant, uiClass = {}

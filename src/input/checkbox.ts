@@ -5,7 +5,7 @@ import { ICheckboxField, IPropWidget } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { checkInputCls, inputWrapperCls, joinClasses, theme, wrapperCls } from "../theme";
-import { getLabelText, setCheck } from "../utils";
+import { getLabelText, setCheck, titleFromLabel } from "../utils";
 
 import { SelectionInner } from "./layout/SelectionInner";
 
@@ -16,7 +16,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
 		const {
-			label, id, name = id, value, title = label,
+			label, id, name = id, value, title = titleFromLabel(label),
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			// options,
 			uiClass = {}, config

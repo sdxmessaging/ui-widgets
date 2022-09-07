@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IMithrilEvent, TField } from "../interface/widget";
 import { pointerCls } from "../theme";
-import { getLabel } from "../utils";
+import { getLabel, titleFromLabel } from "../utils";
 
 export interface IFileInput {
 	readonly field: TField;
@@ -68,7 +68,7 @@ export class FileInput implements ClassComponent<IFileInput> {
 		onSet
 	}, children }: CVnode<IFileInput>) {
 		const {
-			label, id, name = id, title = label,
+			label, id, name = id, title = titleFromLabel(label),
 			required, readonly, disabled, autofocus, tabindex = "0",
 			accept = defaultAccept,
 			uiClass = {}

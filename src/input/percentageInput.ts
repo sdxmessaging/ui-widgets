@@ -4,7 +4,7 @@ import { FieldType, IPropWidget } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { inputCls, joinClasses } from "../theme";
-import { selectTarget, setValue } from "../utils";
+import { selectTarget, setValue, titleFromLabel } from "../utils";
 import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -14,7 +14,7 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
-			label, id, name = id, title = label, placeholder,
+			label, id, name = id, title = titleFromLabel(label), placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,

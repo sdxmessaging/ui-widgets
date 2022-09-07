@@ -6,7 +6,7 @@ import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../int
 
 import { getConfig } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
-import { selectTarget } from "../utils";
+import { selectTarget, titleFromLabel } from "../utils";
 import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
@@ -15,7 +15,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
 		const {
-			label, id, name = id, title = label, placeholder,
+			label, id, name = id, title = titleFromLabel(label), placeholder,
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,

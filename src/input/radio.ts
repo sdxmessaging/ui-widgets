@@ -4,7 +4,7 @@ import { IPropWidget, IRadioField } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
-import { getLabelText, setValue } from "../utils";
+import { getLabelText, setValue, titleFromLabel } from "../utils";
 
 import { SelectionInner } from "./layout/SelectionInner";
 
@@ -13,7 +13,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value: val } = attrs;
 		const {
-			label, id, name, value, title = label,
+			label, id, name, value, title = titleFromLabel(label),
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			uiClass = {}, config
 		} = field as IRadioField;

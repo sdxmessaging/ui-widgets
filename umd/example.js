@@ -431,7 +431,7 @@ m.mount(document.getElementById("page"), {
 				m(".w-50.pa2", m(uiWidgets.ToggleInput, {
 					field: {
 						id: "toggle-in",
-						label: "Toggle Input This one",
+						label: "Toggle Input",
 						config: {
 							selectionLayout: ["label", "off", "icon", "on"],
 							selectionOnLabel: "On",

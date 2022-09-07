@@ -33,6 +33,10 @@ export function pxRatio() {
 	return Math.max(window.devicePixelRatio, 1);
 }
 
+export function titleFromLabel(label?: string | IWidgetLabel) {
+	return label && (typeof label === "string" ? label : label.text);
+}
+
 export function getLabelText(label: string | IWidgetLabel, required?: boolean): string {
 	const text = typeof label === "string" ? label : label.text;
 	return required ? `${text}${config.requiredLblPost}` : text;
