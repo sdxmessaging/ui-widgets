@@ -1,21 +1,18 @@
 import lodash from "lodash";
 import m, { ClassComponent, CVnode } from "mithril";
 
+import { IConfig } from "../interface/config";
 import { FieldType, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { inputCls, theme } from "../theme";
-import { propInvalid } from "../validation";
+import { getConfig } from "../config";
+import { inputCls, joinClasses, theme } from "../theme";
 import { selectTarget } from "../utils";
+import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
-import { getConfig } from "../config";
-import { IConfig } from "../interface/config";
-
-
 export class CurrencyInput implements ClassComponent<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
-		console.log("im new")
 		const { field, value, xform = value } = attrs;
 		const {
 			label, id, name = id, title = label, placeholder,
@@ -27,27 +24,36 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		} = field as IOptionField;
 		const currency = options && options.length ? options[0].value : "$";
 		const negativeStyle = getConfig("negativeStyle", config);
+		const badgePosition = getConfig("badgePosition", config);
 		const unitTotal = propToNumber(xform());
+		console.debug(unitTotal);
 		return m(LayoutFixed, {
 			field,
 			value,
 			invalid: propInvalid(field, value())
-		}, m('.flex.flex-row.w-100', m("span.mr1.self-center", {
-			class: inputCls(uiClass)
-		}, currency),
+		}, m('.flex.flex-row.w-100', [
+			m("span.self-center", {
+				class: joinClasses([
+					badgePosition === "left" ? "order-0 mr1" : "order-last ml1",
+					inputCls(uiClass)
+				])
+			}, currency),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
 				max, maxlength, min, minlength, step, required,
 				readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
-				class: negativeStyle.includes("red") && unitTotal < 0 ? theme.redNumber : inputCls(uiClass),
+				class: joinClasses([
+					negativeStyle.includes("red") && unitTotal < 0 ? theme.redNumber : null,
+					inputCls(uiClass)
+				]),
 				onfocus: selectTarget,
 				value: lodash.isUndefined(xform())
 					? null
 					: formatCurrency(unitTotal, negativeStyle),
 				onchange: setCurrencyValue(value)
 			})
-		));
+		]));
 	}
 
 }

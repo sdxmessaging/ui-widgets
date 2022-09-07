@@ -53,6 +53,8 @@ export interface IConfig {
 	typeIcn: string;
 	/** Signature "Stamp" button icon */
 	stampIcn: string;
+	/** Location for wiget "badge" (Currency/Percentage symbol) */
+	badgePosition: "left" | "right"
 	applyIcn: string;
 	resetIcn: string;
 	cancelIcn: string;

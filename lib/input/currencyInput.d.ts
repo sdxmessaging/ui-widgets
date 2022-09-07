@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget, TProp, TPropStream } from "../interface/widget";
 import { IConfig } from "../interface/config";
+import { IPropWidget, TProp, TPropStream } from "../interface/widget";
 export declare class CurrencyInput implements ClassComponent<IPropWidget> {
     view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;
 }

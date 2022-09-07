@@ -36,6 +36,7 @@ const confMap: IConfig = {
 	drawIcn: "fas fa-signature",
 	typeIcn: "fas fa-keyboard",
 	stampIcn: "fas fa-check",
+	badgePosition: "left",
 	applyIcn: "fas fa-check",
 	resetIcn: "fas fa-eraser",
 	cancelIcn: "fas fa-times",

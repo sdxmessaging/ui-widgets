@@ -515,44 +515,57 @@ m.mount(document.getElementById("page"), {
 			m(".flex.mb2.ba.b--silver.flex-wrap", [
 				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
 					field: {
-						id: "currency-in-currency-red-parentheses",
-						label: "Red Parentheses Currency Input",
-						options: [{
-							value: "£"
-						}],
-						config: { currencyFormat: "redParentheses" }
-					},
-					value: currencyVal
-				})),
-				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
-					field: {
-						id: "currency-in-currency-parentheses",
-						label: "Parentheses Currency Input",
-						options: [{
-							value: "£"
-						}],
-						config: { currencyFormat: "parentheses" }
-					},
-					value: currencyVal
-				})),
-				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
-					field: {
-						id: "currency-in-currency-parentheses",
-						label: "Red Currency Input",
-						options: [{
-							value: "£"
-						}],
-						config: { currencyFormat: "red" }
-					},
-					value: currencyVal
-				})),
-				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
-					field: {
 						id: "currency-in-currency",
-						label: "Currency Input",
+						label: {
+							text: "Currency Input",
+							alt: "(Symbol on Right)"
+						},
 						options: [{
 							value: "£"
-						}]
+						}],
+						config: { badgePosition: "right" }
+					},
+					value: currencyVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+					field: {
+						id: "currency-in-currency-parentheses",
+						label: {
+							text: "Currency Input",
+							alt: "(Red negative)"
+						},
+						options: [{
+							value: "£"
+						}],
+						config: { negativeStyle: "red" }
+					},
+					value: currencyVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+					field: {
+						id: "currency-in-currency-parentheses",
+						label: {
+							text: "Currency Input",
+							alt: "(Parentheses negative)"
+						},
+						options: [{
+							value: "£"
+						}],
+						config: { negativeStyle: "parentheses" }
+					},
+					value: currencyVal
+				})),
+				m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+					field: {
+						id: "currency-in-currency-red-parentheses",
+						label: {
+							text: "Currency Input",
+							alt: "(Red Parentheses negative)"
+						},
+						options: [{
+							value: "£"
+						}],
+						config: { negativeStyle: "redParentheses" }
 					},
 					value: currencyVal
 				})),
@@ -567,6 +580,7 @@ m.mount(document.getElementById("page"), {
 			]),
 
 			m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
+			m("p.mt1.f6.orange", "Note: Take care with CSS specificity between input class and red negative class"),
 
 			// Card Date
 			m(".flex.mb2.ba.b--silver", [

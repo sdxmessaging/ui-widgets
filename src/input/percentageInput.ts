@@ -1,10 +1,11 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { FieldType, IPropWidget, } from "../interface/widget";
+import { FieldType, IPropWidget } from "../interface/widget";
 
-import { inputCls } from "../theme";
-import { propInvalid } from "../validation";
+import { getConfig } from "../config";
+import { inputCls, joinClasses } from "../theme";
 import { selectTarget, setValue } from "../utils";
+import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -17,14 +18,21 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 			max, maxlength, min, minlength, step, required,
 			readonly, disabled, autofocus, autocomplete, tabindex,
 			pattern, inputmode, spellcheck,
-			instant, uiClass = {},
+			instant, uiClass = {}, config
 		} = field;
+		const badgePosition = getConfig("badgePosition", config);
 		return m(LayoutFixed, {
 			field,
 			value,
 			invalid: propInvalid(field, value())
 		},
 			m('.flex.flex-row.w-100', [
+				m("span.self-center", {
+					class: joinClasses([
+						badgePosition === "left" ? "order-0 mr1" : "order-last ml1",
+						inputCls(uiClass)
+					])
+				}, "%"),
 				m("input.w-100.bg-transparent.bn.outline-0", {
 					id, type: FieldType.text, name, title, placeholder,
 					max, maxlength, min, minlength, step, required,
@@ -35,10 +43,7 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 					value: xform(),
 					// Update value on change or input ("instant" option)
 					[instant ? "oninput" : "onchange"]: setValue(value)
-				}),
-				m("span.mr1.self-center", {
-					class: inputCls(uiClass)
-				}, "%")
+				})
 			]));
 	}
 }
