@@ -43,6 +43,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 				readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
 				class: joinClasses([
+					badgePosition === "right" ? "tr" : "",
 					negativeStyle.includes("red") && unitTotal < 0 ? theme.redNumber : null,
 					inputCls(uiClass)
 				]),

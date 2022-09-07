@@ -38,7 +38,10 @@ export class PercentageInput implements ClassComponent<IPropWidget> {
 					max, maxlength, min, minlength, step, required,
 					readonly, disabled, autofocus, autocomplete, tabindex,
 					pattern, inputmode, spellcheck,
-					class: inputCls(uiClass),
+					class: joinClasses([
+						badgePosition === "right" ? "tr" : "",
+						inputCls(uiClass)
+					]),
 					onfocus: selectTarget,
 					value: xform(),
 					// Update value on change or input ("instant" option)
