@@ -7,7 +7,7 @@ import { getConfig } from "../config";
 import { wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
-import { SelectionInner } from "../input/layout/SelectionInner";
+import { SelectionInner } from "../input/layout/temp_selectionInner";
 
 export class Checkbox implements ClassComponent<IPropWidget> {
 

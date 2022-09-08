@@ -6,7 +6,7 @@ import { getConfig } from "../config";
 import { checkInputCls, inputWrapperCls, wrapperCls } from "../theme";
 import { getLabelText, setValue, titleFromLabel } from "../utils";
 
-import { SelectionInner } from "./layout/SelectionInner";
+import { SelectionInner } from "./layout/temp_selectionInner";
 
 export class RadioInput implements ClassComponent<IPropWidget> {
 
