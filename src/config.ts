@@ -12,14 +12,8 @@ const confMap: IConfig = {
 	openFileTxt: "Open file",
 	showPassTxt: "Show Password",
 	requiredLblPost: "",
-	dateOpts: [],
-	signOpts: [{
-		label: "", value: SignTypes.Draw
-	}, {
-		label: "", value: SignTypes.Type
-	}, {
-		label: "", value: SignTypes.Stamp
-	}],
+	dateLocale: "default",
+	signOpts: [SignTypes.Draw, SignTypes.Type, SignTypes.Stamp],
 	signMaxSize: 640,
 	signHeightPct: 25,
 	signFont: "sans-serif",

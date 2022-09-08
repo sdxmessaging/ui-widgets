@@ -24,7 +24,7 @@ var textVal = stream("");
 var currencyVal = stream(-500);
 var dateVal = stream();
 var dateFormat = stream("default");
-var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false }
+var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false };
 var cardVal = stream();
 var colVal = stream("#cc0011");
 var labVal = stream("hello");
@@ -230,9 +230,11 @@ m.mount(document.getElementById("page"), {
 								text: "Date Input",
 								alt: "(ui-widgets Bespoke)"
 							},
-							options: [{ value: dateFormat() }],
 							required: true,
-							uiClass: { wrapper: "mb2" }
+							uiClass: { wrapper: "mb2" },
+							config: {
+								dateLocale: dateFormat()
+							}
 						},
 						value: dateVal
 					}),

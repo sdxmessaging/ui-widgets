@@ -1,5 +1,13 @@
 # Release Notes
 
+## 1.7.1
+
+- Added `dateLocale` config option
+- BREAKING: Removed `dateOpts` config, use `dateLocale` instead
+- BREAKING: DateInput no longer supports locale setting in `options` list
+- BREAKING: Simplified `signOpts` config option to accept a list of `SignTypes` only
+- NOTE: Signature widget supports `options` list and will convert to the simplified `signOpts`, but this will be deprecated in a future release
+
 ## 1.7.0
 
 - Fixed `[object Object]` title attribute on widgets with object label config

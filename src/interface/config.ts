@@ -1,4 +1,4 @@
-import { IOption, LayoutType } from "./widget";
+import { LayoutType, SignTypes } from "./widget";
 
 type TCheckSlot = "label" | "icon" | "on" | "off";
 
@@ -19,10 +19,10 @@ export interface IConfig {
 	showPassTxt: string;
 	/** Text to append to widget labels when field is required */
 	requiredLblPost: string;
-	/** Default date options */
-	dateOpts: ReadonlyArray<IOption>;
+	/** Date local */
+	dateLocale: string;
 	/** Default options for signature creator */
-	signOpts: ReadonlyArray<IOption>;
+	signOpts: ReadonlyArray<SignTypes>;
 	/** Maximum size for signature image in px */
 	signMaxSize: number;
 	/** Height of signature widget as percentage of width */

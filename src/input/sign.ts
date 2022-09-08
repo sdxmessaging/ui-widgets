@@ -49,7 +49,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			label: lbl, id,
 			readonly, disabled, tabindex = "0",
 			uiClass = {}, config,
-			options = getConfig("signOpts", config),
+			options,
 			heightPct = getConfig("signHeightPct", config),
 			stampTxt = getConfig("stampTxt", config),
 			stampSetTxt = getConfig("stampSetTxt", config)
@@ -58,29 +58,33 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			paddingBottom: `${heightPct}%`
 		};
 		const fileObj = lodash.head(value());
+		const signTypes = options
+			// Legacy support for signature types in options list
+			? lodash(options)
+				.map(({ value }) => String(value) in componentMap ? value as SignTypes : null)
+				.compact()
+				.value()
+			: getConfig("signOpts", config);
 		// Convert options into widget descriptions
-		const opts = lodash(options).map(({ value: type }) => {
-			if (type === SignTypes.Draw) {
-				return {
+		const opts = lodash.map(signTypes, (type) => {
+			switch (type) {
+				case SignTypes.Draw: return {
 					type,
 					icon: getConfig("drawIcn", config),
 					label: getConfig("signDrawTxt", config)
 				};
-			} else if (type === SignTypes.Type) {
-				return {
+				case SignTypes.Type: return {
 					type,
 					icon: getConfig("typeIcn", config),
 					label: getConfig("signTypeTxt", config)
 				};
-			} else if (type === SignTypes.Stamp) {
-				return {
+				case SignTypes.Stamp: return {
 					type,
 					icon: getConfig("stampIcn", config),
 					label: getConfig("signStampTxt", config)
 				};
 			}
-			return null;
-		}).compact().value();
+		});
 		// Auto-select widget if there is only one option and no file
 		if (opts.length === 1 && !fileObj) {
 			this.setSignType(opts[0].type);

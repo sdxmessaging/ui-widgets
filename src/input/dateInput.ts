@@ -2,20 +2,22 @@ import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IOptionField, IPropWidget, TField, TProp, TPropStream } from "../interface/widget";
+import { IConfig } from "../interface/config";
+import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { inputCls } from "../theme";
-import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, validateDate } from "../dateUtils";
-
-import { LayoutFixed } from "./layout/layoutFixedLabel";
-import { HiddenDateInput } from "./hiddenDateInput";
-import { setIfDifferent } from "../utils";
 import { getConfig } from "../config";
+import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, validateDate } from "../dateUtils";
+import { inputCls } from "../theme";
+import { setIfDifferent } from "../utils";
+
+import { HiddenDateInput } from "./hiddenDateInput";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 interface IDateParts {
 	readonly type: TDateType | "literal",
 	readonly value: string;
 }
+
 export class DateInput implements ClassComponent<IPropWidget> {
 
 	private readonly dom = stream<Element>();
@@ -31,7 +33,6 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly month = stream<string>("");
 	private readonly year = stream<string>("");
 	private readonly date = stream<string>();
-
 
 	private buildDate(valueStream: TPropStream, required = false) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
@@ -69,12 +70,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}).value();
 	}
 
-	private setLocale(field: TField) {
-		const {
-			config,
-			options = getConfig("dateOpts", config)
-		} = field as IOptionField;
-		const locale = options.length ? options[0].value as string : undefined;
+	private setLocale(config?: Partial<IConfig>) {
+		const locale = getConfig("dateLocale", config);
 		if (locale !== this.locale()) {
 			this.locale(locale);
 		}
@@ -174,8 +171,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}
 	}
 
-	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
-		this.valid(!field.required);
+	public oninit({ attrs: { value, field: { required, config } } }: CVnode<IPropWidget>) {
+		this.valid(!required);
 		// Split value into date parts
 		(value as stream<TProp>).map((newVal) => {
 			// only handle value when the main value stream is changed
@@ -199,24 +196,24 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}
 			// validate when value comes in from other date inputs
 			this.valid(
-				validateDate(this.year(), this.month(), this.day(), Boolean(field.required), this.dom())
+				validateDate(this.year(), this.month(), this.day(), Boolean(required), this.dom())
 			);
 		});
 
 		this.locale.map((newVal) => {
 			this.setDateInputs(newVal);
 		});
-		this.setLocale(field);
+		this.setLocale(config);
 	}
 
 	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
 		setIfDifferent(this.dom, dom);
 	}
 
-	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
-		this.setLocale(field);
+	public onbeforeupdate({ attrs: { field: { required, config } } }: CVnode<IPropWidget>) {
+		this.setLocale(config);
 		this.valid(
-			validateDate(this.year(), this.month(), this.day(), Boolean(field.required), this.dom())
+			validateDate(this.year(), this.month(), this.day(), Boolean(required), this.dom())
 		);
 	}
 
