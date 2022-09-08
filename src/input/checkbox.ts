@@ -18,7 +18,6 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 		const {
 			label, id, name = id, value, title = titleFromLabel(label),
 			required, readonly, disabled, autocomplete, tabindex = "0",
-			// options,
 			uiClass = {}, config
 		} = field as ICheckboxField;
 		return m("div", {
@@ -35,7 +34,7 @@ export class CheckboxInput implements ClassComponent<IPropWidget> {
 				'aria-hidden': "true",
 				onchange: setCheck(val, value)
 			}),
-			m("label", {
+			m("label.db", {
 				class: joinClasses([
 					checkInputCls(uiClass, disabled, readonly),
 					required && !val() ? theme.invalidCheckboxWrapper : ""

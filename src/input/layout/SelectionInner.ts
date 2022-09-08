@@ -4,7 +4,7 @@ import { IConfig } from "../../interface/config";
 
 interface ISelectionInner {
 	readonly selected: boolean;
-	readonly label: Child;
+	readonly label?: Child;
 	readonly onIcon: string;
 	readonly offIcon: string;
 	readonly config?: Partial<IConfig>;
@@ -16,7 +16,7 @@ export class SelectionInner implements ClassComponent<ISelectionInner> {
 		return m(".flex.items-center.nl1.nr1",
 			getConfig("selectionLayout", config).map((element) => {
 				switch (element) {
-					case "label": return m("span.mh1", label);
+					case "label": return label;
 					case "icon": return m("i.mh1", {
 						class: selected ? onIcon : offIcon
 					});

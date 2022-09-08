@@ -16,7 +16,7 @@ export class Checkbox implements ClassComponent<IPropWidget> {
 
 	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
 		const { label, uiClass = {}, config } = field as ICheckboxField;
-		return m(".pa2.flex.items-center", {
+		return m(".pa2", {
 			class: wrapperCls(uiClass),
 		}, m(SelectionInner, {
 			selected: Boolean(value()),

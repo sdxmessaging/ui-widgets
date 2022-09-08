@@ -31,7 +31,7 @@ export class RadioInput implements ClassComponent<IPropWidget> {
 				'aria-hidden': "true",
 				onchange: setValue(val)
 			}),
-			m("label.flex.items-center", {
+			m("label.db", {
 				class: checkInputCls(uiClass, disabled, readonly),
 				for: id,
 				title,
