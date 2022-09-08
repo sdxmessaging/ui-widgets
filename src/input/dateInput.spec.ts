@@ -2,16 +2,14 @@ import m from "mithril";
 import stream from "mithril/stream";
 import { DateInput } from "./dateInput";
 
-
-
 describe("DateInput", () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 	});
 
-	test("minimal", () => {
+	test("minimal + bad value", () => {
 		const root = window.document.createElement("div");
-		const value = stream<string>();
+		const value = stream<string>("bad value");
 		m.mount(root, {
 			view: () => m(DateInput, {
 				field: {

@@ -4,7 +4,8 @@ import {
 	getOrientation,
 	resizeImage,
 	rotateContext,
-	scaleRect
+	scaleRect,
+	createStamp
 } from "./imageUtils";
 
 describe("Scale rectangle", () => {
@@ -52,7 +53,6 @@ describe("File", () => {
 });
 
 describe("Image orientation", () => {
-
 
 	test("no jpeg marker", () => {
 		const buffer = new ArrayBuffer(8);
@@ -132,6 +132,15 @@ describe("Canvas rotation", () => {
 		rotateContext(mockContext, 1, 1, 6);
 		rotateContext(mockContext, 1, 1, 7);
 		rotateContext(mockContext, 1, 1, 8);
+	});
+
+});
+
+describe("Image from text", () => {
+
+	test("createStamp", () => {
+		const stamp = createStamp("TEST", 25);
+		expect(stamp).toContain("data:image/png;base64");
 	});
 
 });

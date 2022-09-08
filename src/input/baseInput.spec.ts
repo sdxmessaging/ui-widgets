@@ -31,7 +31,10 @@ describe("BaseInput", () => {
 			view: () => m(BaseInput, {
 				field: {
 					id: "test",
-					label: "Test Label",
+					label: {
+						text: "Test Label",
+						alt: "Alt Label"
+					},
 					name: "Test Name",
 					title: "Test Title",
 					type: FieldType.number,
