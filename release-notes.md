@@ -2,6 +2,7 @@
 
 ## 1.7.1
 
+- Fix error when DateInput is given an invalid date value, reset widget instead
 - Added `dateLocale` config option
 - BREAKING: Removed `dateOpts` config, use `dateLocale` instead
 - BREAKING: DateInput no longer supports locale setting in `options` list
