@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/jest": "28.1.0",
     "@types/lodash": "4.14.184",
-    "@types/luxon": "^2.0.7",
+    "@types/luxon": "3.0.1",
     "@types/mithril": "2.0.7",
     "@types/node": "16.11.9",
     "@types/signature_pad": "2.3.2",
