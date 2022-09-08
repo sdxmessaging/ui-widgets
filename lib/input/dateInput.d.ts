@@ -18,9 +18,10 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     private setDateInputs;
     private setLocale;
     private createDateInputs;
-    oninit({ attrs: { value, field } }: CVnode<IPropWidget>): void;
+    private resetDateParts;
+    oninit({ attrs: { value, field: { required, config } } }: CVnode<IPropWidget>): void;
     oncreate({ dom }: CVnodeDOM<IPropWidget>): void;
-    onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>): void;
+    onbeforeupdate({ attrs: { field: { required, config } } }: CVnode<IPropWidget>): void;
     onupdate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
     view(vnode: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;

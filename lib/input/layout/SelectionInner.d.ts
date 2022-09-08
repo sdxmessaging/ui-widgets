@@ -2,7 +2,7 @@ import m, { Child, ClassComponent, CVnode } from "mithril";
 import { IConfig } from "../../interface/config";
 interface ISelectionInner {
     readonly selected: boolean;
-    readonly label: Child;
+    readonly label?: Child;
     readonly onIcon: string;
     readonly offIcon: string;
     readonly config?: Partial<IConfig>;

@@ -171,6 +171,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		}
 	}
 
+	private resetDateParts() {
+		this.day("");
+		this.month("");
+		this.year("");
+	}
+
 	public oninit({ attrs: { value, field: { required, config } } }: CVnode<IPropWidget>) {
 		this.valid(!required);
 		// Split value into date parts
@@ -180,19 +186,19 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				const date = new Date(String(newVal));
 				// multiple data-binding reset date stream (important, reset local date stream when value is present)
 				this.date('');
-				// set individual date inputs based on value stream (not date stream)
-				const day = lodash.padStart(String(date.getDate()), 2, "0");
-				const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
-				const year = String(date.getFullYear());
-				this.day(day);
-				this.month(month);
-				this.year(year);
-			}
-			// only reset the non-edited date fields (important for resetting field display value)
-			else if (!this.date()) {
-				this.day("");
-				this.month("");
-				this.year("");
+				if (isNaN(date.valueOf())) {
+					this.resetDateParts();
+				} else {
+					// set individual date inputs based on value stream (not date stream)
+					const day = lodash.padStart(String(date.getDate()), 2, "0");
+					const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
+					const year = String(date.getFullYear());
+					this.day(day);
+					this.month(month);
+					this.year(year);
+				}
+			} else if (!this.date()) {
+				this.resetDateParts();
 			}
 			// validate when value comes in from other date inputs
 			this.valid(
@@ -226,6 +232,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.year.end(true);
 		this.month.end(true);
 		this.day.end(true);
+		this.locale.end(true);
 	}
 
 	public view(vnode: CVnode<IPropWidget>) {
