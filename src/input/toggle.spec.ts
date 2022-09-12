@@ -30,10 +30,7 @@ describe("ToggleInput", () => {
 					name: "Test Name",
 					title: "Test Title",
 					uiClass: {},
-					disabled: true,
-					options: [{
-						label: "test", value: true
-					}]
+					disabled: true
 				},
 				value
 			})

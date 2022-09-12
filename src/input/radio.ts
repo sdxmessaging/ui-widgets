@@ -8,15 +8,16 @@ import { getLabelText, setValue, titleFromLabel } from "../utils";
 
 import { SelectionInner } from "./layout/selectionInner";
 
-export class RadioInput implements ClassComponent<IPropWidget> {
+type TRadioWidget = IPropWidget<IRadioField>;
+export class RadioInput implements ClassComponent<TRadioWidget> {
 
-	public view({ attrs }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<TRadioWidget>) {
 		const { field, value: val } = attrs;
 		const {
 			label, id, name, value, title = titleFromLabel(label),
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			uiClass = {}, config
-		} = field as IRadioField;
+		} = field;
 		const checked = val() === value;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),

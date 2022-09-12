@@ -9,17 +9,18 @@ import { getLabelText, setCheck, titleFromLabel } from "../utils";
 
 import { SelectionInner } from "./layout/selectionInner";
 
-export class CheckboxInput implements ClassComponent<IPropWidget> {
+type TCheckboxWidget = IPropWidget<ICheckboxField>;
+export class CheckboxInput implements ClassComponent<TCheckboxWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
-	public view({ attrs: { field, value: val } }: CVnode<IPropWidget>) {
+	public view({ attrs: { field, value: val } }: CVnode<TCheckboxWidget>) {
 		const {
 			label, id, name = id, value, title = titleFromLabel(label),
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			uiClass = {}, config
-		} = field as ICheckboxField;
+		} = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {

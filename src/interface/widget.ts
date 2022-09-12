@@ -136,17 +136,16 @@ export interface IField {
 	readonly config?: Partial<IConfig>;
 }
 
-// Select/Radio options, config for other fields
+// Select options
 export interface IOption {
 	readonly value: TProp;
 	readonly label?: string;
-	readonly icon?: string;
 }
 
 // We should ideally explicitly type these IField variants:
 // extends Omit<IField, "type">
 export interface IOptionField extends IField {
-	// readonly type: FieldType.select | FieldType.date | FieldType.sign;
+	// readonly type: FieldType.select | FieldType.sign;
 	readonly options?: IOption[];
 }
 
@@ -157,7 +156,7 @@ export interface ISignField extends IOptionField {
 	readonly stampSetTxt?: string;
 }
 
-export interface ICheckboxField extends IOptionField {
+export interface ICheckboxField extends IField {
 	// readonly type: FieldType.checkbox | FieldType.toggle;
 	readonly value?: TProp;
 }
@@ -187,8 +186,8 @@ export interface IMithrilEvent extends Event {
 }
 
 // View/Edit model field widgets
-interface IBaseWidget {
-	readonly field: TField;
+interface IBaseWidget<T> {
+	readonly field: T;
 }
 
 export interface IDisplayWidget {
@@ -198,19 +197,19 @@ export interface IDisplayWidget {
 	readonly config?: Partial<IConfig>;
 }
 
-export interface IFileWidget extends IBaseWidget {
+export interface IFileWidget<T = IField> extends IBaseWidget<T> {
 	readonly value: stream<IFile[]>;
 	readonly displayType?: DisplayType;
 	readonly showDisplay?: boolean;
 }
 
-export interface IPropWidget extends IBaseWidget {
+export interface IPropWidget<T = IField> extends IBaseWidget<T> {
 	readonly value: TPropStream;
 	readonly xform?: TPropStream;
 	readonly children?: Children;
 }
 
-export interface IPropLayoutWidget extends IPropWidget {
+export interface IPropLayoutWidget<T = IField> extends IPropWidget<T> {
 	readonly invalid: boolean;
 }
 

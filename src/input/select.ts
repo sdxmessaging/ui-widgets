@@ -9,9 +9,10 @@ import { propInvalid } from "../validation";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
-export class SelectInput implements ClassComponent<IPropWidget> {
+type TSelectWidget = IPropWidget<IOptionField>;
+export class SelectInput implements ClassComponent<TSelectWidget> {
 
-	public view({ attrs }: CVnode<IPropWidget>) {
+	public view({ attrs }: CVnode<TSelectWidget>) {
 
 		const { field, value: val } = attrs;
 		const {
@@ -19,7 +20,7 @@ export class SelectInput implements ClassComponent<IPropWidget> {
 			required, readonly, disabled, autofocus, autocomplete, tabindex,
 			uiClass = {}, placeholder = "--- Select one ---",
 			options
-		} = field as IOptionField;
+		} = field;
 		return m(LayoutFixed, {
 			field,
 			value: val,

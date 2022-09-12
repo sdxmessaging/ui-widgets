@@ -30,12 +30,13 @@ export function setFile(fileList: stream<IFile[]>, id: string, maxSize: number) 
 	};
 }
 
-export class SignBuilder implements ClassComponent<IFileWidget> {
+type TSignWidget = IFileWidget<ISignField>;
+export class SignBuilder implements ClassComponent<TSignWidget> {
 
 	private signType?: SignTypes;
 	private valUpdate!: stream<void>;
 
-	public oninit({ attrs: { value } }: CVnode<IFileWidget>) {
+	public oninit({ attrs: { value } }: CVnode<TSignWidget>) {
 		// Unset signature component on file change
 		this.valUpdate = value.map(() => this.setSignType());
 	}
@@ -44,7 +45,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 		this.valUpdate.end();
 	}
 
-	public view({ attrs: { field, value } }: CVnode<IFileWidget>) {
+	public view({ attrs: { field, value } }: CVnode<TSignWidget>) {
 		const {
 			label: lbl, id,
 			readonly, disabled, tabindex = "0",
@@ -53,7 +54,7 @@ export class SignBuilder implements ClassComponent<IFileWidget> {
 			heightPct = getConfig("signHeightPct", config),
 			stampTxt = getConfig("stampTxt", config),
 			stampSetTxt = getConfig("stampSetTxt", config)
-		} = field as ISignField;
+		} = field;
 		const style: TStyle = {
 			paddingBottom: `${heightPct}%`
 		};

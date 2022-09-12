@@ -9,13 +9,14 @@ import { getDisplayLabel } from "../utils";
 
 import { SelectionInner } from "../input/layout/selectionInner";
 
-export class Checkbox implements ClassComponent<IPropWidget> {
+type TCheckboxWidget = IPropWidget<ICheckboxField>
+export class Checkbox implements ClassComponent<TCheckboxWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
 
-	public view({ attrs: { field, value } }: CVnode<IPropWidget>) {
-		const { label, uiClass = {}, config } = field as ICheckboxField;
+	public view({ attrs: { field, value } }: CVnode<TCheckboxWidget>) {
+		const { label, uiClass = {}, config } = field;
 		return m(".pa2", {
 			class: wrapperCls(uiClass),
 		}, m(SelectionInner, {
