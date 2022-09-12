@@ -24,5 +24,5 @@ export declare class DateInput implements ClassComponent<IPropWidget> {
     onbeforeupdate({ attrs: { field: { required, config } } }: CVnode<IPropWidget>): void;
     onupdate({ dom }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
-    view(vnode: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;
+    view(vnode: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
 }

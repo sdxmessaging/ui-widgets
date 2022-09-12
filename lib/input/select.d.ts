@@ -1,5 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget } from "../interface/widget";
-export declare class SelectInput implements ClassComponent<IPropWidget> {
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget, unknown>;
+import { IOptionField, IPropWidget } from "../interface/widget";
+declare type TSelectWidget = IPropWidget<IOptionField>;
+export declare class SelectInput implements ClassComponent<TSelectWidget> {
+    view({ attrs }: CVnode<TSelectWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
 }
+export {};

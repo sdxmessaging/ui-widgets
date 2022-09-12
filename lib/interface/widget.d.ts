@@ -45,6 +45,7 @@ export declare const enum FieldType {
     imageSelect = "imageSelect",
     sign = "sign"
 }
+declare type TFieldType = keyof typeof FieldType;
 export declare const enum SignTypes {
     Draw = "draw",
     Type = "type",
@@ -68,7 +69,7 @@ declare type TTabIndex = "-1" | "0" | -1 | 0;
 export interface IField {
     readonly label?: string | IWidgetLabel;
     readonly id: string;
-    readonly type?: FieldType | string;
+    readonly type?: TFieldType;
     readonly name?: string;
     readonly title?: string;
     readonly placeholder?: string;
@@ -95,20 +96,23 @@ export interface IField {
 export interface IOption {
     readonly value: TProp;
     readonly label?: string;
-    readonly icon?: string;
 }
 export interface IOptionField extends IField {
+    readonly type?: "select" | "sign";
     readonly options?: IOption[];
 }
 export interface ISignField extends IOptionField {
+    readonly type?: "sign";
     readonly heightPct?: number;
     readonly stampTxt?: string;
     readonly stampSetTxt?: string;
 }
-export interface ICheckboxField extends IOptionField {
+export interface ICheckboxField extends IField {
+    readonly type?: "checkbox" | "toggle";
     readonly value?: TProp;
 }
 export interface IRadioField extends IField {
+    readonly type?: "radio";
     readonly name: string;
     readonly value: TProp;
 }
@@ -125,8 +129,8 @@ export interface ISignWidget {
 export interface IMithrilEvent extends Event {
     redraw: boolean;
 }
-interface IBaseWidget {
-    readonly field: TField;
+interface IBaseWidget<T> {
+    readonly field: T;
 }
 export interface IDisplayWidget {
     readonly value: stream<IFile[]>;
@@ -134,17 +138,17 @@ export interface IDisplayWidget {
     readonly readonlyOrDisabled?: boolean;
     readonly config?: Partial<IConfig>;
 }
-export interface IFileWidget extends IBaseWidget {
+export interface IFileWidget<T = IField> extends IBaseWidget<T> {
     readonly value: stream<IFile[]>;
     readonly displayType?: DisplayType;
     readonly showDisplay?: boolean;
 }
-export interface IPropWidget extends IBaseWidget {
+export interface IPropWidget<T = IField> extends IBaseWidget<T> {
     readonly value: TPropStream;
     readonly xform?: TPropStream;
     readonly children?: Children;
 }
-export interface IPropLayoutWidget extends IPropWidget {
+export interface IPropLayoutWidget<T = IField> extends IPropWidget<T> {
     readonly invalid: boolean;
 }
 export interface IThumbnailArgs {

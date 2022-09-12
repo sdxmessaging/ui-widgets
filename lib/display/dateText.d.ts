@@ -5,5 +5,5 @@ export declare class DateText implements ClassComponent<IPropWidget> {
     private formatter;
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onremove(): void;
-    view({ attrs: { field } }: CVnode<IPropWidget>): m.Vnode<IPropWidget, unknown>;
+    view({ attrs: { field } }: CVnode<IPropWidget>): m.Vnode<IPropWidget<import("../interface/widget").IField>, unknown>;
 }

@@ -1,8 +1,10 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget } from "../interface/widget";
+import { ICheckboxField, IPropWidget } from "../interface/widget";
 import { IConfig, TSubset } from "../interface/config";
-export declare class Checkbox implements ClassComponent<IPropWidget> {
+declare type TCheckboxWidget = IPropWidget<ICheckboxField>;
+export declare class Checkbox implements ClassComponent<TCheckboxWidget> {
     protected readonly onIcon: keyof TSubset<IConfig, string>;
     protected readonly offIcon: keyof TSubset<IConfig, string>;
-    view({ attrs: { field, value } }: CVnode<IPropWidget>): m.Vnode<any, any>;
+    view({ attrs: { field, value } }: CVnode<TCheckboxWidget>): m.Vnode<any, any>;
 }
+export {};

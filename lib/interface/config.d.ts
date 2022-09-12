@@ -17,7 +17,7 @@ export interface IConfig {
     showPassTxt: string;
     /** Text to append to widget labels when field is required */
     requiredLblPost: string;
-    /** Date local */
+    /** Date locale */
     dateLocale: string;
     /** Default options for signature creator */
     signOpts: ReadonlyArray<SignTypes>;

@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.7.2
+
+- Stricter typings for checkbox, radio, select, sign, toggle widgets
+- Stricter field `type` property must now match `FieldType` enum or string equivalent value
+
 ## 1.7.1
 
 - Fix error when DateInput is given an invalid date value, reset widget instead

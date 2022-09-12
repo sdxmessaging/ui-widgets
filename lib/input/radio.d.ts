@@ -1,5 +1,7 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IPropWidget } from "../interface/widget";
-export declare class RadioInput implements ClassComponent<IPropWidget> {
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<any, any>;
+import { IPropWidget, IRadioField } from "../interface/widget";
+declare type TRadioWidget = IPropWidget<IRadioField>;
+export declare class RadioInput implements ClassComponent<TRadioWidget> {
+    view({ attrs }: CVnode<TRadioWidget>): m.Vnode<any, any>;
 }
+export {};
