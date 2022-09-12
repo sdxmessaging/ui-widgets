@@ -290,7 +290,7 @@ m.mount(document.getElementById("page"), {
 			m(".w-50.pa2", m(uiWidgets.DateText, {
 				field: {
 					id: "date-out",
-					label: "Date Output",
+					label: "Date Output"
 				},
 				value: dateVal
 			}))

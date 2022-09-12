@@ -59,6 +59,8 @@ export const enum FieldType {
 	sign = "sign"
 }
 
+type TFieldType = keyof typeof FieldType;
+
 export const enum SignTypes {
 	Draw = "draw",
 	Type = "type",
@@ -109,7 +111,7 @@ export interface IField {
 	readonly label?: string | IWidgetLabel;
 	// Standard HTML input attributes
 	readonly id: string;
-	readonly type?: FieldType | string;
+	readonly type?: TFieldType;
 	readonly name?: string;
 	readonly title?: string;
 	readonly placeholder?: string;
@@ -145,24 +147,24 @@ export interface IOption {
 // We should ideally explicitly type these IField variants:
 // extends Omit<IField, "type">
 export interface IOptionField extends IField {
-	// readonly type: FieldType.select | FieldType.sign;
+	readonly type?: "select" | "sign";
 	readonly options?: IOption[];
 }
 
 export interface ISignField extends IOptionField {
-	// readonly type: FieldType.sign;
+	readonly type?: "sign";
 	readonly heightPct?: number;
 	readonly stampTxt?: string;
 	readonly stampSetTxt?: string;
 }
 
 export interface ICheckboxField extends IField {
-	// readonly type: FieldType.checkbox | FieldType.toggle;
+	readonly type?: "checkbox" | "toggle";
 	readonly value?: TProp;
 }
 
 export interface IRadioField extends IField {
-	// readonly type: FieldType.radio;
+	readonly type?: "radio";
 	readonly name: string;
 	readonly value: TProp;
 }
