@@ -33,7 +33,8 @@ export class SelectInput implements ClassComponent<TSelectWidget> {
 				}, "Select one")
 			, m("select.w-100.bg-transparent.bn.outline-0", {
 				id, name, title,
-				required, readonly, disabled, autofocus, autocomplete, tabindex,
+				required, autofocus, autocomplete, tabindex,
+				disabled: disabled || readonly,
 				class: inputCls(uiClass),
 				value: val() ? val() : "",
 				onchange: setValue(val),

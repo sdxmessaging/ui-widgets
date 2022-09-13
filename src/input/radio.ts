@@ -27,7 +27,7 @@ export class RadioInput implements ClassComponent<TRadioWidget> {
 			m("input.clip[type=radio]", {
 				id, name, value,
 				checked, required, autocomplete,
-				disabled,
+				disabled: disabled || readonly,
 				tabindex: -1,
 				'aria-hidden': "true",
 				onchange: setValue(val)
