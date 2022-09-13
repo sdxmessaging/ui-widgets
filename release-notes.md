@@ -1,5 +1,10 @@
 # Release Notes
 
+
+## 1.7.XX
+
+- Readonly will disable radio & select inputs
+
 ## 1.7.2
 
 - Stricter typings for checkbox, radio, select, sign, toggle widgets
