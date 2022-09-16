@@ -22,6 +22,7 @@ uiWidgets.updateButtonContext({
 // Simple props
 var textVal = stream("");
 var currencyVal = stream(-500);
+var percentageVal = stream(-5000);
 var dateVal = stream();
 var dateFormat = stream("default");
 var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false };
@@ -564,6 +565,23 @@ m.mount(document.getElementById("page"), {
 				},
 				value: currencyVal
 			}))
+		]),
+
+
+		// Percentage
+		m(".flex.mb2.ba.b--silver.flex-wrap", [
+			m(".w-50.pa2", m(uiWidgets.PercentageInput, {
+				field: {
+					id: "percentage",
+					label: {
+						text: "Percentage Input",
+						alt: "(Symbol on right)"
+					},
+					max: 100,
+					config: { badgePosition: "right" }
+				},
+				value: percentageVal
+			})),
 		]),
 
 		m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
