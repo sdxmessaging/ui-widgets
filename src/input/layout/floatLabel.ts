@@ -61,13 +61,13 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		const floatTop = this.shouldFloat(layout, placeholder || String(xform()), readonly);
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
-			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
+			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled, invalid)} ${label ? "pt2" : ""}`,
 			onfocusin: this.focusIn,
 			onfocusout: this.focusOut
 		},
 			// Input wrapper
 			m("fieldset.relative.pa0.ma0.flex.w-100", {
-				class: inputWrapperCls(uiClass, invalid)
+				class: inputWrapperCls(uiClass)
 			}, [
 				label && this.wrapperHeight ? [
 					// Break fieldset border, make space for label to float into

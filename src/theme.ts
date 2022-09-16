@@ -56,11 +56,13 @@ export function joinClasses(list: ReadonlyArray<string | false | 0 | null | unde
 }
 
 // Class string helpers
-export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disabled?: boolean) {
+export function wrapperCls({ wrapper = "", merge = true, invalidInputWrapper = "" }: IWidgetClasses, disabled?: boolean, invalid?: boolean) {
 	return joinClasses([
 		wrapper,
 		merge ? theme.wrapper : "",
-		disabled ? theme.disabledWrapper : ""
+		disabled ? theme.disabledWrapper : "",
+		invalid ? invalidInputWrapper : "",
+		invalid && merge ? theme.invalidInputWrapper : "",
 	]);
 }
 
@@ -79,12 +81,10 @@ export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: bool
 	]);
 }
 
-export function inputWrapperCls({ inputWrapper = "", invalidInputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
+export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses) {
 	return joinClasses([
 		inputWrapper,
-		merge ? theme.inputWrapper : "",
-		invalid ? invalidInputWrapper : "",
-		invalid && merge ? theme.invalidInputWrapper : "",
+		merge ? theme.inputWrapper : ""
 	]);
 }
 
