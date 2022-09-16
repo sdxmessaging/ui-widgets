@@ -55,14 +55,11 @@ export function joinClasses(list: ReadonlyArray<string | false | 0 | null | unde
 	return lodash.compact(list).join(" ");
 }
 
-// Class string helpers
-export function wrapperCls({ wrapper = "", merge = true, invalidInputWrapper = "" }: IWidgetClasses, disabled?: boolean, invalid?: boolean) {
+export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disabled?: boolean) {
 	return joinClasses([
 		wrapper,
 		merge ? theme.wrapper : "",
-		disabled ? theme.disabledWrapper : "",
-		invalid ? invalidInputWrapper : "",
-		invalid && merge ? theme.invalidInputWrapper : "",
+		disabled ? theme.disabledWrapper : ""
 	]);
 }
 
@@ -81,10 +78,12 @@ export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: bool
 	]);
 }
 
-export function inputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses) {
+export function inputWrapperCls({ inputWrapper = "", invalidInputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
 	return joinClasses([
 		inputWrapper,
-		merge ? theme.inputWrapper : ""
+		merge ? theme.inputWrapper : "",
+		invalid ? invalidInputWrapper : "",
+		invalid && merge ? theme.invalidInputWrapper : "",
 	]);
 }
 

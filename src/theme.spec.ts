@@ -76,14 +76,14 @@ describe("Theme Classes", () => {
 
 	test("inputWrapper", () => {
 		expect(inputWrapperCls({})).toBe(theme.inputWrapper);
+		expect(inputWrapperCls({}, true)).toBe(`${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		expect(inputWrapperCls({ inputWrapper: "test", invalidInputWrapper: "customInvalid", merge: false }, true)).toBe("test customInvalid");
 		expect(inputWrapperCls({ inputWrapper: "test", merge: false })).toBe("test");
 	});
 
 	test("wrapperCls", () => {
 		expect(wrapperCls({})).toBe(theme.wrapper);
-		expect(wrapperCls({}, undefined, true)).toBe(`${theme.wrapper}${theme.invalidInputWrapper}`);
-		expect(wrapperCls({ wrapper: "test", invalidInputWrapper: "customInvalid", merge: false }, false, true)).toBe("test customInvalid");
-		expect(wrapperCls({ wrapper: "test", merge: false, invalidInputWrapper: "customInvalid"})).toBe("test");
+		expect(wrapperCls({ wrapper: "test", merge: false })).toBe("test");
 	});
 
 	test("fileHoverCls", () => {

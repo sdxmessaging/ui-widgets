@@ -13,13 +13,13 @@ export class Basic implements ClassComponent<IPropLayoutWidget> {
 		const { label, id, type = FieldType.text, required, disabled, uiClass = {} } = field;
 		// Wrapper
 		return m("div", {
-			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled, invalid)
+			class: type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)
 		}, [
 			// Basic label
 			getLabel(id, uiClass, label, required),
 			// Input wrapper
 			m("fieldset.bn", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, invalid)
 			},
 				// Input
 				children
