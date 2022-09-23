@@ -4,6 +4,7 @@
 ## 1.7.XX
 
 - Readonly will disable radio & select inputs
+- Percentage Input type is changed from text to number 
 
 ## 1.7.2
 
