@@ -1,6 +1,6 @@
 export * from "./interface/widget";
 export * from "./interface/theme";
-export { IConfig } from './interface/config';
+export { IConfig } from "./interface/config";
 export { updateConfig } from "./config";
 export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
 export { guid, pxRatio, fileNameExtSplit, dataURItoBlob, fileConstructor, dataUrlToFile } from "./utils";
@@ -10,7 +10,7 @@ export { Button } from "./button";
 export { ButtonLink } from "./buttonLink";
 export { NavButton } from "./navButton";
 export { NavLink } from "./navLink";
-export { ToolTip } from "./toolTip";
+export { Tooltip } from "./tooltip";
 export { Trusted } from "./display/trusted";
 export { BaseText } from "./display/baseText";
 export { DateText } from "./display/dateText";

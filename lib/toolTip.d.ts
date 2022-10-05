@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
-import { IToolTip } from "./interface/widget";
-export declare class ToolTip implements ClassComponent<IToolTip> {
+import { IToolTip as ITooltip } from "./interface/widget";
+export declare class Tooltip implements ClassComponent<ITooltip> {
     private show;
-    view({ attrs: { message, direction, icon } }: CVnode<IToolTip>): m.Vnode<any, any>;
+    view({ attrs: { message, direction, icon } }: CVnode<ITooltip>): m.Vnode<any, any>;
 }
