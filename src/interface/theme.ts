@@ -47,9 +47,9 @@ export interface IClassMap extends IClasses {
 	readonly floatLabelPlaceholder?: string;
 	readonly invalidCheckboxWrapper?: string;
 	/** classes common to all tooltips */
-	readonly toolTipWrapper?: string;
-	readonly toolTipIconBackground?: string;
-	readonly toolTipIcon?: string;
-	readonly toolTipMessage?: string;
+	readonly tooltipWrapper?: string;
+	readonly tooltipIconBackground?: string;
+	readonly tooltipIcon?: string;
+	readonly tooltipMessage?: string;
 	readonly redNumber?: string;
 }

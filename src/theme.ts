@@ -21,10 +21,10 @@ const classMapState: Required<IClassMap> = {
 	altLabel: "ml1 o-70",
 	floatLabelPlaceholder: "",
 	invalidCheckboxWrapper: "red",
-	toolTipWrapper: "db relative ma2",
-	toolTipIconBackground: "bg-black h2 w2 relative br-100 ",
-	toolTipIcon: "white f6",
-	toolTipMessage: "white bg-black w4 f6 pa2 absolute br2 z-max",
+	tooltipWrapper: "dib relative mh2",
+	tooltipIconBackground: "bg-black h2 w2 relative br-100 ",
+	tooltipIcon: "white f6",
+	tooltipMessage: "white bg-black w4 f6 pa2 absolute br2 z-max",
 	redNumber: "red fw2"
 };
 

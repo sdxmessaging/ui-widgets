@@ -1,6 +1,6 @@
 export * from "./interface/widget";
 export * from "./interface/theme";
-export { IConfig } from './interface/config';
+export { IConfig } from "./interface/config";
 
 export { updateConfig } from "./config";
 export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
@@ -19,7 +19,7 @@ export { Button } from "./button";
 export { ButtonLink } from "./buttonLink";
 export { NavButton } from "./navButton";
 export { NavLink } from "./navLink";
-export { ToolTip } from "./toolTip";
+export { Tooltip } from "./toolTip";
 
 // Display widgets
 // Prop

@@ -5,6 +5,8 @@ type TCheckSlot = "label" | "icon" | "on" | "off";
 export interface IConfig {
 	/** Default widget layout */
 	layoutType: LayoutType;
+	/** Tooltip hover icon */
+	tooltipIcon: string;
 	/** Maximum size for upload image in px */
 	imageMaxSize: number;
 	/** Single file input label */

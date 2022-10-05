@@ -5,6 +5,7 @@ import { LayoutType, SignTypes } from "./interface/widget";
 
 const confMap: IConfig = {
 	layoutType: LayoutType.default,
+	tooltipIcon: "fas fa-info",
 	imageMaxSize: 1280,
 	addFileTxt: "Upload...",
 	addFilesTxt: "Add file(s)...",
@@ -49,11 +50,7 @@ const confMap: IConfig = {
 	uncheckIcn: "far fa-square",
 	toggleOnIcn: "fas fa-toggle-on",
 	toggleOffIcn: "fas fa-toggle-off",
-	// Recreate doubleLabel parameter
-	// toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal",
-	radioOnIcn: "fas fa-dot-circle",
-	// Font awesome 6
-	// radioOnIcn: "fas fa-circle-dot",
+	radioOnIcn: "fas fa-circle-dot",
 	radioOffIcn: "fas fa-circle",
 	showPassIcn: "fas fa-eye",
 	hidePassIcn: "fas fa-eye-slash",
