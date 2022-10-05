@@ -19,7 +19,7 @@ export { Button } from "./button";
 export { ButtonLink } from "./buttonLink";
 export { NavButton } from "./navButton";
 export { NavLink } from "./navLink";
-export { Tooltip } from "./toolTip";
+export { Tooltip } from "./tooltip";
 
 // Display widgets
 // Prop

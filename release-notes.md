@@ -1,10 +1,12 @@
 # Release Notes
 
+## 1.7.3
 
-## 1.7.XX
-
+- Update to Font Awesome 6.2
 - Readonly will disable radio & select inputs
-- Percentage Input type is changed from text to number 
+- Percentage Input type is changed from text to number
+- Added `tooltipIcon` to config
+- BREAKING: ToolTip widget and config renamed to Tooltip
 
 ## 1.7.2
 

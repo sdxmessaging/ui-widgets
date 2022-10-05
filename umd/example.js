@@ -141,7 +141,10 @@ m.mount(document.getElementById("page"), {
 			])
 		]),
 
-		m("h2", "ui-widgets"),
+		m("h2.flex.items-center", [
+			"ui-widgets",
+			m(uiWidgets.Tooltip, { message: "Now with tooltip" })
+		]),
 
 		m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),
 		m("p", "Display components reflect changes made to the stream by input components. A value stream can be used by multiple input components, values stay in sync with no additional code."),
