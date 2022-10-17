@@ -23,6 +23,7 @@ export interface IConfig {
 	requiredLblPost: string;
 	/** Date locale */
 	dateLocale: string;
+	datePickerIcn: string;
 	/** Default options for signature creator */
 	signOpts: ReadonlyArray<SignTypes>;
 	/** Maximum size for signature image in px */

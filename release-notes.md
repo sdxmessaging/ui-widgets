@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.7.4
+
+- Added flatpickr as date input option for `DateInput` widget
+- Added `datePickerIcn` config option
+
 ## 1.7.3
 
 - Update to Font Awesome 6.2

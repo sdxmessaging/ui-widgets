@@ -1,3 +1,4 @@
+import flatpickr from "flatpickr";
 import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
@@ -20,7 +21,16 @@ interface IDateParts {
 
 export class DateInput implements ClassComponent<IPropWidget> {
 
+	private static dateParts(date: Date): [string, string, string] {
+		return [
+			String(date.getFullYear()),
+			lodash.padStart(String(1 + date.getMonth()), 2, "0"),
+			lodash.padStart(String(date.getDate()), 2, "0"),
+		];
+	}
+
 	private readonly dom = stream<Element>();
+	private flatpickr!: flatpickr.Instance;
 	private readonly valid = stream();
 	private readonly focusedInput = stream<TDateInputType | undefined>(undefined);
 
@@ -33,6 +43,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly month = stream<string>("");
 	private readonly year = stream<string>("");
 	private readonly date = stream<string>();
+	private valueChange!: stream<void>;
 
 	private buildDate(valueStream: TPropStream, required = false) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
@@ -180,7 +191,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	public oninit({ attrs: { value, field: { required, config } } }: CVnode<IPropWidget>) {
 		this.valid(!required);
 		// Split value into date parts
-		(value as stream<TProp>).map((newVal) => {
+		this.valueChange = (value as stream<TProp>).map((newVal) => {
+			// Sync with flatpickr
+			this.flatpickr?.setDate(newVal as string);
 			// only handle value when the main value stream is changed
 			if (newVal) {
 				const date = new Date(String(newVal));
@@ -190,9 +203,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					this.resetDateParts();
 				} else {
 					// set individual date inputs based on value stream (not date stream)
-					const day = lodash.padStart(String(date.getDate()), 2, "0");
-					const month = lodash.padStart(String(1 + date.getMonth()), 2, "0");
-					const year = String(date.getFullYear());
+					const [year, month, day] = DateInput.dateParts(date);
 					this.day(day);
 					this.month(month);
 					this.year(year);
@@ -212,7 +223,21 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.setLocale(config);
 	}
 
-	public oncreate({ dom }: CVnodeDOM<IPropWidget>) {
+	public oncreate({ dom, attrs: { field: { id, max, min }, value } }: CVnodeDOM<IPropWidget>) {
+		const calBtn = dom.querySelector(`#${id}-flatpickr`);
+		if (calBtn) {
+			this.flatpickr = flatpickr(calBtn, {
+				position: "below right",
+				disableMobile: true,
+				defaultDate: value() as string,
+				minDate: min,
+				maxDate: max,
+				onChange: ([newDate]) => {
+					value(DateInput.dateParts(newDate).join("-"));
+					m.redraw();
+				}
+			});
+		}
 		setIfDifferent(this.dom, dom);
 	}
 
@@ -228,6 +253,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	public onremove() {
+		this.flatpickr.destroy();
+		this.valueChange.end(true);
 		this.date.end(true);
 		this.year.end(true);
 		this.month.end(true);
@@ -242,7 +269,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		return m(LayoutFixed, {
 			value: value, field,
 			invalid: !this.valid()
-		},
+		}, [
 			m('.flex.ph-2px.pv-1px', {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			},
@@ -250,7 +277,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 					return this.createDateInputs(datePart, vnode);
 				}),
 				m(HiddenDateInput, vnode.attrs)
-			)
-		);
+			),
+			m("i.self-center.ph-2px.pv-1px.ml-auto", {
+				id: `${id}-flatpickr`,
+				class: getConfig("datePickerIcn", field.config)
+			})
+		]);
 	}
 }

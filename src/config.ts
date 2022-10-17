@@ -14,6 +14,7 @@ const confMap: IConfig = {
 	showPassTxt: "Show Password",
 	requiredLblPost: "",
 	dateLocale: "default",
+	datePickerIcn: "fas fa-calendar",
 	signOpts: [SignTypes.Draw, SignTypes.Type, SignTypes.Stamp],
 	signMaxSize: 640,
 	signHeightPct: 25,
