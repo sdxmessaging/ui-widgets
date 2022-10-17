@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.5
+
+- Minor fix to date picker icon positioning subject to display config
+
 ## 1.7.4
 
 - Added flatpickr as date input option for `DateInput` widget

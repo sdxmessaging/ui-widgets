@@ -364,7 +364,7 @@ describe("DateInput", () => {
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
 		const firstInput = root.querySelector('input') as HTMLInputElement;
 		expect(firstInput).not.toBeNull();
-		const inputContainer = firstInput.closest('.flex') as HTMLElement;
+		const inputContainer = firstInput.closest('.ph-2px') as HTMLElement;
 		expect(inputContainer).not.toBeNull();
 
 		// clicking on parent container/label should focus on the last focused input
@@ -405,7 +405,7 @@ describe("DateInput", () => {
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
 		const firstInput = root.querySelector('input') as HTMLInputElement;
 		expect(firstInput).not.toBeNull();
-		const inputContainer = firstInput.closest('.flex') as HTMLElement;
+		const inputContainer = firstInput.closest('.ph-2px') as HTMLElement;
 		expect(inputContainer).not.toBeNull();
 
 		inputContainer.dispatchEvent(new Event('click'));
