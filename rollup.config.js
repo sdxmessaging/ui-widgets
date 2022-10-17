@@ -1,6 +1,7 @@
 import { terser } from "rollup-plugin-terser";
 
 const globals = {
+	"flatpickr": "flatpickr",
 	"lodash": "_",
 	"mithril": "m",
 	"mithril/stream": "m.stream",
