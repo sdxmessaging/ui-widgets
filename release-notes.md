@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.6
+
+- Minor fix to floatLabel floating with undefined value
+
 ## 1.7.5
 
 - Minor fix to date picker icon positioning subject to display config
