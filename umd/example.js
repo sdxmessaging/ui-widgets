@@ -25,6 +25,7 @@ var currencyVal = stream(-500);
 var percentageVal = stream(-5000);
 var dateVal = stream();
 var dateFormat = stream("default");
+var enableDatePicker = stream(false)
 var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false };
 var cardVal = stream();
 var colVal = stream("#cc0011");
@@ -212,12 +213,27 @@ m.mount(document.getElementById("page"), {
 							alt: "(ui-widgets Bespoke)"
 						},
 						required: true,
+						disabled: !enableDatePicker(),
 						uiClass: { wrapper: "mb2" },
 						config: {
 							dateLocale: dateFormat()
 						}
 					},
 					value: dateVal
+				}),
+				m(uiWidgets.ToggleInput, {
+					field: {
+						id: "toggle-Flatpickr",
+						config: {
+							selectionLayout: ["label", "off", "icon", "on"],
+							selectionOnLabel: "Enabled",
+							selectionOffLabel: "Disabled",
+							selectionOnInactive: "o-40",
+							selectionOffInactive: "o-40",
+							toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
+						}
+					},
+					value: enableDatePicker
 				}),
 				// Date locale
 				m(".flex.flex-wrap.mb2", [
