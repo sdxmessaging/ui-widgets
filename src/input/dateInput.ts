@@ -238,7 +238,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value } } = vnode;
-		const { id } = field;
+		const { id, disabled, readonly } = field;
 
 		return m(LayoutFixed, {
 			value: value, field,
@@ -252,7 +252,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				}),
 				m(HiddenDateInput, vnode.attrs)
 			),
-			m(DatePicker, { field, value })
+			!(disabled || readonly) && m(DatePicker, { field, value })
 		]));
 	}
 }
