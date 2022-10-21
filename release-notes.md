@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.7
+
+- Minor fix: Flatpickr will not show when date input is readonly or disabled
+
 ## 1.7.6
 
 - Minor fix to floatLabel floating with undefined value
