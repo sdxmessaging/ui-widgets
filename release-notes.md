@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.8
+
+- BREAKING: `uiClass` options set in widgets will have theme class applied as default value, irregardless of `merge` flag value
+
 ## 1.7.7
 
 - Minor fix: Flatpickr will not show when date input is readonly or disabled

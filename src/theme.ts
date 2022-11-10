@@ -1,6 +1,6 @@
 import lodash from "lodash";
 
-import { IClassMap, IWidgetClasses } from "./interface/theme";
+import { IClasses, IClassMap, IWidgetClasses } from "./interface/theme";
 
 // ui-widgets 1.4 theme map
 const classMapState: Required<IClassMap> = {
@@ -55,18 +55,26 @@ export function joinClasses(list: ReadonlyArray<string | false | 0 | null | unde
 	return lodash.compact(list).join(" ");
 }
 
-export function wrapperCls({ wrapper = "", merge = true }: IWidgetClasses, disabled?: boolean) {
+// Merge incoming uiClass with theme class
+function mergeClasses(key: keyof IClasses, uiClass: IWidgetClasses) {
+	if (key in uiClass) {
+		// Merge by default unless expliictly disabled
+		return uiClass.merge === false ? [uiClass[key]] : [uiClass[key], theme[key]];
+	} else {
+		return [theme[key]];
+	}
+}
+
+export function wrapperCls(uiClass: IWidgetClasses, disabled?: boolean) {
 	return joinClasses([
-		wrapper,
-		merge ? theme.wrapper : "",
+		...mergeClasses("wrapper", uiClass),
 		disabled ? theme.disabledWrapper : ""
 	]);
 }
 
-export function labelCls({ label = "", merge = true }: IWidgetClasses, required?: boolean) {
+export function labelCls(uiClass: IWidgetClasses, required?: boolean) {
 	return joinClasses([
-		label,
-		merge ? theme.label : "",
+		...mergeClasses("label", uiClass),
 		required ? theme.requiredLabel : ""
 	]);
 }
@@ -78,19 +86,15 @@ export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: bool
 	]);
 }
 
-export function inputWrapperCls({ inputWrapper = "", invalidInputWrapper = "", merge = true }: IWidgetClasses, invalid?: boolean) {
+export function inputWrapperCls(uiClass: IWidgetClasses, invalid?: boolean) {
 	return joinClasses([
-		inputWrapper,
-		merge ? theme.inputWrapper : "",
-		invalid ? invalidInputWrapper : "",
-		invalid && merge ? theme.invalidInputWrapper : "",
+		...mergeClasses("inputWrapper", uiClass),
+		...(invalid ? mergeClasses("invalidInputWrapper", uiClass) : [""])
 	]);
 }
 
-export function inputCls({ input = "", merge = true }: IWidgetClasses) {
-	return joinClasses([
-		input, merge ? theme.input : ""
-	]);
+export function inputCls(uiClass: IWidgetClasses) {
+	return joinClasses(mergeClasses("input", uiClass));
 }
 
 export function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
