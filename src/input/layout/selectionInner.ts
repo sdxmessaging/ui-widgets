@@ -13,7 +13,7 @@ interface ISelectionInner {
 export class SelectionInner implements ClassComponent<ISelectionInner> {
 
 	public view({ attrs: { selected, label, onIcon, offIcon, config } }: CVnode<ISelectionInner>) {
-		return m(".flex.items-center.nl1.nr1",
+		return m(".flex.justify-content.items-center.h-100",
 			getConfig("selectionLayout", config).map((element) => {
 				switch (element) {
 					case "label": return label;

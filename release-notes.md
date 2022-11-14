@@ -1,5 +1,9 @@
 # Release Notes
 
+
+## 1.7.9
+
+- Update selectionInner for radio and checkboxes to align centrally
 ## 1.7.8
 
 - BREAKING: `uiClass` options set in widgets will have theme class applied as default value, irregardless of `merge` flag value
