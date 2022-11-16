@@ -4,11 +4,10 @@ import { IPropWidget } from "./interface/widget";
 
 export abstract class ValidationBase<T extends IPropWidget> implements ClassComponent<T>{
 
-	// Default stream for use pre-oncreate
-	private valueValid = stream<boolean>();
-	// Stream must be active and explicitly stating validation failed
+	private checkValue?: stream<void>;
+	private valueValid = true;
 	protected get invalid() {
-		return this.valueValid() === false;
+		return !this.valueValid;
 	}
 	protected readonly selector: keyof Pick<HTMLElementTagNameMap, "input" | "textarea" | "select"> = "input";
 
@@ -16,18 +15,18 @@ export abstract class ValidationBase<T extends IPropWidget> implements ClassComp
 
 	public oncreate({ dom, attrs: { value, xform = value } }: CVnodeDOM<T>) {
 		const input = dom.querySelector(this.selector);
-		this.valueValid = xform.map((newValue) => {
-			if (input) {
+		if (input) {
+			this.checkValue = xform.map((newValue) => {
 				// Set input value, stream may change from outside of widget
 				input.value = String(newValue);
-				return input.checkValidity();
-			}
-			return true;
-		});
+				this.valueValid = input.checkValidity();
+			});
+			this.valueValid = input.checkValidity();
+		}
 	}
 
 	public onremove() {
-		this.valueValid.end(true);
+		this.checkValue?.end(true);
 	}
 
 }
