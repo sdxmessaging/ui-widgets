@@ -1,4 +1,4 @@
-import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
+import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IPropLayoutWidget, IWidgetLabel, LayoutType, TProp } from "../../interface/widget";
 
 import { getConfig } from "../../config";
@@ -15,32 +15,14 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		this.focus = false;
 	};
 
-	// Track element height for positioning floating label
-	private inputWrapper!: HTMLElement;
-	private wrapperHeight = 0;
-	public oncreate({ dom }: CVnodeDOM<IPropLayoutWidget>) {
-		this.inputWrapper = dom.firstElementChild as HTMLElement;
-		this.calcHeight();
-	}
-
-	public onupdate() {
-		this.calcHeight();
-	}
-
-	private calcHeight() {
-		if (this.inputWrapper.clientHeight !== this.wrapperHeight) {
-			this.wrapperHeight = this.inputWrapper.clientHeight;
-			m.redraw();
-		}
-	}
-
 	// Float label if element has a value set or is in focus
 	protected shouldFloat(layout: LayoutType, value: TProp, readonly = false) {
 		return layout === LayoutType.floatAlways || this.focus || Boolean(value) || readonly;
 	}
 
 	protected labelTranslateY() {
-		return `calc(${this.wrapperHeight * 0.5}px - 1.5ex)`;
+		// 50% down + legend height(0.5ch with 0.7em child text) - 1.5 * "x" height
+		return "calc(50% + 0.175ch - 1.5ex)";
 	}
 
 	private labelContent(label: string | IWidgetLabel, required?: boolean) {
@@ -69,17 +51,17 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 			m("fieldset.relative.pa0.ma0.w-100", {
 				class: inputWrapperCls(uiClass, invalid)
 			}, [
-				label && this.wrapperHeight ? [
+				label ? [
 					// Break fieldset border, make space for label to float into
 					m("legend.db.hidden.h-05ch.transition-mw", {
 						class: `${labelCls(uiClass, required)} ${floatTop ? "mw-100" : "mw-001px"}`,
 					}, m("span.f-07em",
 						this.labelContent(label, required)
 					)),
-					// Floating label
-					m(".absolute.top-0.transition-transform", {
+					// Floating label container, fill fieldset inner region
+					m(".absolute.h-100.top-0.transition-transform.pe-none", {
 						style: {
-							// Input wrapper legend or center
+							// Input wrapper legend or center of fieldset
 							transform: `translateY(${floatTop ? "-1ch" : this.labelTranslateY()})`
 						}
 					}, m("label.db.transition-f", {
@@ -94,4 +76,3 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	}
 
 }
-
