@@ -1,7 +1,8 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 import { IConfig } from "../interface/config";
 import { IPropWidget, TProp, TPropStream } from "../interface/widget";
-export declare class CurrencyInput implements ClassComponent<IPropWidget> {
+import { ValidationBase } from "../validationBase";
+export declare class CurrencyInput extends ValidationBase<IPropWidget> {
     view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
 }
 export declare function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"]): string | undefined;
