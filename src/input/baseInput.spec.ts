@@ -21,6 +21,8 @@ describe("BaseInput", () => {
 		expect(root.childNodes.length).toBe(1);
 		// Input only
 		expect(root.childNodes[0].childNodes.length).toBe(1);
+		// Unmount
+		m.mount(root, null);
 	});
 
 	test("configured", () => {
