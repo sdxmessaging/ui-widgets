@@ -1,30 +1,31 @@
 import lodash from "lodash";
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
-import { propInvalid } from "../validation";
 
+import { ValidationBase } from "../validationBase";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 type TSelectWidget = IPropWidget<IOptionField>;
-export class SelectInput implements ClassComponent<TSelectWidget> {
+export class SelectInput extends ValidationBase<TSelectWidget> {
+
+	protected override readonly selector = "select";
 
 	public view({ attrs }: CVnode<TSelectWidget>) {
-
 		const { field, value: val } = attrs;
 		const {
 			label: lbl, id, name = id, title = lbl,
 			required, readonly, disabled, autofocus, autocomplete, tabindex,
 			uiClass = {}, placeholder = "--- Select one ---",
-			options
+			options = []
 		} = field;
 		return m(LayoutFixed, {
 			field,
 			value: val,
-			invalid: propInvalid(field, val())
+			invalid: this.invalid
 		}, [
 			lbl
 				? null
@@ -39,14 +40,18 @@ export class SelectInput implements ClassComponent<TSelectWidget> {
 				value: val() ? val() : "",
 				onchange: setValue(val),
 				'aria-labelledby': `${id}-legend`
-			}, m('option', {
-				disabled: true,
-				value: ""
-			}, placeholder),
+			}, [
+				lodash.some(options, ({ value }) => !value)
+					? null
+					: m("option", {
+						disabled: true,
+						value: ""
+					}, placeholder),
 				lodash.map(options, ({ value, label = value }) => m("option", {
 					value,
 					disabled: disabled || readonly,
-				}, label)))
+				}, label))
+			])
 		]);
 	}
 

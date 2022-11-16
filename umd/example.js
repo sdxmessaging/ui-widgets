@@ -20,7 +20,7 @@ uiWidgets.updateButtonContext({
 });
 
 // Simple props
-var textVal = stream("");
+var textVal = stream();
 var currencyVal = stream(-500);
 var percentageVal = stream(-5000);
 var dateVal = stream();
@@ -163,10 +163,11 @@ m.mount(document.getElementById("page"), {
 							alt: "(updates on input)"
 						},
 						required: true,
+						// pattern: "([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})",
 						instant: true,
 						uiClass: { invalidInputWrapper: "b--dashed" }
 					},
-					value: textVal,
+					value: textVal
 				}),
 				m(uiWidgets.TextareaInput, {
 					field: {
@@ -177,7 +178,7 @@ m.mount(document.getElementById("page"), {
 						},
 						type: "textarea"
 					},
-					value: textVal,
+					value: textVal
 				}),
 			]),
 
@@ -358,6 +359,7 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "password-in",
 					label: "Password Input",
+					required: true,
 					instant: true
 				},
 				value: passVal
@@ -467,7 +469,11 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "select-in",
 						label: "Select Input",
+						required: true,
 						options: [{
+							label: "Not Set",
+							value: ""
+						}, {
 							label: "Yes",
 							value: "yes"
 						}, {
