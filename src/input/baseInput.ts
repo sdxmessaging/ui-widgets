@@ -4,8 +4,8 @@ import { FieldType, IPropWidget } from "../interface/widget";
 
 import { inputCls } from "../theme";
 import { setValue, titleFromLabel } from "../utils";
-import { ValidationBase } from "../validationBase";
 
+import { ValidationBase } from "../validationBase";
 import { Layout } from "./layout/layout";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -17,7 +17,7 @@ const fixedLabelTypes = new Set<string>([
 	FieldType.range
 ]);
 
-export class BaseInput extends ValidationBase {
+export class BaseInput extends ValidationBase<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;

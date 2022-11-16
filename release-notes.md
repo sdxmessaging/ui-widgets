@@ -3,6 +3,7 @@
 ## 1.7.10
 
 - Rework widget "floating labels" - improved performance & reliability
+- Rework input validation to use primarily depend on input element `checkValidity`
 
 ## 1.7.9
 

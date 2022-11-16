@@ -1,22 +1,33 @@
-import m, { ClassComponent, CVnodeDOM, CVnode, Children } from "mithril";
+import { ClassComponent, CVnodeDOM, CVnode, Children } from "mithril";
+import stream from "mithril/stream";
 import { IPropWidget } from "./interface/widget";
-import { propInvalid } from "./validation";
 
-export abstract class ValidationBase implements ClassComponent<IPropWidget>{
+export abstract class ValidationBase<T extends IPropWidget> implements ClassComponent<T>{
 
-	protected invalid = false;
+	// Default stream for use pre-oncreate
+	private valueValid = stream<boolean>();
+	// Stream must be active and explicitly stating validation failed
+	protected get invalid() {
+		return this.valueValid() === false;
+	}
 	protected readonly selector: keyof Pick<HTMLElementTagNameMap, "input" | "textarea" | "select"> = "input";
 
-	abstract view(vnode: CVnode<IPropWidget>): Children;
+	abstract view(vnode: CVnode<T>): Children;
 
-	public onupdate({ dom, attrs: { field, value } }: CVnodeDOM<IPropWidget>) {
+	public oncreate({ dom, attrs: { value, xform = value } }: CVnodeDOM<T>) {
 		const input = dom.querySelector(this.selector);
-		// Validate from custom implementation or input element
-		const invalid = propInvalid(field, value()) || (input ? !input.checkValidity() : false);
-		if (invalid !== this.invalid) {
-			this.invalid = invalid;
-			m.redraw();
-		}
+		this.valueValid = xform.map((newValue) => {
+			if (input) {
+				// Set input value, stream may change from outside of widget
+				input.value = String(newValue);
+				return input.checkValidity();
+			}
+			return true;
+		});
+	}
+
+	public onremove() {
+		this.valueValid.end(true);
 	}
 
 }

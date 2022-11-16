@@ -1,4 +1,4 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 import stream from "mithril/stream";
 
 import { IPropWidget } from "../interface/widget";
@@ -6,11 +6,11 @@ import { IPropWidget } from "../interface/widget";
 import { getConfig } from "../config";
 import { inputCls } from "../theme";
 import { clickOnEnter, setValue, titleFromLabel } from "../utils";
-import { propInvalid } from "../validation";
 
+import { ValidationBase } from "../validationBase";
 import { Layout } from "./layout/layout";
 
-export class PasswordInput implements ClassComponent<IPropWidget> {
+export class PasswordInput extends ValidationBase<IPropWidget> {
 
 	private showPassword = stream<boolean>(false);
 
@@ -26,7 +26,7 @@ export class PasswordInput implements ClassComponent<IPropWidget> {
 		return m(Layout, {
 			field,
 			value,
-			invalid: propInvalid(field, value())
+			invalid: this.invalid
 		}, m('.flex.flex-row.w-100', [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, name, title, placeholder,

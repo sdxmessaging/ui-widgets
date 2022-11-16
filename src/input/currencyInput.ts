@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 
 import { IConfig } from "../interface/config";
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
@@ -7,10 +7,11 @@ import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget"
 import { getConfig } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
 import { selectTarget, titleFromLabel } from "../utils";
-import { propInvalid } from "../validation";
 
+import { ValidationBase } from "../validationBase";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
-export class CurrencyInput implements ClassComponent<IPropWidget> {
+
+export class CurrencyInput extends ValidationBase<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;
@@ -28,7 +29,7 @@ export class CurrencyInput implements ClassComponent<IPropWidget> {
 		return m(LayoutFixed, {
 			field,
 			value,
-			invalid: propInvalid(field, value())
+			invalid: this.invalid
 		}, m('.flex.flex-row.w-100', [
 			m("span.self-center", {
 				class: joinClasses([
