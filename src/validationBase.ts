@@ -1,30 +1,33 @@
-import { ClassComponent, CVnodeDOM, CVnode, Children } from "mithril";
-import stream from "mithril/stream";
+import m, { ClassComponent, CVnodeDOM, CVnode, Children } from "mithril";
 import { IPropWidget } from "./interface/widget";
 
 export abstract class ValidationBase<T extends IPropWidget> implements ClassComponent<T>{
 
-	private checkValue!: stream<void>;
-	private valueValid = true;
+	private _inputElement!: HTMLInputElement;
+	private _valueValid = true;
 	protected get invalid() {
-		return !this.valueValid;
+		return !this._valueValid;
 	}
 	protected readonly selector: keyof Pick<HTMLElementTagNameMap, "input" | "textarea" | "select"> = "input";
 
-	abstract view(vnode: CVnode<T>): Children;
-
-	public oncreate({ dom, attrs: { value, xform = value } }: CVnodeDOM<T>) {
-		const input = dom.querySelector(this.selector) as HTMLInputElement;
-		this.checkValue = xform.map((newValue) => {
-			// Set input value, stream may change from outside of widget
-			input.value = String(newValue);
-			this.valueValid = input.checkValidity();
-		});
-		this.valueValid = input.checkValidity();
+	// Validity may change due to user input or widget validation attributes
+	private checkValidity() {
+		const valid = this._inputElement.checkValidity();
+		if (valid !== this._valueValid) {
+			this._valueValid = valid;
+			m.redraw();
+		}
 	}
 
-	public onremove() {
-		this.checkValue.end(true);
+	abstract view(vnode: CVnode<T>): Children;
+
+	public oncreate({ dom }: CVnodeDOM<T>) {
+		this._inputElement = dom.querySelector(this.selector) as HTMLInputElement;
+		this.checkValidity();
+	}
+
+	public onupdate() {
+		this.checkValidity();
 	}
 
 }

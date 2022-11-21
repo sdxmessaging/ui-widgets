@@ -48,6 +48,7 @@ var value = stream("");
 var label = stream("Custom Input");
 var type = stream("text");
 var placeholder = stream("Placeholder");
+var required = stream(false);
 var readonly = stream(false);
 var disabled = stream(false);
 var displayFileList = stream(false);
@@ -780,6 +781,15 @@ m.mount(document.getElementById("page"), {
 					},
 					value: placeholder
 				}),
+				,
+				m(uiWidgets.CheckboxInput, {
+					field: {
+						id: "custom-required",
+						label: "Required",
+						uiClass: { wrapper: "mb2" }
+					},
+					value: required
+				}),
 				m(uiWidgets.CheckboxInput, {
 					field: {
 						id: "custom-readonly",
@@ -802,6 +812,7 @@ m.mount(document.getElementById("page"), {
 					label: label(),
 					type: type(),
 					placeholder: placeholder(),
+					required: required(),
 					readonly: readonly(),
 					disabled: disabled()
 				},

@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.11
+
+- Fix widgets not redrawing to reflect validation changes from attributes
+
 ## 1.7.10
 
 - Rework widget "floating labels" - improved performance & reliability
