@@ -33,17 +33,14 @@ describe("BaseInput", () => {
 			view: () => m(BaseInput, {
 				field: {
 					id: "test",
-					label: {
-						text: "Test Label",
-						alt: "Alt Label"
-					},
+					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
 					type: FieldType.number,
 					disabled: true,
 					layout: LayoutType.default,
-					uiClass: {},
-					instant: true
+					instant: true,
+					uiClass: {}
 				},
 				value,
 				xform
@@ -51,7 +48,30 @@ describe("BaseInput", () => {
 		});
 		expect(root.childNodes.length).toBe(1);
 		// Label + Input
-		// expect(root.childNodes[0].childNodes.length).toBe(2);
+		expect(root.childNodes[0].childNodes.length).toBe(2);
+	});
+
+	test("configured + validation + rich label", () => {
+		const root = window.document.createElement("div");
+		const value = stream<string>("");
+		const xform = value.map((val) => val);
+		m.mount(root, {
+			view: () => m(BaseInput, {
+				field: {
+					id: "test",
+					label: {
+						text: "Test Label",
+						alt: "Alt Label"
+					},
+					required: true,
+					type: FieldType.date,
+					uiClass: {}
+				},
+				value,
+				xform
+			})
+		});
+		expect(root.childNodes.length).toBe(1);
 	});
 
 	test("hidden", () => {
@@ -68,39 +88,6 @@ describe("BaseInput", () => {
 		});
 		expect(root.childNodes.length).toBe(1);
 		expect(root.firstElementChild?.classList.contains("clip")).toBe(true);
-	});
-
-	test("baseinputInteralLabel configured", () => {
-		const root = window.document.createElement("div");
-		const value = stream<string>("test");
-		const xform = value.map((val) => val);
-		m.mount(root, {
-			view: () => m(BaseInput, {
-				field: {
-					id: "test",
-					label: "Test Label",
-					name: "Test Name",
-					title: "Test Title",
-					disabled: true,
-					type: FieldType.number,
-					layout: LayoutType.floatLabel,
-					uiClass: {},
-					instant: true
-				},
-				value,
-				xform
-			})
-		});
-		expect(root.childNodes.length).toBe(1);
-		const input = root.querySelector('input');
-		expect(input).not.toBeNull();
-		// Legend not drawn until field size is known
-		// const legend = root.querySelector('legend') as HTMLElement;
-		// expect(legend).not.toBeNull();
-		// expect(legend.textContent).toBe('Test Label');
-		// const label = root.querySelector('label') as HTMLElement;
-		// expect(label).not.toBeNull();
-		// expect(label.textContent).toBe('Test Label');
 	});
 
 });
