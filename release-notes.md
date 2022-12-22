@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.7.12
+
+- Update TypeScript to 4.9
+- Minor cleanup
+
 ## 1.7.11
 
 - Fix widgets not redrawing to reflect validation changes from attributes
