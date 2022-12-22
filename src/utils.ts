@@ -11,7 +11,7 @@ import { IWidgetClasses } from "./interface/theme";
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
 	// Add to 0x100 to pad small numbers with leading 0
-	return (inp + 0x100).toString(16).substr(1);
+	return (inp + 0x100).toString(16).substring(1);
 }
 export function guid(): string {
 	const bytes = new Uint8Array(16);
@@ -159,7 +159,7 @@ export function fileNameExtSplit(fileName: string): [string, string] {
 	if (extIdx === -1) {
 		return [fileName, ""];
 	} else {
-		return [fileName.substr(0, extIdx), fileName.substr(extIdx)];
+		return [fileName.substring(0, extIdx), fileName.substring(extIdx)];
 	}
 }
 

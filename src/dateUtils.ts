@@ -138,7 +138,7 @@ function setAllValidityMessage(message: string, dom?: Element) {
 	if (dom) {
 		const inputId = getInvalidInput(message);
 		dom.querySelectorAll('input').forEach((item) => {
-			if (inputId && item.id.substr(-2) === inputId && message) {
+			if (inputId && item.id.substring(item.id.length - 2) === inputId && message) {
 				item.setCustomValidity(message);
 			} else {
 				item.setCustomValidity("");
