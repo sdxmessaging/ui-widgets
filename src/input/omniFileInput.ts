@@ -49,9 +49,9 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 
 	protected readonly dragging: stream<boolean> = stream<boolean>(false);
 
-	public view({ attrs: { field, value } }: CVnode<IFileWidget>): Children {
-		const file = lodash.head(value());
-		const { disabled, uiClass = {}, config, readonly } = field;
+	public view({ attrs }: CVnode<IFileWidget>): Children {
+		const { field, value } = attrs;
+		const { disabled, uiClass = {} } = field;
 		return m("div", {
 			class: wrapperCls(uiClass, disabled)
 		},
@@ -65,44 +65,52 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 			},
 				m(".flex.items-center.pa1", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
-				}, file ? file.dataUrl
-					? [
-						// Image preview
-						m(".relative.w-100.dt.tc",
-							m("img.img.contain.max-h-img", {
-								title: file.name,
-								src: imgSrc(file.path, file.dataUrl)
-							}),
-							!(readonly || disabled) && m(".absolute.top-0.right-0.pa1.pointer.dim", {
-								title: `Remove ${file.name}`,
-								onclick: removeFile(value, file.guid)
-							}, m("i.pa1", {
-								class: getConfig("cancelIcn", config)
-							}))
-						)
-					] : [
-						// Non-image details
-						m(FileOpen, file),
-						m("span.ma1.flex-auto", {
-							title: file.name,
-						}, file.name),
-						!(readonly || disabled) && m("i.pa1.pointer.dim", {
-							title: `Remove ${file.name}`,
-							class: getConfig("cancelIcn", config),
-							onclick: removeFile(value, file.guid),
-							onkeydown: clickOnEnter,
-							tabindex: 0
-						})
-					]
-					: [
-						// File upload
-						m("i.pa1", {
-							class: getConfig("uploadIcn", config)
-						}),
-						m("span.ma1", getConfig("addFileTxt", config))
-					]
-				)
+				}, this.innerComponent(attrs))
 			)
 		);
+	}
+
+	private innerComponent({ field: { disabled, config, readonly }, value }: IFileWidget) {
+		const file = lodash.head(value());
+		if (file) {
+			if (file.dataUrl) {
+				// Image preview
+				return m(".relative.w-100.dt.tc",
+					m("img.img.contain.max-h-img", {
+						title: file.name,
+						src: imgSrc(file.path, file.dataUrl)
+					}),
+					!(readonly || disabled) && m(".absolute.top-0.right-0.pa1.pointer.dim", {
+						title: `Remove ${file.name}`,
+						onclick: removeFile(value, file.guid)
+					}, m("i.pa1", {
+						class: getConfig("cancelIcn", config)
+					}))
+				);
+			} else {
+				// Non-image details
+				return [
+					m(FileOpen, file),
+					m("span.ma1.flex-auto", {
+						title: file.name,
+					}, file.name),
+					!(readonly || disabled) && m("i.pa1.pointer.dim", {
+						title: `Remove ${file.name}`,
+						class: getConfig("cancelIcn", config),
+						onclick: removeFile(value, file.guid),
+						onkeydown: clickOnEnter,
+						tabindex: 0
+					})
+				];
+			}
+		} else {
+			// File upload
+			return [
+				m("i.pa1", {
+					class: getConfig("uploadIcn", config)
+				}),
+				m("span.ma1", getConfig("addFileTxt", config))
+			];
+		}
 	}
 }
