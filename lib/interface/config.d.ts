@@ -1,5 +1,5 @@
 import { LayoutType, SignTypes } from "./widget";
-declare type TCheckSlot = "label" | "icon" | "on" | "off";
+type TCheckSlot = "label" | "icon" | "on" | "off";
 export interface IConfig {
     /** Default widget layout */
     layoutType: LayoutType;
@@ -100,7 +100,7 @@ export interface IConfig {
 /**
  * Pick keys from T where their respective value extends U
  */
-export declare type TSubset<T, U> = Pick<T, {
+export type TSubset<T, U> = Pick<T, {
     [Key in keyof T]: T[Key] extends U ? Key : never;
 }[keyof T]>;
 export {};

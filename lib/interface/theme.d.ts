@@ -1,4 +1,4 @@
-export declare type TStyle = Partial<CSSStyleDeclaration> | Record<string, string>;
+export type TStyle = Partial<CSSStyleDeclaration> | Record<string, string>;
 export interface IClasses {
     /** Widget outermost element */
     readonly wrapper?: string;

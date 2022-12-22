@@ -1,6 +1,6 @@
 import { TPropStream } from "./interface/widget";
-export declare type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
-export declare type TDateType = 'day' | 'month' | 'year';
+export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
+export type TDateType = 'day' | 'month' | 'year';
 export declare function dateInputIds(type: TDateType): "dd" | "mm" | "yyyy";
 export declare function focusLastInput(dom: Element, id: string, focusedId?: TDateInputType): void;
 interface IAdvanceTarget {

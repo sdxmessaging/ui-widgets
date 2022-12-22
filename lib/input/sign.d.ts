@@ -2,7 +2,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 import stream from "mithril/stream";
 import { IFile, IFileWidget, ISignField, TPropMap } from "../interface/widget";
 export declare function setFile(fileList: stream<IFile[]>, id: string, maxSize: number): (setDataUrl: string, metadata?: TPropMap) => Promise<void>;
-declare type TSignWidget = IFileWidget<ISignField>;
+type TSignWidget = IFileWidget<ISignField>;
 export declare class SignBuilder implements ClassComponent<TSignWidget> {
     private signType?;
     private valUpdate;

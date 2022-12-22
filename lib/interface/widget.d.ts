@@ -2,9 +2,9 @@ import { Children } from "mithril";
 import stream from "mithril/stream";
 import { IConfig } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
-export declare type TProp = string | number | boolean;
-export declare type TPropMap = Record<string, TProp>;
-export declare type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
+export type TProp = string | number | boolean;
+export type TPropMap = Record<string, TProp>;
+export type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
 export interface IFile {
     readonly guid: string;
     readonly name: string;
@@ -45,13 +45,13 @@ export declare const enum FieldType {
     imageSelect = "imageSelect",
     sign = "sign"
 }
-declare type TFieldType = keyof typeof FieldType;
+type TFieldType = keyof typeof FieldType;
 export declare const enum SignTypes {
     Draw = "draw",
     Type = "type",
     Stamp = "stamp"
 }
-declare type TAutocomplete = "off" | "on" | "name" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "url" | "photo" | "tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
+type TAutocomplete = "off" | "on" | "name" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "url" | "photo" | "tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "email" | "impp";
 export declare const enum LayoutType {
     default = "default",
     floatLabel = "floatLabel",
@@ -65,7 +65,7 @@ export interface IWidgetLabel {
     readonly href?: string;
     onclick?(): void;
 }
-declare type TTabIndex = "-1" | "0" | -1 | 0;
+type TTabIndex = "-1" | "0" | -1 | 0;
 export interface IField {
     readonly label?: string | IWidgetLabel;
     readonly id: string;
@@ -116,7 +116,7 @@ export interface IRadioField extends IField {
     readonly name: string;
     readonly value: TProp;
 }
-export declare type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
+export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
 export interface ISignWidget {
     readonly heightPct: number;
     readonly stampTxt: string;
