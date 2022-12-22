@@ -4,5 +4,6 @@ import { IFile, IFileWidget } from "../interface/widget";
 export declare function addOmniFiles(fileList: stream<IFile[]>, replace: boolean): (addList: FileList | null) => Promise<void>;
 export declare class OmniFileInput implements ClassComponent<IFileWidget> {
     protected readonly dragging: stream<boolean>;
-    view({ attrs: { field, value } }: CVnode<IFileWidget>): Children;
+    view({ attrs }: CVnode<IFileWidget>): Children;
+    private innerComponent;
 }
