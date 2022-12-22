@@ -24,7 +24,7 @@ export function scorePassword(value: string) {
 			totalScore = totalScore + 1;
 		}
 		// At least 2 digits
-		if (countMatches(value, /[\d]/g) > 1) {
+		if (countMatches(value, /\d/g) > 1) {
 			totalScore = totalScore + 1;
 		}
 		// At least one special character

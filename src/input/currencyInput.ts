@@ -80,7 +80,6 @@ export function propToNumber(value: TProp): number {
  * @return parsed value as smallest monetary unit e.g. 12345
  */
 export function currencyStrToNumber(currencyStr: string) {
-	// TODO review chain replace
 	// Remove everything but digits and the decimal point, and keep minus sign
 	const inputStr = currencyStr
 		.replace("(-", "-")
