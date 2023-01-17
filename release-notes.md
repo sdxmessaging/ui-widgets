@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.14
+
+- Tooltip minor review
+
 ## 1.7.13
 
 - Tooltip component accepts array of messages
