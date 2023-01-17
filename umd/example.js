@@ -145,7 +145,7 @@ m.mount(document.getElementById("page"), {
 
 		m("h2.flex.items-center", [
 			"ui-widgets",
-			m(uiWidgets.Tooltip, { message: "Now with tooltip" })
+			m(uiWidgets.Tooltip, { message: ["Now with tooltip", "with the option for multiple lines"]})
 		]),
 
 		m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),

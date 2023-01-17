@@ -88,7 +88,9 @@ export class Tooltip implements ClassComponent<ITooltip> {
 					class: joinClasses([theme.tooltipMessage, this.show ? "db" : "dn"]),
 					style: selectDirection(direction)
 				},
-					message
+				[
+					message.map((item) => m('div.mv2', item))
+				]
 				)
 			])
 		]);

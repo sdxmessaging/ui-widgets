@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.13
+
+- Tooltip component accepts array of messages
+
 ## 1.7.12
 
 - Update TypeScript to 4.9
