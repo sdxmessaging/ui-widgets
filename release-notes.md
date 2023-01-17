@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.15
+
+- Change tooltip message to ReadonlyArray
+
 ## 1.7.14
 
 - Tooltip minor review

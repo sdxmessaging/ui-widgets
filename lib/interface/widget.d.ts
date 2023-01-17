@@ -184,7 +184,7 @@ export interface IButtonLink extends IBaseButton {
     readonly download?: string;
 }
 export interface IToolTip {
-    readonly message: string[];
+    readonly message: ReadonlyArray<string>;
     readonly direction?: MessageDirection;
     readonly icon?: string;
 }
