@@ -24,7 +24,7 @@ const classMapState: Required<IClassMap> = {
 	tooltipWrapper: "dib relative mh2",
 	tooltipIconBackground: "bg-black h2 w2 relative br-100 ",
 	tooltipIcon: "white f6",
-	tooltipMessage: "white bg-black w4 f6 pa2 absolute br2 z-max",
+	tooltipMessage: "white bg-black w5 f6 pa2 absolute br2 z-max",
 	redNumber: "red fw2"
 };
 
