@@ -21,6 +21,8 @@ export interface IConfig {
 	showPassTxt: string;
 	/** Text to append to widget labels when field is required */
 	requiredLblPost: string;
+	/** Text to append to widget labels when field is not required */
+	optionalLblPost: string;
 	/** Date locale */
 	dateLocale: string;
 	datePickerIcn: string;

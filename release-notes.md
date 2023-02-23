@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.7.16
+
+- Config support for `optionalLblPost`, append text to labels on widgets when not required
+
 ## 1.7.15
 
 - Change tooltip message to ReadonlyArray

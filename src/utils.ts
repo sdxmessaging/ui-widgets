@@ -39,7 +39,8 @@ export function titleFromLabel(label?: string | IWidgetLabel) {
 
 export function getLabelText(label: string | IWidgetLabel, required?: boolean): string {
 	const text = typeof label === "string" ? label : label.text;
-	return required ? `${text}${config.requiredLblPost}` : text;
+	const post = required ? config.requiredLblPost : config.optionalLblPost;
+	return post ? text + post : text;
 }
 
 export function getAltLabel({ alt }: IWidgetLabel) {

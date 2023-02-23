@@ -5,7 +5,8 @@ var stream = m.stream;
 uiWidgets.updateConfig({
 	signFont: "Caveat",
 	// currencySymbol: "£"
-	// requiredLblPost: "*"
+	// requiredLblPost: "*",
+	// optionalLblPost: " (optional)"
 });
 
 uiWidgets.updateClasses({
