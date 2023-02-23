@@ -1,146 +1,166 @@
 :root {
-  --ui-widgets-transition: 0.2s ease;
+	--ui-widgets-transition: 0.2s ease;
 }
 
 /* Remove input number type arrows */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 .pe-none {
-  pointer-events: none;
+	pointer-events: none;
 }
 
 .resize-none {
-  resize: none;
+	resize: none;
 }
 
 .hidden {
-  visibility: hidden;
+	visibility: hidden;
 }
 
 .cursor-default {
-  cursor: default;
+	cursor: default;
 }
 
 .cursor-text {
-  cursor: text;
+	cursor: text;
 }
 
 /* +4px for input native horizontal padding */
 .mw-yyyy {
-  max-width: calc(4.2ch + 4px);
+	max-width: calc(4.2ch + 4px);
 }
 
 .mw-yy {
-  max-width: calc(2.7ch + 4px);
+	max-width: calc(2.7ch + 4px);
 }
 
 .mw-mm {
-  max-width: calc(2.8ch + 4px);
+	max-width: calc(2.8ch + 4px);
 }
 
 .mw-dd {
-  max-width: calc(2.3ch + 4px);
+	max-width: calc(2.3ch + 4px);
 }
 
 .mw-001px {
-  max-width: 0.01px
+	max-width: 0.01px
 }
 
 .minw-65rem {
-  min-width: 0.65rem;
+	min-width: 0.65rem;
 }
 
 .h-05ch {
-  height: 0.5ch;
+	height: 0.5ch;
 }
 
 .max-h-thumb {
-  max-height: 6rem;
+	max-height: 6rem;
 }
 
 .max-h-img {
-  max-height: 16rem;
+	max-height: 16rem;
 }
 
 .ph-2px {
-  padding-left: 2px;
-  padding-right: 2px;
+	padding-left: 2px;
+	padding-right: 2px;
 }
 
 .pv-1px {
-  padding-top: 1px;
-  padding-bottom: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 }
 
 .mr-2px {
-  margin-right: 2px;
+	margin-right: 2px;
 }
 
 .f-07em {
-  font-size: 0.7em;
+	font-size: 0.7em;
 }
 
 .translate-up-100 {
-  transform: translateY(-100%);
+	transform: translateY(-100%);
 }
 
 .transition-opts {
-  transition: max-width 0.3s ease-in-out;
+	transition: max-width 0.3s ease-in-out;
 }
 
 .cursor-default {
-  cursor: default;
+	cursor: default;
 }
 
 .cursor-text {
-  cursor: text;
+	cursor: text;
+}
+
+.toggle-outer {
+	width: 60px;
+	height: 34px;
+}
+
+.toggle-inner {
+	width: 26px;
+	height: 26px;
+	top: 4px;
+	left: 4px;
+}
+
+.toggle-on {
+	transform: translateX(26px);
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 .screenreader {
-  position: absolute !important;
-  /* Outside the DOM flow */
-  height: 1px;
-  width: 1px;
-  /* Nearly collapsed */
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px);
-  /* IE 7+ only support clip without commas */
-  clip: rect(1px, 1px, 1px, 1px);
-  /* All other browsers */
+	position: absolute !important;
+	/* Outside the DOM flow */
+	height: 1px;
+	width: 1px;
+	/* Nearly collapsed */
+	overflow: hidden;
+	clip: rect(1px 1px 1px 1px);
+	/* IE 7+ only support clip without commas */
+	clip: rect(1px, 1px, 1px, 1px);
+	/* All other browsers */
 }
 
 .transition-mw {
-  transition: max-width var(--ui-widgets-transition);
+	transition: max-width var(--ui-widgets-transition);
 }
 
 .transition-transform {
-  transition: transform var(--ui-widgets-transition);
+	transition: transform var(--ui-widgets-transition);
 }
 
 .transition-f {
-  transition: font-size var(--ui-widgets-transition);
+	transition: font-size var(--ui-widgets-transition);
 }
 
 .transition-o {
-  transition: opacity var(--ui-widgets-transition);
+	transition: opacity var(--ui-widgets-transition);
+}
+
+.transition-bg {
+	transition: background-color var(--ui-widgets-transition);
 }
 
 .hide-child:focus .child {
-  opacity: 1;
-  transition: opacity .15s ease-in;
+	opacity: 1;
+	transition: opacity .15s ease-in;
 }

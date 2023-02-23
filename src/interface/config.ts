@@ -79,6 +79,8 @@ export interface IConfig {
 	selectionOffInactive: string;
 	checkIcn: string;
 	uncheckIcn: string;
+	toggleOnWrapper: string;
+	toggleOffWrapper: string;
 	toggleOnIcn: string;
 	toggleOffIcn: string;
 	radioOnIcn: string;

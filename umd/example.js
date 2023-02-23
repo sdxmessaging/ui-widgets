@@ -227,14 +227,15 @@ m.mount(document.getElementById("page"), {
 				m(uiWidgets.ToggleInput, {
 					field: {
 						id: "toggle-Flatpickr",
-						config: {
-							selectionLayout: ["label", "off", "icon", "on"],
-							selectionOnLabel: "Enabled",
-							selectionOffLabel: "Disabled",
-							selectionOnInactive: "o-40",
-							selectionOffInactive: "o-40",
-							toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
-						}
+						label: "Enabled"
+						// config: {
+						// 	selectionLayout: ["label", "off", "icon", "on"],
+						// 	selectionOnLabel: "Enabled",
+						// 	selectionOffLabel: "Disabled",
+						// 	selectionOnInactive: "o-40",
+						// 	selectionOffInactive: "o-40",
+						// 	toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
+						// }
 					},
 					value: enableDatePicker
 				}),
@@ -410,11 +411,11 @@ m.mount(document.getElementById("page"), {
 					id: "toggle-in",
 					label: "Toggle Input",
 					required: true,
-					config: {
-						selectionLayout: ["icon", "on", "off"],
-						selectionOnLabel: "Toggle Input On",
-						selectionOffLabel: "Toggle Input Off"
-					}
+					// config: {
+					// 	selectionLayout: ["icon", "on", "off"],
+					// 	selectionOnLabel: "Toggle Input On",
+					// 	selectionOffLabel: "Toggle Input Off"
+					// }
 				},
 				value: toggleVal
 			})),
@@ -436,14 +437,14 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "toggle-in",
 					label: "Toggle Input",
-					config: {
-						selectionLayout: ["label", "off", "icon", "on"],
-						selectionOnLabel: "On",
-						selectionOffLabel: "Off",
-						selectionOnInactive: "o-40",
-						selectionOffInactive: "o-40",
-						toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
-					}
+					// config: {
+					// 	selectionLayout: ["label", "off", "icon", "on"],
+					// 	selectionOnLabel: "On",
+					// 	selectionOffLabel: "Off",
+					// 	selectionOnInactive: "o-40",
+					// 	selectionOffInactive: "o-40",
+					// 	// toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
+					// }
 				},
 				value: toggleVal
 			})),
