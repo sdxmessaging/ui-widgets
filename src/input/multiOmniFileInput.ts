@@ -23,10 +23,9 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 		}, [
 			m(FileInput, {
 				field,
-				defaultAccept: "*",
+				value,
 				dragging: this.dragging,
 				onSet: addOmniFiles(value, false),
-				value
 			},
 				m(".flex.items-center.pa1.dt", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
