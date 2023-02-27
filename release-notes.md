@@ -5,6 +5,7 @@
 - Config support for `optionalLblPost`, append text to labels on widgets when not required
 - BREAKING: Reworked toggle control, icons are now set in the "slider" part of an animated toggle
 - Added `toggleOnWrapper` and `toggleOffWrapper` config classes
+- Added `--ui-widgets-toggle-width` CSS variable for controlling toggle size (default 48px)
 
 ## 1.7.15
 
