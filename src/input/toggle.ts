@@ -54,7 +54,7 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 					class: checked
 						? getConfig("toggleOnWrapper", config)
 						: getConfig("toggleOffWrapper", config)
-				}, m(".toggle-inner.absolute.br-100.lh-title.tc.transition-transform", {
+				}, m(".toggle-inner.absolute.br-100.tc.transition-transform", {
 					class: checked
 						? joinClasses(["toggle-on", getConfig(this.onIcon, config)])
 						: getConfig(this.offIcon, config)
