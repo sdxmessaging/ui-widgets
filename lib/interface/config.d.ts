@@ -19,6 +19,8 @@ export interface IConfig {
     showPassTxt: string;
     /** Text to append to widget labels when field is required */
     requiredLblPost: string;
+    /** Text to append to widget labels when field is not required */
+    optionalLblPost: string;
     /** Date locale */
     dateLocale: string;
     datePickerIcn: string;
@@ -74,6 +76,8 @@ export interface IConfig {
     selectionOffInactive: string;
     checkIcn: string;
     uncheckIcn: string;
+    toggleOnWrapper: string;
+    toggleOffWrapper: string;
     toggleOnIcn: string;
     toggleOffIcn: string;
     radioOnIcn: string;
