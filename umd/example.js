@@ -227,15 +227,10 @@ m.mount(document.getElementById("page"), {
 				m(uiWidgets.ToggleInput, {
 					field: {
 						id: "toggle-Flatpickr",
-						label: "Enabled"
-						// config: {
-						// 	selectionLayout: ["label", "off", "icon", "on"],
-						// 	selectionOnLabel: "Enabled",
-						// 	selectionOffLabel: "Disabled",
-						// 	selectionOnInactive: "o-40",
-						// 	selectionOffInactive: "o-40",
-						// 	toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
-						// }
+						label: "Enabled",
+						config: {
+							toggleOnIcn: "bg-white br-pill fa-solid fa-check green"
+						}
 					},
 					value: enableDatePicker
 				}),
@@ -410,12 +405,7 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "toggle-in",
 					label: "Toggle Input",
-					required: true,
-					// config: {
-					// 	selectionLayout: ["icon", "on", "off"],
-					// 	selectionOnLabel: "Toggle Input On",
-					// 	selectionOffLabel: "Toggle Input Off"
-					// }
+					required: true
 				},
 				value: toggleVal
 			})),
@@ -426,7 +416,9 @@ m.mount(document.getElementById("page"), {
 					config: {
 						selectionLayout: ["icon", "on", "off"],
 						selectionOnLabel: "Toggle Input On",
-						selectionOffLabel: "Toggle Input Off"
+						selectionOffLabel: "Toggle Input Off",
+						toggleOnIcn: "fas fa-toggle-off",
+						toggleOffIcn: "fas fa-toggle-on"
 					},
 				},
 				value: toggleVal
@@ -437,14 +429,12 @@ m.mount(document.getElementById("page"), {
 				field: {
 					id: "toggle-in",
 					label: "Toggle Input",
-					// config: {
-					// 	selectionLayout: ["label", "off", "icon", "on"],
-					// 	selectionOnLabel: "On",
-					// 	selectionOffLabel: "Off",
-					// 	selectionOnInactive: "o-40",
-					// 	selectionOffInactive: "o-40",
-					// 	// toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
-					// }
+					config: {
+						toggleOnWrapper: "bg-dark-gray",
+						toggleOffWrapper: "bg-dark-gray",
+						toggleOnIcn: "bg-near-white",
+						toggleOffIcn: "bg-gray"
+					}
 				},
 				value: toggleVal
 			})),
@@ -458,6 +448,7 @@ m.mount(document.getElementById("page"), {
 						selectionOffLabel: "Off",
 						selectionOnInactive: "o-40",
 						selectionOffInactive: "o-40",
+						toggleOnIcn: "fas fa-toggle-off",
 						toggleOffIcn: "fas fa-toggle-on fa-flip-horizontal"
 					}
 				},

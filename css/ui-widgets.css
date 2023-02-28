@@ -1,6 +1,6 @@
 :root {
 	--ui-widgets-transition: 0.2s ease;
-	--ui-widgets-toggle-width: 66px;
+	--ui-widgets-toggle-height: 32px;
 }
 
 /* Remove input number type arrows */
@@ -108,14 +108,14 @@ input[type=number] {
 }
 
 .toggle-outer {
-	--ui-widgets-toggle-spacing: calc(var(--ui-widgets-toggle-width) / 12);
-	--ui-widgets-toggle-height: calc(var(--ui-widgets-toggle-width) / 2.5);
+	--ui-widgets-toggle-width: calc(var(--ui-widgets-toggle-height) * 2);
 	width: var(--ui-widgets-toggle-width);
-	height: calc(var(--ui-widgets-toggle-height) + var(--ui-widgets-toggle-spacing));
+	height: var(--ui-widgets-toggle-height);
 }
 
 .toggle-inner {
-	--ui-widgets-toggle-inner: calc(var(--ui-widgets-toggle-height) - var(--ui-widgets-toggle-spacing));
+	--ui-widgets-toggle-spacing: calc(var(--ui-widgets-toggle-height) / 8);
+	--ui-widgets-toggle-inner: calc(var(--ui-widgets-toggle-height) - 2 * var(--ui-widgets-toggle-spacing));
 	font-size: calc(var(--ui-widgets-toggle-height) / 2);
 	line-height: var(--ui-widgets-toggle-inner);
 	width: var(--ui-widgets-toggle-inner);
@@ -125,7 +125,7 @@ input[type=number] {
 }
 
 .toggle-on {
-	transform: translateX(calc(1.5 * var(--ui-widgets-toggle-height) - var(--ui-widgets-toggle-spacing)));
+	transform: translateX(var(--ui-widgets-toggle-height));
 }
 
 /* Firefox */
