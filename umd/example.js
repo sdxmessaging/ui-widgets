@@ -229,7 +229,8 @@ m.mount(document.getElementById("page"), {
 						id: "toggle-Flatpickr",
 						label: "Enabled",
 						config: {
-							toggleOnIcn: "bg-white br-pill fa-solid fa-check green"
+							toggleOnIcn: "bg-white br-pill fa-solid fa-check green",
+							toggleOffIcn: "bg-white br-pill fa-solid fa-xmark"
 						}
 					},
 					value: enableDatePicker
