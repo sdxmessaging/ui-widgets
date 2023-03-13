@@ -1,6 +1,6 @@
 # Release Notes
 
-## 1.7.16
+## 1.8.0
 
 - Config support for `optionalLblPost`, append text to labels on widgets when not required
 - BREAKING: Reworked toggle control, icons are now set in the "slider" part of an animated toggle

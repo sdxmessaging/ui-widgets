@@ -7,7 +7,6 @@ import { joinClasses, labelCls, theme } from "./theme";
 import { config } from "./config";
 import { IWidgetClasses } from "./interface/theme";
 
-
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
 	// Add to 0x100 to pad small numbers with leading 0
