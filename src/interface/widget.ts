@@ -169,7 +169,14 @@ export interface IRadioField extends IField {
 	readonly value: TProp;
 }
 
-export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
+export interface ITextareaField extends IField {
+	readonly type?: "textarea";
+	readonly rows?: number;
+	readonly cols?: number;
+	readonly wrap?: "hard" | "soft" | "off";
+}
+
+export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField | ITextareaField;
 
 // Editor signature inner widgets
 export interface ISignWidget {
