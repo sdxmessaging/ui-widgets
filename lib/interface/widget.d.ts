@@ -83,7 +83,7 @@ export interface IField {
     readonly maxlength?: number;
     readonly min?: number | string;
     readonly minlength?: number;
-    readonly step?: number;
+    readonly step?: number | "any";
     readonly pattern?: string;
     readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
     readonly spellcheck?: boolean;
@@ -116,7 +116,13 @@ export interface IRadioField extends IField {
     readonly name: string;
     readonly value: TProp;
 }
-export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField;
+export interface ITextareaField extends IField {
+    readonly type?: "textarea";
+    readonly rows?: number;
+    readonly cols?: number;
+    readonly wrap?: "hard" | "soft" | "off";
+}
+export type TField = IField | IOptionField | ISignField | ICheckboxField | IRadioField | ITextareaField;
 export interface ISignWidget {
     readonly heightPct: number;
     readonly stampTxt: string;

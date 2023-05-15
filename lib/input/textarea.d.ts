@@ -1,7 +1,7 @@
 import m, { CVnode } from "mithril";
-import { IPropWidget } from "../interface/widget";
+import { IPropWidget, ITextareaField } from "../interface/widget";
 import { ValidationBase } from "../validationBase";
-export declare class TextareaInput extends ValidationBase<IPropWidget> {
+export declare class TextareaInput extends ValidationBase<IPropWidget<ITextareaField>> {
     protected readonly selector = "textarea";
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
+    view({ attrs }: CVnode<IPropWidget<ITextareaField>>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
 }
