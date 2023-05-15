@@ -134,7 +134,7 @@ m.mount(document.getElementById("page"), {
 	view: () => m(".mw8.ph4.mv5.center", [
 
 		// Navbar
-		m(".flex.flex-column.flex-row-l.items-center.fixed.top-0.right-0.bg-near-white.z-max", [
+		m(".flex.flex-column.flex-row-l.items-center-l.fixed.top-0.right-0.bg-near-white.z-max", [
 			m(uiWidgets.NavLink, {
 				label: "Basic Usage",
 				icon: "fas fa-home",
@@ -151,7 +151,7 @@ m.mount(document.getElementById("page"), {
 				href: "#custom"
 			}),
 			m(uiWidgets.NavLink, {
-				label: "File Support",
+				label: "File Inputs",
 				icon: "fas fa-file-alt",
 				href: "#files"
 			}),
@@ -161,7 +161,7 @@ m.mount(document.getElementById("page"), {
 				href: "#list"
 			}),
 			m(uiWidgets.NavLink, {
-				label: "Theme Support",
+				label: "Theme",
 				icon: "fas fa-paint-roller",
 				href: "#theme"
 			}),
