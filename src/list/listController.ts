@@ -35,9 +35,7 @@ export class ListController<T> {
 
 	// All data, unsorted and unfiltered
 	private readonly dataStore: T[] = [];
-	// Rendered pages
-	private readonly viewStore: ReadonlyArray<T>[] = [];
-	// Pages of data yet to be rendered (this should be optimised out, viewStore can populate directly from dataStore)
+	// Data split into pages
 	private readonly pageStore: ReadonlyArray<T>[] = [];
 
 	private scrollPct = 0;
@@ -58,7 +56,6 @@ export class ListController<T> {
 		this.startPage = -1;
 		this.endPage = -1;
 		this.dataStore.splice(0, this.dataStore.length);
-		this.viewStore.splice(0, this.viewStore.length);
 		this.pageStore.splice(0, this.pageStore.length);
 		this.load();
 	}
@@ -72,20 +69,11 @@ export class ListController<T> {
 	public updateDataStore(data: T[], hasMore = false) {
 		this.loadMore = hasMore;
 		this.dataStore.push(...data);
-		const pageIdx = this.viewStore.length + this.pageStore.length;
-		let startIdx = pageIdx * ListController.PAGE_SIZE;
-		// Split data into pages
-		while (startIdx < this.dataStore.length) {
-			const endIdx = startIdx + ListController.PAGE_SIZE;
-			// What happens if the last page is not full?
-			this.pageStore.push(this.dataStore.slice(startIdx, endIdx));
-			startIdx = endIdx;
-		}
 		this.updatePageRange();
 	}
 
 	public render<C>(callback: (params: IListPageRender<T>) => C): C[] {
-		return this.viewStore.map((items, idx) => callback({
+		return this.pageStore.map((items, idx) => callback({
 			items,
 			idx,
 			visible: idx >= this.startPage && idx <= this.endPage
@@ -94,9 +82,8 @@ export class ListController<T> {
 
 	public debug() {
 		return {
-			rows: this.dataStore.length,
-			activePages: this.viewStore.length,
-			pendingPages: this.pageStore.length,
+			data: this.dataStore.length,
+			pages: this.pageStore.length,
 			start: this.startPage,
 			end: this.endPage
 		};
@@ -113,20 +100,26 @@ export class ListController<T> {
 
 	private updatePageRange() {
 		// Determine start page, minor bias to help different page sizes and scrolling up
-		let startPage = Math.max(0, Math.floor(this.scrollPct * this.viewStore.length) - 1);
+		let startPage = Math.max(0, Math.floor(this.scrollPct * this.pageStore.length) - 1);
 		// "Rewind" start page if it is too close to the end
-		if (startPage + ListController.PAGE_RANGE > (this.viewStore.length + this.pageStore.length)) {
-			startPage = Math.max(0, this.viewStore.length - ListController.PAGE_RANGE);
+		if (startPage + ListController.PAGE_RANGE > Math.ceil(this.dataStore.length / ListController.PAGE_SIZE)) {
+			startPage = Math.max(0, this.pageStore.length - ListController.PAGE_RANGE);
 		}
 		if (startPage !== this.startPage) {
 			this.startPage = startPage;
 			this.endPage = startPage + ListController.PAGE_RANGE;
-			// Get more pages from pageStore if required
-			if (this.endPage >= this.viewStore.length && this.pageStore.length > 0) {
-				this.viewStore.push(...this.pageStore.splice(0, this.endPage - this.viewStore.length));
+			// Update viewStore with more pages if required
+			const bufferStart = this.pageStore.length * ListController.PAGE_SIZE;
+			const bufferEnd = this.endPage * ListController.PAGE_SIZE;
+			for (let start = bufferStart; start < bufferEnd; start += ListController.PAGE_SIZE) {
+				const end = start + ListController.PAGE_SIZE;
+				// Skip page if out of bounds and more data to load
+				if (!(end > this.dataStore.length && this.loadMore)) {
+					this.pageStore.push(this.dataStore.slice(start, end));
+				}
 			}
 			// Load more pages if required
-			if (this.loadMore && this.pageStore.length === 0) {
+			if (this.loadMore && bufferEnd >= this.dataStore.length) {
 				this.load();
 			}
 			m.redraw();
