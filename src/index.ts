@@ -30,7 +30,6 @@ export { iconMap, linkIcon, linkAttrs, Link } from "./display/link";
 export { Checkbox } from "./display/checkbox";
 export { Toggle } from "./display/toggle";
 export { DisplayTypeComponent } from "./display/displayTypeComponent";
-// Prop (options)
 export { SelectText } from "./display/select";
 // File
 export { FileList } from "./display/file";
@@ -49,10 +48,8 @@ export { CardDateInput } from "./input/cardDateInput";
 export { DateInput } from "./input/dateInput";
 export { PasswordInput } from "./input/password";
 export { TextareaInput } from "./input/textarea";
-
 export { CheckboxInput } from "./input/checkbox";
 export { ToggleInput } from "./input/toggle";
-// Prop (options)
 export { RadioInput } from "./input/radio";
 export { SelectInput } from "./input/select";
 // File
@@ -64,3 +61,7 @@ export { SignBuilder } from "./input/sign";
 export { OmniFileInput } from "./input/omniFileInput";
 export { MultiOmniFileInput } from "./input/multiOmniFileInput";
 export { FileButtonSelect } from "./input/fileButtonSelect";
+
+// List
+export { List } from "./list/list";
+export { ListController } from "./list/listController";

@@ -88,6 +88,48 @@ themeBtn.map((newCls) => uiWidgets.updateClasses({ button: newCls }));
 var themeNavBtn = stream(uiWidgets.theme.navButton);
 themeNavBtn.map((newCls) => uiWidgets.updateClasses({ navButton: newCls }));
 
+// List dummy data generator
+function generate(offset, limit) {
+	var data = [];
+	var end = offset + limit;
+	for (var i = offset; i < end; i++) {
+		var random = Math.random();
+		data.push({
+			id: i,
+			name: `Entry - ${i}`,
+			random: random.toFixed(3),
+			upper: random > 0.5,
+			even: i % 2 === 0
+		});
+	}
+	return new Promise((resolve) => {
+		setTimeout(() => resolve(data), 500 + Math.random() * 500);
+	});
+}
+// Fetch 128 rows
+var single = uiWidgets.ListController.single(() => generate(0, 128));
+// Fetch rows from range
+var paging = uiWidgets.ListController.paging(generate);
+
+// List row component
+var rowComponent = {
+	view: ({ attrs: { id, name, random, upper, even } }) => m(".pa1",
+		m(".flex.items-center.justify-around.pa1.ba.b--moon-gray.br2", {
+			class: even ? "bg-near-white" : ""
+		}, [
+			m("span.w-20.i", id),
+			m("span.w-30", name),
+			m("span.w-20.code.f6", {
+				class: upper ? "dark-green" : "dark-red"
+			}, random),
+			m(uiWidgets.Button, {
+				label: "Log Name",
+				onclick: () => console.log(name)
+			})
+		])
+	)
+};
+
 m.mount(document.getElementById("page"), {
 	view: () => m(".mw8.ph4.mv5.center", [
 
@@ -112,6 +154,11 @@ m.mount(document.getElementById("page"), {
 				label: "File Support",
 				icon: "fas fa-file-alt",
 				href: "#files"
+			}),
+			m(uiWidgets.NavLink, {
+				label: "List",
+				icon: "fas fa-list",
+				href: "#list"
 			}),
 			m(uiWidgets.NavLink, {
 				label: "Theme Support",
@@ -146,7 +193,7 @@ m.mount(document.getElementById("page"), {
 
 		m("h2.flex.items-center", [
 			"ui-widgets",
-			m(uiWidgets.Tooltip, { message: ["Now with tooltip", "with the option for multiple lines"]})
+			m(uiWidgets.Tooltip, { message: ["Now with tooltip", "with the option for multiple lines"] })
 		]),
 
 		m("h3", m("a#basic.link[href=#basic]", "Basic Usage")),
@@ -1006,6 +1053,31 @@ m.mount(document.getElementById("page"), {
 			classes: "mb2",
 			onclick: () => console.debug(signList())
 		}),
+
+		m("h3", m("a#list.link[href=#list]", "List")),
+		m("p", "The list widget and controller provide a simple way to fetch and display items in a very unopinionated manner. The controller provides a \"rolling window\" of visible items, which combined with the list widget allows for large datasets to be displayed without performance issues."),
+		m("p", "Provide your own row component, and wrap it as you see fit. The following examples add a header to each list and a loading indicator."),
+
+		m(".flex.flex-column.ba.b--silver", [
+			m(".flex.justify-between.pa2.bg-near-black.white", [
+				m("span.f3", "Sample List - 128 Items"),
+				single.loading ? m("progress") : null
+			]),
+			m(uiWidgets.List, {
+				classes: "vh-25",
+				controller: single,
+				component: rowComponent
+			}),
+			m(".flex.justify-between.pa2.bg-near-black.white", [
+				m("span.f3", "Sample List - Infinite Data Source"),
+				paging.loading ? m("progress") : null
+			]),
+			m(uiWidgets.List, {
+				classes: "vh-50",
+				controller: paging,
+				component: rowComponent
+			})
+		]),
 
 		m("h3", m("a#theme.link[href=#theme]", "Theme Support")),
 		m("p", "Update theme classes on the fly and use your existing css"),

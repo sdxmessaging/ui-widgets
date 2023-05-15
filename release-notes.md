@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.1
+
+- Support field range option "any"
+- Added `List` component and `ListController` class, more info in example page
+
 ## 1.8.0
 
 - Config support for `optionalLblPost`, append text to labels on widgets when not required
