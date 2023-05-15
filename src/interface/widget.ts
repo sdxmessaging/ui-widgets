@@ -125,7 +125,7 @@ export interface IField {
 	readonly maxlength?: number;
 	readonly min?: number | string;
 	readonly minlength?: number;
-	readonly step?: number;
+	readonly step?: number | "any";
 	readonly pattern?: string;
 	readonly inputmode?: "none" | "text" | "decimal" | "numeric" | "tel" | "search" | "email" | "url";
 	readonly spellcheck?: boolean;
