@@ -7,6 +7,7 @@
 
 ## 1.8.1
 
+- Update TypeScript to 5.0
 - Support field range option "any"
 - Added `List` component and `ListController` class, more info in example page
 
