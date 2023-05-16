@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.2
+
+- Minor performance improvement to `List` buffering
+- Added support for sorting and filtering on `List` data
+
 ## 1.8.1
 
 - Support field range option "any"
