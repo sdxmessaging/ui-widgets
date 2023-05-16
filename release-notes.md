@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.3
+
+- Fix `List` sometimes appearing blank after reload
+
 ## 1.8.2
 
 - Minor performance improvement to `List` buffering

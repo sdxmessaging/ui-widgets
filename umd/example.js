@@ -1143,6 +1143,11 @@ m.mount(document.getElementById("page"), {
 				JSON.stringify(paging.debug())
 			)
 		]),
+		m(uiWidgets.Button, {
+			label: "Reload List",
+			classes: "mt2",
+			onclick: () => paging.reload()
+		}),
 
 		m("h3", m("a#theme.link[href=#theme]", "Theme Support")),
 		m("p", "Update theme classes on the fly and use your existing css"),

@@ -98,8 +98,10 @@ export class ListController<T> {
 
 	/** Update visible page range, trigger redraw if range has changed */
 	public updateScroll(percentage: number) {
-		this.scrollPct = percentage;
-		this.updatePageRange();
+		if (this.dataStore.length > 0) {
+			this.scrollPct = percentage;
+			this.updatePageRange();
+		}
 	}
 
 	public updateDataStore(data: T[], hasMore = false) {
