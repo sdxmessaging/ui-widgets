@@ -17,11 +17,11 @@ describe("List", () => {
 		view: ({ attrs: { id } }: Vnode<ITestData>) => m("div", id)
 	};
 
-	test("create and scroll", () => {
+	test("create and scroll", (done) => {
 		const root = window.document.createElement("div");
 		m.mount(root, {
 			view: () => m(List<ITestData>, {
-				classes: "h5",
+				classes: "h1",
 				controller,
 				component
 			})
@@ -31,11 +31,20 @@ describe("List", () => {
 		expect(container).toBeDefined();
 		// 3 initial pages
 		expect(container.childNodes.length).toBe(3);
-		// Scroll to bottom of visible area, should fetch in 2 more pages
-		controller.updateScroll(1);
-		m.redraw.sync();
-		// 1 hidden and 4 active pages
-		expect(container.childNodes.length).toBe(5);
+		// Test debounced scroll handler
+		const scrollEvent = new Event("scroll");
+		Object.defineProperty(scrollEvent, "target", {
+			get: () => container
+		});
+		container.dispatchEvent(scrollEvent);
+		setTimeout(() => {
+			// Force scroll to bottom of visible area, should fetch in 2 more pages
+			controller.updateScroll(1);
+			m.redraw.sync();
+			// 1 hidden and 4 active pages
+			expect(container.childNodes.length).toBe(5);
+			done();
+		}, 66);
 	});
 
 });

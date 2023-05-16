@@ -1,3 +1,4 @@
+import lodash from "lodash";
 import m from "mithril";
 import { IListPageRender } from "../interface/list";
 
@@ -5,9 +6,6 @@ export class ListController<T> {
 
 	private static readonly PAGE_SIZE = 25;
 	private static readonly PAGE_RANGE = 3;
-	private static identity<T>(input: T[]): T[] {
-		return input;
-	}
 
 	/** Factory for a ListController that loads all data at once */
 	static single<D>(load: () => Promise<D[]>): ListController<D> {
@@ -42,13 +40,13 @@ export class ListController<T> {
 		return this.dataStore;
 	}
 
-	private sortFn: (inp: T[]) => T[] = ListController.identity;
+	private sortFn: (inp: T[]) => T[] = lodash.identity;
 	private sortedDataStore: T[] = this.dataStore;
 	public get sortedData(): ReadonlyArray<T> {
 		return this.sortedDataStore;
 	}
 
-	private filterFn: (inp: T[]) => T[] = ListController.identity;
+	private filterFn: (inp: T[]) => T[] = lodash.identity;
 	private filteredDataStore: T[] = this.sortedDataStore;
 	public get filteredData(): ReadonlyArray<T> {
 		return this.filteredDataStore;
