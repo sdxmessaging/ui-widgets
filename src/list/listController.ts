@@ -7,6 +7,11 @@ export class ListController<T> {
 	private static readonly PAGE_SIZE = 25;
 	private static readonly PAGE_RANGE = 3;
 
+	/** Clamp value to a range, min takes priority over max */
+	private static clampRange(min: number, value: number, max: number) {
+		return Math.max(min, Math.min(value, max));
+	}
+
 	/** Factory for a ListController that loads all data at once */
 	static single<D>(load: () => Promise<D[]>): ListController<D> {
 		const ctrl: ListController<D> = new ListController(
@@ -142,13 +147,13 @@ export class ListController<T> {
 	}
 
 	private updatePageRange() {
-		// Determine start page, minor bias to help different page sizes and scrolling up
-		let startPage = Math.max(0, Math.floor(this.scrollPct * this.pageStore.length) - 1);
-		// "Rewind" start page if it is too close to the end
-		const lastPage = Math.ceil(this.filteredDataStore.length / ListController.PAGE_SIZE);
-		if (startPage + ListController.PAGE_RANGE > lastPage) {
-			startPage = Math.max(0, this.pageStore.length - ListController.PAGE_RANGE);
-		}
+		const startPage = ListController.clampRange(
+			0,
+			// Bias to help different page sizes and scrolling up
+			Math.floor(this.scrollPct * this.pageStore.length) - 1,
+			// Limit to last page - page range
+			Math.ceil(this.filteredDataStore.length / ListController.PAGE_SIZE) - ListController.PAGE_RANGE
+		);
 		if (startPage !== this.startPage) {
 			this.startPage = startPage;
 			this.endPage = startPage + ListController.PAGE_RANGE;
