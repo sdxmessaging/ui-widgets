@@ -157,17 +157,15 @@ export class ListController<T> {
 		if (startPage !== this.startPage) {
 			this.startPage = startPage;
 			this.endPage = startPage + ListController.PAGE_RANGE;
-			// Update viewStore with more pages if required
-			const bufferStart = this.pageStore.length * ListController.PAGE_SIZE;
+			// Create more pages if required
+			let bufferStart = this.pageStore.length * ListController.PAGE_SIZE;
 			const bufferEnd = this.endPage * ListController.PAGE_SIZE;
-			for (let start = bufferStart; start < bufferEnd; start += ListController.PAGE_SIZE) {
-				const end = start + ListController.PAGE_SIZE;
-				// Skip page if out of bounds and more data to load
-				if (!(end > this.filteredDataStore.length && this.loadMore)) {
-					this.pageStore.push(this.filteredDataStore.slice(start, end));
-				}
+			while (bufferStart < bufferEnd) {
+				const end = bufferStart + ListController.PAGE_SIZE;
+				this.pageStore.push(this.filteredDataStore.slice(bufferStart, end));
+				bufferStart = end;
 			}
-			// Load more pages if required
+			// Load more pages if required and next page will run out of buffer
 			if (this.loadMore && bufferEnd >= this.dataStore.length) {
 				this.load();
 			}
