@@ -89,6 +89,7 @@ var themeNavBtn = stream(uiWidgets.theme.navButton);
 themeNavBtn.map((newCls) => uiWidgets.updateClasses({ navButton: newCls }));
 
 // List dummy data generator
+var words = ["lorem", "ipsum", "dolor", "sit", "amet"];
 function generate(offset, limit) {
 	var data = [];
 	var end = offset + limit;
@@ -96,7 +97,7 @@ function generate(offset, limit) {
 		var random = Math.random();
 		data.push({
 			id: i,
-			name: `Entry - ${i}`,
+			name: `${i}: ${words[Math.floor(random * words.length)]}`,
 			random: random.toFixed(3),
 			upper: random > 0.5,
 			even: i % 2 === 0
@@ -108,6 +109,26 @@ function generate(offset, limit) {
 }
 // Fetch 128 rows
 var single = uiWidgets.ListController.single(() => generate(0, 128));
+// Basic sort
+var orderAsc = true;
+single.setSort((input) => orderAsc ? input : _.sortBy(input, ({ id }) => id * -1));
+// Basic filter
+var singleFilter = stream();
+single.setFilter((input) => {
+	const val = singleFilter();
+	if (val) {
+		const filter = val.toLowerCase();
+		return input.filter(({ name }) => name.toLowerCase().includes(filter))
+	} else {
+		return input;
+	}
+});
+// Don't filter until data is loaded and handle streams that have not started
+singleFilter.map(() => single.applyFilter());
+
+// List debug mode
+var debug = stream(false);
+
 // Fetch rows from range
 var paging = uiWidgets.ListController.paging(generate);
 
@@ -1055,19 +1076,60 @@ m.mount(document.getElementById("page"), {
 		}),
 
 		m("h3", m("a#list.link[href=#list]", "List")),
-		m("p", "The list widget and controller provide a simple way to fetch and display items in a very unopinionated manner. The controller provides a \"rolling window\" of visible items, which combined with the list widget allows for large datasets to be displayed without performance issues."),
-		m("p", "Provide your own row component, and wrap it as you see fit. The following examples add a header to each list and a loading indicator."),
+		m("p", "The list widget and controller provide a simple way to fetch and display items in a very unopinionated manner. The controller provides a \"rolling window\" of visible items, which combined with the list widget allows for large datasets to be displayed without performance issues. Provide your own row component, and wrap the list as you see fit."),
+
+		m("div", {
+			style: {
+				"--ui-widgets-toggle-height": "24px"
+			}
+		}, m(uiWidgets.ToggleInput, {
+			field: {
+				id: "toggle-debug",
+				label: "Enable Debug Footer"
+			},
+			value: debug
+		})),
+
+		m("p", "This basic grid has a simple header and filter/order controls. Local sorting and filtering should only be used if the entire dataset is loaded into memory. Otherwise, use the server-side filtering and sorting options."),
 
 		m(".flex.flex-column.ba.b--silver", [
 			m(".flex.justify-between.pa2.bg-near-black.white", [
 				m("span.f3", "Sample List - 128 Items"),
 				single.loading ? m("progress") : null
 			]),
+			m(".flex.items-center.pa1.bb.b--silver", [
+				m(uiWidgets.BaseInput, {
+					field: {
+						id: "single-filter",
+						placeholder: "Filter",
+						instant: true,
+						uiClass: { wrapper: "flex-auto mr1" }
+					},
+					value: singleFilter
+				}),
+				m(uiWidgets.Button, {
+					title: "Order Ascending/Descending",
+					icon: orderAsc ? "fas fa-arrow-down-1-9" : "fas fa-arrow-up-9-1",
+					classes: "flex-shrink-0",
+					onclick: () => {
+						orderAsc = !orderAsc;
+						single.applySort();
+					}
+				})
+			]),
 			m(uiWidgets.List, {
 				classes: "vh-25",
 				controller: single,
 				component: rowComponent
 			}),
+			debug() && m(".pa2.f5.near-black.code.bg-washed-yellow.bt.b--silver",
+				JSON.stringify(single.debug())
+			)
+		]),
+
+		m("p", "This basic grid has a simple header and will load dummy data as you scroll."),
+
+		m(".flex.flex-column.ba.b--silver", [
 			m(".flex.justify-between.pa2.bg-near-black.white", [
 				m("span.f3", "Sample List - Infinite Data Source"),
 				paging.loading ? m("progress") : null
@@ -1076,7 +1138,10 @@ m.mount(document.getElementById("page"), {
 				classes: "vh-50",
 				controller: paging,
 				component: rowComponent
-			})
+			}),
+			debug() && m(".pa2.f5.near-black.code.bg-washed-yellow.bt.b--silver",
+				JSON.stringify(paging.debug())
+			)
 		]),
 
 		m("h3", m("a#theme.link[href=#theme]", "Theme Support")),
