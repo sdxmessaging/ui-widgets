@@ -93,8 +93,8 @@ const processArray: ReadonlyArray<IProcess> = [
 	{
 		execute: () => shell.exec("npm run test"),
 		rollback: () => null,
-		errMsg: "Publish failed, could not pull changes ui-widgets. See logs for more details",
-		executeMsg: "Pulling changes on ui-widgets..."
+		errMsg: "Publish failed, could not run tests. See logs for more details",
+		executeMsg: "Running tests..."
 	},
 	// Build, add and commit
 	{
