@@ -70,10 +70,6 @@ export class ListController<T> {
 		return this.isLoading;
 	}
 
-	constructor(private dataLoader: (offset: number) => Promise<void>) {
-		this.load();
-	}
-
 	public setSort(sortFn: (inp: T[]) => T[]) {
 		this.sortFn = sortFn;
 	}
@@ -129,6 +125,10 @@ export class ListController<T> {
 			start: this.startPage,
 			end: this.endPage
 		};
+	}
+
+	private constructor(private dataLoader: (offset: number) => Promise<void>) {
+		this.load();
 	}
 
 	private invalidate() {
