@@ -3,7 +3,8 @@ export declare class ListController<T> {
     private dataLoader;
     private static readonly PAGE_SIZE;
     private static readonly PAGE_RANGE;
-    private static identity;
+    /** Clamp value to a range, min takes priority over max */
+    private static clampRange;
     /** Factory for a ListController that loads all data at once */
     static single<D>(load: () => Promise<D[]>): ListController<D>;
     /** Factory for a ListController that loads data in pages */
@@ -23,7 +24,6 @@ export declare class ListController<T> {
     private loadMore;
     isLoading: boolean;
     get loading(): boolean;
-    constructor(dataLoader: (offset: number) => Promise<void>);
     setSort(sortFn: (inp: T[]) => T[]): void;
     applySort(): void;
     setFilter(filterFn: (inp: T[]) => T[]): void;
@@ -40,6 +40,7 @@ export declare class ListController<T> {
         start: number;
         end: number;
     };
+    private constructor();
     private invalidate;
     private load;
     private updatePageRange;
