@@ -1,6 +1,7 @@
 import lodash from "lodash";
+import m from "mithril";
 
-import { IConfig } from "./interface/config";
+import { IConfig, TIcon, TWidgetFunction } from "./interface/config";
 import { LayoutType, SignTypes } from "./interface/widget";
 
 const confMap: IConfig = {
@@ -85,4 +86,28 @@ export function getConfig<T extends keyof IConfig>(key: T, override?: Partial<IC
 	return override && key in override
 		? override[key] as IConfig[T]
 		: config[key];
+}
+
+const functionMap: Record<string, TWidgetFunction> = {};
+
+export function registerFunction(name: string, func: TWidgetFunction) {
+	if (name in functionMap) {
+		throw new Error(`Function ${name} already registered.`);
+	}
+	functionMap[name] = func;
+}
+
+export function getFunction(name: string) {
+	if (!(name in functionMap)) {
+		throw new Error(`Function ${name} not registered.`);
+	}
+	return functionMap[name];
+}
+
+export function getIcon(icon: TIcon, classes: string) {
+	if (typeof icon === "string") {
+		return m("i", { class: `${classes} ${icon}` });
+	} else {
+		return getFunction(icon.name)(icon.args, classes);
+	}
 }

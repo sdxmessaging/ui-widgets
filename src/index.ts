@@ -2,7 +2,7 @@ export * from "./interface/widget";
 export * from "./interface/theme";
 export { IConfig } from "./interface/config";
 
-export { updateConfig } from "./config";
+export { updateConfig, registerFunction } from "./config";
 export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
 export {
 	guid, pxRatio, fileNameExtSplit,
