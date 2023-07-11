@@ -88,6 +88,22 @@ themeBtn.map((newCls) => uiWidgets.updateClasses({ button: newCls }));
 var themeNavBtn = stream(uiWidgets.theme.navButton);
 themeNavBtn.map((newCls) => uiWidgets.updateClasses({ navButton: newCls }));
 
+uiWidgets.registerFunction("customRadio", (args, classes) => m("svg[xmlns=http://www.w3.org/2000/svg]", {
+	class: classes,
+	viewBox: "0 0 16 16",
+	width: args.radius * 2, height: args.radius * 2,
+	class: classes
+},
+	m("circle", {
+		cx: 8, cy: 8, r: 7,
+		style: {
+			fill: args.fill,
+			stroke: args.stroke,
+			strokeWidth: 2
+		}
+	})
+));
+
 // List dummy data generator
 var words = ["lorem", "ipsum", "dolor", "sit", "amet"];
 function generate(offset, limit) {
@@ -582,7 +598,23 @@ m.mount(document.getElementById("page"), {
 						required: true,
 						config: {
 							selectionLayout: ["icon", "label", "on"],
-							selectionOnActive: "fas fa-question"
+							selectionOnActive: "fas fa-question",
+							radioOnIcn: {
+								name: "customRadio",
+								args: {
+									radius: 10,
+									fill: "green",
+									stroke: "#333333"
+								}
+							},
+							// radioOffIcn: {
+							// 	name: "customRadio",
+							// 	args: {
+							// 		radius: 10,
+							// 		fill: "red",
+							// 		stroke: "#333333"
+							// 	}
+							// }
 						}
 					},
 					value: optVal
