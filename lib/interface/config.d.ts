@@ -1,4 +1,12 @@
-import { LayoutType, SignTypes } from "./widget";
+import { Vnode } from "mithril";
+import { LayoutType, SignTypes, TProp } from "./widget";
+export type TWidgetData = Record<string, TProp>;
+export type TWidgetFunction = (data: TWidgetData, classes: string) => Vnode;
+export interface IFunctionCall {
+    readonly name: string;
+    readonly data: TWidgetData;
+}
+export type TIcon = string | IFunctionCall;
 type TCheckSlot = "label" | "icon" | "on" | "off";
 export interface IConfig {
     /** Default widget layout */
@@ -80,8 +88,8 @@ export interface IConfig {
     toggleOffWrapper: string;
     toggleOnIcn: string;
     toggleOffIcn: string;
-    radioOnIcn: string;
-    radioOffIcn: string;
+    radioOnIcn: TIcon;
+    radioOffIcn: TIcon;
     showPassIcn: string;
     hidePassIcn: string;
     uploadIcn: string;

@@ -1,7 +1,7 @@
 export * from "./interface/widget";
 export * from "./interface/theme";
 export { IConfig } from "./interface/config";
-export { updateConfig } from "./config";
+export { updateConfig, registerFunction } from "./config";
 export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
 export { guid, pxRatio, fileNameExtSplit, dataURItoBlob, fileConstructor, dataUrlToFile } from "./utils";
 export { getOrientation, readArrayBuffer, readOrientation, scaleRect, resizeImage, scaleDataUrl, textToImage, createStamp, } from "./imageUtils";
