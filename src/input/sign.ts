@@ -5,7 +5,7 @@ import stream from "mithril/stream";
 import { TStyle } from "../interface/theme";
 import { IFile, IFileWidget, ISignField, ISignWidget, SignTypes, TPropMap } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { theme, wrapperCls } from "../theme";
 import { getLabel, imgSrc, dataUrlToFile, clickOnEnter } from "../utils";
 import { scaleDataUrl } from "../imageUtils";
@@ -151,9 +151,7 @@ export class SignBuilder implements ClassComponent<TSignWidget> {
 								onkeydown: clickOnEnter,
 								onclick: lodash.bind(this.setSignType, this, type)
 							},
-								m("i.fa-2x.ma1", {
-									class: icon,
-								}),
+								getIcon(icon, "fa-2x ma1"),
 								m("span.ma1.dn.db-ns.truncate", label)
 							))
 						)

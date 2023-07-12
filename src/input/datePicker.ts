@@ -2,7 +2,7 @@ import flatpickr from "flatpickr";
 import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 
 import { IPropWidget } from "../interface/widget";
 
@@ -51,9 +51,7 @@ export class DatePicker implements ClassComponent<IPropWidget> {
 	}
 
 	public view({ attrs: { field: { config } } }: CVnode<IPropWidget>) {
-		return m("i.ph-2px.pv-1px", {
-			class: getConfig("datePickerIcn", config)
-		});
+		return getIcon(getConfig("datePickerIcn", config), "ph-2px pv-1px");
 	}
 
 }

@@ -1,6 +1,6 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IConfig, TSubset } from "../interface/config";
+import { IConfig, TIcon, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget } from "../interface/widget";
 
 import { getConfig } from "../config";
@@ -12,8 +12,8 @@ import { SelectionInner } from "./layout/selectionInner";
 type TCheckboxWidget = IPropWidget<ICheckboxField>;
 export class CheckboxInput implements ClassComponent<TCheckboxWidget> {
 
-	protected readonly onIcon: keyof TSubset<IConfig, string> = "checkIcn";
-	protected readonly offIcon: keyof TSubset<IConfig, string> = "uncheckIcn";
+	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
+	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";
 
 	public view({ attrs: { field, value: val } }: CVnode<TCheckboxWidget>) {
 		const {
