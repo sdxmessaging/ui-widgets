@@ -108,6 +108,6 @@ export function getIcon(icon: TIcon, classes: string) {
 	if (typeof icon === "string") {
 		return m("i", { class: `${classes} ${icon}` });
 	} else {
-		return getFunction(icon.name)(icon.args, classes);
+		return getFunction(icon.name)(icon.data, classes);
 	}
 }

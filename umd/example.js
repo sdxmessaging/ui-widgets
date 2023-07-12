@@ -88,17 +88,17 @@ themeBtn.map((newCls) => uiWidgets.updateClasses({ button: newCls }));
 var themeNavBtn = stream(uiWidgets.theme.navButton);
 themeNavBtn.map((newCls) => uiWidgets.updateClasses({ navButton: newCls }));
 
-uiWidgets.registerFunction("customRadio", (args, classes) => m("svg[xmlns=http://www.w3.org/2000/svg]", {
+uiWidgets.registerFunction("customRadio", (data, classes) => m("svg[xmlns=http://www.w3.org/2000/svg]", {
 	class: classes,
 	viewBox: "0 0 16 16",
-	width: args.radius * 2, height: args.radius * 2,
+	width: data.radius * 2, height: data.radius * 2,
 	class: classes
 },
 	m("circle", {
 		cx: 8, cy: 8, r: 7,
 		style: {
-			fill: args.fill,
-			stroke: args.stroke,
+			fill: data.fill,
+			stroke: data.stroke,
 			strokeWidth: 2
 		}
 	})
@@ -601,7 +601,7 @@ m.mount(document.getElementById("page"), {
 							selectionOnActive: "fas fa-question",
 							radioOnIcn: {
 								name: "customRadio",
-								args: {
+								data: {
 									radius: 10,
 									fill: "green",
 									stroke: "#333333"
@@ -609,7 +609,7 @@ m.mount(document.getElementById("page"), {
 							},
 							// radioOffIcn: {
 							// 	name: "customRadio",
-							// 	args: {
+							// 	data: {
 							// 		radius: 10,
 							// 		fill: "red",
 							// 		stroke: "#333333"

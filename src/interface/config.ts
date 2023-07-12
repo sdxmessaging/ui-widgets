@@ -7,7 +7,7 @@ export type TWidgetFunction = (data: TWidgetData, classes: string) => Vnode;
 
 export interface IFunctionCall {
 	readonly name: string;
-	readonly args: TWidgetData;
+	readonly data: TWidgetData;
 }
 
 export type TIcon = string | IFunctionCall;
