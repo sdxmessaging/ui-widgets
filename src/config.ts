@@ -3,6 +3,7 @@ import m from "mithril";
 
 import { IConfig, TIcon, TWidgetFunction } from "./interface/config";
 import { LayoutType, SignTypes } from "./interface/widget";
+import { joinClasses } from "./theme";
 
 const confMap: IConfig = {
 	layoutType: LayoutType.default,
@@ -106,7 +107,7 @@ export function getFunction(name: string) {
 
 export function getIcon(icon: TIcon, classes: string) {
 	if (typeof icon === "string") {
-		return m("i", { class: `${classes} ${icon}` });
+		return m("i", { class: joinClasses([classes, icon]) });
 	} else {
 		return getFunction(icon.name)(icon.data, classes);
 	}

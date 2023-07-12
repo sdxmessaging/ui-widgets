@@ -1,7 +1,7 @@
 import { Children } from "mithril";
 import stream from "mithril/stream";
 
-import { IConfig } from "./config";
+import { IConfig, TIcon } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
 
 export type TProp = string | number | boolean;
@@ -97,12 +97,12 @@ export const enum LayoutType {
 }
 
 export interface IWidgetLabel {
-	readonly text: string
-	readonly alt?: string
-	readonly icon?: string
-	readonly rightIcon?: string
-	readonly href?: string
-	onclick?(): void
+	readonly text: string;
+	readonly alt?: string;
+	readonly icon?: TIcon;
+	readonly rightIcon?: TIcon;
+	readonly href?: string;
+	onclick?(): void;
 }
 
 type TTabIndex = "-1" | "0" | -1 | 0;
@@ -239,8 +239,8 @@ export const enum DisplayType {
 interface IBaseButton {
 	readonly label?: string;
 	readonly title?: string;
-	readonly icon?: string;
-	readonly rightIcon?: string;
+	readonly icon?: TIcon;
+	readonly rightIcon?: TIcon;
 	readonly context?: string;
 	readonly classes?: string;
 	readonly style?: Partial<CSSStyleDeclaration>;

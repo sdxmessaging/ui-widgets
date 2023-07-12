@@ -3,9 +3,9 @@ import stream from "mithril/stream";
 
 import { IFile, IWidgetLabel, TProp, TPropMap, TPropStream } from "./interface/widget";
 
-import { joinClasses, labelCls, theme } from "./theme";
-import { config } from "./config";
+import { config, getIcon } from "./config";
 import { IWidgetClasses } from "./interface/theme";
+import { joinClasses, labelCls, theme } from "./theme";
 
 // Create "v4-like" (no fixed version id) uuid (based on node-uuid)
 function toHex(inp: number): string {
@@ -54,10 +54,10 @@ function enrichLabel(
 	label: IWidgetLabel, selector: string, attributes: Attributes, required?: boolean
 ) {
 	return m(selector, attributes, [
-		label.icon ? m("i", { class: label.icon }) : null,
+		label.icon ? getIcon(label.icon, "") : null,
 		m("span", getLabelText(label, required)),
 		getAltLabel(label),
-		label.rightIcon ? m("i", { class: label.rightIcon }) : null,
+		label.rightIcon ? getIcon(label.rightIcon, "") : null,
 		label.href ? m("a.link.dim.pointer.ws-normal.mh1", { onclick: label.onclick }, [
 			m("i", { class: config.linkIcn }),
 			label.href
@@ -107,13 +107,9 @@ export function getLabel(id: string, uiClass: IWidgetClasses, label?: string | I
 
 export function labelIcon(label: IWidgetLabel) {
 	return [
-		label.icon && m("i.fa-fw", {
-			class: label.icon
-		}),
+		label.icon && getIcon(label.icon, "fa-fw"),
 		label.text && m("span", label.text),
-		label.rightIcon && m("i.fa-fw", {
-			class: label.rightIcon
-		})
+		label.rightIcon && getIcon(label.rightIcon, "fa-fw")
 	];
 }
 

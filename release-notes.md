@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.4
+
+- `registerFunction` utils, add custom methods to build mithril elements for use by widgets
+- Radio button, button, and label icons can now reference registered functions
+
 ## 1.8.3
 
 - Fix `List` sometimes appearing blank after reload

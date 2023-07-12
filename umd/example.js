@@ -92,7 +92,7 @@ uiWidgets.registerFunction("customRadio", (data, classes) => m("svg[xmlns=http:/
 	class: classes,
 	viewBox: "0 0 16 16",
 	width: data.radius * 2, height: data.radius * 2,
-	class: classes
+	class: uiWidgets.joinClasses([classes, data.classes])
 },
 	m("circle", {
 		cx: 8, cy: 8, r: 7,
@@ -758,7 +758,16 @@ m.mount(document.getElementById("page"), {
 			m(uiWidgets.Button, {
 				label: "Simple Button",
 				icon: "fas fa-arrow-circle-down mr1",
-				rightIcon: "fas fa-arrow-circle-down ml1",
+				// rightIcon: "fas fa-arrow-circle-down ml1",
+				rightIcon: {
+					name: "customRadio",
+					data: {
+						radius: 10,
+						fill: "silver",
+						stroke: "#333333",
+						classes: "ml1"
+					}
+				},
 				classes: "ma1",
 				onclick: () => console.debug("Button Click")
 			}),
