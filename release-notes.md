@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.5
+
+- Extend references to registered functions for checkboxes, signature options, datepicker, toggle icon
+- Updated registered function interface to be more flexible (`Children` instead of `Vnode`)
+
 ## 1.8.4
 
 - `registerFunction` utils, add custom methods to build mithril elements for use by widgets
