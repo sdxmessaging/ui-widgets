@@ -1,17 +1,17 @@
 import m, { ClassComponent, CVnode } from "mithril";
 
-import { IConfig, TSubset } from "../interface/config";
+import { IConfig, TIcon, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { checkInputCls, inputWrapperCls, joinClasses, theme, wrapperCls } from "../theme";
 import { getLabelText, setCheck, titleFromLabel } from "../utils";
 
 type TCheckboxWidget = IPropWidget<ICheckboxField>;
 export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 
-	protected readonly onIcon: keyof TSubset<IConfig, string> = "toggleOnIcn";
-	protected readonly offIcon: keyof TSubset<IConfig, string> = "toggleOffIcn";
+	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "toggleOnIcn";
+	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "toggleOffIcn";
 
 	public view({ attrs: { field, value: val } }: CVnode<TCheckboxWidget>) {
 		const {
@@ -54,11 +54,12 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 					class: checked
 						? getConfig("toggleOnWrapper", config)
 						: getConfig("toggleOffWrapper", config)
-				}, m(".toggle-inner.absolute.tc.transition-transform", {
-					class: checked
-						? joinClasses(["toggle-on", getConfig(this.onIcon, config)])
-						: getConfig(this.offIcon, config)
-				})),
+				},
+					getIcon(getConfig(checked ? this.onIcon : this.offIcon, config), joinClasses([
+						"toggle-inner absolute tc transition-transform",
+						checked ? "toggle-on" : null
+					]))
+				),
 				label ? m("span.mh1", getLabelText(label, required)) : null
 			])
 		]));

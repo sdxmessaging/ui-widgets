@@ -88,7 +88,7 @@ themeBtn.map((newCls) => uiWidgets.updateClasses({ button: newCls }));
 var themeNavBtn = stream(uiWidgets.theme.navButton);
 themeNavBtn.map((newCls) => uiWidgets.updateClasses({ navButton: newCls }));
 
-uiWidgets.registerFunction("customRadio", (data, classes) => m("svg[xmlns=http://www.w3.org/2000/svg]", {
+uiWidgets.registerFunction("svgCircle", (data, classes) => m("svg[xmlns=http://www.w3.org/2000/svg]", {
 	class: classes,
 	viewBox: "0 0 16 16",
 	width: data.radius * 2, height: data.radius * 2,
@@ -600,7 +600,7 @@ m.mount(document.getElementById("page"), {
 							selectionLayout: ["icon", "label", "on"],
 							selectionOnActive: "fas fa-question",
 							radioOnIcn: {
-								name: "customRadio",
+								name: "svgCircle",
 								data: {
 									radius: 10,
 									fill: "green",
@@ -608,7 +608,7 @@ m.mount(document.getElementById("page"), {
 								}
 							},
 							// radioOffIcn: {
-							// 	name: "customRadio",
+							// 	name: "svgCircle",
 							// 	data: {
 							// 		radius: 10,
 							// 		fill: "red",
@@ -760,7 +760,7 @@ m.mount(document.getElementById("page"), {
 				icon: "fas fa-arrow-circle-down mr1",
 				// rightIcon: "fas fa-arrow-circle-down ml1",
 				rightIcon: {
-					name: "customRadio",
+					name: "svgCircle",
 					data: {
 						radius: 10,
 						fill: "silver",
@@ -1126,7 +1126,25 @@ m.mount(document.getElementById("page"), {
 		}, m(uiWidgets.ToggleInput, {
 			field: {
 				id: "toggle-debug",
-				label: "Enable Debug Footer"
+				label: "Enable Debug Footer",
+				config: {
+					toggleOnIcn: {
+						name: "svgCircle",
+						data: {
+							radius: 10,
+							fill: "mediumseagreen",
+							stroke: "#999"
+						}
+					},
+					toggleOffIcn: {
+						name: "svgCircle",
+						data: {
+							radius: 10,
+							fill: "white",
+							stroke: "#999"
+						}
+					}
+				}
 			},
 			value: debug
 		})),

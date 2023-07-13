@@ -93,8 +93,8 @@ export interface IConfig {
 	uncheckIcn: TIcon;
 	toggleOnWrapper: string;
 	toggleOffWrapper: string;
-	toggleOnIcn: string;
-	toggleOffIcn: string;
+	toggleOnIcn: TIcon;
+	toggleOffIcn: TIcon;
 	radioOnIcn: TIcon;
 	radioOffIcn: TIcon;
 	// Password
