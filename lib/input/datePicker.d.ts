@@ -6,5 +6,5 @@ export declare class DatePicker implements ClassComponent<IPropWidget> {
     private valueChange;
     oncreate({ dom, attrs: { field: { max, min }, value } }: CVnodeDOM<IPropWidget>): void;
     onremove(): void;
-    view({ attrs: { field: { config } } }: CVnode<IPropWidget>): m.Vnode<any, any>;
+    view({ attrs: { field: { config } } }: CVnode<IPropWidget>): m.Children;
 }

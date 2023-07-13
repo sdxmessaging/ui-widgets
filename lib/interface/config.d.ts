@@ -1,7 +1,7 @@
-import { Vnode } from "mithril";
+import { Children } from "mithril";
 import { LayoutType, SignTypes, TProp } from "./widget";
 export type TWidgetData = Record<string, TProp>;
-export type TWidgetFunction = (data: TWidgetData, classes: string) => Vnode;
+export type TWidgetFunction = (data: TWidgetData, classes: string) => Children;
 export interface IFunctionCall {
     readonly name: string;
     readonly data: TWidgetData;
@@ -31,7 +31,7 @@ export interface IConfig {
     optionalLblPost: string;
     /** Date locale */
     dateLocale: string;
-    datePickerIcn: string;
+    datePickerIcn: TIcon;
     /** Default options for signature creator */
     signOpts: ReadonlyArray<SignTypes>;
     /** Maximum size for signature image in px */
@@ -61,11 +61,11 @@ export interface IConfig {
     /** Signature "Cancel" button tooltip */
     cancelTtl: string;
     /** Signature "Draw" button icon */
-    drawIcn: string;
+    drawIcn: TIcon;
     /** Signature "Type" button icon */
-    typeIcn: string;
+    typeIcn: TIcon;
     /** Signature "Stamp" button icon */
-    stampIcn: string;
+    stampIcn: TIcon;
     applyIcn: string;
     resetIcn: string;
     cancelIcn: string;
@@ -82,12 +82,12 @@ export interface IConfig {
     selectionOnInactive: string;
     selectionOffActive: string;
     selectionOffInactive: string;
-    checkIcn: string;
-    uncheckIcn: string;
+    checkIcn: TIcon;
+    uncheckIcn: TIcon;
     toggleOnWrapper: string;
     toggleOffWrapper: string;
-    toggleOnIcn: string;
-    toggleOffIcn: string;
+    toggleOnIcn: TIcon;
+    toggleOffIcn: TIcon;
     radioOnIcn: TIcon;
     radioOffIcn: TIcon;
     showPassIcn: string;
