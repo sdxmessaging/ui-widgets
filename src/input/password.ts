@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IPropWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { inputCls } from "../theme";
 import { clickOnEnter, setValue, titleFromLabel } from "../utils";
 
@@ -41,13 +41,15 @@ export class PasswordInput extends ValidationBase<IPropWidget> {
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}),
-			m("i.ml1.pa1.fa-fw.pointer.dim", {
+			// Show/hide password toggle
+			m(".ml1.pointer.dim", {
 				title: getConfig("showPassTxt", config),
-				class: getConfig(this.showPassword() ? "hidePassIcn" : "showPassIcn", config),
 				onclick: () => this.showPassword(!this.showPassword()),
 				tabindex: 0,
 				onkeydown: clickOnEnter
-			})
+			},
+				getIcon(getConfig(this.showPassword() ? "hidePassIcn" : "showPassIcn", config), "pa1")
+			)
 		]));
 	}
 }

@@ -97,9 +97,8 @@ export interface IConfig {
 	toggleOffIcn: TIcon;
 	radioOnIcn: TIcon;
 	radioOffIcn: TIcon;
-	// Password
-	showPassIcn: string;
-	hidePassIcn: string;
+	showPassIcn: TIcon;
+	hidePassIcn: TIcon;
 	uploadIcn: string;
 	downloadIcn: string;
 	deleteIcn: string;
