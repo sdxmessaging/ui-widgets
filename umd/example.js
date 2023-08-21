@@ -90,12 +90,12 @@ themeNavBtn.map((newCls) => uiWidgets.updateClasses({ navButton: newCls }));
 
 uiWidgets.registerFunction("svgCircle", (data, classes) => m("svg[xmlns=http://www.w3.org/2000/svg]", {
 	class: classes,
-	viewBox: "0 0 16 16",
+	viewBox: `0 0 ${data.radius * 2} ${data.radius * 2}`,
 	width: data.radius * 2, height: data.radius * 2,
 	class: uiWidgets.joinClasses([classes, data.classes])
 },
 	m("circle", {
-		cx: 8, cy: 8, r: 7,
+		cx: data.radius, cy: data.radius, r: data.radius - 1,
 		style: {
 			fill: data.fill,
 			stroke: data.stroke,
@@ -504,7 +504,7 @@ m.mount(document.getElementById("page"), {
 						selectionOffLabel: "Toggle Input Off",
 						toggleOnIcn: "fas fa-toggle-off",
 						toggleOffIcn: "fas fa-toggle-on"
-					},
+					}
 				},
 				value: toggleVal
 			}))
@@ -1131,17 +1131,17 @@ m.mount(document.getElementById("page"), {
 					toggleOnIcn: {
 						name: "svgCircle",
 						data: {
-							radius: 10,
-							fill: "mediumseagreen",
-							stroke: "#999"
+							radius: 9,
+							fill: "white",
+							stroke: "#137752"
 						}
 					},
 					toggleOffIcn: {
 						name: "svgCircle",
 						data: {
-							radius: 10,
+							radius: 9,
 							fill: "white",
-							stroke: "#999"
+							stroke: "white"
 						}
 					}
 				}
