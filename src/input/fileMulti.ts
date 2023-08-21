@@ -63,9 +63,8 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 					file.name,
 					!(readonly || disabled) && m("i.child.fr", {
 						title: `${getConfig("remFileTtl", config)} ${file.name}`,
-						class: getConfig("deleteIcn", config),
 						onclick: removeFile(value, file.guid)
-					})
+					}, getIcon(getConfig("deleteIcn", config), "db"))
 				]))
 			)
 		]);

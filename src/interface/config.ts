@@ -101,7 +101,7 @@ export interface IConfig {
 	hidePassIcn: TIcon;
 	uploadIcn: TIcon;
 	downloadIcn: TIcon;
-	deleteIcn: string;
+	deleteIcn: TIcon;
 	cameraIcn: string;
 	imageIcn: string;
 	emailIcn: string;
