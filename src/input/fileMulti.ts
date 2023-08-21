@@ -53,7 +53,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				m(".pa2", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
-					getIcon(getConfig("uploadIcn", config), "mr2"),
+					getIcon(getConfig("uploadIcn", config), "db mr2"),
 					m("span", getConfig("addFilesTxt", config))
 				])
 			),

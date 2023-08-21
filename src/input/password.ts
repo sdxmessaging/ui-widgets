@@ -48,7 +48,7 @@ export class PasswordInput extends ValidationBase<IPropWidget> {
 				tabindex: 0,
 				onkeydown: clickOnEnter
 			},
-				getIcon(getConfig(this.showPassword() ? "hidePassIcn" : "showPassIcn", config), "pa1")
+				getIcon(getConfig(this.showPassword() ? "hidePassIcn" : "showPassIcn", config), "db pa1")
 			)
 		]));
 	}
