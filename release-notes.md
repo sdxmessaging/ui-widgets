@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.6
+
+- Expand references to registered functions for icons: `showPassIcn`, `hidePassIcn`, `uploadIcn`, `downloadIcn`, and `deleteIcn`
+
 ## 1.8.5
 
 - Extend references to registered functions for checkboxes, signature options, datepicker, toggle icon

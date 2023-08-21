@@ -57,7 +57,7 @@ describe("PasswordInput", () => {
 		expect(input != null).toBe(true);
 		expect(input.getAttribute("type")).toBe("password");
 		// Click toggle
-		const toggleBtn = root.querySelector("i") as HTMLElement;
+		const toggleBtn = root.querySelector("[title='Show Password']") as HTMLElement;
 		expect(toggleBtn != null).toBe(true);
 		toggleBtn.dispatchEvent(new Event("click"));
 		m.redraw.sync();
