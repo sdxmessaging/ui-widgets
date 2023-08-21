@@ -59,9 +59,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 			),
 			m(".flex.flex-column.mt1.nb1", lodash.map(value(),
 				(file) => m("span.pa2.mv1.ba.b--black-20.hide-child.dim.pointer", [
-					m("i.mr2", {
-						class: getConfig("downloadIcn", config)
-					}),
+					getIcon(getConfig("downloadIcn", config), "db mr2"),
 					file.name,
 					!(readonly || disabled) && m("i.child.fr", {
 						title: `${getConfig("remFileTtl", config)} ${file.name}`,

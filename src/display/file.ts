@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { theme, wrapperCls } from "../theme";
 import { getDisplayLabel } from "../utils";
 
@@ -19,12 +19,10 @@ export class FileList implements ClassComponent<IFileWidget> {
 				return m("a.pa2.mv1.link.ba.b--black-20.dim.dib.pointer[target=_blank]", {
 					class: theme.displayValue,
 					href: path
-				},
-					m("i.mr2", {
-						class: getConfig("downloadIcn", config)
-					}),
+				}, [
+					getIcon(getConfig("downloadIcn", config), "db mr2"),
 					name
-				);
+				]);
 			}))
 		]);
 	}
