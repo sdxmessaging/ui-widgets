@@ -99,7 +99,7 @@ export interface IConfig {
 	radioOffIcn: TIcon;
 	showPassIcn: TIcon;
 	hidePassIcn: TIcon;
-	uploadIcn: string;
+	uploadIcn: TIcon;
 	downloadIcn: string;
 	deleteIcn: string;
 	cameraIcn: string;

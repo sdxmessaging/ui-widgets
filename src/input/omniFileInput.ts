@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { config as configMap, getConfig } from "../config";
+import { config as configMap, getConfig, getIcon } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { isImage, dataURItoBlob, fileConstructor, guid, imgSrc, clickOnEnter } from "../utils";
 import { resizeImage } from "../imageUtils";
@@ -105,9 +105,7 @@ export class OmniFileInput implements ClassComponent<IFileWidget> {
 		} else {
 			// File upload
 			return [
-				m("i.pa1", {
-					class: getConfig("uploadIcn", config)
-				}),
+				getIcon(getConfig("uploadIcn", config), "pa1"),
 				m("span.ma1", getConfig("addFileTxt", config))
 			];
 		}

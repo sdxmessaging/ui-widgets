@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { DisplayType, IFileWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 
 import { FileOpen } from "../display/fileOpen";
@@ -35,9 +35,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				m(".flex.items-center.pa1", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
-					m("i.pa1", {
-						class: getConfig("uploadIcn", config)
-					}),
+					getIcon(getConfig("uploadIcn", config), "pa1"),
 					m("span.ma1.flex-auto", innerText),
 					file && displayType !== DisplayType.none ? [
 						m(FileOpen, file),

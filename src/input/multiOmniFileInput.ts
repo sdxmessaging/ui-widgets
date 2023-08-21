@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { IFileWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { fileInvalid } from "../validation";
 
@@ -30,9 +30,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				m(".flex.items-center.pa1.dt", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
-					m("i.pa1", {
-						class: getConfig("uploadIcn", config)
-					}),
+					getIcon(getConfig("uploadIcn", config), "pa1"),
 					m("span.ma1.flex-auto", getConfig("addFileTxt", config))
 				])
 			),

@@ -3,7 +3,7 @@ import m, { ClassComponent, CVnode } from "mithril";
 
 import { DisplayType, IDisplayWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { imgSrc } from "../utils";
 
 import { removeFile } from "../input/fileMulti";
@@ -32,9 +32,7 @@ export class DisplayTypeComponent implements ClassComponent<IDisplayWidget> {
 			)),
 		) : m(".pa2.flex.flex-column",
 			lodash.map(value(), (file) => m(".flex.items-center.pa1.ba.b--black-20", [
-				m("i.pa1", {
-					class: getConfig("uploadIcn", config)
-				}),
+				getIcon(getConfig("uploadIcn", config), "pa1"),
 				m("span.ma1.flex-auto", {
 					title: file.name
 				}, file.name),

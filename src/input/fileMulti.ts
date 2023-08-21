@@ -4,7 +4,7 @@ import stream from "mithril/stream";
 
 import { IFile, IFileWidget } from "../interface/widget";
 
-import { getConfig } from "../config";
+import { getConfig, getIcon } from "../config";
 import { fileInputWrapperCls, wrapperCls } from "../theme";
 import { guid } from "../utils";
 import { fileInvalid } from "../validation";
@@ -53,9 +53,7 @@ export class FileMulti implements ClassComponent<IFileWidget> {
 				m(".pa2", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
-					m("i.mr2", {
-						class: getConfig("uploadIcn", config)
-					}),
+					getIcon(getConfig("uploadIcn", config), "mr2"),
 					m("span", getConfig("addFilesTxt", config))
 				])
 			),
