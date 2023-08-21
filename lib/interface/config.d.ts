@@ -90,11 +90,11 @@ export interface IConfig {
     toggleOffIcn: TIcon;
     radioOnIcn: TIcon;
     radioOffIcn: TIcon;
-    showPassIcn: string;
-    hidePassIcn: string;
-    uploadIcn: string;
-    downloadIcn: string;
-    deleteIcn: string;
+    showPassIcn: TIcon;
+    hidePassIcn: TIcon;
+    uploadIcn: TIcon;
+    downloadIcn: TIcon;
+    deleteIcn: TIcon;
     cameraIcn: string;
     imageIcn: string;
     emailIcn: string;
