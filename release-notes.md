@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.7
+
+- Update luxon to `3.4.0`
+
 ## 1.8.6
 
 - Expand references to registered functions for icons: `showPassIcn`, `hidePassIcn`, `uploadIcn`, `downloadIcn`, and `deleteIcn`
