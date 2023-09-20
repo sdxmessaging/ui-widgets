@@ -25,7 +25,7 @@ export { ImagePreview } from "./display/imagePreview";
 export { PasswordStrength } from "./display/passwordStrength";
 export { Label } from "./input/label";
 export { BaseInput } from "./input/baseInput";
-export { CurrencyInput, currencyStrToNumber, numberToCurrencyStr, numberToCurrencyTuple } from "./input/currencyInput";
+export { CurrencyInput, formatCurrency, currencyStrToNumber, numberToCurrencyStr, numberToCurrencyTuple } from "./input/currencyInput";
 export { PercentageInput } from "./input/percentageInput";
 export { CardDateInput } from "./input/cardDateInput";
 export { DateInput } from "./input/dateInput";
