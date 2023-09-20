@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.8
+
+- `Toggle` to support `layout` field attribute (`LayoutType.default` or `LayoutType.floatAlways` recommended)
+
 ## 1.8.7
 
 - Update luxon to `3.4.0`
