@@ -2,6 +2,7 @@ import m from "mithril";
 import stream from "mithril/stream";
 
 import { ToggleInput } from "./toggle";
+import { LayoutType } from "../interface/widget";
 
 describe("ToggleInput", () => {
 
@@ -29,8 +30,9 @@ describe("ToggleInput", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
+					disabled: true,
 					uiClass: {},
-					disabled: true
+					layout: LayoutType.floatAlways
 				},
 				value
 			})

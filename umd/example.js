@@ -519,7 +519,8 @@ m.mount(document.getElementById("page"), {
 						toggleOffWrapper: "bg-dark-gray",
 						toggleOnIcn: "bg-near-white",
 						toggleOffIcn: "bg-gray"
-					}
+					},
+					layout: "floatAlways"
 				},
 				value: toggleVal
 			})),
