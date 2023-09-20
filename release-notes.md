@@ -3,6 +3,7 @@
 ## 1.8.8
 
 - `Toggle` to support `layout` field attribute (`LayoutType.default` or `LayoutType.floatAlways` recommended)
+- Export `formatCurrency` funciton
 
 ## 1.8.7
 
