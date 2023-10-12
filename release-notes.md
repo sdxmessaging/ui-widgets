@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.9
+
+- Fix `ListController.single` not applying sort/filter on load if sort/filter is set
+
 ## 1.8.8
 
 - `Toggle` to support `layout` field attribute (`LayoutType.default` or `LayoutType.floatAlways` recommended)

@@ -17,6 +17,8 @@ export class ListController<T> {
 		const ctrl: ListController<D> = new ListController(
 			() => load().then((rowData) => {
 				ctrl.updateDataStore(rowData);
+				// Sort and filter immediately
+				ctrl.applySort();
 				m.redraw();
 			})
 		);
