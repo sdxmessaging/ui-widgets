@@ -2,6 +2,7 @@
 
 ## 1.8.9
 
+- `CurrencyInput` now supports number validation properties
 - Fix `ListController.single` not applying sort/filter on load if sort/filter is set
 
 ## 1.8.8
