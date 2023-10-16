@@ -23,6 +23,7 @@ uiWidgets.updateButtonContext({
 // Simple props
 var textVal = stream();
 var currencyVal = stream(-500);
+var currencyValidationVal = stream(100);
 var percentageVal = stream(-5000);
 var dateVal = stream();
 var dateFormat = stream("default");
@@ -688,6 +689,33 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
+		m("p", "Currency inputs also support number validation, these rules are applied against the currency in the smallest monetary unit"),
+
+		// Currency/Number
+		m("form.flex.mb2.ba.b--silver.flex-wrap", {
+			onsubmit: () => {
+				console.debug("Submit success");
+				return false;
+			}
+		}, [
+			m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
+				field: {
+					id: "currency-in-currency",
+					label: {
+						text: "Currency Input",
+						alt: "(Min 0, Max 1000)"
+					},
+					min: 0,
+					max: 1000,
+				},
+				value: currencyValidationVal
+			})),
+			m(".w-50.pa2.flex.items-end", m(uiWidgets.Button, {
+				label: "Submit",
+				type: "submit",
+				icon: "fas fa-paper-plane"
+			}))
+		]),
 
 		// Percentage
 		m(".flex.mb2.ba.b--silver.flex-wrap", [

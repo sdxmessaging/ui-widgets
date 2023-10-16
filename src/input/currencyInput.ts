@@ -26,6 +26,7 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 		const negativeStyle = getConfig("negativeStyle", config);
 		const badgePosition = getConfig("badgePosition", config);
 		const unitTotal = propToNumber(xform());
+		const inputClass = inputCls(uiClass);
 		return m(LayoutFixed, {
 			field,
 			value,
@@ -34,18 +35,21 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 			m("span.self-center", {
 				class: joinClasses([
 					badgePosition === "left" ? "order-0 mr1" : "order-last ml1",
-					inputCls(uiClass)
+					inputClass
 				])
 			}, symbol),
+			m("input.pe-none.o-0.absolute[type=number][tabindex=-1]", {
+				max, maxlength, min, minlength, step, required,
+				value: unitTotal
+			}),
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, type: FieldType.text, name, title, placeholder,
-				max, maxlength, min, minlength, step, required,
-				readonly, disabled, autofocus, autocomplete, tabindex,
+				required, readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
 				class: joinClasses([
 					badgePosition === "right" ? "tr" : "",
 					negativeStyle.includes("red") && unitTotal < 0 ? theme.redNumber : null,
-					inputCls(uiClass)
+					inputClass
 				]),
 				onfocus: selectTarget,
 				value: lodash.isUndefined(xform())
