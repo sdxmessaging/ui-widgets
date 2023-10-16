@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.10
+
+- `CurrencyInput` "hidden" input element now has no padding and a very small width, should fix cases where input escapes container for large elements
+
 ## 1.8.9
 
 - `CurrencyInput` now supports number validation properties
