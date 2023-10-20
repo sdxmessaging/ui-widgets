@@ -1,4 +1,4 @@
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 
 const globals = {
 	"flatpickr": "flatpickr",
@@ -8,7 +8,6 @@ const globals = {
 	"signature_pad": "SignaturePad",
 	"luxon": "luxon"
 };
-
 const external = Object.keys(globals);
 
 const banner = `/* @preserve built on: ${new Date().toJSON()} */`;
@@ -29,7 +28,6 @@ export default [{
 		format: "esm",
 		globals
 	},
-	context: "this",
 	plugins
 }, {
 	input: "lib/index.js",
@@ -41,6 +39,5 @@ export default [{
 		format: "umd",
 		globals
 	},
-	context: "this",
 	plugins
 }];
