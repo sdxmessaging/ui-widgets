@@ -13,6 +13,7 @@ import { LayoutFixed } from "./layout/layoutFixedLabel";
 const fixedLabelTypes = new Set<string>([
 	FieldType.date,
 	FieldType.dateTimeLocal,
+	FieldType.time,
 	FieldType.color,
 	FieldType.range
 ]);
