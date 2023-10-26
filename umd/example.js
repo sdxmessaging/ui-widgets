@@ -29,8 +29,9 @@ var dateVal = stream();
 var dateFormat = stream("default");
 var enableDatePicker = stream(false)
 var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false };
-var cardVal = stream();
+var timeVal = stream();
 var colVal = stream("#cc0011");
+var cardVal = stream();
 var labVal = stream("Label");
 var checkVal = stream();
 var optVal = stream();
@@ -398,6 +399,25 @@ m.mount(document.getElementById("page"), {
 					label: "Date Output"
 				},
 				value: dateVal
+			}))
+		]),
+
+		// Time
+		m(".flex.mb2.ba.b--silver", [
+			m(".w-50.pa2", m(uiWidgets.BaseInput, {
+				field: {
+					id: "time-in",
+					label: "Time Input",
+					type: "time"
+				},
+				value: timeVal
+			})),
+			m(".w-50.pa2", m(uiWidgets.BaseText, {
+				field: {
+					id: "time-out",
+					label: "Time Output",
+				},
+				value: timeVal
 			}))
 		]),
 
