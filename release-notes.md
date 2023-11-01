@@ -1,7 +1,8 @@
 # Release Notes
 
-## 1.8.x
+## 1.8.11
 
+- dim class removed from show/hide password toggle
 - Added `time` to `BaseInput` types that should always use a fixed label position
 
 ## 1.8.10
