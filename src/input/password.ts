@@ -41,12 +41,8 @@ export class PasswordInput extends ValidationBase<IPropWidget> {
 				// Update value on change or input ("instant" option)
 				[instant ? "oninput" : "onchange"]: setValue(value)
 			}),
-<<<<<<< HEAD
 			// Show/hide password toggle
 			m(".ml1.pointer.dim", {
-=======
-			m("i.ml1.pa1.fa-fw.pointer", {
->>>>>>> 6085a35 (- dim class removed from show/hide password toggle)
 				title: getConfig("showPassTxt", config),
 				onclick: () => this.showPassword(!this.showPassword()),
 				tabindex: 0,
