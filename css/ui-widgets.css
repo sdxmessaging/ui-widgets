@@ -1,6 +1,7 @@
 :root {
 	--ui-widgets-transition: 0.2s ease;
 	--ui-widgets-toggle-height: 32px;
+	--ui-widgets-outline: Highlight;
 }
 
 /* Remove input number type arrows */
@@ -14,6 +15,10 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
 	-moz-appearance: textfield;
+}
+
+.bg-canvas {
+	background-color: Canvas
 }
 
 .pe-none {
@@ -169,4 +174,8 @@ input[type=number] {
 .hide-child:focus .child {
 	opacity: 1;
 	transition: opacity .15s ease-in;
+}
+
+.ui-widgets-option[aria-activedescendant=true] {
+	outline: var(--ui-widgets-outline) solid 2px;
 }

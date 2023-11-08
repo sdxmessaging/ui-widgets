@@ -35,6 +35,7 @@ var cardVal = stream();
 var labVal = stream("Label");
 var checkVal = stream();
 var optVal = stream();
+var multiVal = stream();
 var faceVal = stream();
 var faceValUiClass = {
 	wrapper: "flex-auto bg-near-white br-pill ma1",
@@ -648,6 +649,38 @@ m.mount(document.getElementById("page"), {
 					label: "Select/Radio Output"
 				},
 				value: optVal
+			}))
+		]),
+
+		m("p", "The multi-select input is a work in progress"),
+
+		// Multi-Select
+		m(".flex.mb2.items-center.ba.b--silver", [
+			m(".w-50.pa2", m(uiWidgets.MultiSelect, {
+				field: {
+					id: "multi-select-in",
+					label: "Multi-Select Input",
+					required: true,
+					options: [{
+						value: "A", label: "Apple",
+					}, {
+						value: "B", label: "Banana"
+					}, {
+						value: "C", label: "Cherry"
+					}, {
+						value: "D", label: "Durian"
+					}, {
+						value: "E", label: "Elderberry"
+					}]
+				},
+				value: multiVal
+			})),
+			m(".w-50.pa2", m(uiWidgets.BaseText, {
+				field: {
+					id: "multi-select-out",
+					label: "Multi-Select Output"
+				},
+				value: multiVal
 			}))
 		]),
 
