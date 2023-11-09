@@ -37,6 +37,7 @@ export declare const enum FieldType {
     checkbox = "checkbox",
     toggle = "toggle",
     select = "select",
+    checkList = "checkList",
     radio = "radio",
     fileMulti = "fileMulti",
     file = "file",
@@ -98,7 +99,8 @@ export interface IOption {
     readonly label?: string;
 }
 export interface IOptionField extends IField {
-    readonly type?: "select" | "sign";
+    readonly type?: "select" | "checkList" | "sign";
+    readonly multiple?: boolean;
     readonly options?: IOption[];
 }
 export interface ISignField extends IOptionField {
