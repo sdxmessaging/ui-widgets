@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.x (12)
+
+- Added new `CheckList` widget, alternative to `SelectInput` displaying checkboxes for options
+
 ## 1.8.11
 
 - dim class removed from show/hide password toggle

@@ -11,7 +11,7 @@ import { IConfig, TIcon, TSubset } from "../interface/config";
 import { getConfig, getIcon } from "../config";
 
 type TSelectWidget = IPropWidget<IOptionField>;
-export class MultiSelect extends ValidationBase<TSelectWidget> {
+export class CheckList extends ValidationBase<TSelectWidget> {
 
 	protected override readonly selector = "input";
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
@@ -155,7 +155,7 @@ export class MultiSelect extends ValidationBase<TSelectWidget> {
 				this.placeHolder(val, options, placeholder),
 				this.open && m(".absolute.z-max", {
 					class: joinClasses([
-						theme.drowDownWrapper,
+						theme.checkListOptionsWrapper,
 						getConfig("selectDropUp", config) ? "bottom-0" : "top-0"
 					])
 				}, options.map(({ value, label = value }) => {

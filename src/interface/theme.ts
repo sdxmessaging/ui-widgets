@@ -52,6 +52,6 @@ export interface IClassMap extends IClasses {
 	readonly tooltipIcon?: string;
 	readonly tooltipMessage?: string;
 	readonly redNumber?: string;
-	/** Multi-Select dropdown list */
-	readonly drowDownWrapper?: string;
+	/** CheckList options */
+	readonly checkListOptionsWrapper?: string;
 }

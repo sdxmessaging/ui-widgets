@@ -50,6 +50,7 @@ export const enum FieldType {
 	checkbox = "checkbox",
 	toggle = "toggle",
 	select = "select",
+	checkList = "checkList",
 	radio = "radio",
 	fileMulti = "fileMulti",
 	file = "file",
@@ -147,7 +148,7 @@ export interface IOption {
 // We should ideally explicitly type these IField variants:
 // extends Omit<IField, "type">
 export interface IOptionField extends IField {
-	readonly type?: "select" | "sign";
+	readonly type?: "select" | "checkList" | "sign";
 	readonly multiple?: boolean;
 	readonly options?: IOption[];
 }

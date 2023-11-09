@@ -36,6 +36,17 @@ var labVal = stream("Label");
 var checkVal = stream();
 var optVal = stream();
 var multiVal = stream();
+var multiValOpts = [{
+	value: "A", label: "Apple",
+}, {
+	value: "B", label: "Banana"
+}, {
+	value: "C", label: "Cherry"
+}, {
+	value: "D", label: "Durian"
+}, {
+	value: "E", label: "Elderberry"
+}];
 var faceVal = stream();
 var faceValUiClass = {
 	wrapper: "flex-auto bg-near-white br-pill ma1",
@@ -652,36 +663,45 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
-		m("p", "The multi-select input is a work in progress"),
+		m("p", "The CheckList input behaves like a select input, but displays options similar to the Checkbox widget. The list stays open when in focus and can help simplify multi-selection."),
 
 		// Multi-Select
 		m(".flex.mb2.items-center.ba.b--silver", [
-			m(".w-50.pa2", m(uiWidgets.MultiSelect, {
-				field: {
-					id: "multi-select-in",
-					label: "Multi-Select Input",
-					required: true,
-					options: [{
-						value: "A", label: "Apple",
-					}, {
-						value: "B", label: "Banana"
-					}, {
-						value: "C", label: "Cherry"
-					}, {
-						value: "D", label: "Durian"
-					}, {
-						value: "E", label: "Elderberry"
-					}]
-				},
-				value: multiVal
-			})),
-			m(".w-50.pa2", m(uiWidgets.BaseText, {
-				field: {
-					id: "multi-select-out",
-					label: "Multi-Select Output"
-				},
-				value: multiVal
-			}))
+			m(".w-50.pa2", [
+				m(uiWidgets.CheckList, {
+					field: {
+						id: "single-checklist-in",
+						label: "Single CheckList Input",
+						required: true,
+						placeholder: "Single Fruit",
+						options: multiValOpts,
+						config: {
+							selectDropUp: true
+						}
+					},
+					value: multiVal
+				}),
+				m(uiWidgets.CheckList, {
+					field: {
+						id: "multi-checklist-in",
+						label: "Multi-CheckList Input",
+						required: true,
+						multiple: true,
+						placeholder: "Multiple Fruit",
+						options: multiValOpts
+					},
+					value: multiVal
+				})
+			]),
+			m(".w-50.pa2", [
+				m(uiWidgets.BaseText, {
+					field: {
+						id: "checklist-out",
+						label: "CheckList Output"
+					},
+					value: multiVal
+				})
+			])
 		]),
 
 		m("p", "The currency input stores values as the smallest monetary unit"),
