@@ -416,14 +416,28 @@ m.mount(document.getElementById("page"), {
 
 		// Time
 		m(".flex.mb2.ba.b--silver", [
-			m(".w-50.pa2", m(uiWidgets.BaseInput, {
-				field: {
-					id: "time-in",
-					label: "Time Input",
-					type: "time"
-				},
-				value: timeVal
-			})),
+			m(".w-50.pa2", [
+				m(uiWidgets.BaseInput, {
+					field: {
+						id: "time-in",
+						label: "Time Input",
+						type: "time"
+					},
+					value: timeVal
+				}),
+				m(uiWidgets.TimeInput, {
+					field: {
+						id: "time-in-widget",
+						label: {
+							text: "Time Input",
+							alt: "(ui-widgets Bespoke)"
+						},
+						required: true,
+						step: 5
+					},
+					value: timeVal
+				})
+			]),
 			m(".w-50.pa2", m(uiWidgets.BaseText, {
 				field: {
 					id: "time-out",
@@ -663,7 +677,7 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
-		m("p", "The CheckList input behaves like a select input, but displays options similar to the Checkbox widget. The list stays open when in focus and can help simplify multi-selection."),
+		m("p", "The CheckList input behaves like a select input, but displays options similar to the Checkbox widget. The list stays open when in focus and can help simplify multiple selection."),
 
 		// Multi-Select
 		m(".flex.mb2.items-center.ba.b--silver", [
@@ -684,7 +698,7 @@ m.mount(document.getElementById("page"), {
 				m(uiWidgets.CheckList, {
 					field: {
 						id: "multi-checklist-in",
-						label: "Multi-CheckList Input",
+						label: "Multi CheckList Input",
 						required: true,
 						multiple: true,
 						placeholder: "Multiple Fruit",
