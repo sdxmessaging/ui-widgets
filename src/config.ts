@@ -18,6 +18,7 @@ const confMap: IConfig = {
 	optionalLblPost: "",
 	dateLocale: "default",
 	datePickerIcn: "fas fa-calendar",
+	selectDropUp: false,
 	signOpts: [SignTypes.Draw, SignTypes.Type, SignTypes.Stamp],
 	signMaxSize: 640,
 	signHeightPct: 25,

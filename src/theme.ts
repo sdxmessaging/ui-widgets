@@ -26,7 +26,7 @@ const classMapState: Required<IClassMap> = {
 	tooltipIcon: "white f6",
 	tooltipMessage: "white bg-black w5 f6 pa2 absolute br2 z-max",
 	redNumber: "red fw2",
-	drowDownWrapper: "ba br2 b--silver pa2 ma0 dark-gray bg-canvas w5 max-h-img overflow-y-auto",
+	drowDownWrapper: "ba br2 b--silver pa2 ma0 dark-gray bg-canvas w-100 max-h-img overflow-y-auto"
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
