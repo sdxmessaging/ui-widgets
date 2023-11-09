@@ -105,7 +105,9 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 	public onbeforeupdate({ attrs: { value } }: CVnode<TSelectWidget>) {
 		// Sync selection set with value stream
 		if (value() != null) {
-			const selected = new Set(String(value()).split(","));
+			const valStr = String(value());
+			const values = valStr === "" ? [] : valStr.split(",");
+			const selected = new Set(values);
 			if (!lodash.isEqual(this.selected, selected)) {
 				this.selected = selected;
 			}
