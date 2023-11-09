@@ -13,7 +13,6 @@ import { getConfig, getIcon } from "../config";
 type TSelectWidget = IPropWidget<IOptionField>;
 export class CheckList extends ValidationBase<TSelectWidget> {
 
-	protected override readonly selector = "input";
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";
 
@@ -153,7 +152,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 					: undefined
 			}, [
 				this.placeHolder(val, options, placeholder),
-				this.open && m(".absolute.z-max", {
+				this.open && m(".absolute.z-max.us-none", {
 					class: joinClasses([
 						theme.checkListOptionsWrapper,
 						getConfig("selectDropUp", config) ? "bottom-0" : "top-0"
