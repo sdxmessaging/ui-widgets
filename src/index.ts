@@ -46,6 +46,7 @@ export { CurrencyInput, formatCurrency, currencyStrToNumber, numberToCurrencyStr
 export { PercentageInput } from "./input/percentageInput";
 export { CardDateInput } from "./input/cardDateInput";
 export { DateInput } from "./input/dateInput";
+export { TimeInput } from "./input/timeInput";
 export { PasswordInput } from "./input/password";
 export { TextareaInput } from "./input/textarea";
 export { CheckboxInput } from "./input/checkbox";

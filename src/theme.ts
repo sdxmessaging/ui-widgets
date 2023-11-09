@@ -26,7 +26,9 @@ const classMapState: Required<IClassMap> = {
 	tooltipIcon: "white f6",
 	tooltipMessage: "white bg-black w5 f6 pa2 absolute br2 z-max",
 	redNumber: "red fw2",
-	checkListOptionsWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas w-100 max-h-img overflow-y-auto"
+	checkListOptionsWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas w-100 max-h-img overflow-y-auto shadow-4",
+	timeInputScrollerWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas top-2 shadow-4",
+	timeInputScrollerNumber: "pv1 mv2 w-100 mw-dd tc f6 fw6 bg-light-gray"
 };
 
 export const theme: Readonly<typeof classMapState> = classMapState;
