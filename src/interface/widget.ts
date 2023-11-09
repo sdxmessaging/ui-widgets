@@ -148,6 +148,7 @@ export interface IOption {
 // extends Omit<IField, "type">
 export interface IOptionField extends IField {
 	readonly type?: "select" | "sign";
+	readonly multiple?: boolean;
 	readonly options?: IOption[];
 }
 

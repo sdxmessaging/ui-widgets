@@ -18,7 +18,8 @@ export class SelectInput extends ValidationBase<TSelectWidget> {
 		const { field, value: val } = attrs;
 		const {
 			label: lbl, id, name = id, title = lbl,
-			required, readonly, disabled, autofocus, autocomplete, tabindex,
+			required, readonly, disabled, multiple,
+			autofocus, autocomplete, tabindex,
 			uiClass = {}, placeholder = "--- Select one ---",
 			options = []
 		} = field;
@@ -34,7 +35,7 @@ export class SelectInput extends ValidationBase<TSelectWidget> {
 				}, "Select one")
 			, m("select.w-100.bg-transparent.bn.outline-0", {
 				id, name, title,
-				required, autofocus, autocomplete, tabindex,
+				required, multiple, autofocus, autocomplete, tabindex,
 				disabled: disabled || readonly,
 				class: inputCls(uiClass),
 				value: val() ? val() : "",
