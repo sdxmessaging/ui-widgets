@@ -3,6 +3,7 @@
 ## 1.8.x (12)
 
 - Added new `CheckList` widget, alternative to `SelectInput` displaying checkboxes for options
+- Added new `TimeInput` widget, alternative to `BaseInput` of type `time`
 
 ## 1.8.11
 

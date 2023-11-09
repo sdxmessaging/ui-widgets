@@ -38,6 +38,9 @@ export interface IConfig {
 	/** Date locale */
 	dateLocale: string;
 	datePickerIcn: TIcon;
+	timePickerIcn: TIcon;
+	timeScrollerUpIcn: TIcon;
+	timeScrollerDownIcn: TIcon;
 	/** Multi-Select list drop direction */
 	selectDropUp: boolean;
 	/** Default options for signature creator */

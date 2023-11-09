@@ -3,7 +3,7 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget } from "../interface/widget";
 
-// import { getConfig, getIcon } from "../config";
+import { getConfig, getIcon } from "../config";
 import { inputCls, theme } from "../theme";
 import { setValue } from "../utils";
 
@@ -62,7 +62,7 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 		const {
 			id, name = id, step,
 			required, readonly, disabled,
-			uiClass = {}
+			uiClass = {}, config
 		} = field;
 		const classStr = inputCls(uiClass);
 
@@ -110,20 +110,24 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 				}, [
 					m(TimeScroller, {
 						value: this.hour,
-						min: 1, max: 23
+						min: 1, max: 23,
+						config
 					}),
 					m("span.ph2.f6", ":"),
 					m(TimeScroller, {
 						value: this.min,
 						min: 0, max: 55,
-						step: step === "any" ? 1 : step
+						step: step === "any" ? 1 : step,
+						config
 					})
 				])
 			]),
 
-			!(disabled || readonly) && m(".fas.fa-clock.pointer", {
+			!(disabled || readonly) && m(".pointer", {
 				onclick: () => this.showPicker = !this.showPicker
-			})
+			},
+				getIcon(getConfig("timePickerIcn", config), "ph-2px pv-1px")
+			)
 		]));
 	}
 

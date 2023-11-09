@@ -3,12 +3,12 @@ import m, { CVnode } from "mithril";
 
 import { IOption, IOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
+import { getConfig, getIcon } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
 
+import { IConfig, TIcon, TSubset } from "../interface/config";
 import { ValidationBase } from "../validationBase";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
-import { IConfig, TIcon, TSubset } from "../interface/config";
-import { getConfig, getIcon } from "../config";
 
 type TSelectWidget = IPropWidget<IOptionField>;
 export class CheckList extends ValidationBase<TSelectWidget> {
