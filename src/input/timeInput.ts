@@ -4,12 +4,12 @@ import stream from "mithril/stream";
 import { FieldType, IPropWidget } from "../interface/widget";
 
 import { getConfig, getIcon } from "../config";
-import { inputCls, theme } from "../theme";
+import { inputCls } from "../theme";
 import { setValue } from "../utils";
 
 import { ValidationBase } from "../validationBase";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
-import { TimeScroller } from "./timeScroller";
+import { TimePicker } from "./timePicker";
 
 function cleanTime(value: string) {
 	return value.replace(/[^0-9]/g, "").slice(0, 2);
@@ -105,26 +105,18 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 				}),
 
 				// FLoating time picker
-				this.showPicker && m(".flex.items-center.absolute.z-max.us-none", {
-					class: theme.timeInputScrollerWrapper
-				}, [
-					m(TimeScroller, {
-						value: this.hour,
-						min: 1, max: 23,
-						config
-					}),
-					m("span.ph2.f6", ":"),
-					m(TimeScroller, {
-						value: this.min,
-						min: 0, max: 55,
-						step: step === "any" ? 1 : step,
-						config
-					})
-				])
+				this.showPicker && m(TimePicker, {
+					hour: this.hour,
+					min: this.min,
+					step: step === "any" ? 1 : step,
+					config,
+					onClose: () => this.showPicker = false
+				})
 			]),
 
 			!(disabled || readonly) && m(".pointer", {
-				onclick: () => this.showPicker = !this.showPicker
+				// TimePicker onClose event will handle hiding the picker
+				onclick: () => this.showPicker = true
 			},
 				getIcon(getConfig("timePickerIcn", config), "ph-2px pv-1px")
 			)
