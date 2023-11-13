@@ -1,9 +1,10 @@
 # Release Notes
 
-## 1.8.x (12)
+## 1.8.12
 
 - Added new `CheckList` widget, alternative to `SelectInput` displaying checkboxes for options
 - Added new `TimeInput` widget, alternative to `BaseInput` of type `time`
+- Added support for `multi` attribute on `SelectInput` and `CheckList` widgets
 
 ## 1.8.11
 
