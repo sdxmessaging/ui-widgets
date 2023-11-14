@@ -98,12 +98,8 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 		}
 	}
 
-	// public oninit({ attrs: { field: { options = [] } } }: CVnode<TSelectWidget>) {
-	// 	// TODO read state of value stream and write to this.selected
-	// }
-
-	public onbeforeupdate({ attrs: { value } }: CVnode<TSelectWidget>) {
-		// Sync selection set with value stream
+	/** Sync selection set with value stream */
+	private syncSelection(value: TPropStream) {
 		if (value() != null) {
 			const valStr = String(value());
 			const values = valStr === "" ? [] : valStr.split(",");
@@ -112,6 +108,14 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				this.selected = selected;
 			}
 		}
+	}
+
+	public oninit({ attrs: { value } }: CVnode<TSelectWidget>) {
+		this.syncSelection(value);
+	}
+
+	public onbeforeupdate({ attrs: { value } }: CVnode<TSelectWidget>) {
+		this.syncSelection(value);
 	}
 
 	public view({ attrs }: CVnode<TSelectWidget>) {
