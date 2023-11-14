@@ -46,7 +46,7 @@ export class TimePicker implements ClassComponent<ITimePicker> {
 			m("span.ph2.f6", ":"),
 			m(TimeScroller, {
 				value: min,
-				min: 0, max: 55,
+				min: 0, max: 59,
 				step,
 				config
 			})

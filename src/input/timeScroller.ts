@@ -26,8 +26,10 @@ export class TimeScroller implements ClassComponent<ITimeScroller> {
 	private static applyStep(value: TPropStream, step: number, min: number, max: number) {
 		const numVal = Number(TimeScroller.formatValue(value));
 		const safeVal = isNaN(numVal) ? min : numVal;
-		const clamped = Math.min(Math.max(safeVal + step, min), max);
-		value(clamped.toString());
+		// Apply step if within bounds
+		const stepVal = safeVal + step;
+		const newVal = (stepVal < min || stepVal > max) ? safeVal : stepVal;
+		value(newVal.toString());
 	}
 
 	public view({ attrs: { value, step = 1, min, max, config } }: CVnode<ITimeScroller>) {
