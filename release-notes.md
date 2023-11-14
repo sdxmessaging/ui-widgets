@@ -1,5 +1,13 @@
 # Release Notes
 
+## 1.8.13
+
+- Fix `TimeInput` minutes limit - from 55 to 59
+- Reworked `TimeInput` picker step handling - step is not applied if result exceeds min/s
+- Fix `CheckList` potentially not showing value stream state on first draw
+- `CheckList` ignores key presses with modifiers
+- `CheckList` support for closing via Tab key, reopen on navigation key press
+
 ## 1.8.12
 
 - Added new `CheckList` widget, alternative to `SelectInput` displaying checkboxes for options

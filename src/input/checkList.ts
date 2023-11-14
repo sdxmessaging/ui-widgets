@@ -18,7 +18,14 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 
 	private selected = new Set<string>();
 	private open = false;
-	private focusOption?: TProp = undefined;
+	private _focusOption: TProp | null = null;
+	private get focusOption() {
+		return this._focusOption;
+	}
+	private set focusOption(value: TProp | null) {
+		this.open = value != null;
+		this._focusOption = value;
+	}
 	private keySearch = "";
 	private keyTs = 0;
 
@@ -57,6 +64,10 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 	}
 
 	private keyNav(evt: KeyboardEvent, options: ReadonlyArray<IOption>, value: TPropStream, multiple: boolean) {
+		// Don't handle any key presses with modifiers
+		if (evt.altKey || evt.ctrlKey || evt.metaKey) {
+			return;
+		}
 		switch (evt.key) {
 			// Navigate
 			case "ArrowDown": {
@@ -76,6 +87,12 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				if (this.focusOption != null) {
 					this.toggleSelection(String(this.focusOption), value, multiple);
 				}
+				break;
+			}
+			// Close
+			case "Escape": {
+				evt.preventDefault();
+				this.focusOption = null;
 				break;
 			}
 			// Search
@@ -148,10 +165,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				role: "listbox",
 				class: inputCls(uiClass),
 				onfocus: () => this.open = active,
-				onblur: () => {
-					this.open = false;
-					this.focusOption = undefined;
-				},
+				onblur: () => this.focusOption = null,
 				"aria-activedescendant": `${id}-${this.focusOption}`,
 				onkeydown: active
 					? (evt: KeyboardEvent) => this.keyNav(evt, options, val, multiple)
