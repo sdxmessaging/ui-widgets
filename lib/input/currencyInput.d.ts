@@ -5,7 +5,7 @@ import { ValidationBase } from "../validationBase";
 export declare class CurrencyInput extends ValidationBase<IPropWidget> {
     view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
 }
-export declare function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"]): string | undefined;
+export declare function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"], invert?: boolean): string | undefined;
 export declare function propToNumber(value: TProp): number;
 /**
  * Parse a currency string into a number
