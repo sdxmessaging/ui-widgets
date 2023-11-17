@@ -62,9 +62,10 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 
 }
 
-export function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"]) {
+export function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"], invert: boolean = false) {
 	const currencyStr = numberToCurrencyStr(unitTotal);
-	if (unitTotal < 0) {
+	const invertNegative = invert ? unitTotal > 0 : unitTotal < 0;
+	if (invertNegative) {
 		if (negativeStyle.toLowerCase().includes("parentheses")) {
 			return `(${currencyStr})`;
 		} else if (negativeStyle !== "red") {
