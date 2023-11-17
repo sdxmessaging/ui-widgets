@@ -1,5 +1,8 @@
 # Release Notes
 
+## 1.8.14
+- Added invert option to formatCurrency
+
 ## 1.8.13
 
 - Fix `TimeInput` minutes limit - from 55 to 59
