@@ -1,11 +1,11 @@
 import m, { CVnode, ClassComponent } from "mithril";
-import { IConfig } from "../interface/config";
-import { TPropStream } from "../interface/widget";
-import { theme } from "../theme";
+import stream from "mithril/stream";
 import { getConfig, getIcon } from "../config";
+import { IConfig } from "../interface/config";
+import { theme } from "../theme";
 
 interface ITimeScroller {
-	readonly value: TPropStream;
+	readonly value: stream<string>;
 	readonly min: number;
 	readonly max: number;
 	readonly step?: number;
@@ -14,16 +14,14 @@ interface ITimeScroller {
 
 export class TimeScroller implements ClassComponent<ITimeScroller> {
 
-	private static formatValue(value: TPropStream) {
+	private static formatValue(value: stream<string>) {
 		const val = value();
 		return val != null
-			? String(value())
-				.padStart(2, "0")
-				.slice(0, 2)
+			? val.padStart(2, "0").slice(0, 2)
 			: "-";
 	}
 
-	private static applyStep(value: TPropStream, step: number, min: number, max: number) {
+	private static applyStep(value: stream<string>, step: number, min: number, max: number) {
 		const numVal = Number(TimeScroller.formatValue(value));
 		const safeVal = isNaN(numVal) ? min : numVal;
 		// Apply step if within bounds
