@@ -20,8 +20,12 @@ export class DatePicker implements ClassComponent<IPropWidget> {
 	private valueChange!: stream<void>;
 
 	public oncreate({ dom, attrs: { field: { max, min }, value } }: CVnodeDOM<IPropWidget>) {
+		// Position picker relative to parent & left/right screen half
+		const container = dom.parentElement as HTMLElement;
+		const { left, right } = container.getBoundingClientRect();
 		this.flatpickr = flatpickr(dom, {
-			position: "below right",
+			positionElement: container,
+			position: left + right < window.innerWidth ? "below left" : "below right",
 			disableMobile: true,
 			minDate: min,
 			maxDate: max,

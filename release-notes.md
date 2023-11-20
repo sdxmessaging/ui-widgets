@@ -1,6 +1,12 @@
 # Release Notes
 
+## 1.8.x (15)
+
+- `DateInput` date picker drop-down alignment respects input position on screen, avoid picker opening with parts "off screen"
+- `TimePicker` pads hour/min inputs with leading zeros
+
 ## 1.8.14
+
 - Added invert option to formatCurrency
 
 ## 1.8.13
