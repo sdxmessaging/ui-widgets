@@ -19,21 +19,24 @@ function padZero(value: string) {
 	return value.padStart(2, '0');
 }
 
+const enum Focus { None, Hour, Minute }
+
 export class TimeInput extends ValidationBase<IPropWidget> {
 
 	private showPicker = false;
+	private focus = Focus.None;
 
 	// Hour/Minute input, clamped to 0-2 chars, padded with leading 0
 	private readonly hour = stream<string>();
 	private readonly cleanHour = this.hour.map(cleanTime);
+	private readonly padHour = this.cleanHour.map(padZero);
 	private readonly min = stream<string>();
 	private readonly cleanMin = this.min.map(cleanTime);
+	private readonly padMin = this.cleanMin.map(padZero);
 	// Combined hour/minute stream
 	private readonly time = stream.lift(
-		(hour, min) => hour && min
-			? `${padZero(hour)}:${padZero(min)}`
-			: ""
-		, this.cleanHour, this.cleanMin
+		(hour, min) => hour && min ? `${hour}:${min}` : "",
+		this.padHour, this.padMin
 	);
 
 	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
@@ -82,28 +85,31 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 					ariaHidden: "true"
 				}),
 				// Time Input parts
-				m("input.di.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
+				m("input.di.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-hh`, name: `${name}-hh`,
 					type: FieldType.number, placeholder: "hh",
 					min: 0, max: 23,
 					required, readonly, disabled,
 					'aria-label': `${name}: Hour`,
-					value: this.cleanHour(),
+					value: this.focus === Focus.Hour ? this.cleanHour() : this.padHour(),
 					class: classStr,
-					oninput: setValue(this.hour)
+					oninput: setValue(this.hour),
+					onfocus: () => this.focus = Focus.Hour,
+					onblur: () => this.focus = Focus.None
 				}),
 				m("span.mr-2px", ":"),
-				m("input.di.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
+				m("input.di.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.number, placeholder: "mm",
 					min: 0, max: 59, step,
 					required, readonly, disabled,
 					'aria-label': `${name}: Minute`,
-					value: this.cleanMin(),
+					value: this.focus === Focus.Minute ? this.cleanMin() : this.padMin(),
 					class: classStr,
-					oninput: setValue(this.min)
+					oninput: setValue(this.min),
+					onfocus: () => this.focus = Focus.Minute,
+					onblur: () => this.focus = Focus.None
 				}),
-
 				// FLoating time picker
 				this.showPicker && m(TimePicker, {
 					hour: this.hour,
