@@ -171,11 +171,16 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 					? (evt: KeyboardEvent) => this.keyNav(evt, options, val, multiple)
 					: undefined
 			}, [
-				this.placeHolder(val, options, placeholder),
+				m(".flex", [
+					m(".flex-auto.ph-2px.pv-1px",
+						this.placeHolder(val, options, placeholder)
+					),
+					getIcon(getConfig("checkListIcn", config), "ph-2px pv-1px")
+				]),
 				this.open && m(".absolute.z-max.us-none", {
 					class: joinClasses([
 						theme.checkListOptionsWrapper,
-						getConfig("selectDropUp", config) ? "bottom-0" : "top-0"
+						getConfig("checkListDropUp", config) ? "bottom-0" : "top-0"
 					])
 				}, options.map(({ value, label = value }) => {
 					const selected = this.selected.has(String(value));

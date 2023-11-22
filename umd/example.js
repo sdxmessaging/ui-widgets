@@ -690,7 +690,8 @@ m.mount(document.getElementById("page"), {
 						placeholder: "Single Fruit",
 						options: multiValOpts,
 						config: {
-							selectDropUp: true
+							checkListIcn: "fas fa-chevron-up",
+							checkListDropUp: true
 						}
 					},
 					value: multiVal

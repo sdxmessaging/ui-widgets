@@ -1,9 +1,11 @@
 # Release Notes
 
-## 1.8.x (15)
+## 1.8.15
 
 - `DateInput` date picker drop-down alignment respects input position on screen, avoid picker opening with parts "off screen"
 - `TimePicker` pads hour/min inputs with leading zeros
+- `CheckList` support for "open" icon
+- BREAKING config option `selectDropUp` renamed `checkListDropUp`
 
 ## 1.8.14
 

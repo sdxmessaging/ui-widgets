@@ -41,8 +41,10 @@ export interface IConfig {
 	timePickerIcn: TIcon;
 	timeScrollerUpIcn: TIcon;
 	timeScrollerDownIcn: TIcon;
-	/** Multi-Select list drop direction */
-	selectDropUp: boolean;
+	/** CheckList */
+	checkListIcn: TIcon;
+	/** CheckList options drop direction */
+	checkListDropUp: boolean;
 	/** Default options for signature creator */
 	signOpts: ReadonlyArray<SignTypes>;
 	/** Maximum size for signature image in px */
