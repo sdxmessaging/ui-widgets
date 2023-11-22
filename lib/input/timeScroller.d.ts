@@ -1,8 +1,8 @@
 import m, { CVnode, ClassComponent } from "mithril";
+import stream from "mithril/stream";
 import { IConfig } from "../interface/config";
-import { TPropStream } from "../interface/widget";
 interface ITimeScroller {
-    readonly value: TPropStream;
+    readonly value: stream<string>;
     readonly min: number;
     readonly max: number;
     readonly step?: number;

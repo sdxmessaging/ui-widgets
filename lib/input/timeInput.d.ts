@@ -3,10 +3,13 @@ import { IPropWidget } from "../interface/widget";
 import { ValidationBase } from "../validationBase";
 export declare class TimeInput extends ValidationBase<IPropWidget> {
     private showPicker;
+    private focus;
     private readonly hour;
     private readonly cleanHour;
+    private readonly padHour;
     private readonly min;
     private readonly cleanMin;
+    private readonly padMin;
     private readonly time;
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onbeforeupdate({ attrs: { value } }: CVnode<IPropWidget>): void;
