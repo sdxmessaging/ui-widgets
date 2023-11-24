@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.16
+
+- Replace "--- Select one ---" default placeholder for `SelectInput`/`CheckList` with "Select"
+
 ## 1.8.15
 
 - `DateInput` date picker drop-down alignment respects input position on screen, avoid picker opening with parts "off screen"

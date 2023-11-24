@@ -29,7 +29,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 	private keySearch = "";
 	private keyTs = 0;
 
-	private toggleSelection(option: string, value: TPropStream, multiple: boolean) {
+	private toggleSelection(option: string, value: TPropStream, multiple?: boolean) {
 		if (!multiple) {
 			this.selected.clear();
 		}
@@ -63,7 +63,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 		}
 	}
 
-	private keyNav(evt: KeyboardEvent, options: ReadonlyArray<IOption>, value: TPropStream, multiple: boolean) {
+	private keyNav(evt: KeyboardEvent, options: ReadonlyArray<IOption>, value: TPropStream, multiple?: boolean) {
 		// Don't handle any key presses with modifiers
 		if (evt.altKey || evt.ctrlKey || evt.metaKey) {
 			return;
@@ -139,8 +139,8 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 		const { field, value: val } = attrs;
 		const {
 			label: lbl, id, name = id, title = lbl,
-			required, readonly, disabled, multiple = false,
-			uiClass = {}, placeholder = "--- Select one ---",
+			required, readonly, disabled, multiple,
+			uiClass = {}, placeholder = "Select",
 			options = [], config
 		} = field;
 		const active = !(disabled || readonly);

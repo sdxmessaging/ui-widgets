@@ -20,7 +20,7 @@ export class SelectInput extends ValidationBase<TSelectWidget> {
 			label: lbl, id, name = id, title = lbl,
 			required, readonly, disabled, multiple,
 			autofocus, autocomplete, tabindex,
-			uiClass = {}, placeholder = "--- Select one ---",
+			uiClass = {}, placeholder = "Select",
 			options = []
 		} = field;
 		return m(LayoutFixed, {
@@ -32,7 +32,7 @@ export class SelectInput extends ValidationBase<TSelectWidget> {
 				? null
 				: m("legend.screenreader", {
 					id: `${id}-legend`
-				}, "Select one")
+				}, "Select")
 			, m("select.w-100.bg-transparent.bn.outline-0", {
 				id, name, title,
 				required, multiple, autofocus, autocomplete, tabindex,
