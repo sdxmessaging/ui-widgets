@@ -43,9 +43,9 @@ var multiValOpts = [{
 }, {
 	value: "C", label: "Cherry"
 }, {
-	value: "D", label: "Durian"
+	value: 1, label: "One"
 }, {
-	value: "E", label: "Elderberry"
+	value: true, label: "True"
 }];
 var faceVal = stream();
 var faceValUiClass = {
@@ -687,7 +687,7 @@ m.mount(document.getElementById("page"), {
 						id: "single-checklist-in",
 						label: "Single CheckList Input",
 						required: true,
-						placeholder: "Single Fruit",
+						placeholder: "Single",
 						options: multiValOpts,
 						config: {
 							checkListIcn: "fas fa-chevron-up",
@@ -702,7 +702,7 @@ m.mount(document.getElementById("page"), {
 						label: "Multi CheckList Input",
 						required: true,
 						multiple: true,
-						placeholder: "Multiple Fruit",
+						placeholder: "Multiple",
 						options: multiValOpts
 					},
 					value: multiVal
@@ -718,6 +718,8 @@ m.mount(document.getElementById("page"), {
 				})
 			])
 		]),
+
+		m("p.mt1.f6.orange", "Note: Take care mixing strings, numbers, and booleans in option values. The values are compared as strings and may not behave as expected."),
 
 		m("p", "The currency input stores values as the smallest monetary unit"),
 
@@ -805,6 +807,9 @@ m.mount(document.getElementById("page"), {
 			}))
 		]),
 
+		m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
+		m("p.mt1.f6.orange", "Note: Take care with CSS specificity between input class and red negative class"),
+
 		// Percentage
 		m(".flex.mb2.ba.b--silver.flex-wrap", [
 			m(".w-50.pa2", m(uiWidgets.PercentageInput, {
@@ -820,9 +825,6 @@ m.mount(document.getElementById("page"), {
 				value: percentageVal
 			})),
 		]),
-
-		m("p.mt1.f6.orange", "Note: Values beyond Number.MAX_SAFE_INTEGER have undefined behaviour and display/input values will have their absolute value taken"),
-		m("p.mt1.f6.orange", "Note: Take care with CSS specificity between input class and red negative class"),
 
 		// Card Date
 		m(".flex.mb2.ba.b--silver", [

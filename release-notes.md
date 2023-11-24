@@ -2,6 +2,7 @@
 
 ## 1.8.16
 
+- Fix `CheckList` text content not handling number/boolean option values
 - Replace "--- Select one ---" default placeholder for `SelectInput`/`CheckList` with "Select"
 
 ## 1.8.15

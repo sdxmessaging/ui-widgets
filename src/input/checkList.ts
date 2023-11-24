@@ -109,7 +109,10 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 		if (this.selected.size > 1) {
 			return `${this.selected.size} Selected`;
 		} else if (this.selected.size === 1) {
-			return lodash.find(options, { value: value() })?.label ?? placeholder;
+			const matchVal = value();
+			return lodash.find(options,
+				(opt) => String(opt.value) === matchVal
+			)?.label ?? placeholder;
 		} else {
 			return placeholder;
 		}
