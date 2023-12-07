@@ -71,6 +71,7 @@ export class ListController<T> {
 	public get loading() {
 		return this.isLoading;
 	}
+	private bufferReload = false;
 
 	public setSort(sortFn: (inp: T[]) => T[]) {
 		this.sortFn = sortFn;
@@ -92,9 +93,12 @@ export class ListController<T> {
 	}
 
 	public reload() {
-		this.dataStore.splice(0, this.dataStore.length);
-		this.invalidate();
-		this.load();
+		this.bufferReload = this.loading;
+		if (!this.bufferReload) {
+			this.dataStore.splice(0, this.dataStore.length);
+			this.invalidate();
+			this.load();
+		}
 	}
 
 	/** Update visible page range, trigger redraw if range has changed */
@@ -144,7 +148,12 @@ export class ListController<T> {
 			this.isLoading = true;
 			this.dataLoader(this.data.length)
 				.catch(console.error)
-				.then(() => this.isLoading = false);
+				.then(() => {
+					this.isLoading = false;
+					if (this.bufferReload) {
+						this.reload();
+					}
+				});
 		}
 	}
 
