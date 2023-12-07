@@ -24,6 +24,7 @@ export declare class ListController<T> {
     private loadMore;
     isLoading: boolean;
     get loading(): boolean;
+    private bufferReload;
     setSort(sortFn: (inp: T[]) => T[]): void;
     applySort(): void;
     setFilter(filterFn: (inp: T[]) => T[]): void;
