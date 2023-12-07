@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.17
+
+- Fix `ListController` calls to `reload` being ignored if the list is loading
+
 ## 1.8.16
 
 - Fix `CheckList` text content not handling number/boolean option values
