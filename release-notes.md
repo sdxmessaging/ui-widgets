@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.x (18)
+
+- `ListController` to enforce readonly arrays for sort/filter methods
+
 ## 1.8.17
 
 - Fix `ListController` calls to `reload` being ignored if the list is loading

@@ -2,6 +2,8 @@ import lodash from "lodash";
 import m from "mithril";
 import { IListPageRender } from "../interface/list";
 
+type TListFn<T> = (inp: ReadonlyArray<T>) => ReadonlyArray<T>;
+
 export class ListController<T> {
 
 	private static readonly PAGE_SIZE = 25;
@@ -47,14 +49,14 @@ export class ListController<T> {
 		return this.dataStore;
 	}
 
-	private sortFn: (inp: T[]) => T[] = lodash.identity;
-	private sortedDataStore: T[] = this.dataStore;
+	private sortFn: TListFn<T> = lodash.identity;
+	private sortedDataStore: ReadonlyArray<T> = this.dataStore;
 	public get sortedData(): ReadonlyArray<T> {
 		return this.sortedDataStore;
 	}
 
-	private filterFn: (inp: T[]) => T[] = lodash.identity;
-	private filteredDataStore: T[] = this.sortedDataStore;
+	private filterFn: TListFn<T> = lodash.identity;
+	private filteredDataStore: ReadonlyArray<T> = this.sortedDataStore;
 	public get filteredData(): ReadonlyArray<T> {
 		return this.filteredDataStore;
 	}
@@ -73,7 +75,7 @@ export class ListController<T> {
 	}
 	private bufferReload = false;
 
-	public setSort(sortFn: (inp: T[]) => T[]) {
+	public setSort(sortFn: TListFn<T>) {
 		this.sortFn = sortFn;
 	}
 
@@ -82,7 +84,7 @@ export class ListController<T> {
 		this.applyFilter();
 	}
 
-	public setFilter(filterFn: (inp: T[]) => T[]) {
+	public setFilter(filterFn: TListFn<T>) {
 		this.filterFn = filterFn;
 	}
 
