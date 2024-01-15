@@ -69,7 +69,7 @@ export class ListController<T> {
 	private endPage = -1;
 
 	private loadMore = false;
-	public isLoading = false;
+	private isLoading = false;
 	public get loading() {
 		return this.isLoading;
 	}
