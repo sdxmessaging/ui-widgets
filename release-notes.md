@@ -2,7 +2,9 @@
 
 ## 1.8.x (18)
 
+- Fix `TimeInput` not showing stream value on first draw
 - `ListController` to enforce readonly arrays for sort/filter methods
+- BREAKING `ListController::isLoading` member made private, use `ListController::loading` getter
 
 ## 1.8.17
 

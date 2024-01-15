@@ -1,7 +1,7 @@
 import m, { CVnode } from "mithril";
 import stream from "mithril/stream";
 
-import { FieldType, IPropWidget } from "../interface/widget";
+import { FieldType, IPropWidget, TPropStream } from "../interface/widget";
 
 import { getConfig, getIcon } from "../config";
 import { inputCls } from "../theme";
@@ -39,19 +39,24 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 		this.padHour, this.padMin
 	);
 
-	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
-		// Write valid time to value stream
-		this.time.map((time) => value(time));
-	}
-
-	public onbeforeupdate({ attrs: { value } }: CVnode<IPropWidget>) {
-		// Update hour/minute streams from value stream if changed
+	/** Update hour/minute streams from value stream if changed */
+	private syncTime(value: TPropStream) {
 		const inVal = value();
 		if (inVal !== this.time()) {
 			const [hour, min = ""] = String(inVal).split(":");
 			this.hour(hour);
 			this.min(min);
 		}
+	}
+
+	public oninit({ attrs: { value } }: CVnode<IPropWidget>) {
+		// Write valid time to value stream
+		this.time.map((time) => value(time));
+		this.syncTime(value);
+	}
+
+	public onbeforeupdate({ attrs: { value } }: CVnode<IPropWidget>) {
+		this.syncTime(value);
 	}
 
 	public onremove() {
