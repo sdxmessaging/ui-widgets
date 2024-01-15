@@ -1,6 +1,6 @@
 # Release Notes
 
-## 1.8.x (18)
+## 1.8.18
 
 - Fix `TimeInput` not showing stream value on first draw
 - `ListController` to enforce readonly arrays for sort/filter methods
