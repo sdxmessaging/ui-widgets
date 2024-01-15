@@ -1,4 +1,5 @@
 import { IListPageRender } from "../interface/list";
+type TListFn<T> = (inp: ReadonlyArray<T>) => ReadonlyArray<T>;
 export declare class ListController<T> {
     private dataLoader;
     private static readonly PAGE_SIZE;
@@ -22,12 +23,12 @@ export declare class ListController<T> {
     private startPage;
     private endPage;
     private loadMore;
-    isLoading: boolean;
+    private isLoading;
     get loading(): boolean;
     private bufferReload;
-    setSort(sortFn: (inp: T[]) => T[]): void;
+    setSort(sortFn: TListFn<T>): void;
     applySort(): void;
-    setFilter(filterFn: (inp: T[]) => T[]): void;
+    setFilter(filterFn: TListFn<T>): void;
     applyFilter(): void;
     reload(): void;
     /** Update visible page range, trigger redraw if range has changed */
@@ -46,3 +47,4 @@ export declare class ListController<T> {
     private load;
     private updatePageRange;
 }
+export {};

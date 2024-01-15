@@ -11,6 +11,8 @@ export declare class TimeInput extends ValidationBase<IPropWidget> {
     private readonly cleanMin;
     private readonly padMin;
     private readonly time;
+    /** Update hour/minute streams from value stream if changed */
+    private syncTime;
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onbeforeupdate({ attrs: { value } }: CVnode<IPropWidget>): void;
     onremove(): void;
