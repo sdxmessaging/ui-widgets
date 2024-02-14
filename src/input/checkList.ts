@@ -56,7 +56,6 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 			this.keyTs = evtTs;
 		}
 		this.keySearch += character;
-		console.debug("Search", this.keySearch);
 		const match = lodash.find(options,
 			({ value, label = value }) => String(label).toLowerCase().includes(this.keySearch)
 		);
