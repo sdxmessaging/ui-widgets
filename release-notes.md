@@ -5,7 +5,7 @@
 - `CheckList` displays single selection without checkboxes
 - Drop-down `CheckList` now attaches list to the bottom of input
 - Single selection `CheckList` closes on selection
-- Added `checkListOption` (single/multiple) and `checkListOptionSelected` (single only) theme options
+- Added `checkListOption` and `checkListOptionSingleSelected`/`checkListOptionMultiSelected` theme options
 - Fixed `CheckList` keyboard selection using value and not lables
 
 ## 1.8.18

@@ -188,7 +188,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				this.open && m(".absolute.z-max.us-none", {
 					class: joinClasses([
 						theme.checkListOptionsWrapper,
-						getConfig("checkListDropUp", config) ? "bottom-0" : "mt1"
+						getConfig("checkListDropUp", config) ? "bottom-0" : "mt3"
 					])
 				}, multiple
 					? options.map((opt) => this.multiSelectionRow(val, id, opt, config))
@@ -207,7 +207,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 			id: `${id}-${value}`,
 			class: joinClasses([
 				theme.checkListOption,
-				selected ? theme.checkListOptionSelected : null
+				selected ? theme.checkListOptionSingleSelected : null
 			]),
 			role: "option",
 			ariaSelected: selected,
@@ -228,7 +228,10 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 		const focus = value === this.focusOption ? "true" : undefined;
 		return m(".ui-widgets-option.cursor-default", {
 			id: `${id}-${value}`,
-			class: theme.checkListOption,
+			class: joinClasses([
+				theme.checkListOption,
+				selected ? theme.checkListOptionMultiSelected : null
+			]),
 			role: "option",
 			ariaSelected: selected,
 			"aria-activedescendant": focus,
@@ -238,7 +241,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 			}
 		}, [
 			getIcon(icon, "mh1"),
-			label
+			m("span.mh1", label)
 		]);
 	}
 
