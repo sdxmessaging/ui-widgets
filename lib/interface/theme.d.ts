@@ -47,8 +47,14 @@ export interface IClassMap extends IClasses {
     readonly tooltipIcon?: string;
     readonly tooltipMessage?: string;
     readonly redNumber?: string;
-    /** CheckList options */
+    /** CheckList options container */
     readonly checkListOptionsWrapper?: string;
+    /** CheckList option row */
+    readonly checkListOption?: string;
+    /** CheckList selected option (single) */
+    readonly checkListOptionSingleSelected?: string;
+    /** CheckList selected option (multiple) */
+    readonly checkListOptionMultiSelected?: string;
     /** TimeInput Scroller */
     readonly timeInputScrollerWrapper?: string;
     readonly timeInputScrollerNumber?: string;

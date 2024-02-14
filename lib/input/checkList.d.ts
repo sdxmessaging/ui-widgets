@@ -23,5 +23,7 @@ export declare class CheckList extends ValidationBase<TSelectWidget> {
     oninit({ attrs: { value } }: CVnode<TSelectWidget>): void;
     onbeforeupdate({ attrs: { value } }: CVnode<TSelectWidget>): void;
     view({ attrs }: CVnode<TSelectWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
+    private singleSelectionRow;
+    private multiSelectionRow;
 }
 export {};
