@@ -1,5 +1,13 @@
 # Release Notes
 
+## 1.8.19
+
+- `CheckList` displays single selection without checkboxes
+- Drop-down `CheckList` now attaches list to the bottom of input
+- Single selection `CheckList` closes on selection
+- Added `checkListOption` (single/multiple) and `checkListOptionSelected` (single only) theme options
+- Fixed `CheckList` keyboard selection using value and not lables
+
 ## 1.8.18
 
 - Fix `TimeInput` not showing stream value on first draw

@@ -32,6 +32,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 	private toggleSelection(option: string, value: TPropStream, multiple?: boolean) {
 		if (!multiple) {
 			this.selected.clear();
+			this.focusOption = null;
 		}
 		if (this.selected.has(option)) {
 			this.selected.delete(option);
@@ -55,8 +56,9 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 			this.keyTs = evtTs;
 		}
 		this.keySearch += character;
+		console.debug("Search", this.keySearch);
 		const match = lodash.find(options,
-			({ value }) => String(value).toLowerCase().includes(this.keySearch)
+			({ value, label = value }) => String(label).toLowerCase().includes(this.keySearch)
 		);
 		if (match) {
 			this.focusOption = match.value;
@@ -86,6 +88,8 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				evt.preventDefault();
 				if (this.focusOption != null) {
 					this.toggleSelection(String(this.focusOption), value, multiple);
+				} else {
+					this.open = true;
 				}
 				break;
 			}
@@ -167,6 +171,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				tabindex: 0,
 				role: "listbox",
 				class: inputCls(uiClass),
+				onclick: () => this.open = active,
 				onfocus: () => this.open = active,
 				onblur: () => this.focusOption = null,
 				"aria-activedescendant": `${id}-${this.focusOption}`,
@@ -183,26 +188,58 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				this.open && m(".absolute.z-max.us-none", {
 					class: joinClasses([
 						theme.checkListOptionsWrapper,
-						getConfig("checkListDropUp", config) ? "bottom-0" : "top-0"
+						getConfig("checkListDropUp", config) ? "bottom-0" : "mt1"
 					])
-				}, options.map(({ value, label = value }) => {
-					const selected = this.selected.has(String(value));
-					const icon = selected
-						? getConfig(this.onIcon, config)
-						: getConfig(this.offIcon, config);
-					const focus = value === this.focusOption ? "true" : undefined;
-					return m(".ui-widgets-option.cursor-default.pa2", {
-						id: `${id}-${value}`,
-						role: "option",
-						ariaSelected: selected,
-						"aria-activedescendant": focus,
-						onclick: () => this.toggleSelection(String(value), val, multiple)
-					}, [
-						getIcon(icon, "mh1"),
-						label
-					]);
-				}))
+				}, multiple
+					? options.map((opt) => this.multiSelectionRow(val, id, opt, config))
+					: options.map((opt) => this.singleSelectionRow(val, id, opt))
+				)
 			])
 		]);
+
 	}
+
+	private singleSelectionRow(val: TPropStream, id: string, opt: IOption) {
+		const { value, label = value } = opt;
+		const selected = this.selected.has(String(value));
+		const focus = value === this.focusOption ? "true" : undefined;
+		return m(".ui-widgets-option.cursor-default", {
+			id: `${id}-${value}`,
+			class: joinClasses([
+				theme.checkListOption,
+				selected ? theme.checkListOptionSelected : null
+			]),
+			role: "option",
+			ariaSelected: selected,
+			"aria-activedescendant": focus,
+			onclick: (evt: MouseEvent) => {
+				evt.stopPropagation();
+				this.toggleSelection(String(value), val);
+			}
+		}, label);
+	}
+
+	private multiSelectionRow(val: TPropStream, id: string, opt: IOption, config?: Partial<IConfig>) {
+		const { value, label = value } = opt;
+		const selected = this.selected.has(String(value));
+		const icon = selected
+			? getConfig(this.onIcon, config)
+			: getConfig(this.offIcon, config);
+		const focus = value === this.focusOption ? "true" : undefined;
+		return m(".ui-widgets-option.cursor-default", {
+			id: `${id}-${value}`,
+			class: theme.checkListOption,
+			role: "option",
+			ariaSelected: selected,
+			"aria-activedescendant": focus,
+			onclick: (evt: MouseEvent) => {
+				evt.stopPropagation();
+				this.toggleSelection(String(value), val, true);
+			}
+		}, [
+			getIcon(icon, "mh1"),
+			label
+		]);
+	}
+
 }
