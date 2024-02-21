@@ -18,6 +18,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 
 	private selected = new Set<string>();
 	private open = false;
+	private openTs = 0;
 	private _focusOption: TProp | null = null;
 	private get focusOption() {
 		return this._focusOption;
@@ -28,6 +29,14 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 	}
 	private keySearch = "";
 	private keyTs = 0;
+
+	private toggleOpen() {
+		const ts = Date.now();
+		if (ts - this.openTs > 333) {
+			this.open = !this.open;
+			this.openTs = ts;
+		}
+	}
 
 	private toggleSelection(option: string, value: TPropStream, multiple?: boolean) {
 		if (!multiple) {
@@ -88,7 +97,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				if (this.focusOption != null) {
 					this.toggleSelection(String(this.focusOption), value, multiple);
 				} else {
-					this.open = true;
+					this.toggleOpen();
 				}
 				break;
 			}
@@ -170,8 +179,8 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				tabindex: 0,
 				role: "listbox",
 				class: inputCls(uiClass),
-				onclick: () => this.open = active,
-				onfocus: () => this.open = active,
+				onclick: () => this.toggleOpen(),
+				onfocus: () => this.toggleOpen(),
 				onblur: () => this.focusOption = null,
 				"aria-activedescendant": `${id}-${this.focusOption}`,
 				onkeydown: active

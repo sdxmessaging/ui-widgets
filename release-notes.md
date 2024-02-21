@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.20
+
+- `CheckList` support for toggle open/closed on click or space/enter with no selection
+
 ## 1.8.19
 
 - `CheckList` displays single selection without checkboxes
