@@ -8,11 +8,13 @@ export declare class CheckList extends ValidationBase<TSelectWidget> {
     protected readonly offIcon: keyof TSubset<IConfig, TIcon>;
     private selected;
     private open;
+    private openTs;
     private _focusOption;
     private get focusOption();
     private set focusOption(value);
     private keySearch;
     private keyTs;
+    private toggleOpen;
     private toggleSelection;
     private moveFocus;
     private findFocus;
