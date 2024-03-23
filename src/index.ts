@@ -67,3 +67,4 @@ export { FileButtonSelect } from "./input/fileButtonSelect";
 // List
 export { List } from "./list/list";
 export { ListController } from "./list/listController";
+export { PageController } from "./list/pageController";

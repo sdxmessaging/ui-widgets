@@ -118,6 +118,9 @@ uiWidgets.registerFunction("svgCircle", (data, classes) => m("svg[xmlns=http://w
 	})
 ));
 
+// List debug mode
+var debug = stream(false);
+
 // List dummy data generator
 var words = ["lorem", "ipsum", "dolor", "sit", "amet"];
 function generate(offset, limit) {
@@ -156,11 +159,11 @@ single.setFilter((input) => {
 // Don't filter until data is loaded and handle streams that have not started
 singleFilter.map(() => single.applyFilter());
 
-// List debug mode
-var debug = stream(false);
-
 // Fetch rows from range
 var paging = uiWidgets.ListController.paging(generate);
+
+// var paginated = uiWidgets.PageController.paging(generate);
+var paginated = uiWidgets.PageController.single(() => generate(0, 128));
 
 // List row component
 var rowComponent = {
@@ -1326,6 +1329,41 @@ m.mount(document.getElementById("page"), {
 			classes: "mt2",
 			onclick: () => paging.reload()
 		}),
+
+		m("p", "This basic grid uses a \"pagination\" controller as opposed to a long list."),
+
+		m(".flex.flex-column.ba.b--silver", [
+			m(".flex.justify-between.pa2.bg-near-black.white", [
+				m("span.f3", "Paginated List - Infinite Data Source"),
+				paginated.loading ? m("progress") : null
+			]),
+			m(uiWidgets.List, {
+				classes: "vh-50",
+				controller: paginated,
+				component: rowComponent
+			}),
+			debug() && m(".pa2.f5.near-black.code.bg-washed-yellow.bt.b--silver",
+				JSON.stringify(paginated.debug())
+			)
+		]),
+		m(".flex.mt2", [
+			m(uiWidgets.Button, {
+				label: "Reload List",
+				onclick: () => paginated.reload()
+			}),
+			m(uiWidgets.Button, {
+				label: "Previous Page",
+				icon: "fas fa-arrow-left",
+				classes: "ml-auto",
+				onclick: () => paginated.pageRelative(-1)
+			}),
+			m(uiWidgets.Button, {
+				label: "Next Page",
+				icon: "fas fa-arrow-right",
+				classes: "ml2",
+				onclick: () => paginated.pageRelative(1)
+			})
+		]),
 
 		m("h3", m("a#theme.link[href=#theme]", "Theme Support")),
 		m("p", "Update theme classes on the fly and use your existing css"),

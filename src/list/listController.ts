@@ -4,9 +4,11 @@ import { IListPageRender } from "../interface/list";
 
 type TListFn<T> = (inp: ReadonlyArray<T>) => ReadonlyArray<T>;
 
+// TODO Rename "page" to "block"
+
 export class ListController<T> {
 
-	private static readonly PAGE_SIZE = 25;
+	protected static readonly PAGE_SIZE = 25;
 	private static readonly PAGE_RANGE = 3;
 
 	/** Clamp value to a range, min takes priority over max */
@@ -15,8 +17,8 @@ export class ListController<T> {
 	}
 
 	/** Factory for a ListController that loads all data at once */
-	static single<D>(load: () => Promise<D[]>): ListController<D> {
-		const ctrl: ListController<D> = new ListController(
+	static single<D>(load: () => Promise<D[]>) {
+		const ctrl = new ListController(
 			() => load().then((rowData) => {
 				ctrl.updateDataStore(rowData);
 				// Sort and filter immediately
@@ -28,9 +30,9 @@ export class ListController<T> {
 	}
 
 	/** Factory for a ListController that loads data in pages */
-	static paging<D>(load: (offset: number, limit: number) => Promise<D[]>): ListController<D> {
+	static paging<D>(load: (offset: number, limit: number) => Promise<D[]>) {
 		const loadSize = ListController.PAGE_SIZE * 4;
-		const ctrl: ListController<D> = new ListController(
+		const ctrl = new ListController(
 			(offset) => load(offset, loadSize + 1).then((rowData) => {
 				if (rowData.length > loadSize) {
 					ctrl.updateDataStore(rowData.slice(0, loadSize), true);
@@ -62,11 +64,11 @@ export class ListController<T> {
 	}
 
 	// Data split into pages
-	private readonly pageStore: ReadonlyArray<T>[] = [];
+	protected readonly pageStore: ReadonlyArray<T>[] = [];
 
 	private scrollPct = 0;
-	private startPage = -1;
-	private endPage = -1;
+	protected startPage = -1;
+	protected endPage = -1;
 
 	private loadMore = false;
 	private isLoading = false;
@@ -135,7 +137,7 @@ export class ListController<T> {
 		};
 	}
 
-	private constructor(private dataLoader: (offset: number) => Promise<void>) {
+	protected constructor(private dataLoader: (offset: number) => Promise<void>) {
 		this.load();
 	}
 
@@ -159,7 +161,7 @@ export class ListController<T> {
 		}
 	}
 
-	private updatePageRange() {
+	protected updatePageRange() {
 		const startPage = ListController.clampRange(
 			0,
 			// Bias to help different page sizes and scrolling up
@@ -170,19 +172,24 @@ export class ListController<T> {
 		if (startPage !== this.startPage) {
 			this.startPage = startPage;
 			this.endPage = startPage + ListController.PAGE_RANGE;
-			// Create more pages if required
-			let bufferStart = this.pageStore.length * ListController.PAGE_SIZE;
-			const bufferEnd = this.endPage * ListController.PAGE_SIZE;
-			while (bufferStart < bufferEnd) {
-				const end = bufferStart + ListController.PAGE_SIZE;
-				this.pageStore.push(this.filteredDataStore.slice(bufferStart, end));
-				bufferStart = end;
-			}
-			// Load more pages if required and next page will run out of buffer
-			if (this.loadMore && bufferEnd >= this.dataStore.length) {
-				this.load();
-			}
+			this.ensurePageStore();
 			m.redraw();
+		}
+	}
+
+	/** Ensure pageStore contains rows for the current page range, load more rows if required */
+	protected ensurePageStore() {
+		// Create more pages if required
+		let bufferStart = this.pageStore.length * ListController.PAGE_SIZE;
+		const bufferEnd = this.endPage * ListController.PAGE_SIZE;
+		while (bufferStart < bufferEnd) {
+			const end = bufferStart + ListController.PAGE_SIZE;
+			this.pageStore.push(this.filteredDataStore.slice(bufferStart, end));
+			bufferStart = end;
+		}
+		// Load more pages if required and next page will run out of buffer
+		if (this.loadMore && bufferEnd >= this.dataStore.length) {
+			this.load();
 		}
 	}
 
