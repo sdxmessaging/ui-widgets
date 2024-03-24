@@ -126,6 +126,7 @@ var words = ["lorem", "ipsum", "dolor", "sit", "amet"];
 function generate(offset, limit) {
 	var data = [];
 	var end = offset + limit;
+	// var end = Math.min(offset + limit, 256);
 	for (var i = offset; i < end; i++) {
 		var random = Math.random();
 		data.push({
@@ -162,8 +163,7 @@ singleFilter.map(() => single.applyFilter());
 // Fetch rows from range
 var paging = uiWidgets.ListController.paging(generate);
 
-// var paginated = uiWidgets.PageController.paging(generate);
-var paginated = uiWidgets.PageController.single(() => generate(0, 128));
+var paginated = uiWidgets.PageController.paging(generate);
 
 // List row component
 var rowComponent = {
@@ -1271,7 +1271,7 @@ m.mount(document.getElementById("page"), {
 			value: debug
 		})),
 
-		m("p", "This basic grid has a simple header and filter/order controls. Local sorting and filtering should only be used if the entire dataset is loaded into memory. Otherwise, use the server-side filtering and sorting options."),
+		m("p", "This basic list has a simple header and filter/order controls. Local sorting and filtering should only be used if the entire dataset is loaded into memory. Otherwise, use the server-side filtering and sorting options."),
 
 		m(".flex.flex-column.ba.b--silver", [
 			m(".flex.justify-between.pa2.bg-near-black.white", [
@@ -1308,7 +1308,7 @@ m.mount(document.getElementById("page"), {
 			)
 		]),
 
-		m("p", "This basic grid has a simple header and will load dummy data as you scroll."),
+		m("p", "This basic list has a simple header and will load dummy data as you scroll."),
 
 		m(".flex.flex-column.ba.b--silver", [
 			m(".flex.justify-between.pa2.bg-near-black.white", [
@@ -1330,7 +1330,7 @@ m.mount(document.getElementById("page"), {
 			onclick: () => paging.reload()
 		}),
 
-		m("p", "This basic grid uses a \"pagination\" controller as opposed to a long list."),
+		m("p", "Lists can also use a \"pagination\" controller. This controller works in the same manner as a list controller, but the visible row range is controlled from simple page \"setter\" methods."),
 
 		m(".flex.flex-column.ba.b--silver", [
 			m(".flex.justify-between.pa2.bg-near-black.white", [
@@ -1346,7 +1346,7 @@ m.mount(document.getElementById("page"), {
 				JSON.stringify(paginated.debug())
 			)
 		]),
-		m(".flex.mt2", [
+		m(".flex.items-center.mt2", [
 			m(uiWidgets.Button, {
 				label: "Reload List",
 				onclick: () => paginated.reload()
@@ -1355,12 +1355,18 @@ m.mount(document.getElementById("page"), {
 				label: "Previous Page",
 				icon: "fas fa-arrow-left",
 				classes: "ml-auto",
+				disabled: !paginated.canPageBackward,
 				onclick: () => paginated.pageRelative(-1)
 			}),
+			m("span.mh2.f3", [
+				paginated.page + 1,
+				"/",
+				paginated.pageCount + 1
+			]),
 			m(uiWidgets.Button, {
 				label: "Next Page",
 				icon: "fas fa-arrow-right",
-				classes: "ml2",
+				disabled: !paginated.canPageForward,
 				onclick: () => paginated.pageRelative(1)
 			})
 		]),
