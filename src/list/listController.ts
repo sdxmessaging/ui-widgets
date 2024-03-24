@@ -4,15 +4,15 @@ import { IListPageRender } from "../interface/list";
 
 type TListFn<T> = (inp: ReadonlyArray<T>) => ReadonlyArray<T>;
 
-// TODO Rename "page" to "block"
-
 export class ListController<T> {
 
-	protected static readonly PAGE_SIZE = 25;
-	private static readonly PAGE_RANGE = 3;
+	/** Number of items in each "block" */
+	protected static readonly BLOCK_SIZE = 25;
+	/** Number of "blocks" to render */
+	private static readonly BLOCK_RANGE = 3;
 
 	/** Clamp value to a range, min takes priority over max */
-	private static clampRange(min: number, value: number, max: number) {
+	protected static clampRange(min: number, value: number, max: number) {
 		return Math.max(min, Math.min(value, max));
 	}
 
@@ -31,7 +31,7 @@ export class ListController<T> {
 
 	/** Factory for a ListController that loads data in pages */
 	static paging<D>(load: (offset: number, limit: number) => Promise<D[]>) {
-		const loadSize = ListController.PAGE_SIZE * 4;
+		const loadSize = ListController.BLOCK_SIZE * 4;
 		const ctrl = new ListController(
 			(offset) => load(offset, loadSize + 1).then((rowData) => {
 				if (rowData.length > loadSize) {
@@ -63,12 +63,17 @@ export class ListController<T> {
 		return this.filteredDataStore;
 	}
 
-	// Data split into pages
-	protected readonly pageStore: ReadonlyArray<T>[] = [];
+	/** Number of blocks that can be made from filtered data */
+	public get availableBlocks() {
+		return Math.ceil(this.filteredDataStore.length / ListController.BLOCK_SIZE);
+	}
+
+	// Data split into "blocks"
+	protected readonly blockStore: ReadonlyArray<T>[] = [];
 
 	private scrollPct = 0;
-	protected startPage = -1;
-	protected endPage = -1;
+	protected startBlock = -1;
+	protected endBlock = -1;
 
 	private loadMore = false;
 	private isLoading = false;
@@ -93,7 +98,7 @@ export class ListController<T> {
 	public applyFilter() {
 		this.filteredDataStore = this.filterFn(this.sortedDataStore);
 		this.invalidate();
-		this.updatePageRange();
+		this.updateBlockRange();
 	}
 
 	public reload() {
@@ -109,21 +114,21 @@ export class ListController<T> {
 	public updateScroll(percentage: number) {
 		if (this.dataStore.length > 0) {
 			this.scrollPct = percentage;
-			this.updatePageRange();
+			this.updateBlockRange();
 		}
 	}
 
 	public updateDataStore(data: T[], hasMore = false) {
 		this.loadMore = hasMore;
 		this.dataStore.push(...data);
-		this.updatePageRange();
+		this.updateBlockRange();
 	}
 
 	public render<C>(callback: (params: IListPageRender<T>) => C): C[] {
-		return this.pageStore.map((items, idx) => callback({
+		return this.blockStore.map((items, idx) => callback({
 			items,
 			idx,
-			visible: idx >= this.startPage && idx <= this.endPage
+			visible: idx >= this.startBlock && idx < this.endBlock
 		}));
 	}
 
@@ -131,9 +136,9 @@ export class ListController<T> {
 		return {
 			data: this.data.length,
 			filtered: this.filteredData.length,
-			pages: this.pageStore.length,
-			start: this.startPage,
-			end: this.endPage
+			blocks: this.blockStore.length,
+			start: this.startBlock,
+			end: this.endBlock
 		};
 	}
 
@@ -142,9 +147,9 @@ export class ListController<T> {
 	}
 
 	private invalidate() {
-		this.startPage = -1;
-		this.endPage = -1;
-		this.pageStore.splice(0, this.pageStore.length);
+		this.startBlock = -1;
+		this.endBlock = -1;
+		this.blockStore.splice(0, this.blockStore.length);
 	}
 
 	private load() {
@@ -161,33 +166,34 @@ export class ListController<T> {
 		}
 	}
 
-	protected updatePageRange() {
-		const startPage = ListController.clampRange(
+	protected updateBlockRange() {
+		const startBlock = ListController.clampRange(
 			0,
-			// Bias to help different page sizes and scrolling up
-			Math.floor(this.scrollPct * this.pageStore.length) - 1,
-			// Limit to last page - page range
-			Math.ceil(this.filteredDataStore.length / ListController.PAGE_SIZE) - ListController.PAGE_RANGE
+			// Bias to help different block sizes and scrolling up
+			Math.floor(this.scrollPct * this.blockStore.length) - 1,
+			// Limit to last block - block range
+			this.availableBlocks - ListController.BLOCK_RANGE
 		);
-		if (startPage !== this.startPage) {
-			this.startPage = startPage;
-			this.endPage = startPage + ListController.PAGE_RANGE;
-			this.ensurePageStore();
+		if (startBlock !== this.startBlock) {
+			this.startBlock = startBlock;
+			this.endBlock = startBlock + ListController.BLOCK_RANGE;
+			this.ensureBlockStore();
 			m.redraw();
 		}
 	}
 
-	/** Ensure pageStore contains rows for the current page range, load more rows if required */
-	protected ensurePageStore() {
-		// Create more pages if required
-		let bufferStart = this.pageStore.length * ListController.PAGE_SIZE;
-		const bufferEnd = this.endPage * ListController.PAGE_SIZE;
+	/** Ensure blockStore contains rows for the current block range, load more rows if required */
+	protected ensureBlockStore() {
+		// Create more blocks if required
+		let bufferStart = this.blockStore.length * ListController.BLOCK_SIZE;
+		// Limit block creation to available data
+		const bufferEnd = Math.min(this.endBlock, this.availableBlocks) * ListController.BLOCK_SIZE;
 		while (bufferStart < bufferEnd) {
-			const end = bufferStart + ListController.PAGE_SIZE;
-			this.pageStore.push(this.filteredDataStore.slice(bufferStart, end));
+			const end = bufferStart + ListController.BLOCK_SIZE;
+			this.blockStore.push(this.filteredDataStore.slice(bufferStart, end));
 			bufferStart = end;
 		}
-		// Load more pages if required and next page will run out of buffer
+		// Load more blocks if required and next block will run out of buffer
 		if (this.loadMore && bufferEnd >= this.dataStore.length) {
 			this.load();
 		}
