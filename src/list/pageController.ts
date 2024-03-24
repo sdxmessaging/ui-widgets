@@ -8,7 +8,7 @@ export class PageController<T> extends ListController<T> {
 	private static readonly PAGE_STRIDE = 4;
 
 	static override single<D>(load: () => Promise<D[]>) {
-		const ctrl = new PageController(
+		const ctrl = new PageController<D>(
 			() => load().then((rowData) => {
 				ctrl.updateDataStore(rowData);
 				// Sort and filter immediately
@@ -22,7 +22,7 @@ export class PageController<T> extends ListController<T> {
 	/** Factory for a ListController that loads data in pages */
 	static override paging<D>(load: (offset: number, limit: number) => Promise<D[]>) {
 		const loadSize = ListController.BLOCK_SIZE * 4;
-		const ctrl = new PageController(
+		const ctrl = new PageController<D>(
 			(offset) => load(offset, loadSize + 1).then((rowData) => {
 				if (rowData.length > loadSize) {
 					ctrl.updateDataStore(rowData.slice(0, loadSize), true);

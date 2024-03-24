@@ -18,7 +18,7 @@ export class ListController<T> {
 
 	/** Factory for a ListController that loads all data at once */
 	static single<D>(load: () => Promise<D[]>) {
-		const ctrl = new ListController(
+		const ctrl = new ListController<D>(
 			() => load().then((rowData) => {
 				ctrl.updateDataStore(rowData);
 				// Sort and filter immediately
@@ -32,7 +32,7 @@ export class ListController<T> {
 	/** Factory for a ListController that loads data in pages */
 	static paging<D>(load: (offset: number, limit: number) => Promise<D[]>) {
 		const loadSize = ListController.BLOCK_SIZE * 4;
-		const ctrl = new ListController(
+		const ctrl = new ListController<D>(
 			(offset) => load(offset, loadSize + 1).then((rowData) => {
 				if (rowData.length > loadSize) {
 					ctrl.updateDataStore(rowData.slice(0, loadSize), true);
