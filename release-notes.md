@@ -1,5 +1,11 @@
 # Release Notes
 
+## 1.8.21
+
+- New `PageController` class, `ListController` variant that displays items in "pages"
+- `PageController` methods for next/previous page, page bounds checking, and number of pages
+- Fix `ListController` drawing an additional "block" of rows at the bottom of visible range
+
 ## 1.8.20
 
 - `CheckList` support for toggle open/closed on click or space/enter with no selection
