@@ -43,6 +43,7 @@ export class PageController<T> extends ListController<T> {
 	public get canPageBackward() {
 		return !this.loading && this.page > 0;
 	}
+	/** Maximum page available (zero-indexed) */
 	public get pageCount() {
 		return Math.floor(this.availableBlocks / PageController.PAGE_STRIDE);
 	}

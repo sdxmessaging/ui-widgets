@@ -64,7 +64,7 @@ export class ListController<T> {
 	}
 
 	/** Number of blocks that can be made from filtered data */
-	public get availableBlocks() {
+	protected get availableBlocks() {
 		return Math.ceil(this.filteredDataStore.length / ListController.BLOCK_SIZE);
 	}
 

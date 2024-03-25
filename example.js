@@ -163,6 +163,7 @@ singleFilter.map(() => single.applyFilter());
 // Fetch rows from range
 var paging = uiWidgets.ListController.paging(generate);
 
+// var paginated = uiWidgets.PageController.single(() => generate(0, 128));
 var paginated = uiWidgets.PageController.paging(generate);
 
 // List row component
