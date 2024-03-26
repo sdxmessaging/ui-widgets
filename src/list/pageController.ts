@@ -35,21 +35,14 @@ export class PageController<T> extends ListController<T> {
 		return ctrl;
 	}
 
+	/** Zero-indexed page number */
 	private page = 0;
-
-	public get canPageForward() {
-		return !this.loading && this.page < this.pageCount;
-	}
-	public get canPageBackward() {
-		return !this.loading && this.page > 0;
-	}
-	/** Maximum page available (zero-indexed) */
-	public get pageCount() {
+	/** Zero-indexed last page available */
+	private get pageCount() {
 		return Math.floor(this.availableBlocks / PageController.PAGE_STRIDE);
 	}
-
-	/** Set page (zero-indexed) */
-	public setPage(page: number) {
+	/** Zero-indexed page update */
+	private updatePage(page: number) {
 		// Clamp page and start block from page
 		this.page = ListController.clampRange(0, page, this.pageCount);
 		this.startBlock = this.page * PageController.PAGE_STRIDE;
@@ -59,9 +52,25 @@ export class PageController<T> extends ListController<T> {
 		m.redraw();
 	}
 
+	public get canPageForward() {
+		return !this.loading && this.page < this.pageCount;
+	}
+	public get canPageBackward() {
+		return !this.loading && this.page > 0;
+	}
+	public get currentPage() {
+		return this.page + 1;
+	}
+	public get lastPage() {
+		return this.pageCount + 1;
+	}
+	/** Set page */
+	public setPage(page: number) {
+		this.updatePage(page - 1);
+	}
 	/** Change page relative to current page */
 	public pageRelative(offset: number) {
-		this.setPage(this.page + offset);
+		this.updatePage(this.page + offset);
 	}
 
 	public override render<C>(callback: (params: IListPageRender<T>) => C): C[] {
@@ -82,7 +91,7 @@ export class PageController<T> extends ListController<T> {
 	/** Initialise page & ensure page range is available in blockStore */
 	protected override updateBlockRange() {
 		if (this.startBlock === -1) {
-			this.setPage(0);
+			this.updatePage(0);
 		}
 		if (this.endBlock > this.blockStore.length) {
 			this.ensureBlockStore();

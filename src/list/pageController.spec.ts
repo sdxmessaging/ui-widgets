@@ -19,13 +19,17 @@ describe("PageController", () => {
 			// 2 pages of 100 rows
 			expect(ctrl.canPageBackward).toBe(false);
 			expect(ctrl.canPageForward).toBe(true);
-			expect(ctrl.pageCount).toBe(1);
+			expect(ctrl.lastPage).toBe(2);
 			// Advance to next page
 			ctrl.pageRelative(1);
 			expect(ctrl.canPageBackward).toBe(true);
 			expect(ctrl.canPageForward).toBe(false);
+			// Reset to first page
+			ctrl.setPage(1);
+			expect(ctrl.canPageBackward).toBe(false);
+			expect(ctrl.canPageForward).toBe(true);
 			done();
-		}, 16);
+		}, 1);
 	});
 
 });

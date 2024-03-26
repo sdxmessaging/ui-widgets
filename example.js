@@ -1359,11 +1359,7 @@ m.mount(document.getElementById("page"), {
 				disabled: !paginated.canPageBackward,
 				onclick: () => paginated.pageRelative(-1)
 			}),
-			m("span.mh2.f3", [
-				paginated.page + 1,
-				"/",
-				paginated.pageCount + 1
-			]),
+			m("span.mh2.f3", [paginated.currentPage, "/", paginated.lastPage]),
 			m(uiWidgets.Button, {
 				label: "Next Page",
 				icon: "fas fa-arrow-right",
