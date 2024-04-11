@@ -6,12 +6,17 @@ export declare class PageController<T> extends ListController<T> {
     static single<D>(load: () => Promise<D[]>): PageController<D>;
     /** Factory for a ListController that loads data in pages */
     static paging<D>(load: (offset: number, limit: number) => Promise<D[]>): PageController<D>;
+    /** Zero-indexed page number */
     private page;
+    /** Zero-indexed last page available */
+    private get pageCount();
+    /** Zero-indexed page update */
+    private updatePage;
     get canPageForward(): boolean;
     get canPageBackward(): boolean;
-    /** Maximum page available (zero-indexed) */
-    get pageCount(): number;
-    /** Set page (zero-indexed) */
+    get currentPage(): number;
+    get lastPage(): number;
+    /** Set page */
     setPage(page: number): void;
     /** Change page relative to current page */
     pageRelative(offset: number): void;

@@ -2,9 +2,13 @@
 
 ## 1.8.21
 
-- New `PageController` class, `ListController` variant that displays items in "pages"
 - `PageController` methods for next/previous page, page bounds checking, and number of pages
 - Fix `ListController` drawing an additional "block" of rows at the bottom of visible range
+- New `PageController` class, `ListController` variant that displays items in "pages"
+- `CurrencyInput` now formats large numbers with group separators (based on system locale)
+- Fix `CurrencyInput` incorrectly handling negative pence amounts after input
+- New `Currency` static class with currency conversion util methods
+- Deprecate `formatCurrency`, `currencyStrToNumber`, `numberToCurrencyStr`, `numberToCurrencyTuple` methods in favour of `Currency`
 
 ## 1.8.20
 

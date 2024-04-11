@@ -2,10 +2,12 @@ import { IListPageRender } from "../interface/list";
 type TListFn<T> = (inp: ReadonlyArray<T>) => ReadonlyArray<T>;
 export declare class ListController<T> {
     private dataLoader;
-    private static readonly PAGE_SIZE;
-    private static readonly PAGE_RANGE;
+    /** Number of items in each "block" */
+    protected static readonly BLOCK_SIZE = 25;
+    /** Number of "blocks" to render */
+    private static readonly BLOCK_RANGE;
     /** Clamp value to a range, min takes priority over max */
-    private static clampRange;
+    protected static clampRange(min: number, value: number, max: number): number;
     /** Factory for a ListController that loads all data at once */
     static single<D>(load: () => Promise<D[]>): ListController<D>;
     /** Factory for a ListController that loads data in pages */
@@ -18,10 +20,12 @@ export declare class ListController<T> {
     private filterFn;
     private filteredDataStore;
     get filteredData(): ReadonlyArray<T>;
-    private readonly pageStore;
+    /** Number of blocks that can be made from filtered data */
+    protected get availableBlocks(): number;
+    protected readonly blockStore: ReadonlyArray<T>[];
     private scrollPct;
-    private startPage;
-    private endPage;
+    protected startBlock: number;
+    protected endBlock: number;
     private loadMore;
     private isLoading;
     get loading(): boolean;
@@ -38,13 +42,15 @@ export declare class ListController<T> {
     debug(): {
         data: number;
         filtered: number;
-        pages: number;
+        blocks: number;
         start: number;
         end: number;
     };
-    private constructor();
+    protected constructor(dataLoader: (offset: number) => Promise<void>);
     private invalidate;
     private load;
-    private updatePageRange;
+    protected updateBlockRange(): void;
+    /** Ensure blockStore contains rows for the current block range, load more rows if required */
+    protected ensureBlockStore(): void;
 }
 export {};

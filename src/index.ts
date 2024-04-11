@@ -13,6 +13,7 @@ export {
 	scaleRect, resizeImage, scaleDataUrl,
 	textToImage, createStamp,
 } from "./imageUtils";
+export { Currency } from "./currency";
 
 export { Badge } from "./badge";
 export { Button } from "./button";

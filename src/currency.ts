@@ -69,7 +69,7 @@ export class Currency {
 	 * @param unitTotal total in smallest monetary unit to convert e.g. 12345
 	 * @return currency string pair if finite number e.g. ["123", "45"] or undefined
 	 */
-	private static numToTuple(unitTotal: number): [number, number] | undefined {
+	static numToTuple(unitTotal: number): [number, number] | undefined {
 		if (!lodash.isFinite(unitTotal)) {
 			return undefined;
 		}
