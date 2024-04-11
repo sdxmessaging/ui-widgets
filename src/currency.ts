@@ -10,8 +10,8 @@ export class Currency {
 
 	static format(unitTotal: number, negativeParens: boolean = false, invert: boolean = false) {
 		const currencyStr = this.numtoStr(unitTotal);
-		const invertNegative = invert ? unitTotal > 0 : unitTotal < 0;
-		if (invertNegative) {
+		const negative = invert ? unitTotal > 0 : unitTotal < 0;
+		if (negative) {
 			return negativeParens ? `(${currencyStr})` : `-${currencyStr}`;
 		} else {
 			return currencyStr;
@@ -77,8 +77,8 @@ export class Currency {
 		let large = 0;
 		let small: number;
 		if (value > 99) {
-			// Shift to force integer result
-			large = (value / 100) >> 0;
+			// Ensure integer result
+			large = Math.trunc(value / 100);
 			small = value % 100;
 		} else {
 			small = value;

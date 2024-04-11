@@ -8,6 +8,7 @@ import { getConfig } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
 import { selectTarget, titleFromLabel } from "../utils";
 
+import { Currency } from "../currency";
 import { ValidationBase } from "../validationBase";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
@@ -27,6 +28,11 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 		const badgePosition = getConfig("badgePosition", config);
 		const unitTotal = propToNumber(xform());
 		const inputClass = inputCls(uiClass);
+		// Handle negative currency values
+		const negative = unitTotal < 0;
+		const redNegative = negativeStyle === "red";
+		const redNumber = redNegative || negativeStyle === "redParentheses";
+		const negativeParens = negativeStyle === "parentheses" || negativeStyle === "redParentheses";
 		return m(LayoutFixed, {
 			field,
 			value,
@@ -48,13 +54,14 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 				pattern, inputmode, spellcheck,
 				class: joinClasses([
 					badgePosition === "right" ? "tr" : "",
-					negativeStyle.includes("red") && unitTotal < 0 ? theme.redNumber : null,
+					redNumber && negative ? theme.redNumber : null,
 					inputClass
 				]),
 				onfocus: selectTarget,
 				value: lodash.isUndefined(xform())
 					? null
-					: formatCurrency(unitTotal, negativeStyle),
+					// "Flip" gegative "red" numbers, remove the minus sign
+					: Currency.format(unitTotal, negativeParens, redNegative && negative),
 				onchange: setCurrencyValue(value)
 			})
 		]));
@@ -62,6 +69,18 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 
 }
 
+export function propToNumber(value: TProp): number {
+	return lodash.isString(value) ? lodash.parseInt(value) : Number(value);
+}
+
+// Currency TProp update helper
+export function setCurrencyValue(val: TPropStream) {
+	return ({ target: { value } }: { target: HTMLInputElement; }) => val(Currency.strToNum(value));
+}
+
+/**
+ * @deprecated Use Currency.format instead
+ */
 export function formatCurrency(unitTotal: number, negativeStyle: IConfig["negativeStyle"], invert: boolean = false) {
 	const currencyStr = numberToCurrencyStr(unitTotal);
 	const invertNegative = invert ? unitTotal > 0 : unitTotal < 0;
@@ -75,41 +94,18 @@ export function formatCurrency(unitTotal: number, negativeStyle: IConfig["negati
 	return currencyStr;
 }
 
-export function propToNumber(value: TProp): number {
-	return lodash.isString(value) ? lodash.parseInt(value) : Number(value);
-}
-
 /**
+ * @deprecated Use Currency.strToNum instead
  * Parse a currency string into a number
  * @param currencyStr Value to convert e.g. "123.45"
  * @return parsed value as smallest monetary unit e.g. 12345
  */
 export function currencyStrToNumber(currencyStr: string) {
-	// Remove everything but digits and the decimal point, and keep minus sign
-	const inputStr = currencyStr
-		.replace("(-", "-")
-		.replace("(", "-")
-		.replace(")", "")
-		.replace(/[^\d.-]/g, "");
-	let left;
-	let right = 0;
-	// split number at decimal point
-	if (inputStr.indexOf(".") > -1) {
-		const decimalPos = inputStr.indexOf(".");
-		const leftStr = inputStr.substring(0, decimalPos);
-		// Ensure left component has at least 1 character
-		left = lodash.parseInt(lodash.padStart(leftStr, 1, "0"));
-		// Only accept first 2 figures after decimal
-		const rightStr = inputStr.substring(decimalPos + 1, Math.min(decimalPos + 3, inputStr.length));
-		// Ensure right component has 2 characters
-		right = lodash.parseInt(lodash.padEnd(rightStr, 2, "0"));
-	} else {
-		left = lodash.parseInt(inputStr) || 0;
-	}
-	return left * 100 + right;
+	return Currency.strToNum(currencyStr);
 }
 
 /**
+ * @deprecated Use Currency.numtoStr instead
  * Convert a number into a currency string
  * @param unitTotal total in smallest monetary unit to convert e.g. 12345
  * @return currency string if finite number e.g. "123.45" or undefined
@@ -124,6 +120,7 @@ export function numberToCurrencyStr(unitTotal: number) {
 }
 
 /**
+ * @deprecated Use Currency.numToTuple instead
  * Convert a number into a currency string pair
  * @param unitTotal total in smallest monetary unit to convert e.g. 12345
  * @return currency string pair if finite number e.g. ["123", "45"] or undefined
@@ -143,9 +140,4 @@ export function numberToCurrencyTuple(unitTotal: number): [string, string] | und
 		small = lodash.padStart(valStr, 2, "0");
 	}
 	return [large, small];
-}
-
-// Currency TProp update helper
-export function setCurrencyValue(val: TPropStream) {
-	return ({ target: { value } }: { target: HTMLInputElement; }) => val(currencyStrToNumber(value));
 }

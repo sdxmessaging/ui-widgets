@@ -1,6 +1,23 @@
 import { Currency } from "./currency";
 
+// Get number grouping separator
+const formatter = new Intl.NumberFormat();
+const parts = formatter.formatToParts(1000);
+const { value: g } = parts[1];
+
 describe("format", () => {
+	describe("default", () => {
+		test("positive", () => {
+			expect(Currency.format(1)).toBe("0.01");
+		});
+		test("negative", () => {
+			expect(Currency.format(-1)).toBe("-0.01");
+		});
+		test("zero", () => {
+			expect(Currency.format(0)).toBe("0.00");
+			expect(Currency.format(-0)).toBe("0.00");
+		});
+	});
 
 	describe("parentheses", () => {
 		test("positive", () => {
@@ -15,17 +32,9 @@ describe("format", () => {
 		});
 	});
 
-	describe("default", () => {
-		test("positive", () => {
-			expect(Currency.format(1)).toBe("0.01");
-		});
-		test("negative", () => {
-			expect(Currency.format(-1)).toBe("-0.01");
-		});
-		test("zero", () => {
-			expect(Currency.format(0)).toBe("0.00");
-			expect(Currency.format(-0)).toBe("0.00");
-		});
+	test("extreme", () => {
+		expect(Currency.format(Number.MAX_SAFE_INTEGER))
+			.toBe(`90${g}071${g}992${g}547${g}409.91`);
 	});
 });
 
@@ -101,11 +110,8 @@ describe("Number -> String", () => {
 	});
 
 	test("large number", () => {
-		// Get number grouping separator
-		const formatter = new Intl.NumberFormat();
-		const parts = formatter.formatToParts(1000);
-		const { value: grp } = parts[1];
-		expect(Currency.numtoStr(123456789)).toBe(`1${grp}234${grp}567.89`);
+
+		expect(Currency.numtoStr(123456789)).toBe(`1${g}234${g}567.89`);
 	});
 
 });
