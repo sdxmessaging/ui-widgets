@@ -2,6 +2,11 @@
 
 ## 1.8.21
 
+- `Currency.numtoStr` additional optional argument to enable formatting of large numbers
+- BREAKING `Currency.numtoStr` default behaviour changed to not format large numbers
+
+## 1.8.21
+
 - `PageController` methods for next/previous page, page bounds checking, and number of pages
 - Fix `ListController` drawing an additional "block" of rows at the bottom of visible range
 - New `PageController` class, `ListController` variant that displays items in "pages"

@@ -8,12 +8,21 @@ export class Currency {
 
 	private static formatter = new Intl.NumberFormat();
 
+	/**
+	 * Format a number into a currency string
+	 * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+	 * @param negativeParens whether to format negative numbers with parentheses
+	 * @param invert interpret postive/negative `unitTotal` as the opposite
+	 * @return currency string if finite number e.g. "1,234,567.89", "-1.23", "(4.56)", or undefined
+	 */
 	static format(unitTotal: number, negativeParens: boolean = false, invert: boolean = false) {
-		const currencyStr = this.numtoStr(unitTotal);
+		const currencyStr = this.numtoStr(unitTotal, true);
 		const negative = invert ? unitTotal > 0 : unitTotal < 0;
-		if (negative) {
+		if (currencyStr && negative) {
+			// Valid negative currency
 			return negativeParens ? `(${currencyStr})` : `-${currencyStr}`;
 		} else {
+			// Positive, zero, or invalid currency
 			return currencyStr;
 		}
 	}
@@ -53,14 +62,17 @@ export class Currency {
 	/**
 	 * Convert a number into a currency string
 	 * @param unitTotal total in smallest monetary unit to convert e.g. 12345
+	 * @param format whether to format the large number with commas
 	 * @return currency string if finite number e.g. "123.45" or undefined
 	 */
-	static numtoStr(unitTotal: number) {
-		const numPair = this.numToTuple(unitTotal);
-		if (numPair) {
-			return `${this.formatter.format(numPair[0])}.${lodash.padStart(String(numPair[1]), 2, "0")}`;
+	static numtoStr(unitTotal: number, format?: boolean) {
+		const tuple = this.numToTuple(unitTotal);
+		if (tuple) {
+			const large = format ? this.formatter.format(tuple[0]) : tuple[0];
+			const small = lodash.padStart(String(tuple[1]), 2, "0");
+			return `${large}.${small}`;
 		} else {
-			return numPair;
+			return undefined;
 		}
 	}
 
