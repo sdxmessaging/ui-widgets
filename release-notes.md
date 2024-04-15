@@ -1,6 +1,6 @@
 # Release Notes
 
-## 1.8.21
+## 1.8.22
 
 - `Currency.numtoStr` additional optional argument to enable formatting of large numbers
 - BREAKING `Currency.numtoStr` default behaviour changed to not format large numbers
