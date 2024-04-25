@@ -4,7 +4,7 @@ import { IListPageRender } from "../interface/list";
 
 export class PageController<T> extends ListController<T> {
 
-	/** Size of a "page" in "blocks" */
+	/** Default size of a "page" in "blocks" */
 	private static readonly PAGE_STRIDE = 4;
 
 	static override single<D>(load: () => Promise<D[]>) {
@@ -35,35 +35,45 @@ export class PageController<T> extends ListController<T> {
 		return ctrl;
 	}
 
+	private pageStride = PageController.PAGE_STRIDE;
+
+	/** Update the number of "blocks" to render in a single page */
+	public set blockStride(value: number) {
+		this.pageStride = value;
+		this.updatePage(0);
+	}
+
 	/** Zero-indexed page number */
 	private page = 0;
-	/** Zero-indexed last page available */
-	private get pageCount() {
-		return Math.floor(this.availableBlocks / PageController.PAGE_STRIDE);
-	}
 	/** Zero-indexed page update */
 	private updatePage(page: number) {
 		// Clamp page and start block from page
-		this.page = ListController.clampRange(0, page, this.pageCount);
-		this.startBlock = this.page * PageController.PAGE_STRIDE;
+		this.page = ListController.clampRange(0, page, this.lastPage);
+		this.startBlock = this.page * this.pageStride;
 		// Could consider clamping end block, but it's not necessary
-		this.endBlock = this.startBlock + PageController.PAGE_STRIDE;
+		this.endBlock = this.startBlock + this.pageStride;
 		this.ensureBlockStore();
 		m.redraw();
 	}
 
+	/** 1-indexed page number */
+	public get currentPage() {
+		return this.page + 1;
+	}
+	/** Number of pages to fit loaded list items */
+	public get lastPage() {
+		return Math.ceil(this.availableBlocks / this.pageStride);
+	}
 	public get canPageForward() {
-		return !this.loading && this.page < this.pageCount;
+		return !this.loading && this.currentPage < this.lastPage;
 	}
 	public get canPageBackward() {
 		return !this.loading && this.page > 0;
 	}
-	public get currentPage() {
-		return this.page + 1;
+	public get rowsPerPage() {
+		return this.pageStride * ListController.BLOCK_SIZE;
 	}
-	public get lastPage() {
-		return this.pageCount + 1;
-	}
+
 	/** Set page */
 	public setPage(page: number) {
 		this.updatePage(page - 1);
@@ -84,6 +94,7 @@ export class PageController<T> extends ListController<T> {
 	public override debug() {
 		return {
 			...super.debug(),
+			blockStride: this.pageStride,
 			page: this.page
 		};
 	}
@@ -93,7 +104,7 @@ export class PageController<T> extends ListController<T> {
 		if (this.startBlock === -1) {
 			this.updatePage(0);
 		}
-		if (this.endBlock > this.blockStore.length) {
+		if (this.endBlock >= this.blockStore.length) {
 			this.ensureBlockStore();
 		}
 	}

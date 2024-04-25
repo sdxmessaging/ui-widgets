@@ -1338,6 +1338,23 @@ m.mount(document.getElementById("page"), {
 				m("span.f3", "Paginated List - Infinite Data Source"),
 				paginated.loading ? m("progress") : null
 			]),
+			m(".flex.justify-end.pa1.bb.b--silver", [
+				m(uiWidgets.Button, {
+					label: "25 Rows",
+					classes: "mh1",
+					onclick: () => paginated.blockStride = 1
+				}),
+				m(uiWidgets.Button, {
+					label: "50 Rows",
+					classes: "mh1",
+					onclick: () => paginated.blockStride = 2
+				}),
+				m(uiWidgets.Button, {
+					label: "100 Rows",
+					classes: "ml1",
+					onclick: () => paginated.blockStride = 4
+				})
+			]),
 			m(uiWidgets.List, {
 				classes: "vh-50",
 				controller: paginated,

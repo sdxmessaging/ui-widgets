@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.23
+
+- `PageController::blockStride` method to update the "block stride"
+
 ## 1.8.22
 
 - `Currency.numtoStr` additional optional argument to enable formatting of large numbers
