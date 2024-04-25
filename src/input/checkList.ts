@@ -176,11 +176,11 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 			m(".relative.cursor-default", {
 				id, title,
 				disabled: !active,
-				tabindex: 0,
+				tabindex: active ? 0 : -1,
 				role: "listbox",
 				class: inputCls(uiClass),
-				onclick: () => this.toggleOpen(),
-				onfocus: () => this.toggleOpen(),
+				onclick: () => active ? this.toggleOpen() : undefined,
+				onfocus: () => active ? this.toggleOpen() : undefined,
 				onblur: () => this.focusOption = null,
 				"aria-activedescendant": `${id}-${this.focusOption}`,
 				onkeydown: active

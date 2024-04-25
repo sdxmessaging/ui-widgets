@@ -3,6 +3,7 @@
 ## 1.8.23
 
 - `PageController::blockStride` method to update the "block stride"
+- Fix `CheckList` opening on click or focus when disabled or readonly
 
 ## 1.8.22
 
