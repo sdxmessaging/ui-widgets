@@ -155,6 +155,7 @@ export class ListController<T> {
 	private load() {
 		if (!this.loading) {
 			this.isLoading = true;
+			m.redraw();
 			this.dataLoader(this.data.length)
 				.catch(console.error)
 				.then(() => {
