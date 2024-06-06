@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.24
+
+- Reduced width of inputs in `TimeInput`
+- Changed `TimeInput` placeholders to "--" instead of "hh" and "mm"
+
 ## 1.8.23
 
 - `PageController::blockStride` method to update the "block stride"

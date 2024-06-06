@@ -62,6 +62,10 @@ input[type=number] {
 	max-width: calc(2.3ch + 4px);
 }
 
+.mw-tt {
+	max-width: calc(2ch + 4px);
+}
+
 .mw-001px {
 	max-width: 0.01px
 }

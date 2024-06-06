@@ -90,9 +90,9 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 					ariaHidden: "true"
 				}),
 				// Time Input parts
-				m("input.di.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
+				m("input.di.w-100.mw-tt.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-hh`, name: `${name}-hh`,
-					type: FieldType.number, placeholder: "hh",
+					type: FieldType.number, placeholder: "--",
 					min: 0, max: 23,
 					required, readonly, disabled,
 					'aria-label': `${name}: Hour`,
@@ -103,9 +103,9 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 					onblur: () => this.focus = Focus.None
 				}),
 				m("span.mr-2px", ":"),
-				m("input.di.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
+				m("input.di.w-100.mw-tt.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-mm`, name: `${name}-mm`,
-					type: FieldType.number, placeholder: "mm",
+					type: FieldType.number, placeholder: "--",
 					min: 0, max: 59, step,
 					required, readonly, disabled,
 					'aria-label': `${name}: Minute`,
