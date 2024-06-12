@@ -191,7 +191,10 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 					m(".flex-auto.ph-2px.pv-1px",
 						this.placeHolder(val, options, placeholder)
 					),
-					getIcon(getConfig("checkListIcn", config), this.open ? "ph-2px pv-1px rotate-180" : "ph-2px pv-1px")
+					getIcon(getConfig("checkListIcn", config), joinClasses([
+						"ph-2px pv-1px transition-transform",
+						this.open ? "rotate-180" : null
+					]))
 				]),
 				this.open && m(".absolute.z-max.us-none", {
 					class: joinClasses([
