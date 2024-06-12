@@ -24,11 +24,13 @@ export class ListPage<T> implements ClassComponent<IListPage<T>> {
 		}
 	}
 
-	public view({ attrs: { items, idx, visible, component } }: CVnode<IListPage<T>>) {
+	public view({ attrs: { items, idx, visible, component, fragment } }: CVnode<IListPage<T>>) {
 		return m("div", {
 			"data-idx": idx
 		}, visible ? items.map(
-			(item) => m(component, item as T & CommonAttributes<T, unknown>)
+			(item) => m.fragment(fragment(item), [
+				m(component, item as T & CommonAttributes<T, unknown>)
+			])
 		) : null);
 	}
 }

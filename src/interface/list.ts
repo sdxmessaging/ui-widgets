@@ -1,6 +1,10 @@
 import { ComponentTypes } from "mithril";
 import { ListController } from "../list/listController";
 
+interface IKeyAttrs extends Record<string, unknown> {
+	readonly key?: string | number;
+}
+
 export interface IList<T> {
 	/** Classes for scrollable list container */
 	readonly classes?: string;
@@ -8,6 +12,8 @@ export interface IList<T> {
 	readonly component: ComponentTypes<T>;
 	/** List data source */
 	readonly controller: ListController<T>;
+	/** Set mithril attributes for fragment wrapping each list item */
+	fragment?(item: T): IKeyAttrs;
 }
 
 export interface IListPageRender<T> {
@@ -18,4 +24,5 @@ export interface IListPageRender<T> {
 
 export interface IListPage<T> extends IListPageRender<T> {
 	readonly component: ComponentTypes<T>;
+	fragment(item: T): IKeyAttrs;
 }

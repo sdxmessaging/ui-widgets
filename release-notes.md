@@ -1,5 +1,11 @@
 # Release Notes
 
+## 1.8.25
+
+- `List` component support for `keyBy` method
+  - Support seting a `key` attribute for each list row
+  - `key` is set on a Mithril fragment containing the row
+
 ## 1.8.24
 
 - Reduced width of inputs in `TimeInput`

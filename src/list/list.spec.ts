@@ -47,4 +47,17 @@ describe("List", () => {
 		}, 66);
 	});
 
+	test("fragment", () => {
+		const root = window.document.createElement("div");
+		m.mount(root, {
+			view: () => m(List<ITestData>, {
+				classes: "h1",
+				controller,
+				component,
+				fragment: ({ id }) => ({ key: id })
+			})
+		});
+		expect(root.childNodes.length).toBe(1);
+	});
+
 });

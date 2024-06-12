@@ -7,6 +7,8 @@ import { ListPage } from "./listPage";
 
 export class List<T> implements ClassComponent<IList<T>> {
 
+	private static fragment() { return {}; }
+
 	private controller!: ListController<T>;
 
 	private scrollHandler = lodash.throttle((target: HTMLElement) => {
@@ -18,7 +20,7 @@ export class List<T> implements ClassComponent<IList<T>> {
 		this.controller = controller;
 	}
 
-	public view({ attrs: { classes, component } }: CVnode<IList<T>>) {
+	public view({ attrs: { classes, component, fragment = List.fragment } }: CVnode<IList<T>>) {
 		return m(".overflow-y-auto", {
 			class: classes,
 			onscroll: (event: Event & IMithrilEvent) => {
@@ -27,7 +29,7 @@ export class List<T> implements ClassComponent<IList<T>> {
 			}
 		}, this.controller.render(
 			({ items, idx, visible }) => m(ListPage<T>, {
-				items, idx, visible, component
+				items, idx, visible, component, fragment
 			})
 		));
 	}
