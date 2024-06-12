@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.26
+
+- `chekList` component support for icon rotation
+  - `checkListIcn` is rotated 180deg when the dropdown list is open
+
 ## 1.8.25
 
 - `List` component support for `keyBy` method
