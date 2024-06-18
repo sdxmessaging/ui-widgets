@@ -23,7 +23,6 @@ const confMap: IConfig = {
 	timeScrollerDownIcn: "fas fa-chevron-down",
 	checkListIcn: "fas fa-chevron-down",
 	checkListDropUp: false,
-	checkBoxNoMargin: false,
 	signOpts: [SignTypes.Draw, SignTypes.Type, SignTypes.Stamp],
 	signMaxSize: 640,
 	signHeightPct: 25,

@@ -251,7 +251,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				this.toggleSelection(String(value), val, true);
 			}
 		}, [
-			getIcon(icon, config?.checkBoxNoMargin ? "" : "mh1"),
+			getIcon(icon, "mh1"),
 			m("span.mh1", label)
 		]);
 	}
