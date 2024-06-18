@@ -39,6 +39,8 @@ export interface IConfig {
     checkListIcn: TIcon;
     /** CheckList options drop direction */
     checkListDropUp: boolean;
+    /** Remove margin from checkbox icon */
+    checkBoxNoMargin: boolean;
     /** Default options for signature creator */
     signOpts: ReadonlyArray<SignTypes>;
     /** Maximum size for signature image in px */

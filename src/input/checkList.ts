@@ -187,7 +187,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 					? (evt: KeyboardEvent) => this.keyNav(evt, options, val, multiple)
 					: undefined
 			}, [
-				m(".flex", [
+				m(".flex.items-center", [
 					m(".flex-auto.ph-2px.pv-1px",
 						this.placeHolder(val, options, placeholder)
 					),
@@ -251,7 +251,7 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				this.toggleSelection(String(value), val, true);
 			}
 		}, [
-			getIcon(icon, "mh1"),
+			getIcon(icon, config?.checkBoxNoMargin ? "" : "mh1"),
 			m("span.mh1", label)
 		]);
 	}

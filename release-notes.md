@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.27
+
+- `checkList` component and `dateInput` component align icons and text in center of dropdown input
+- `checkList` component support removing margin around icon in multi select to tighten spacing through config option `checkListNoMargin`
+
 ## 1.8.26
 
 - `chekList` component support for icon rotation
