@@ -32,8 +32,14 @@ export interface IClassMap extends IClasses {
     readonly displayValue?: string;
     /** Classes applied to required widget label */
     readonly requiredLabel?: string;
+    /** Classes applied to a requied widget input wrapper */
+    readonly requiredInputWrapper?: string;
+    /** Classes applied to a readonly widget input wrapper */
+    readonly readonlyInputWrapper?: string;
     /** Classes applied to disabled widget wrapper */
     readonly disabledWrapper?: string;
+    /** Classes applied to a disabled widget input wrapper */
+    readonly disabledInputWrapper?: string;
     /** Classes applied to widget wrapper when validation fails */
     readonly invalidInputWrapper?: string;
     /** Classes for alt label text */
