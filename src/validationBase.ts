@@ -32,13 +32,22 @@ export abstract class ValidationBase<T extends IPropWidget> implements ClassComp
 
 	abstract view(vnode: CVnode<T>): Children;
 
-	public oncreate({ dom }: CVnodeDOM<T>) {
+	public oncreate({ dom, attrs: { value } }: CVnodeDOM<T>) {
 		this._inputElement = dom.querySelector(this.selector) as HTMLInputElement;
-		this._inputElement.addEventListener("blur", this.touch);
+		// Pre-populated value stream indicates this input has already been touched and should be validated as normal
+		if (value() != null) {
+			this._touch = true;
+		} else {
+			this._inputElement.addEventListener("blur", this.touch);
+		}
 		this.checkValidity();
 	}
 
-	public onupdate() {
+	public onupdate({ attrs: { value } }: CVnodeDOM<T>) {
+		// Any stream change is considered user input
+		if (value() != null && this._touch === false) {
+			this.touch();
+		}
 		this.checkValidity();
 	}
 
