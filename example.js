@@ -13,6 +13,9 @@ uiWidgets.updateClasses({
 	invalidInputWrapper: "b--red ba",
 	floatLabelPlaceholder: "o-40",
 	requiredLabel: "bb b--red",
+	requiredInputWrapper: "b--dashed",
+	readonlyInputWrapper: "br-pill",
+	disabledInputWrapper: "b--silver"
 });
 
 uiWidgets.updateButtonContext({
@@ -47,7 +50,7 @@ var multiValOpts = [{
 }, {
 	value: true, label: "True"
 }, {
-	value: "long", label: "Extra long label that should overflow this CheckList option container"
+	value: "long", label: "Extra long label that should overflow this option container and wrap lines"
 }];
 var faceVal = stream();
 var faceValUiClass = {
@@ -61,7 +64,7 @@ var xformValIn = stream("");
 var xformValOut = xformValIn.map((val) => val.toUpperCase());
 
 // Custom
-var value = stream("");
+var value = stream();
 var label = stream("Custom Input");
 var type = stream("text");
 var placeholder = stream("Placeholder");
@@ -271,7 +274,7 @@ m.mount(document.getElementById("page"), {
 						required: true,
 						// pattern: "([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})",
 						instant: true,
-						uiClass: { invalidInputWrapper: "b--dashed" }
+						uiClass: { invalidInputWrapper: "b--dotted" }
 					},
 					value: textVal
 				}),
