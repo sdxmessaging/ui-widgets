@@ -46,6 +46,8 @@ var multiValOpts = [{
 	value: 1, label: "One"
 }, {
 	value: true, label: "True"
+}, {
+	value: "long", label: "Extra long label that should overflow this CheckList option container"
 }];
 var faceVal = stream();
 var faceValUiClass = {

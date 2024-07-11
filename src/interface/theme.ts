@@ -56,6 +56,10 @@ export interface IClassMap extends IClasses {
 	readonly checkListOptionsWrapper?: string;
 	/** CheckList option row */
 	readonly checkListOption?: string;
+	/** Checklist option label (single or multiple) */
+	readonly checkListOptionLabel?: string;
+	/** Checklist option icon (multiple) */
+	readonly checkListOptionIcon?: string;
 	/** CheckList selected option (single) */
 	readonly checkListOptionSingleSelected?: string;
 	/** CheckList selected option (multiple) */

@@ -28,6 +28,8 @@ const classMapState: Required<IClassMap> = {
 	redNumber: "red fw2",
 	checkListOptionsWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas w-100 max-h-img overflow-y-auto shadow-4",
 	checkListOption: "pa2 hover-bg-light-gray",
+	checkListOptionLabel: "mh1",
+	checkListOptionIcon: "mh1",
 	checkListOptionSingleSelected: "bg-light-blue fw6",
 	checkListOptionMultiSelected: "fw6",
 	timeInputScrollerWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas top-2 shadow-4",

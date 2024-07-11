@@ -227,7 +227,11 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				evt.stopPropagation();
 				this.toggleSelection(String(value), val);
 			}
-		}, label);
+		},
+			m("span", {
+				class: theme.checkListOptionLabel
+			}, label)
+		);
 	}
 
 	private multiSelectionRow(val: TPropStream, id: string, opt: IOption, config?: Partial<IConfig>) {
@@ -251,8 +255,10 @@ export class CheckList extends ValidationBase<TSelectWidget> {
 				this.toggleSelection(String(value), val, true);
 			}
 		}, [
-			getIcon(icon, "mh1"),
-			m("span.mh1", label)
+			getIcon(icon, theme.checkListOptionIcon),
+			m("span", {
+				class: theme.checkListOptionLabel
+			}, label)
 		]);
 	}
 
