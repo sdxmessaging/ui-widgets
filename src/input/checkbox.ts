@@ -24,7 +24,7 @@ export class CheckboxInput implements ClassComponent<TCheckboxWidget> {
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
-			class: inputWrapperCls(uiClass)
+			class: inputWrapperCls(uiClass, field)
 		}, [
 			m("input.clip[type=checkbox]", {
 				id, name, value,

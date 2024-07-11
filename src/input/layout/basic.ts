@@ -19,7 +19,7 @@ export class Basic implements ClassComponent<IPropLayoutWidget> {
 			getLabel(id, uiClass, label, required),
 			// Input wrapper
 			m("fieldset.bn", {
-				class: inputWrapperCls(uiClass, invalid)
+				class: inputWrapperCls(uiClass, field, invalid)
 			},
 				// Input
 				children

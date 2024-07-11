@@ -81,7 +81,7 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 			: m("div", {
 				class: wrapperCls(uiClass, disabled),
 			}, m("fieldset.w-100.bn", {
-				class: inputWrapperCls(uiClass)
+				class: inputWrapperCls(uiClass, field)
 			}, this.toggleWrapper(field, val, [
 				this.toggleInner(checked, config),
 				label ? m("span.mh1", getLabelText(label, required)) : null

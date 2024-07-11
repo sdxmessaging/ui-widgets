@@ -1,6 +1,7 @@
 import lodash from "lodash";
 
 import { IClasses, IClassMap, IWidgetClasses } from "./interface/theme";
+import { IField } from "./interface/widget";
 
 // ui-widgets 1.4 theme map
 const classMapState: Required<IClassMap> = {
@@ -16,7 +17,10 @@ const classMapState: Required<IClassMap> = {
 	displayLabel: "silver",
 	displayValue: "dark-gray",
 	requiredLabel: "",
+	requiredInputWrapper: "",
+	readonlyInputWrapper: "",
 	disabledWrapper: "o-40",
+	disabledInputWrapper: "",
 	invalidInputWrapper: "ba b--red",
 	altLabel: "ml1 o-70",
 	floatLabelPlaceholder: "",
@@ -94,10 +98,15 @@ export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: bool
 	]);
 }
 
-export function inputWrapperCls(uiClass: IWidgetClasses, invalid?: boolean) {
+export function inputWrapperCls(uiClass: IWidgetClasses, {
+	required, readonly, disabled
+}: IField, invalid?: boolean) {
 	return joinClasses([
 		...mergeClasses("inputWrapper", uiClass),
-		...(invalid ? mergeClasses("invalidInputWrapper", uiClass) : [""])
+		...(invalid ? mergeClasses("invalidInputWrapper", uiClass) : [""]),
+		required ? theme.requiredInputWrapper : "",
+		readonly ? theme.readonlyInputWrapper : "",
+		disabled ? theme.disabledInputWrapper : "",
 	]);
 }
 
