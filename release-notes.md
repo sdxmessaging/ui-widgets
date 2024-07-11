@@ -1,5 +1,11 @@
 # Release Notes
 
+## 1.8.29
+
+- BREAKING Widget `invalidInputWrapper` class is now only applied after first user interaction or when value stream has a value set
+- Added theme support for `requiredInputWrapper`, `readonlyInputWrapper`, and `disabledInputWrapper`, applied to widgets when field has these attributes
+- Added theme support for `checkListOptionLabel` and `checkListOptionIcon`, defaulting to stock margins
+
 ## 1.8.28
 
 - `checkList` component back out of support removing margin around icon in multi select: remove config option `checkListNoMargin`
