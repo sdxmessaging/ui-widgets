@@ -100,7 +100,10 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 					class: classStr,
 					oninput: setValue(this.hour),
 					onfocus: () => this.focus = Focus.Hour,
-					onblur: () => this.focus = Focus.None
+					onblur: () => {
+						this.focus = Focus.None;
+						this.touch();
+					}
 				}),
 				m("span.mr-2px", ":"),
 				m("input.di.w-100.mw-tt.pa0.bg-transparent.bn.outline-0.tc", {
@@ -115,7 +118,7 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 					onfocus: () => this.focus = Focus.Minute,
 					onblur: () => this.focus = Focus.None
 				}),
-				// FLoating time picker
+				// Floating time picker
 				this.showPicker && m(TimePicker, {
 					hour: this.hour,
 					min: this.min,

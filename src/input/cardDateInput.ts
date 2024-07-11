@@ -62,7 +62,6 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 		this.month.end(true);
 	}
 
-
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value } = attrs;
 		const {

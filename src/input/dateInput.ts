@@ -247,9 +247,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			m(".flex-auto.ph-2px.pv-1px", {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			},
-				this.dateParts.map((datePart) => {
-					return this.createDateInputs(datePart, vnode);
-				}),
+				this.dateParts.map(
+					(datePart) => this.createDateInputs(datePart, vnode)
+				),
 				m(HiddenDateInput, vnode.attrs)
 			),
 			!(disabled || readonly) && m(DatePicker, { field, value })
