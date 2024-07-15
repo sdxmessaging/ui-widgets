@@ -37,19 +37,22 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 			field,
 			value,
 			invalid: this.invalid
-		}, m('.flex.flex-row.w-100', [
+		}, m(".flex.w-100", [
 			m("span.self-center", {
 				class: joinClasses([
 					badgePosition === "left" ? "order-0 mr1" : "order-last ml1",
 					inputClass
 				])
 			}, symbol),
-			m("input.absolute.pa0.w1.o-0.pe-none[type=number][tabindex=-1]", {
+			m("input.absolute.pa0.w1.o-0.pe-none[type=number]", {
+				name, value: unitTotal,
 				max, maxlength, min, minlength, step, required,
-				value: unitTotal
+				tabindex: -1,
+				ariaHidden: "true"
 			}),
 			m("input.w-100.bg-transparent.bn.outline-0", {
-				id, type: FieldType.text, name, title, placeholder,
+				id, type: FieldType.text,
+				name: `${name}-currency`, title, placeholder,
 				required, readonly, disabled, autofocus, autocomplete, tabindex,
 				pattern, inputmode, spellcheck,
 				class: joinClasses([
@@ -58,9 +61,10 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 					inputClass
 				]),
 				onfocus: selectTarget,
+				onblur: this.touch,
 				value: lodash.isUndefined(xform())
 					? null
-					// "Flip" gegative "red" numbers, remove the minus sign
+					// "Flip" negative "red" numbers, remove the minus sign
 					: Currency.format(unitTotal, negativeParens, redNegative && negative),
 				onchange: setCurrencyValue(value)
 			})

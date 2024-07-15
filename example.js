@@ -805,7 +805,7 @@ m.mount(document.getElementById("page"), {
 						alt: "(Min 0, Max 1000)"
 					},
 					min: 0,
-					max: 1000,
+					max: 1000
 				},
 				value: currencyValidationVal
 			})),
