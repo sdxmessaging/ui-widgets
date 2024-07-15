@@ -83,9 +83,9 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 				// onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			}, [
 				// Hidden input
-				m("input.clip[type=text]", {
+				m("input.absolute.pa0.w1.o-0.pe-none[type=text]", {
 					name, value: value(),
-					required,
+					required, readonly, disabled,
 					tabindex: -1,
 					ariaHidden: "true"
 				}),

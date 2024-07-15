@@ -46,7 +46,7 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 			}, symbol),
 			m("input.absolute.pa0.w1.o-0.pe-none[type=number]", {
 				name, value: unitTotal,
-				max, maxlength, min, minlength, step, required,
+				max, maxlength, min, minlength, step, required, readonly, disabled,
 				tabindex: -1,
 				ariaHidden: "true"
 			}),
