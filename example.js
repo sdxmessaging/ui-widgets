@@ -792,8 +792,8 @@ m.mount(document.getElementById("page"), {
 
 		// Currency/Number
 		m("form.flex.mb2.ba.b--silver.flex-wrap", {
-			onsubmit: () => {
-				console.debug("Submit success");
+			onsubmit: (event) => {
+				console.debug("Submit", new FormData(event.target));
 				return false;
 			}
 		}, [
