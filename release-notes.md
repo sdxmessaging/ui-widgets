@@ -1,5 +1,18 @@
 # Release Notes
 
+## 1.8.30
+
+- `CurrencyInput` and `TimeInput` validation now respects readonly/disabled attributes
+- Fix `CurrencyInput` not marking invalid after "blur" event
+- Fix `TimeInput` not showing validation messages under widget
+- BREAKING `CurrencyInput` changes to name/value when serializing parent form
+  - Currency unit set to widget name
+  - Formatted currency string set to widget name + "-currency"
+  - e.g. Widget named "test" with a value of $-1.23 will serialize to:
+    - "test" -> "123"
+    - "test-currency" -> "-1.23" by default
+    - "test-currency" -> "(1.23)" if configured with `{ "negativeStyle": "parentheses" }`
+
 ## 1.8.29
 
 - BREAKING Widget `invalidInputWrapper` class is now only applied after first user interaction or when value stream has a value set
