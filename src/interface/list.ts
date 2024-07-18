@@ -6,12 +6,12 @@ interface IKeyAttrs extends Record<string, unknown> {
 }
 
 export interface IList<T> {
-	/** Classes for scrollable list container */
-	readonly classes?: string;
-	/** Component for list item */
-	readonly component: ComponentTypes<T>;
 	/** List data source */
 	readonly controller: ListController<T>;
+	/** Component for list item */
+	readonly component: ComponentTypes<T>;
+	/** Classes for scrollable list container */
+	readonly classes?: string;
 	/** Set mithril attributes for fragment wrapping each list item */
 	fragment?(item: T): IKeyAttrs;
 }

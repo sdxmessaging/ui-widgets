@@ -20,8 +20,10 @@ export class List<T> implements ClassComponent<IList<T>> {
 		this.controller = controller;
 	}
 
-	public view({ attrs: { classes, component, fragment = List.fragment } }: CVnode<IList<T>>) {
-		return m(".overflow-y-auto", {
+	public view({ attrs: {
+		component, classes = "overflow-y-auto", fragment = List.fragment
+	} }: CVnode<IList<T>>) {
+		return m("div", {
 			class: classes,
 			onscroll: (event: Event & IMithrilEvent) => {
 				event.redraw = false;

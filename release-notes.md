@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.40
+
+- BREAKING `List` will no longer apply "overflow-y-auto" class if you provide a `classes` attribute
+
 ## 1.8.30
 
 - `CurrencyInput` and `TimeInput` validation now respects readonly/disabled attributes
