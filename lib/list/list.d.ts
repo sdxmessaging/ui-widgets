@@ -5,5 +5,5 @@ export declare class List<T> implements ClassComponent<IList<T>> {
     private controller;
     private scrollHandler;
     oninit({ attrs: { controller } }: CVnode<IList<T>>): void;
-    view({ attrs: { classes, component, fragment } }: CVnode<IList<T>>): m.Vnode<any, any>;
+    view({ attrs: { component, classes, fragment } }: CVnode<IList<T>>): m.Vnode<any, any>;
 }
