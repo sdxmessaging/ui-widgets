@@ -1305,7 +1305,7 @@ m.mount(document.getElementById("page"), {
 				})
 			]),
 			m(uiWidgets.List, {
-				classes: "vh-25",
+				classes: "vh-25 overflow-y-auto",
 				controller: single,
 				component: rowComponent
 			}),
@@ -1322,7 +1322,7 @@ m.mount(document.getElementById("page"), {
 				paging.loading ? m("progress") : null
 			]),
 			m(uiWidgets.List, {
-				classes: "vh-50",
+				classes: "vh-50 overflow-y-auto",
 				controller: paging,
 				component: rowComponent
 			}),
@@ -1361,7 +1361,7 @@ m.mount(document.getElementById("page"), {
 				})
 			]),
 			m(uiWidgets.List, {
-				classes: "vh-50",
+				classes: "vh-50 overflow-y-auto",
 				controller: paginated,
 				component: rowComponent
 			}),
