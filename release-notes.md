@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.32
+
+- Fix `CheckList` option selection issue introduced in Chrome 127 builds
+
 ## 1.8.31
 
 - BREAKING `List` will no longer apply "overflow-y-auto" class if you provide a `classes` attribute
