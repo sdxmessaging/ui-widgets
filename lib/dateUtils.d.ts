@@ -1,4 +1,4 @@
-import { TPropStream } from "./interface/widget";
+import { IField, TPropStream } from "./interface/widget";
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export type TDateType = 'day' | 'month' | 'year';
 export declare function dateInputIds(type: TDateType): "dd" | "mm" | "yyyy";
@@ -12,6 +12,6 @@ export declare function resetInvalidValueStream(valid: boolean, date: string, ye
 export declare function appendZeroToDayMonth(valueStream: TPropStream): void;
 export declare function validDateInputLengths(year: string, month: string, day: string): boolean;
 export declare function validateCardDate(year: string, month: string, required: boolean, dom?: Element): boolean;
-export declare function validateDate(year: string, month: string, day: string, required: boolean, dom?: Element): boolean;
+export declare function validateDate(year: string, month: string, day: string, field: IField, dom?: Element): boolean;
 export declare function handleDateChange(streamType: TPropStream, id: string, selfType: TDateInputType, dom: Element, targetType?: TDateInputType): void;
 export {};
