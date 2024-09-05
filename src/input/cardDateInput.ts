@@ -4,12 +4,11 @@ import stream from "mithril/stream";
 
 import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
-import { inputCls } from "../theme";
 import { appendZeroToDayMonth, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, validateCardDate } from "../dateUtils";
+import { inputCls } from "../theme";
 import { setIfDifferent } from "../utils";
 
 import { LayoutFixed } from "./layout/layoutFixedLabel";
-import { HiddenDateInput } from "./hiddenDateInput";
 
 export class CardDateInput implements ClassComponent<IPropWidget> {
 
@@ -123,7 +122,13 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						this.buildDate(Boolean(field.required), attrs.value);
 					}
 				}),
-				m(HiddenDateInput, attrs)
+				// Hidden input for form validation and submission
+				m("input.dn", {
+					id,
+					required, readonly, disabled,
+					tabindex: -1,
+					ariaHidden: "true"
+				})
 			])),
 		);
 	}

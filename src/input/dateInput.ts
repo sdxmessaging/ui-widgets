@@ -3,16 +3,15 @@ import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
 import { IConfig } from "../interface/config";
-import { FieldType, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { FieldType, IField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { getConfig } from "../config";
 import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, handleRetreatOrLiteralAdvance, resetInvalidValueStream, TDateInputType, TDateType, validateDate } from "../dateUtils";
 import { inputCls } from "../theme";
 import { setIfDifferent } from "../utils";
 
-import { LayoutFixed } from "./layout/layoutFixedLabel";
-import { HiddenDateInput } from "./hiddenDateInput";
 import { DatePicker, getYmd } from "./datePicker";
+import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 interface IDateParts {
 	readonly type: TDateType | "literal",
@@ -36,9 +35,9 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	private readonly date = stream<string>();
 	private valueChange!: stream<void>;
 
-	private buildDate(valueStream: TPropStream, required = false) {
+	private buildDate(valueStream: TPropStream, field: IField) {
 		this.date(`${this.year()}-${this.month()}-${this.day()}`);
-		const valid = validateDate(this.year(), this.month(), this.day(), required, this.dom());
+		const valid = validateDate(this.year(), this.month(), this.day(), field, this.dom());
 		// important! reset value when value stream is invalid
 		resetInvalidValueStream(valid, this.date(), this.year(), this.month(), this.day(), valueStream);
 	}
@@ -80,15 +79,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 	}
 
 	private createDateInputs({ type, value }: IDateParts, {
-		attrs: {
-			field: {
-				id, name = id,
-				required, readonly, disabled, tabindex,
-				uiClass = {},
-			},
-			value: streamValue
-		} }: CVnode<IPropWidget>) {
-
+		attrs: { field, value: streamValue } }: CVnode<IPropWidget>
+	) {
+		const {
+			id, name = id,
+			required, readonly, disabled, tabindex,
+			uiClass = {},
+		} = field;
 		const classStr = inputCls(uiClass);
 
 		switch (type) {
@@ -113,11 +110,11 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				},
 				oninput: () => {
 					handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
-					this.buildDate(streamValue, required);
+					this.buildDate(streamValue, field);
 				},
 				onblur: () => {
 					appendZeroToDayMonth(this.day);
-					this.buildDate(streamValue, required);
+					this.buildDate(streamValue, field);
 				}
 			}));
 			case ('month'): return m("span", m("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
@@ -139,12 +136,12 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				},
 				oninput: () => {
 					handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
-					this.buildDate(streamValue, required);
+					this.buildDate(streamValue, field);
 				},
 				onfocus: lodash.partial(this.focusedInput, 'mm'),
 				onblur: () => {
 					appendZeroToDayMonth(this.month);
-					this.buildDate(streamValue, required);
+					this.buildDate(streamValue, field);
 				}
 			}));
 			case ('year'): return m("span", m("input.w-100.mw-yyyy.pa0.bg-transparent.bn.outline-0.tc", {
@@ -167,7 +164,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				},
 				oninput: () => {
 					handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
-					this.buildDate(streamValue, required);
+					this.buildDate(streamValue, field);
 				}
 			}));
 		}
@@ -179,7 +176,8 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.year("");
 	}
 
-	public oninit({ attrs: { value, field: { required, config } } }: CVnode<IPropWidget>) {
+	public oninit({ attrs: { value, field } }: CVnode<IPropWidget>) {
+		const { required, config } = field;
 		this.valid(!required);
 		// Split value into date parts
 		this.valueChange = (value as stream<TProp>).map((newVal) => {
@@ -202,7 +200,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			}
 			// validate when value comes in from other date inputs
 			this.valid(
-				validateDate(this.year(), this.month(), this.day(), Boolean(required), this.dom())
+				validateDate(this.year(), this.month(), this.day(), field, this.dom())
 			);
 		});
 
@@ -216,10 +214,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		setIfDifferent(this.dom, dom);
 	}
 
-	public onbeforeupdate({ attrs: { field: { required, config } } }: CVnode<IPropWidget>) {
-		this.setLocale(config);
+	public onbeforeupdate({ attrs: { field } }: CVnode<IPropWidget>) {
+		this.setLocale(field.config);
 		this.valid(
-			validateDate(this.year(), this.month(), this.day(), Boolean(required), this.dom())
+			validateDate(this.year(), this.month(), this.day(), field, this.dom())
 		);
 	}
 
@@ -238,7 +236,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value } } = vnode;
-		const { id, disabled, readonly } = field;
+		const { id, required, readonly, disabled, min, max } = field;
 
 		return m(LayoutFixed, {
 			value: value, field,
@@ -250,7 +248,14 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				this.dateParts.map(
 					(datePart) => this.createDateInputs(datePart, vnode)
 				),
-				m(HiddenDateInput, vnode.attrs)
+				// Hidden input for form validation and submission
+				m("input.dn", {
+					id,
+					required, readonly, disabled,
+					min, max,
+					tabindex: -1,
+					ariaHidden: "true"
+				})
 			),
 			!(disabled || readonly) && m(DatePicker, { field, value })
 		]));

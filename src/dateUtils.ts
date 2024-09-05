@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-import { TPropStream } from "./interface/widget";
+import { IField, TPropStream } from "./interface/widget";
 
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
 export type TDateType = 'day' | 'month' | 'year';
@@ -156,7 +156,7 @@ export function validateCardDate(year: string, month: string, required: boolean,
 	return valid;
 }
 
-export function validateDate(year: string, month: string, day: string, required: boolean, dom?: Element) {
+export function validateDate(year: string, month: string, day: string, field: IField, dom?: Element) {
 	const validation = DateTime.fromObject({
 		year: Number(year),
 		month: Number(month),
@@ -164,7 +164,10 @@ export function validateDate(year: string, month: string, day: string, required:
 	});
 	const dateEmpty = !year && !month && !day;
 	setAllValidityMessage(getDateValidityMessage(validation, year, dateEmpty), dom);
-	return (validation.isValid && Number(year) >= 1900) || (dateEmpty && !required);
+	const boundsValid = Number(year) >= 1900;
+	const minValid = field.min ? validation >= DateTime.fromISO(String(field.min)) : true;
+	const maxValid = field.max ? validation <= DateTime.fromISO(String(field.max)) : true;
+	return (validation.isValid && minValid && maxValid && boundsValid) || (dateEmpty && !field.required);
 }
 
 export function handleDateChange(

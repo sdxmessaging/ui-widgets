@@ -325,6 +325,8 @@ m.mount(document.getElementById("page"), {
 						required: true,
 						disabled: !enableDatePicker(),
 						uiClass: { wrapper: "mb2" },
+						min: "1970-01-01",
+						max: "2038-01-19",
 						config: {
 							dateLocale: dateFormat()
 						}

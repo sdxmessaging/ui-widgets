@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.33
+
+- `DateInput` to respect min/max field attributes for text entry
+
 ## 1.8.32
 
 - Fix `CheckList` option selection issue introduced in Chrome 127 builds
