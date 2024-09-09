@@ -22,7 +22,7 @@ export class RadioInput implements ClassComponent<TRadioWidget> {
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
-			class: inputWrapperCls(uiClass, field)
+			class: inputWrapperCls(field)
 		}, [
 			m("input.clip[type=radio]", {
 				id, name, value,
@@ -33,7 +33,7 @@ export class RadioInput implements ClassComponent<TRadioWidget> {
 				onchange: setValue(val)
 			}),
 			m("label.db", {
-				class: checkInputCls(uiClass, disabled, readonly),
+				class: checkInputCls(field),
 				for: id,
 				title,
 				"data-input-id": id,

@@ -1,4 +1,3 @@
-import lodash from "lodash";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
@@ -74,23 +73,23 @@ export class FileInput implements ClassComponent<IFileInput> {
 			uiClass = {}
 		} = field;
 		const labelInner = this.showLabel && label ? getLabel(id, uiClass, label, required) : null;
-		return m("label.db", lodash.extend({
-			"for": id,
-			"title": title,
-			"aria-labelled-by": id,
-			"class": pointerCls(disabled, readonly),
-			"data-input-id": id,
+		return m("label.db", {
+			for: id,
+			title: title,
+			class: pointerCls(disabled, readonly),
 			tabindex,
+			"aria-labelled-by": id,
+			"data-input-id": id,
 			onkeydown: (e: KeyboardEvent) => {
 				if (e.key === " ") {
 					(document.activeElement?.firstElementChild as HTMLElement).click();
 				}
-			}
-		}, disabled || readonly ? {} : {
-			ondragover: dragStart(dragging),
-			ondragleave: dragStop(dragging),
-			ondrop: drop(dragging, onSet)
-		}), [
+			}, ...(disabled || readonly ? {} : {
+				ondragover: dragStart(dragging),
+				ondragleave: dragStop(dragging),
+				ondrop: drop(dragging, onSet)
+			})
+		}, [
 			m("input.clip[type=file].bg-transparent.bn.outline-0", {
 				id, name, multiple, accept,
 				required, autofocus,

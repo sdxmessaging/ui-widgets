@@ -68,7 +68,7 @@ export function joinClasses(list: ReadonlyArray<string | false | 0 | null | unde
 }
 
 // Merge incoming uiClass with theme class
-function mergeClasses(key: keyof IClasses, uiClass: IWidgetClasses) {
+function mergeClasses(key: keyof IClasses, uiClass: IWidgetClasses = {}) {
 	if (key in uiClass) {
 		// Merge by default unless expliictly disabled
 		return uiClass.merge === false ? [uiClass[key]] : [uiClass[key], theme[key]];
@@ -84,45 +84,44 @@ export function wrapperCls(uiClass: IWidgetClasses, disabled?: boolean) {
 	]);
 }
 
-export function labelCls(uiClass: IWidgetClasses, required?: boolean) {
+export function labelCls(uiClass?: IWidgetClasses, required?: boolean) {
 	return joinClasses([
 		...mergeClasses("label", uiClass),
 		required ? theme.requiredLabel : ""
 	]);
 }
 
-export function floatLabelPlaceholderCls(uiClass: IWidgetClasses, floatTop: boolean, required?: boolean) {
+export function floatLabelPlaceholderCls({ required, uiClass }: IField, floatTop: boolean) {
 	return joinClasses([
 		labelCls(uiClass, required),
 		floatTop ? "f-07em cursor-default" : `${theme.floatLabelPlaceholder} cursor-text`
 	]);
 }
 
-export function inputWrapperCls(uiClass: IWidgetClasses, {
-	required, readonly, disabled
-}: IField, invalid?: boolean) {
+export function inputWrapperCls({ required, readonly, disabled, uiClass }: IField, invalid?: boolean) {
 	return joinClasses([
 		...mergeClasses("inputWrapper", uiClass),
-		...(invalid ? mergeClasses("invalidInputWrapper", uiClass) : [""]),
-		required ? theme.requiredInputWrapper : "",
-		readonly ? theme.readonlyInputWrapper : "",
-		disabled ? theme.disabledInputWrapper : "",
+		...(invalid ? mergeClasses("invalidInputWrapper", uiClass) : []),
+		required ? theme.requiredInputWrapper : null,
+		readonly ? theme.readonlyInputWrapper : null,
+		disabled ? theme.disabledInputWrapper : null
 	]);
 }
 
-export function inputCls(uiClass: IWidgetClasses) {
+export function inputCls(uiClass?: IWidgetClasses) {
 	return joinClasses(mergeClasses("input", uiClass));
 }
 
-export function checkInputCls(uiClass: IWidgetClasses, disabled?: boolean, readonly?: boolean) {
+export function checkInputCls({ readonly, disabled, uiClass }: IField) {
 	return joinClasses([
-		inputCls(uiClass), pointerCls(disabled, readonly)
+		inputCls(uiClass),
+		pointerCls(disabled, readonly)
 	]);
 }
 
-export function textareaCls({ input = "", merge = true }: IWidgetClasses) {
+export function textareaCls({ input, merge = true }: IWidgetClasses) {
 	return joinClasses([
-		input, merge ? theme.textarea : ""
+		input, merge ? theme.textarea : null
 	]);
 }
 
@@ -130,11 +129,11 @@ export function fileHoverCls(dragging: boolean) {
 	return dragging ? theme.fileHover : "";
 }
 
-export function fileInputWrapperCls({ inputWrapper = "", merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean) {
+export function fileInputWrapperCls({ inputWrapper, merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean) {
 	return joinClasses([
 		inputWrapper,
-		merge ? theme.fileInputWrapper : "",
-		invalid ? theme.invalidInputWrapper : "",
+		merge ? theme.fileInputWrapper : null,
+		invalid ? theme.invalidInputWrapper : null,
 		fileHoverCls(dragging)
 	]);
 }

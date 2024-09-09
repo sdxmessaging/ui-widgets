@@ -77,22 +77,31 @@ describe("Theme Classes", () => {
 
 	test("inputWrapper", () => {
 		const exampleField: IField = { id: "test" };
-		expect(inputWrapperCls({}, exampleField)).toBe(theme.inputWrapper);
-		expect(inputWrapperCls({}, exampleField, true)).toBe(`${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		expect(inputWrapperCls(exampleField)).toBe(theme.inputWrapper);
+		expect(inputWrapperCls(exampleField, true)).toBe(`${theme.inputWrapper} ${theme.invalidInputWrapper}`);
 		expect(inputWrapperCls({
-			inputWrapper: "test",
-			invalidInputWrapper: "customInvalid",
-			merge: false
-		}, exampleField, true)).toBe("test customInvalid");
+			...exampleField,
+			uiClass: {
+				inputWrapper: "test",
+				invalidInputWrapper: "customInvalid",
+				merge: false
+			}
+		}, true)).toBe("test customInvalid");
 		expect(inputWrapperCls({
-			inputWrapper: "test",
-			merge: false
-		}, exampleField)).toBe("test");
+			...exampleField,
+			uiClass: {
+				inputWrapper: "test",
+				merge: false
+			}
+		})).toBe("test");
 		// Continue to apply invalidInputWrapper as it is not overriden
 		expect(inputWrapperCls({
-			inputWrapper: "test",
-			merge: false
-		}, exampleField, true)).toBe("test invalid");
+			...exampleField,
+			uiClass: {
+				inputWrapper: "test",
+				merge: false
+			}
+		}, true)).toBe("test invalid");
 	});
 
 	test("wrapperCls", () => {

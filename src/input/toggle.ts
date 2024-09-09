@@ -17,8 +17,7 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 	private toggleWrapper(field: ICheckboxField, val: TPropStream, children: Children) {
 		const {
 			label, id, name = id, value, title = titleFromLabel(label),
-			required, readonly, disabled, autocomplete, tabindex = "0",
-			uiClass = {}
+			required, readonly, disabled, autocomplete, tabindex = "0"
 		} = field;
 		return [
 			m("input.clip[type=checkbox]", {
@@ -32,7 +31,7 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 			}),
 			m("label.db.flex.justify-content.items-center", {
 				class: joinClasses([
-					checkInputCls(uiClass, disabled, readonly),
+					checkInputCls(field),
 					required && !val() ? theme.invalidCheckboxWrapper : ""
 				]),
 				for: id,
@@ -81,7 +80,7 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 			: m("div", {
 				class: wrapperCls(uiClass, disabled),
 			}, m("fieldset.w-100.bn", {
-				class: inputWrapperCls(uiClass, field)
+				class: inputWrapperCls(field)
 			}, this.toggleWrapper(field, val, [
 				this.toggleInner(checked, config),
 				label ? m("span.mh1", getLabelText(label, required)) : null

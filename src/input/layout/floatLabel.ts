@@ -49,7 +49,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		},
 			// Input wrapper
 			m("fieldset.relative.pa0.ma0.w-100", {
-				class: inputWrapperCls(uiClass, field, invalid)
+				class: inputWrapperCls(field, invalid)
 			}, [
 				label ? [
 					// Break fieldset border, make space for label to float into
@@ -66,7 +66,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 						}
 					}, m("label.db.transition-f", {
 						for: id, title: typeof label === "string" ? label : label.text,
-						class: floatLabelPlaceholderCls(uiClass, floatTop, required)
+						class: floatLabelPlaceholderCls(field, floatTop)
 					}, this.labelContent(label, required)))
 				] : null,
 				// Input
