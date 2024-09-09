@@ -77,7 +77,7 @@ function mergeClasses(key: keyof IClasses, uiClass: IWidgetClasses = {}) {
 	}
 }
 
-export function wrapperCls(uiClass: IWidgetClasses, disabled?: boolean) {
+export function wrapperCls(uiClass?: IWidgetClasses, disabled?: boolean) {
 	return joinClasses([
 		...mergeClasses("wrapper", uiClass),
 		disabled ? theme.disabledWrapper : ""
@@ -125,19 +125,15 @@ export function textareaCls({ input, merge = true }: IWidgetClasses) {
 	]);
 }
 
-export function fileHoverCls(dragging: boolean) {
-	return dragging ? theme.fileHover : "";
-}
-
 export function fileInputWrapperCls({ inputWrapper, merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean) {
 	return joinClasses([
 		inputWrapper,
 		merge ? theme.fileInputWrapper : null,
 		invalid ? theme.invalidInputWrapper : null,
-		fileHoverCls(dragging)
+		dragging ? theme.fileHover : ""
 	]);
 }
 
 export function pointerCls(disabled?: boolean, readonly?: boolean) {
-	return disabled || readonly ? "" : "pointer";
+	return disabled || readonly ? undefined : "pointer";
 }

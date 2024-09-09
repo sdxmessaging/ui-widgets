@@ -1,10 +1,5 @@
 import { IField } from "./interface/widget";
-import { fileHoverCls, theme, updateClasses } from "./theme";
-import { getButtonContext, updateButtonContext } from "./theme";
-import {
-	labelCls,
-	inputCls, fileInputWrapperCls, textareaCls, inputWrapperCls, wrapperCls
-} from "./theme";
+import { fileInputWrapperCls, getButtonContext, inputCls, inputWrapperCls, labelCls, textareaCls, theme, updateButtonContext, updateClasses, wrapperCls } from "./theme";
 
 describe("Theme", () => {
 
@@ -60,14 +55,26 @@ describe("Theme Classes", () => {
 	});
 
 	test("fileInputWrapperCls", () => {
-		expect(fileInputWrapperCls({ label: "test", merge: true }, false, false)).toBe(theme.fileInputWrapper);
-		expect(fileInputWrapperCls({ label: "test", merge: true }, true, false)).toBe(`${theme.fileInputWrapper} ${theme.fileHover}`);
-		expect(fileInputWrapperCls({ label: "test", merge: true }, false, true)).toBe(`${theme.fileInputWrapper} ${theme.invalidInputWrapper}`);
-		expect(fileInputWrapperCls({ label: "test", merge: true }, true, true)).toBe(`${theme.fileInputWrapper} ${theme.invalidInputWrapper} ${theme.fileHover}`);
-		expect(fileInputWrapperCls({ label: "test", merge: false }, false, false)).toBe("");
-		expect(fileInputWrapperCls({ label: "test", merge: false }, true, false)).toBe(theme.fileHover);
-		expect(fileInputWrapperCls({ label: "test", merge: false }, false, true)).toBe(theme.invalidInputWrapper);
-		expect(fileInputWrapperCls({ label: "test", merge: false }, true, true)).toBe(`${theme.invalidInputWrapper} ${theme.fileHover}`);
+		// Merge classes
+		const merge = { label: "test", merge: true };
+		expect(fileInputWrapperCls(merge, false, false))
+			.toBe(theme.fileInputWrapper);
+		expect(fileInputWrapperCls(merge, true, false))
+			.toBe(`${theme.fileInputWrapper} ${theme.fileHover}`);
+		expect(fileInputWrapperCls(merge, false, true))
+			.toBe(`${theme.fileInputWrapper} ${theme.invalidInputWrapper}`);
+		expect(fileInputWrapperCls(merge, true, true))
+			.toBe(`${theme.fileInputWrapper} ${theme.invalidInputWrapper} ${theme.fileHover}`);
+		// Don't merge classes
+		const noMerge = { label: "test", merge: false };
+		expect(fileInputWrapperCls(noMerge, false, false))
+			.toBe("");
+		expect(fileInputWrapperCls(noMerge, true, false))
+			.toBe(theme.fileHover);
+		expect(fileInputWrapperCls(noMerge, false, true))
+			.toBe(theme.invalidInputWrapper);
+		expect(fileInputWrapperCls(noMerge, true, true))
+			.toBe(`${theme.invalidInputWrapper} ${theme.fileHover}`);
 	});
 
 	test("textareaCls", () => {
@@ -107,11 +114,6 @@ describe("Theme Classes", () => {
 	test("wrapperCls", () => {
 		expect(wrapperCls({})).toBe(theme.wrapper);
 		expect(wrapperCls({ wrapper: "test", merge: false })).toBe("test");
-	});
-
-	test("fileHoverCls", () => {
-		expect(fileHoverCls(false)).toBe("");
-		expect(fileHoverCls(true)).toBe(theme.fileHover);
 	});
 
 });
