@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.34
+
+- Fix `SelectInput` not disabling empty option values in the same manner as a placeholder value
+
 ## 1.8.33
 
 - `DateInput` to respect min/max field attributes for text entry

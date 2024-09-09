@@ -45,12 +45,12 @@ export class SelectInput extends ValidationBase<TSelectWidget> {
 				lodash.some(options, ({ value }) => !value)
 					? null
 					: m("option", {
-						disabled: true,
-						value: ""
+						value: "",
+						disabled: true
 					}, placeholder),
 				lodash.map(options, ({ value, label = value }) => m("option", {
 					value,
-					disabled: disabled || readonly,
+					disabled: !value || disabled || readonly,
 				}, label))
 			])
 		]);

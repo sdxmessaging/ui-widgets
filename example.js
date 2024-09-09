@@ -607,11 +607,9 @@ m.mount(document.getElementById("page"), {
 					field: {
 						id: "select-in",
 						label: "Select Input",
+						placeholder: "Not Set",
 						required: true,
 						options: [{
-							label: "Not Set",
-							value: ""
-						}, {
 							label: "Yes",
 							value: "yes"
 						}, {
