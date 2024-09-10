@@ -1,7 +1,7 @@
 import m, { CVnode, CVnodeDOM, Children, ClassComponent } from "mithril";
 import { IPropWidget } from "./interface/widget";
 
-export abstract class ValidationBase<T extends IPropWidget> implements ClassComponent<T> {
+export abstract class BaseWidget<T extends IPropWidget> implements ClassComponent<T> {
 
 	private _inputElement!: HTMLInputElement;
 

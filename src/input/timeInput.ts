@@ -7,7 +7,7 @@ import { getConfig, getIcon } from "../config";
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
 
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 import { TimePicker } from "./timePicker";
 
@@ -21,7 +21,7 @@ function padZero(value: string) {
 
 const enum Focus { None, Hour, Minute }
 
-export class TimeInput extends ValidationBase<IPropWidget> {
+export class TimeInput extends BaseWidget<IPropWidget> {
 
 	private showPicker = false;
 	private focus = Focus.None;

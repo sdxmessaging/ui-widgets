@@ -7,11 +7,11 @@ import { getConfig, getIcon } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
 
 import { IConfig, TIcon, TSubset } from "../interface/config";
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 type TSelectWidget = IPropWidget<IOptionField>;
-export class CheckList extends ValidationBase<TSelectWidget> {
+export class CheckList extends BaseWidget<TSelectWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";

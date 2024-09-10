@@ -5,10 +5,10 @@ import { IPropWidget, ITextareaField } from "../interface/widget";
 import { textareaCls } from "../theme";
 import { setValue, titleFromLabel } from "../utils";
 
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { LayoutTop } from "./layout/layoutTopLabel";
 
-export class TextareaInput extends ValidationBase<IPropWidget<ITextareaField>> {
+export class TextareaInput extends BaseWidget<IPropWidget<ITextareaField>> {
 
 	protected override readonly selector = "textarea";
 

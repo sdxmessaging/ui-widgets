@@ -6,10 +6,10 @@ import { getConfig } from "../config";
 import { inputCls, joinClasses } from "../theme";
 import { selectTarget, setValue, titleFromLabel } from "../utils";
 
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
-export class PercentageInput extends ValidationBase<IPropWidget> {
+export class PercentageInput extends BaseWidget<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;

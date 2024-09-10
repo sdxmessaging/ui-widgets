@@ -9,10 +9,10 @@ import { inputCls, joinClasses, theme } from "../theme";
 import { selectTarget, titleFromLabel } from "../utils";
 
 import { Currency } from "../currency";
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
-export class CurrencyInput extends ValidationBase<IPropWidget> {
+export class CurrencyInput extends BaseWidget<IPropWidget> {
 
 	public view({ attrs }: CVnode<IPropWidget>) {
 		const { field, value, xform = value } = attrs;

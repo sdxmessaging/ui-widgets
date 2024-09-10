@@ -7,10 +7,10 @@ import { getConfig, getIcon } from "../config";
 import { inputCls } from "../theme";
 import { clickOnEnter, setValue, titleFromLabel } from "../utils";
 
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { Layout } from "./layout/layout";
 
-export class PasswordInput extends ValidationBase<IPropWidget> {
+export class PasswordInput extends BaseWidget<IPropWidget> {
 
 	private showPassword = stream<boolean>(false);
 

@@ -6,11 +6,11 @@ import { IOptionField, IPropWidget } from "../interface/widget";
 import { inputCls } from "../theme";
 import { setValue } from "../utils";
 
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 type TSelectWidget = IPropWidget<IOptionField>;
-export class SelectInput extends ValidationBase<TSelectWidget> {
+export class SelectInput extends BaseWidget<TSelectWidget> {
 
 	protected override readonly selector = "select";
 

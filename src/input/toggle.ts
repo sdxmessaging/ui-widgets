@@ -6,11 +6,11 @@ import { ICheckboxField, IPropWidget, TPropStream } from "../interface/widget";
 import { getConfig, getIcon } from "../config";
 import { checkInputCls, inputWrapperCls, joinClasses, theme, wrapperCls } from "../theme";
 import { getLabelText, setCheck, titleFromLabel } from "../utils";
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 import { Layout } from "./layout/layout";
 
 type TCheckboxWidget = IPropWidget<ICheckboxField>;
-export class ToggleInput extends ValidationBase<TCheckboxWidget> {
+export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "toggleOnIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "toggleOffIcn";
