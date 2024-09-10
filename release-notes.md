@@ -2,6 +2,7 @@
 
 ## 1.8.34
 
+- Revert: BREAKING Widget `invalidInputWrapper` class is now only applied after first user interaction or when value stream has a value set (from 1.8.29)
 - Theme support for widget input wrapper when in focus
 - Fix `SelectInput` not disabling empty option values in the same manner as a placeholder value
 - `SelectInput` and `CheckList` to use placeholder label class if no value is set

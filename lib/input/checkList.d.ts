@@ -1,9 +1,9 @@
 import m, { CVnode } from "mithril";
 import { IOptionField, IPropWidget } from "../interface/widget";
 import { IConfig, TIcon, TSubset } from "../interface/config";
-import { ValidationBase } from "../validationBase";
+import { BaseWidget } from "../baseWidget";
 type TSelectWidget = IPropWidget<IOptionField>;
-export declare class CheckList extends ValidationBase<TSelectWidget> {
+export declare class CheckList extends BaseWidget<TSelectWidget> {
     protected readonly onIcon: keyof TSubset<IConfig, TIcon>;
     protected readonly offIcon: keyof TSubset<IConfig, TIcon>;
     private selected;

@@ -42,9 +42,11 @@ export interface IClassMap extends IClasses {
     readonly disabledInputWrapper?: string;
     /** Classes applied to widget wrapper when validation fails */
     readonly invalidInputWrapper?: string;
+    /** Classes applied to widget wrapper when widget is in focus */
+    readonly focusInputWrapper?: string;
     /** Classes for alt label text */
     readonly altLabel?: string;
-    /** Float Label Placeholder if it is not floating yet */
+    /** Placeholder label if it is not floating yet, select "placeholder" if value not set */
     readonly floatLabelPlaceholder?: string;
     readonly invalidCheckboxWrapper?: string;
     /** classes common to all tooltips */

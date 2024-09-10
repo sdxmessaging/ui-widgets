@@ -1,8 +1,8 @@
 import m, { CVnode } from "mithril";
 import { IConfig } from "../interface/config";
 import { IPropWidget, TProp, TPropStream } from "../interface/widget";
-import { ValidationBase } from "../validationBase";
-export declare class CurrencyInput extends ValidationBase<IPropWidget> {
+import { BaseWidget } from "../baseWidget";
+export declare class CurrencyInput extends BaseWidget<IPropWidget> {
     view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
 }
 export declare function propToNumber(value: TProp): number;

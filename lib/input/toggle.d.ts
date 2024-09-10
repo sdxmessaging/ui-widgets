@@ -1,8 +1,9 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 import { IConfig, TIcon, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget } from "../interface/widget";
+import { BaseWidget } from "../baseWidget";
 type TCheckboxWidget = IPropWidget<ICheckboxField>;
-export declare class ToggleInput implements ClassComponent<TCheckboxWidget> {
+export declare class ToggleInput extends BaseWidget<TCheckboxWidget> {
     protected readonly onIcon: keyof TSubset<IConfig, TIcon>;
     protected readonly offIcon: keyof TSubset<IConfig, TIcon>;
     private toggleWrapper;
