@@ -15,7 +15,10 @@ export class Layout implements ClassComponent<IPropLayoutWidget> {
 		const { field: {
 			config, layout = getConfig("layoutType", config)
 		} } = attrs;
-		return m(layout === LayoutType.default ? Basic : this.layout, attrs, children);
+		return m(layout === LayoutType.default ? Basic : this.layout,
+			attrs,
+			children
+		);
 	}
 
 }

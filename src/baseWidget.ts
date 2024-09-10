@@ -6,7 +6,8 @@ export abstract class BaseWidget<T extends IPropWidget> implements ClassComponen
 	private _inputElement!: HTMLInputElement;
 
 	private _focus = false;
-	private _touch = false;
+	// TODO Default to false once agreement on validation state showing
+	private _touch = true;
 	private _valid = true;
 
 	private unboundTouch() {
