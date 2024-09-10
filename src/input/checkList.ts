@@ -189,7 +189,9 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 					: undefined
 			}, [
 				m(".flex.items-center", [
-					m(".flex-auto.ph-2px.pv-1px",
+					m(".flex-auto.ph-2px.pv-1px", {
+						class: this.selected.size ? undefined : theme.floatLabelPlaceholder
+					},
 						this.placeHolder(val, options, placeholder)
 					),
 					getIcon(getConfig("checkListIcn", config), joinClasses([

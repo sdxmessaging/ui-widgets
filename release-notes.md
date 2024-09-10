@@ -4,7 +4,7 @@
 
 - Theme support for widget input wrapper when in focus
 - Fix `SelectInput` not disabling empty option values in the same manner as a placeholder value
-- `SelectInput` to use placeholder label class if no value is set
+- `SelectInput` and `CheckList` to use placeholder label class if no value is set
 
 ## 1.8.33
 
