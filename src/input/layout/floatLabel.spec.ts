@@ -8,7 +8,7 @@ import { TopLabel } from "./topLabel";
 
 describe("floatLabel", () => {
 
-	test('mount', () => {
+	test("mount", () => {
 		const root = window.document.createElement("div");
 		const value = stream<string>();
 		const xform = value.map((val) => val);
@@ -20,14 +20,15 @@ describe("floatLabel", () => {
 					label: "Test Label",
 					name: "Test Name",
 					title: "Test Title",
-					uiClass: { wrapper: 'h2', input: "h2", inputWrapper: "h2" },
+					uiClass: { wrapper: "h2", input: "h2", inputWrapper: "h2" },
 					required: true,
 					instant: true,
-					layout: LayoutType.floatAlways,
+					layout: LayoutType.floatAlways
 				},
-				invalid: false,
 				value,
-				xform
+				xform,
+				invalid: false,
+				focus: false
 			})
 		});
 		expect(root.childNodes.length).toEqual(1);
@@ -38,16 +39,8 @@ describe("floatLabel", () => {
 		const legend = inputWrapper.firstElementChild as HTMLElement;
 		expect(legend).not.toBeNull();
 		expect(legend.className).toContain("mw-100");
-	
-		expect(floatLabel['labelTranslateY']()).not.toBe("-1ch");
-	});
 
-	test('focusIn & focusOut', () => {
-		const floatLabel = new FloatLabel();
-		floatLabel['focusIn']();
-		expect(floatLabel['focus']).toEqual(true);
-		floatLabel['focusOut']();
-		expect(floatLabel['focus']).toEqual(false);
+		expect(floatLabel['labelTranslateY']()).not.toBe("-1ch");
 	});
 
 	test("fixedLabel", () => {

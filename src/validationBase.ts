@@ -5,16 +5,36 @@ export abstract class ValidationBase<T extends IPropWidget> implements ClassComp
 
 	private _inputElement!: HTMLInputElement;
 
+	private _focus = false;
 	private _touch = false;
+	private _valid = true;
+
 	private unboundTouch() {
 		this._touch = true;
-		this._inputElement.removeEventListener("blur", this.touch);
+		this._focus = false;
+		m.redraw();
 	}
+	/**
+	 * Mark the widget as "touched",
+	 * automatically occurs when user focus leaves the widget
+	 * or when the widget stream is updated to a non-null value
+	 */
 	protected touch = this.unboundTouch.bind(this);
 
-	private _valueValid = true;
+	private unboundFocus() {
+		this._focus = true;
+		m.redraw();
+	}
+	private boundFocus = this.unboundFocus.bind(this);
+
+	/** Widget currently in focus */
+	protected get inFocus() {
+		return this._focus;
+	}
+
+	/** Widget fails validation */
 	protected get invalid() {
-		return !this._valueValid;
+		return !this._valid;
 	}
 
 	protected readonly selector: keyof Pick<HTMLElementTagNameMap, "input" | "textarea" | "select"> = "input";
@@ -23,8 +43,8 @@ export abstract class ValidationBase<T extends IPropWidget> implements ClassComp
 	private checkValidity() {
 		if (this._touch) {
 			const validity = this._inputElement.checkValidity();
-			if (validity !== this._valueValid) {
-				this._valueValid = validity;
+			if (validity !== this._valid) {
+				this._valid = validity;
 				m.redraw();
 			}
 		}
@@ -33,12 +53,12 @@ export abstract class ValidationBase<T extends IPropWidget> implements ClassComp
 	abstract view(vnode: CVnode<T>): Children;
 
 	public oncreate({ dom, attrs: { value } }: CVnodeDOM<T>) {
+		dom.addEventListener("focusin", this.boundFocus);
+		dom.addEventListener("focusout", this.touch);
 		this._inputElement = dom.querySelector(this.selector) as HTMLInputElement;
 		// Pre-populated value stream indicates this input has already been touched and should be validated as normal
 		if (value() != null) {
 			this._touch = true;
-		} else {
-			this._inputElement.addEventListener("blur", this.touch);
 		}
 		this.checkValidity();
 	}
@@ -49,6 +69,11 @@ export abstract class ValidationBase<T extends IPropWidget> implements ClassComp
 			this.touch();
 		}
 		this.checkValidity();
+	}
+
+	public onbeforeremove({ dom }: CVnodeDOM<T>) {
+		dom.removeEventListener("focusin", this.boundFocus);
+		dom.removeEventListener("focusout", this.touch);
 	}
 
 }

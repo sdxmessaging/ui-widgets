@@ -223,13 +223,14 @@ export interface IPropWidget<T = IField> extends IBaseWidget<T> {
 
 export interface IPropLayoutWidget<T = IField> extends IPropWidget<T> {
 	readonly invalid: boolean;
+	readonly focus: boolean;
 }
 
 export interface IThumbnailArgs {
-	title?: string;
-	src?: string;
-	data?: IFile;
-	style?: Partial<CSSStyleDeclaration>;
+	readonly title?: string;
+	readonly src?: string;
+	readonly data?: IFile;
+	readonly style?: Partial<CSSStyleDeclaration>;
 }
 
 export const enum DisplayType {

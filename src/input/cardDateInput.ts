@@ -69,7 +69,12 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			uiClass = {}
 		} = field;
 		const classStr = inputCls(uiClass);
-		return m(LayoutFixed, { value, field, invalid: !this.valid() }, m('.flex.ph-2px.pv-1px', {
+		return m(LayoutFixed, {
+			field,
+			value,
+			invalid: !this.valid(),
+			focus: false
+		}, m('.flex.ph-2px.pv-1px', {
 			onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 		},
 			m("span", [

@@ -73,11 +73,11 @@ export class TimeInput extends ValidationBase<IPropWidget> {
 			uiClass = {}, config
 		} = field;
 		const classStr = inputCls(uiClass);
-
 		return m(LayoutFixed, {
 			field,
 			value,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, m(".flex.items-center", [
 			m(".relative.flex-auto.ph-2px.pv-1px", {
 				// onclick: () => focusLastInput(this.dom(), id, this.focusedInput())

@@ -24,7 +24,8 @@ export class PercentageInput extends ValidationBase<IPropWidget> {
 		return m(LayoutFixed, {
 			field,
 			value,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, m('.flex.flex-row.w-100', [
 			m("span.self-center", {
 				class: joinClasses([

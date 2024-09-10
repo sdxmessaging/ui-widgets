@@ -36,7 +36,8 @@ export class CurrencyInput extends ValidationBase<IPropWidget> {
 		return m(LayoutFixed, {
 			field,
 			value,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, m(".flex.w-100", [
 			m("span.self-center", {
 				class: joinClasses([

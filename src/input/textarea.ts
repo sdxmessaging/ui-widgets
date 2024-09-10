@@ -24,7 +24,8 @@ export class TextareaInput extends ValidationBase<IPropWidget<ITextareaField>> {
 			field,
 			value,
 			xform,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, m("textarea.w-100.bg-transparent.bn.outline-0.h-100.resize-none", {
 			id, name, title,
 			placeholder, required, readonly, disabled, autofocus, autocomplete,

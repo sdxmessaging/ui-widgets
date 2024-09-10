@@ -1,4 +1,4 @@
-import m, { Children, ClassComponent, CVnode } from "mithril";
+import m, { Children, CVnode } from "mithril";
 
 import { IConfig, TIcon, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget, TPropStream } from "../interface/widget";
@@ -6,10 +6,11 @@ import { ICheckboxField, IPropWidget, TPropStream } from "../interface/widget";
 import { getConfig, getIcon } from "../config";
 import { checkInputCls, inputWrapperCls, joinClasses, theme, wrapperCls } from "../theme";
 import { getLabelText, setCheck, titleFromLabel } from "../utils";
+import { ValidationBase } from "../validationBase";
 import { Layout } from "./layout/layout";
 
 type TCheckboxWidget = IPropWidget<ICheckboxField>;
-export class ToggleInput implements ClassComponent<TCheckboxWidget> {
+export class ToggleInput extends ValidationBase<TCheckboxWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "toggleOnIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "toggleOffIcn";
@@ -32,7 +33,7 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 			m("label.db.flex.justify-content.items-center", {
 				class: joinClasses([
 					checkInputCls(field),
-					required && !val() ? theme.invalidCheckboxWrapper : ""
+					this.invalid ? theme.invalidCheckboxWrapper : ""
 				]),
 				for: id,
 				title,
@@ -72,7 +73,8 @@ export class ToggleInput implements ClassComponent<TCheckboxWidget> {
 			? m(Layout, {
 				field,
 				value: val,
-				invalid: required ? !val() : false
+				invalid: this.invalid,
+				focus: this.inFocus
 			}, this.toggleWrapper(field, val,
 				this.toggleInner(checked, config)
 			))

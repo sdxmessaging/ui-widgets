@@ -26,7 +26,8 @@ export class PasswordInput extends ValidationBase<IPropWidget> {
 		return m(Layout, {
 			field,
 			value,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, m('.flex.flex-row.w-100', [
 			m("input.w-100.bg-transparent.bn.outline-0", {
 				id, name, title, placeholder,

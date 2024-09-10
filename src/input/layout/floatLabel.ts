@@ -2,22 +2,14 @@ import m, { ClassComponent, CVnode } from "mithril";
 import { FieldType, IPropLayoutWidget, IWidgetLabel, LayoutType, TProp } from "../../interface/widget";
 
 import { getConfig } from "../../config";
-import { floatLabelPlaceholderCls, inputWrapperCls, labelCls, wrapperCls } from "../../theme";
+import { floatLabelPlaceholderCls, inputWrapperCls, joinClasses, labelCls, wrapperCls } from "../../theme";
 import { getLabelText, getAltLabel } from "../../utils";
 
 export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 
-	private focus = false;
-	private focusIn = () => {
-		this.focus = true;
-	};
-	private focusOut = () => {
-		this.focus = false;
-	};
-
 	// Float label if element has a value set or is in focus
-	protected shouldFloat(layout: LayoutType, value: TProp, readonly = false) {
-		return layout === LayoutType.floatAlways || this.focus || Boolean(value) || readonly;
+	protected shouldFloat(layout: LayoutType, value: TProp, focus: boolean, readonly = false) {
+		return layout === LayoutType.floatAlways || focus || Boolean(value) || readonly;
 	}
 
 	protected labelTranslateY() {
@@ -32,7 +24,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 	}
 
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
-		const { field, invalid, value, xform = value } = attrs;
+		const { field, value, xform = value, invalid, focus } = attrs;
 		const {
 			label, id, type = FieldType.text, placeholder,
 			required, disabled, readonly,
@@ -40,12 +32,13 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 			layout = getConfig("layoutType", config)
 		} = field;
 		// Placeholder or value count as value content
-		const floatTop = this.shouldFloat(layout, placeholder || (xform() != null && String(xform())), readonly);
+		const floatTop = this.shouldFloat(layout, placeholder || (xform() != null && String(xform())), focus, readonly);
 		// Wrapper (padding for shrunk label overflow)
 		return m("div", {
-			class: `${type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled)} ${label ? "pt2" : ""}`,
-			onfocusin: this.focusIn,
-			onfocusout: this.focusOut
+			class: joinClasses([
+				type === FieldType.hidden ? "clip" : wrapperCls(uiClass, disabled),
+				label ? "pt2" : null
+			])
 		},
 			// Input wrapper
 			m("fieldset.relative.pa0.ma0.w-100", {

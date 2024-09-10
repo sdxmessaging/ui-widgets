@@ -34,7 +34,8 @@ export class BaseInput extends ValidationBase<IPropWidget> {
 			field,
 			value,
 			xform,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, m("input.w-100.bg-transparent.bn.outline-0", {
 			id, type, name, title, placeholder,
 			max, maxlength, min, minlength, step, required,

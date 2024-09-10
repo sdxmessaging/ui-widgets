@@ -26,7 +26,8 @@ export class SelectInput extends ValidationBase<TSelectWidget> {
 		return m(LayoutFixed, {
 			field,
 			value: val,
-			invalid: this.invalid
+			invalid: this.invalid,
+			focus: this.inFocus
 		}, [
 			lbl
 				? null

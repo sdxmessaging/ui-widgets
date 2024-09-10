@@ -239,8 +239,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const { id, required, readonly, disabled, min, max } = field;
 
 		return m(LayoutFixed, {
-			value: value, field,
-			invalid: !this.valid()
+			field,
+			value,
+			invalid: !this.valid(),
+			focus: false
 		}, m(".flex.items-center", [
 			m(".flex-auto.ph-2px.pv-1px", {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
