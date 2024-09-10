@@ -3,7 +3,7 @@ import m, { CVnode } from "mithril";
 
 import { IOptionField, IPropWidget } from "../interface/widget";
 
-import { inputCls } from "../theme";
+import { inputCls, joinClasses, theme } from "../theme";
 import { setValue } from "../utils";
 
 import { BaseWidget } from "../baseWidget";
@@ -23,23 +23,25 @@ export class SelectInput extends BaseWidget<TSelectWidget> {
 			uiClass = {}, placeholder = "Select",
 			options = []
 		} = field;
+		const value = val();
 		return m(LayoutFixed, {
 			field,
 			value: val,
 			invalid: this.invalid,
 			focus: this.inFocus
 		}, [
-			lbl
-				? null
-				: m("legend.screenreader", {
-					id: `${id}-legend`
-				}, "Select")
+			lbl ? null : m("legend.screenreader", {
+				id: `${id}-legend`
+			}, "Select")
 			, m("select.w-100.bg-transparent.bn.outline-0", {
 				id, name, title,
 				required, multiple, autofocus, autocomplete, tabindex,
 				disabled: disabled || readonly,
-				class: inputCls(uiClass),
-				value: val() ? val() : "",
+				class: joinClasses([
+					inputCls(uiClass),
+					value ? "" : theme.floatLabelPlaceholder
+				]),
+				value: value ?? "",
 				onchange: setValue(val),
 				'aria-labelledby': `${id}-legend`
 			}, [
