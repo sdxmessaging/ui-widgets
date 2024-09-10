@@ -42,7 +42,7 @@ export class FloatLabel implements ClassComponent<IPropLayoutWidget> {
 		},
 			// Input wrapper
 			m("fieldset.relative.pa0.ma0.w-100", {
-				class: inputWrapperCls(field, invalid)
+				class: inputWrapperCls(field, invalid, focus)
 			}, [
 				label ? [
 					// Break fieldset border, make space for label to float into

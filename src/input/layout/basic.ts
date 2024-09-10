@@ -9,7 +9,7 @@ import { getLabel } from "../../utils";
 export class Basic implements ClassComponent<IPropLayoutWidget> {
 
 	public view({ attrs, children }: CVnode<IPropLayoutWidget>) {
-		const { field, invalid } = attrs;
+		const { field, invalid, focus } = attrs;
 		const { label, id, type = FieldType.text, required, disabled, uiClass = {} } = field;
 		// Wrapper
 		return m("div", {
@@ -19,7 +19,7 @@ export class Basic implements ClassComponent<IPropLayoutWidget> {
 			getLabel(id, uiClass, label, required),
 			// Input wrapper
 			m("fieldset.bn", {
-				class: inputWrapperCls(field, invalid)
+				class: inputWrapperCls(field, invalid, focus)
 			},
 				// Input
 				children

@@ -22,6 +22,7 @@ const classMapState: Required<IClassMap> = {
 	disabledWrapper: "o-40",
 	disabledInputWrapper: "",
 	invalidInputWrapper: "ba b--red",
+	focusInputWrapper: "",
 	altLabel: "ml1 o-70",
 	floatLabelPlaceholder: "",
 	invalidCheckboxWrapper: "red",
@@ -98,13 +99,16 @@ export function floatLabelPlaceholderCls({ required, uiClass }: IField, floatTop
 	]);
 }
 
-export function inputWrapperCls({ required, readonly, disabled, uiClass }: IField, invalid?: boolean) {
+export function inputWrapperCls(
+	{ required, readonly, disabled, uiClass }: IField, invalid?: boolean, focus?: boolean
+) {
 	return joinClasses([
 		...mergeClasses("inputWrapper", uiClass),
 		...(invalid ? mergeClasses("invalidInputWrapper", uiClass) : []),
 		required ? theme.requiredInputWrapper : null,
 		readonly ? theme.readonlyInputWrapper : null,
-		disabled ? theme.disabledInputWrapper : null
+		disabled ? theme.disabledInputWrapper : null,
+		focus ? theme.focusInputWrapper : null
 	]);
 }
 
@@ -125,7 +129,9 @@ export function textareaCls({ input, merge = true }: IWidgetClasses) {
 	]);
 }
 
-export function fileInputWrapperCls({ inputWrapper, merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean) {
+export function fileInputWrapperCls(
+	{ inputWrapper, merge = true }: IWidgetClasses, dragging: boolean, invalid: boolean
+) {
 	return joinClasses([
 		inputWrapper,
 		merge ? theme.fileInputWrapper : null,

@@ -1,4 +1,4 @@
-import m, { ClassComponent, CVnode } from "mithril";
+import m, { CVnode } from "mithril";
 
 import { IConfig, TIcon, TSubset } from "../interface/config";
 import { ICheckboxField, IPropWidget } from "../interface/widget";
@@ -7,10 +7,11 @@ import { getConfig } from "../config";
 import { checkInputCls, inputWrapperCls, joinClasses, theme, wrapperCls } from "../theme";
 import { getLabelText, setCheck, titleFromLabel } from "../utils";
 
+import { BaseWidget } from "../baseWidget";
 import { SelectionInner } from "./layout/selectionInner";
 
 type TCheckboxWidget = IPropWidget<ICheckboxField>;
-export class CheckboxInput implements ClassComponent<TCheckboxWidget> {
+export class CheckboxInput extends BaseWidget<TCheckboxWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";
@@ -24,7 +25,7 @@ export class CheckboxInput implements ClassComponent<TCheckboxWidget> {
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
-			class: inputWrapperCls(field, false)
+			class: inputWrapperCls(field, this.invalid, this.inFocus)
 		}, [
 			m("input.clip[type=checkbox]", {
 				id, name, value,
@@ -38,7 +39,7 @@ export class CheckboxInput implements ClassComponent<TCheckboxWidget> {
 			m("label.db", {
 				class: joinClasses([
 					checkInputCls(field),
-					required && !val() ? theme.invalidCheckboxWrapper : ""
+					this.invalid ? theme.invalidCheckboxWrapper : ""
 				]),
 				for: id,
 				title,

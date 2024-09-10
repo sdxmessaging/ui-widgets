@@ -10,12 +10,13 @@ uiWidgets.updateConfig({
 });
 
 uiWidgets.updateClasses({
-	invalidInputWrapper: "b--red ba",
 	floatLabelPlaceholder: "o-40",
 	requiredLabel: "bb b--red",
-	requiredInputWrapper: "b--dashed",
+	requiredInputWrapper: "b--black-80",
 	readonlyInputWrapper: "br-pill",
-	disabledInputWrapper: "b--silver"
+	disabledInputWrapper: "b--silver",
+	invalidInputWrapper: "b--red",
+	focusInputWrapper: "b--light-blue"
 });
 
 uiWidgets.updateButtonContext({
@@ -799,7 +800,7 @@ m.mount(document.getElementById("page"), {
 		}, [
 			m(".w-50.pa2", m(uiWidgets.CurrencyInput, {
 				field: {
-					id: "currency-in-currency",
+					id: "currency-in-validation",
 					label: {
 						text: "Currency Input",
 						alt: "(Min 0, Max 1000)"
