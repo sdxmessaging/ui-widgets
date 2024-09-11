@@ -3,6 +3,8 @@
 ## 1.8.36
 
 - Fix `ToggleInput` showing focus
+- Improve layout & validation state reporting in `DateInput` and `CardDateInput` widgets
+- Fix `DateInput` ordering of literals from rtl text locales
 
 ## 1.8.35
 

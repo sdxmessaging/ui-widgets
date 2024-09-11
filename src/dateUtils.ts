@@ -3,14 +3,14 @@ import { DateTime } from "luxon";
 import { IField, TPropStream } from "./interface/widget";
 
 export type TDateInputType = "dd" | "mm" | "yyyy" | "yy";
-export type TDateType = 'day' | 'month' | 'year';
+export type TDateType = "day" | "month" | "year";
 
 // All individual inputs have a fixed suffix for date types
 export function dateInputIds(type: TDateType) {
 	switch (type) {
-		case 'day': return 'dd';
-		case 'month': return 'mm';
-		case 'year': return 'yyyy';
+		case "day": return "dd";
+		case "month": return "mm";
+		case "year": return "yyyy";
 	}
 }
 
@@ -23,12 +23,12 @@ export function focusLastInput(dom: Element, id: string, focusedId?: TDateInputT
 // For showing custom validity message at the right place/input
 function getInvalidInput(message: string): TDateInputType | null {
 	const formattedMessage = message ? message.toLocaleLowerCase() : "";
-	if (formattedMessage.includes('month')) {
-		return 'mm';
-	} else if (formattedMessage.includes('day')) {
+	if (formattedMessage.includes("month")) {
+		return "mm";
+	} else if (formattedMessage.includes("day")) {
 		return "dd";
-	} else if (formattedMessage.includes('year')) {
-		return 'yy';
+	} else if (formattedMessage.includes("year")) {
+		return "yy";
 	} else {
 		return null;
 	}
@@ -55,7 +55,7 @@ export function handleRetreatOrLiteralAdvance(
 	const self = dom.querySelector(`#${id}-${selfType}`) as HTMLInputElement;
 	const maxLength = getElementMaxLength(self);
 
-	if ((event.key === 'Backspace' || event.key === 'Delete') && streamValue.length === 0 && prev) {
+	if ((event.key === "Backspace" || event.key === "Delete") && streamValue.length === 0 && prev) {
 		focusAndSelectNextInput(dom, id, prev);
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
@@ -81,7 +81,7 @@ export function resetInvalidValueStream(valid: boolean, date: string,
 
 export function appendZeroToDayMonth(valueStream: TPropStream) {
 	const value = String(valueStream());
-	if (value.length === 1 && value !== '0') {
+	if (value.length === 1 && value !== "0") {
 		valueStream(`0${value}`);
 	}
 }
@@ -94,10 +94,10 @@ export function validDateInputLengths(year: string, month: string, day: string) 
 
 // get input type for the message from Luxon error explanation
 function getDateFromExplanation(errMsg: string) {
-	if (errMsg.includes('month')) {
-		return 'month';
-	} else if (errMsg.includes('day')) {
-		return 'day';
+	if (errMsg.includes("month")) {
+		return "month";
+	} else if (errMsg.includes("day")) {
+		return "day";
 	}
 	// edge case
 	return "date";
@@ -137,7 +137,7 @@ function getCardDateValidityMessage(year: string, month: string, valid: boolean)
 function setAllValidityMessage(message: string, dom?: Element) {
 	if (dom) {
 		const inputId = getInvalidInput(message);
-		dom.querySelectorAll('input').forEach((item) => {
+		dom.querySelectorAll("input").forEach((item) => {
 			if (inputId && item.id.substring(item.id.length - 2) === inputId && message) {
 				item.setCustomValidity(message);
 			} else {

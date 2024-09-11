@@ -16,7 +16,7 @@ function cleanTime(value: string) {
 }
 
 function padZero(value: string) {
-	return value.padStart(2, '0');
+	return value.padStart(2, "0");
 }
 
 const enum Focus { None, Hour, Minute }
@@ -105,7 +105,7 @@ export class TimeInput extends BaseWidget<IPropWidget> {
 						this.touch();
 					}
 				}),
-				m("span.mr-2px", ":"),
+				m(".di.mr-2px", ":"),
 				m("input.di.w-100.mw-tt.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.number, placeholder: "--",

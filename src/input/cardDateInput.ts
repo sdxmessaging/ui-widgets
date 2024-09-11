@@ -74,10 +74,19 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 			value,
 			invalid: !this.valid(),
 			focus: false
-		}, m('.flex.ph-2px.pv-1px', {
-			onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
-		},
-			m("span", [
+		}, m(".flex.items-center",
+			m(".relative.flex-auto.ph-2px.pv-1px", {
+				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
+			}, [
+				// Hidden input for form validation and submission
+				m("input.absolute.pa0.w1.o-0.pe-none[type=text]", {
+					id, value: value(),
+					required, readonly, disabled,
+					tabindex: -1,
+					ariaHidden: "true"
+				}),
+
+				// Year (2 digit)
 				m("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-mm`, name: `${name}-mm`,
 					type: FieldType.text, placeholder: "MM",
@@ -102,10 +111,11 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						appendZeroToDayMonth(this.month);
 						this.buildDate(Boolean(field.required), attrs.value);
 					}
-				})
-			]),
-			m("span.pa0.mr-2px", "/"),
-			m("span", [
+				}),
+
+				m(".di.mr-2px", "/"),
+
+				// Month
 				m("input.w-100.mw-yy.pa0.bg-transparent.bn.outline-0.tc", {
 					id: `${id}-yy`, name: `${name}-yy`,
 					type: FieldType.text, placeholder: "YY",
@@ -126,16 +136,9 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 						handleDateChange(this.year, id, "yy", this.dom());
 						this.buildDate(Boolean(field.required), attrs.value);
 					}
-				}),
-				// Hidden input for form validation and submission
-				m("input.dn", {
-					id, value: value(),
-					required, readonly, disabled,
-					tabindex: -1,
-					ariaHidden: "true"
 				})
-			])),
-		);
+			])
+		));
 	}
 
 }

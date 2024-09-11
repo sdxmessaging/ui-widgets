@@ -26,7 +26,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	private dateParts!: ReadonlyArray<IDateParts>;
 	private readonly locale = stream<string | undefined>(undefined);
-	private readonly literalKey = stream<string>('/');
+	private readonly literalKey = stream<string>("/");
 	private dateInputAdvanceOrder!: ReadonlyArray<Intl.DateTimeFormatPartTypes>;
 
 	private readonly day = stream<string>("");
@@ -49,6 +49,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			this.dateInputAdvanceOrder.indexOf(type) + 1
 		] as TDateType)) as TDateInputType;
 	}
+
 	private findPrevInput(type: TDateType) {
 		const index = this.dateInputAdvanceOrder.indexOf(type);
 		return (index !== 0 && dateInputIds(this.dateInputAdvanceOrder[
@@ -63,12 +64,10 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.literalKey(dateParts[1].value);
 		const firstInputId = dateInputIds(dateType) as TDateInputType;
 		this.focusedInput(firstInputId);
-
-		this.dateInputAdvanceOrder = lodash(this.dateParts).map((({ type }) => {
-			return type;
-		})).filter((type) => {
-			return type !== "literal";
-		}).value();
+		this.dateInputAdvanceOrder = lodash(this.dateParts)
+			.map((({ type }) => type))
+			.filter((type) => type !== "literal")
+			.value();
 	}
 
 	private setLocale(config?: Partial<IConfig>) {
@@ -89,84 +88,84 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		const classStr = inputCls(uiClass);
 
 		switch (type) {
-			case ('literal'): return m('span.pa0.mr-2px', value);
-			case ('day'): return m("span", m("input.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
+			case ("literal"): return m(".di.mr-2px.tl", value);
+			case ("day"): return m("input.w-100.mw-dd.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-dd`, name: `${name}-dd`,
 				type: FieldType.text, placeholder: "DD",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled, tabindex,
 				value: this.day(),
-				'aria-label': `${name}: Day`,
+				"aria-label": `${name}: Day`,
 				class: `${classStr} maxw-dd p-0px`,
-				onfocus: lodash.partial(this.focusedInput, 'dd'),
+				onfocus: lodash.partial(this.focusedInput, "dd"),
 				onkeydown: (e: KeyboardEvent) => {
-					handleRetreatOrLiteralAdvance(id, 'dd',
+					handleRetreatOrLiteralAdvance(id, "dd",
 						this.day(), this.dom(),
 						e, this.literalKey(), {
-						next: this.findNextInput('day'),
-						prev: this.findPrevInput('day')
+						next: this.findNextInput("day"),
+						prev: this.findPrevInput("day")
 					});
 				},
 				oninput: () => {
-					handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput('day'));
+					handleDateChange(this.day, id, "dd", this.dom(), this.findNextInput("day"));
 					this.buildDate(streamValue, field);
 				},
 				onblur: () => {
 					appendZeroToDayMonth(this.day);
 					this.buildDate(streamValue, field);
 				}
-			}));
-			case ('month'): return m("span", m("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
+			});
+			case ("month"): return m("input.w-100.mw-mm.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-mm`, name: `${name}-mm`,
 				type: FieldType.text, placeholder: "MM",
 				minlength: "2", maxlength: "2",
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled, tabindex,
 				value: this.month(),
-				'aria-label': `${name}: Month`,
+				"aria-label": `${name}: Month`,
 				class: `${classStr} maxw-mm p-0px`,
 				onkeydown: (e: KeyboardEvent) => {
-					handleRetreatOrLiteralAdvance(id, 'mm',
+					handleRetreatOrLiteralAdvance(id, "mm",
 						this.month(), this.dom(),
 						e, this.literalKey(), {
-						next: this.findNextInput('month'),
-						prev: this.findPrevInput('month')
+						next: this.findNextInput("month"),
+						prev: this.findPrevInput("month")
 					});
 				},
 				oninput: () => {
-					handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput('month'));
+					handleDateChange(this.month, id, "mm", this.dom(), this.findNextInput("month"));
 					this.buildDate(streamValue, field);
 				},
-				onfocus: lodash.partial(this.focusedInput, 'mm'),
+				onfocus: lodash.partial(this.focusedInput, "mm"),
 				onblur: () => {
 					appendZeroToDayMonth(this.month);
 					this.buildDate(streamValue, field);
 				}
-			}));
-			case ('year'): return m("span", m("input.w-100.mw-yyyy.pa0.bg-transparent.bn.outline-0.tc", {
+			});
+			case ("year"): return m("input.w-100.mw-yyyy.pa0.bg-transparent.bn.outline-0.tc", {
 				id: `${id}-yyyy`, name: `${name}-yyyy`,
 				type: FieldType.text, placeholder: "YYYY",
 				minlength: "4", maxlength: "4",
 				pattern: "[0-9]*", inputmode: "numeric",
 				required, readonly, disabled, tabindex,
 				value: this.year(),
-				'aria-label': `${name}: Year`,
+				"aria-label": `${name}: Year`,
 				class: `${classStr} maxw-yyyy p-0px`,
-				onfocus: lodash.partial(this.focusedInput, 'yyyy'),
+				onfocus: lodash.partial(this.focusedInput, "yyyy"),
 				onkeydown: (e: KeyboardEvent) => {
-					handleRetreatOrLiteralAdvance(id, 'yyyy',
+					handleRetreatOrLiteralAdvance(id, "yyyy",
 						this.year(), this.dom(),
 						e, this.literalKey(), {
-						next: this.findNextInput('year'),
-						prev: this.findPrevInput('year')
+						next: this.findNextInput("year"),
+						prev: this.findPrevInput("year")
 					});
 				},
 				oninput: () => {
-					handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput('year'));
+					handleDateChange(this.year, id, "yyyy", this.dom(), this.findNextInput("year"));
 					this.buildDate(streamValue, field);
 				}
-			}));
+			});
 		}
 	}
 
@@ -185,7 +184,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			if (newVal) {
 				const date = new Date(String(newVal));
 				// multiple data-binding reset date stream (important, reset local date stream when value is present)
-				this.date('');
+				this.date("");
 				if (isNaN(date.valueOf())) {
 					this.resetDateParts();
 				} else {
@@ -204,9 +203,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 			);
 		});
 
-		this.locale.map((newVal) => {
-			this.setDateInputs(newVal);
-		});
+		this.locale.map((newVal) => this.setDateInputs(newVal));
 		this.setLocale(config);
 	}
 
@@ -236,28 +233,29 @@ export class DateInput implements ClassComponent<IPropWidget> {
 
 	public view(vnode: CVnode<IPropWidget>) {
 		const { attrs: { field, value } } = vnode;
-		const { id, required, readonly, disabled, min, max } = field;
-
+		const { id, name = id, required, readonly, disabled, min, max } = field;
 		return m(LayoutFixed, {
 			field,
 			value,
 			invalid: !this.valid(),
 			focus: false
 		}, m(".flex.items-center", [
-			m(".flex-auto.ph-2px.pv-1px", {
+			m(".relative.flex-auto.ph-2px.pv-1px", {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			},
-				this.dateParts.map(
-					(datePart) => this.createDateInputs(datePart, vnode)
-				),
 				// Hidden input for form validation and submission
-				m("input.dn", {
-					id, value: value(),
+				m("input.absolute.pa0.w1.o-0.pe-none[type=date]", {
+					id, name, value: value(),
 					required, readonly, disabled,
 					min, max,
 					tabindex: -1,
 					ariaHidden: "true"
-				})
+				}),
+
+				// Date components
+				this.dateParts.map(
+					(datePart) => this.createDateInputs(datePart, vnode)
+				)
 			),
 			!(disabled || readonly) && m(DatePicker, { field, value })
 		]));
