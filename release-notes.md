@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.36
+
+- Fix `ToggleInput` showing focus
+
 ## 1.8.35
 
 - Fix `DateInput` and `CardDateInput` not passing HTML form validation when valid

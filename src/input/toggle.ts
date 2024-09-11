@@ -15,10 +15,12 @@ export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "toggleOnIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "toggleOffIcn";
 
-	private toggleWrapper(field: ICheckboxField, val: TPropStream, children: Children) {
+	private toggle(field: ICheckboxField, val: TPropStream, children: Children) {
+		const checked = Boolean(val());
 		const {
 			label, id, name = id, value, title = titleFromLabel(label),
-			required, readonly, disabled, autocomplete, tabindex = "0"
+			required, readonly, disabled, autocomplete, tabindex = "0",
+			config
 		} = field;
 		return [
 			m("input.clip[type=checkbox]", {
@@ -45,46 +47,41 @@ export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 						val(!val());
 					}
 				}
-			}, children)
+			}, [
+				m(".toggle-outer.relative.dib.transition-bg", {
+					class: checked
+						? getConfig("toggleOnWrapper", config)
+						: getConfig("toggleOffWrapper", config)
+				},
+					getIcon(getConfig(checked ? this.onIcon : this.offIcon, config), joinClasses([
+						"toggle-inner absolute tc transition-transform",
+						checked ? "toggle-on" : null
+					]))
+				),
+				children
+			])
 		];
-	}
 
-	private toggleInner(checked: boolean, config?: Partial<IConfig>) {
-		return m(".toggle-outer.relative.dib.transition-bg", {
-			class: checked
-				? getConfig("toggleOnWrapper", config)
-				: getConfig("toggleOffWrapper", config)
-		},
-			getIcon(getConfig(checked ? this.onIcon : this.offIcon, config), joinClasses([
-				"toggle-inner absolute tc transition-transform",
-				checked ? "toggle-on" : null
-			]))
-		);
 	}
 
 	public view({ attrs: { field, value: val } }: CVnode<TCheckboxWidget>) {
-		const {
-			label, required, disabled,
-			uiClass = {}, layout, config
-		} = field;
-		const checked = Boolean(val());
+		const { label, required, disabled, uiClass, layout } = field;
 		return layout
 			// Toggle in widget layout
 			? m(Layout, {
 				field,
 				value: val,
 				invalid: this.invalid,
-				focus: this.inFocus
-			}, this.toggleWrapper(field, val,
-				this.toggleInner(checked, config)
-			))
+				focus: false
+			},
+				this.toggle(field, val, null)
+			)
 			// Toggle with inline label
 			: m("div", {
 				class: wrapperCls(uiClass, disabled),
 			}, m("fieldset.w-100.bn", {
 				class: inputWrapperCls(field)
-			}, this.toggleWrapper(field, val, [
-				this.toggleInner(checked, config),
+			}, this.toggle(field, val, [
 				label ? m("span.mh1", getLabelText(label, required)) : null
 			])));
 	}
