@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.35
+
+- Don't show invalid/focus wrapper class on `CheckboxInput`, `ToggleInput`, or `RadioInput` widgets
+
 ## 1.8.34
 
 - Revert: BREAKING Widget `invalidInputWrapper` class is now only applied after first user interaction or when value stream has a value set (from 1.8.29)

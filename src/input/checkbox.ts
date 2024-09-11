@@ -25,7 +25,7 @@ export class CheckboxInput extends BaseWidget<TCheckboxWidget> {
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
-			class: inputWrapperCls(field, this.invalid, this.inFocus)
+			class: inputWrapperCls(field)
 		}, [
 			m("input.clip[type=checkbox]", {
 				id, name, value,

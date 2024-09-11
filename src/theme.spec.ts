@@ -86,6 +86,7 @@ describe("Theme Classes", () => {
 		const exampleField: IField = { id: "test" };
 		expect(inputWrapperCls(exampleField)).toBe(theme.inputWrapper);
 		expect(inputWrapperCls(exampleField, true)).toBe(`${theme.inputWrapper} ${theme.invalidInputWrapper}`);
+		expect(inputWrapperCls(exampleField, true, true)).toBe(`${theme.inputWrapper} ${theme.invalidInputWrapper}`);
 		expect(inputWrapperCls({
 			...exampleField,
 			uiClass: {
@@ -108,7 +109,7 @@ describe("Theme Classes", () => {
 				inputWrapper: "test",
 				merge: false
 			}
-		}, true)).toBe("test invalid");
+		}, true)).toBe(`test ${theme.invalidInputWrapper}`);
 	});
 
 	test("wrapperCls", () => {

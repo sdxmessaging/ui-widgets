@@ -82,7 +82,7 @@ export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 			: m("div", {
 				class: wrapperCls(uiClass, disabled),
 			}, m("fieldset.w-100.bn", {
-				class: inputWrapperCls(field, this.invalid, this.inFocus)
+				class: inputWrapperCls(field)
 			}, this.toggleWrapper(field, val, [
 				this.toggleInner(checked, config),
 				label ? m("span.mh1", getLabelText(label, required)) : null

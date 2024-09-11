@@ -23,7 +23,7 @@ export class RadioInput extends BaseWidget<TRadioWidget> {
 		return m("div", {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
-			class: inputWrapperCls(field, this.invalid, this.inFocus)
+			class: inputWrapperCls(field)
 		}, [
 			m("input.clip[type=radio]", {
 				id, name, value,
