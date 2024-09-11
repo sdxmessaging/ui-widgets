@@ -129,7 +129,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				}),
 				// Hidden input for form validation and submission
 				m("input.dn", {
-					id,
+					id, value: value(),
 					required, readonly, disabled,
 					tabindex: -1,
 					ariaHidden: "true"

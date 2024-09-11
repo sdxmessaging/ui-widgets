@@ -252,7 +252,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				),
 				// Hidden input for form validation and submission
 				m("input.dn", {
-					id,
+					id, value: value(),
 					required, readonly, disabled,
 					min, max,
 					tabindex: -1,

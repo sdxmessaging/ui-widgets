@@ -2,6 +2,7 @@
 
 ## 1.8.35
 
+- Fix `DateInput` and `CardDateInput` not passing HTML form validation when valid
 - Don't show invalid/focus wrapper class on `CheckboxInput`, `ToggleInput`, or `RadioInput` widgets
 
 ## 1.8.34
