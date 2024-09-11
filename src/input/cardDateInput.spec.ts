@@ -200,7 +200,7 @@ describe("CardDateInput", () => {
 		const monthInSpy = jest.spyOn(monthIn, 'focus');
 		const firstInput = root.querySelector('input') as HTMLInputElement;
 		expect(firstInput).not.toBeNull();
-		const inputContainer = firstInput.closest('.flex') as HTMLElement;
+		const inputContainer = firstInput.closest('.flex-auto') as HTMLElement;
 		expect(inputContainer).not.toBeNull();
 
 		inputContainer.dispatchEvent(new Event('click'));
