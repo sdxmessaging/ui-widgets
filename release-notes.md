@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.37
+
+- `CheckList` keyboard navigation reworked to filter list on type
+
 ## 1.8.36
 
 - Fix `ToggleInput` showing focus

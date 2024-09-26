@@ -6,8 +6,10 @@ import { IOption, IOptionField, IPropWidget, TProp, TPropStream } from "../inter
 import { getConfig, getIcon } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
 
-import { IConfig, TIcon, TSubset } from "../interface/config";
 import { BaseWidget } from "../baseWidget";
+import { IConfig, TIcon, TSubset } from "../interface/config";
+import { List } from "../list/list";
+import { ListController } from "../list/listController";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 type TSelectWidget = IPropWidget<IOptionField>;
@@ -15,6 +17,8 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";
+
+	private list!: ListController<IOption>;
 
 	private selected = new Set<string>();
 	private open = false;
@@ -26,6 +30,9 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 	private set focusOption(value: TProp | null) {
 		this.open = value != null;
 		this._focusOption = value;
+		if (!this.open) {
+			this.applyFilter("");
+		}
 	}
 	private keySearch = "";
 	private keyTs = 0;
@@ -51,29 +58,29 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 		value(Array.from(this.selected).join(","));
 	}
 
-	private moveFocus(options: ReadonlyArray<IOption>, delta: 1 | -1) {
+	private moveFocus(delta: 1 | -1) {
+		const options = this.list.filteredData;
 		const idx = lodash.findIndex(options, ({ value }) => value === this.focusOption);
 		const clampIdx = lodash.clamp(idx + delta, 0, options.length - 1);
 		this.focusOption = options[clampIdx].value;
 	}
 
-	private findFocus(options: ReadonlyArray<IOption>, character: string) {
+	private applyFilter(search: string) {
+		this.keySearch = search;
+		this.list.applyFilter();
+	}
+
+	private filterList(character: string) {
 		// Chain key presses within 333ms
 		const evtTs = Date.now();
 		if (evtTs - this.keyTs > 333) {
 			this.keySearch = "";
 			this.keyTs = evtTs;
 		}
-		this.keySearch += character;
-		const match = lodash.find(options,
-			({ value, label = value }) => String(label).toLowerCase().includes(this.keySearch)
-		);
-		if (match) {
-			this.focusOption = match.value;
-		}
+		this.applyFilter(this.keySearch + character);
 	}
 
-	private keyNav(evt: KeyboardEvent, options: ReadonlyArray<IOption>, value: TPropStream, multiple?: boolean) {
+	private keyNav(evt: KeyboardEvent, value: TPropStream, multiple?: boolean) {
 		// Don't handle any key presses with modifiers
 		if (evt.altKey || evt.ctrlKey || evt.metaKey) {
 			return;
@@ -82,12 +89,12 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 			// Navigate
 			case "ArrowDown": {
 				evt.preventDefault();
-				this.moveFocus(options, 1);
+				this.moveFocus(1);
 				break;
 			}
 			case "ArrowUp": {
 				evt.preventDefault();
-				this.moveFocus(options, -1);
+				this.moveFocus(-1);
 				break;
 			}
 			// Toggle
@@ -107,11 +114,18 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 				this.focusOption = null;
 				break;
 			}
+			// Clear search
+			case "Delete":
+			case "Backspace": {
+				evt.preventDefault();
+				this.applyFilter("");
+				break;
+			}
 			// Search
 			default:
 				if (evt.key.length === 1) {
 					evt.preventDefault();
-					this.findFocus(options, evt.key.toLowerCase());
+					this.filterList(evt.key.toLowerCase());
 				}
 		}
 	}
@@ -142,7 +156,13 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 		}
 	}
 
-	public oninit({ attrs: { value } }: CVnode<TSelectWidget>) {
+	public oninit({ attrs: { field: { options = [] }, value } }: CVnode<TSelectWidget>) {
+		this.list = ListController.single(() => Promise.resolve(options));
+		this.list.setFilter((options) => options.filter(
+			({ value, label = value }) => String(label)
+				.toLowerCase()
+				.includes(this.keySearch)
+		));
 		this.syncSelection(value);
 	}
 
@@ -185,7 +205,7 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 				onfocusout: () => this.focusOption = null,
 				"aria-activedescendant": `${id}-${this.focusOption}`,
 				onkeydown: active
-					? (evt: KeyboardEvent) => this.keyNav(evt, options, val, multiple)
+					? (evt: KeyboardEvent) => this.keyNav(evt, val, multiple)
 					: undefined
 			}, [
 				m(".flex.items-center", [
@@ -199,15 +219,17 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 						this.open ? "rotate-180" : null
 					]))
 				]),
-				this.open && m(".absolute.z-max.us-none", {
-					class: joinClasses([
+				this.open && m(List<IOption>, {
+					controller: this.list,
+					classes: joinClasses([
+						"absolute z-max us-none",
 						theme.checkListOptionsWrapper,
 						getConfig("checkListDropUp", config) ? "bottom-0" : "mt3"
-					])
-				}, multiple
-					? options.map((opt) => this.multiSelectionRow(val, id, opt, config))
-					: options.map((opt) => this.singleSelectionRow(val, id, opt))
-				)
+					]),
+					component: multiple
+						? { view: ({ attrs }) => this.multiSelectionRow(val, id, attrs, config) }
+						: { view: ({ attrs }) => this.singleSelectionRow(val, id, attrs) }
+				})
 			])
 		]);
 
