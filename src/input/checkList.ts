@@ -75,8 +75,8 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 		const evtTs = Date.now();
 		if (evtTs - this.keyTs > 333) {
 			this.keySearch = "";
-			this.keyTs = evtTs;
 		}
+		this.keyTs = evtTs;
 		this.applyFilter(this.keySearch + character);
 	}
 
@@ -209,10 +209,13 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 					: undefined
 			}, [
 				m(".flex.items-center", [
-					m(".flex-auto.ph-2px.pv-1px", {
-						class: this.selected.size ? undefined : theme.floatLabelPlaceholder
-					},
-						this.placeHolder(val, options, placeholder)
+					m(".flex-auto.ph-2px.pv-1px", this.keySearch
+						// Search term
+						? m("span", this.keySearch)
+						// Selected option(s) or placeholder text
+						: m("span", {
+							class: this.selected.size ? undefined : theme.floatLabelPlaceholder
+						}, this.placeHolder(val, options, placeholder))
 					),
 					getIcon(getConfig("checkListIcn", config), joinClasses([
 						"ph-2px pv-1px transition-transform",
