@@ -35,7 +35,6 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 		}
 	}
 	private keySearch = "";
-	private keyTs = 0;
 
 	private toggleOpen() {
 		const ts = Date.now();
@@ -68,16 +67,6 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 	private applyFilter(search: string) {
 		this.keySearch = search;
 		this.list.applyFilter();
-	}
-
-	private filterList(character: string) {
-		// Chain key presses within 333ms
-		const evtTs = Date.now();
-		if (evtTs - this.keyTs > 333) {
-			this.keySearch = "";
-		}
-		this.keyTs = evtTs;
-		this.applyFilter(this.keySearch + character);
 	}
 
 	private keyNav(evt: KeyboardEvent, value: TPropStream, multiple?: boolean) {
@@ -129,7 +118,7 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 			default:
 				if (evt.key.length === 1) {
 					evt.preventDefault();
-					this.filterList(evt.key.toLowerCase());
+					this.applyFilter(this.keySearch + evt.key.toLowerCase());
 				}
 		}
 	}
