@@ -115,10 +115,14 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 				break;
 			}
 			// Clear search
-			case "Delete":
-			case "Backspace": {
+			case "Delete": {
 				evt.preventDefault();
 				this.applyFilter("");
+				break;
+			}
+			case "Backspace": {
+				evt.preventDefault();
+				this.applyFilter(this.keySearch.slice(0, - 1));
 				break;
 			}
 			// Search
