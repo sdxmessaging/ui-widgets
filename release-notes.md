@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.38
+
+- Fix `CheckList` not reacting to changes in option list
+
 ## 1.8.37
 
 - `CheckList` keyboard navigation reworked to filter list on type

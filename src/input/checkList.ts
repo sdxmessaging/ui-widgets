@@ -18,6 +18,7 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";
 
+	private opts: IOption[] = [];
 	private list!: ListController<IOption>;
 
 	private selected = new Set<string>();
@@ -150,7 +151,8 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 	}
 
 	public oninit({ attrs: { field: { options = [] }, value } }: CVnode<TSelectWidget>) {
-		this.list = ListController.single(() => Promise.resolve(options));
+		this.opts = options;
+		this.list = ListController.single(() => Promise.resolve(this.opts));
 		this.list.setFilter((options) => options.filter(
 			({ value, label = value }) => String(label)
 				.toLowerCase()
@@ -159,8 +161,13 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 		this.syncSelection(value);
 	}
 
-	public onbeforeupdate({ attrs: { value } }: CVnode<TSelectWidget>) {
+	public onbeforeupdate({ attrs: { field: { options = [] }, value } }: CVnode<TSelectWidget>) {
 		this.syncSelection(value);
+		// React to changes in options list length
+		if (options.length !== this.opts.length) {
+			this.opts = options;
+			this.list.reload();
+		}
 	}
 
 	public view({ attrs }: CVnode<TSelectWidget>) {
