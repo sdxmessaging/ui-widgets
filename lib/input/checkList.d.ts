@@ -6,6 +6,7 @@ type TSelectWidget = IPropWidget<IOptionField>;
 export declare class CheckList extends BaseWidget<TSelectWidget> {
     protected readonly onIcon: keyof TSubset<IConfig, TIcon>;
     protected readonly offIcon: keyof TSubset<IConfig, TIcon>;
+    private opts;
     private list;
     private selected;
     private open;
@@ -23,7 +24,7 @@ export declare class CheckList extends BaseWidget<TSelectWidget> {
     /** Sync selection set with value stream */
     private syncSelection;
     oninit({ attrs: { field: { options }, value } }: CVnode<TSelectWidget>): void;
-    onbeforeupdate({ attrs: { value } }: CVnode<TSelectWidget>): void;
+    onbeforeupdate({ attrs: { field: { options }, value } }: CVnode<TSelectWidget>): void;
     view({ attrs }: CVnode<TSelectWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
     private singleSelectionRow;
     private multiSelectionRow;
