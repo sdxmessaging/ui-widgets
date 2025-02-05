@@ -49,6 +49,7 @@ export const enum FieldType {
 	cardDate = "cardDate",
 	textarea = "textarea",
 	checkbox = "checkbox",
+	checkboxGroup = "checkboxGroup",
 	toggle = "toggle",
 	select = "select",
 	checkList = "checkList",
@@ -146,12 +147,30 @@ export interface IOption {
 	readonly label?: string;
 }
 
+// Select options grouped
+export interface IGroupedOption {
+	readonly value: TProp;
+	readonly label?: string;
+	readonly isGroup?: boolean;
+}
+
 // We should ideally explicitly type these IField variants:
 // extends Omit<IField, "type">
 export interface IOptionField extends IField {
 	readonly type?: "select" | "checkList" | "sign";
 	readonly multiple?: boolean;
 	readonly options?: IOption[];
+}
+
+export interface IGroupOption {
+	readonly group: string;
+	readonly options?: IOption[];
+}
+
+export interface IGroupOptionField extends IField {
+	readonly type?: "checkboxGroup";
+	readonly multiple?: boolean;
+	readonly groups?: IGroupOption[];
 }
 
 export interface ISignField extends IOptionField {
