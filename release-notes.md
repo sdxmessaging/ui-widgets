@@ -1,8 +1,13 @@
 # Release Notes
 
+## 1.8.40
+
+- CheckListGroup single item selected bug fix 
+
 ## 1.8.39
 
 - CheckListGroup
+
 ## 1.8.38
 
 - Fix `CheckList` not reacting to changes in option list

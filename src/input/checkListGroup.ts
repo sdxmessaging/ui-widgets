@@ -291,7 +291,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 						: m("span", {
 							class: this.selected.size ? undefined : theme.floatLabelPlaceholder
 							// TODO fix placeholder
-						}, this.placeHolder(val, [], placeholder))
+						}, this.placeHolder(val, this.opts, placeholder))
 					),
 					getIcon(getConfig("checkListIcn", config), joinClasses([
 						"ph-2px pv-1px transition-transform",
