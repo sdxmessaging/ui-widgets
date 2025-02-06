@@ -3,7 +3,7 @@ import { IGroupOptionField, IPropWidget } from "../interface/widget";
 import { BaseWidget } from "../baseWidget";
 import { IConfig, TIcon, TSubset } from "../interface/config";
 type TSelectWidget = IPropWidget<IGroupOptionField>;
-export declare class CheckboxGroup extends BaseWidget<TSelectWidget> {
+export declare class CheckListGroup extends BaseWidget<TSelectWidget> {
     protected readonly onIcon: keyof TSubset<IConfig, TIcon>;
     protected readonly offIcon: keyof TSubset<IConfig, TIcon>;
     private opts;
@@ -11,15 +11,19 @@ export declare class CheckboxGroup extends BaseWidget<TSelectWidget> {
     private selected;
     private open;
     private openTs;
-    private _focusOption;
-    private get focusOption();
-    private set focusOption(value);
+    private _focusOptionValue;
+    private get focusOptionValue();
+    private set focusOptionValue(value);
     private keySearch;
     private toggleOpen;
+    private focusOption;
+    private toggleMultiple;
+    private allGroupChildrenSelected;
     private toggleSelection;
     private moveFocus;
     private applyFilter;
     private keyNav;
+    private selectedCount;
     private placeHolder;
     /** Sync selection set with value stream */
     private syncSelection;

@@ -1,4 +1,4 @@
-/* @preserve built on: 2025-02-05T15:03:14.260Z */
+/* @preserve built on: 2025-02-06T15:35:41.989Z */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('lodash'), require('mithril'), require('mithril/stream'), require('luxon'), require('flatpickr'), require('signature_pad')) :
     typeof define === 'function' && define.amd ? define(['exports', 'lodash', 'mithril', 'mithril/stream', 'luxon', 'flatpickr', 'signature_pad'], factory) :
@@ -39,6 +39,8 @@
         checkListOptionIcon: "mh1",
         checkListOptionSingleSelected: "bg-light-blue fw6",
         checkListOptionMultiSelected: "fw6",
+        checkListGroupHeaders: "fw6",
+        checkListGroupChildren: "ml4",
         timeInputScrollerWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas top-2 shadow-4",
         timeInputScrollerNumber: "pv1 mv2 w-100 mw-dd tc f6 fw6 bg-light-gray"
     };
@@ -3211,7 +3213,7 @@
         }
     }
 
-    class CheckboxGroup extends BaseWidget {
+    class CheckListGroup extends BaseWidget {
         constructor() {
             super(...arguments);
             this.onIcon = "checkIcn";
@@ -3220,15 +3222,16 @@
             this.selected = new Set();
             this.open = false;
             this.openTs = 0;
-            this._focusOption = null;
+            this._focusOptionValue = null;
             this.keySearch = "";
+            this.focusOption = null;
         }
-        get focusOption() {
-            return this._focusOption;
+        get focusOptionValue() {
+            return this._focusOptionValue;
         }
-        set focusOption(value) {
+        set focusOptionValue(value) {
             this.open = value != null;
-            this._focusOption = value;
+            this._focusOptionValue = value;
             if (!this.open) {
                 this.applyFilter("");
             }
@@ -3240,30 +3243,55 @@
                 this.openTs = ts;
             }
         }
-        toggleSelection(option, value, multiple) {
-            if (!multiple) {
-                this.selected.clear();
-                this.focusOption = null;
-            }
+        toggleMultiple(direction, option, groupId, isGroupHeader) {
+            direction === "on" ? this.selected.add(option) : this.selected.delete(option);
+            isGroupHeader && this.opts.map((option) => {
+                if (option.groupId === groupId) {
+                    direction === "on" ? this.selected.add(String(option.value)) : this.selected.delete(String(option.value));
+                }
+            });
+        }
+        allGroupChildrenSelected(groupId) {
+            const groupChildren = lodash.filter(this.opts, (option) => {
+                return (option.groupId === groupId &&
+                    option.isGroupHeader === false);
+            });
+            const selectedGroupChildren = lodash.filter(groupChildren, (option) => this.selected.has(String(option.value)));
+            return groupChildren.length === selectedGroupChildren.length;
+        }
+        toggleSelection(option, value, isGroupHeader, groupId) {
+            var _a;
             if (this.selected.has(option)) {
-                this.selected.delete(option);
+                this.toggleMultiple("off", option, groupId, isGroupHeader);
             }
             else {
-                this.selected.add(option);
+                this.toggleMultiple("on", option, groupId, isGroupHeader);
+            }
+            const groupHeaderVal = (_a = lodash.find(this.opts, (option) => {
+                return option.isGroupHeader && option.groupId === groupId;
+            })) === null || _a === void 0 ? void 0 : _a.value;
+            // if all group children are unselected - deselected group header
+            if (!this.allGroupChildrenSelected(groupId)) {
+                this.selected.delete(String(groupHeaderVal));
+            }
+            else {
+                // if all group children are selected - select group header
+                this.selected.add(String(groupHeaderVal));
             }
             value(Array.from(this.selected).join(","));
         }
         moveFocus(delta) {
             const options = this.list.filteredData;
-            const idx = lodash.findIndex(options, ({ value }) => value === this.focusOption);
+            const idx = lodash.findIndex(options, ({ value }) => value === this.focusOptionValue);
             const clampIdx = lodash.clamp(idx + delta, 0, options.length - 1);
-            this.focusOption = options[clampIdx].value;
+            this.focusOptionValue = options[clampIdx].value;
+            this.focusOption = options[clampIdx];
         }
         applyFilter(search) {
             this.keySearch = search;
             this.list.applyFilter();
         }
-        keyNav(evt, value, multiple) {
+        keyNav(evt, value) {
             // Don't handle any key presses with modifiers
             if (evt.altKey || evt.ctrlKey || evt.metaKey) {
                 return;
@@ -3284,8 +3312,8 @@
                 case " ":
                 case "Enter": {
                     evt.preventDefault();
-                    if (this.focusOption != null) {
-                        this.toggleSelection(String(this.focusOption), value, multiple);
+                    if (this.focusOptionValue != null && this.focusOption != null) {
+                        this.toggleSelection(String(this.focusOptionValue), value, this.focusOption.isGroupHeader, this.focusOption.groupId);
                     }
                     else {
                         this.toggleOpen();
@@ -3295,7 +3323,7 @@
                 // Close
                 case "Escape": {
                     evt.preventDefault();
-                    this.focusOption = null;
+                    this.focusOptionValue = null;
                     break;
                 }
                 // Clear search
@@ -3317,11 +3345,18 @@
                     }
             }
         }
+        selectedCount() {
+            // ignore group headers when counting
+            return lodash.chain(this.opts)
+                .filter((option) => !option.isGroupHeader)
+                .filter((option) => this.selected.has(String(option.value)))
+                .value().length;
+        }
         // Placeholder, single selection, or count of selected
         placeHolder(value, options, placeholder) {
             var _a, _b;
             if (this.selected.size > 1) {
-                return `${this.selected.size} Selected`;
+                return `${this.selectedCount()} Selected`;
             }
             else if (this.selected.size === 1) {
                 const matchVal = value();
@@ -3343,11 +3378,14 @@
             }
         }
         oninit({ attrs: { field: { groups = [] }, value } }) {
-            this.opts = lodash.flatMap(groups, ({ group, options = [] }) => [
-                { value: group, label: group, isGroup: true },
-                ...options
-            ]);
-            console.log('1111', this.opts);
+            this.opts = lodash.flatMap(groups, ({ groupLabel, groupId, options = [] }) => {
+                return [
+                    { value: groupId, label: groupLabel, isGroupHeader: true, groupId },
+                    ...options.map((option) => {
+                        return Object.assign(Object.assign({}, option), { isGroupHeader: false, groupId });
+                    })
+                ];
+            });
             this.list = ListController.single(() => Promise.resolve(this.opts));
             this.list.setFilter((options) => options.filter(({ value, label = value }) => String(label)
                 .toLowerCase()
@@ -3355,9 +3393,11 @@
             this.syncSelection(value);
         }
         onbeforeupdate({ attrs: { field: { groups = [] }, value } }) {
-            const options = lodash.flatMap(groups, ({ group, options = [] }) => [
-                { value: group, label: group, isGroup: true },
-                ...options
+            const options = lodash.flatMap(groups, ({ groupLabel, groupId, options = [] }) => [
+                { value: groupId, label: groupLabel, isGroupHeader: true, groupId },
+                ...options.map((option) => {
+                    return Object.assign(Object.assign({}, option), { isGroupHeader: false, groupId });
+                })
             ]);
             this.syncSelection(value);
             // React to changes in options list length
@@ -3368,7 +3408,7 @@
         }
         view({ attrs }) {
             const { field, value: val } = attrs;
-            const { label: lbl, id, name = id, title = lbl, required, readonly, disabled, multiple, uiClass = {}, placeholder = "Select", config } = field;
+            const { label: lbl, id, name = id, title = lbl, required, readonly, disabled, uiClass = {}, placeholder = "Select", config } = field;
             const active = !(disabled || readonly);
             return m(LayoutFixed, {
                 field,
@@ -3392,10 +3432,10 @@
                     class: inputCls(uiClass),
                     onclick: () => active ? this.toggleOpen() : undefined,
                     onfocusin: () => active ? this.toggleOpen() : undefined,
-                    onfocusout: () => this.focusOption = null,
-                    "aria-activedescendant": `${id}-${this.focusOption}`,
+                    onfocusout: () => this.focusOptionValue = null,
+                    "aria-activedescendant": `${id}-${this.focusOptionValue}`,
                     onkeydown: active
-                        ? (evt) => this.keyNav(evt, val, multiple)
+                        ? (evt) => this.keyNav(evt, val)
                         : undefined
                 }, [
                     m(".flex.items-center", [
@@ -3424,54 +3464,25 @@
                 ])
             ]);
         }
-        // private singleSelectionRow(val: TPropStream, id: string, opt: IOption) {
-        // 	const { value, label = value } = opt;
-        // 	const selected = this.selected.has(String(value));
-        // 	const focus = value === this.focusOption ? "true" : undefined;
-        // 	return m(".ui-widgets-option.cursor-default", {
-        // 		id: `${id}-${value}`,
-        // 		class: joinClasses([
-        // 			theme.checkListOption,
-        // 			selected ? theme.checkListOptionSingleSelected : null
-        // 		]),
-        // 		role: "option",
-        // 		ariaSelected: selected,
-        // 		"aria-activedescendant": focus,
-        // 		onclick: (evt: MouseEvent) => {
-        // 			evt.stopPropagation();
-        // 			this.toggleSelection(String(value), val);
-        // 		}
-        // 	},
-        // 		m("span", {
-        // 			class: theme.checkListOptionLabel
-        // 		}, label)
-        // 	);
-        // }
-        // private groupSelectionRow(val: TPropStream, id: string, opt: IOption) {
-        // 	return m('div', [
-        // 		m('div', options.map((opt) => this.singleSelectionRow(val, id, opt)))
-        // 	]);
-        // }
         multiSelectionRow(val, id, opt, config) {
-            const { value, label = value, isGroup = false } = opt;
+            const { value, label = value, isGroupHeader = false, groupId } = opt;
             const selected = this.selected.has(String(value));
             const icon = selected
                 ? getConfig(this.onIcon, config)
                 : getConfig(this.offIcon, config);
-            const focus = value === this.focusOption ? "true" : undefined;
+            const focus = value === this.focusOptionValue ? "true" : undefined;
             return m(".ui-widgets-option.cursor-default", {
                 id: `${id}-${value}`,
                 class: joinClasses([
                     theme.checkListOption,
-                    selected ? theme.checkListOptionMultiSelected : null,
-                    !isGroup && "ml4"
+                    isGroupHeader ? theme.checkListGroupHeaders : theme.checkListGroupChildren
                 ]),
                 role: "option",
                 ariaSelected: selected,
                 "aria-activedescendant": focus,
                 onclick: (evt) => {
                     evt.stopPropagation();
-                    this.toggleSelection(String(value), val, true);
+                    this.toggleSelection(String(value), val, isGroupHeader, groupId);
                 }
             }, [
                 getIcon(icon, theme.checkListOptionIcon),
@@ -4126,8 +4137,8 @@
     exports.ButtonLink = ButtonLink;
     exports.CardDateInput = CardDateInput;
     exports.CheckList = CheckList;
+    exports.CheckListGroup = CheckListGroup;
     exports.Checkbox = Checkbox;
-    exports.CheckboxGroup = CheckboxGroup;
     exports.CheckboxInput = CheckboxInput;
     exports.Currency = Currency;
     exports.CurrencyInput = CurrencyInput;

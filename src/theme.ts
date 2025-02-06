@@ -37,6 +37,8 @@ const classMapState: Required<IClassMap> = {
 	checkListOptionIcon: "mh1",
 	checkListOptionSingleSelected: "bg-light-blue fw6",
 	checkListOptionMultiSelected: "fw6",
+	checkListGroupHeaders: "fw6",
+	checkListGroupChildren: "ml4",
 	timeInputScrollerWrapper: "ba br2 b--silver pa2 dark-gray bg-canvas top-2 shadow-4",
 	timeInputScrollerNumber: "pv1 mv2 w-100 mw-dd tc f6 fw6 bg-light-gray"
 };

@@ -54,18 +54,18 @@ var multiValOpts = [{
 	value: "long", label: "Extra long label that should overflow this option container and wrap lines"
 }];
 var yellowFruit = [{
-	value: "A", label: "Lemon",
+	value: "lemon", label: "Lemon",
 }, {
-	value: "B", label: "Banana"
+	value: "banana", label: "Banana"
 }, {
-	value: "C", label: "Melon"
+	value: "melon", label: "Melon"
 }];
 var redFruit = [{
-	value: "A", label: "Apple",
+	value: "apple", label: "Apple",
 }, {
-	value: "B", label: "Dragon Fruit"
+	value: "dragon-fruit", label: "Dragon Fruit"
 }, {
-	value: "C", label: "Strawberry"
+	value: "strawberry", label: "Strawberry"
 }];
 var faceVal = stream();
 var faceValUiClass = {
@@ -731,7 +731,7 @@ m.mount(document.getElementById("page"), {
 					},
 					value: multiVal
 				}),
-				m(uiWidgets.CheckboxGroup, {
+				m(uiWidgets.CheckListGroup, {
 					field: {
 						id: "multi-checklist-in",
 						label: "Multi CheckList Input",
@@ -740,11 +740,13 @@ m.mount(document.getElementById("page"), {
 						placeholder: "Multiple",
 						groups: [
 							{
-								group: "Yellow Fruit",
+								groupId: 'yellow-fruit',
+								groupLabel: "Yellow Fruit",
 								options: yellowFruit
 							},
 							{
-								group: "Red Fruit",
+								groupId: "red-fruit",
+								groupLabel: "Red Fruit",
 								options: redFruit
 							}
 						]

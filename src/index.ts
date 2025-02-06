@@ -55,7 +55,7 @@ export { ToggleInput } from "./input/toggle";
 export { RadioInput } from "./input/radio";
 export { SelectInput } from "./input/select";
 export { CheckList } from "./input/checkList";
-export { CheckboxGroup } from "./input/checkboxGroup";
+export { CheckListGroup } from "./input/checkListGroup";
 // File
 export { FileMulti } from "./input/fileMulti";
 export { FileSelect } from "./input/fileSelect";
