@@ -96,10 +96,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 			// if all group children are selected - select group header
 			this.selected.add(String(groupHeaderVal));
 		}
-
-
-
-
+		
 		value(Array.from(this.selected).join(","));
 	}
 
