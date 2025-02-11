@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import m, { Children, CVnode } from "mithril";
 
-import { IGroupOption, IGroupOptionField, IOption, IPropWidget, TProp, TPropStream } from "../interface/widget";
+import { IGroupOption, IGroupOptionField, IPropWidget, TProp, TPropStream } from "../interface/widget";
 
 import { getConfig, getIcon } from "../config";
 import { inputCls, joinClasses, theme } from "../theme";
@@ -12,15 +12,24 @@ import { List } from "../list/list";
 import { ListController } from "../list/listController";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
-type TSelectWidget = IPropWidget<IGroupOptionField>;
-
 interface IFlatGroupedOption {
+	readonly groupId: string;
 	readonly value: TProp;
 	readonly label?: string;
-	readonly groupId: string;
-	readonly isGroupHeader: boolean;
+	readonly header?: boolean;
 }
+
+type TSelectWidget = IPropWidget<IGroupOptionField>;
 export class CheckListGroup extends BaseWidget<TSelectWidget> {
+
+	private static flattenOpts(groups: IGroupOption[]): IFlatGroupedOption[] {
+		return lodash.flatMap<IGroupOption, IFlatGroupedOption>(groups,
+			({ groupLabel, groupId, options = [] }) => [
+				{ groupId, value: groupId, label: groupLabel, header: true },
+				...options.map((option) => ({ groupId, ...option }))
+			]
+		);
+	}
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";
 	protected readonly offIcon: keyof TSubset<IConfig, TIcon> = "uncheckIcn";
@@ -31,6 +40,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 	private selected = new Set<string>();
 	private open = false;
 	private openTs = 0;
+	private focusOption: IFlatGroupedOption | null = null;
 	private _focusOptionValue: TProp | null = null;
 	private get focusOptionValue() {
 		return this._focusOptionValue;
@@ -52,42 +62,43 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 		}
 	}
 
-	private focusOption: IFlatGroupedOption | null = null;
-
-	private toggleMultiple(direction: "on" | "off", option: string, groupId: string, isGroupHeader: boolean) {
-		direction === "on" ? this.selected.add(option) : this.selected.delete(option);
-		isGroupHeader && this.opts.map((option) => {
-			if (option.groupId === groupId) {
-				direction === "on" ? this.selected.add(String(option.value)) : this.selected.delete(String(option.value));
-			}
-		});
-	}
-
-
 	private allGroupChildrenSelected(groupId: string) {
-		const groupChildren = lodash.filter(this.opts, (option) => {
-			return (
-				option.groupId === groupId &&
-				option.isGroupHeader === false
-			);
-		});
-		const selectedGroupChildren = lodash.filter(groupChildren, (option: IFlatGroupedOption) => 
-				this.selected.has(String(option.value))
+		const groupChildren = this.opts.filter(
+			(option) => option.groupId === groupId && option.header !== true
 		);
-		return groupChildren.length === selectedGroupChildren.length;
+		const selectedChildren = groupChildren.filter(
+			(option) => this.selected.has(String(option.value))
+		);
+		return groupChildren.length === selectedChildren.length;
 	}
 
+	private toggleSelection(groupOption: IFlatGroupedOption, value: TPropStream) {
+		const { value: optVal, groupId, header = false } = groupOption;
+		const option = String(optVal);
 
-	private toggleSelection(option: string, value: TPropStream, isGroupHeader: boolean, groupId: string) {
-		if (this.selected.has(option)) {
-			this.toggleMultiple("off", option, groupId, isGroupHeader);
+		// Toggle selected option
+		const deselect = this.selected.has(option);
+		if (deselect) {
+			this.selected.delete(option);
 		} else {
-			this.toggleMultiple("on", option, groupId, isGroupHeader);
+			this.selected.add(option);
+		}
+		// Toggle selected group
+		if (header) {
+			this.opts.forEach((option) => {
+				if (option.groupId === groupId) {
+					if (deselect) {
+						this.selected.delete(String(option.value));
+					} else {
+						this.selected.add(String(option.value));
+					}
+				}
+			});
 		}
 
-		const groupHeaderVal = lodash.find(this.opts, (option: IFlatGroupedOption) => {
-			return option.isGroupHeader && option.groupId === groupId;
-		})?.value;
+		const groupHeaderVal = lodash.find(this.opts, (option) =>
+			option.header === true && option.groupId === groupId
+		)?.value;
 
 		// if all group children are unselected - deselected group header
 		if (!this.allGroupChildrenSelected(groupId)) {
@@ -96,7 +107,8 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 			// if all group children are selected - select group header
 			this.selected.add(String(groupHeaderVal));
 		}
-		
+
+		// TODO don't include group headers in selection
 		value(Array.from(this.selected).join(","));
 	}
 
@@ -135,7 +147,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 			case "Enter": {
 				evt.preventDefault();
 				if (this.focusOptionValue != null && this.focusOption != null) {
-					this.toggleSelection(String(this.focusOptionValue), value, this.focusOption.isGroupHeader, this.focusOption.groupId);
+					this.toggleSelection(this.focusOption, value);
 				} else {
 					this.toggleOpen();
 				}
@@ -167,23 +179,16 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 		}
 	}
 
-	private selectedCount() {
-		// ignore group headers when counting
-		return lodash.chain(this.opts)
-		.filter((option: IFlatGroupedOption) => !option.isGroupHeader)
-		.filter((option: IFlatGroupedOption) => this.selected.has(String(option.value)))
-		.value().length;
-	} 
-
 	// Placeholder, single selection, or count of selected
-	private placeHolder(value: TPropStream, options: ReadonlyArray<IOption>, placeholder: string) {
-		if (this.selected.size > 1) {
-			return `${this.selectedCount()} Selected`;
-		} else if (this.selected.size === 1) {
-			const matchVal = value();
-			return lodash.find(options,
-				(opt) => String(opt.value) === matchVal
-			)?.label ?? placeholder;
+	private placeHolder(placeholder: string) {
+		// Count selected, ignoring group headers
+		const selected = this.opts.filter(
+			({ value, header }) => header !== true && this.selected.has(String(value))
+		);
+		if (selected.length > 1) {
+			return `${selected.length} Selected`;
+		} else if (selected.length === 1) {
+			return selected[0].label ?? placeholder;
 		} else {
 			return placeholder;
 		}
@@ -202,21 +207,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 	}
 
 	public oninit({ attrs: { field: { groups = [] }, value } }: CVnode<TSelectWidget>) {
-
-		this.opts = lodash.flatMap<IGroupOption, IFlatGroupedOption>(groups, ({ groupLabel, groupId, options = [] }) => {
-			return [
-				{ value: groupId, label: groupLabel, isGroupHeader: true, groupId },
-				...options.map((option) => {
-					return {
-						...option,
-						isGroupHeader: false,
-						groupId
-					};
-				})
-			];
-		});
-
-
+		this.opts = CheckListGroup.flattenOpts(groups);
 		this.list = ListController.single(() => Promise.resolve(this.opts));
 		this.list.setFilter((options) => options.filter(
 			({ value, label = value }) => String(label)
@@ -227,17 +218,8 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 	}
 
 	public onbeforeupdate({ attrs: { field: { groups = [] }, value } }: CVnode<TSelectWidget>) {
-		const options = lodash.flatMap<IGroupOption, IFlatGroupedOption>(groups, ({ groupLabel, groupId, options = [] }) => [
-			{ value: groupId, label: groupLabel, isGroupHeader: true, groupId },
-			...options.map((option) => {
-				return {
-					...option,
-					isGroupHeader: false,
-					groupId
-				};
-			})
-		]);
 		this.syncSelection(value);
+		const options = CheckListGroup.flattenOpts(groups);
 		// React to changes in options list length
 		if (options.length !== this.opts.length) {
 			this.opts = options;
@@ -290,8 +272,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 						// Selected option(s) or placeholder text
 						: m("span", {
 							class: this.selected.size ? undefined : theme.floatLabelPlaceholder
-							// TODO fix placeholder
-						}, this.placeHolder(val, this.opts, placeholder))
+						}, this.placeHolder(placeholder))
 					),
 					getIcon(getConfig("checkListIcn", config), joinClasses([
 						"ph-2px pv-1px transition-transform",
@@ -313,7 +294,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 	}
 
 	private multiSelectionRow(val: TPropStream, id: string, opt: IFlatGroupedOption, config?: Partial<IConfig>) {
-		const { value, label = value, isGroupHeader = false, groupId } = opt;
+		const { value, label = value, header } = opt;
 		const selected = this.selected.has(String(value));
 		const icon = selected
 			? getConfig(this.onIcon, config)
@@ -323,14 +304,14 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 			id: `${id}-${value}`,
 			class: joinClasses([
 				theme.checkListOption,
-				isGroupHeader ? theme.checkListGroupHeaders : theme.checkListGroupChildren
+				header ? theme.checkListGroupHeaders : theme.checkListGroupChildren
 			]),
 			role: "option",
 			ariaSelected: selected,
 			"aria-activedescendant": focus,
 			onclick: (evt: MouseEvent) => {
 				evt.stopPropagation();
-				this.toggleSelection(String(value), val, isGroupHeader, groupId);
+				this.toggleSelection(opt, val);
 			}
 		}, [
 			getIcon(icon, theme.checkListOptionIcon),

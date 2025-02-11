@@ -72,11 +72,10 @@ export interface IClassMap extends IClasses {
 	readonly checkListOptionSingleSelected?: string;
 	/** CheckList selected option (multiple) */
 	readonly checkListOptionMultiSelected?: string;
-	/** CheckLGroup Headers */
+	/** CheckListGroup Headers */
 	readonly checkListGroupHeaders?: string;
-	/** CheckLGroup Children */
+	/** CheckListGroup Children */
 	readonly checkListGroupChildren?: string;
-
 	/** TimeInput Scroller */
 	readonly timeInputScrollerWrapper?: string;
 	readonly timeInputScrollerNumber?: string;
