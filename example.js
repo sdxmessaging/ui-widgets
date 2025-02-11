@@ -53,20 +53,7 @@ var multiValOpts = [{
 }, {
 	value: "long", label: "Extra long label that should overflow this option container and wrap lines"
 }];
-var yellowFruit = [{
-	value: "lemon", label: "Lemon",
-}, {
-	value: "banana", label: "Banana"
-}, {
-	value: "melon", label: "Melon"
-}];
-var redFruit = [{
-	value: "apple", label: "Apple",
-}, {
-	value: "dragon-fruit", label: "Dragon Fruit"
-}, {
-	value: "strawberry", label: "Strawberry"
-}];
+var groupedVal = stream();
 var faceVal = stream();
 var faceValUiClass = {
 	wrapper: "flex-auto bg-near-white br-pill ma1",
@@ -730,28 +717,6 @@ m.mount(document.getElementById("page"), {
 						options: multiValOpts
 					},
 					value: multiVal
-				}),
-				m(uiWidgets.CheckListGroup, {
-					field: {
-						id: "multi-checklist-in",
-						label: "Multi CheckList Input",
-						required: true,
-						multiple: true,
-						placeholder: "Multiple",
-						groups: [
-							{
-								groupId: 'yellow-fruit',
-								groupLabel: "Yellow Fruit",
-								options: yellowFruit
-							},
-							{
-								groupId: "red-fruit",
-								groupLabel: "Red Fruit",
-								options: redFruit
-							}
-						]
-					},
-					value: multiVal
 				})
 			]),
 			m(".w-50.pa2", [
@@ -761,6 +726,51 @@ m.mount(document.getElementById("page"), {
 						label: "CheckList Output"
 					},
 					value: multiVal
+				})
+			])
+		]),
+
+		m(".flex.mb2.items-center.ba.b--silver", [
+			m(".w-50.pa2", [
+				m(uiWidgets.CheckListGroup, {
+					field: {
+						id: "group-checklist-in",
+						label: "Grouped CheckList Input",
+						required: true,
+						multiple: true,
+						placeholder: "Multiple",
+						groups: [{
+							groupId: "yellow-fruit",
+							groupLabel: "Yellow Fruit",
+							options: [{
+								value: "lemon", label: "Lemon",
+							}, {
+								value: "banana", label: "Banana"
+							}, {
+								value: "melon", label: "Melon"
+							}]
+						}, {
+							groupId: "red-fruit",
+							groupLabel: "Red Fruit",
+							options: [{
+								value: "apple", label: "Apple",
+							}, {
+								value: "dragon-fruit", label: "Dragon Fruit"
+							}, {
+								value: "strawberry", label: "Strawberry"
+							}]
+						}]
+					},
+					value: groupedVal
+				})
+			]),
+			m(".w-50.pa2", [
+				m(uiWidgets.BaseText, {
+					field: {
+						id: "group-checklist-out",
+						label: "Grouped CheckList Output"
+					},
+					value: groupedVal
 				})
 			])
 		]),
