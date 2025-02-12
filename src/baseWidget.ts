@@ -1,5 +1,5 @@
 import m, { CVnode, CVnodeDOM, Children, ClassComponent } from "mithril";
-import { IPropWidget } from "./interface/widget";
+import { IPropWidget, TPropStream } from "./interface/widget";
 
 export abstract class BaseWidget<T extends IPropWidget> implements ClassComponent<T> {
 
@@ -49,6 +49,17 @@ export abstract class BaseWidget<T extends IPropWidget> implements ClassComponen
 				m.redraw();
 			}
 		}
+	}
+
+	/**
+	 * Update value and emit change event,
+	 * useful for widgets that use a hidden input to for validation
+	 * */
+	protected changeInput(value: TPropStream) {
+		this._inputElement.value = String(value());
+		this._inputElement.dispatchEvent(new Event("change", {
+			bubbles: true
+		}));
 	}
 
 	abstract view(vnode: CVnode<T>): Children;
