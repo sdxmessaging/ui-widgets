@@ -62,28 +62,24 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 		}
 	}
 
-	private allGroupChildrenSelected(groupId: string) {
+	/** Select group if all children are also selected */
+	private selectGroup(groupId: string) {
 		const groupChildren = this.opts.filter(
 			(option) => option.groupId === groupId && option.header !== true
 		);
 		const selectedChildren = groupChildren.filter(
 			(option) => this.selected.has(String(option.value))
 		);
-		return groupChildren.length === selectedChildren.length;
+		if (groupChildren.length === selectedChildren.length) {
+			this.selected.add(groupId);
+		}
 	}
 
 	private toggleSelection(groupOption: IFlatGroupedOption, value: TPropStream) {
 		const { value: optVal, groupId, header = false } = groupOption;
 		const option = String(optVal);
-
-		// Toggle selected option
 		const deselect = this.selected.has(option);
-		if (deselect) {
-			this.selected.delete(option);
-		} else {
-			this.selected.add(option);
-		}
-		// Toggle selected group
+		// Toggle selected group children
 		if (header) {
 			this.opts.forEach((option) => {
 				if (option.groupId === groupId) {
@@ -95,21 +91,22 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 				}
 			});
 		}
-
-		const groupHeaderVal = lodash.find(this.opts, (option) =>
-			option.header === true && option.groupId === groupId
-		)?.value;
-
-		// if all group children are unselected - deselected group header
-		if (!this.allGroupChildrenSelected(groupId)) {
-			this.selected.delete(String(groupHeaderVal));
+		// Toggle selected option
+		if (deselect) {
+			this.selected.delete(option);
+			// Deselect group
+			this.selected.delete(groupId);
 		} else {
-			// if all group children are selected - select group header
-			this.selected.add(String(groupHeaderVal));
+			this.selected.add(option);
+			// Select group if all children are now selected
+			this.selectGroup(groupId);
 		}
-
-		// TODO don't include group headers in selection
-		value(Array.from(this.selected).join(","));
+		// Serialise selection and omit group headers
+		value(this.opts.filter(
+			({ value, header }) => header !== true && this.selected.has(String(value))
+		)
+			.map(({ value }) => value)
+			.join(","));
 		this.changeInput(value);
 	}
 
@@ -203,6 +200,10 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 			const selected = new Set(values);
 			if (!lodash.isEqual(this.selected, selected)) {
 				this.selected = selected;
+				// Select groups if all children are selected
+				this.opts
+					.filter(({ header }) => header)
+					.forEach(({ groupId }) => this.selectGroup(groupId));
 			}
 		}
 	}
@@ -291,7 +292,6 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 				})
 			])
 		]);
-
 	}
 
 	private multiSelectionRow(val: TPropStream, id: string, opt: IFlatGroupedOption, config?: Partial<IConfig>) {

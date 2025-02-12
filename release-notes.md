@@ -1,12 +1,17 @@
 # Release Notes
 
+## 1.8.41
+
+- Fix `CheckListGroup` - don't add group keys to stream value
+- `CheckList` and `CheckListGroup` now emit change events on interaction
+
 ## 1.8.40
 
-- CheckListGroup single item selected bug fix 
+- `CheckListGroup` single item selected bug fix
 
 ## 1.8.39
 
-- CheckListGroup
+- `CheckListGroup`
 
 ## 1.8.38
 

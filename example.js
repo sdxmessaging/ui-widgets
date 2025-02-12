@@ -690,7 +690,7 @@ m.mount(document.getElementById("page"), {
 
 		m("p", "The CheckList input behaves like a select input, but displays options similar to the Checkbox widget. The list stays open when in focus and can help simplify multiple selection."),
 
-		// Multi-Select
+		// CheckList select
 		m(".flex.mb2.items-center.ba.b--silver", [
 			m(".w-50.pa2", [
 				m(uiWidgets.CheckList, {
