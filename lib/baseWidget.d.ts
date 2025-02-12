@@ -1,5 +1,5 @@
 import { CVnode, CVnodeDOM, Children, ClassComponent } from "mithril";
-import { IPropWidget } from "./interface/widget";
+import { IPropWidget, TPropStream } from "./interface/widget";
 export declare abstract class BaseWidget<T extends IPropWidget> implements ClassComponent<T> {
     private _inputElement;
     private _focus;
@@ -20,6 +20,11 @@ export declare abstract class BaseWidget<T extends IPropWidget> implements Class
     protected get invalid(): boolean;
     protected readonly selector: keyof Pick<HTMLElementTagNameMap, "input" | "textarea" | "select">;
     private checkValidity;
+    /**
+     * Update value and emit change event,
+     * useful for widgets that use a hidden input to for validation
+     * */
+    protected changeInput(value: TPropStream): void;
     abstract view(vnode: CVnode<T>): Children;
     oncreate({ dom, attrs: { value } }: CVnodeDOM<T>): void;
     onupdate({ attrs: { value } }: CVnodeDOM<T>): void;
