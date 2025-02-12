@@ -110,6 +110,7 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 
 		// TODO don't include group headers in selection
 		value(Array.from(this.selected).join(","));
+		this.changeInput(value);
 	}
 
 	private moveFocus(delta: 1 | -1) {

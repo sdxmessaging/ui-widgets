@@ -56,6 +56,7 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 			this.selected.add(option);
 		}
 		value(Array.from(this.selected).join(","));
+		this.changeInput(value);
 	}
 
 	private moveFocus(delta: 1 | -1) {
