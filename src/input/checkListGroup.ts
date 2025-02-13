@@ -252,7 +252,6 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 				tabindex: -1,
 				ariaHidden: "true"
 			}),
-			// Select "input"
 			m(".relative.cursor-default", {
 				id, title,
 				disabled: !active,
@@ -267,17 +266,17 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 					? (evt: KeyboardEvent) => this.keyNav(evt, val)
 					: undefined
 			}, [
-				m(".flex.items-center", [
-					m(".flex-auto.ph-2px.pv-1px", this.keySearch
-						// Search term
-						? m("span", this.keySearch)
-						// Selected option(s) or placeholder text
-						: m("span", {
+				// Select "input"
+				m(".flex.items-center.ph-2px.pv-1px", {
+					class: inputCls(uiClass)
+				}, [
+					this.keySearch
+						? m(".flex-auto", this.keySearch)
+						: m(".flex-auto", {
 							class: this.selected.size ? undefined : theme.floatLabelPlaceholder
-						}, this.placeHolder(placeholder))
-					),
+						}, this.placeHolder(placeholder)),
 					getIcon(getConfig("checkListIcn", config), joinClasses([
-						"ph-2px pv-1px transition-transform",
+						"transition-transform",
 						this.open ? "rotate-180" : null
 					]))
 				]),
