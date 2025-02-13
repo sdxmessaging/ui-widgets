@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8
+
+- Move `CheckList` input styling to inner-most placeholder/selection element
+
 ## 1.8.41
 
 - Fix `CheckListGroup` - don't add group keys to stream value
