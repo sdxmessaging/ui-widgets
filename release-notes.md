@@ -1,8 +1,9 @@
 # Release Notes
 
-## 1.8
+## 1.8.42
 
 - Move `CheckList` input styling to inner-most placeholder/selection element
+- Fix `CheckList` not showing single selection if stream value is updated with non-string value
 
 ## 1.8.41
 

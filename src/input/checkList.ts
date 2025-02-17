@@ -126,14 +126,15 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 	}
 
 	// Placeholder, single selection, or count of selected
-	private placeHolder(value: TPropStream, options: ReadonlyArray<IOption>, placeholder: string) {
-		if (this.selected.size > 1) {
-			return `${this.selected.size} Selected`;
-		} else if (this.selected.size === 1) {
-			const matchVal = value();
-			return lodash.find(options,
-				(opt) => String(opt.value) === matchVal
-			)?.label ?? placeholder;
+	private placeHolder(options: ReadonlyArray<IOption>, placeholder: string) {
+		// Count selected options
+		const selected = options.filter(
+			({ value }) => this.selected.has(String(value))
+		);
+		if (selected.length > 1) {
+			return `${selected.length} Selected`;
+		} else if (selected.length === 1) {
+			return selected[0].label ?? placeholder;
 		} else {
 			return placeholder;
 		}
@@ -215,7 +216,7 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 						? m(".flex-auto", this.keySearch)
 						: m(".flex-auto", {
 							class: this.selected.size ? undefined : theme.floatLabelPlaceholder
-						}, this.placeHolder(val, options, placeholder)),
+						}, this.placeHolder(options, placeholder)),
 					getIcon(getConfig("checkListIcn", config), joinClasses([
 						"transition-transform",
 						this.open ? "rotate-180" : null
