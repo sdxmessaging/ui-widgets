@@ -222,8 +222,8 @@ export class CheckListGroup extends BaseWidget<TSelectWidget> {
 	public onbeforeupdate({ attrs: { field: { groups = [] }, value } }: CVnode<TSelectWidget>) {
 		this.syncSelection(value);
 		const options = CheckListGroup.flattenOpts(groups);
-		// React to changes in options list length
-		if (options.length !== this.opts.length) {
+		// React to changes in options list
+		if (!lodash.isEqual(options, this.opts)) {
 			this.opts = options;
 			this.list.reload();
 		}

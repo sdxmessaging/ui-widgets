@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.43
+
+- Fix `CheckList`/`CheckListGroup` not reflecting changes to options when list has same length
+
 ## 1.8.42
 
 - Move `CheckList` input styling to inner-most placeholder/selection element
