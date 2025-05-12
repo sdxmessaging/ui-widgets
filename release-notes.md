@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.8.44
+
+- Fix `DateInput` adjusting day component for users in a time zone with negative offset
+
 ## 1.8.43
 
 - Fix `CheckList`/`CheckListGroup` not reflecting changes to options when list has same length

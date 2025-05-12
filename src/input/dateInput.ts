@@ -1,4 +1,5 @@
 import lodash from "lodash";
+import { DateTime } from "luxon";
 import m, { ClassComponent, CVnode, CVnodeDOM } from "mithril";
 import stream from "mithril/stream";
 
@@ -10,7 +11,7 @@ import { appendZeroToDayMonth, dateInputIds, focusLastInput, handleDateChange, h
 import { inputCls } from "../theme";
 import { setIfDifferent } from "../utils";
 
-import { DatePicker, getYmd } from "./datePicker";
+import { DatePicker } from "./datePicker";
 import { LayoutFixed } from "./layout/layoutFixedLabel";
 
 interface IDateParts {
@@ -182,17 +183,16 @@ export class DateInput implements ClassComponent<IPropWidget> {
 		this.valueChange = (value as stream<TProp>).map((newVal) => {
 			// only handle value when the main value stream is changed
 			if (newVal) {
-				const date = new Date(String(newVal));
+				const luxDate = DateTime.fromISO(String(newVal));
 				// multiple data-binding reset date stream (important, reset local date stream when value is present)
 				this.date("");
-				if (isNaN(date.valueOf())) {
-					this.resetDateParts();
-				} else {
+				if (luxDate.isValid) {
 					// set individual date inputs based on value stream (not date stream)
-					const [year, month, day] = getYmd(date);
-					this.day(day);
-					this.month(month);
-					this.year(year);
+					this.day(luxDate.toLocaleString({ day: "2-digit" }));
+					this.month(luxDate.toLocaleString({ month: "2-digit" }));
+					this.year(luxDate.toLocaleString({ year: "numeric" }));
+				} else {
+					this.resetDateParts();
 				}
 			} else if (!this.date()) {
 				this.resetDateParts();
