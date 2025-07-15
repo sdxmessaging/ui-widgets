@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.45
+
+- Disable autocomplete on Date, Card Date, and Time inputs
+- Added `scrollbar-gutter-stable` class, useful for aligning headers on complex list components
+
 ## 1.8.44
 
 - Fix `DateInput` adjusting day component for users in a time zone with negative offset

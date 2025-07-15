@@ -17,6 +17,11 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
+/* Add space for a scrollbar, requires overflow rules */
+.scrollbar-gutter-stable {
+	scrollbar-gutter: stable;
+}
+
 .bg-canvas {
 	background-color: Canvas
 }

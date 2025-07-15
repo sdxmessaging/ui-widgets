@@ -98,6 +98,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled, tabindex,
 				value: this.day(),
 				"aria-label": `${name}: Day`,
+				autocomplete: "off",
 				class: `${classStr} maxw-dd p-0px`,
 				onfocus: lodash.partial(this.focusedInput, "dd"),
 				onkeydown: (e: KeyboardEvent) => {
@@ -125,6 +126,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled, tabindex,
 				value: this.month(),
 				"aria-label": `${name}: Month`,
+				autocomplete: "off",
 				class: `${classStr} maxw-mm p-0px`,
 				onkeydown: (e: KeyboardEvent) => {
 					handleRetreatOrLiteralAdvance(id, "mm",
@@ -152,6 +154,7 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				required, readonly, disabled, tabindex,
 				value: this.year(),
 				"aria-label": `${name}: Year`,
+				autocomplete: "off",
 				class: `${classStr} maxw-yyyy p-0px`,
 				onfocus: lodash.partial(this.focusedInput, "yyyy"),
 				onkeydown: (e: KeyboardEvent) => {
