@@ -117,14 +117,6 @@ input[type=number] {
 	transition: max-width 0.3s ease-in-out;
 }
 
-.cursor-default {
-	cursor: default;
-}
-
-.cursor-text {
-	cursor: text;
-}
-
 .toggle-outer {
 	--ui-widgets-toggle-width: calc(var(--ui-widgets-toggle-height) * 2);
 	width: var(--ui-widgets-toggle-width);
