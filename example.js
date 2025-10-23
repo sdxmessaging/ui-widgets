@@ -35,6 +35,7 @@ var enableDatePicker = stream(false)
 var dateFormatUiClass = { inputWrapper: "pa1 ma0", input: "f6", merge: false };
 var timeVal = stream();
 var colVal = stream("#cc0011");
+var telVal = stream();
 var cardVal = stream();
 var labVal = stream("Label");
 var checkVal = stream();
@@ -476,6 +477,34 @@ m.mount(document.getElementById("page"), {
 					label: "Colour Output",
 				},
 				value: colVal
+			}))
+		]),
+
+		// Tel
+		m("form.flex.mb2.ba.b--silver", {
+			onsubmit: (event) => {
+				console.debug("Submit", new FormData(event.target));
+				return false;
+			}
+		}, [
+			m(".w-50.pa2", m(uiWidgets.BaseInput, {
+				field: {
+					id: "tel-in",
+					label: "Telephone Input",
+					type: "tel",
+					required: true,
+					minlength: 11,
+					pattern: "[+]{0,1}[0-9]{11,15}",
+					inputmode: "tel"
+				},
+				value: telVal
+			})),
+			m(".w-50.pa2", m(uiWidgets.BaseText, {
+				field: {
+					id: "tel-out",
+					label: "Telephone Output",
+				},
+				value: telVal
 			}))
 		]),
 
