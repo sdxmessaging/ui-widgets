@@ -15,6 +15,7 @@ export {
 } from "./imageUtils";
 export { Currency } from "./currency";
 
+export { AwaitButton } from "./awaitButton";
 export { Badge } from "./badge";
 export { Button } from "./button";
 export { ButtonLink } from "./buttonLink";

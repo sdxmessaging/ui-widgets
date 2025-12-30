@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.8.46
+
+- New `AwaitButton` component
+  - `Button` variant that is disabled `onclick`, and enables when returned promise resoves/rejects
+
 ## 1.8.45
 
 - Disable autocomplete on Date, Card Date, and Time inputs

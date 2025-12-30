@@ -975,6 +975,15 @@ m.mount(document.getElementById("page"), {
 				classes: "ma1",
 				onclick: () => console.debug("Button Click")
 			}),
+			m(uiWidgets.AwaitButton, {
+				label: "Await Button",
+				icon: "fas fa-hourglass mr1",
+				classes: "ma1",
+				onclick: () => new Promise((resolve) => {
+					console.debug("Disabled for ~1 second");
+					setTimeout(resolve, 1000);
+				})
+			}),
 			m(uiWidgets.Button, {
 				label: "Disabled Button",
 				classes: "ma1",
