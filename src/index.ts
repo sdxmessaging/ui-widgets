@@ -2,6 +2,7 @@ export * from "./interface/widget";
 export * from "./interface/theme";
 export { IConfig } from "./interface/config";
 
+// Functions
 export { updateConfig, registerFunction } from "./config";
 export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
 export {
@@ -14,7 +15,9 @@ export {
 	textToImage, createStamp,
 } from "./imageUtils";
 export { Currency } from "./currency";
+export { DebounceStream } from "./debounceStream";
 
+// Components
 export { AwaitButton } from "./awaitButton";
 export { Badge } from "./badge";
 export { Button } from "./button";

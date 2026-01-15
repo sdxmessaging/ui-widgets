@@ -1,5 +1,11 @@
 # Release Notes
 
+## 1.8.47
+
+- New `DebounceStream` utility class
+  - Wrap a mithril stream with lodash debounce, calls to method will update stream after a delay
+  - Includes simple `pipe` method to debounce a single stream to a `map` handler function
+
 ## 1.8.46
 
 - New `AwaitButton` component

@@ -165,8 +165,10 @@ single.setFilter((input) => {
 		return input;
 	}
 });
-// Don't filter until data is loaded and handle streams that have not started
-singleFilter.map(() => single.applyFilter());
+
+// Limit filter apply until after filter stream has stopped changing for 250ms
+const debounce = new uiWidgets.DebounceStream(250)
+	.pipe(singleFilter, () => single.applyFilter());
 
 // Fetch rows from range
 var paging = uiWidgets.ListController.paging(generate);
