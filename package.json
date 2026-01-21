@@ -18,7 +18,7 @@
   "types": "./lib/index.d.ts",
   "dependencies": {
     "flatpickr": "4.6.13",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "luxon": "3.4.0",
     "mithril": "2.0.4",
     "signature_pad": "4.0.7"
