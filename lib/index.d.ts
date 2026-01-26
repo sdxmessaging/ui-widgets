@@ -6,6 +6,7 @@ export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme"
 export { guid, pxRatio, fileNameExtSplit, dataURItoBlob, fileConstructor, dataUrlToFile } from "./utils";
 export { getOrientation, readArrayBuffer, readOrientation, scaleRect, resizeImage, scaleDataUrl, textToImage, createStamp, } from "./imageUtils";
 export { Currency } from "./currency";
+export { DebounceStream } from "./debounceStream";
 export { AwaitButton } from "./awaitButton";
 export { Badge } from "./badge";
 export { Button } from "./button";
