@@ -1,5 +1,8 @@
 # Release Notes
 
+## 1.8.48
+- expand DatePicker to accept disabledDates and enabledDates arguments
+
 ## 1.8.47
 
 - New `DebounceStream` utility class
