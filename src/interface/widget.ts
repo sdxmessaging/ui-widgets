@@ -4,6 +4,13 @@ import stream from "mithril/stream";
 import { IConfig, TIcon } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
 
+export declare type TDateOption = Date | string | number;
+export declare type TDateRangeLimit<D = TDateOption> = {
+    from: D;
+    to: D;
+};
+export declare type TDateLimit<D = TDateOption> = D | TDateRangeLimit<D> | ((date: Date) => boolean);
+
 export type TProp = string | number | boolean;
 
 export type TPropMap = Record<string, TProp>;
@@ -139,6 +146,7 @@ export interface IField {
 	readonly layout?: LayoutType;
 	readonly uiClass?: IWidgetClasses;
 	readonly config?: Partial<IConfig>;
+	readonly enable?: TDateLimit<Date>[];
 }
 
 // Select options
