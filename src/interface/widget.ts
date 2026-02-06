@@ -146,7 +146,8 @@ export interface IField {
 	readonly layout?: LayoutType;
 	readonly uiClass?: IWidgetClasses;
 	readonly config?: Partial<IConfig>;
-	readonly enable?: TDateLimit<Date>[];
+	readonly enabledDates?: TDateLimit<Date>[];
+	readonly disabledDates?: TDateLimit<Date>[];
 }
 
 // Select options
