@@ -101,8 +101,8 @@ export interface IField {
     readonly layout?: LayoutType;
     readonly uiClass?: IWidgetClasses;
     readonly config?: Partial<IConfig>;
-    readonly enabledDates?: TDateLimit<Date>[];
-    readonly disabledDates?: TDateLimit<Date>[];
+    readonly enabledDates?: TDateLimit[];
+    readonly disabledDates?: TDateLimit[];
 }
 export interface IOption {
     readonly value: TProp;
