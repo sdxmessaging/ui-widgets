@@ -1,5 +1,8 @@
 # Release Notes
 
+## 1.8.49
+- allow enabled and disabled date options to be Date | string | number
+
 ## 1.8.48
 - expand DatePicker to accept disabledDates and enabledDates arguments
 
