@@ -2,6 +2,12 @@ import { Children } from "mithril";
 import stream from "mithril/stream";
 import { IConfig, TIcon } from "./config";
 import { IWidgetClasses, TStyle } from "./theme";
+export declare type TDateOption = Date | string | number;
+export declare type TDateRangeLimit<D = TDateOption> = {
+    from: D;
+    to: D;
+};
+export declare type TDateLimit<D = TDateOption> = D | TDateRangeLimit<D> | ((date: Date) => boolean);
 export type TProp = string | number | boolean;
 export type TPropMap = Record<string, TProp>;
 export type TPropStream = stream<string> | stream<number> | stream<boolean> | stream<TProp>;
@@ -95,6 +101,8 @@ export interface IField {
     readonly layout?: LayoutType;
     readonly uiClass?: IWidgetClasses;
     readonly config?: Partial<IConfig>;
+    readonly enabledDates?: TDateLimit<Date>[];
+    readonly disabledDates?: TDateLimit<Date>[];
 }
 export interface IOption {
     readonly value: TProp;
