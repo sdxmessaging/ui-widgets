@@ -19,27 +19,29 @@ export class DatePicker implements ClassComponent<IPropWidget> {
 	private flatpickr!: flatpickr.Instance;
 	private valueChange!: stream<void>;
 
-	public oncreate({ dom, attrs: { field: { max, min, enabledDates, disabledDates = [] }, value } }: CVnodeDOM<IPropWidget>) {
+	public oncreate({ dom, attrs: {
+		field: { max, min, enabledDates, disabledDates = [] }, value
+	} }: CVnodeDOM<IPropWidget>) {
 		// Position picker relative to parent & left/right screen half
 		const container = dom.parentElement as HTMLElement;
 		const { left, right } = container.getBoundingClientRect();
 		this.flatpickr = flatpickr(dom, {
-			...{
-				positionElement: container,
-				position: left + right < window.innerWidth ? "below left" : "below right",
-				disableMobile: true,
-				minDate: min,
-				maxDate: max,
-				disable: disabledDates,
-				onChange: ([newDate]) => {
-					if (newDate) {
-						value(getYmd(newDate).join("-"));
-						m.redraw();
-					}
+			positionElement: container,
+			position: left + right < window.innerWidth ? "below left" : "below right",
+			disableMobile: true,
+			minDate: min,
+			maxDate: max,
+			disable: disabledDates,
+			onChange: ([newDate]) => {
+				if (newDate) {
+					value(getYmd(newDate).join("-"));
+					m.redraw();
 				}
-			},
-			...(enabledDates ? { enable: enabledDates } : {})
+			}
 		});
+		if (enabledDates != null) {
+			this.flatpickr.set("enable", enabledDates);
+		}
 		// Sync value change with flatpickr
 		this.valueChange = value.map((newVal) => {
 			const date = new Date(String(newVal));
@@ -51,7 +53,15 @@ export class DatePicker implements ClassComponent<IPropWidget> {
 		});
 	}
 
-	// Consider updating min/max attrs in onupdate event
+	// // Consider updating min/max attrs in onupdate event
+	// onbeforeupdate(
+	// 	{ attrs: { field } }: CVnode<IPropWidget>,
+	// 	{ attrs: { field: oldField } }: CVnode<IPropWidget>
+	// ) {
+	// 	if (field.min !== oldField.min) {
+	// 		this.flatpickr.set("minDate", field.min);
+	// 	}
+	// }
 
 	public onremove() {
 		this.flatpickr.destroy();
