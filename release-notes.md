@@ -1,10 +1,16 @@
 # Release Notes
 
+## 1.9.0
+
+- Breaking change targeting ES2017 script instead of ES2015
+
 ## 1.8.49
-- allow enabled and disabled date options to be Date | string | number
+
+- Allow enabled and disabled date options to be Date | string | number
 
 ## 1.8.48
-- expand DatePicker to accept disabledDates and enabledDates arguments
+
+- Expand DatePicker to accept disabledDates and enabledDates arguments
 
 ## 1.8.47
 
