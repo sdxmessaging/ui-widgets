@@ -166,13 +166,13 @@ describe("CardDateInput", () => {
 		const yearInSpy = jest.spyOn(yearIn, 'focus');
 		yearIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
 		expect(value()).not.toBeTruthy();
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Backspace" }));
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 
 		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "BackSpace" }));
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 	});
 
 	test("focusLastInput", () => {
@@ -205,13 +205,13 @@ describe("CardDateInput", () => {
 
 		inputContainer.dispatchEvent(new Event('click'));
 
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 		yearIn.dispatchEvent(new Event('focus'));
 
 		root.dispatchEvent(new Event('click'));
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 		inputContainer.dispatchEvent(new Event('click'));
-		expect(yearInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
 
 	});
 
@@ -239,7 +239,7 @@ describe("CardDateInput", () => {
 
 		monthIn.value = "02";
 		monthIn.dispatchEvent(new Event("input"));
-		expect(yearInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
 	});
 
 	test("appendZeroToDayMonth", () => {
@@ -304,24 +304,24 @@ describe("CardDateInput", () => {
 		const yearInSpy = jest.spyOn(yearIn, 'focus');
 
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.value = '1';
 		yearIn.dispatchEvent(new Event('input'));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		monthIn.value = '2';
 		monthIn.dispatchEvent(new Event('input'));
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 		monthIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(yearInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
 
 	});
 

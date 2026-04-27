@@ -166,30 +166,30 @@ describe("DateInput", () => {
 		// only auto advance when reaching max length
 		dayIn.value = "0";
 		dayIn.dispatchEvent(new Event("input"));
-		expect(monthInSpy).toBeCalledTimes(0);
-		expect(monthInSelectSpy).toBeCalledTimes(0);
-		expect(yearInSpy).toBeCalledTimes(0);
-		expect(yearInSelectSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
+		expect(monthInSelectSpy).toHaveBeenCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
+		expect(yearInSelectSpy).toHaveBeenCalledTimes(0);
 
 		// should auto advance
 		dayIn.value = "01";
 		dayIn.dispatchEvent(new Event("input"));
-		expect(monthInSpy).toBeCalledTimes(1);
-		expect(monthInSelectSpy).toBeCalledTimes(1);
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
+		expect(monthInSelectSpy).toHaveBeenCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 		monthIn.value = "02";
 		monthIn.dispatchEvent(new Event("input"));
-		expect(yearInSpy).toBeCalledTimes(1);
-		expect(yearInSelectSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
+		expect(yearInSelectSpy).toHaveBeenCalledTimes(1);
 
 		// in this current locale, year shouldn't auto advance
 		yearIn.value = "2020";
 		yearIn.dispatchEvent(new Event("input"));
 		// none of these should be called
-		expect(yearInSpy).toBeCalledTimes(1);
-		expect(monthInSpy).toBeCalledTimes(1);
-		expect(dayInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
 
 		// Test two-way date binding
 		m.redraw.sync();
@@ -261,11 +261,11 @@ describe("DateInput", () => {
 		// checking the order of auto advance for a different locale
 		monthIn.value = "02";
 		monthIn.dispatchEvent(new Event("input"));
-		expect(dayInSpy).toBeCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(1);
 
 		dayIn.value = "01";
 		dayIn.dispatchEvent(new Event("input"));
-		expect(yearInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
 
 	});
 
@@ -302,26 +302,26 @@ describe("DateInput", () => {
 
 		yearIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
 		expect(value()).not.toBeTruthy();
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Backspace" }));
 
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 
 		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "test" }));
 
-		expect(dayInSpy).toBeCalledTimes(0);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
 
 		monthIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentBackward" }));
-		expect(dayInSpy).toBeCalledTimes(0);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
 
 		monthIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Delete" }));
-		expect(dayInSpy).toBeCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(1);
 
 		dayIn.dispatchEvent(new InputEvent("input", { inputType: "deleteContentForward" }));
-		expect(dayInSpy).toBeCalledTimes(1);
-		expect(yearInSpy).toBeCalledTimes(0);
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 
 		value('2021-02-20');
 		dayIn.dispatchEvent(new Event('input'));
@@ -333,9 +333,9 @@ describe("DateInput", () => {
 
 		// None of these should be called
 		dayIn.dispatchEvent(new KeyboardEvent("keydown", { key: "Delete" }));
-		expect(dayInSpy).toBeCalledTimes(1);
-		expect(monthInSpy).toBeCalledTimes(1);
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(dayInSpy).toHaveBeenCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 	});
 
@@ -370,13 +370,13 @@ describe("DateInput", () => {
 		// clicking on parent container/label should focus on the last focused input
 		inputContainer.dispatchEvent(new Event('click'));
 
-		expect(dayInSpy).toBeCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(1);
 		monthIn.dispatchEvent(new Event('focus'));
 
 		root.dispatchEvent(new Event('click'));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 		inputContainer.dispatchEvent(new Event('click'));
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 
 	});
 
@@ -410,13 +410,13 @@ describe("DateInput", () => {
 
 		inputContainer.dispatchEvent(new Event('click'));
 
-		expect(yearInSpy).toBeCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
 		monthIn.dispatchEvent(new Event('focus'));
 
 		root.dispatchEvent(new Event('click'));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 		inputContainer.dispatchEvent(new Event('click'));
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 
 	});
 
@@ -499,39 +499,39 @@ describe("DateInput", () => {
 
 		// for the current locale, pressing '/' when there's value should auto advance
 		dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(monthInSpy).toBeCalledTimes(0);
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 		dayIn.value = '1';
 		dayIn.dispatchEvent(new Event('input'));
-		expect(monthInSpy).toBeCalledTimes(0);
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 		// wrong key
 		dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
-		expect(monthInSpy).toBeCalledTimes(0);
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 		dayIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(monthInSpy).toBeCalledTimes(1);
-		expect(yearInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
 
 		monthIn.value = '2';
 		monthIn.dispatchEvent(new Event('input'));
-		expect(yearInSpy).toBeCalledTimes(0);
-		expect(dayInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(0);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
 		monthIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(yearInSpy).toBeCalledTimes(1);
-		expect(dayInSpy).toBeCalledTimes(0);
+		expect(yearInSpy).toHaveBeenCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.value = '2';
 		yearIn.dispatchEvent(new Event('input'));
-		expect(dayInSpy).toBeCalledTimes(0);
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 		// for this current locale, year should not advance
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(monthInSpy).toBeCalledTimes(1);
-		expect(dayInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
+		expect(dayInSpy).toHaveBeenCalledTimes(0);
 
 	});
 
@@ -560,19 +560,19 @@ describe("DateInput", () => {
 
 		// for this current locale, '.' is the advance key/literal
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		yearIn.value = '1';
 		yearIn.dispatchEvent(new Event('input'));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		// wrong key
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "/" }));
-		expect(monthInSpy).toBeCalledTimes(0);
+		expect(monthInSpy).toHaveBeenCalledTimes(0);
 
 		// for this locale, year should advance
 		yearIn.dispatchEvent(new KeyboardEvent('keydown', { key: "." }));
-		expect(monthInSpy).toBeCalledTimes(1);
+		expect(monthInSpy).toHaveBeenCalledTimes(1);
 	});
 
 	test("Validate Date - Set Custom Validity Message for required date input", () => {
