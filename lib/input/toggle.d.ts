@@ -7,6 +7,6 @@ export declare class ToggleInput extends BaseWidget<TCheckboxWidget> {
     protected readonly onIcon: keyof TSubset<IConfig, TIcon>;
     protected readonly offIcon: keyof TSubset<IConfig, TIcon>;
     private toggle;
-    view({ attrs: { field, value: val } }: CVnode<TCheckboxWidget>): m.Vnode<any, any> | m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
+    view({ attrs: { field, value: val } }: CVnode<TCheckboxWidget>): m.Vnode<any, any> | m.Vnode<import("..").IPropLayoutWidget<import("..").IField>, unknown>;
 }
 export {};

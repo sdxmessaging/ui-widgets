@@ -25,7 +25,7 @@ export declare class CheckList extends BaseWidget<TSelectWidget> {
     private syncSelection;
     oninit({ attrs: { field: { options }, value } }: CVnode<TSelectWidget>): void;
     onbeforeupdate({ attrs: { field: { options }, value } }: CVnode<TSelectWidget>): void;
-    view({ attrs }: CVnode<TSelectWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
+    view({ attrs }: CVnode<TSelectWidget>): m.Vnode<import("..").IPropLayoutWidget<import("..").IField>, unknown>;
     private singleSelectionRow;
     private multiSelectionRow;
 }

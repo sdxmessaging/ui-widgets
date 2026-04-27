@@ -3,7 +3,7 @@ import { IConfig } from "../interface/config";
 import { IPropWidget, TProp, TPropStream } from "../interface/widget";
 import { BaseWidget } from "../baseWidget";
 export declare class CurrencyInput extends BaseWidget<IPropWidget> {
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("..").IPropLayoutWidget<import("..").IField>, unknown>;
 }
 export declare function propToNumber(value: TProp): number;
 export declare function setCurrencyValue(val: TPropStream): ({ target: { value } }: {

@@ -16,5 +16,5 @@ export declare class TimeInput extends BaseWidget<IPropWidget> {
     oninit({ attrs: { value } }: CVnode<IPropWidget>): void;
     onbeforeupdate({ attrs: { value } }: CVnode<IPropWidget>): void;
     onremove(): void;
-    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("../interface/widget").IPropLayoutWidget<import("../interface/widget").IField>, unknown>;
+    view({ attrs }: CVnode<IPropWidget>): m.Vnode<import("..").IPropLayoutWidget<import("..").IField>, unknown>;
 }
