@@ -26,10 +26,10 @@
   "devDependencies": {
     "@rollup/plugin-terser": "0.4.4",
     "@types/jest": "29.5.11",
-    "@types/lodash": "4.14.202",
-    "@types/luxon": "3.3.3",
+    "@types/lodash": "4.17.24",
+    "@types/luxon": "3.7.1",
     "@types/mithril": "2.0.7",
-    "@types/node": "18.16.5",
+    "@types/node": "25.6.0",
     "@types/signature_pad": "2.3.6",
     "@typescript-eslint/eslint-plugin": "6.19.1",
     "@typescript-eslint/parser": "6.19.1",
@@ -40,11 +40,11 @@
     "jest-environment-jsdom": "29.7.0",
     "pre-push": "0.1.4",
     "rimraf": "5.0.5",
-    "rollup": "4.21.2",
+    "rollup": "4.60.2",
     "shelljs": "0.8.5",
-    "ts-jest": "29.1.2",
+    "ts-jest": "29.4.9",
     "ts-node": "10.9.2",
-    "typescript": "5.5.4"
+    "typescript": "5.9.3"
   },
   "scripts": {
     "prebuild": "rimraf lib tsconfig.tsbuildinfo",
