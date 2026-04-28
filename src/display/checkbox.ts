@@ -9,7 +9,8 @@ import { getDisplayLabel } from "../utils";
 
 import { SelectionInner } from "../input/layout/selectionInner";
 
-type TCheckboxWidget = IPropWidget<ICheckboxField>
+type TCheckboxWidget = IPropWidget<ICheckboxField>;
+
 export class Checkbox implements ClassComponent<TCheckboxWidget> {
 
 	protected readonly onIcon: keyof TSubset<IConfig, TIcon> = "checkIcn";

@@ -7,7 +7,9 @@ import { ListPage } from "./listPage";
 
 export class List<T> implements ClassComponent<IList<T>> {
 
-	private static fragment() { return {}; }
+	private static fragment() {
+		return {};
+	}
 
 	private controller!: ListController<T>;
 

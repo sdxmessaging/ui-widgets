@@ -24,16 +24,16 @@
     "signature_pad": "4.0.7"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@rollup/plugin-terser": "0.4.4",
+    "@stylistic/eslint-plugin": "5.10.0",
     "@types/jest": "30.0.0",
     "@types/lodash": "4.17.24",
     "@types/luxon": "3.7.1",
     "@types/mithril": "2.2.8",
     "@types/node": "25.6.0",
     "@types/signature_pad": "2.3.6",
-    "@typescript-eslint/eslint-plugin": "6.19.1",
-    "@typescript-eslint/parser": "6.19.1",
-    "eslint": "8.56.0",
+    "eslint": "10.2.1",
     "jest": "30.3.0",
     "jest-canvas-mock": "2.5.2",
     "jest-cli": "30.3.0",
@@ -44,7 +44,8 @@
     "shelljs": "0.8.5",
     "ts-jest": "29.4.9",
     "ts-node": "10.9.2",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.59.0"
   },
   "scripts": {
     "prebuild": "rimraf lib tsconfig.tsbuildinfo",
@@ -55,7 +56,7 @@
     "watch-test": "jest --watch-ts",
     "test": "jest",
     "coverage": "jest --coverage",
-    "lint": "eslint --ext .ts src/",
+    "lint": "eslint src/",
     "example": "open example.html",
     "dist": "ts-node ./scriptHelpers/dist.ts",
     "dist-minor": "ts-node ./scriptHelpers/dist.ts minor",

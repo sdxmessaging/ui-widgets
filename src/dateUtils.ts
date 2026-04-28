@@ -59,8 +59,7 @@ export function handleRetreatOrLiteralAdvance(
 		focusAndSelectNextInput(dom, id, prev);
 		// prevent event from passing to the previous field & deleting characters right away
 		event.preventDefault();
-	}
-	else if (literalKey.charCodeAt(0) === event.key.charCodeAt(0)
+	} else if (literalKey.charCodeAt(0) === event.key.charCodeAt(0)
 		&& next && streamValue.length !== 0 && streamValue.length < maxLength) {
 		focusAndSelectNextInput(dom, id, next);
 		// prevent event from passing to the next field & advancing right away

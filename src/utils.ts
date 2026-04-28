@@ -73,8 +73,7 @@ export function getDisplayLabel(label?: string | IWidgetLabel, labelCls = "mr2 t
 				title: label,
 				class: joinClasses([labelCls, theme.displayLabel])
 			}, label);
-		}
-		else {
+		} else {
 			return enrichLabel(label, "span", {
 				title: label.text,
 				class: joinClasses([labelCls, theme.displayLabel])
@@ -93,8 +92,7 @@ export function getLabel(id: string, uiClass: IWidgetClasses, label?: string | I
 				for: id,
 				class: labelCls(uiClass, required),
 			}, getLabelText(label, required));
-		}
-		else {
+		} else {
 			return enrichLabel(label, "label.mb1.db", {
 				title: label.text,
 				for: id,

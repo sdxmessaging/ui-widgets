@@ -136,7 +136,7 @@ export function numberToCurrencyTuple(unitTotal: number): [string, string] | und
 	}
 	const valStr = String(Math.abs(unitTotal));
 	let large = "0";
-	let small = "";
+	let small: string;
 	if (valStr.length > 2) {
 		const decimalPos = valStr.length - 2;
 		large = valStr.substring(0, decimalPos);
