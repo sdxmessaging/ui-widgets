@@ -651,6 +651,9 @@ m.mount(document.getElementById("page"), {
 						}, {
 							label: "Maybe",
 							value: "maybe"
+						}, {
+							label: "So",
+							value: "so"
 						}],
 						uiClass: { wrapper: "mb2" }
 					},
@@ -705,6 +708,22 @@ m.mount(document.getElementById("page"), {
 							// 		stroke: "#333333"
 							// 	}
 							// }
+						}
+					},
+					value: optVal
+				}),
+				m(uiWidgets.RadioInput, {
+					field: {
+						id: "radio-in4",
+						type: "radio",
+						name: "radio-group-1",
+						value: "so",
+						required: true,
+						config: {
+							selectionLayout: ["on"],
+							selectionOnLabel: "So",
+							selectionOnActive: "w-100 pv1 tc bg-washed-green ba br4 b--dark-green",
+							selectionOnInactive: "w-100 pv1 tc ba br4 b--silver"
 						}
 					},
 					value: optVal
