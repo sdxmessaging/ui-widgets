@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.9.1
+
+- Export `getConfig` helper function
+
 ## 1.9.0
 
 - Breaking change targeting ES2017 script instead of ES2015

@@ -3,7 +3,7 @@ export * from "./interface/theme";
 export { IConfig } from "./interface/config";
 
 // Functions
-export { updateConfig, registerFunction } from "./config";
+export { getConfig, updateConfig, registerFunction } from "./config";
 export { joinClasses, updateClasses, updateButtonContext, theme } from "./theme";
 export {
 	guid, pxRatio, fileNameExtSplit,
