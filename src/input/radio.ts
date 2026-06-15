@@ -24,8 +24,8 @@ export class RadioInput extends BaseWidget<TRadioWidget> {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
 			class: inputWrapperCls(field)
-		}, [
-			m("input.clip[type=radio]", {
+		}, m(".relative", [
+			m("input.hidden-input[type=radio]", {
 				id, name, value,
 				checked, required, autocomplete,
 				disabled: disabled || readonly,
@@ -52,7 +52,7 @@ export class RadioInput extends BaseWidget<TRadioWidget> {
 				offIcon: getConfig("radioOffIcn", config),
 				config
 			}))
-		]));
+		])));
 	}
 
 }

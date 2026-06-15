@@ -26,8 +26,8 @@ export class CheckboxInput extends BaseWidget<TCheckboxWidget> {
 			class: wrapperCls(uiClass, disabled),
 		}, m("fieldset.w-100.bn", {
 			class: inputWrapperCls(field)
-		}, [
-			m("input.clip[type=checkbox]", {
+		}, m(".relative", [
+			m("input.hidden-input[type=checkbox]", {
 				id, name, value,
 				checked: val(),
 				required, autocomplete,
@@ -58,7 +58,7 @@ export class CheckboxInput extends BaseWidget<TCheckboxWidget> {
 				offIcon: getConfig(this.offIcon, config),
 				config
 			}))
-		]));
+		])));
 	}
 
 }

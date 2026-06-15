@@ -188,13 +188,6 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 			invalid: this.invalid,
 			focus: this.inFocus
 		}, [
-			// Hidden input
-			m("input.clip[type=text]", {
-				name, value: val(),
-				required,
-				tabindex: -1,
-				ariaHidden: "true"
-			}),
 			m(".relative.cursor-default", {
 				id, title,
 				disabled: !active,
@@ -208,6 +201,13 @@ export class CheckList extends BaseWidget<TSelectWidget> {
 					? (evt: KeyboardEvent) => this.keyNav(evt, val, multiple)
 					: undefined
 			}, [
+				// Hidden input
+				m("input.hidden-input[type=text]", {
+					name, value: val(),
+					required,
+					tabindex: -1,
+					ariaHidden: "true"
+				}),
 				// Select "input"
 				m(".flex.items-center.ph-2px.pv-1px", {
 					class: inputCls(uiClass)

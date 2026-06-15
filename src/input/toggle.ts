@@ -22,8 +22,8 @@ export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 			required, readonly, disabled, autocomplete, tabindex = "0",
 			config
 		} = field;
-		return [
-			m("input.clip[type=checkbox]", {
+		return m(".relative", [
+			m("input.hidden-input[type=checkbox]", {
 				id, name, value,
 				checked: val(),
 				required, autocomplete,
@@ -60,7 +60,7 @@ export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 				),
 				children
 			])
-		];
+		]);
 
 	}
 
