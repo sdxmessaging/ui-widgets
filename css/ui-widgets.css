@@ -17,6 +17,17 @@ input[type=number] {
 	-moz-appearance: textfield;
 }
 
+/* Alternative to tachyons clip class, ensures input occupies same area in a relative container */
+.hidden-input {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
 /* Add space for a scrollbar, requires overflow rules */
 .scrollbar-gutter-stable {
 	scrollbar-gutter: stable;

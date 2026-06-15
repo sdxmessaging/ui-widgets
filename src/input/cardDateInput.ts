@@ -78,7 +78,7 @@ export class CardDateInput implements ClassComponent<IPropWidget> {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			}, [
 				// Hidden input for form validation and submission
-				m("input.absolute.pa0.w1.o-0.pe-none[type=text]", {
+				m("input.hidden-input[type=text]", {
 					id, value: value(),
 					required, readonly, disabled,
 					tabindex: -1,

@@ -79,11 +79,9 @@ export class TimeInput extends BaseWidget<IPropWidget> {
 			invalid: this.invalid,
 			focus: this.inFocus
 		}, m(".flex.items-center", [
-			m(".relative.flex-auto.ph-2px.pv-1px", {
-				// onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
-			}, [
+			m(".relative.flex-auto.ph-2px.pv-1px", [
 				// Hidden input
-				m("input.absolute.pa0.w1.o-0.pe-none[type=text]", {
+				m("input.hidden-input[type=text]", {
 					name, value: value(),
 					required, readonly, disabled,
 					tabindex: -1,

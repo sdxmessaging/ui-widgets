@@ -247,14 +247,13 @@ export class DateInput implements ClassComponent<IPropWidget> {
 				onclick: () => focusLastInput(this.dom(), id, this.focusedInput())
 			},
 				// Hidden input for form validation and submission
-				m("input.absolute.pa0.w1.o-0.pe-none[type=date]", {
+				m("input.hidden-input[type=date]", {
 					id, name, value: value(),
 					required, readonly, disabled,
 					min, max,
 					tabindex: -1,
 					ariaHidden: "true"
 				}),
-
 				// Date components
 				this.dateParts.map(
 					(datePart) => this.createDateInputs(datePart, vnode)

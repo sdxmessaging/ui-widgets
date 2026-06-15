@@ -45,30 +45,33 @@ export class CurrencyInput extends BaseWidget<IPropWidget> {
 					inputClass
 				])
 			}, symbol),
-			m("input.absolute.pa0.w1.o-0.pe-none[type=number]", {
-				name, value: unitTotal,
-				max, maxlength, min, minlength, step, required, readonly, disabled,
-				tabindex: -1,
-				ariaHidden: "true"
-			}),
-			m("input.w-100.bg-transparent.bn.outline-0", {
-				id, type: FieldType.text,
-				name: `${name}-currency`, title, placeholder,
-				required, readonly, disabled, autofocus, autocomplete, tabindex,
-				pattern, inputmode, spellcheck,
-				class: joinClasses([
-					badgePosition === "right" ? "tr" : "",
-					redNumber && negative ? theme.redNumber : null,
-					inputClass
-				]),
-				onfocus: selectTarget,
-				onblur: this.touch,
-				value: lodash.isUndefined(xform())
-					? null
-					// "Flip" negative "red" numbers, remove the minus sign
-					: Currency.format(unitTotal, negativeParens, redNegative && negative),
-				onchange: setCurrencyValue(value)
-			})
+			m(".relative.flex-auto", [
+				// Hidden input
+				m("input.hidden-input[type=number]", {
+					name, value: unitTotal,
+					max, maxlength, min, minlength, step, required, readonly, disabled,
+					tabindex: -1,
+					ariaHidden: "true"
+				}),
+				m("input.w-100.bg-transparent.bn.outline-0", {
+					id, type: FieldType.text,
+					name: `${name}-currency`, title, placeholder,
+					required, readonly, disabled, autofocus, autocomplete, tabindex,
+					pattern, inputmode, spellcheck,
+					class: joinClasses([
+						badgePosition === "right" ? "tr" : "",
+						redNumber && negative ? theme.redNumber : null,
+						inputClass
+					]),
+					onfocus: selectTarget,
+					onblur: this.touch,
+					value: lodash.isUndefined(xform())
+						? null
+						// "Flip" negative "red" numbers, remove the minus sign
+						: Currency.format(unitTotal, negativeParens, redNegative && negative),
+					onchange: setCurrencyValue(value)
+				})
+			])
 		]));
 	}
 
