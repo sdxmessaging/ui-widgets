@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.9.2
+
+- Update hidden inputs in widgets to occupy same area as their custom input
+
 ## 1.9.1
 
 - Export `getConfig` helper function
