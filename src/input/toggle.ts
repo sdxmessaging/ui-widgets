@@ -48,7 +48,7 @@ export class ToggleInput extends BaseWidget<TCheckboxWidget> {
 					}
 				}
 			}, [
-				m(".toggle-outer.relative.dib.transition-bg", {
+				m(".toggle-outer.relative.dib.flex-shrink-0.transition-bg", {
 					class: checked
 						? getConfig("toggleOnWrapper", config)
 						: getConfig("toggleOffWrapper", config)

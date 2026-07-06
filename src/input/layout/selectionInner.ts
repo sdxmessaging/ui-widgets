@@ -17,11 +17,11 @@ export class SelectionInner implements ClassComponent<ISelectionInner> {
 			getConfig("selectionLayout", config).map((element) => {
 				switch (element) {
 					case "label": return label;
-					case "icon": return getIcon(selected ? onIcon : offIcon, "mh1");
-					case "on": return m("span.mh1", {
+					case "icon": return getIcon(selected ? onIcon : offIcon, "mh1 flex-shrink-0");
+					case "on": return m("span.mh1.flex-shrink-0", {
 						class: getConfig(selected ? "selectionOnActive" : "selectionOnInactive", config)
 					}, getConfig("selectionOnLabel", config));
-					case "off": return m("span.mh1", {
+					case "off": return m("span.mh1.flex-shrink-0", {
 						class: getConfig(selected ? "selectionOffInactive" : "selectionOffActive", config)
 					}, getConfig("selectionOffLabel", config));
 				}

@@ -1,5 +1,10 @@
 # Release Notes
 
+## 1.9.3
+
+- Prevent shrinking of toggle and check widgets with large labels
+- Update 3rd party dependencies to latest
+
 ## 1.9.2
 
 - Update hidden inputs in widgets to occupy same area as their custom input
