@@ -2,7 +2,7 @@
 
 ## 1.9.4
 
-- Fix input currnecy symbols or icon buttons being shrunk for small input widths
+- Fix input currency symbols or icon buttons being shrunk for small input widths
 
 ## 1.9.3
 
