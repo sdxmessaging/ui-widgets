@@ -30,7 +30,7 @@ export class MultiOmniFileInput implements ClassComponent<IFileWidget> {
 				m(".flex.items-center.pa1.dt", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
-					getIcon(getConfig("uploadIcn", config), "pa1"),
+					getIcon(getConfig("uploadIcn", config), "pa1 flex-shrink-0"),
 					m("span.ma1.flex-auto", getConfig("addFileTxt", config))
 				])
 			),

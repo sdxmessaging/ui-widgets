@@ -35,7 +35,7 @@ export class FileSelect implements ClassComponent<IFileWidget> {
 				m(".flex.items-center.pa1", {
 					class: fileInputWrapperCls(uiClass, this.dragging(), fileInvalid(field, value()))
 				}, [
-					getIcon(getConfig("uploadIcn", config), "pa1"),
+					getIcon(getConfig("uploadIcn", config), "pa1 flex-shrink-0"),
 					m("span.ma1.flex-auto", innerText),
 					file && displayType !== DisplayType.none ? [
 						m(FileOpen, file),

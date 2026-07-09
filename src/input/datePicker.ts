@@ -69,7 +69,7 @@ export class DatePicker implements ClassComponent<IPropWidget> {
 	}
 
 	public view({ attrs: { field: { config } } }: CVnode<IPropWidget>) {
-		return getIcon(getConfig("datePickerIcn", config), "ph-2px pv-1px");
+		return getIcon(getConfig("datePickerIcn", config), "ph-2px pv-1px flex-shrink-0");
 	}
 
 }

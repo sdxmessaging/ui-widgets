@@ -128,7 +128,7 @@ export class TimeInput extends BaseWidget<IPropWidget> {
 				})
 			]),
 
-			!(disabled || readonly) && m(".pointer", {
+			!(disabled || readonly) && m(".pointer.flex-shrink-0", {
 				// TimePicker onClose event will handle hiding the picker
 				onclick: () => this.showPicker = true
 			},

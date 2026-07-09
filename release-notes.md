@@ -1,5 +1,9 @@
 # Release Notes
 
+## 1.9.4
+
+- Fix input currnecy symbols or icon buttons being shrunk for small input widths
+
 ## 1.9.3
 
 - Prevent shrinking of toggle and check widgets with large labels

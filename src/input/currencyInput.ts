@@ -39,7 +39,7 @@ export class CurrencyInput extends BaseWidget<IPropWidget> {
 			invalid: this.invalid,
 			focus: this.inFocus
 		}, m(".flex.w-100", [
-			m("span.self-center", {
+			m("span.self-center.flex-shrink-0", {
 				class: joinClasses([
 					badgePosition === "left" ? "order-0 mr1" : "order-last ml1",
 					inputClass
